@@ -1,24 +1,12 @@
 {
   "pages": {
-    "enterprise": {
-      "title": "Enterprise Guide (On-Premise)",
-      "path": "/docs/enterprise"
-    },
     "": {
       "title": "Documentation",
       "path": "/docs"
     },
-    "install": {
-      "title": "Installation Guide",
-      "path": "/docs/install"
-    },
-    "open_source_components": {
-      "title": "Open-Source Components",
-      "path": "/docs/open_source_components"
-    },
-    "permissions": {
-      "title": "Permissions and Roles",
-      "path": "/docs/permissions"
+    "enterprise": {
+      "title": "Enterprise Guide (On-Premise)",
+      "path": "/docs/enterprise"
     },
     "guides": {
       "title": "Guides",
@@ -28,13 +16,17 @@
       "title": "Guide: Exporting Query Statistics using the pganalyze API",
       "path": "/docs/guides/exporting_query_statistics.html"
     },
-    "install/01_enabling_pg_stat_statements": {
-      "title": "Step 1: Enabling pg_stat_statements",
-      "path": "/docs/install/01_enabling_pg_stat_statements"
-    },
     "guides/setup_log_insights_on_self_hosted_server": {
       "title": "Guide: Setting up pganalyze Log Insights on a self-hosted server",
       "path": "/docs/guides/setup_log_insights_on_self_hosted_server"
+    },
+    "install": {
+      "title": "Installation Guide",
+      "path": "/docs/install"
+    },
+    "install/01_enabling_pg_stat_statements": {
+      "title": "Step 1: Enabling pg_stat_statements",
+      "path": "/docs/install/01_enabling_pg_stat_statements"
     },
     "install/02_installing_the_collector": {
       "title": "Step 2: Installing the Collector",
@@ -48,6 +40,22 @@
       "title": "Installation Guide (Amazon RDS for PostgreSQL)",
       "path": "/docs/install/amazon_rds"
     },
+    "install/amazon_rds/01_configure_rds_instance": {
+      "title": "Step 1: Configure RDS instance",
+      "path": "/docs/install/amazon_rds/01_configure_rds_instance"
+    },
+    "install/amazon_rds/02_create_monitoring_user": {
+      "title": "Step 2: Create Monitoring User",
+      "path": "/docs/install/amazon_rds/02_create_monitoring_user"
+    },
+    "install/amazon_rds/03_setup_iam_policy": {
+      "title": "Step 3: Setup IAM Policy",
+      "path": "/docs/install/amazon_rds/03_setup_iam_policy"
+    },
+    "install/amazon_rds/04_install_collector": {
+      "title": "Step 4: Install collector",
+      "path": "/docs/install/amazon_rds/04_install_collector"
+    },
     "install/heroku_postgres": {
       "title": "Using pganalyze on Heroku Postgres",
       "path": "/docs/install/heroku_postgres"
@@ -56,21 +64,9 @@
       "title": "Log Insights",
       "path": "/docs/log-insights"
     },
-    "install/amazon_rds/01_configure_rds_instance": {
-      "title": "Step 1: Configure RDS instance",
-      "path": "/docs/install/amazon_rds/01_configure_rds_instance"
-    },
-    "install/amazon_rds/03_setup_iam_policy": {
-      "title": "Step 3: Setup IAM Policy",
-      "path": "/docs/install/amazon_rds/03_setup_iam_policy"
-    },
-    "install/amazon_rds/02_create_monitoring_user": {
-      "title": "Step 2: Create Monitoring User",
-      "path": "/docs/install/amazon_rds/02_create_monitoring_user"
-    },
-    "install/amazon_rds/04_install_collector": {
-      "title": "Step 4: Install collector",
-      "path": "/docs/install/amazon_rds/04_install_collector"
+    "log-insights/classifications": {
+      "title": "Log Insights: Classifications",
+      "path": "/docs/log-insights/classifications"
     },
     "log-insights/classifications/app_errors": {
       "title": "Application / User Errors",
@@ -104,10 +100,6 @@
       "title": "Standby Servers",
       "path": "/docs/log-insights/classifications/standby"
     },
-    "log-insights/classifications": {
-      "title": "Log Insights: Classifications",
-      "path": "/docs/log-insights/classifications"
-    },
     "log-insights/classifications/statements": {
       "title": "Statements",
       "path": "/docs/log-insights/classifications/statements"
@@ -115,6 +107,14 @@
     "log-insights/classifications/wal": {
       "title": "WAL",
       "path": "/docs/log-insights/classifications/wal"
+    },
+    "open_source_components": {
+      "title": "Open-Source Components",
+      "path": "/docs/open_source_components"
+    },
+    "permissions": {
+      "title": "Permissions and Roles",
+      "path": "/docs/permissions"
     }
   },
   "logClassifications": {
