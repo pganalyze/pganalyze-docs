@@ -1,0 +1,52 @@
+---
+title: 'Permissions and Roles'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+Permissions are set for roles, and roles are assigned to members of your organization.
+
+Every member of your organization gets to see the list of all other members in the organization,
+but can't access any database information without having the **View** permission on them.
+
+Permissions are additive-only - that means if you grant a role that gives
+unrestricted access to all databases and servers, another restrictive permission
+that is also assigned will not restrict access for them.
+
+## View
+
+Allows the member to see statistics information for a database, including full
+query details as well as complete log information when using Log Insights.
+
+## Modify
+
+Allows the member to acknowledge check-ups and change configuration settings in pganalyze
+for the databases and servers they have the modify permission on.
+
+## Billing
+
+Allows the member to input billing details, change the subscription an organization
+is on, as well as view invoices.
+
+You cannot restrict the billing permission to a specific database or server.
+
+## API
+
+Allows the member to see API keys, typically required for integrating the pganalyze collector on a server.
+
+You cannot restrict the API permission to a specific database or server.
+
+## Manage
+
+Allows the member to invite/add new members with any of the above permissions,
+create new roles and change the permissions of existing roles, as well
+as remove any other member from the organization.
+
+This also grants the permission to create new servers in the organization, as well
+as removing existing servers and their statistics.
+
+You cannot restrict the manage permission to a specific database or server.
+
+---
+
+**Hint:** No roles grant access to your database server, as pganalyze operates in a push model - the open-source [pganalyze-collector](https://github.com/pganalyze/collector) is the only component able to access your database directly.

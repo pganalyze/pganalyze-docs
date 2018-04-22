@@ -1,0 +1,212 @@
+{
+  "pages": {
+    "enterprise": {
+      "title": "Enterprise Guide (On-Premise)",
+      "path": "/docs/enterprise"
+    },
+    "": {
+      "title": "Documentation",
+      "path": "/docs"
+    },
+    "install": {
+      "title": "Installation Guide",
+      "path": "/docs/install"
+    },
+    "open_source_components": {
+      "title": "Open-Source Components",
+      "path": "/docs/open_source_components"
+    },
+    "permissions": {
+      "title": "Permissions and Roles",
+      "path": "/docs/permissions"
+    },
+    "guides": {
+      "title": "Guides",
+      "path": "/docs/guides"
+    },
+    "guides/exporting_query_statistics.html": {
+      "title": "Guide: Exporting Query Statistics using the pganalyze API",
+      "path": "/docs/guides/exporting_query_statistics.html"
+    },
+    "install/01_enabling_pg_stat_statements": {
+      "title": "Step 1: Enabling pg_stat_statements",
+      "path": "/docs/install/01_enabling_pg_stat_statements"
+    },
+    "guides/setup_log_insights_on_self_hosted_server": {
+      "title": "Guide: Setting up pganalyze Log Insights on a self-hosted server",
+      "path": "/docs/guides/setup_log_insights_on_self_hosted_server"
+    },
+    "install/02_installing_the_collector": {
+      "title": "Step 2: Installing the Collector",
+      "path": "/docs/install/02_installing_the_collector"
+    },
+    "install/03_configuring_the_collector": {
+      "title": "Step 3: Configuring the Collector",
+      "path": "/docs/install/03_configuring_the_collector"
+    },
+    "install/amazon_rds": {
+      "title": "Installation Guide (Amazon RDS for PostgreSQL)",
+      "path": "/docs/install/amazon_rds"
+    },
+    "install/heroku_postgres": {
+      "title": "Using pganalyze on Heroku Postgres",
+      "path": "/docs/install/heroku_postgres"
+    },
+    "log-insights": {
+      "title": "Log Insights",
+      "path": "/docs/log-insights"
+    },
+    "install/amazon_rds/01_configure_rds_instance": {
+      "title": "Step 1: Configure RDS instance",
+      "path": "/docs/install/amazon_rds/01_configure_rds_instance"
+    },
+    "install/amazon_rds/03_setup_iam_policy": {
+      "title": "Step 3: Setup IAM Policy",
+      "path": "/docs/install/amazon_rds/03_setup_iam_policy"
+    },
+    "install/amazon_rds/02_create_monitoring_user": {
+      "title": "Step 2: Create Monitoring User",
+      "path": "/docs/install/amazon_rds/02_create_monitoring_user"
+    },
+    "install/amazon_rds/04_install_collector": {
+      "title": "Step 4: Install collector",
+      "path": "/docs/install/amazon_rds/04_install_collector"
+    },
+    "log-insights/classifications/app_errors": {
+      "title": "Application / User Errors",
+      "path": "/docs/log-insights/classifications/app_errors"
+    },
+    "log-insights/classifications/autovacuum": {
+      "title": "Autovacuum",
+      "path": "/docs/log-insights/classifications/autovacuum"
+    },
+    "log-insights/classifications/checkpoints": {
+      "title": "Checkpoints",
+      "path": "/docs/log-insights/classifications/checkpoints"
+    },
+    "log-insights/classifications/connections": {
+      "title": "Connections",
+      "path": "/docs/log-insights/classifications/connections"
+    },
+    "log-insights/classifications/constraint_violations": {
+      "title": "Constraint Violations",
+      "path": "/docs/log-insights/classifications/constraint_violations"
+    },
+    "log-insights/classifications/locks": {
+      "title": "Locks",
+      "path": "/docs/log-insights/classifications/locks"
+    },
+    "log-insights/classifications/server": {
+      "title": "Server",
+      "path": "/docs/log-insights/classifications/server"
+    },
+    "log-insights/classifications/standby": {
+      "title": "Standby Servers",
+      "path": "/docs/log-insights/classifications/standby"
+    },
+    "log-insights/classifications": {
+      "title": "Log Insights: Classifications",
+      "path": "/docs/log-insights/classifications"
+    },
+    "log-insights/classifications/statements": {
+      "title": "Statements",
+      "path": "/docs/log-insights/classifications/statements"
+    },
+    "log-insights/classifications/wal": {
+      "title": "WAL",
+      "path": "/docs/log-insights/classifications/wal"
+    }
+  },
+  "logClassifications": {
+    "U110": {
+      "title": "Syntax Error",
+      "category": "app-errors",
+      "collectorKey": "SYNTAX_ERROR",
+      "tooltip": "The sent query couldn't be parsed by Postgres",
+      "urgency": "low",
+      "sqlstate": 42601,
+      "path": "/docs/log-insights/events/U110"
+    },
+    "U111": {
+      "title": "Invalid Input Syntax",
+      "category": "app-errors",
+      "collectorKey": "INVALID_INPUT_SYNTAX",
+      "tooltip": "The value passed in is invalid input for the column's data type",
+      "urgency": "low",
+      "sqlstate": null,
+      "path": "/docs/log-insights/events/U111"
+    },
+    "U112": {
+      "title": "Value Too Long For Type",
+      "category": "app-errors",
+      "collectorKey": "VALUE_TOO_LONG_FOR_TYPE",
+      "tooltip": "The value passed in is too large for the column's data type",
+      "urgency": "medium",
+      "sqlstate": null,
+      "path": "/docs/log-insights/events/U112"
+    },
+    "U113": {
+      "title": "Invalid Value",
+      "category": "app-errors",
+      "collectorKey": "INVALID_VALUE",
+      "tooltip": "The value passed to a function or config parameter is invalid",
+      "urgency": "low",
+      "sqlstate": null,
+      "path": "/docs/log-insights/events/U113"
+    },
+    "U114": {
+      "title": "Malformed Array Literal",
+      "category": "app-errors",
+      "collectorKey": "MALFORMED_ARRAY_LITERAL",
+      "tooltip": "The array value passed in has the wrong format",
+      "urgency": "low",
+      "sqlstate": null,
+      "path": "/docs/log-insights/events/U114"
+    },
+    "U115": {
+      "title": "Subquery Missing Alias",
+      "category": "app-errors",
+      "collectorKey": "SUBQUERY_MISSING_ALIAS",
+      "tooltip": "The query is missing an alias name for a subquery",
+      "urgency": "low",
+      "sqlstate": null,
+      "path": "/docs/log-insights/events/U115"
+    },
+    "U116": {
+      "title": "INSERT Target Column Mismatch",
+      "category": "app-errors",
+      "collectorKey": "INSERT_TARGET_COLUMN_MISMATCH",
+      "tooltip": "The \\# of columns in your INSERT statements are different than the \\# of values per row",
+      "urgency": "low",
+      "sqlstate": null,
+      "path": "/docs/log-insights/events/U116"
+    },
+    "U117": {
+      "title": "ANY/ALL Requires Array",
+      "category": "app-errors",
+      "collectorKey": "ANY_ALL_REQUIRES_ARRAY",
+      "tooltip": "Non-array value passed to ANY/ALL expression",
+      "urgency": "low",
+      "sqlstate": null,
+      "path": "/docs/log-insights/events/U117"
+    },
+    "U118": {
+      "title": "Column Missing from GROUP BY",
+      "category": "app-errors",
+      "collectorKey": "COLUMN_MISSING_FROM_GROUP_BY",
+      "tooltip": "Query uses an aggregate function without the correct GROUP BY",
+      "urgency": "low",
+      "sqlstate": null,
+      "path": "/docs/log-insights/events/U118"
+    },
+    "U119": {
+      "title": "Relation Does Not Exist",
+      "category": "app-errors",
+      "collectorKey": "RELATION_DOES_NOT_EXIST",
+      "tooltip": "Query references a table or view that does not exist",
+      "urgency": "low",
+      "sqlstate": null,
+      "path": "/docs/log-insights/events/U119"
+    }
+  }
+}
