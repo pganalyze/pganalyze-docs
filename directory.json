@@ -81,7 +81,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/autovacuum/A60"
+      "path": "/docs/log-insights/autovacuum/A60",
+      "color": null,
+      "hasAnalysis": null
     },
     "A61": {
       "title": "TXID Wraparound Warning",
@@ -90,7 +92,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/autovacuum/A61"
+      "path": "/docs/log-insights/autovacuum/A61",
+      "color": null,
+      "hasAnalysis": null
     },
     "A62": {
       "title": "TXID Wraparound Critical",
@@ -99,7 +103,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/autovacuum/A62"
+      "path": "/docs/log-insights/autovacuum/A62",
+      "color": null,
+      "hasAnalysis": null
     },
     "A63": {
       "title": "Autovacuum Launcher Started",
@@ -108,7 +114,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/autovacuum/A63"
+      "path": "/docs/log-insights/autovacuum/A63",
+      "color": null,
+      "hasAnalysis": null
     },
     "A64": {
       "title": "Autovacuum Launcher Shutting Down",
@@ -117,7 +125,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/autovacuum/A64"
+      "path": "/docs/log-insights/autovacuum/A64",
+      "color": null,
+      "hasAnalysis": null
     },
     "A65": {
       "title": "Autovacuum Completed",
@@ -126,7 +136,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/autovacuum/A65"
+      "path": "/docs/log-insights/autovacuum/A65",
+      "color": "#8be",
+      "hasAnalysis": null
     },
     "A66": {
       "title": "Autoanalyze Completed",
@@ -135,7 +147,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/autovacuum/A66"
+      "path": "/docs/log-insights/autovacuum/A66",
+      "color": "#8be",
+      "hasAnalysis": null
     },
     "B90": {
       "title": "Restored WAL from Archive",
@@ -144,7 +158,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/standby/B90"
+      "path": "/docs/log-insights/standby/B90",
+      "color": null,
+      "hasAnalysis": null
     },
     "B91": {
       "title": "Streaming Started",
@@ -153,7 +169,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/standby/B91"
+      "path": "/docs/log-insights/standby/B91",
+      "color": null,
+      "hasAnalysis": null
     },
     "B92": {
       "title": "Streaming Interrupted",
@@ -162,7 +180,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/standby/B92"
+      "path": "/docs/log-insights/standby/B92",
+      "color": null,
+      "hasAnalysis": null
     },
     "B93": {
       "title": "Streaming Stopped",
@@ -171,7 +191,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/standby/B93"
+      "path": "/docs/log-insights/standby/B93",
+      "color": null,
+      "hasAnalysis": null
     },
     "B94": {
       "title": "Recovery Reference",
@@ -180,7 +202,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/standby/B94"
+      "path": "/docs/log-insights/standby/B94",
+      "color": null,
+      "hasAnalysis": null
     },
     "B95": {
       "title": "Statement Canceled Due To Recovery Conflict",
@@ -189,7 +213,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/standby/B95"
+      "path": "/docs/log-insights/standby/B95",
+      "color": null,
+      "hasAnalysis": null
     },
     "B96": {
       "title": "Invalid Timeline",
@@ -198,7 +224,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/standby/B96"
+      "path": "/docs/log-insights/standby/B96",
+      "color": null,
+      "hasAnalysis": null
     },
     "C20": {
       "title": "Connection Received",
@@ -207,7 +235,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C20"
+      "path": "/docs/log-insights/connections/C20",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
     },
     "C21": {
       "title": "Connection Authorized",
@@ -216,7 +246,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C21"
+      "path": "/docs/log-insights/connections/C21",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
     },
     "C22": {
       "title": "Connection Rejected",
@@ -225,7 +257,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C22"
+      "path": "/docs/log-insights/connections/C22",
+      "color": "#ff0000",
+      "hasAnalysis": null
     },
     "C23": {
       "title": "Connection Disconnected",
@@ -234,7 +268,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C23"
+      "path": "/docs/log-insights/connections/C23",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
     },
     "C24": {
       "title": "Client Failed To Connect",
@@ -243,7 +279,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C24"
+      "path": "/docs/log-insights/connections/C24",
+      "color": "#999",
+      "hasAnalysis": null
     },
     "C25": {
       "title": "Connection Lost",
@@ -252,7 +290,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C25"
+      "path": "/docs/log-insights/connections/C25",
+      "color": "#999",
+      "hasAnalysis": null
     },
     "C26": {
       "title": "Connection Lost (open transaction)",
@@ -261,7 +301,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C26"
+      "path": "/docs/log-insights/connections/C26",
+      "color": "#ff0000",
+      "hasAnalysis": null
     },
     "C27": {
       "title": "Connection Terminated",
@@ -270,7 +312,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C27"
+      "path": "/docs/log-insights/connections/C27",
+      "color": "#ff0000",
+      "hasAnalysis": null
     },
     "C28": {
       "title": "Out Of Connections",
@@ -279,7 +323,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C28"
+      "path": "/docs/log-insights/connections/C28",
+      "color": null,
+      "hasAnalysis": null
     },
     "C29": {
       "title": "Too Many Connections For Role",
@@ -288,7 +334,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C29"
+      "path": "/docs/log-insights/connections/C29",
+      "color": null,
+      "hasAnalysis": null
     },
     "C30": {
       "title": "Could Not Accept SSL Connection",
@@ -297,7 +345,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C30"
+      "path": "/docs/log-insights/connections/C30",
+      "color": null,
+      "hasAnalysis": null
     },
     "C31": {
       "title": "Unsupported Protocol Version",
@@ -306,7 +356,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C31"
+      "path": "/docs/log-insights/connections/C31",
+      "color": null,
+      "hasAnalysis": null
     },
     "C32": {
       "title": "Incomplete Protocol Message",
@@ -315,7 +367,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/connections/C32"
+      "path": "/docs/log-insights/connections/C32",
+      "color": null,
+      "hasAnalysis": null
     },
     "L70": {
       "title": "Lock Acquired",
@@ -324,7 +378,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/locks/L70"
+      "path": "/docs/log-insights/locks/L70",
+      "color": "#FF7F50",
+      "hasAnalysis": null
     },
     "L71": {
       "title": "Waiting for Lock",
@@ -333,7 +389,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/locks/L71"
+      "path": "/docs/log-insights/locks/L71",
+      "color": "#FF7F50",
+      "hasAnalysis": null
     },
     "L72": {
       "title": "Statement Canceled Due To Lock",
@@ -342,7 +400,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/locks/L72"
+      "path": "/docs/log-insights/locks/L72",
+      "color": null,
+      "hasAnalysis": null
     },
     "L73": {
       "title": "Deadlock Detected",
@@ -351,7 +411,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/locks/L73"
+      "path": "/docs/log-insights/locks/L73",
+      "color": "#ff0000",
+      "hasAnalysis": null
     },
     "L74": {
       "title": "Deadlock Avoided",
@@ -360,7 +422,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/locks/L74"
+      "path": "/docs/log-insights/locks/L74",
+      "color": null,
+      "hasAnalysis": null
     },
     "P40": {
       "title": "Checkpoint Starting",
@@ -369,7 +433,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/checkpoints/P40"
+      "path": "/docs/log-insights/checkpoints/P40",
+      "color": "#8FBC8F",
+      "hasAnalysis": true
     },
     "P41": {
       "title": "Checkpoint Complete",
@@ -378,7 +444,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/checkpoints/P41"
+      "path": "/docs/log-insights/checkpoints/P41",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
     },
     "P42": {
       "title": "Checkpoints Too Frequent",
@@ -387,7 +455,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/checkpoints/P42"
+      "path": "/docs/log-insights/checkpoints/P42",
+      "color": "#ff0000",
+      "hasAnalysis": null
     },
     "P43": {
       "title": "Restartpoint Starting",
@@ -396,7 +466,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/checkpoints/P43"
+      "path": "/docs/log-insights/checkpoints/P43",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
     },
     "P44": {
       "title": "Restartpoint Complete",
@@ -405,7 +477,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/checkpoints/P44"
+      "path": "/docs/log-insights/checkpoints/P44",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
     },
     "P45": {
       "title": "Restartpoint Reference",
@@ -414,7 +488,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/checkpoints/P45"
+      "path": "/docs/log-insights/checkpoints/P45",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
     },
     "S1": {
       "title": "Server Crashed",
@@ -423,7 +499,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "57P02 (Class 57 — Operator Intervention: crash_shutdown)",
-      "path": "/docs/log-insights/server/S1"
+      "path": "/docs/log-insights/server/S1",
+      "color": null,
+      "hasAnalysis": null
     },
     "S10": {
       "title": "Server Process Exited",
@@ -432,7 +510,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/server/S10"
+      "path": "/docs/log-insights/server/S10",
+      "color": null,
+      "hasAnalysis": null
     },
     "S2": {
       "title": "Server Start",
@@ -441,7 +521,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/server/S2"
+      "path": "/docs/log-insights/server/S2",
+      "color": null,
+      "hasAnalysis": null
     },
     "S3": {
       "title": "Server Start (Recovering)",
@@ -450,7 +532,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/server/S3"
+      "path": "/docs/log-insights/server/S3",
+      "color": null,
+      "hasAnalysis": null
     },
     "S4": {
       "title": "Server Shutdown",
@@ -459,7 +543,9 @@
       "tooltip": "?",
       "urgency": "?",
       "sqlstate": "57P01 (Class 57 — Operator Intervention: admin_shutdown)",
-      "path": "/docs/log-insights/server/S4"
+      "path": "/docs/log-insights/server/S4",
+      "color": null,
+      "hasAnalysis": null
     },
     "S5": {
       "title": "Out of Memory",
@@ -468,7 +554,9 @@
       "tooltip": "?",
       "urgency": "?",
       "sqlstate": "53200 (Class 53 — Insufficient Resources: out_of_memory)",
-      "path": "/docs/log-insights/server/S5"
+      "path": "/docs/log-insights/server/S5",
+      "color": null,
+      "hasAnalysis": null
     },
     "S6": {
       "title": "Invalid Checksum",
@@ -477,7 +565,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/server/S6"
+      "path": "/docs/log-insights/server/S6",
+      "color": null,
+      "hasAnalysis": null
     },
     "S7": {
       "title": "Temp File Created",
@@ -486,7 +576,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/server/S7"
+      "path": "/docs/log-insights/server/S7",
+      "color": "#FF7F50",
+      "hasAnalysis": true
     },
     "S8": {
       "title": "Other Server Notice",
@@ -495,7 +587,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/server/S8"
+      "path": "/docs/log-insights/server/S8",
+      "color": "#999",
+      "hasAnalysis": null
     },
     "S9": {
       "title": "Server Reloaded",
@@ -504,7 +598,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/server/S9"
+      "path": "/docs/log-insights/server/S9",
+      "color": "#FF7F50",
+      "hasAnalysis": null
     },
     "T80": {
       "title": "Slow Query",
@@ -513,7 +609,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/statements/T80"
+      "path": "/docs/log-insights/statements/T80",
+      "color": "#FF7F50",
+      "hasAnalysis": null
     },
     "T81": {
       "title": "Statement Canceled Due To Timeout",
@@ -522,7 +620,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/statements/T81"
+      "path": "/docs/log-insights/statements/T81",
+      "color": "#ff0000",
+      "hasAnalysis": null
     },
     "T82": {
       "title": "Statement Canceled Due To User Request",
@@ -531,7 +631,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/statements/T82"
+      "path": "/docs/log-insights/statements/T82",
+      "color": "#FF7F50",
+      "hasAnalysis": null
     },
     "T83": {
       "title": "Statement Notice",
@@ -540,7 +642,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/statements/T83"
+      "path": "/docs/log-insights/statements/T83",
+      "color": null,
+      "hasAnalysis": null
     },
     "T84": {
       "title": "Statement Auto EXPLAIN",
@@ -549,7 +653,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/statements/T84"
+      "path": "/docs/log-insights/statements/T84",
+      "color": null,
+      "hasAnalysis": null
     },
     "U110": {
       "title": "Syntax Error",
@@ -558,7 +664,9 @@
       "tooltip": "The sent query couldn't be parsed by Postgres",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U110"
+      "path": "/docs/log-insights/app-errors/U110",
+      "color": null,
+      "hasAnalysis": null
     },
     "U111": {
       "title": "Invalid Input Syntax",
@@ -567,7 +675,9 @@
       "tooltip": "The value passed in is invalid input for the column's data type",
       "urgency": "low",
       "sqlstate": "22P02 (Class 22 — Data Exception: invalid_text_representation)",
-      "path": "/docs/log-insights/app-errors/U111"
+      "path": "/docs/log-insights/app-errors/U111",
+      "color": null,
+      "hasAnalysis": null
     },
     "U112": {
       "title": "Value Too Long For Type",
@@ -576,7 +686,9 @@
       "tooltip": "The value passed in is too large for the column's data type",
       "urgency": "medium",
       "sqlstate": "22001 (Class 22 — Data Exception: string_data_right_truncation)",
-      "path": "/docs/log-insights/app-errors/U112"
+      "path": "/docs/log-insights/app-errors/U112",
+      "color": null,
+      "hasAnalysis": null
     },
     "U113": {
       "title": "Invalid Value",
@@ -585,7 +697,9 @@
       "tooltip": "The value passed to a function or config parameter is invalid",
       "urgency": "low",
       "sqlstate": "22007 and 22023 (Class 22 — Data Exception: invalid_datetime_format and invalid_parameter_value)",
-      "path": "/docs/log-insights/app-errors/U113"
+      "path": "/docs/log-insights/app-errors/U113",
+      "color": null,
+      "hasAnalysis": null
     },
     "U114": {
       "title": "Malformed Array Literal",
@@ -594,7 +708,9 @@
       "tooltip": "The array value passed in has the wrong format",
       "urgency": "low",
       "sqlstate": "22P02 (Class 22 — Data Exception: invalid_text_representation)",
-      "path": "/docs/log-insights/app-errors/U114"
+      "path": "/docs/log-insights/app-errors/U114",
+      "color": null,
+      "hasAnalysis": null
     },
     "U115": {
       "title": "Subquery Missing Alias",
@@ -603,7 +719,9 @@
       "tooltip": "The query is missing an alias name for a subquery",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U115"
+      "path": "/docs/log-insights/app-errors/U115",
+      "color": null,
+      "hasAnalysis": null
     },
     "U116": {
       "title": "INSERT Target Column Mismatch",
@@ -612,7 +730,9 @@
       "tooltip": "The \\# of columns in your INSERT statements are different than the \\# of values per row",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U116"
+      "path": "/docs/log-insights/app-errors/U116",
+      "color": null,
+      "hasAnalysis": null
     },
     "U117": {
       "title": "ANY/ALL Requires Array",
@@ -621,7 +741,9 @@
       "tooltip": "Non-array value passed to ANY/ALL expression",
       "urgency": "low",
       "sqlstate": "42809 (Class 42 — Syntax Error or Access Rule Violation: wrong_object_type)",
-      "path": "/docs/log-insights/app-errors/U117"
+      "path": "/docs/log-insights/app-errors/U117",
+      "color": null,
+      "hasAnalysis": null
     },
     "U118": {
       "title": "Column Missing from GROUP BY",
@@ -630,7 +752,9 @@
       "tooltip": "Query uses an aggregate function without the correct GROUP BY",
       "urgency": "low",
       "sqlstate": "42803 (Class 42 — Syntax Error or Access Rule Violation: grouping_error)",
-      "path": "/docs/log-insights/app-errors/U118"
+      "path": "/docs/log-insights/app-errors/U118",
+      "color": null,
+      "hasAnalysis": null
     },
     "U119": {
       "title": "Relation Does Not Exist",
@@ -639,7 +763,9 @@
       "tooltip": "Query references a table or view that does not exist",
       "urgency": "low",
       "sqlstate": "42P01 (Class 42 — Syntax Error or Access Rule Violation: undefined_table)",
-      "path": "/docs/log-insights/app-errors/U119"
+      "path": "/docs/log-insights/app-errors/U119",
+      "color": null,
+      "hasAnalysis": null
     },
     "U120": {
       "title": "Column Does Not Exist",
@@ -648,7 +774,9 @@
       "tooltip": "Query references a column that can't be found",
       "urgency": "low",
       "sqlstate": "42703 (Class 42 — Syntax Error or Access Rule Violation: undefined_column)",
-      "path": "/docs/log-insights/app-errors/U120"
+      "path": "/docs/log-insights/app-errors/U120",
+      "color": null,
+      "hasAnalysis": null
     },
     "U121": {
       "title": "Operator Does Not Exist",
@@ -657,7 +785,9 @@
       "tooltip": "The query text contains an operator that does not exist",
       "urgency": "low",
       "sqlstate": "42883 (Class 42 — Syntax Error or Access Rule Violation: undefined_function)",
-      "path": "/docs/log-insights/app-errors/U121"
+      "path": "/docs/log-insights/app-errors/U121",
+      "color": null,
+      "hasAnalysis": null
     },
     "U122": {
       "title": "Column Reference Is Ambiguous",
@@ -666,7 +796,9 @@
       "tooltip": "Query references a column that exists multiple times",
       "urgency": "low",
       "sqlstate": "42702 and 42P09 (Class 42 — Syntax Error or Access Rule Violation: ambiguous_column and ambiguous_alias)",
-      "path": "/docs/log-insights/app-errors/U122"
+      "path": "/docs/log-insights/app-errors/U122",
+      "color": null,
+      "hasAnalysis": null
     },
     "U123": {
       "title": "Permission Denied",
@@ -675,7 +807,9 @@
       "tooltip": "Permission was denied when accessing a table or other database object",
       "urgency": "medium",
       "sqlstate": "42501 (Class 42 — Syntax Error or Access Rule Violation: insufficient_privilege)",
-      "path": "/docs/log-insights/app-errors/U123"
+      "path": "/docs/log-insights/app-errors/U123",
+      "color": null,
+      "hasAnalysis": null
     },
     "U124": {
       "title": "Transaction Is Aborted",
@@ -684,7 +818,9 @@
       "tooltip": "Error when executing query in aborted transaction",
       "urgency": "low",
       "sqlstate": "25P02 (Class 25 — Invalid Transaction State: in_failed_sql_transaction)",
-      "path": "/docs/log-insights/app-errors/U124"
+      "path": "/docs/log-insights/app-errors/U124",
+      "color": null,
+      "hasAnalysis": null
     },
     "U125": {
       "title": "No Constrained Matched For ON CONFLICT Clause",
@@ -693,7 +829,9 @@
       "tooltip": "Missing required unique/exclusion constraint for ON CONFLICT statement",
       "urgency": "low",
       "sqlstate": "42P10 (Class 42 — Syntax Error or Access Rule Violation: invalid_column_reference)",
-      "path": "/docs/log-insights/app-errors/U125"
+      "path": "/docs/log-insights/app-errors/U125",
+      "color": null,
+      "hasAnalysis": null
     },
     "U126": {
       "title": "ON CONFLICT Affected Row Twice",
@@ -702,7 +840,9 @@
       "tooltip": "INSERT statement contains the same row twice, as determined by ON CONFLICT constraint",
       "urgency": "low",
       "sqlstate": "21000 (Class 21 — Cardinality Violation: cardinality_violation)",
-      "path": "/docs/log-insights/app-errors/U126"
+      "path": "/docs/log-insights/app-errors/U126",
+      "color": null,
+      "hasAnalysis": null
     },
     "U127": {
       "title": "Column Cannot Be Cast To Type",
@@ -711,7 +851,9 @@
       "tooltip": "The referenced column can't be cast to the specified data type",
       "urgency": "low",
       "sqlstate": "42804 (Class 42 — Syntax Error or Access Rule Violation: datatype_mismatch)",
-      "path": "/docs/log-insights/app-errors/U127"
+      "path": "/docs/log-insights/app-errors/U127",
+      "color": null,
+      "hasAnalysis": null
     },
     "U128": {
       "title": "Division By Zero",
@@ -720,7 +862,9 @@
       "tooltip": "The statement couldn't be executed as it tried to divide by zero",
       "urgency": "low",
       "sqlstate": "22012 (Class 22 — Data Exception: division_by_zero)",
-      "path": "/docs/log-insights/app-errors/U128"
+      "path": "/docs/log-insights/app-errors/U128",
+      "color": null,
+      "hasAnalysis": null
     },
     "U129": {
       "title": "Cannot Drop Object",
@@ -729,7 +873,9 @@
       "tooltip": "The statement failed to drop the referenced object",
       "urgency": "low",
       "sqlstate": "2BP01 (Class 2B — Dependent Privilege Descriptors Still Exist: dependent_objects_still_exist)",
-      "path": "/docs/log-insights/app-errors/U129"
+      "path": "/docs/log-insights/app-errors/U129",
+      "color": null,
+      "hasAnalysis": null
     },
     "U130": {
       "title": "Integer Out Of Range",
@@ -738,7 +884,9 @@
       "tooltip": "The inserted integer value exceeds the size of the target column",
       "urgency": "medium",
       "sqlstate": "22003 (Class 22 — Data Exception: numeric_value_out_of_range)",
-      "path": "/docs/log-insights/app-errors/U130"
+      "path": "/docs/log-insights/app-errors/U130",
+      "color": null,
+      "hasAnalysis": null
     },
     "U131": {
       "title": "Invalid Regexp",
@@ -747,7 +895,9 @@
       "tooltip": "The regular expression used in the query is invalid",
       "urgency": "low",
       "sqlstate": "2201B (Class 22 — Data Exception: invalid_regular_expression)",
-      "path": "/docs/log-insights/app-errors/U131"
+      "path": "/docs/log-insights/app-errors/U131",
+      "color": null,
+      "hasAnalysis": null
     },
     "U132": {
       "title": "Param Missing",
@@ -756,7 +906,9 @@
       "tooltip": "The referenced parameter $n is missing",
       "urgency": "low",
       "sqlstate": "42P02 (Class 42 — Syntax Error or Access Rule Violation: undefined_parameter)",
-      "path": "/docs/log-insights/app-errors/U132"
+      "path": "/docs/log-insights/app-errors/U132",
+      "color": null,
+      "hasAnalysis": null
     },
     "U133": {
       "title": "Function Does Not Exist",
@@ -765,7 +917,9 @@
       "tooltip": "The function referenced in the query does not exist",
       "urgency": "low",
       "sqlstate": "42883 (Class 42 — Syntax Error or Access Rule Violation: undefined_function)",
-      "path": "/docs/log-insights/app-errors/U133"
+      "path": "/docs/log-insights/app-errors/U133",
+      "color": null,
+      "hasAnalysis": null
     },
     "U134": {
       "title": "No Such Savepoint",
@@ -774,7 +928,9 @@
       "tooltip": "The referenced SAVEPOINT does not exist",
       "urgency": "low",
       "sqlstate": "3B001 (Class 3B — Savepoint Exception: invalid_savepoint_specification)",
-      "path": "/docs/log-insights/app-errors/U134"
+      "path": "/docs/log-insights/app-errors/U134",
+      "color": null,
+      "hasAnalysis": null
     },
     "U135": {
       "title": "Unterminated Quoted String",
@@ -783,7 +939,9 @@
       "tooltip": "The query string contains a syntax error due to an unclosed string",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U135"
+      "path": "/docs/log-insights/app-errors/U135",
+      "color": null,
+      "hasAnalysis": null
     },
     "U136": {
       "title": "Unterminated Quoted Identifier",
@@ -792,7 +950,9 @@
       "tooltip": "Query syntax is invalid due to an unterminated identifier",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U136"
+      "path": "/docs/log-insights/app-errors/U136",
+      "color": null,
+      "hasAnalysis": null
     },
     "V100": {
       "title": "Unique Constraint Violation",
@@ -801,7 +961,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "23505 (Class 23 — Integrity Constraint Violation: unique_violation)",
-      "path": "/docs/log-insights/constraint-violations/V100"
+      "path": "/docs/log-insights/constraint-violations/V100",
+      "color": "#8A2BE2",
+      "hasAnalysis": null
     },
     "V101": {
       "title": "Foreign Key Constraint Violation",
@@ -810,7 +972,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "23503 (Class 23 — Integrity Constraint Violation: foreign_key_violation)",
-      "path": "/docs/log-insights/constraint-violations/V101"
+      "path": "/docs/log-insights/constraint-violations/V101",
+      "color": "#8A2BE2",
+      "hasAnalysis": null
     },
     "V102": {
       "title": "Not Null Constraint Violation",
@@ -819,7 +983,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "23502 (Class 23 — Integrity Constraint Violation: not_null_violation)",
-      "path": "/docs/log-insights/constraint-violations/V102"
+      "path": "/docs/log-insights/constraint-violations/V102",
+      "color": "#8A2BE2",
+      "hasAnalysis": null
     },
     "V103": {
       "title": "Check Constraint Violation",
@@ -828,7 +994,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "23514 (Class 23 — Integrity Constraint Violation: check_violation)",
-      "path": "/docs/log-insights/constraint-violations/V103"
+      "path": "/docs/log-insights/constraint-violations/V103",
+      "color": "#8A2BE2",
+      "hasAnalysis": null
     },
     "V104": {
       "title": "Exclusion Constraint Violation",
@@ -837,7 +1005,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "23P01 (Class 23 — Integrity Constraint Violation: exclusion_violation)",
-      "path": "/docs/log-insights/constraint-violations/V104"
+      "path": "/docs/log-insights/constraint-violations/V104",
+      "color": "#8A2BE2",
+      "hasAnalysis": null
     },
     "W50": {
       "title": "Invalid Record Length",
@@ -846,7 +1016,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/wal/W50"
+      "path": "/docs/log-insights/wal/W50",
+      "color": null,
+      "hasAnalysis": null
     },
     "W51": {
       "title": "Redo Reference",
@@ -855,7 +1027,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/wal/W51"
+      "path": "/docs/log-insights/wal/W51",
+      "color": null,
+      "hasAnalysis": null
     },
     "W52": {
       "title": "Archive Command Failed",
@@ -864,7 +1038,9 @@
       "tooltip": "?1",
       "urgency": "?2",
       "sqlstate": "?2",
-      "path": "/docs/log-insights/wal/W52"
+      "path": "/docs/log-insights/wal/W52",
+      "color": null,
+      "hasAnalysis": null
     }
   }
 }
