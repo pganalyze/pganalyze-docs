@@ -30,7 +30,7 @@ title: 'Documentation'
       * [Constraint Violations](/docs/log-insights/constraint_violations)
       * [Application / User Errors](/docs/log-insights/app_errors)
 
-* **[Enterprise](/docs/enterprise)**
+* **[Enterprise Edition](/docs/enterprise)**
   - [Initial Setup](/docs/enterprise/setup)
   - [Troubleshooting](/docs/enterprise/troubleshooting)
   - [Log Insights Setup](/docs/enterprise/log-insights)

@@ -81,17 +81,17 @@ After this you should see data showing up in the "Log Insights" tab in pganalyze
 
 Currently we support the following log_line_prefix settings when using Postgres built-in `stderr` logging:
 
-* `log_line_prefix = "%t:%r:%u@%d:[%p]:"`
-* `log_line_prefix = "%m [%p][%v] : [%l-1] %q[app=%a] "`
-* `log_line_prefix = "%t [%p-%l] %q%u@%d "`
+* `log_line_prefix = '%t:%r:%u@%d:[%p]:'`
+* `log_line_prefix = '%m [%p][%v] : [%l-1] %q[app=%a] '`
+* `log_line_prefix = '%t [%p-%l] %q%u@%d '`
 
-We also support the parsing of `rsyslogd` log lines that look like the following default template, with an empty log_line_prefix:
+We also support the parsing of `rsyslogd` log lines that look like the following default template, with an empty log\_line\_prefix:
 
 ```
 Feb  2 09:04:39 ip-172-31-14-41 postgres[7395]: [3-1] LOG:  database system is ready to accept connections
 ```
 
-If you have a log_line_prefix config thats not covered, please reach out to us, as it is easy for us to add additional parsing support.
+If you have a log\_line\_prefix config thats not covered, please reach out to us, as it is easy for us to add additional parsing support.
 
 ## Allowing access when using Postgres built-in logging
 
