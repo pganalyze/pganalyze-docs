@@ -5,20 +5,36 @@
       "path": "/docs"
     },
     "enterprise": {
-      "title": "Enterprise Guide (On-Premise)",
+      "title": "pganalyze Enterprise Edition",
       "path": "/docs/enterprise"
+    },
+    "enterprise/log-insights": {
+      "title": "Enterprise Edition: Log Insights Setup",
+      "path": "/docs/enterprise/log-insights"
+    },
+    "enterprise/setup": {
+      "title": "Enterprise Edition: Initial Setup",
+      "path": "/docs/enterprise/setup"
+    },
+    "enterprise/troubleshooting": {
+      "title": "Enterprise Edition: Troubleshooting",
+      "path": "/docs/enterprise/troubleshooting"
     },
     "guides": {
       "title": "Guides",
       "path": "/docs/guides"
     },
-    "guides/exporting_query_statistics.html": {
-      "title": "Guide: Exporting Query Statistics using the pganalyze API",
-      "path": "/docs/guides/exporting_query_statistics.html"
+    "guides/adjusting-work-mem": {
+      "title": "Guide: Adjusting work_mem based on temporary file creation",
+      "path": "/docs/guides/adjusting-work-mem"
     },
-    "guides/setup_log_insights_on_self_hosted_server": {
-      "title": "Guide: Setting up pganalyze Log Insights on a self-hosted server",
-      "path": "/docs/guides/setup_log_insights_on_self_hosted_server"
+    "guides/exporting-query-statistics": {
+      "title": "Guide: Exporting Query Statistics using the pganalyze API",
+      "path": "/docs/guides/exporting-query-statistics"
+    },
+    "guides/tuning-checkpoint-intervals": {
+      "title": "Guide: Tuning checkpoint intervals to reduce I/O spikes",
+      "path": "/docs/guides/tuning-checkpoint-intervals"
     },
     "install": {
       "title": "Installation Guide",
@@ -63,6 +79,18 @@
     "log-insights": {
       "title": "Log Insights",
       "path": "/docs/log-insights"
+    },
+    "log-insights/install-amazon-rds": {
+      "title": "Log Insights: Install on Amazon RDS",
+      "path": "/docs/log-insights/install-amazon-rds"
+    },
+    "log-insights/install-heroku-postgres": {
+      "title": "Log Insights: Install on Heroku Postgres",
+      "path": "/docs/log-insights/install-heroku-postgres"
+    },
+    "log-insights/install-self-hosted": {
+      "title": "Log Insights: Install on Self-Hosted System",
+      "path": "/docs/log-insights/install-self-hosted"
     },
     "open_source_components": {
       "title": "Open-Source Components",

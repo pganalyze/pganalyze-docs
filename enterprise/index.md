@@ -1,5 +1,5 @@
 ---
-title: 'Enterprise Guide (On-Premise)'
+title: 'pganalyze Enterprise Edition'
 backlink_href: /docs
 backlink_title: 'Documentation'
 ---
@@ -9,3 +9,7 @@ We provide a local appliance for environments that store sensitive data
 
 If you'd like to get a quote for a setup in your environment,
 **[please email us](mailto:team@pganalyze.com%3Fsubject%3DLocal%20Installation)**.
+
+- [Initial Setup](/docs/enterprise/setup)
+- [Troubleshooting](/docs/enterprise/troubleshooting)
+- [Log Insights Setup](/docs/enterprise/log-insights)

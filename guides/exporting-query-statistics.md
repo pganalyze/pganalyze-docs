@@ -1,4 +1,5 @@
 ---
+work_in_progress: true
 title: 'Guide: Exporting Query Statistics using the pganalyze API'
 backlink_href: /docs/guides
 backlink_title: 'Guides'

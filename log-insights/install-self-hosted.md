@@ -1,7 +1,8 @@
 ---
-title: 'Guide: Setting up pganalyze Log Insights on a self-hosted server'
-backlink_href: /docs/guides
-backlink_title: 'Guides'
+work_in_progress: true
+title: 'Log Insights: Install on Self-Hosted System'
+backlink_href: /docs/log-insights
+backlink_title: 'Log Insights'
 ---
 
 This guide helps you set up the pganalyze Log Insights feature for a self-hosted system, i.e. one that is managed and configured by yourself, instead of one that is provided as a service by a cloud provider.

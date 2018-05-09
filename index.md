@@ -13,28 +13,32 @@ title: 'Documentation'
   3. [Setup IAM policy](/docs/install/amazon_rds/03_setup_iam_policy)
   4. [Install the Collector on an EC2 Instance](/docs/install/amazon_rds/04_install_collector)
 
-* **[Log Insights](/docs/log_insights)**
-  - [Installation & Tuning](/docs/log_insights/install)
-  - [Classifications](/docs/log_insights/classifications)
-      * [Server](/docs/log_insights/classifications/server)
-      * [Connections](/docs/log_insights/classifications/connections)
-      * [Checkpoints](/docs/log_insights/classifications/checkpoints)
-      * [WAL](/docs/log_insights/classifications/wal)
-      * [Autovacuum](/docs/log_insights/classifications/autovacuum)
-      * [Locks](/docs/log_insights/classifications/locks)
-      * [Statements](/docs/log_insights/classifications/statements)
-      * [Standby Servers](/docs/log_insights/classifications/standby)
-      * [Constraint Violations](/docs/log_insights/classifications/constraint_violations)
-      * [Application / User Errors](/docs/log_insights/classifications/app_errors)
+* **[Log Insights](/docs/log-insights)**
+  - Installation
+      * [Amazon RDS](/docs/log-insights/install-amazon-rds)
+      * [Heroku Postgres](/docs/log-insights/install-heroku-postgres)
+      * [Self-Hosted](/docs/log-insights/install-self-hosted)
+  - Classifications
+      * [Server](/docs/log-insights/server)
+      * [Connections](/docs/log-insights/connections)
+      * [Checkpoints](/docs/log-insights/checkpoints)
+      * [WAL](/docs/log-insights/wal)
+      * [Autovacuum](/docs/log-insights/autovacuum)
+      * [Locks](/docs/log-insights/locks)
+      * [Statements](/docs/log-insights/statements)
+      * [Standby Servers](/docs/log-insights/standby)
+      * [Constraint Violations](/docs/log-insights/constraint_violations)
+      * [Application / User Errors](/docs/log-insights/app_errors)
 
 * **[Enterprise](/docs/enterprise)**
   - [Initial Setup](/docs/enterprise/setup)
   - [Troubleshooting](/docs/enterprise/troubleshooting)
-  - [Log Insights Setup](/docs/enterprise/log_insights)
+  - [Log Insights Setup](/docs/enterprise/log-insights)
 
 * **[Guides](/docs/guides)**
-  - [Setting up pganalyze Log Insights on a self-hosted server](/docs/guides/setup_log_insights_on_self_hosted_server)
-  - [Exporting Query Statistics using the pganalyze API](/docs/guides/exporting_query_statistics)
+  - [Tuning checkpoint intervals to reduce I/O spikes](/docs/guides/tuning-checkpoint-intervals)
+  - [Adjusting work_mem based on temporary file creation](/docs/guides/adjusting-work-mem)
+  - [Exporting Query Statistics using the pganalyze API](/docs/guides/exporting-query-statistics)
 
 ---
 

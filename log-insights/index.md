@@ -1,4 +1,5 @@
 ---
+work_in_progress: true
 title: 'Log Insights'
 backlink_href: /docs
 backlink_title: 'Documentation'
@@ -8,7 +9,9 @@ backlink_title: 'Documentation'
 
 ## Setup
 
-[ Setup instructions ]
+* [Amazon RDS](/docs/log-insights/install-amazon-rds)
+* [Heroku Postgres](/docs/log-insights/install-heroku-postgres)
+* [Self-Hosted](/docs/log-insights/install-self-hosted)
 
 ## About the pganalyze Log Classification System
 
