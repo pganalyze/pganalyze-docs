@@ -9,9 +9,9 @@ backlink_title: 'Documentation'
 
 ## Setup
 
-* [Amazon RDS](/docs/log-insights/install-amazon-rds)
-* [Heroku Postgres](/docs/log-insights/install-heroku-postgres)
-* [Self-Hosted](/docs/log-insights/install-self-hosted)
+* [Amazon RDS](/docs/log-insights/setup/amazon-rds)
+* [Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
+* [Self-Hosted](/docs/log-insights/setup/self-hosted)
 
 ## About the pganalyze Log Classification System
 

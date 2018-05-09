@@ -80,17 +80,17 @@
       "title": "Log Insights",
       "path": "/docs/log-insights"
     },
-    "log-insights/install-amazon-rds": {
+    "log-insights/setup/amazon-rds": {
       "title": "Log Insights: Install on Amazon RDS",
-      "path": "/docs/log-insights/install-amazon-rds"
+      "path": "/docs/log-insights/setup/amazon-rds"
     },
-    "log-insights/install-heroku-postgres": {
+    "log-insights/setup/heroku-postgres": {
       "title": "Log Insights: Install on Heroku Postgres",
-      "path": "/docs/log-insights/install-heroku-postgres"
+      "path": "/docs/log-insights/setup/heroku-postgres"
     },
-    "log-insights/install-self-hosted": {
+    "log-insights/setup/self-hosted": {
       "title": "Log Insights: Install on Self-Hosted System",
-      "path": "/docs/log-insights/install-self-hosted"
+      "path": "/docs/log-insights/setup/self-hosted"
     },
     "open_source_components": {
       "title": "Open-Source Components",

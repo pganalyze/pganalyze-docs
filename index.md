@@ -14,11 +14,11 @@ title: 'Documentation'
   4. [Install the Collector on an EC2 Instance](/docs/install/amazon_rds/04_install_collector)
 
 * **[Log Insights](/docs/log-insights)**
-  - Installation
-      * [Amazon RDS](/docs/log-insights/install-amazon-rds)
-      * [Heroku Postgres](/docs/log-insights/install-heroku-postgres)
-      * [Self-Hosted](/docs/log-insights/install-self-hosted)
-  - Classifications
+  - [Setup](/docs/log-insights/setup)
+      * [Amazon RDS](/docs/log-insights/setup/amazon-rds)
+      * [Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
+      * [Self-Hosted](/docs/log-insights/setup/self-hosted)
+  - [Classifications](/docs/log-insights)
       * [Server](/docs/log-insights/server)
       * [Connections](/docs/log-insights/connections)
       * [Checkpoints](/docs/log-insights/checkpoints)
