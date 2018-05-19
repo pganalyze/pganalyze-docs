@@ -103,10 +103,10 @@
   },
   "logClassifications": {
     "A60": {
-      "title": "Autovacuum Cancelled",
+      "title": "Canceling autovacuum task",
       "category": "autovacuum",
       "collectorKey": "AUTOVACUUM_CANCEL",
-      "tooltip": "?1",
+      "tooltip": "Autovacuum run on a table has been canceled",
       "urgency": "low",
       "sqlstate": "57014 (Class 57 - Operator Intervention: query_canceled)",
       "path": "/docs/log-insights/autovacuum/A60",
@@ -114,10 +114,10 @@
       "hasAnalysis": null
     },
     "A61": {
-      "title": "TXID Wraparound Warning",
+      "title": "Database must be vacuumed within N transactions (TXID Wraparound Warning)",
       "category": "autovacuum",
       "collectorKey": "TXID_WRAPAROUND_WARNING",
-      "tooltip": "?1",
+      "tooltip": "Database is at risk of forced shutdown due to overdue VACUUM",
       "urgency": "high",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/autovacuum/A61",
@@ -125,10 +125,10 @@
       "hasAnalysis": null
     },
     "A62": {
-      "title": "TXID Wraparound Critical",
+      "title": "Database is not accepting commands to avoid wraparound data loss",
       "category": "autovacuum",
       "collectorKey": "TXID_WRAPAROUND_ERROR",
-      "tooltip": "?1",
+      "tooltip": "The database has been interrupted due to imminent TXID wraparound - manual intervention required",
       "urgency": "high",
       "sqlstate": "54000 (Class 54 - Program Limit Exceeded: program_limit_exceeded)",
       "path": "/docs/log-insights/autovacuum/A62",
@@ -136,10 +136,10 @@
       "hasAnalysis": null
     },
     "A63": {
-      "title": "Autovacuum Launcher Started",
+      "title": "Autovacuum launcher started",
       "category": "autovacuum",
       "collectorKey": "AUTOVACUUM_LAUNCHER_STARTED",
-      "tooltip": "?1",
+      "tooltip": "The Postgres autovacuum launcher has started",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/autovacuum/A63",
@@ -147,10 +147,10 @@
       "hasAnalysis": null
     },
     "A64": {
-      "title": "Autovacuum Launcher Shutting Down",
+      "title": "Autovacuum launcher shutting down",
       "category": "autovacuum",
       "collectorKey": "AUTOVACUUM_LAUNCHER_SHUTTING_DOWN",
-      "tooltip": "?1",
+      "tooltip": "The autovacuum launcher has been stopped",
       "urgency": "low",
       "sqlstate": "57P01 (Class 57 - Operator Intervention: admin_shutdown)",
       "path": "/docs/log-insights/autovacuum/A64",
@@ -158,10 +158,10 @@
       "hasAnalysis": null
     },
     "A65": {
-      "title": "Autovacuum Completed",
+      "title": "Automatic vacuum of table completed",
       "category": "autovacuum",
       "collectorKey": "AUTOVACUUM_COMPLETED",
-      "tooltip": "?1",
+      "tooltip": "Automatic VACUUM for the referenced table has completed",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/autovacuum/A65",
@@ -169,10 +169,10 @@
       "hasAnalysis": null
     },
     "A66": {
-      "title": "Autoanalyze Completed",
+      "title": "Automatic analyze of table completed",
       "category": "autovacuum",
       "collectorKey": "AUTOANALYZE_COMPLETED",
-      "tooltip": "?1",
+      "tooltip": "Automatic ANALYZE for the referenced table has completed",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/autovacuum/A66",
@@ -257,10 +257,10 @@
       "hasAnalysis": null
     },
     "C20": {
-      "title": "Connection Received",
+      "title": "Connection received",
       "category": "connections",
       "collectorKey": "CONNECTION_RECEIVED",
-      "tooltip": "?1",
+      "tooltip": "New connection has been received by the server",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/connections/C20",
@@ -268,10 +268,10 @@
       "hasAnalysis": null
     },
     "C21": {
-      "title": "Connection Authorized",
+      "title": "Connection authorized",
       "category": "connections",
       "collectorKey": "CONNECTION_AUTHORIZED",
-      "tooltip": "?1",
+      "tooltip": "Connection has been successfully authorized to access the database",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/connections/C21",
@@ -282,7 +282,7 @@
       "title": "Connection Rejected",
       "category": "connections",
       "collectorKey": "CONNECTION_REJECTED",
-      "tooltip": "?1",
+      "tooltip": "New connection was rejected due to authentication/authorization errors",
       "urgency": "low",
       "sqlstate": "28000 (Class 28 - Invalid Authorization Specification: invalid_authorization_specification), 28P01 (Class 28 - Invalid Authorization Specification: invalid_password), 55000 (Class 55 - Object Not In Prerequisite State: object_not_in_prerequisite_state)",
       "path": "/docs/log-insights/connections/C22",
@@ -290,10 +290,10 @@
       "hasAnalysis": null
     },
     "C23": {
-      "title": "Connection Disconnected",
+      "title": "Disconnection",
       "category": "connections",
       "collectorKey": "CONNECTION_DISCONNECTED",
-      "tooltip": "?1",
+      "tooltip": "A client has disconnected from the database",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/connections/C23",
@@ -301,10 +301,10 @@
       "hasAnalysis": null
     },
     "C24": {
-      "title": "Client Failed To Connect",
+      "title": "Incomplete startup packet (client failed to connect)",
       "category": "connections",
       "collectorKey": "CONNECTION_CLIENT_FAILED_TO_CONNECT",
-      "tooltip": "?1",
+      "tooltip": "The client opened a connection but didn't complete the initial process",
       "urgency": "low",
       "sqlstate": "08P01 (Class 08 - Connection Exception: protocol_violation)",
       "path": "/docs/log-insights/connections/C24",
@@ -312,7 +312,7 @@
       "hasAnalysis": null
     },
     "C25": {
-      "title": "Connection Lost",
+      "title": "Could not receive data from client / connection to client lost",
       "category": "connections",
       "collectorKey": "CONNECTION_LOST",
       "tooltip": "?1",
@@ -466,10 +466,10 @@
       "hasAnalysis": null
     },
     "P40": {
-      "title": "Checkpoint Starting",
+      "title": "Checkpoint starting",
       "category": "checkpoints",
       "collectorKey": "CHECKPOINT_STARTING",
-      "tooltip": "?1",
+      "tooltip": "Checkpoint to synchronize the data directory has started",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/checkpoints/P40",
@@ -477,10 +477,10 @@
       "hasAnalysis": true
     },
     "P41": {
-      "title": "Checkpoint Complete",
+      "title": "Checkpoint complete",
       "category": "checkpoints",
       "collectorKey": "CHECKPOINT_COMPLETE",
-      "tooltip": "?1",
+      "tooltip": "Checkpoint has completed synchronizing the data directory",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/checkpoints/P41",
@@ -488,10 +488,10 @@
       "hasAnalysis": null
     },
     "P42": {
-      "title": "Checkpoints Too Frequent",
+      "title": "Checkpoints are occurring too frequently",
       "category": "checkpoints",
       "collectorKey": "CHECKPOINT_TOO_FREQUENT",
-      "tooltip": "?1",
+      "tooltip": "Checkpoints are occurring very quickly, causing I/O impact",
       "urgency": "medium",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/checkpoints/P42",
@@ -499,10 +499,10 @@
       "hasAnalysis": null
     },
     "P43": {
-      "title": "Restartpoint Starting",
+      "title": "Restartpoint starting",
       "category": "checkpoints",
       "collectorKey": "RESTARTPOINT_STARTING",
-      "tooltip": "?1",
+      "tooltip": "Standby restartpoint has started to synchronize the data directory",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/checkpoints/P43",
@@ -510,10 +510,10 @@
       "hasAnalysis": null
     },
     "P44": {
-      "title": "Restartpoint Complete",
+      "title": "Restartpoint complete",
       "category": "checkpoints",
       "collectorKey": "RESTARTPOINT_COMPLETE",
-      "tooltip": "?1",
+      "tooltip": "Standby restartpoint has completed synchronizing the data directory",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/checkpoints/P44",
@@ -521,18 +521,18 @@
       "hasAnalysis": null
     },
     "P45": {
-      "title": "Restartpoint Reference",
+      "title": "Recovery restart point at ...",
       "category": "checkpoints",
       "collectorKey": "RESTARTPOINT_AT",
-      "tooltip": "?1",
+      "tooltip": "Reference for when a new safe restartpoint was established",
       "urgency": "low",
-      "sqlstate": "?2",
+      "sqlstate": "n/a",
       "path": "/docs/log-insights/checkpoints/P45",
       "color": "#8FBC8F",
       "hasAnalysis": null
     },
     "S1": {
-      "title": "Server Crashed",
+      "title": "Server process was terminated / Terminating connection because of crash",
       "category": "server",
       "collectorKey": "SERVER_CRASHED",
       "tooltip": "Postgres server processes have crashed, server will be restarted",
@@ -543,7 +543,7 @@
       "hasAnalysis": null
     },
     "S10": {
-      "title": "Worker Process Exited / Terminated By Signal",
+      "title": "Worker process exited / terminated by signal",
       "category": "server",
       "collectorKey": "SERVER_PROCESS_EXITED",
       "tooltip": "Internal process has exited - check exit code/signal",
@@ -554,10 +554,10 @@
       "hasAnalysis": null
     },
     "S2": {
-      "title": "Server Start",
+      "title": "Database server starting",
       "category": "server",
       "collectorKey": "SERVER_START",
-      "tooltip": "The Postgres server has restarted",
+      "tooltip": "The Postgres server is starting up",
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/server/S2",
@@ -565,7 +565,7 @@
       "hasAnalysis": null
     },
     "S3": {
-      "title": "Server Start (Recovering): Database system was interrupted",
+      "title": "Database system was interrupted (server starting)",
       "category": "server",
       "collectorKey": "SERVER_START_RECOVERING",
       "tooltip": "Postgres has restarted after a crash/forceful shutdown",
@@ -576,7 +576,7 @@
       "hasAnalysis": null
     },
     "S4": {
-      "title": "Database System Is Shutting Down",
+      "title": "Database system is shutting down",
       "category": "server",
       "collectorKey": "SERVER_SHUTDOWN",
       "tooltip": "Postgres is shutting down",
@@ -587,7 +587,7 @@
       "hasAnalysis": null
     },
     "S5": {
-      "title": "Out of Memory",
+      "title": "Out of memory",
       "category": "server",
       "collectorKey": "SERVER_OUT_OF_MEMORY",
       "tooltip": "Not enough RAM available to complete the current task",
@@ -598,7 +598,7 @@
       "hasAnalysis": null
     },
     "S6": {
-      "title": "Data Corrupted: Invalid Page / Page Verification Failed",
+      "title": "Invalid page / page verification failed (data corrupted)",
       "category": "server",
       "collectorKey": "SERVER_INVALID_CHECKSUM",
       "tooltip": "Failed to access table or index data due to corruption",
@@ -609,7 +609,7 @@
       "hasAnalysis": null
     },
     "S7": {
-      "title": "Temporary File Created",
+      "title": "Temporary file: path ..., size ... (temp file created)",
       "category": "server",
       "collectorKey": "SERVER_TEMP_FILE_CREATED",
       "tooltip": "Sorting/hashing operation was done through a file instead of in memory",
@@ -620,7 +620,7 @@
       "hasAnalysis": true
     },
     "S8": {
-      "title": "Other Server Notice",
+      "title": "Miscellaneous server notice",
       "category": "server",
       "collectorKey": "SERVER_MISC",
       "tooltip": "Non-problematic server notice message that can usually be ignored",
@@ -631,7 +631,7 @@
       "hasAnalysis": null
     },
     "S9": {
-      "title": "Reloading Configuration Files",
+      "title": "Reloading configuration files",
       "category": "server",
       "collectorKey": "SERVER_RELOAD",
       "tooltip": "Postgres is reloading the configuration files",
@@ -697,10 +697,10 @@
       "hasAnalysis": null
     },
     "U110": {
-      "title": "Syntax Error",
+      "title": "Syntax error",
       "category": "app-errors",
       "collectorKey": "SYNTAX_ERROR",
-      "tooltip": "The sent query couldn't be parsed by Postgres",
+      "tooltip": "The query sent by the client couldn't be parsed by Postgres",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
       "path": "/docs/log-insights/app-errors/U110",
@@ -708,10 +708,10 @@
       "hasAnalysis": null
     },
     "U111": {
-      "title": "Invalid Input Syntax",
+      "title": "Invalid input syntax",
       "category": "app-errors",
       "collectorKey": "INVALID_INPUT_SYNTAX",
-      "tooltip": "The value passed in is invalid input for the column's data type",
+      "tooltip": "The value is invalid input for the column's data type",
       "urgency": "low",
       "sqlstate": "22P02 (Class 22 — Data Exception: invalid_text_representation)",
       "path": "/docs/log-insights/app-errors/U111",
@@ -719,10 +719,10 @@
       "hasAnalysis": null
     },
     "U112": {
-      "title": "Value Too Long For Type",
+      "title": "Value too long for type",
       "category": "app-errors",
       "collectorKey": "VALUE_TOO_LONG_FOR_TYPE",
-      "tooltip": "The value passed in is too large for the column's data type",
+      "tooltip": "The value is too large for the column's data type",
       "urgency": "medium",
       "sqlstate": "22001 (Class 22 — Data Exception: string_data_right_truncation)",
       "path": "/docs/log-insights/app-errors/U112",
@@ -730,7 +730,7 @@
       "hasAnalysis": null
     },
     "U113": {
-      "title": "Invalid Value",
+      "title": "Invalid value",
       "category": "app-errors",
       "collectorKey": "INVALID_VALUE",
       "tooltip": "The value passed to a function or config parameter is invalid",
@@ -741,10 +741,10 @@
       "hasAnalysis": null
     },
     "U114": {
-      "title": "Malformed Array Literal",
+      "title": "Malformed array literal",
       "category": "app-errors",
       "collectorKey": "MALFORMED_ARRAY_LITERAL",
-      "tooltip": "The array value passed in has the wrong format",
+      "tooltip": "The array value has the wrong formatting / syntax",
       "urgency": "low",
       "sqlstate": "22P02 (Class 22 — Data Exception: invalid_text_representation)",
       "path": "/docs/log-insights/app-errors/U114",
@@ -752,7 +752,7 @@
       "hasAnalysis": null
     },
     "U115": {
-      "title": "Subquery Missing Alias",
+      "title": "Subquery in FROM must have an alias",
       "category": "app-errors",
       "collectorKey": "SUBQUERY_MISSING_ALIAS",
       "tooltip": "The query is missing an alias name for a subquery",
@@ -763,10 +763,10 @@
       "hasAnalysis": null
     },
     "U116": {
-      "title": "INSERT Target Column Mismatch",
+      "title": "INSERT has more expressions than target columns",
       "category": "app-errors",
       "collectorKey": "INSERT_TARGET_COLUMN_MISMATCH",
-      "tooltip": "The \\# of columns in your INSERT statements are different than the \\# of values per row",
+      "tooltip": "The # of columns in your INSERT statements are different than the # of values per row",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
       "path": "/docs/log-insights/app-errors/U116",
@@ -774,7 +774,7 @@
       "hasAnalysis": null
     },
     "U117": {
-      "title": "ANY/ALL Requires Array",
+      "title": "Op ANY/ALL (array) requires array",
       "category": "app-errors",
       "collectorKey": "ANY_ALL_REQUIRES_ARRAY",
       "tooltip": "Non-array value passed to ANY/ALL expression",
@@ -785,7 +785,7 @@
       "hasAnalysis": null
     },
     "U118": {
-      "title": "Column Missing from GROUP BY",
+      "title": "Column must appear in the GROUP BY clause",
       "category": "app-errors",
       "collectorKey": "COLUMN_MISSING_FROM_GROUP_BY",
       "tooltip": "Query uses an aggregate function without the correct GROUP BY",
@@ -796,7 +796,7 @@
       "hasAnalysis": null
     },
     "U119": {
-      "title": "Relation Does Not Exist",
+      "title": "Relation does not exist",
       "category": "app-errors",
       "collectorKey": "RELATION_DOES_NOT_EXIST",
       "tooltip": "Query references a table or view that does not exist",
@@ -807,7 +807,7 @@
       "hasAnalysis": null
     },
     "U120": {
-      "title": "Column Does Not Exist",
+      "title": "Column does not exist",
       "category": "app-errors",
       "collectorKey": "COLUMN_DOES_NOT_EXIST",
       "tooltip": "Query references a column that can't be found",
@@ -818,7 +818,7 @@
       "hasAnalysis": null
     },
     "U121": {
-      "title": "Operator Does Not Exist",
+      "title": "Operator does not exist",
       "category": "app-errors",
       "collectorKey": "OPERATOR_DOES_NOT_EXIST",
       "tooltip": "The query text contains an operator that does not exist",
@@ -829,7 +829,7 @@
       "hasAnalysis": null
     },
     "U122": {
-      "title": "Column Reference Is Ambiguous",
+      "title": "Column reference is ambiguous",
       "category": "app-errors",
       "collectorKey": "COLUMN_REFERENCE_AMBIGUOUS",
       "tooltip": "Query references a column that exists multiple times",
@@ -840,7 +840,7 @@
       "hasAnalysis": null
     },
     "U123": {
-      "title": "Permission Denied",
+      "title": "Permission denied",
       "category": "app-errors",
       "collectorKey": "PERMISSION_DENIED",
       "tooltip": "Permission was denied when accessing a table or other database object",
@@ -851,10 +851,10 @@
       "hasAnalysis": null
     },
     "U124": {
-      "title": "Transaction Is Aborted",
+      "title": "Current transaction is aborted",
       "category": "app-errors",
       "collectorKey": "TRANSACTION_IS_ABORTED",
-      "tooltip": "Error when executing query in aborted transaction",
+      "tooltip": "Error when executing query in failed transaction",
       "urgency": "low",
       "sqlstate": "25P02 (Class 25 — Invalid Transaction State: in_failed_sql_transaction)",
       "path": "/docs/log-insights/app-errors/U124",
@@ -862,10 +862,10 @@
       "hasAnalysis": null
     },
     "U125": {
-      "title": "No Constrained Matched For ON CONFLICT Clause",
+      "title": "No unique or exclusion constraint matching the ON CONFLICT specification",
       "category": "app-errors",
       "collectorKey": "ON_CONFLICT_NO_CONSTRAINT_MATCH",
-      "tooltip": "Missing required unique/exclusion constraint for ON CONFLICT statement",
+      "tooltip": "Missing unique/exclusion constraint for conflict resolution in ON CONFLICT statement",
       "urgency": "low",
       "sqlstate": "42P10 (Class 42 — Syntax Error or Access Rule Violation: invalid_column_reference)",
       "path": "/docs/log-insights/app-errors/U125",
@@ -873,7 +873,7 @@
       "hasAnalysis": null
     },
     "U126": {
-      "title": "ON CONFLICT Affected Row Twice",
+      "title": "ON CONFLICT DO UPDATE command cannot affect row a second time",
       "category": "app-errors",
       "collectorKey": "ON_CONFLICT_ROW_AFFECTED_TWICE",
       "tooltip": "INSERT statement contains the same row twice, as determined by ON CONFLICT constraint",
@@ -884,7 +884,7 @@
       "hasAnalysis": null
     },
     "U127": {
-      "title": "Column Cannot Be Cast To Type",
+      "title": "Column cannot be cast to type",
       "category": "app-errors",
       "collectorKey": "COLUMN_CANNOT_BE_CAST",
       "tooltip": "The referenced column can't be cast to the specified data type",
@@ -895,7 +895,7 @@
       "hasAnalysis": null
     },
     "U128": {
-      "title": "Division By Zero",
+      "title": "Division by zero",
       "category": "app-errors",
       "collectorKey": "DIVISION_BY_ZERO",
       "tooltip": "The statement couldn't be executed as it tried to divide by zero",
@@ -906,7 +906,7 @@
       "hasAnalysis": null
     },
     "U129": {
-      "title": "Cannot Drop Object",
+      "title": "Cannot drop table / Cannot drop object",
       "category": "app-errors",
       "collectorKey": "CANNOT_DROP",
       "tooltip": "The statement failed to drop the referenced object",
@@ -917,7 +917,7 @@
       "hasAnalysis": null
     },
     "U130": {
-      "title": "Integer Out Of Range",
+      "title": "Integer out of range",
       "category": "app-errors",
       "collectorKey": "INTEGER_OUT_OF_RANGE",
       "tooltip": "The inserted integer value exceeds the size of the target column",
@@ -928,10 +928,10 @@
       "hasAnalysis": null
     },
     "U131": {
-      "title": "Invalid Regexp",
+      "title": "Invalid regular expression",
       "category": "app-errors",
       "collectorKey": "INVALID_REGEXP",
-      "tooltip": "The regular expression used in the query is invalid",
+      "tooltip": "The regular expression used in the query doesn't have correct syntax",
       "urgency": "low",
       "sqlstate": "2201B (Class 22 — Data Exception: invalid_regular_expression)",
       "path": "/docs/log-insights/app-errors/U131",
@@ -939,7 +939,7 @@
       "hasAnalysis": null
     },
     "U132": {
-      "title": "Param Missing",
+      "title": "There is no parameter $1 / $n",
       "category": "app-errors",
       "collectorKey": "PARAM_MISSING",
       "tooltip": "The referenced parameter $n is missing",
@@ -950,7 +950,7 @@
       "hasAnalysis": null
     },
     "U133": {
-      "title": "Function Does Not Exist",
+      "title": "Function does not exist",
       "category": "app-errors",
       "collectorKey": "FUNCTION_DOES_NOT_EXIST",
       "tooltip": "The function referenced in the query does not exist",
@@ -961,7 +961,7 @@
       "hasAnalysis": null
     },
     "U134": {
-      "title": "No Such Savepoint",
+      "title": "No such savepoint",
       "category": "app-errors",
       "collectorKey": "NO_SUCH_SAVEPOINT",
       "tooltip": "The referenced SAVEPOINT does not exist",
@@ -972,7 +972,7 @@
       "hasAnalysis": null
     },
     "U135": {
-      "title": "Unterminated Quoted String",
+      "title": "Unterminated quoted string",
       "category": "app-errors",
       "collectorKey": "UNTERMINATED_QUOTED_STRING",
       "tooltip": "The query string contains a syntax error due to an unclosed string",
@@ -983,7 +983,7 @@
       "hasAnalysis": null
     },
     "U136": {
-      "title": "Unterminated Quoted Identifier",
+      "title": "Unterminated quoted identifier",
       "category": "app-errors",
       "collectorKey": "UNTERMINATED_QUOTED_IDENTIFIER",
       "tooltip": "Query syntax is invalid due to an unterminated identifier",
@@ -994,10 +994,10 @@
       "hasAnalysis": null
     },
     "U137": {
-      "title": "Invalid Byte Sequence",
+      "title": "Invalid byte sequence for encoding",
       "category": "server",
       "collectorKey": "SERVER_MISC",
-      "tooltip": "?1",
+      "tooltip": "Text data contains bytes that are not valid for the chosen encoding",
       "urgency": "low",
       "sqlstate": "22021 (Class 22 - Data Exception: character_not_in_repertoire)",
       "path": "/docs/log-insights/app-errors/U137",
