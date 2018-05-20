@@ -1,7 +1,7 @@
 ---
 work_in_progress: true
 title: 'Log Insights: Install on Self-Hosted System'
-backlink_href: /docs/log-insights/setup
+backlink_href: /docs/log-insights
 backlink_title: 'Log Insights: Setup'
 ---
 
@@ -104,7 +104,7 @@ It means that the log test was able to run successfully as a root user, but coul
 
 See "Allowing access when using Postgres built-in logging" or "Allowing access when using rsyslogd built-in logging" below for details on how to fix this.
 
-## Collector test error: "log_line_prefix not supported"
+## Collector test error: "log\_line\_prefix not supported"
 
 FIXME
 

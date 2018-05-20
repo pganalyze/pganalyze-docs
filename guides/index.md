@@ -6,4 +6,5 @@ backlink_title: 'Documentation'
 
 - [Tuning checkpoint intervals to reduce I/O spikes](/docs/guides/tuning-checkpoint-intervals)
 - [Adjusting work_mem based on temporary file creation](/docs/guides/adjusting-work-mem)
-- [Exporting Query Statistics using the pganalyze API](/docs/guides/exporting-query-statistics)
+- [Exporting query statistics using the pganalyze API](/docs/guides/exporting-query-statistics)
+- [Monitoring Postgres locks using Log Insights](/docs/guides/monitoring-postgres-locks-using-log-insights)
