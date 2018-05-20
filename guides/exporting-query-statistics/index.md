@@ -1,5 +1,4 @@
 ---
-work_in_progress: true
 title: 'Guide: Exporting query statistics using the pganalyze API'
 backlink_href: /docs/guides
 backlink_title: 'Guides'
@@ -21,7 +20,7 @@ Note that the API methods described in this guide are subject to change.
 
 First, start by going to the API Keys page for your organization, and creating a new read API key:
 
-<%= image_tag('/images-old/docs/api_keys.png', width: 700, style: 'border: 1px solid grey') %>
+![](api_keys.png)
 
 You now have a separate read-only API token that can be used for requests to our GraphQL API.
 
@@ -163,6 +162,8 @@ Based on usage patterns we may rate limit this API in the future.
 
 ## Other API requests
 
-There are more GraphQL API endpoints available - please contact us if you have a use case
-thats not fulfilled by the above, we're happy to share details on private APIs that
-are only used by pganalyze itself, with the disclaimer that they may change at any time.
+There are more GraphQL API endpoints available - please [contact us](mailto:team@pganalyze.com)
+if you have a use case thats not fulfilled by the above.
+
+We're happy to share details on private APIs that are only used by pganalyze itself,
+with the disclaimer that they may change at any time.

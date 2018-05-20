@@ -11,5 +11,4 @@ If you'd like to get a quote for a setup in your environment,
 **[please email us](mailto:team@pganalyze.com%3Fsubject%3DLocal%20Installation)**.
 
 - [Initial Setup](/docs/enterprise/setup)
-- [Troubleshooting](/docs/enterprise/troubleshooting)
 - [Log Insights Setup](/docs/enterprise/log-insights)

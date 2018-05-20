@@ -13,11 +13,16 @@ title: 'Documentation'
   3. [Setup IAM policy](/docs/install/amazon_rds/03_setup_iam_policy)
   4. [Install the Collector on an EC2 Instance](/docs/install/amazon_rds/04_install_collector)
 
+* **[Installation Guide (Heroku Postgres)](/docs/install/heroku_postgres)**
+
+<hr />
+
 * **[Log Insights](/docs/log-insights)**
   - [Setup](/docs/log-insights/setup)
-      * [Amazon RDS](/docs/log-insights/setup/amazon-rds)
-      * [Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
-      * [Self-Hosted](/docs/log-insights/setup/self-hosted)
+      * [Install on Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds)
+      * [Install on Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
+      * [Install on Self-Hosted Server](/docs/log-insights/setup/self-hosted)
+      * [Tuning Log Config Settings](/docs/log-insights/setup/tuning-log-config-settings)
   - [Classifications](/docs/log-insights)
       * [Server](/docs/log-insights/server)
       * [Connections](/docs/log-insights/connections)
@@ -32,7 +37,6 @@ title: 'Documentation'
 
 * **[Enterprise Edition](/docs/enterprise)**
   - [Initial Setup](/docs/enterprise/setup)
-  - [Troubleshooting](/docs/enterprise/troubleshooting)
   - [Log Insights Setup](/docs/enterprise/log-insights)
 
 * **[Guides](/docs/guides)**

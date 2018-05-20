@@ -1,13 +1,14 @@
 ---
-title: 'Installation Guide (Amazon RDS for PostgreSQL)'
+title: 'Installation Guide (Amazon RDS and Amazon Aurora for PostgreSQL)'
 backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
 This guide details setting up pganalyze for monitoring a Postgres instance running
-on Amazon's [Relational Database Service (RDS) for PostgreSQL](https://aws.amazon.com/rds/postgresql/).
+on Amazon's [Relational Database Service (RDS) for PostgreSQL](https://aws.amazon.com/rds/postgresql/)
+as well as Amazon Aurora for PostgreSQL.
 
-If you're looking to monitor a PostgreSQL database running on your own EC2 instances, or anywhere else, use the normal [Installation Guide](/docs/install).
+If you're looking to monitor a PostgreSQL database running on your own EC2 instances, or anywhere else, use the self-hosted [Installation Guide](/docs/install).
 
 ---
 
@@ -18,22 +19,17 @@ If you're looking to monitor a PostgreSQL database running on your own EC2 insta
 
 ---
 
-By following this guide you get this additional functionality for Amazon RDS databases:
+Also note the following functionality that is fully supported for Amazon RDS and Amazon Aurora databases:
 
 ### CloudWatch Monitoring
 
 Pulls down system metrics into pganalyze, including Enhanced Monitoring data.
 
-### Log File Monitoring (coming soon)
+### Log File Monitoring
 
-Watches your PostgreSQL log files continuously and makes them easily accessible to you.
+See [Log Insights](/docs/log-insights).
 
-### Automatic EXPLAINs (coming soon)
+### Automatic EXPLAINs
 
-Use `log_min_duration_statement` to set a threshold for statement runtime (e.g. slower than 1s),<br>
-the pganalyze collector will then automatically run [EXPLAIN](http://www.postgresql.org/docs/9.5/static/sql-explain.html) as needed to get query plan<br>
-information, and make it available in the pganalyze dashboard.
-
----
-
-This integration is currently in public beta testing - if you run into issues please let us know!
+See [Log Insights: Tuning Log Config Settings](/docs/log-insights) to automatically
+retrieve EXPLAIN plans using `auto_explain`.

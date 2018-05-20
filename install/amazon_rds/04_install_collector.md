@@ -51,16 +51,24 @@ SSH into your EC2 instance, and run the following to download and install the pa
 The collector configuration file lives in `/etc/pganalyze-collector.conf`, and looks like this:
 
 ```
+# Lines starting with # are comments
+
 [pganalyze]
-api_key: your_pga_api_key
-db_host: yourdb.company.com
-db_name: your_database_name
-db_username: your_database_user
-db_password: your_database_password
-aws_db_instance_id: your_rds_instance_id
+#api_key: your_api_key
+
+[server1]
+#db_name: mydb
+#db_username: myusername
+#db_password: mypassword
+#db_host: 127.0.0.1
+#db_port: 5432
+#aws_db_instance_id: your_rds_instance
+#aws_region: us-west-2
+#aws_access_key_id: mykey
+#aws_secret_access_key: mysecret
 ```
 
-Fill in the values step-by-step:
+Fill in the values step-by-step and remove the `#` in the line when you fill in the values:
 
 1. The `api_key` can be found in the pganalyze dashboard (on the API Keys page for your organization)
 2. The `db_host` is the hostname of your RDS instance
@@ -79,7 +87,7 @@ There are a few more advanced options, as well as the ability to specify multipl
 You can verify that the configuration is correct, by running the following command:
 
 ```
-pganalyze-collector --config=/etc/pganalyze-collector.conf --test
+pganalyze-collector --test
 ```
 
 This will go through one cycle of collecting statistics information from both PostgreSQL and RDS,<br>

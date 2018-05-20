@@ -1,7 +1,6 @@
 ---
-work_in_progress: true
-title: 'Log Insights: Install on Self-Hosted System'
-backlink_href: /docs/log-insights
+title: 'Log Insights: Install on Self-Hosted Server'
+backlink_href: /docs/log-insights/setup
 backlink_title: 'Log Insights: Setup'
 ---
 
@@ -21,7 +20,7 @@ Log Insights works by continuously tailing your local Postgres log files, and cl
 
 In order to do that, you need to configure the `db_log_location` in the `pganalyze-collector.conf` file, which should be either the Postgres log file, or the directory in which log files are located.
 
-We provide a helper for discovering the log directory, which you can run like this:
+We provide a helper for discovering the log directory, which you can run like this as root:
 
 ```
 pganalyze-collector --discover-log-location
@@ -30,9 +29,13 @@ pganalyze-collector --discover-log-location
 This will then produce output like this:
 
 ```
+2018/05/20 19:51:30 I [server1] Found log location, add this to your pganalyze-collector.conf in the [server1] section:
+db_log_location = /var/log/postgresql/postgresql-9.3-main.log
 ```
 
 In some cases where discovery doesn't work you might have to review in more detail how your system is set up. Please reach out to pganalyze support for help if needed.
+
+Note that both individual files and directories are supported for `db_log_location`.
 
 ## 3. Adjust configuration and run test
 
@@ -48,7 +51,7 @@ db_username: pganalyze
 db_password: mypassword
 db_host: 127.0.0.1
 db_port: 5432
-db_log_location: /var/log/postgresql
+db_log_location: /var/log/postgresql/postgresql-9.3-main.log
 ```
 
 Now we can use the `--test` option of the collector to verify that log collection and parsing works:
@@ -85,6 +88,34 @@ After this you should see data showing up in the "Log Insights" tab in pganalyze
 
 ---
 
+## Collector test error: "log\_line\_prefix not supported"
+
+When you see output like this:
+
+```
+2018/05/20 19:56:18 I [server1] Testing statistics collection...
+2018/05/20 19:56:20 I [server1] Test submission successful (15.9 KB received)
+2018/05/20 19:56:20 I [server1] Testing local log tailing...
+2018/05/20 19:56:20 E [server1] ERROR - Could not tail logs for server: Unsupported log_line_prefix setting: '%t '
+```
+
+It means that the currently configured `log_line_prefix` is not supported by the collector. You need to change your PostgreSQL configuration, reload the Postgres server, and then re-run `pganalyze-collector --test`.
+
+Currently we support the following log\_line\_prefix settings when using Postgres built-in logging (`log_destination = stderr`):
+
+* `log_line_prefix = '%t:%r:%u@%d:[%p]:'`
+* `log_line_prefix = '%m [%p][%v] : [%l-1] %q[app=%a] '`
+* `log_line_prefix = '%t [%p-%l] %q%u@%d '`
+* `log_line_prefix = '%m [%p] '`
+
+We also support the parsing of `rsyslogd` log lines that look like the following default template, with an empty log\_line\_prefix:
+
+```
+Feb  2 09:04:39 ip-172-31-14-41 postgres[7395]: [3-1] LOG:  database system is ready to accept connections
+```
+
+If you have a log\_line\_prefix config thats not covered, please reach out to us, as it is easy for us to add additional parsing support.
+
 ## Collector test error: "permission denied"
 
 When you see output like this:
@@ -103,26 +134,6 @@ When you see output like this:
 It means that the log test was able to run successfully as a root user, but could not be completed when testing with the "pganalyze" user that the collector background process runs as.
 
 See "Allowing access when using Postgres built-in logging" or "Allowing access when using rsyslogd built-in logging" below for details on how to fix this.
-
-## Collector test error: "log\_line\_prefix not supported"
-
-FIXME
-
-## Supported log\_line\_prefix settings
-
-Currently we support the following log_line_prefix settings when using Postgres built-in `stderr` logging:
-
-* `log_line_prefix = '%t:%r:%u@%d:[%p]:'`
-* `log_line_prefix = '%m [%p][%v] : [%l-1] %q[app=%a] '`
-* `log_line_prefix = '%t [%p-%l] %q%u@%d '`
-
-We also support the parsing of `rsyslogd` log lines that look like the following default template, with an empty log\_line\_prefix:
-
-```
-Feb  2 09:04:39 ip-172-31-14-41 postgres[7395]: [3-1] LOG:  database system is ready to accept connections
-```
-
-If you have a log\_line\_prefix config thats not covered, please reach out to us, as it is easy for us to add additional parsing support.
 
 ## Allowing access when using Postgres built-in logging
 
@@ -186,4 +197,4 @@ As well as making sure the current log file has the correct permissions:
 chmod 640 /var/log/postgres/postgres.log
 ```
 
-Then reload rsyslog and go back to Step 3.
+Then reload rsyslog and re-run `pganalyze-collector --test`.

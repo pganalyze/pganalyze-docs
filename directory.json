@@ -16,10 +16,6 @@
       "title": "Enterprise Edition: Initial Setup",
       "path": "/docs/enterprise/setup"
     },
-    "enterprise/troubleshooting": {
-      "title": "Enterprise Edition: Troubleshooting",
-      "path": "/docs/enterprise/troubleshooting"
-    },
     "guides": {
       "title": "Guides",
       "path": "/docs/guides"
@@ -57,7 +53,7 @@
       "path": "/docs/install/03_configuring_the_collector"
     },
     "install/amazon_rds": {
-      "title": "Installation Guide (Amazon RDS for PostgreSQL)",
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora for PostgreSQL)",
       "path": "/docs/install/amazon_rds"
     },
     "install/amazon_rds/01_configure_rds_instance": {
@@ -81,16 +77,28 @@
       "path": "/docs/install/heroku_postgres"
     },
     "log-insights": {
-      "title": "Log Insights",
+      "title": "pganalyze Log Insights",
       "path": "/docs/log-insights"
     },
+    "log-insights/setup": {
+      "title": "Log Insights: Setup",
+      "path": "/docs/log-insights/setup"
+    },
     "log-insights/setup/amazon-rds": {
-      "title": "Log Insights: Install on Amazon RDS",
+      "title": "Log Insights: Install on Amazon RDS & Amazon Aurora",
       "path": "/docs/log-insights/setup/amazon-rds"
     },
+    "log-insights/setup/heroku-postgres": {
+      "title": "Log Insights: Install on Heroku Postgres",
+      "path": "/docs/log-insights/setup/heroku-postgres"
+    },
     "log-insights/setup/self-hosted": {
-      "title": "Log Insights: Install on Self-Hosted System",
+      "title": "Log Insights: Install on Self-Hosted Server",
       "path": "/docs/log-insights/setup/self-hosted"
+    },
+    "log-insights/setup/tuning-log-config-settings": {
+      "title": "Log Insights: Tuning Log Config Settings",
+      "path": "/docs/log-insights/setup/tuning-log-config-settings"
     },
     "open_source_components": {
       "title": "Open-Source Components",

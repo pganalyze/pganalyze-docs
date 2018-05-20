@@ -69,3 +69,5 @@ In case you run into issues, make sure to check `heroku logs` of the collector a
 **Congratulations - you're done!**
 
 Note that it will take up to 30 minutes for the first statistics to be shown in pganalyze.
+
+As a next step we recommend reviewing our **[setup instructions for the Log Insights](/docs/log-insights/setup/heroku-postgres)** feature.
