@@ -109,7 +109,7 @@ to enable logging for them to get more details:
 log_checkpoints = on
 ```
 
-This will then give you the following log events: [P40: Checkpoint starting](/docs/log-insights/checkpoints/P40), [P41: Checkpoint complete](/docs/log-insights/checkpoints/P41) as well as others.
+This will then give you the following log events: [W40: Checkpoint starting](/docs/log-insights/checkpoints/W40), [W41: Checkpoint complete](/docs/log-insights/checkpoints/W41) as well as others.
 
 pganalyze will also do analysis on the checkpoint reason for you:
 

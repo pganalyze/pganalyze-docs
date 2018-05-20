@@ -253,17 +253,6 @@
       "color": null,
       "hasAnalysis": null
     },
-    "B96": {
-      "title": "According to history file, WAL location belongs to timeline N",
-      "category": "standby",
-      "collectorKey": "STANDBY_INVALID_TIMELINE",
-      "tooltip": "Phantom WAL segment file is associated to wrong timeline",
-      "urgency": "medium",
-      "sqlstate": "n/a",
-      "path": "/docs/log-insights/standby/B96",
-      "color": null,
-      "hasAnalysis": null
-    },
     "C20": {
       "title": "Connection received",
       "category": "connections",
@@ -471,72 +460,6 @@
       "sqlstate": "n/a",
       "path": "/docs/log-insights/locks/L74",
       "color": null,
-      "hasAnalysis": null
-    },
-    "P40": {
-      "title": "Checkpoint starting",
-      "category": "checkpoints",
-      "collectorKey": "CHECKPOINT_STARTING",
-      "tooltip": "Checkpoint to synchronize the data directory has started",
-      "urgency": "low",
-      "sqlstate": "n/a",
-      "path": "/docs/log-insights/checkpoints/P40",
-      "color": "#8FBC8F",
-      "hasAnalysis": true
-    },
-    "P41": {
-      "title": "Checkpoint complete",
-      "category": "checkpoints",
-      "collectorKey": "CHECKPOINT_COMPLETE",
-      "tooltip": "Checkpoint has completed synchronizing the data directory",
-      "urgency": "low",
-      "sqlstate": "n/a",
-      "path": "/docs/log-insights/checkpoints/P41",
-      "color": "#8FBC8F",
-      "hasAnalysis": null
-    },
-    "P42": {
-      "title": "Checkpoints are occurring too frequently",
-      "category": "checkpoints",
-      "collectorKey": "CHECKPOINT_TOO_FREQUENT",
-      "tooltip": "Checkpoints are occurring very quickly, causing I/O impact",
-      "urgency": "medium",
-      "sqlstate": "n/a",
-      "path": "/docs/log-insights/checkpoints/P42",
-      "color": "#ff0000",
-      "hasAnalysis": null
-    },
-    "P43": {
-      "title": "Restartpoint starting",
-      "category": "checkpoints",
-      "collectorKey": "RESTARTPOINT_STARTING",
-      "tooltip": "Standby restartpoint has started to synchronize the data directory",
-      "urgency": "low",
-      "sqlstate": "n/a",
-      "path": "/docs/log-insights/checkpoints/P43",
-      "color": "#8FBC8F",
-      "hasAnalysis": null
-    },
-    "P44": {
-      "title": "Restartpoint complete",
-      "category": "checkpoints",
-      "collectorKey": "RESTARTPOINT_COMPLETE",
-      "tooltip": "Standby restartpoint has completed synchronizing the data directory",
-      "urgency": "low",
-      "sqlstate": "n/a",
-      "path": "/docs/log-insights/checkpoints/P44",
-      "color": "#8FBC8F",
-      "hasAnalysis": null
-    },
-    "P45": {
-      "title": "Recovery restart point at ...",
-      "category": "checkpoints",
-      "collectorKey": "RESTARTPOINT_AT",
-      "tooltip": "Reference for when a new safe restartpoint was established",
-      "urgency": "low",
-      "sqlstate": "n/a",
-      "path": "/docs/log-insights/checkpoints/P45",
-      "color": "#8FBC8F",
       "hasAnalysis": null
     },
     "S1": {
@@ -1067,36 +990,113 @@
       "color": "#8A2BE2",
       "hasAnalysis": null
     },
+    "W40": {
+      "title": "Checkpoint starting",
+      "category": "wal-checkpoints",
+      "collectorKey": "CHECKPOINT_STARTING",
+      "tooltip": "Checkpoint to synchronize the data directory has started",
+      "urgency": "low",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/wal-checkpoints/W40",
+      "color": "#8FBC8F",
+      "hasAnalysis": true
+    },
+    "W41": {
+      "title": "Checkpoint complete",
+      "category": "wal-checkpoints",
+      "collectorKey": "CHECKPOINT_COMPLETE",
+      "tooltip": "Checkpoint has completed synchronizing the data directory",
+      "urgency": "low",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/wal-checkpoints/W41",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
+    },
+    "W42": {
+      "title": "Checkpoints are occurring too frequently",
+      "category": "wal-checkpoints",
+      "collectorKey": "CHECKPOINT_TOO_FREQUENT",
+      "tooltip": "Checkpoints are occurring very quickly, causing I/O impact",
+      "urgency": "medium",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/wal-checkpoints/W42",
+      "color": "#ff0000",
+      "hasAnalysis": null
+    },
+    "W43": {
+      "title": "Restartpoint starting",
+      "category": "wal-checkpoints",
+      "collectorKey": "RESTARTPOINT_STARTING",
+      "tooltip": "Standby restartpoint has started to synchronize the data directory",
+      "urgency": "low",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/wal-checkpoints/W43",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
+    },
+    "W44": {
+      "title": "Restartpoint complete",
+      "category": "wal-checkpoints",
+      "collectorKey": "RESTARTPOINT_COMPLETE",
+      "tooltip": "Standby restartpoint has completed synchronizing the data directory",
+      "urgency": "low",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/wal-checkpoints/W44",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
+    },
+    "W45": {
+      "title": "Recovery restart point at ...",
+      "category": "wal-checkpoints",
+      "collectorKey": "RESTARTPOINT_AT",
+      "tooltip": "Reference for when a new safe restartpoint was established",
+      "urgency": "low",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/wal-checkpoints/W45",
+      "color": "#8FBC8F",
+      "hasAnalysis": null
+    },
+    "W46": {
+      "title": "According to history file, WAL location belongs to timeline N",
+      "category": "wal-checkpoints",
+      "collectorKey": "STANDBY_INVALID_TIMELINE",
+      "tooltip": "Phantom WAL segment file is associated to wrong timeline",
+      "urgency": "medium",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/wal-checkpoints/W46",
+      "color": null,
+      "hasAnalysis": null
+    },
     "W50": {
       "title": "Invalid record length",
-      "category": "wal",
+      "category": "wal-checkpoints",
       "collectorKey": "WAL_INVALID_RECORD_LENGTH",
       "tooltip": "Low-level error reading a WAL file",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal/W50",
+      "path": "/docs/log-insights/wal-checkpoints/W50",
       "color": null,
       "hasAnalysis": null
     },
     "W51": {
       "title": "Redo starts / redo done",
-      "category": "wal",
+      "category": "wal-checkpoints",
       "collectorKey": "WAL_REDO",
       "tooltip": "WAL recovery process start/end",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal/W51",
+      "path": "/docs/log-insights/wal-checkpoints/W51",
       "color": null,
       "hasAnalysis": null
     },
     "W52": {
       "title": "Archive command failed",
-      "category": "wal",
+      "category": "wal-checkpoints",
       "collectorKey": "WAL_ARCHIVE_COMMAND_FAILED",
       "tooltip": "WAL archiving failed due to archive_command failure",
       "urgency": "medium",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal/W52",
+      "path": "/docs/log-insights/wal-checkpoints/W52",
       "color": null,
       "hasAnalysis": null
     }

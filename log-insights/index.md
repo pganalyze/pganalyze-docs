@@ -27,8 +27,7 @@ These classifications are then used for alerting and filtering purposes, and all
 
 * [Server](/docs/log-insights/server)
 * [Connections](/docs/log-insights/connections)
-* [Checkpoints](/docs/log-insights/checkpoints)
-* [WAL](/docs/log-insights/wal)
+* [WAL & Checkpoints](/docs/log-insights/wal-checkpoints)
 * [Autovacuum](/docs/log-insights/autovacuum)
 * [Locks](/docs/log-insights/locks)
 * [Statements](/docs/log-insights/statements)
