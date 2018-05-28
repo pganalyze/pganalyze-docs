@@ -1100,5 +1100,16 @@
       "color": null,
       "hasAnalysis": null
     }
+  },
+  "logCategories": {
+    "server": "Server Events",
+    "connections": "Connection Events",
+    "wal-checkpoints": "WAL & Checkpoint Events",
+    "autovacuum": "Autovacuum Events",
+    "locks": "Lock Events",
+    "statements": "Statement Events",
+    "standby": "Standby Server Events",
+    "constraint-violations": "Constraint Violations",
+    "app-errors": "Application / User Errors"
   }
 }
