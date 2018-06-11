@@ -187,6 +187,28 @@
       "color": "#8be",
       "hasAnalysis": null
     },
+    "A67": {
+      "title": "Skipping vacuum - lock not available",
+      "category": "autovacuum",
+      "collectorKey": "SKIPPING_VACUUM_LOCK_NOT_AVAILABLE",
+      "tooltip": "Vacuum could not be started due to lock failure",
+      "urgency": "low",
+      "sqlstate": "55P03 (Class 55 - Object Not In Prerequisite State: lock_not_available)",
+      "path": "/docs/log-insights/autovacuum/A67",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "A68": {
+      "title": "Skipping analyze - lock not available",
+      "category": "autovacuum",
+      "collectorKey": "SKIPPING_VACUUM_LOCK_NOT_AVAILABLE",
+      "tooltip": "Vacuum could not be started due to lock failure",
+      "urgency": "low",
+      "sqlstate": "55P03 (Class 55 - Object Not In Prerequisite State: lock_not_available)",
+      "path": "/docs/log-insights/autovacuum/A68",
+      "color": null,
+      "hasAnalysis": null
+    },
     "B90": {
       "title": "Restored log file from archive (WAL replay)",
       "category": "standby",
