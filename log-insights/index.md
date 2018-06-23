@@ -6,9 +6,9 @@ backlink_title: 'Documentation'
 
 ![](setup/log_insights_screenshot.png)
 
-Welcome to **Log Insights** - pganalyze's feature to monitor and analyze the PostgreSQL log
-files, and give you insights into how to tune your database better, or to explain
-why your database might be slow at a given moment.
+Welcome to pganalyze **Log Insights** - the best way to monitor and analyze your
+PostgreSQL log files, and give you insights into how to tune your database better,
+or to explain why your database might be slow at a given moment.
 
 ## Setup
 

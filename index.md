@@ -31,8 +31,8 @@ title: 'Documentation'
       * [Locks](/docs/log-insights/locks)
       * [Statements](/docs/log-insights/statements)
       * [Standby Servers](/docs/log-insights/standby)
-      * [Constraint Violations](/docs/log-insights/constraint_violations)
-      * [Application / User Errors](/docs/log-insights/app_errors)
+      * [Constraint Violations](/docs/log-insights/constraint-violations)
+      * [Application / User Errors](/docs/log-insights/app-errors)
 
 * **[Enterprise Edition](/docs/enterprise)**
   - [Initial Setup](/docs/enterprise/setup)
