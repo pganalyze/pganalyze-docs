@@ -371,7 +371,7 @@
       "urgency": "high",
       "sqlstate": "53300 (Class 53 - Insufficient Resources: too_many_connections)",
       "path": "/docs/log-insights/connections/C28",
-      "color": null,
+      "color": "#ff0000",
       "hasAnalysis": null
     },
     "C29": {
@@ -382,7 +382,7 @@
       "urgency": "medium",
       "sqlstate": "53300 (Class 53 - Insufficient Resources: too_many_connections)",
       "path": "/docs/log-insights/connections/C29",
-      "color": null,
+      "color": "#ff0000",
       "hasAnalysis": null
     },
     "C30": {
@@ -426,7 +426,7 @@
       "urgency": "medium",
       "sqlstate": "53300 (Class 53 - Insufficient Resources: too_many_connections)",
       "path": "/docs/log-insights/connections/C33",
-      "color": null,
+      "color": "#ff0000",
       "hasAnalysis": null
     },
     "L70": {
