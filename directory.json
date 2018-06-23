@@ -948,12 +948,34 @@
     },
     "U137": {
       "title": "Invalid byte sequence for encoding",
-      "category": "server",
+      "category": "app-errors",
       "collectorKey": "INVALID_BYTE_SEQUENCE",
       "tooltip": "Text data contains bytes that are not valid for the chosen encoding",
       "urgency": "low",
       "sqlstate": "22021 (Class 22 - Data Exception: character_not_in_repertoire)",
       "path": "/docs/log-insights/app-errors/U137",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U138": {
+      "title": "Could not serialize access due to concurrent update",
+      "category": "app-errors",
+      "collectorKey": "COULD_NOT_SERIALIZE_REPEATABLE_READ",
+      "tooltip": "UPDATE or DELETE was run concurrently on the same row with isolation level REPEATABLE READ",
+      "urgency": "low",
+      "sqlstate": "40001 (Class 40 - Transaction Rollback: serialization_failure)",
+      "path": "/docs/log-insights/app-errors/U138",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U139": {
+      "title": "Could not serialize access due to read/write dependencies among transactions",
+      "category": "app-errors",
+      "collectorKey": "COULD_NOT_SERIALIZE_SERIALIZABLE",
+      "tooltip": "Transaction could not be completed under SERIALIZABLE isolation level",
+      "urgency": "low",
+      "sqlstate": "40001 (Class 40 - Transaction Rollback: serialization_failure)",
+      "path": "/docs/log-insights/app-errors/U139",
       "color": null,
       "hasAnalysis": null
     },
@@ -1130,6 +1152,17 @@
       "urgency": "low",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/unknown/Z00",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "Z1000": {
+      "title": "pganalyze-collector identification",
+      "category": "unknown",
+      "collectorKey": "PGA_COLLECTOR_IDENTIFY",
+      "tooltip": "Used by the pganalyze-collector to identify the database its connected to",
+      "urgency": "low",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/unknown/Z1000",
       "color": null,
       "hasAnalysis": null
     }
