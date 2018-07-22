@@ -1,0 +1,38 @@
+---
+title: 'Enterprise Edition: How to setup Google Auth Integration'
+backlink_href: /docs/enterprise
+backlink_title: 'pganalyze Enterprise Edition'
+---
+
+1. Create a new project in the Google Cloud Platform developer console
+1. Click "API & Services" and then "Enable APIs and Services"
+3. Enable "Contacts API" and "Google+ API"
+4. Click "Credentials" and then "Create Credentials" => "OAuth Client ID"
+5. Click "Configure consent screen" and fill in as follows:
+
+```
+Email address: [ Any address of your choice ]
+Product name to be shown to users: pganalyze Enterprise
+```
+
+7. Create Client ID for "Web Application", and fill out as follows:
+
+```
+Name: [ Leave default, not used for anything ]
+Authorized JavaScript origins: http://pganalyze.myorganization.internal
+Authorized redirect URIs: http://pganalyze.myorganization.internal/users/auth/google/callback
+```
+
+8. Click "Create" and then copy out the Client ID and Client Secret
+
+9. Configure the corresponding environment variables `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` on the pganalyze container and restart it
+
+10. You should now see a "Sign In with Google" button on the login and signup screens
+
+---
+
+Note that new users need to use the "Sign Up with Google" tab on the signup page first, otherwise Login will error out.
+
+By default all users are assigned as full members to the first organization in the system (by creation date).
+
+If you want to specify a different organization set the `DEFAULT_ORG_NAME` env variable to the name of another organization.

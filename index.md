@@ -36,7 +36,9 @@ title: 'Documentation'
 
 * **[Enterprise Edition](/docs/enterprise)**
   - [Initial Setup](/docs/enterprise/setup)
+  - [Release Changelog](/docs/enterprise/releases)
   - [Log Insights Setup](/docs/enterprise/log-insights)
+  - [Google Auth Setup](/docs/enterprise/google-auth)
 
 * **[Guides](/docs/guides)**
   - [Tuning checkpoint intervals to reduce I/O spikes](/docs/guides/tuning-checkpoint-intervals)

@@ -8,9 +8,57 @@
       "title": "pganalyze Enterprise Edition",
       "path": "/docs/enterprise"
     },
+    "enterprise/google-auth": {
+      "title": "Enterprise Edition: How to setup Google Auth Integration",
+      "path": "/docs/enterprise/google-auth"
+    },
     "enterprise/log-insights": {
       "title": "Enterprise Edition: Log Insights Setup",
       "path": "/docs/enterprise/log-insights"
+    },
+    "enterprise/releases": {
+      "title": "Enterprise Edition: Release Changelog",
+      "path": "/docs/enterprise/releases"
+    },
+    "enterprise/releases/2017-08-0": {
+      "title": "2017.08.0 Release",
+      "path": "/docs/enterprise/releases/2017-08-0"
+    },
+    "enterprise/releases/2017-10-0": {
+      "title": "2017.10.0 Release",
+      "path": "/docs/enterprise/releases/2017-10-0"
+    },
+    "enterprise/releases/2017-11-0": {
+      "title": "2017.11.0 Release",
+      "path": "/docs/enterprise/releases/2017-11-0"
+    },
+    "enterprise/releases/2017-12-0": {
+      "title": "2017.12.0 Release",
+      "path": "/docs/enterprise/releases/2017-12-0"
+    },
+    "enterprise/releases/2018-02-0": {
+      "title": "2018.02.0 Release",
+      "path": "/docs/enterprise/releases/2018-02-0"
+    },
+    "enterprise/releases/2018-02-1": {
+      "title": "2018.02.1 Release",
+      "path": "/docs/enterprise/releases/2018-02-1"
+    },
+    "enterprise/releases/2018-02-2": {
+      "title": "2018.02.2 Release",
+      "path": "/docs/enterprise/releases/2018-02-2"
+    },
+    "enterprise/releases/2018-02-3": {
+      "title": "2018.02.3 Release",
+      "path": "/docs/enterprise/releases/2018-02-3"
+    },
+    "enterprise/releases/2018-02-4": {
+      "title": "2018.02.4 Release",
+      "path": "/docs/enterprise/releases/2018-02-4"
+    },
+    "enterprise/releases/2018-07-0": {
+      "title": "2018.07.0 Release",
+      "path": "/docs/enterprise/releases/2018-07-0"
     },
     "enterprise/setup": {
       "title": "Enterprise Edition: Initial Setup",

@@ -11,4 +11,6 @@ If you'd like to get a quote for a setup in your environment,
 **[please email us](mailto:team@pganalyze.com%3Fsubject%3DLocal%20Installation)**.
 
 - [Initial Setup](/docs/enterprise/setup)
+- [Release Changelog](/docs/enterprise/releases)
 - [Log Insights Setup](/docs/enterprise/log-insights)
+- [Google Auth Setup](/docs/enterprise/google-auth)
