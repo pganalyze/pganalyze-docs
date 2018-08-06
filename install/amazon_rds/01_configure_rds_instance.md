@@ -57,7 +57,7 @@ Connect to your database as an RDS superuser (usually the credentials you create
 Run the following SQL commands to enable the extension, and make sure it was installed correctly:
 
 ```
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
 SELECT * FROM pg_stat_statements LIMIT 1;
 ```
 
