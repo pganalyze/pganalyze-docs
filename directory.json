@@ -64,9 +64,17 @@
       "title": "2018.08.0 Release",
       "path": "/docs/enterprise/releases/2018-08-0"
     },
+    "enterprise/releases/2018-08-1": {
+      "title": "2018.08.1 Release",
+      "path": "/docs/enterprise/releases/2018-08-1"
+    },
     "enterprise/setup": {
       "title": "Enterprise Edition: Initial Setup",
       "path": "/docs/enterprise/setup"
+    },
+    "enterprise/upgrade": {
+      "title": "Enterprise Edition: Upgrading to new releases",
+      "path": "/docs/enterprise/upgrade"
     },
     "guides": {
       "title": "Guides",

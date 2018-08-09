@@ -39,6 +39,7 @@ title: 'Documentation'
   - [Release Changelog](/docs/enterprise/releases)
   - [Log Insights Setup](/docs/enterprise/log-insights)
   - [Google Auth Setup](/docs/enterprise/google-auth)
+  - [Upgrading to new releases](/docs/enterprise/upgrade)
 
 * **[Guides](/docs/guides)**
   - [Tuning checkpoint intervals to reduce I/O spikes](/docs/guides/tuning-checkpoint-intervals)

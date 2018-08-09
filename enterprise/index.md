@@ -14,3 +14,4 @@ If you'd like to get a quote for a setup in your environment,
 - [Release Changelog](/docs/enterprise/releases)
 - [Log Insights Setup](/docs/enterprise/log-insights)
 - [Google Auth Setup](/docs/enterprise/google-auth)
+- [Upgrading to new releases](/docs/enterprise/upgrade)

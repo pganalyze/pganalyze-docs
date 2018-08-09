@@ -1,0 +1,77 @@
+---
+title: 'Enterprise Edition: Upgrading to new releases'
+backlink_href: /docs/enterprise
+backlink_title: 'pganalyze Enterprise Edition'
+---
+
+## Upgrade process
+
+The general upgrade process for pganalyze Enterprise Edition is as follows:
+
+**1. Backup the statistics database (pg_dump or RDS snapshot)**
+
+We recommend you make a backup of the pganalyze statistics database, to be able
+to roll back an upgrade easily (see **Recovering from a failed upgrade**). You
+don't need to save any other state besides the statistics database, and you can
+use a simple `pg_dump` for backing up the database, or any other method that
+allows a convenient restore (e.g. Amazon RDS snapshots).
+
+**2. Pull the new pganalyze image**
+
+`docker pull quay.io/pganalyze/enterprise:[new version]`
+
+Be sure to replace `[new version]` with the specific release you are upgrading
+to. You can see the latest release on the [Releases](releases) page.
+
+**3. Stop the currently running container**
+
+`docker stop --rm pganalyze`
+
+**4. Run `rake db:migrate` task in a new container**
+
+`docker run --env-file pganalyze.env quay.io/pganalyze/enterprise:[new version] rake db:migrate`
+
+This will upgrade the database schema for the new release - at this point you need to use the new version,
+and can't go back to the old version without recovering from backup (as schemas are not compatible across versions).
+
+**5. Run enterprise self check**
+
+`docker run --env-file pganalyze.env quay.io/pganalyze/enterprise:[new version] rake enterprise:self_check`
+
+If this returns any errors, please review your environment configuration in `pganalyze.env`.
+
+Also see **Special Notes: Upgrading from earlier releases to 2018.08 and newer** if you are running into a license error.
+
+**6. Start container**
+
+`docker run -d --name pganalyze -p 8080:5000 --env-file pganalyze.env quay.io/pganalyze/enterprise:[new version]`
+
+At this point you are done and the user interface should load again as expected. Please reach out to us if you run into any issues.
+
+## Recovering from a failed upgrade
+
+In order to recover from a failed upgrade attempt, you need to first stop the
+pganalyze container using `docker stop --rm pganalyze`.
+
+Then you would perform a regular database restore operation - on Amazon RDS you
+might choose to recover from a snapshot, on other systems you would usually use
+`pg_restore` from a `pg_dump` you have done before.
+
+After the backup is restored, start up the container with the old version like this:
+
+`docker run -d --name pganalyze -p 8080:5000 --env-file pganalyze.env quay.io/pganalyze/enterprise:[old version]`
+
+## Special Notes: Upgrading from earlier releases to 2018.08 and newer
+
+Starting in pganalyze Enterprise [2018.08.0](releases/2018-08-0), the pganalyze
+container requires the `LICENSE_KEY` environment variable to be configured.
+
+Before starting the new container, set the `LICENSE_KEY` environment variable to
+the download password that you have been given when first setting up pganalyze Enterprise Edition.
+
+Note that this requires the container to be able to make an HTTPS connection (port 443) to
+`enterprise-license-check.pganalyze.com` - if this is not possible in your setup
+please [contact support](mailto:team@pganalyze.com) for workarounds.
+
+After setting the `LICENSE_KEY` you can verify using `rake enterprise:self_check`
+that the license verification works as expected.

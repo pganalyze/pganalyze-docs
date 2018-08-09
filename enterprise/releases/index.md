@@ -4,6 +4,7 @@ backlink_href: /docs/enterprise
 backlink_title: 'pganalyze Enterprise Edition'
 ---
 
+* [2018.08.1 Release](/docs/enterprise/releases/2018-08-1)
 * [2018.08.0 Release](/docs/enterprise/releases/2018-08-0)
 * [2018.07.0 Release](/docs/enterprise/releases/2018-07-0)
 * [2018.02.4 Release](/docs/enterprise/releases/2018-02-4)
