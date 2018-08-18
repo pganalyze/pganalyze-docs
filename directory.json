@@ -72,6 +72,10 @@
       "title": "Enterprise Edition: Initial Setup",
       "path": "/docs/enterprise/setup"
     },
+    "enterprise/troubleshooting": {
+      "title": "Enterprise Edition: Troubleshooting",
+      "path": "/docs/enterprise/troubleshooting"
+    },
     "enterprise/upgrade": {
       "title": "Enterprise Edition: Upgrading to new releases",
       "path": "/docs/enterprise/upgrade"
