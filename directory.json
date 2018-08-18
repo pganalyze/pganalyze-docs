@@ -68,6 +68,10 @@
       "title": "2018.08.1 Release",
       "path": "/docs/enterprise/releases/2018-08-1"
     },
+    "enterprise/releases/2018-08-2": {
+      "title": "2018.08.2 Release",
+      "path": "/docs/enterprise/releases/2018-08-2"
+    },
     "enterprise/setup": {
       "title": "Enterprise Edition: Initial Setup",
       "path": "/docs/enterprise/setup"
