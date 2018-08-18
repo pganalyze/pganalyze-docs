@@ -29,6 +29,8 @@ to. You can see the latest release on the [Releases](releases) page.
 
 **4. Run `rake db:migrate` task in a new container**
 
+Before starting the database migration task, make sure that the `pgcrypto` and `uuid-ossp` extensions are installed and available. If the statistics database uses Postgres 10 and newer, you also need the `btree_gist` extension.
+
 `docker run --env-file pganalyze.env quay.io/pganalyze/enterprise:[new version] rake db:migrate`
 
 This will upgrade the database schema for the new release - at this point you need to use the new version,
@@ -63,7 +65,7 @@ After the backup is restored, start up the container with the old version like t
 
 ## Special Notes: Upgrading from earlier releases to 2018.08 and newer
 
-Starting in pganalyze Enterprise [2018.08.0](releases/2018-08-0), the pganalyze
+Starting in pganalyze Enterprise [2018.08.0](/docs/enterprise/releases/2018-08-0), the pganalyze
 container requires the `LICENSE_KEY` environment variable to be configured.
 
 Before starting the new container, set the `LICENSE_KEY` environment variable to
