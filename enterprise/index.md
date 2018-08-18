@@ -15,3 +15,4 @@ If you'd like to get a quote for a setup in your environment,
 - [Log Insights Setup](/docs/enterprise/log-insights)
 - [Google Auth Setup](/docs/enterprise/google-auth)
 - [Upgrading to new releases](/docs/enterprise/upgrade)
+- [Troubleshooting](/docs/enterprise/troubleshooting)
