@@ -64,7 +64,7 @@ The fields currently available on the `getQueryStats` endpoint:
 * **`tableNames` (array of strings)**<br>Fully qualified list of table names used in this query
 * **`totalCalls` (integer)**<br>Total number of calls for this query
 * **`avgTime` (float)**<br>Average runtime in milliseconds for this query
-* **`avgIoTime` (float)**<br>Average time spent in I/O operations for this query (this requires track_io_timing to be enabled on the database)
+* **`avgIoTime` (float)**<br>Average time spent in I/O operations for this query (this requires `track_io_timing` to be enabled on the database)
 * **`bufferHitRatio` (float)**<br>% of query data that was returned from the buffer cache, instead of the disk or page cache
 * **`pctOfTotal` (float)**<br>% of runtime this query represents compared to the cumulative runtime of all queries
 
