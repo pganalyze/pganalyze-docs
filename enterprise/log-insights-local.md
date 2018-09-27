@@ -1,7 +1,7 @@
 ---
 title: 'Enterprise Edition: Log Insights Setup (Local Storage)'
-backlink_href: /docs/enterprise
-backlink_title: 'pganalyze Enterprise Edition'
+backlink_href: /docs/enterprise/log-insights
+backlink_title: 'pganalyze Enterprise Edition: Log Insights Setup'
 ---
 
 ### 1. Installation of the Minio storage server

@@ -12,8 +12,9 @@ If you'd like to get a quote for a setup in your environment,
 
 - [Initial Setup](/docs/enterprise/setup)
 - [Release Changelog](/docs/enterprise/releases)
-- [Log Insights Setup (Amazon S3)](/docs/enterprise/log-insights-s3)
-- [Log Insights Setup (Local Storage)](/docs/enterprise/log-insights-local)
+- [Log Insights Setup](/docs/enterprise/log-insights)
+  - [Local Storage using Minio](/docs/enterprise/log-insights-local)
+  - [Cloud Storage using Amazon S3](/docs/enterprise/log-insights-s3)
 - [Google Auth Setup](/docs/enterprise/google-auth)
 - [Upgrading to new releases](/docs/enterprise/upgrade)
 - [Troubleshooting](/docs/enterprise/troubleshooting)
