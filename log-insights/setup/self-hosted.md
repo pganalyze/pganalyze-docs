@@ -103,10 +103,14 @@ It means that the currently configured `log_line_prefix` is not supported by the
 
 Currently we support the following log\_line\_prefix settings when using Postgres built-in logging (`log_destination = stderr`):
 
+* **`log_line_prefix = '%m [%p] %q[user=%u,db=%d,app=%a] '`**
+* `log_line_prefix = '%m [%p] %q[user=%u,db=%d,app=%a,host=%h] '`
 * `log_line_prefix = '%t:%r:%u@%d:[%p]:'`
 * `log_line_prefix = '%m [%p][%v] : [%l-1] %q[app=%a] '`
 * `log_line_prefix = '%t [%p-%l] %q%u@%d '`
 * `log_line_prefix = '%m [%p] '`
+
+If you're unsure, we recommend using the first `log_line_prefix` in the list above.
 
 We also support the parsing of `rsyslogd` log lines that look like the following default template, with an empty log\_line\_prefix:
 
@@ -164,7 +168,7 @@ log_directory = '/my/log/directory'
 log_file_mode = 0640
 ```
 
-Reload Postgres afterwards and then re-run the permission test as described in Step 3.
+Reload Postgres afterwards, as well as **restart** the collector background process, and then re-run the permission test as described in Step 3.
 
 ## Allowing access when using rsyslogd built-in logging
 
