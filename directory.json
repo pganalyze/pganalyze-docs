@@ -16,6 +16,14 @@
       "title": "Enterprise Edition: Log Insights Setup",
       "path": "/docs/enterprise/log-insights"
     },
+    "enterprise/log-insights-local": {
+      "title": "Enterprise Edition: Log Insights Setup (Local Storage)",
+      "path": "/docs/enterprise/log-insights-local"
+    },
+    "enterprise/log-insights-s3": {
+      "title": "Enterprise Edition: Log Insights Setup (Amazon S3)",
+      "path": "/docs/enterprise/log-insights-s3"
+    },
     "enterprise/releases": {
       "title": "Enterprise Edition: Release Changelog",
       "path": "/docs/enterprise/releases"
@@ -71,6 +79,10 @@
     "enterprise/releases/2018-08-2": {
       "title": "2018.08.2 Release",
       "path": "/docs/enterprise/releases/2018-08-2"
+    },
+    "enterprise/releases/2018-09-0": {
+      "title": "2018.09.0 Release",
+      "path": "/docs/enterprise/releases/2018-09-0"
     },
     "enterprise/setup": {
       "title": "Enterprise Edition: Initial Setup",
