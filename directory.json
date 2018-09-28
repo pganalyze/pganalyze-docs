@@ -586,6 +586,17 @@
       "color": null,
       "hasAnalysis": null
     },
+    "S11": {
+      "title": "Stats collector is not responding",
+      "category": "server",
+      "collectorKey": "SERVER_STATS_COLLECTOR_TIMEOUT",
+      "tooltip": "Internal connections to the stats collector are timing out",
+      "urgency": "medium",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/server/S11",
+      "color": null,
+      "hasAnalysis": null
+    },
     "S2": {
       "title": "Database server starting",
       "category": "server",
@@ -1221,6 +1232,17 @@
       "urgency": "medium",
       "sqlstate": "n/a",
       "path": "/docs/log-insights/wal-checkpoints/W52",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "W53": {
+      "title": "Backup complete, all required WAL segments have been archived",
+      "category": "wal-checkpoints",
+      "collectorKey": "WAL_BASE_BACKUP_COMPLETE",
+      "tooltip": "The pg_stop_backup command has succeeded (part of base backup)",
+      "urgency": "low",
+      "sqlstate": "n/a",
+      "path": "/docs/log-insights/wal-checkpoints/W53",
       "color": null,
       "hasAnalysis": null
     },
