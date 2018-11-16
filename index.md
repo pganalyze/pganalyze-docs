@@ -3,25 +3,11 @@ title: 'Documentation'
 ---
 
 * **[Installation Guide](/docs/install)**
-  1. [Enabling pg\_stat\_statements](/docs/install/01_enabling_pg_stat_statements)
-  2. [Installing the Collector](/docs/install/02_installing_the_collector)
-  3. [Configuring the Collector](/docs/install/03_configuring_the_collector)
-
-* **[Installation Guide (Amazon RDS)](/docs/install/amazon_rds)**
-  1. [Configure your RDS instance](/docs/install/amazon_rds/01_configure_rds_instance)
-  2. [Create the Monitoring User](/docs/install/amazon_rds/02_create_monitoring_user)
-  3. [Setup IAM policy](/docs/install/amazon_rds/03_setup_iam_policy)
-  4. [Install the Collector on an EC2 Instance](/docs/install/amazon_rds/04_install_collector)
-
-* **[Installation Guide (Heroku Postgres)](/docs/install/heroku_postgres)**
 
 <hr />
 
 * **[Log Insights](/docs/log-insights)**
   - [Setup](/docs/log-insights/setup)
-      * [Install on Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds)
-      * [Install on Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
-      * [Install on Self-Hosted Server](/docs/log-insights/setup/self-hosted)
       * [Tuning Log Config Settings](/docs/log-insights/setup/tuning-log-config-settings)
   - [Classifications](/docs/log-insights)
       * [Server](/docs/log-insights/server)
