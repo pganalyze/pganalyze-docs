@@ -9,6 +9,7 @@ title: 'Documentation'
 * **[Log Insights](/docs/log-insights)**
   - [Setup](/docs/log-insights/setup)
       * [Tuning Log Config Settings](/docs/log-insights/setup/tuning-log-config-settings)
+      * [Collect Postgres EXPLAIN plans using auto_explain](/docs/log-insights/setup/auto_explain)
   - [Classifications](/docs/log-insights)
       * [Server](/docs/log-insights/server)
       * [Connections](/docs/log-insights/connections)

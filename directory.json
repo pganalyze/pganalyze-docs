@@ -168,6 +168,10 @@
       "title": "Log Insights: Install on Amazon RDS & Amazon Aurora",
       "path": "/docs/log-insights/setup/amazon-rds"
     },
+    "log-insights/setup/auto_explain": {
+      "title": "Log Insights: Collect Postgres EXPLAIN plans using auto_explain",
+      "path": "/docs/log-insights/setup/auto_explain"
+    },
     "log-insights/setup/heroku-postgres": {
       "title": "Log Insights: Install on Heroku Postgres",
       "path": "/docs/log-insights/setup/heroku-postgres"

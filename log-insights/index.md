@@ -15,7 +15,11 @@ or to explain why your database might be slow at a given moment.
 * [Install on Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds)
 * [Install on Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
 * [Install on Self-Hosted Server](/docs/log-insights/setup/self-hosted)
+
+## Configuration Tuning
+
 * [Tuning Log Config Settings](/docs/log-insights/setup/tuning-log-config-settings)
+* [Collect Postgres EXPLAIN plans using auto_explain](/docs/log-insights/setup/auto_explain)
 
 ## Log Events
 
