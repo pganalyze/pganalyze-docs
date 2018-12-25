@@ -11,7 +11,7 @@ Run the following whilst connected as an RDS superuser, replacing `mypassword` w
 ```
 CREATE SCHEMA pganalyze;
 
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
 
 CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements(showtext boolean = true) RETURNS SETOF pg_stat_statements AS
 $$
