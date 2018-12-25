@@ -8,4 +8,7 @@ See also https://pganalyze.com/docs
 
 Copyright 2018, Duboce Labs Inc.
 
-All rights reserved.
+The pganalyze documentation is licensed under a
+Creative Commons Attribution 4.0 International License.
+
+See the LICENSE file or http://creativecommons.org/licenses/by-sa/4.0/
