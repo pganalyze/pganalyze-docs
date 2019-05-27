@@ -162,7 +162,7 @@ Based on usage patterns we may rate limit this API in the future.
 
 ## Other API requests
 
-There are more GraphQL API endpoints available - please [contact us](mailto:team@pganalyze.com)
+There are more GraphQL API endpoints available - please [contact us](mailto:support@pganalyze.com)
 if you have a use case thats not fulfilled by the above.
 
 We're happy to share details on private APIs that are only used by pganalyze itself,

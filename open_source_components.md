@@ -69,4 +69,4 @@ customer names, etc.
 ---
 
 If you have any questions how we use these components in practice,
-[feel free to drop us a line](mailto:team@pganalyze.com).
+[feel free to drop us a line](mailto:support@pganalyze.com).

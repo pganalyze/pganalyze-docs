@@ -73,7 +73,7 @@ the download password that you have been given when first setting up pganalyze E
 
 Note that this requires the container to be able to make an HTTPS connection (port 443) to
 `enterprise-license-check.pganalyze.com` - if this is not possible in your setup
-please [contact support](mailto:team@pganalyze.com) for workarounds.
+please [contact support](mailto:support@pganalyze.com) for workarounds.
 
 After setting the `LICENSE_KEY` you can verify using `rake enterprise:self_check`
 that the license verification works as expected.
