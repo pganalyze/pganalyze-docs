@@ -4,6 +4,34 @@
       "title": "Documentation",
       "path": "/docs"
     },
+    "api": {
+      "title": "pganalyze GraphQL API",
+      "path": "/docs/api"
+    },
+    "api/create-api-key": {
+      "title": "API: Creating an API key",
+      "path": "/docs/api/create-api-key"
+    },
+    "api/mutations": {
+      "title": "pganalyze GraphQL API Mutations",
+      "path": "/docs/api/mutations"
+    },
+    "api/mutations/addServer": {
+      "title": "addServer - Add a server to pganalyze Enterprise Edition",
+      "path": "/docs/api/mutations/addServer"
+    },
+    "api/queries": {
+      "title": "pganalyze GraphQL API Queries",
+      "path": "/docs/api/queries"
+    },
+    "api/queries/getIssues": {
+      "title": "getIssues - Get check-up issues and alerts",
+      "path": "/docs/api/queries/getIssues"
+    },
+    "api/queries/getQueryStats": {
+      "title": "getQueryStats - Export query statistics",
+      "path": "/docs/api/queries/getQueryStats"
+    },
     "enterprise": {
       "title": "pganalyze Enterprise Edition",
       "path": "/docs/enterprise"
@@ -107,10 +135,6 @@
     "guides/adjusting-work-mem": {
       "title": "Guide: Adjusting work_mem based on temporary file creation",
       "path": "/docs/guides/adjusting-work-mem"
-    },
-    "guides/exporting-query-statistics": {
-      "title": "Guide: Exporting query statistics using the pganalyze API",
-      "path": "/docs/guides/exporting-query-statistics"
     },
     "guides/monitoring-postgres-locks-using-log-insights": {
       "title": "Guide: Monitoring Postgres locks using Log Insights",

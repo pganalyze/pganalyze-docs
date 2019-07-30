@@ -28,11 +28,20 @@ title: 'Documentation'
   - [Google Auth Setup](/docs/enterprise/google-auth)
   - [Upgrading to new releases](/docs/enterprise/upgrade)
 
-* **[Guides](/docs/guides)**
+* **[pganalyze GraphQL API](/docs/api)**
+  - [Creating an API key](/docs/api/create-api-key)
+  - [Queries](/docs/api/queries)
+      * [getIssues - Get check-up issues and alerts](/docs/api/queries/getIssues)
+      * [getQueryStats - Export query statistics](/docs/api/queries/getQueryStats)
+  - [Mutations](/docs/api/mutations)
+      * [addServer - Add a server to pganalyze Enterprise Edition](/docs/api/mutations/addServer)
+
+<!--* **[Guides](/docs/guides)**
   - [Tuning checkpoint intervals to reduce I/O spikes](/docs/guides/tuning-checkpoint-intervals)
   - [Adjusting work_mem based on temporary file creation](/docs/guides/adjusting-work-mem)
   - [Exporting query statistics using the pganalyze API](/docs/guides/exporting-query-statistics)
   - [Monitoring Postgres locks using Log Insights](/docs/guides/monitoring-postgres-locks-using-log-insights)
+-->
 
 ---
 
