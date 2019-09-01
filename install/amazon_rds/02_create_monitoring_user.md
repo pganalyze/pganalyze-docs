@@ -4,7 +4,7 @@ backlink_href: /docs/install/amazon_rds
 backlink_title: 'Installation Guide (Amazon RDS)'
 ---
 
-For additional security, we recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
+We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
 
 Run the following whilst connected as an RDS superuser, replacing `mypassword` with one of your choosing:
 
