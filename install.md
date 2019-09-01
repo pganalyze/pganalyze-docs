@@ -27,3 +27,7 @@ Alternative installation options:
 * [Amazon Web Services](/docs/install/amazon_rds) (including [Amazon RDS for PostgreSQL](https://aws.amazon.com/rds/postgresql/))
 * [Heroku Postgres](/docs/install/heroku_postgres)
 * [Enterprise (On-Premise)](/docs/enterprise)
+
+---
+
+If you run into issues, take a look at the [Troubleshooting section](/docs/install/troubleshooting).
