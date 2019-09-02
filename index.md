@@ -3,6 +3,7 @@ title: 'Documentation'
 ---
 
 * **[Installation Guide](/docs/install)**
+  - [Troubleshooting](/docs/install/troubleshooting)
 
 <hr />
 
