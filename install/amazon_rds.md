@@ -8,7 +8,7 @@ This guide details setting up pganalyze for monitoring a Postgres instance runni
 on Amazon's [Relational Database Service (RDS) for PostgreSQL](https://aws.amazon.com/rds/postgresql/)
 as well as Amazon Aurora for PostgreSQL.
 
-If you're looking to monitor a PostgreSQL database running on your own EC2 instances, or anywhere else, use the self-hosted [Installation Guide](/docs/install).
+If you're looking to monitor a PostgreSQL database running on your own EC2 instances, or anywhere else, use the self-managed [Installation Guide](/docs/install).
 
 ---
 

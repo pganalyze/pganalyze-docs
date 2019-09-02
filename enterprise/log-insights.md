@@ -19,7 +19,7 @@ and follow one of these two guides:
 Once you have successfully completed this, you can change the collector setup
 to run on the database servers themselves, in order to have log access:
 
-## Setup collector on self-hosted database servers
+## Setup collector on self-managed database servers
 
 In order to collect log information from your database server you will need to install the collector on
 the server itself, and configure it.
@@ -42,6 +42,6 @@ api_key: your_pga_organization_api_key
 api_base_url: http://your-docker-container.internal
 ```
 
-Once this works successfully, you can enable [Log Insights for self-hosted servers](/docs/log-insights/setup/self-hosted).
+Once this works successfully, you can enable [Log Insights for self-managed servers](/docs/log-insights/setup/self-managed).
 
 You should then see data flow into the dashboard correctly.

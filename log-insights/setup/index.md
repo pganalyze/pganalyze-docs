@@ -8,7 +8,7 @@ See the following pages for details on how to install pganalyze Log Insights:
 
 * [Install on Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds)
 * [Install on Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
-* [Install on Self-Hosted Server](/docs/log-insights/setup/self-hosted)
+* [Install on Self-Managed Server](/docs/log-insights/setup/self-managed)
 
 In addition, there are settings you can tune on Postgres for optimal log output:
 

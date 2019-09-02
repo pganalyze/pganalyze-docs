@@ -212,9 +212,9 @@
       "title": "Log Insights: Install on Heroku Postgres",
       "path": "/docs/log-insights/setup/heroku-postgres"
     },
-    "log-insights/setup/self-hosted": {
-      "title": "Log Insights: Install on Self-Hosted Server",
-      "path": "/docs/log-insights/setup/self-hosted"
+    "log-insights/setup/self-managed": {
+      "title": "Log Insights: Install on Self-Managed Server",
+      "path": "/docs/log-insights/setup/self-managed"
     },
     "log-insights/setup/tuning-log-config-settings": {
       "title": "Log Insights: Tuning Log Config Settings",

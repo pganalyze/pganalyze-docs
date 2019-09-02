@@ -1,5 +1,5 @@
 ---
-title: 'Log Insights: Install on Self-Hosted Server'
+title: 'Log Insights: Install on Self-Managed Server'
 backlink_href: /docs/log-insights/setup
 backlink_title: 'Log Insights: Setup'
 ---
