@@ -4,7 +4,7 @@ backlink_href: /docs/explain
 backlink_title: 'Documentation: EXPLAIN - Overview'
 ---
 
-* [Disk Sorts](/docs/explain/insights/disk-sorts)
+* [Disk Sort](/docs/explain/insights/disk-sort)
 * [Expensive](/docs/explain/insights/expensive)
 * [Hash Batches](/docs/explain/insights/hash-batches)
 * [Inefficient Index](/docs/explain/insights/inefficient-index)
