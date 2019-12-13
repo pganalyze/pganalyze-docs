@@ -22,6 +22,21 @@ title: 'Documentation'
       * [Constraint Violations](/docs/log-insights/constraint-violations)
       * [Application / User Errors](/docs/log-insights/app-errors)
 
+* **[EXPLAIN](/docs/explain)**
+  - [Insights](/docs/explain/insights)
+      * [Disk Sorts](/docs/explain/insights/disk-sorts)
+      * [Expensive](/docs/explain/insights/expensive)
+      * [Hash Batches](/docs/explain/insights/hash-batches)
+      * [Inefficient Index](/docs/explain/insights/inefficient-index)
+      * [Large Offset](/docs/explain/insights/large-offset)
+      * [Lossy Bitmaps](/docs/explain/insights/lossy-bitmaps)
+      * [Mis-Estimate](/docs/explain/insights/mis-estimate)
+      * [Slow Scan](/docs/explain/insights/slow-scan)
+      * [Stale Stats](/docs/explain/insights/stale-stats)
+  - [Scan nodes](/docs/explain/scan-nodes)
+  - [Join nodes](/docs/explain/join-nodes)
+  - [Other nodes](/docs/explain/other-nodes)
+
 * **[Enterprise Edition](/docs/enterprise)**
   - [Initial Setup](/docs/enterprise/setup)
   - [Release Changelog](/docs/enterprise/releases)

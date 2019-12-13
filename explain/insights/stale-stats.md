@@ -1,0 +1,21 @@
+---
+explain_insight: 'stale stats'
+title: 'EXPLAIN - Insights: Stale Stats'
+backlink_href: /docs/explain/insights
+backlink_title: 'Documentation: EXPLAIN - Insights'
+---
+
+**Description:**
+
+Postgres relies on statistics about your schema in order to plan queries effectively. Statistics like most-common values, distribution of values (is it heterogenous or skewed?), average row size, what proportion of values is null, and others can be critical to getting a good query plan.
+
+**Recommended Action:**
+
+Statistics are gathered by running the [ANALYZE](https://www.postgresql.org/docs/current/sql-analyze.html) command, either manually or through the [autovacuum](https://www.postgresql.org/docs/current/routine-vacuuming.html#AUTOVACUUM) process. You can check when your tables were last vacuumed by visiting the Schema Statistics / Tables / VACUUM/ANALYZE Activity page in pganalyze or running the following query in your database:
+
+```
+SELECT schemaname, relname, last_analyze, last_autoanalyze
+  FROM pg_stat_user_tables;
+```
+
+Note that if autovacuum is not gathering stats reliably, you should consider changing autovacuum settings to be more aggressive (by default, autovacuum will limit its activity to avoid interfering with your query workload, but if it’s de-prioritizing itself too much you may have chronically stale statistics and runaway dead tuple bloat, which can affect performance). If you make bulk changes to your tables, a manual ANALYZE or VACUUM ANALYZE may also be prudent to ensure statistics are updated right away.

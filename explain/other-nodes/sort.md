@@ -1,0 +1,18 @@
+---
+plan_node: Sort
+short_description: Takes data from a child node and produces sorted output, using either memory if available (depending on the work_mem setting) or “spilling” to disk. This is obviously necessary if the output needs to be sorted, though sometimes the input can be scanned in an already-sorted manner instead—e.g., if scanning a btree index compatible with the desired sort order.
+important_fields: Sort Method, Sort Space Type, Sort Space Used
+title: EXPLAIN - Sort
+backlink_href: /docs/explain/other-nodes
+backlink_title: 'Documentation: EXPLAIN - Other Nodes'
+---
+
+**Description:**
+
+Takes data from a child node and produces sorted output, using either memory if available (depending on the work_mem setting) or “spilling” to disk. This is obviously necessary if the output needs to be sorted, though sometimes the input can be scanned in an already-sorted manner instead—e.g., if scanning a btree index compatible with the desired sort order.
+
+**Important Fields:**
+
+- Sort Method
+- Sort Space Type
+- Sort Space Used
