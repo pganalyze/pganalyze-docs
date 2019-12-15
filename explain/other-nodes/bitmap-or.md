@@ -1,6 +1,6 @@
 ---
 plan_node: Bitmap Or
-short_description: Generate the union of the results of sub-plans.
+short_description: Calculates the union of two physical row location bitmaps.
 important_fields:
 title: EXPLAIN - Bitmap Or
 backlink_href: /docs/explain/other-nodes

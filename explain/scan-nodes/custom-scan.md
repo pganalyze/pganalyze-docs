@@ -1,6 +1,6 @@
 ---
 plan_node: Custom Scan
-short_description: Scan using a custom scan implementation, which can be added as a separate module and plug into standard Postgres query planning and execution.
+short_description: Scans the database object using a custom scan implementation from an external module.
 important_fields:
 title: EXPLAIN - Custom Scan
 backlink_href: /docs/explain/scan-nodes

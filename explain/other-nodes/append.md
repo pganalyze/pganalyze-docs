@@ -1,6 +1,6 @@
 ---
 plan_node: Append
-short_description: Generate the concatenation of the results of sub-plans. For example, this can be used for a UNION ALL query.
+short_description: Combines the results of its children.
 important_fields:
 title: EXPLAIN - Append
 backlink_href: /docs/explain/other-nodes
