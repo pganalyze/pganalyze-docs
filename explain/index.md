@@ -39,3 +39,6 @@ Node types can be broadly considered in three categories:
 
 pganalyze includes built-in visualization of query plans:
 
+![Plan Visualization Example](visualization.png)
+
+Visualizations are available for all plans collected using [auto_explain](/docs/log-insights/setup/auto_explain).
