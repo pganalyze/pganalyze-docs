@@ -1,5 +1,5 @@
 ---
-plan_node: Bitmap And
+plan_node: BitmapAnd
 short_description: Calculates the intersection of two physical row location bitmaps.
 important_fields:
 title: EXPLAIN - Bitmap And

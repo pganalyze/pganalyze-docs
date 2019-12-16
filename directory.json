@@ -1350,11 +1350,6 @@
       "importantFields": [],
       "path": "/docs/explain/other-nodes/append"
     },
-    "Bitmap And": {
-      "shortDescription": "Calculates the intersection of two physical row location bitmaps.",
-      "importantFields": [],
-      "path": "/docs/explain/other-nodes/bitmap-and"
-    },
     "Bitmap Heap Scan": {
       "shortDescription": "Reads a Bitmap of physical row locations and fetches the data referenced in it.",
       "importantFields": [
@@ -1374,7 +1369,12 @@
       ],
       "path": "/docs/explain/scan-nodes/bitmap-index-scan"
     },
-    "Bitmap Or": {
+    "BitmapAnd": {
+      "shortDescription": "Calculates the intersection of two physical row location bitmaps.",
+      "importantFields": [],
+      "path": "/docs/explain/other-nodes/bitmap-and"
+    },
+    "BitmapOr": {
       "shortDescription": "Calculates the union of two physical row location bitmaps.",
       "importantFields": [],
       "path": "/docs/explain/other-nodes/bitmap-or"

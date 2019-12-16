@@ -1,5 +1,5 @@
 ---
-plan_node: Bitmap Or
+plan_node: BitmapOr
 short_description: Calculates the union of two physical row location bitmaps.
 important_fields:
 title: EXPLAIN - Bitmap Or
