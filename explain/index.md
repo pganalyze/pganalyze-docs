@@ -15,15 +15,15 @@ Wondering how you should optimize a particular query?
 pganalyze automatically collects queries using **[auto_explain](/docs/log-insights/setup/auto_explain)** and
 analyses query execution plans to find the most important insights:
 
-* [Disk Sorts](/docs/explain/insights/disk-sorts)
-* [Expensive](/docs/explain/insights/expensive)
-* [Hash Batches](/docs/explain/insights/hash-batches)
-* [Inefficient Index](/docs/explain/insights/inefficient-index)
-* [Large Offset](/docs/explain/insights/large-offset)
-* [Lossy Bitmaps](/docs/explain/insights/lossy-bitmaps)
-* [Mis-Estimate](/docs/explain/insights/mis-estimate)
-* [Slow Scan](/docs/explain/insights/slow-scan)
-* [Stale Stats](/docs/explain/insights/stale-stats)
+* **[Disk Sort](/docs/explain/insights/disk-sort)**<br />When a Sort operation spills to disk due to low work_mem settings
+* **[Expensive Nodes](/docs/explain/insights/expensive)**<br />When particular nodes are more expensive than others in a plan
+* **[Hash Batches](/docs/explain/insights/hash-batches)**<br />When a Hash operation spilles to disk due to low work_mem settings
+* **[Inefficient Index](/docs/explain/insights/inefficient-index)**<br />When an index is inefficient because its loading too much data and then filters rows without an index
+* **[Large Offset](/docs/explain/insights/large-offset)**<br />When OFFSET is used for pagination, instead of an efficient method such as keyset-based pagination
+* **[Lossy Bitmaps](/docs/explain/insights/lossy-bitmaps)**<br />Bitmap Heap Scan that utilizes a lossy bitmap due to low work_mem 
+* **[Mis-Estimate](/docs/explain/insights/mis-estimate)**<br />The Postgres planner mis-estimated the number of rows a particular plan node returns
+* **[Slow Scan](/docs/explain/insights/slow-scan)**<br />Sequential Scan that removed a significant number of rows (an index would have helped to avoid this)
+* **[Stale Stats](/docs/explain/insights/stale-stats)**<br />The table referenced has not had an `ANALYZE` run recently (potentially leading to inefficient plans)
 
 ## Postgres Plan Nodes
 
