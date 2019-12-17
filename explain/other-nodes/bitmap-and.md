@@ -9,4 +9,6 @@ backlink_title: 'Documentation: EXPLAIN - Other Nodes'
 
 **Description:**
 
-Generate the intersection of the results of sub-plans.
+Generate a bitmap of the intersection of two physical row location bitmaps (that is, only locations that occur in both bitmaps). The bitmaps can come from Bitmap Index Scans or other BitmapOr or BitmapAnd child nodes.
+
+Note that, due to internal implementation limitations, BitmapAnd nodes do not track the number of rows they produce. Their row count will always be listed as "Unknown" and they will not be flagged as mis-estimates.
