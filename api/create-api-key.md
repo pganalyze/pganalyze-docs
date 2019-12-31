@@ -71,13 +71,8 @@ The result will be a JSON document that looks like this:
 ## Creating a read-write API token (pganalyze Enterprise Edition)
 
 In order to create a read-write API token for use with pganalyze Enterprise Edition,
-you will first need to create a read API token, and then change it into a read-write
-token by running the following SQL on the pganalyze database:
+make sure you run at least the [2019.04.1](/docs/enterprise/releases/2019-04-1) and then use the "Create Read-Write API Key" button.
 
-```
-UPDATE api_keys SET access_type = 1 WHERE token = '57RXFYDVGLYBMGWS' AND access_type = 2;
-```
-
-After running this SQL you should see the key marked as read-write in the UI:
+You should then see the new key marked as read-write in the UI:
 
 ![](api_keys_read_write.png)
