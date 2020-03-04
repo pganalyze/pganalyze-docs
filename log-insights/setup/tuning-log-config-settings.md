@@ -118,6 +118,10 @@ you can enable logging of all DDL statements:
 log_statement = ddl
 ```
 
+**Warning:** Enabling this also causes `ALTER USER` statements to be logged. Make sure that
+you run a session-local `SET log_statement = none` before running any statement that contains
+a password.
+
 These will then show up as [T83: Statement notice](/docs/log-insights/statements/T83).
 
 Note that there is also a setting that would log every single query (`log_statement = all`)
