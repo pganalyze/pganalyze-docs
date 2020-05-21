@@ -103,14 +103,19 @@ It means that the currently configured `log_line_prefix` is not supported by the
 
 Currently we support the following log\_line\_prefix settings when using Postgres built-in logging (`log_destination = stderr`):
 
-* **`log_line_prefix = '%m [%p] %q[user=%u,db=%d,app=%a] '`**
+* **`log_line_prefix = '%m [%p] %q[user=%u,db=%d,app=%a] '`** (recommended)
 * `log_line_prefix = '%m [%p] %q[user=%u,db=%d,app=%a,host=%h] '`
 * `log_line_prefix = '%t:%r:%u@%d:[%p]:'`
-* `log_line_prefix = '%m [%p][%v] : [%l-1] %q[app=%a] '`
 * `log_line_prefix = '%t [%p-%l] %q%u@%d '`
-* `log_line_prefix = '%m [%p] '`
+* `log_line_prefix = '%t [%p]: [%l-1] user=%u,db=%d - PG-%e '`
+* `log_line_prefix = '%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '`
+* `log_line_prefix = '%t [%p]: [%l-1] [trx_id=%x] user=%u,db=%d '`
 
-If you're unsure, we recommend using the first `log_line_prefix` in the list above.
+The following are supported but not recommended, since they do not include the user name and database name:
+
+* `log_line_prefix = '%m %r %u %a [%c] [%p] '`
+* `log_line_prefix = '%m [%p][%v] : [%l-1] %q[app=%a] '`
+* `log_line_prefix = '%m [%p] '`
 
 We also support the parsing of `rsyslogd` log lines that look like the following default template, with an empty log\_line\_prefix:
 
