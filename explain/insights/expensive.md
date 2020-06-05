@@ -7,7 +7,7 @@ backlink_title: 'Documentation: EXPLAIN - Insights'
 
 **Description:**
 
-Postgres will often spend most of its time on a query in a small set of plan nodes. A slow plan  This insight identifies the most expensive nodes to guide optimization. Even if other insights point to different nodes, you should probably focus on the most expensive ones first: there is little to be gained by optimizing an inefficiency unless it is also a bottleneck.
+Postgres will often spend most of its time on a query in a small set of plan nodes. This insight identifies the most expensive nodes to guide optimization. Even if other insights point to different nodes, you should probably focus on the most expensive ones first: there is little to be gained by optimizing an inefficiency unless it is also a bottleneck.
 
 **Recommended Action:**
 
