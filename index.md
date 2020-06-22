@@ -28,6 +28,7 @@ title: 'Documentation'
       * [Expensive](/docs/explain/insights/expensive)
       * [Hash Batches](/docs/explain/insights/hash-batches)
       * [Inefficient Index](/docs/explain/insights/inefficient-index)
+      * [I/O Heavy](/docs/explain/insights/io-heavy)
       * [Large Offset](/docs/explain/insights/large-offset)
       * [Lossy Bitmaps](/docs/explain/insights/lossy-bitmaps)
       * [Mis-Estimate](/docs/explain/insights/mis-estimate)
