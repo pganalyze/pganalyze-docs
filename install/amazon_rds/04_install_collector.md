@@ -25,11 +25,11 @@ It should look like this when reviewing:
 
 ![](rds_iam_role.png)
 
-Start a new `t2.nano` instance, Amazon Linux based, that has this role applied:
+Start a new `t2.nano` instance, Amazon Linux 2 based, that has this role applied:
 
 ![](rds_new_instance_role.png)
 
-Then follow the step to install the collector on Amazon Linux based instances.
+Then follow the step to install the collector on Amazon Linux 2 based instances.
 
 ## Variant B: Giving access to an existing EC2 instance
 
