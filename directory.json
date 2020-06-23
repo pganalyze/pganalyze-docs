@@ -1630,6 +1630,9 @@
     "hash batches": {
       "path": "/docs/explain/insights/hash-batches"
     },
+    "i/o-heavy": {
+      "path": "/docs/explain/insights/io-heavy"
+    },
     "inefficient index": {
       "path": "/docs/explain/insights/inefficient-index"
     },
