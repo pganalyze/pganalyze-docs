@@ -8,12 +8,47 @@ First time looking at **EXPLAIN**, or trying to understand how query plans work?
 
 Start here: **[The Basics of Postgres Query Planning](/docs/explain/basics-of-postgres-query-planning)**
 
+## Query Plan Visualization
+
+pganalyze includes built-in visualization of query plans:
+
+![Plan Visualization Example](visualization.png)
+
+Visualizations are available for all plans collected automatically:
+
+## How to collect EXPLAIN plans automatically
+
+pganalyze integrates with two main mechanism for collecting EXPLAIN plans automatically:
+
+* **Log-based EXPLAIN:** pganalyze collector runs EXPLAIN (without ANALYZE) on all queries logged based on `log_min_duration_statement`, after the query has completed
+* **auto_explain:** Postgres collects EXPLAIN (or EXPLAIN ANALYZE) data as part of query processing, based on `auto_explain.log_min_duration`, reflecting the actual plan that was used
+
+Generally we recommend utilizing **auto_explain** where available, as it provides higher data quality.
+
+## Supported platforms & setup
+
+Platform         | Log-based EXPLAIN |    auto_explain   |
+-----------------|-------------------|-------------------|
+Amazon RDS       | Yes               | Yes (Recommended) |
+Azure Database   | Yes               | No                |
+Google Cloud SQL | Yes               | No                |
+Heroku Postgres  | Yes               | No                |
+Self-managed VM  | Yes               | Yes (Recommended) |
+Kubernetes       | No                | No                |
+Other PaaS       | No                | No                |
+
+We are constantly evaluating new platform to support - please [reach out](/contact) if you're missing an integration, to help us prioritize.
+
+Learn more how to set up the integration:
+
+* [Setup Log-based EXPLAIN with pganalyze](/docs/log-insights/setup/log_explain)
+* [Setup auto_explain with pganalyze](/docs/log-insights/setup/auto_explain)
+
 ## pganalyze EXPLAIN Insights
 
 Wondering how you should optimize a particular query?
 
-pganalyze automatically collects queries using **[auto_explain](/docs/log-insights/setup/auto_explain)** and
-analyses query execution plans to find the most important insights:
+pganalyze automatically analyses EXPLAIN plans to find the most important insights:
 
 * **[Disk Sort](/docs/explain/insights/disk-sort)**<br />When a Sort operation spills to disk due to low work_mem settings
 * **[Expensive Nodes](/docs/explain/insights/expensive)**<br />When particular nodes are more expensive than others in a plan
@@ -34,11 +69,3 @@ Node types can be broadly considered in three categories:
 * [Scan nodes](/docs/explain/scan-nodes): Produce rows from underlying table data
 * [Join nodes](/docs/explain/join-nodes): Combine rows from child nodes
 * [Other nodes](/docs/explain/other-nodes): Broad variety of functionality (e.g. aggregation, limiting, grouping, etc)
-
-## Query Plan Visualization
-
-pganalyze includes built-in visualization of query plans:
-
-![Plan Visualization Example](visualization.png)
-
-Visualizations are available for all plans collected using [auto_explain](/docs/log-insights/setup/auto_explain).

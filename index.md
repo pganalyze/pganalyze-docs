@@ -9,8 +9,14 @@ title: 'Documentation'
 
 * **[Log Insights](/docs/log-insights)**
   - [Setup](/docs/log-insights/setup)
+      * [Collect logs on Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds)
+      * [Collect logs on Azure Database for PostgreSQL](/docs/log-insights/setup/azure-database)
+      * [Collect logs on Google Cloud SQL](/docs/log-insights/setup/google-cloud-sql)
+      * [Collect logs on Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
+      * [Collect logs on a Self-managed Postgres Server](/docs/log-insights/setup/self-managed)
       * [Tuning Log Config Settings](/docs/log-insights/setup/tuning-log-config-settings)
-      * [Collect Postgres EXPLAIN plans using auto_explain](/docs/log-insights/setup/auto_explain)
+      * [Log-based EXPLAIN: Automatically EXPLAIN slow queries in Postgres](/docs/log-insights/setup/log_explain)
+      * [auto\_explain: Collect Postgres EXPLAIN plans using auto_explain](/docs/log-insights/setup/auto_explain)
   - [Classifications](/docs/log-insights)
       * [Server](/docs/log-insights/server)
       * [Connections](/docs/log-insights/connections)
