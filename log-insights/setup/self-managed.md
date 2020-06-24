@@ -6,15 +6,16 @@ backlink_title: 'Log Insights: Setup'
 
 This guide helps you set up the pganalyze Log Insights feature for a self-hosted system, i.e. one that is managed and configured by yourself, instead of one that is provided as a service by a cloud provider.
 
+## Installation steps
 Note that your account needs to be on the **Scale** plan or higher to be able to use Log Insights, or you need to be in your initial 14-day trial period.
 
-## 1. Update pganalyze collector (if needed)
+### 1. Update pganalyze collector (if needed)
 
 Make sure you are running an up-to-date pganalyze-collector version, by running `yum update pganalyze-collector` or `apt-get upgrade pganalyze-collector`.
 
 Also make sure the collector is running on your database server directly, and not on another system.
 
-## 2. Locate your PostgreSQL log file / directory
+### 2. Locate your PostgreSQL log file / directory
 
 Log Insights works by continuously tailing your local Postgres log files, and classifying log lines, and submitting log data and statistics to pganalyze.
 
@@ -37,7 +38,7 @@ In some cases where discovery doesn't work you might have to review in more deta
 
 Note that both individual files and directories are supported for `db_log_location`.
 
-## 3. Adjust configuration and run test
+### 3. Adjust configuration and run test
 
 We can now configure the log directory for the collector, by adding the `db_log_location` setting, so the configuration file looks similar to this:
 
@@ -74,7 +75,7 @@ In the successful case, the log output will look like this:
 
 There are a few error cases, in particular permission related ones for the "log test with reduced privileges", which you will likely encounter. They are documented at the end of this page.
 
-## 5. Reload your collector
+### 4. Reload your collector
 
 Once the log test is successful you need to reload the collector for the new configuration to take effect:
 
@@ -86,9 +87,9 @@ After this you should see data showing up in the "Log Insights" tab in pganalyze
 
 ![](log_insights_screenshot.png)
 
----
+## Troubleshooting
 
-## Collector test error: "log\_line\_prefix not supported"
+### Collector test error: "log\_line\_prefix not supported"
 
 When you see output like this:
 
@@ -125,7 +126,7 @@ Feb  2 09:04:39 ip-172-31-14-41 postgres[7395]: [3-1] LOG:  database system is r
 
 If you have a log\_line\_prefix config thats not covered, please reach out to us, as it is easy for us to add additional parsing support.
 
-## Collector test error: "permission denied"
+### Collector test error: "permission denied"
 
 When you see output like this:
 
@@ -144,7 +145,9 @@ It means that the log test was able to run successfully as a root user, but coul
 
 See "Allowing access when using Postgres built-in logging" or "Allowing access when using rsyslogd built-in logging" below for details on how to fix this.
 
-## Allowing access when using Postgres built-in logging
+## Special setups
+
+### Allowing access when using Postgres built-in logging
 
 In the case of built-in Postgres logging you will likely run into the issue that
 log files are by default written in a way that prevents users other than the
@@ -175,7 +178,7 @@ log_file_mode = 0640
 
 Reload Postgres afterwards, as well as **restart** the collector background process, and then re-run the permission test as described in Step 3.
 
-## Allowing access when using rsyslogd built-in logging
+### Allowing access when using rsyslogd built-in logging
 
 For rsyslogd and other syslog daemons, the issue can often be that new log files
 are created with permissions that don't allow the pganalyze user access.

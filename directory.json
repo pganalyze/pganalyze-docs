@@ -236,9 +236,21 @@
       "title": "Log Insights: Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/log-insights/setup/auto_explain"
     },
+    "log-insights/setup/azure-database": {
+      "title": "Log Insights: Install on Azure Database for PostgreSQL",
+      "path": "/docs/log-insights/setup/azure-database"
+    },
+    "log-insights/setup/google-cloud-sql": {
+      "title": "Log Insights: Install on Google Cloud SQL",
+      "path": "/docs/log-insights/setup/google-cloud-sql"
+    },
     "log-insights/setup/heroku-postgres": {
       "title": "Log Insights: Install on Heroku Postgres",
       "path": "/docs/log-insights/setup/heroku-postgres"
+    },
+    "log-insights/setup/log_explain": {
+      "title": "Log Insights: Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres",
+      "path": "/docs/log-insights/setup/log_explain"
     },
     "log-insights/setup/self-managed": {
       "title": "Log Insights: Install on Self-Managed Server",

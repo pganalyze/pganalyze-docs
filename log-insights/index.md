@@ -10,16 +10,24 @@ Welcome to pganalyze **Log Insights** - the best way to monitor and analyze your
 PostgreSQL log files, and give you insights into how to tune your database better,
 or to explain why your database might be slow at a given moment.
 
-## Setup
+## Setting up Log Insights
+
+To start, follow the platform-specific setup steps:
 
 * [Install on Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds)
+* [Install on Azure Database for PostgreSQL](/docs/log-insights/setup/azure-database)
+* [Install on Google Cloud SQL](/docs/log-insights/setup/google-cloud-sql)
 * [Install on Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
 * [Install on Self-Managed Server](/docs/log-insights/setup/self-managed)
 
-## Configuration Tuning
+We recommend tuning configuration settings to get the most important log events logged:
 
 * [Tuning Log Config Settings](/docs/log-insights/setup/tuning-log-config-settings)
-* [Collect Postgres EXPLAIN plans using auto_explain](/docs/log-insights/setup/auto_explain)
+
+In addition, pganalyze Log Insights can automatically collect EXPLAIN plans for you through two mechanisms:
+
+* [Log-based EXPLAIN: Automatically EXPLAIN slow queries in Postgres](/docs/log-insights/setup/log_explain)
+* [auto\_explain: Collect Postgres EXPLAIN plans using auto_explain](/docs/log-insights/setup/auto_explain)
 
 ## Log Events
 
