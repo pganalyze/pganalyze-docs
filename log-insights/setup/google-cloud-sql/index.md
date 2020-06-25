@@ -6,6 +6,9 @@ backlink_title: 'Log Insights: Setup'
 
 These instructions guide you how to enable [pganalyze Log Insights](/docs/log-insights) for Google Cloud SQL.
 
+```toc
+```
+
 ## Installation steps
 
 ### Pre-requisites
@@ -59,7 +62,7 @@ Local processes on the VM, such as the pganalyze collector, can now access APIs 
 
 ### Step 4: Configure pganalyze collector
 
-Login to your virtual machine, and add the following configuration setting:
+Sign in to your virtual machine, and add the following configuration setting:
 
 ```
 gcp_pubsub_subscription: projects/PROJECT_ID/subscriptions/SUBSCRIPTION_ID
