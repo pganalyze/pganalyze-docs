@@ -8,9 +8,13 @@ In order to configure Log Insights for Amazon RDS and Amazon Aurora, please firs
 make sure that you have setup the [IAM policy](/docs/install/amazon_rds/03_setup_iam_policy) as described in the RDS installation guide.
 
 Note that you will also need to be on the **Scale** plan, or be in your 14-day trial period.
+
+```toc
+```
+
 ## Installation steps
 
-### 1. Ensure your collector can access the AWS APIs
+### Step 1: Ensure your collector can access the AWS APIs
 
 The collector will only collect log data when you have an Amazon RDS host name specified (the instance name is auto-detected),
 or you manually specify the `aws_db_instance_id` and `aws_region` settings.
@@ -34,7 +38,7 @@ aws_access_key_id: mykey
 aws_secret_access_key: mysecret
 ```
 
-### 2. Test log download
+### Step 2: Test log download
 
 Now you can test whether the collector can actually access your RDS logs correctly,
 by running the following:
@@ -63,7 +67,7 @@ pganalyze-collector --test -v
 
 In case you get permission errors, make sure your IAM user has the [appropriate policy associated](/docs/install/amazon_rds/03_setup_iam_policy).
 
-### 3. Reload the collector
+### Step 3: Reload the collector
 
 In order to make this change permanent, reload the collector:
 

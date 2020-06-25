@@ -23,7 +23,7 @@ pganalyze integrates with two main mechanism for collecting EXPLAIN plans automa
 * **Log-based EXPLAIN:** pganalyze collector runs EXPLAIN (without ANALYZE) on all queries logged based on `log_min_duration_statement`, after the query has completed
 * **auto_explain:** Postgres collects EXPLAIN (or EXPLAIN ANALYZE) data as part of query processing, based on `auto_explain.log_min_duration`, reflecting the actual plan that was used
 
-Generally we recommend utilizing **auto_explain** where available, as it provides higher data quality.
+Generally we recommend utilizing **auto_explain** where available, as it provides higher data quality. Log-based EXPLAIN is not guaranteed to show the same plan that was executed, and cannot show execution metrics like I/O timing or buffer usage.
 
 ## Supported platforms & setup
 
@@ -41,14 +41,14 @@ We are constantly evaluating new platform to support - please [reach out](/conta
 
 Learn more how to set up the integration:
 
-* [Setup Log-based EXPLAIN with pganalyze](/docs/log-insights/setup/log_explain)
-* [Setup auto_explain with pganalyze](/docs/log-insights/setup/auto_explain)
+* [Set up Log-based EXPLAIN with pganalyze](/docs/log-insights/setup/log_explain)
+* [Set up auto_explain with pganalyze](/docs/log-insights/setup/auto_explain)
 
 ## pganalyze EXPLAIN Insights
 
 Wondering how you should optimize a particular query?
 
-pganalyze automatically analyses EXPLAIN plans to find the most important insights:
+pganalyze automatically analyzes EXPLAIN plans to find the most important insights:
 
 * **[Disk Sort](/docs/explain/insights/disk-sort)**<br />When a Sort operation spills to disk due to low work_mem settings
 * **[Expensive Nodes](/docs/explain/insights/expensive)**<br />When particular nodes are more expensive than others in a plan

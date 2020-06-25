@@ -12,9 +12,12 @@ Note that this also assumes you are on the pganalyze **Scale** plan, or are in y
 
 Log output support is only available on Heroku Postgres Standard, Premium and higher plans.
 
+```toc
+```
+
 ## Installation steps
 
-### 1. Add log drain to your source application
+### Step 1: Add log drain to your source application
 
 Log output for Heroku Postgres databases is sent to the application that the
 database is attached to, so we need to add a log drain to that application that
@@ -48,7 +51,7 @@ heroku drains:add https://testapp-pganalyze-collector.herokuapp.com/logs/TESTAPP
 
 Make sure to replace `testapp-pganalyze-collector` with the name of your own collector application that you've deployed in your Heroku account.
 
-### 2. Verify that log drain is working
+### Step 2: Verify that log drain is working
 
 First you can verify whether the log drain data is coming by looking at the router
 logs of the collector app:
@@ -61,7 +64,7 @@ heroku logs -a testapp-pganalyze-collector
 2018-05-20T21:20:40.993026+00:00 heroku[router]: at=info method=POST path="/logs/TESTAPP_URL" host=testapp-pganalyze-collector.herokuapp.com request_id=564088b7-05a9-4def-8aa0-3861b25f9334 fwd="55.22.33.44" dyno=web.1 connect=0ms service=0ms status=200 bytes=135 protocol=https
 ```
 
-### 3. Restart collector
+### Step 3: Restart collector
 
 To finish, restart the collector app:
 

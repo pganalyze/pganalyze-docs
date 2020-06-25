@@ -6,6 +6,9 @@ backlink_title: 'Log Insights: Setup'
 
 These instructions guide you how to enable [pganalyze Log Insights](/docs/log-insights) for Azure Database for PostgreSQL.
 
+```toc
+```
+
 ## Installation steps
 
 ### Pre-requisites
@@ -23,7 +26,7 @@ After the Managed Identity is created, assign it to your virtual machine:
 
 Now the pganalyze collector running inside the virtual machine will be able to call Azure REST APIs using the Managed Identity.
 
-Note: If you would like to use an Azure AD application instead of a Managed Identity, see instructions towards the end of this document
+**Note:** Alternatively, instead of using Managed Identity, you can also use an [Azure AD application](#setting-up-authentication-using-azure-ad-application-alternative-to-managed-identity).
 
 ### Step 2: Setup Azure Event Hub
 
@@ -52,7 +55,7 @@ To send logs to the Event Hub, within your database server, go to Diagnostic set
 
 ![Screenshot of adding PostgreSQL Diagnostic Setting in Azure Portal](add-diagnostic-setting.png)
 
-Save the new diagnostic setting. Now our Event Hub should be receiving Postgres log messages.
+Save the new diagnostic setting. Now your Event Hub should be receiving Postgres log messages.
 
 ### Step 4: Adjust your Postgres log line prefix
 
@@ -64,11 +67,11 @@ log_line_prefix = '%m [%p] %q[user=%u,db=%d,app=%a] '
 
 You can change this setting in the "Server parameters" section of your database. Please note the trailing space in the parameter value, which is required.
 
-The correct setting for `log_line_prefix` ensures that the collector can associate each log line to the correct PID, database and username.
+The correct setting for `log_line_prefix` ensures that the collector can associate each log line to the correct session, database and username.
 
 ### Step 5: Configure collector
 
-To complete the setup, we can now go to our virtual machine that is running the collector, and enable access to the Azure Event Hub.
+To complete the setup, we can now go to your virtual machine that is running the collector, and enable access to the Azure Event Hub.
 
 We go into the `pganalyze-collector.conf` configuration file, and add these two settings. Note the values need to match what you created in Step 2:
 
@@ -77,7 +80,7 @@ azure_eventhub_namespace: pganalyze-test
 azure_eventhub_name: postgres
 ```
 
-Thanks to the Managed Identity thats assigned to the VM, we don't need to specify any credentials here.
+Thanks to the Managed Identity that's assigned to the VM, we don't need to specify any credentials here.
 
 Run the collector test to verify the setup works:
 
@@ -143,7 +146,7 @@ Follow the same steps as above, but instead of creating a Managed Identity, foll
 1. Go to "Azure Active Directory" in the Azure Portal
 2. Go to "App registrations"
 3. Register a new application with a name of your choice, set supported account type to "Accounts in this organizational directory only", and leave Redirect URI as is
-4. Go to "Certificates & secrets" and create either a client secret, or upload a certificate
+4. Go to "Certificates & secrets" and either create a client secret, or upload a certificate
 
 When specifying the access permissions, select the Azure AD application, instead of the Managed Identity.
 
