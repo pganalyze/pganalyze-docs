@@ -1,7 +1,7 @@
 ---
-title: 'Log Insights: Collect Postgres EXPLAIN plans using auto_explain'
-backlink_href: /docs/log-insights/setup
-backlink_title: 'Log Insights: Setup'
+title: 'Collect Postgres EXPLAIN plans using auto_explain'
+backlink_href: /docs/explain/setup
+backlink_title: 'Set up automatic EXPLAIN plan collection'
 ---
 
 We support extraction of EXPLAIN plans from `auto_explain` output. Please

@@ -90,7 +90,7 @@ I Successfully reloaded pganalyze collector (PID 123)
 
 You will start seeing log data in pganalyze Log Insights within a few minutes.
 
-We recommend setting up [Log-based EXPLAIN](/docs/log-insights/setup/log_explain) as follow-up step, to automatically EXPLAIN slow queries in Postgres.
+We recommend setting up [Log-based EXPLAIN](/docs/explain/setup/log_explain) as follow-up step, to automatically EXPLAIN slow queries in Postgres.
 
 ## Troubleshooting
 
