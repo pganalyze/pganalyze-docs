@@ -1,10 +1,10 @@
 ---
-title: 'Log Insights: Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres'
-backlink_href: /docs/log-insights/setup
-backlink_title: 'Log Insights: Setup'
+title: 'Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres'
+backlink_href: /docs/explain/setup
+backlink_title: 'Set up automatic EXPLAIN plan collection'
 ---
 
-EXPLAIN plans are essential to understand why exactly a query is slow. We generally recommend using [auto_explain](/docs/log-insights/setup/auto_explain) to collect EXPLAIN plans automatically.
+EXPLAIN plans are essential to understand why exactly a query is slow. We generally recommend using [auto_explain](/docs/explain/setup/auto_explain) to collect EXPLAIN plans automatically.
 
 However, not all environments support the `auto_explain` extension (bundled with Postgres), and therefore we support an alternative mechanism.
 

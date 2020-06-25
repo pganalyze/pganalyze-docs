@@ -14,35 +14,11 @@ pganalyze includes built-in visualization of query plans:
 
 ![Plan Visualization Example](visualization.png)
 
-Visualizations are available for all plans collected automatically:
+Visualizations are available for all plans collected automatically.
 
-## How to collect EXPLAIN plans automatically
+## Set up automatic EXPLAIN plan collection
 
-pganalyze integrates with two main mechanism for collecting EXPLAIN plans automatically:
-
-* **Log-based EXPLAIN:** pganalyze collector runs EXPLAIN (without ANALYZE) on all queries logged based on `log_min_duration_statement`, after the query has completed
-* **auto_explain:** Postgres collects EXPLAIN (or EXPLAIN ANALYZE) data as part of query processing, based on `auto_explain.log_min_duration`, reflecting the actual plan that was used
-
-Generally we recommend utilizing **auto_explain** where available, as it provides higher data quality. Log-based EXPLAIN is not guaranteed to show the same plan that was executed, and cannot show execution metrics like I/O timing or buffer usage.
-
-## Supported platforms & setup
-
-Platform         | Log-based EXPLAIN |    auto_explain   |
------------------|-------------------|-------------------|
-Amazon RDS       | Yes               | Yes (Recommended) |
-Azure Database   | Yes               | No                |
-Google Cloud SQL | Yes               | No                |
-Heroku Postgres  | Yes               | No                |
-Self-managed VM  | Yes               | Yes (Recommended) |
-Kubernetes       | No                | No                |
-Other PaaS       | No                | No                |
-
-We are constantly evaluating new platform to support - please [reach out](/contact) if you're missing an integration, to help us prioritize.
-
-Learn more how to set up the integration:
-
-* [Set up Log-based EXPLAIN with pganalyze](/docs/log-insights/setup/log_explain)
-* [Set up auto_explain with pganalyze](/docs/log-insights/setup/auto_explain)
+Learn how to **[enable automatic EXPLAIN plan collection](/docs/explain/setup)**.
 
 ## pganalyze EXPLAIN Insights
 

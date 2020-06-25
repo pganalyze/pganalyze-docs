@@ -156,6 +156,18 @@
       "title": "EXPLAIN - Scan Nodes",
       "path": "/docs/explain/scan-nodes"
     },
+    "explain/setup": {
+      "title": "Set up automatic EXPLAIN plan collection",
+      "path": "/docs/explain/setup"
+    },
+    "explain/setup/auto_explain": {
+      "title": "Collect Postgres EXPLAIN plans using auto_explain",
+      "path": "/docs/explain/setup/auto_explain"
+    },
+    "explain/setup/log_explain": {
+      "title": "Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres",
+      "path": "/docs/explain/setup/log_explain"
+    },
     "guides": {
       "title": "Guides",
       "path": "/docs/guides"
@@ -232,10 +244,6 @@
       "title": "Log Insights: Install on Amazon RDS & Amazon Aurora",
       "path": "/docs/log-insights/setup/amazon-rds"
     },
-    "log-insights/setup/auto_explain": {
-      "title": "Log Insights: Collect Postgres EXPLAIN plans using auto_explain",
-      "path": "/docs/log-insights/setup/auto_explain"
-    },
     "log-insights/setup/azure-database": {
       "title": "Log Insights: Install on Azure Database for PostgreSQL",
       "path": "/docs/log-insights/setup/azure-database"
@@ -247,10 +255,6 @@
     "log-insights/setup/heroku-postgres": {
       "title": "Log Insights: Install on Heroku Postgres",
       "path": "/docs/log-insights/setup/heroku-postgres"
-    },
-    "log-insights/setup/log_explain": {
-      "title": "Log Insights: Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres",
-      "path": "/docs/log-insights/setup/log_explain"
     },
     "log-insights/setup/self-managed": {
       "title": "Log Insights: Install on Self-Managed Server",

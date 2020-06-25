@@ -14,20 +14,18 @@ or to explain why your database might be slow at a given moment.
 
 To start, follow the platform-specific setup steps:
 
-* [Install on Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds)
-* [Install on Azure Database for PostgreSQL](/docs/log-insights/setup/azure-database)
-* [Install on Google Cloud SQL](/docs/log-insights/setup/google-cloud-sql)
-* [Install on Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
-* [Install on Self-Managed Server](/docs/log-insights/setup/self-managed)
+* [Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds)
+* [Azure Database for PostgreSQL](/docs/log-insights/setup/azure-database)
+* [Google Cloud SQL](/docs/log-insights/setup/google-cloud-sql)
+* [Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
+* [Self-Managed Server](/docs/log-insights/setup/self-managed)
 
-We recommend tuning configuration settings to get the most important log events logged:
+## Making the most of Log Insights
 
-* [Tuning Log Config Settings](/docs/log-insights/setup/tuning-log-config-settings)
+After you have completed the initial setup of Log Insights, we recommend two more steps:
 
-In addition, pganalyze Log Insights can automatically collect EXPLAIN plans for you through two mechanisms:
-
-* [Log-based EXPLAIN: Automatically EXPLAIN slow queries in Postgres](/docs/log-insights/setup/log_explain)
-* [auto\_explain: Collect Postgres EXPLAIN plans using auto_explain](/docs/log-insights/setup/auto_explain)
+* [Tune Postgres logging parameters](/docs/log-insights/setup/tuning-log-config-settings)<br />Enable additional important log events for your Postgres server.
+* [Set up automatic EXPLAIN plan collection](/docs/explain/setup)<br />Automatically get detailed EXPLAIN plans for slow queries in your system.
 
 ## Log Events
 
