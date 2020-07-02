@@ -15,10 +15,16 @@ The pganalyze Docker image is mostly self-contained, and runs various services i
 
 ### Pre-requisites
 
-* Provision a virtual machine that has at least 4GB - 8GB of RAM, 1-2 dedicated CPU cores
-* Install Docker on your virtual machine (pganalyze Enterprise Edition is delivered through a Docker image)
-* PostgreSQL database that can be used for storing statistics data (50 GB of disk space or more)
-* Optional: If you use the RDS integration, you will also need to setup an appropriate IAM role that can be used - you can also assign the required policy to an existing EC2 instance and it's instance role. Appendix A lists out the exact permissions required.
+* Provision a virtual machine
+  * Assign at least 4GB - 8GB of RAM, 1-2 dedicated CPU cores
+* Install Docker on your virtual machine
+  * pganalyze Enterprise Edition is delivered through a Docker image
+* Setup a PostgreSQL database that can be used for storing statistics data
+  * PostgreSQL 10 or newer
+  * 50 GB of dedicated disk space or more
+* Optional: If you use the RDS integration, setup an appropriate IAM role that can be used
+  * You can also assign the required policy to an existing EC2 instance and its instance role
+  * Appendix A lists out the exact IAM policy
 
 ### Step 1: Download the Docker Image
 
@@ -48,8 +54,8 @@ The Docker image uses environment variables that are passed in to determine how 
 Here is an example .env file to get you started:
 
 ```
-DATABASE_URL=postgres://myusername:mypassword@myserver.company.net:5432/mydatabase
-MAILER_URL=smtp://myusername:mypassword@mymailserver.company.net:25
+DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
+MAILER_URL=smtp://myusername:mypassword@example.com:25
 LICENSE_KEY=KEYKEYKEY
 ```
 
@@ -72,7 +78,7 @@ Testing LDAP connection... Success!
 All tests completed successfully!
 ```
 
-In the case of an error this will give you a very verbose error message - please don't hesitate to ask us about it.
+In the case of an error this will give you a very verbose error message - please don't hesitate to [ask us about it](/contact/).
 
 Assuming it succeeds, continue by initializing the database schema.
 
@@ -145,7 +151,7 @@ Choose an organization name of your choice (typically your company name), and th
 
 Before you can add a database to the pganalyze installation, you'll need to enable the `pg_stat_statements` extension on it.
 
-This extension is bundled with PostgreSQL and allows you detailed query monitoring. Its overhead on the database system is minimal (although not zero), and it is required to use pganalyze.
+This extension is bundled with PostgreSQL and allows you detailed query monitoring. Its overhead on the database system is minimal, and it is required to use pganalyze.
 
 Please see [self-hosted systems](/docs/install/01_enabling_pg_stat_statements) or [Amazon RDS](/docs/install/amazon_rds) instructions on how to add it to your database.
 
@@ -189,7 +195,7 @@ Note that only administrators can add new databases (see Appendix B).
 
 ### Appendix A - Amazon Web Services IAM Role
 
-Your IAM role will need two policies assigned - at first, the predefined "AmazonRDSReadOnlyAccess" policy that gives access to most Amazon RDS information and statistics.
+Your IAM role will need two policies assigned - at first, the predefined `AmazonRDSReadOnlyAccess` policy that gives access to most Amazon RDS information and statistics.
 
 In addition, you'll also need to add an inline policy with the following content, if you want to use the log monitoring feature:
 
@@ -254,15 +260,15 @@ The following environment variables can be passed into the Docker image. Note th
 * `LICENSE_KEY`: License key provided to you by the pganalyze team (required)
 * `MAILER_URL`: SMTP server used to send system emails, e.g. user invites (optional, recommended)
 * `AWS_ACCESS_KEY_ID:` AWS Access Key ID (optional)
-* `AWS_SECRET_ACCESS_KEY`: AWS Access Key ID (optional)
+* `AWS_SECRET_ACCESS_KEY`: AWS Secret Access Key (optional)
 * `AWS_REGION`: Default AWS region (optional)
 
 An example configuration looks like this:
 
 ```
-DATABASE_URL=postgres://myusername:mypassword@myserver.company.net:5432/mydatabase
+DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
 LICENSE_KEY=KEYKEYKEY
-MAILER_URL=smtp://myusername:mypassword@mymailserver.company.net:25
+MAILER_URL=smtp://myusername:mypassword@example.com:25
 AWS_ACCESS_KEY_ID=AKIAXXXXXXXXXXXX
 AWS_SECRET_ACCESS_KEY=ReallyLongStringYouWillGetFromYourAwsConsole
 AWS_REGION=us-east-1
@@ -276,13 +282,13 @@ AWS_REGION=us-east-1
 * `LDAP_ADMIN_GROUP_CN`: Common Name of the group used to identify pganalyze admins. Note that members don’t need to be LDAP admins
 * `LDAP_LOOKUP_CN`: Common Name of an account that will be used to run authentication lookups on your LDAP directory
 * `LDAP_LOOKUP_PASSWORD`: Password for the account that will be used to run authentication lookups
-* `LDAP_FIELD_UID`: UID field on your LDAP entries. This is usually “sAMAccountName” on Active Directory servers
-* `LDAP_ENCRYPTION`: Encryption mode to use for LDAP connections. Only add this when you want to use LDAPS (Port 636) or STARTTLS (Port 389) for a secure connection to your server. Specify “ssl” for LDAPS, and “tls” for STARTTLS (optional)
+* `LDAP_FIELD_UID`: UID field on your LDAP entries. This is usually `sAMAccountName` on Active Directory servers
+* `LDAP_ENCRYPTION`: Encryption mode to use for LDAP connections. Only add this when you want to use LDAPS (Port 636) or STARTTLS (Port 389) for a secure connection to your server. Specify `ssl` for LDAPS, and `tls` for STARTTLS (optional)
 
 Example LDAP configuration, in addition to regular environment variables:
 
 ```
-LDAP_HOST=ldaptest.mydomain.com
+LDAP_HOST=example.com
 LDAP_PORT=389
 LDAP_BASE_DN=OU=Users,OU=ldaptest,DC=ldaptest,DC=pganalyze,DC=com
 LDAP_ADMIN_GROUP_CN=opsteam
@@ -292,8 +298,7 @@ LDAP_FIELD_UID=sAMAccountName
 LDAP_ENCRYPTION=ssl
 ```
 
-If LDAP authentication does not work, or you see an error message instead of this form, please check the container’s logs using “docker logs” and verify your LDAP_ADMIN_GROUP_CN setting.
-
+If LDAP authentication does not work, or you see an error message instead of this form, please check the container's logs using `docker logs` and verify your `LDAP_ADMIN_GROUP_CN` setting.
 
 ### Appendix E - Command Line Debugging Tools
 
@@ -314,9 +319,6 @@ docker logs -f pganalyze
 ```
 
 Shows the full log messages from the pganalyze container - if you encounter an error screen in the software this will show the details. This information will be required when submitting issues to our support team.
-
-In addition you can access high-level debugging information at /admin, including error messages related to the processing of statistics snapshots.
-
 
 ### Appendix F - Updating to a new Version
 
