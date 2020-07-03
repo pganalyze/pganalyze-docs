@@ -17,6 +17,8 @@ compare the frequency and impact of queries over time.
 Arguments for `getQueryStats`:
 
 * **`databaseId` (string)**<br>Database ID for which to retrieve query statistics for
+* **`startTs` (integer)**<br>Start Unix timestamp in seconds (optional, defaults to 24 hours ago)
+* **`endTs` (integer)**<br>End Unix timestamp in seconds (optional, defaults to now)
 
 Fields returned:
 
