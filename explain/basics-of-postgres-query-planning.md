@@ -32,7 +32,7 @@ To come up with a plan, Postgres inspects your query and evaluates one or more a
 
 Postgres offers an essential tool for everyone tuning performance: The [EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html) command allows you to inspect the plan Postgres decided on, to understand why it picked that plan among possible alternatives, and possibly optimize the query.
 
-As a quick example, lets utilize the EXPLAIN command to understand a simple query:
+As a quick example, let's utilize the EXPLAIN command to understand a simple query:
 
 ```sql
 EXPLAIN SELECT * FROM databases WHERE id = 1;
@@ -47,7 +47,7 @@ EXPLAIN SELECT * FROM databases WHERE id = 1;
 
 This indicates that Postgres will perform an **[Index Scan](/docs/explain/scan-nodes/index-scan)** in order to retrieve the requested data. Postgres expects that this will return a single row. Note that this only represents the query plan, and doesn't tell us anything about the actual query execution.
 
-Its often useful to utilize additional options for `EXPLAIN`, in particular the `ANALYZE` option, which shows you details about the actual query execution, and the `BUFFERS` option, showing you details on how much data is being loaded from disk and the Postgres shared buffer cache:
+It's often useful to utilize additional options for `EXPLAIN`, in particular the `ANALYZE` option, which shows you details about the actual query execution, and the `BUFFERS` option, showing you details on how much data is being loaded from disk and the Postgres shared buffer cache:
 
 ```sql
 EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM databases WHERE id = 1;
