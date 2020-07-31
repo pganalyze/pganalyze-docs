@@ -120,6 +120,10 @@
       "title": "2019.04.1 Release",
       "path": "/docs/enterprise/releases/2019-04-1"
     },
+    "enterprise/releases/2020-07-0": {
+      "title": "2020.07.0 Release",
+      "path": "/docs/enterprise/releases/2020-07-0"
+    },
     "enterprise/setup": {
       "title": "Enterprise Edition: Initial Setup",
       "path": "/docs/enterprise/setup"
