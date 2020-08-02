@@ -86,7 +86,7 @@ Assuming it succeeds, continue by initializing the database schema.
 docker run --env-file pganalyze.env quay.io/pganalyze/enterprise:[version] rake db:structure:load
 ```
 
-If you get permission errors, you may need to create the extensions `btree_gist`, `pgcrypto` and `"uuid-ossp"` beforehand. A successful output looks like this:
+If you get permission errors, you may need to create the extensions `btree_gist` and `pgcrypto` beforehand. A successful output looks like this:
 
 ```
 Jul  2 07:15:16 aa84f55aceba syslog-ng[160]: syslog-ng starting up; version='3.13.2'
