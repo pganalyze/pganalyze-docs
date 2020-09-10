@@ -32,6 +32,10 @@
       "title": "getQueryStats - Export query statistics",
       "path": "/docs/api/queries/getQueryStats"
     },
+    "collector": {
+      "title": "pganalyze Collector",
+      "path": "/docs/collector"
+    },
     "enterprise": {
       "title": "pganalyze Enterprise Edition",
       "path": "/docs/enterprise"
