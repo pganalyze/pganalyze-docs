@@ -14,24 +14,24 @@ For registering new servers to the hosted service you can simply use an organiza
 
 Arguments for `addServer`:
 
-* **`name` (String)**<br>Display name for the server in pganalyze (optional)
-* **`dbHost` (String)**<br>Hostname of the database server
-* **`dbPort` (Integer)**<br>Port of the database server (optional, defaults to 5432)
-* **`dbUsername` (String)**<br>Username for the database server
-* **`dbPassword` (String)**<br>Password for the database server (optional)
-* **`dbName` (String)**<br>Database name to connect to
-* **`dbSslmode` (String)**<br>Postgres SSL mode to be used when connecting (optional, defaults to prefer)
-* **`awsRegion` (String)**<br>For Amazon RDS: Region the database runs in (optional)
-* **`awsDbInstanceId` (String)**<br>For Amazon RDS: Instance ID of the database server (optional)
-* **`enableLogs` (Boolean)**<br>For Amazon RDS: Determines whether log collection is enabled (optional, defaults to false)
-* **`enableActivity` (Boolean)**<br>Determines whether activity snapshots for Connection Tracing and Vacuum Monitoring are enabled (optional, defaults to false)
-* **`collectAllDatabases` (Boolean)**<br>Determines whether statistics are collected for all databases on the server (optional, defaults to false)
+* **`name` (String)**<br/>Display name for the server in pganalyze (optional)
+* **`dbHost` (String)**<br/>Hostname of the database server
+* **`dbPort` (Integer)**<br/>Port of the database server (optional, defaults to 5432)
+* **`dbUsername` (String)**<br/>Username for the database server
+* **`dbPassword` (String)**<br/>Password for the database server (optional)
+* **`dbName` (String)**<br/>Database name to connect to
+* **`dbSslmode` (String)**<br/>Postgres SSL mode to be used when connecting (optional, defaults to prefer)
+* **`awsRegion` (String)**<br/>For Amazon RDS: Region the database runs in (optional)
+* **`awsDbInstanceId` (String)**<br/>For Amazon RDS: Instance ID of the database server (optional)
+* **`enableLogs` (Boolean)**<br/>For Amazon RDS: Determines whether log collection is enabled (optional, defaults to false)
+* **`enableActivity` (Boolean)**<br/>Determines whether activity snapshots for Connection Tracing and Vacuum Monitoring are enabled (optional, defaults to false)
+* **`collectAllDatabases` (Boolean)**<br/>Determines whether statistics are collected for all databases on the server (optional, defaults to false)
 
 Fields returned:
 
-* **`server` (ServerType)**<br>Server that was just created using this endpoint (null if an error occurred)
-  * **`humanId` (String)**<br>Public "human" ID that can be used to refer to this server in URLs and API calls
-* **`errors` (Array of String)**<br>Errors that occurred during creation of the server (if any)
+* **`server` (ServerType)**<br/>Server that was just created using this endpoint (null if an error occurred)
+  * **`humanId` (String)**<br/>Public "human" ID that can be used to refer to this server in URLs and API calls
+* **`errors` (Array of String)**<br/>Errors that occurred during creation of the server (if any)
 
 ## Example
 

@@ -16,23 +16,23 @@ compare the frequency and impact of queries over time.
 
 Arguments for `getQueryStats`:
 
-* **`databaseId` (string)**<br>Database ID for which to retrieve query statistics for
-* **`startTs` (integer)**<br>Start Unix timestamp in seconds (optional, defaults to 24 hours ago)
-* **`endTs` (integer)**<br>End Unix timestamp in seconds (optional, defaults to now)
+* **`databaseId` (string)**<br/>Database ID for which to retrieve query statistics for
+* **`startTs` (integer)**<br/>Start Unix timestamp in seconds (optional, defaults to 24 hours ago)
+* **`endTs` (integer)**<br/>End Unix timestamp in seconds (optional, defaults to now)
 
 Fields returned:
 
-* **`id` (number)**<br>Unique identifier for this query in the pganalyze system
-* **`queryUrl` (string)**<br>URL to the pganalyze query page
-* **`truncatedQuery` (string)**<br>Shortened query text up to 100 characters (same as displayed in "Query Performance" overview)
-* **`queryComment` (string)**<br>First comment contained in the query (this is taken from the full query string, not just the truncated one)
-* **`statementType` (array of strings)**<br>List of statement type(s) used in this query
-* **`tableNames` (array of strings)**<br>Fully qualified list of table names used in this query
-* **`totalCalls` (integer)**<br>Total number of calls for this query
-* **`avgTime` (float)**<br>Average runtime in milliseconds for this query
-* **`avgIoTime` (float)**<br>Average time spent in I/O operations for this query (this requires `track_io_timing` to be enabled on the database)
-* **`bufferHitRatio` (float)**<br>% of query data that was returned from the buffer cache, instead of the disk or page cache
-* **`pctOfTotal` (float)**<br>% of runtime this query represents compared to the cumulative runtime of all queries
+* **`id` (number)**<br/>Unique identifier for this query in the pganalyze system
+* **`queryUrl` (string)**<br/>URL to the pganalyze query page
+* **`truncatedQuery` (string)**<br/>Shortened query text up to 100 characters (same as displayed in "Query Performance" overview)
+* **`queryComment` (string)**<br/>First comment contained in the query (this is taken from the full query string, not just the truncated one)
+* **`statementType` (array of strings)**<br/>List of statement type(s) used in this query
+* **`tableNames` (array of strings)**<br/>Fully qualified list of table names used in this query
+* **`totalCalls` (integer)**<br/>Total number of calls for this query
+* **`avgTime` (float)**<br/>Average runtime in milliseconds for this query
+* **`avgIoTime` (float)**<br/>Average time spent in I/O operations for this query (this requires `track_io_timing` to be enabled on the database)
+* **`bufferHitRatio` (float)**<br/>% of query data that was returned from the buffer cache, instead of the disk or page cache
+* **`pctOfTotal` (float)**<br/>% of runtime this query represents compared to the cumulative runtime of all queries
 
 Note that the data returned reflects the statistics of the previous 24 hours, from the time the API request was run.
 

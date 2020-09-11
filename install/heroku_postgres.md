@@ -18,7 +18,7 @@ additional charge you have to pay to Heroku in addition to any pganalyze charges
 Deploy the [collector](https://github.com/pganalyze/collector) to your own Heroku account:
 
 <a href="https://heroku.com/deploy?template=https://github.com/pganalyze/collector">
-  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy" />
 </a><br /><br />
 
 On the configuration screen, insert your pganalyze <strong>Organization API key</strong>,

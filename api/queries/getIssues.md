@@ -14,23 +14,23 @@ them to a third-party system such as PagerDuty.
 
 Arguments for `getIssues`:
 
-* **`databaseId` (string)**<br>Database ID for which to retrieve issues for
-* **`serverId` (string)**<br>Server ID for which to retrieve issues for (either this or `databaseID` needs to be specified)
+* **`databaseId` (string)**<br/>Database ID for which to retrieve issues for
+* **`serverId` (string)**<br/>Server ID for which to retrieve issues for (either this or `databaseID` needs to be specified)
 
 Fields returned:
 
 * **`issues` (Array of IssueType)**
-  * **`id` (String)**<br>Unique ID of this issue
-  * **`databaseId` (Number)**<br>Database ID this issue is related to
-  * **`description` (String)**<br>Issue description
-  * **`severity` (String)**<br>Issue severity (info, warning, critical)
-  * **`displayName` (String)**<br>Name of the object this issue is associated to
+  * **`id` (String)**<br/>Unique ID of this issue
+  * **`databaseId` (Number)**<br/>Database ID this issue is related to
+  * **`description` (String)**<br/>Issue description
+  * **`severity` (String)**<br/>Issue severity (info, warning, critical)
+  * **`displayName` (String)**<br/>Name of the object this issue is associated to
   * **`reference` (IssueReferenceType)**
-      * **`kind` (String)**<br>Type of object this issue references
-      * **`name` (String)**<br>Name of the object this issue references
-      * **`url` (String)**<br>URL to the object this issue references
-      * **`secondaryUrl` (String)** (optional)<br>Secondary URL for an alternate object this issue references (e.g. active queries reference both the connection as well as the query object)
-      * **`queryText` (String)** (optional)<br>For query references, statement text of the query
+      * **`kind` (String)**<br/>Type of object this issue references
+      * **`name` (String)**<br/>Name of the object this issue references
+      * **`url` (String)**<br/>URL to the object this issue references
+      * **`secondaryUrl` (String)** (optional)<br/>Secondary URL for an alternate object this issue references (e.g. active queries reference both the connection as well as the query object)
+      * **`queryText` (String)** (optional)<br/>For query references, statement text of the query
 
 ## Example
 

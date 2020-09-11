@@ -4,7 +4,7 @@ backlink_href: /docs/install/amazon_rds
 backlink_title: 'Installation Guide (Amazon RDS)'
 ---
 
-In order to setup pganalyze monitoring for [Amazon RDS](https://aws.amazon.com/rds/postgresql/) you'll need to first follow these steps<br>
+In order to setup pganalyze monitoring for [Amazon RDS](https://aws.amazon.com/rds/postgresql/) you'll need to first follow these steps<br/>
 to enable the [pg\_stat\_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html) extension for collecting query statistics.
 
 This guide assumes you have an already running Amazon RDS PostgreSQL server you want to monitor.
@@ -31,14 +31,14 @@ Then set the following configuration parameters:
 
 ---
 
-In case you created a new parameter group you'll have to modify your database to use the Parameter Group you created earlier:<br>
+In case you created a new parameter group you'll have to modify your database to use the Parameter Group you created earlier:<br/>
 
 ![](rds_enable_parameter_group.png)
 
 ## Enable Enhanced Monitoring
 
-We also highly recommend turning on Enhanced Monitoring, if you haven't already - it will give you<br>
-more detailed system-level statistics that can be helpful, e.g. to debug I/O issues.<br>
+We also highly recommend turning on Enhanced Monitoring, if you haven't already - it will give you<br/>
+more detailed system-level statistics that can be helpful, e.g. to debug I/O issues.<br/>
 
 If Enhanced Monitoring is enabled, pganalyze will automatically collect and show this additional information in the dashboard as well.
 
@@ -69,5 +69,5 @@ Continue by creating the monitoring user:
 
 [Proceed to Step 2: Create Monitoring User](/docs/install/amazon_rds/02_create_monitoring_user)
 
-<br>
+<br/>
 <div><signup-cta event-label="Docs"></signup-cta></div>

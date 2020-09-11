@@ -4,21 +4,21 @@ backlink_href: /docs/install/amazon_rds
 backlink_title: 'Installation Guide (Amazon RDS)'
 ---
 
-For this final step, you first need to choose whether you want to install the collector<br>
+For this final step, you first need to choose whether you want to install the collector<br/>
 on an existing EC2 instance, or run a new one.
 
-The collector is a daemon process that continuously collects database statistics as well<br>
-as other information from the RDS system, and submits them to the pganalyze dashboard<br>
+The collector is a daemon process that continuously collects database statistics as well<br/>
+as other information from the RDS system, and submits them to the pganalyze dashboard<br/>
 in recurring intervals.
 
-Historically the pganalyze collector has been Python-based (invoked via cron), but for RDS access<br>
+Historically the pganalyze collector has been Python-based (invoked via cron), but for RDS access<br/>
 you need to use our [newer Go-based collector](https://github.com/pganalyze/collector) which runs as a daemon.
 
 You can either run it on a tiny instance (a `t2.nano` suffices), or add it to an existing EC2 instance in your environment.
 
 ## Variant A: Starting a new EC2 instance
 
-First, go back to **Security Credentials** and create a new IAM role that can be used by EC2 instances,<br>
+First, go back to **Security Credentials** and create a new IAM role that can be used by EC2 instances,<br/>
 with the IAM policy that we created in the previous step.
 
 It should look like this when reviewing:
@@ -90,7 +90,7 @@ You can verify that the configuration is correct, by running the following comma
 pganalyze-collector --test
 ```
 
-This will go through one cycle of collecting statistics information from both PostgreSQL and RDS,<br>
+This will go through one cycle of collecting statistics information from both PostgreSQL and RDS,<br/>
 as well as submitting it to the pganalyze dashboard (but not storing it).
 
 If this is successful, all you should see is:
@@ -105,7 +105,7 @@ In case the collector can't find the instance make sure that you've specified th
 
 ## Reloading the daemon
 
-If you've installed the package successfully, the daemon should have been running in the background already,<br>
+If you've installed the package successfully, the daemon should have been running in the background already,<br/>
 You can now issue a simple reload to get it to update its configuration:
 
 ```
@@ -129,5 +129,5 @@ The collector will also log every time data is sent to syslog/journald, which yo
 
 The dashboard should start showing data once at least two snapshots have been received from the collector daemon.
 
-It is recommended you let the system run for 24 hours before giving it a detailed look, most views need a few<br>
+It is recommended you let the system run for 24 hours before giving it a detailed look, most views need a few<br/>
 hours worth of data to show correctly and give you useful insights.

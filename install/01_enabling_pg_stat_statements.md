@@ -8,7 +8,7 @@ We use the [pg\_stat\_statements](http://www.postgresql.org/docs/current/static/
 
 The query information collected by the extension is cleaned and then sent to our servers using our collector script.
 
-The extension's normalization code cleans the actual values from the queries,<br>
+The extension's normalization code cleans the actual values from the queries,<br/>
 turning ```SELECT * FROM t WHERE secret = '123'``` into ```SELECT * FROM t WHERE secret = ?```.
 
 We still recommend that you use prepared statements if you query for highly sensitive data.
@@ -47,7 +47,7 @@ pg_stat_statements.track = all
 ```
 
 If you're running PostgreSQL 9.2 you may need to increase your OS shared memory
-limits when using pg\_stat\_statements.<br>
+limits when using pg\_stat\_statements.<br/>
 See the Postgres [shared memory documentation](http://www.postgresql.org/docs/9.2/static/kernel-resources.html#SYSVIPC)
 for details on how to do this.
 
@@ -61,5 +61,5 @@ sudo service postgresql restart
 
 [Continue to Step 2: Installing the Collector](/docs/install/02_installing_the_collector)
 
-<br>
+<br/>
 <div><signup-cta event-label="Docs"></signup-cta></div>
