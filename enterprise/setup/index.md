@@ -8,8 +8,6 @@ These are the installation instructions for [pganalyze Enterprise Edition](/ente
 
 The pganalyze Docker image is mostly self-contained, and runs various services inside the Docker container.
 
-```toc
-```
 
 ## Installation steps
 

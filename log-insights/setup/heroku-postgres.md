@@ -12,8 +12,6 @@ Note that this also assumes you are on the pganalyze **Scale** plan, or are in y
 
 Log output support is only available on Heroku Postgres Standard, Premium and higher plans.
 
-```toc
-```
 
 ## Installation steps
 

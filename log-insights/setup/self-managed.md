@@ -8,8 +8,6 @@ This guide helps you set up the pganalyze Log Insights feature for a self-hosted
 
 Note that your account needs to be on the **Scale** plan or higher to be able to use Log Insights, or you need to be in your initial 14-day trial period.
 
-```toc
-```
 
 ## Installation steps
 

@@ -8,8 +8,6 @@ EXPLAIN plans are essential to understand why exactly a query is slow. We genera
 
 However, not all environments support the `auto_explain` extension (bundled with Postgres), and therefore we support an alternative mechanism.
 
-```toc
-```
 
 ## How Log-based EXPLAIN works
 

@@ -9,8 +9,6 @@ make sure that you have setup the [IAM policy](/docs/install/amazon_rds/03_setup
 
 Note that you will also need to be on the **Scale** plan, or be in your 14-day trial period.
 
-```toc
-```
 
 ## Installation steps
 

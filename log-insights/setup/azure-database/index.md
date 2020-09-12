@@ -6,8 +6,6 @@ backlink_title: 'Log Insights: Setup'
 
 These instructions guide you how to enable [pganalyze Log Insights](/docs/log-insights) for Azure Database for PostgreSQL.
 
-```toc
-```
 
 ## Installation steps
 
