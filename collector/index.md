@@ -256,6 +256,11 @@ settings are only relevant if you are using custom AWS endpoints. See
       <td>Secret access key of IAM role with permissions to?</td>
     </tr>
     <tr>
+      <td>aws_assume_role (<code>AWS_ASSUME_ROLE</code>)</td>
+      <td>[none]</td>
+      <td>If using cross-account role delegation, the ARN of the role to assume. See the <a target="_blank" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html">AWS documentation</a> for details.</td>
+    </tr>
+    <tr>
       <td>aws_endpoint_signing_region (<code>AWS_ENDPOINT_SIGNING_REGION</code>)</td>
       <td>[none]</td>
       <td>?</td>
