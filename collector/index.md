@@ -4,12 +4,12 @@ backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
-```toc
-```
-
 The pganalyze collector periodically queries your database and sends metrics and metadata (as "snapshots") to
 the pganalyze app. For details on setting up the collector, see the [collector installation guide](/docs/install/02_installing_the_collector).
 The collector is open-source and the code is available [on GitHub](https://github.com/pganalyze/collector).
+
+```toc
+```
 
 # Security
 
