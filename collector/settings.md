@@ -4,8 +4,6 @@ backlink_href: /docs/collector
 backlink_title: 'pganalyze Collector'
 ---
 
-# Configuration settings
-
 The collector can be configured either through an `INI` config file (in a package-based install) or environment
 variables (typically for running via its Docker image). Most settings can be configured through either mechanism.
 If both are present, the config file takes precedence. Note that a single collector instance can monitor more than
@@ -21,6 +19,9 @@ servers.
 After you make changes, you can run `pganalyze-collector --test --reload` to verify the new configuration and load
 the new configuration in the collector background process if they work correctly. This minimizes monitoring
 interruptions and simplifies config file updates.
+
+
+# Configuration settings
 
 The tables below list configuration settings, their defaults if not set, and their descriptions. If a setting is
 configurable through environment variables, the environment variable name follows the setting in parentheses.
