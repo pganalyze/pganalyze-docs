@@ -10,7 +10,7 @@ your server under the "pganalyze" user.
 ## Configuring the collector
 
 You can find the default configuration file in /etc/pganalyze-collector.conf, and
-information on all the settings in the [Collector](/docs/collector) documentation.
+information on all the settings in the [Collector](/docs/collector/settings) documentation.
 
 You'll need to insert the API key you can find in the pganalyze dashboard,
 as well as access credentials to your database.

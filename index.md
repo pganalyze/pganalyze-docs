@@ -83,6 +83,7 @@ title: 'Documentation'
       * [Window Aggregate](/docs/explain/other-nodes/window-aggregate)
 
 * **[Collector](/docs/collector)**
+  - [Settings overview](/docs/collector/settings)
 
 * **[Enterprise Edition](/docs/enterprise)**
   - [Initial Setup](/docs/enterprise/setup)
