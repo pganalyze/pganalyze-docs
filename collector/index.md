@@ -445,7 +445,7 @@ Like the general settings above, but less commonly used.
     <tr>
       <td>query_stats_interval (<code>QUERY_STATS_INTERVAL</code>)</td>
       <td>60</td>
-      <td>How often to collect query statistics, in seconds; supported values are `60` (once a minute) and `600` (once every ten minutes)</td>
+      <td>How often to collect query statistics, in seconds; supported values are <code>60</code> (once a minute) and <code>600</code> (once every ten minutes)</td>
     </tr>
     <tr>
       <td>max_collector_connections (<code>MAX_COLLECTOR_CONNECTION</code>)</td>
