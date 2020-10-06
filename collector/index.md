@@ -8,7 +8,7 @@ The pganalyze collector periodically queries your database and sends metrics and
 the pganalyze app. For details on setting up the collector, see the [collector installation guide](/docs/install).
 The collector is open-source and the code is available [on GitHub](https://github.com/pganalyze/collector).
 
-For an overview of the collector configuration settings, see the **[collector settings](/docs/collector/settings)** page.
+For an overview of the collector configuration settings, see the **[Collector Settings](/docs/collector/settings)** page.
 
 # Security
 
