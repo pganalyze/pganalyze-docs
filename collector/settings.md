@@ -21,7 +21,7 @@ the new configuration in the collector background process if they work correctly
 interruptions and simplifies config file updates.
 
 
-# Configuration settings
+## Configuration settings
 
 The tables below list configuration settings, their defaults if not set, and their descriptions. If a setting is
 configurable through environment variables, the environment variable name follows the setting in parentheses.

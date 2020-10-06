@@ -10,7 +10,7 @@ The collector is open-source and the code is available [on GitHub](https://githu
 
 For an overview of the collector configuration settings, see the **[Collector Settings](/docs/collector/settings)** page.
 
-# Security
+## Security
 
 Keeping your data safe is very important to us. We take a number of precautions to minimize the data
 we have access to, and to limit our level of access to that data. The collector is the only pganalyze
