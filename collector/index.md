@@ -5,7 +5,7 @@ backlink_title: 'Documentation'
 ---
 
 The pganalyze collector periodically queries your database and sends metrics and metadata (as "snapshots") to
-the pganalyze app. For details on setting up the collector, see the [collector installation guide](/docs/install/02_installing_the_collector).
+the pganalyze app. For details on setting up the collector, see the [collector installation guide](/docs/install).
 The collector is open-source and the code is available [on GitHub](https://github.com/pganalyze/collector).
 
 ```toc
@@ -17,29 +17,37 @@ Keeping your data safe is very important to us. We take a number of precautions 
 we have access to, and to limit our level of access to that data. The collector is the only pganalyze
 component that talks directly to your database. In our recommended configuration, the collector uses
 a database role with limited access, and can only read system statistics and metadata&mdash;it cannot actually
-query your data.
+query your data, or modify your database.
 
-The collector connects to your database on the port you specify (default 5432) using the standard Postgres
-protocol, to Amazon S3 also over https (port 443) to upload monitoring data, and to the pganalyze API also
-over https. The collector only makes outbound connections&mdash;it does not listen on any ports.
+For retrieving database statistics, the collector connects to your database on the port you specify (default 5432)
+using the standard Postgres protocol. When using a managed database service, such as Amazon RDS, the collector
+will also connect to your provider's API using secure HTTPS connections.
+
+For sending statistics data to the hosted pganalyze service, the collector connects to the pganalyze API at
+api.pganalyze.com on port 443, as well as to Amazon S3 at s3.amazonaws.com on port 443.
+
+The collector makes only outbound connections, it does not listen on any ports. The only exception to this is the
+Heroku-based setup, where the collector listens on the dyno's PORT for Heroku to consider the application running,
+as well as to receive database logs by serving as a Heroku log drain.
 
 
-# Configuration Settings
+# Configuration settings
 
 The collector can be configured either through an `INI` config file (in a package-based install) or environment
 variables (typically for running via its Docker image). Most settings can be configured through either mechanism.
 If both are present, the config file takes precedence. Note that a single collector instance can monitor more than
 one database server, though this is not supported when configuring through environment variables.
 
-The `[pganalyze]` section describes settings that apply to all servers. Other sections describe the servers to
-monitor, how to connect to them, and server-specific configuration settings. You should name the other sections after
-the servers they correspond to, though note these are not the names that will appear in the app. In-app names are
-based on hostname settings as determined during monitoring. When using environment variables, the setting applies
-to all monitored servers.
+For the `INI`-based setup, the `[pganalyze]` section describes settings that apply to all servers. Other sections
+describe the servers to monitor, how to connect to them, and server-specific configuration settings. You should
+name the other sections after the servers they correspond to, though note these are not the names that will appear
+in the app. In-app names are based on hostname settings as determined during monitoring. When you set environment
+variables in addition to specifying a configuration file, the environment variable settings apply to all monitored
+servers.
 
 After you make changes, you can run `pganalyze-collector --test --reload` to verify the new configuration and load
-the new configuration in the collector service if they work correctly. This minimizes monitoring interruptions and
-simplifies config file updates.
+the new configuration in the collector background process if they work correctly. This minimizes monitoring
+interruptions and simplifies config file updates.
 
 The tables below list configuration settings, their defaults if not set, and their descriptions. If a setting is
 configurable through environment variables, the environment variable name follows the setting in parentheses.
@@ -48,7 +56,7 @@ Environment variables for boolean settings expect `1` for true and `0` for false
 
 ## General settings
 
-Common settings for configuring monitoring regardless of platform.
+Common settings for configuring collector behavior, independent of the platform.
 
 <table>
   <thead>
@@ -87,15 +95,15 @@ Common settings for configuring monitoring regardless of platform.
     <tr>
       <td>ignore_schema_regexp (<code>IGNORE_SCHEMA_REGEXP</code>)</td>
       <td>[none]</td>
-      <td>Skip matching tables, schemas, or functions; match is checked against schema-qualified object names (e.g.
-      to ignore table "foo" only in the public schema, set to <code>^public\.foo$</code>)
+      <td>Skip collecting metadata for all matching tables, schemas, or functions; match is checked against
+      schema-qualified object names (e.g. to ignore table "foo" only in the public schema, set to <code>^public\.foo$</code>)
       </td>
     </tr>
     <tr>
       <td>enable_log_explain (<code>PGA_ENABLE_LOG_EXPLAIN</code>)</td>
       <td>false</td>
       <td>Enable log-based EXPLAIN. See <a href="/docs/explain/setup/log_explain">setup instructions</a>, but note 
-      we recommend using <a href="/docs/explain/setup/auto_explain">autoexplain</a> instead if possible.
+      we recommend using <a href="/docs/explain/setup/auto_explain">auto_explain</a> instead if possible.
       </td>
     </tr>
   </tbody>
@@ -104,8 +112,8 @@ Common settings for configuring monitoring regardless of platform.
 ## Server connection settings
 
 How to connect to the server(s) pganalyze will be monitoring. Note that when monitoring multiple
-databases on the same server, one is considered the primary. This is where helper functions
-are expected to be defined, and the one we connect to for server-wide metrics.
+databases on the same server, the first specified is considered the primary database. This is where
+helper functions are expected to be defined, and the one we connect to for server-wide metrics.
 
 <table>
   <thead>
@@ -130,12 +138,12 @@ are expected to be defined, and the one we connect to for server-wide metrics.
     <tr>
       <td>db_username (<code>DB_USERNAME</code>)</td>
       <td>n/a, either this or db_url is required</td>
-      <td>User to connect as</td>
+      <td>Postgres user to connect as (we recommend using the pganalyze monitoring user here)</td>
     </tr>
     <tr>
       <td>db_password (<code>DB_PASSWORD</code>)</td>
-      <td>n/a, either this or db_url is required</td>
-      <td>Password to connect with</td>
+      <td>[none]</td>
+      <td>Password for the Postgres user</td>
     </tr>
     <tr>
       <td>db_host (<code>DB_HOST</code>)</td>
@@ -144,7 +152,7 @@ are expected to be defined, and the one we connect to for server-wide metrics.
     </tr>
     <tr>
       <td>db_port (<code>DB_PORT</code>)</td>
-      <td>n/a, either this or db_url is required</td>
+      <td>5432</td>
       <td>Port to connect on</td>
     </tr>
     <tr>
@@ -165,7 +173,7 @@ are expected to be defined, and the one we connect to for server-wide metrics.
     <tr>
       <td>db_sslcert (<code>DB_SSLCERT</code>)</td>
       <td>[none]</td>
-      <td>Path to the client SSL certificate</td>
+      <td>Path to the client SSL certificate (optional, usually not required)</td>
     </tr>
     <tr>
       <td>db_sslcert_contents (<code>DB_SSLCERT_CONTENTS</code>)</td>
@@ -219,10 +227,22 @@ settings to filter these before we collect them.
   </tbody>
 </table>
 
+Our recommended configuration for servers containing highly sensitive data is as follows:
+
+```
+filter_log_secret: all
+filter_query_sample: all
+filter_query_text: unparsable
+```
+
+Note that this automatically turns off the query sample and EXPLAIN plan features, as they may contain sensitive
+data in the query text. We are working to provide more fine-grained PII filtering options in the future, including
+the option to sanitize EXPLAIN plans automatically.
+
 
 ## AWS settings
 
-Only relevant if you are running your database in AWS RDS. See our <a href="https://pganalyze.com/docs/log-insights/setup/amazon-rds">RDS/Aurora setup instructions</a> for details.
+Only relevant if you are running your database in Amazon RDS or Amazon Aurora. See our <a href="https://pganalyze.com/docs/log-insights/setup/amazon-rds">RDS/Aurora setup instructions</a> for details.
 
 Note that the `aws_endpoint_*` settings are only relevant if you are using custom AWS endpoints. See
 [the AWS documentation](https://docs.aws.amazon.com/general/latest/gr/rande.html) for details.
@@ -244,7 +264,7 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
     <tr>
       <td>aws_db_instance_id (<code>AWS_INSTANCE_ID</code>)</td>
       <td>auto-detected from hostname</td>
-      <td>Instance id of your AWS server; may need to be set manually when using IP addresses or custom DNS records</td>
+      <td>Instance ID of your AWS server; may need to be set manually when using IP addresses or custom DNS records</td>
     </tr>
     <tr>
       <td>aws_access_key_id (<code>AWS_ACCESS_KEY_ID</code>)</td>
@@ -264,34 +284,35 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
     <tr>
       <td>aws_endpoint_signing_region (<code>AWS_ENDPOINT_SIGNING_REGION</code>)</td>
       <td>[none]</td>
-      <td>Region to use for signing requests</td>
+      <td>Region to use for signing requests (optional, usually not required)</td>
     </tr>
     <tr>
       <td>aws_endpoint_rds_url (<code>AWS_ENDPOINT_RDS_URL</code>)</td>
       <td>[none]</td>
-      <td>URL of RDS service</td>
+      <td>URL of RDS service (optional, usually not required)</td>
     </tr>
     <tr>
       <td>aws_endpoint_ec2_url (<code>AWS_ENDPOINT_EC2_URL</code>)</td>
       <td>[none]</td>
-      <td>URL of EC2 service</td>
+      <td>URL of EC2 service (optional, usually not required)</td>
     </tr>
     <tr>
       <td>aws_endpoint_cloudwatch_url (<code>AWS_ENDPOINT_CLOUDWATCH_URL</code>)</td>
       <td>[none]</td>
-      <td>URL of CloudWatch service</td>
+      <td>URL of CloudWatch service (optional, usually not required)</td>
     </tr>
     <tr>
       <td>aws_endpoint_cloudwatch_logs_url (<code>AWS_ENDPOINT_CLOUDWATCH_LOGS_URL</code>)</td>
       <td>[none]</td>
-      <td>URL of CloudWatch log service</td>
+      <td>URL of CloudWatch log service (optional, usually not required)</td>
     </tr>
   </tbody>
 </table>
 
 ## Azure settings
 
-Only relevant if you are running your database in Azure. See our <a href="https://pganalyze.com/docs/log-insights/setup/azure-database#step-2-setup-azure-event-hub">Azure setup instructions</a> for details.
+Only relevant if you are running your database in Azure using Azure Database for PostgreSQL. See our
+<a href="https://pganalyze.com/docs/log-insights/setup/azure-database">Azure setup instructions</a> for details.
 
 <table>
   <thead>
@@ -320,35 +341,35 @@ Only relevant if you are running your database in Azure. See our <a href="https:
     <tr>
       <td>azure_ad_tenant_id (<code>AZURE_AD_TENANT_ID</code>)</td>
       <td>[none]</td>
-      <td>Only necessary if not using a recommended Managed Identity; see these <a href="https://pganalyze.com/docs/log-insights/setup/azure-database#setting-up-authentication-using-azure-ad-application-alternative-to-managed-identity">setup instructions</a>
+      <td>The "Directory (tenant) ID" on your application. Only necessary if not using the recommended Managed Identity setup; see these <a href="https://pganalyze.com/docs/log-insights/setup/azure-database#setting-up-authentication-using-azure-ad-application-alternative-to-managed-identity">setup instructions</a>
       for details</td>
     </tr>
     <tr>
       <td>azure_ad_client_id (<code>AZURE_AD_CLIENT_ID</code>)</td>
       <td>[none]</td>
-      <td>See above</td>
+      <td>The "Application (client) ID" on your application</td>
     </tr>
     <tr>
       <td>azure_ad_client_secret (<code>AZURE_AD_CLIENT_SECRET</code>)</td>
       <td>[none]</td>
-      <td>See above</td>
+      <td>When using client secrets, specify the generated secret here</td>
     </tr>
     <tr>
       <td>azure_ad_certificate_path (<code>AZURE_AD_CERTIFICATE_PATH</code>)</td>
       <td>[none]</td>
-      <td>See above</td>
+      <td>When using certificates, specify the path to your certificate here</td>
     </tr>
     <tr>
       <td>azure_ad_certificate_password (<code>AZURE_AD_CERTIFICATE_PASSWORD</code>)</td>
       <td>[none]</td>
-      <td>See above</td>
+      <td>When using certificates, specify your certificate password here, if required</td>
     </tr>
   </tbody>
 </table>
 
 ## Google Cloud Platform
 
-Only relevant if you are running your database in GCP. See the <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql">GCP setup instructions</a> for details.
+Only relevant if you are running your database in GCP using Google Cloud SQL. See the <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql">GCP setup instructions</a> for details.
 
 <table>
   <thead>
@@ -362,7 +383,12 @@ Only relevant if you are running your database in GCP. See the <a href="https://
     <tr>
       <td>gcp_cloudsql_instance_id (<code>GCP_CLOUDSQL_INSTANCE_ID</code>)</td>
       <td>n/a, required for Log Insights</td>
-      <td>GCP id of your database instance</td>
+      <td>Google Cloud SQL instance ID</td>
+    </tr>
+    <tr>
+      <td>gcp_project_id (<code>GCP_PROJECT_ID</code>)</td>
+      <td>n/a, required</td>
+      <td>GCP project ID; see <a href="https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy#projects">Google documentation</a> for details</td>
     </tr>
     <tr>
       <td>gcp_pubsub_subscription (<code>GCP_PUBSUB_SUBSCRIPTION</code>)</td>
@@ -376,18 +402,13 @@ Only relevant if you are running your database in GCP. See the <a href="https://
       <td>[none]</td>
       <td>Only necessary if not using the recommended method of assigning the Service Account to the VM directly; see <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql#step-3-setup-service-account">these setup instructions</a> for details</td>
     </tr>
-    <tr>
-      <td>gcp_project_id (<code>GCP_PROJECT_ID</code>)</td>
-      <td>n/a, required</td>
-      <td>GCP Project id; see <a href="https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy#projects">Google documentation</a> for details</td>
-    </tr>
   </tbody>
 </table>
 
 ## Self-managed servers
 
-If running on your own infrastructure or a platform other than the cloud providers listed above,
-the configuration settings here may be useful.
+If running on your own infrastructure, a platform other than the cloud providers listed above, or in
+a self-managed VM on a cloud provider, the configuration settings here may be useful.
 
 <table>
   <thead>
@@ -408,7 +429,8 @@ the configuration settings here may be useful.
 
 ## Additional settings
 
-Like the general settings above, but less commonly used.
+Like the general settings above, but less commonly used. We only recommend using these settings after
+talking to pganalyze support.
 
 <table>
   <thead>
@@ -421,27 +443,29 @@ Like the general settings above, but less commonly used.
   <tbody>
     <tr>
       <td>api_system_id (<code>PGA_API_SYSTEM_ID</code>)</td>
-      <td>?</td>
-      <td>?</td>
+      <td>Automatically detected</td>
+      <td>Overrides the ID of the system, used for uniquely identifying the server with the pganalyze API.
+      This is commonly what's used to refer to a single server, and defaults to the instance ID for managed
+      database providers.</td>
     </tr>
     <tr>
       <td>api_system_type (<code>PGA_API_SYSTEM_TYPE</code>)</td>
-      <td>?</td>
-      <td>?</td>
+      <td>Automatically detected</td>
+      <td>Overrides the type of the system, used for uniquely identifying the server with the pganalyze API.
+      Must be one of the following: amazon_rds, azure_database, google_cloudsql, self_hosted or heroku.</td>
     </tr>
     <tr>
       <td>api_system_scope (<code>PGA_API_SYSTEM_SCOPE</code>)</td>
-      <td>?</td>
-      <td>?</td>
+      <td>Automatically detected</td>
+      <td>Overrides the scope of the system, used for uniquely identifying the server with the pganalyze API.
+      Can be used for auxiliary identifying characteristics (e.g., region of a server ID that's re-used).</td>
     </tr>
-    <!--
-      only really useful for development
-      <tr>
-        <td>db_log_docker_tail</td>
-        <td>[none]</td>
-        <td>experimental: name of docker container to collect logs from using <code>docker logs -t</code></td>
-      </tr>
-    -->
+    <tr>
+      <td>db_log_docker_tail</td>
+      <td>[none]</td>
+      <td>Experimental: name of docker container to collect logs from using <code>docker logs -t</code>.
+      This requires that the collector runs on the Docker host.</td>
+    </tr>
     <tr>
       <td>query_stats_interval (<code>QUERY_STATS_INTERVAL</code>)</td>
       <td>60</td>
@@ -458,27 +482,28 @@ Like the general settings above, but less commonly used.
     <tr>
       <td>http_proxy (<code>HTTP_PROXY</code>)</td>
       <td>[none]</td>
-      <td>?</td>
+      <td>Proxy to be used for all HTTP connections, such as API calls. Use for proxies that do not support SSL. Example: <code>http://username:password@myproxy</code></td>
     </tr>
     <tr>
       <td>https_proxy (<code>HTTPS_PROXY</code>)</td>
       <td>[none]</td>
-      <td>?</td>
+      <td>Proxy to be used for all HTTP connections, such as API calls. Use for proxies that support SSL. Example: <code>https://username:password@myproxy</code></td>
     </tr>
     <tr>
       <td>no_proxy (<code>NO_PROXY</code>)</td>
       <td>[none]</td>
-      <td>?</td>
+      <td>Comma-delimited list of hostnames that should be accessed directly, without using a configured proxy. Has no effect unless
+      either HTTP_PROXY or HTTPS_PROXY is specified.</td>
     </tr>
     <tr>
       <td>disable_logs (<code>PGA_DISABLE_LOGS</code>)</td>
       <td>false</td>
-      <td>Disable log collection and processing</td>
+      <td>Disable Log Insights data collection</td>
     </tr>
     <tr>
       <td>disable_activity (<code>PGA_DISABLE_ACTIVITY</code>)</td>
       <td>false</td>
-      <td>Disable activity snapshots and processing (current vacuums, queries, etc.)</td>
+      <td>Disable activity snapshot data collection (VACUUM, connection traces, etc.)</td>
     </tr>
     <tr>
       <td>error_callback</td>
