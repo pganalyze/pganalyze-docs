@@ -87,7 +87,7 @@ Common settings for configuring monitoring regardless of platform.
     <tr>
       <td>ignore_schema_regexp (<code>IGNORE_SCHEMA_REGEXP</code>)</td>
       <td>[none]</td>
-      <td>do not monitor matching tables, schemas, or functions; match is checked against schema-qualified object names (e.g.
+      <td>Skip matching tables, schemas, or functions; match is checked against schema-qualified object names (e.g.
       to ignore table "foo" only in the public schema, set to <code>^public\.foo$</code>)
       </td>
     </tr>
@@ -95,7 +95,7 @@ Common settings for configuring monitoring regardless of platform.
       <td>enable_log_explain (<code>PGA_ENABLE_LOG_EXPLAIN</code>)</td>
       <td>false</td>
       <td>Enable log-based EXPLAIN. See <a href="/docs/explain/setup/log_explain">setup instructions</a>, but note 
-      we recommend using <a href="/docs/explain/setup/auto_explain">autoexplain</a> instead if possible
+      we recommend using <a href="/docs/explain/setup/auto_explain">autoexplain</a> instead if possible.
       </td>
     </tr>
   </tbody>
@@ -118,7 +118,7 @@ are expected to be defined, and the one we connect to for server-wide metrics.
   <tbody>
     <tr>
       <td>db_url (<code>DB_URL</code>)</td>
-      <td>n/a, either this or individual db_* settings are required</td>
+      <td>n/a, either this or individual settings below are required</td>
       <td>URL of the database server to monitor</td>
     </tr>
     <tr>
@@ -154,7 +154,7 @@ are expected to be defined, and the one we connect to for server-wide metrics.
     </tr>
     <tr>
       <td>db_sslrootcert (<code>DB_SSLROOTCERT</code>)</td>
-      <td>system certificate store (?)</td>
+      <td>system certificate store</td>
       <td>Path to SSL certificate authority (CA) certificate(s) to use to verify the server's certificate, or one of <code>rds-ca-2015-root</code> or <code>rds-ca-2019-root</code> to use the built-in AWS RDS certificates</td>
     </tr>
     <tr>
@@ -204,17 +204,17 @@ settings to filter these before we collect them.
     <tr>
       <td>filter_log_secret (<code>FILTER_LOG_SECRET</code>)</td>
       <td>none</td>
-      <td>none/all/credential/parsing_error/statement_text/statement_parameter/table_data/ops/unidentified (comma separated)</td>
+      <td>One or more of <code>none</code>/<code>all</code>/<code>credential</code>/<code>parsing_error</code>/<code>statement_text</code>/<code>statement_parameter</code>/<code>table_data</code>/<code>ops</code>/<code>unidentified</code> (comma separated)</td>
     </tr>
     <tr>
       <td>filter_query_sample (<code>FILTER_QUERY_SAMPLE</code>)</td>
       <td>none</td>
-      <td>none/all</td>
+      <td>Either <code>none</code> or <code>all</code></td>
     </tr>
     <tr>
       <td>filter_query_text (<code>FILTER_QUERY_TEXT</code>)</td>
       <td>unparsable</td>
-      <td>none/unparsable</td>
+      <td>Either <code>none</code> or <code>unparsable</code></td>
     </tr>
   </tbody>
 </table>
@@ -222,9 +222,10 @@ settings to filter these before we collect them.
 
 ## AWS settings
 
-Only relevant if you are running your database in AWS RDS. Note that the `aws_endpoint_*`
-settings are only relevant if you are using custom AWS endpoints. See
-[the AWS documentation](https://docs.aws.amazon.com/sdk-for-go/api/aws/endpoints/) for details.
+Only relevant if you are running your database in AWS RDS. See our <a href="https://pganalyze.com/docs/log-insights/setup/amazon-rds">RDS/Aurora setup instructions</a> for details.
+
+Note that the `aws_endpoint_*` settings are only relevant if you are using custom AWS endpoints. See
+[the AWS documentation](https://docs.aws.amazon.com/general/latest/gr/rande.html) for details.
 
 <table>
   <thead>
@@ -247,50 +248,50 @@ settings are only relevant if you are using custom AWS endpoints. See
     </tr>
     <tr>
       <td>aws_access_key_id (<code>AWS_ACCESS_KEY_ID</code>)</td>
-      <td>required unless using instance roles for an EC2 instance</td>
-      <td>Access key id of IAM role with permissions to?</td>
+      <td>[none]</td>
+      <td>Only necessary if not using recommended <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html">instance roles</a> configuration</td>
     </tr>
     <tr>
       <td>aws_secret_access_key (<code>AWS_SECRET_ACCESS_KEY</code>)</td>
-      <td>n/a, required?</td>
-      <td>Secret access key of IAM role with permissions to?</td>
+      <td>[none]</td>
+      <td>See above</td>
     </tr>
     <tr>
       <td>aws_assume_role (<code>AWS_ASSUME_ROLE</code>)</td>
       <td>[none]</td>
-      <td>If using cross-account role delegation, the ARN of the role to assume. See the <a target="_blank" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html">AWS documentation</a> for details.</td>
+      <td>If using cross-account role delegation, the ARN of the role to assume; see the <a target="_blank" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html">AWS documentation</a> for details</td>
     </tr>
     <tr>
       <td>aws_endpoint_signing_region (<code>AWS_ENDPOINT_SIGNING_REGION</code>)</td>
       <td>[none]</td>
-      <td>?</td>
+      <td>Region to use for signing requests</td>
     </tr>
     <tr>
       <td>aws_endpoint_rds_url (<code>AWS_ENDPOINT_RDS_URL</code>)</td>
       <td>[none]</td>
-      <td>?</td>
+      <td>URL of RDS service</td>
     </tr>
     <tr>
-      <td>aws_endpoint_ec2_url (AWS_ENDPOINT_EC2_URL)</td>
+      <td>aws_endpoint_ec2_url (<code>AWS_ENDPOINT_EC2_URL</code>)</td>
       <td>[none]</td>
-      <td>?</td>
+      <td>URL of EC2 service</td>
     </tr>
     <tr>
       <td>aws_endpoint_cloudwatch_url (<code>AWS_ENDPOINT_CLOUDWATCH_URL</code>)</td>
       <td>[none]</td>
-      <td>?</td>
+      <td>URL of CloudWatch service</td>
     </tr>
     <tr>
       <td>aws_endpoint_cloudwatch_logs_url (<code>AWS_ENDPOINT_CLOUDWATCH_LOGS_URL</code>)</td>
       <td>[none]</td>
-      <td>?</td>
+      <td>URL of CloudWatch log service</td>
     </tr>
   </tbody>
 </table>
 
 ## Azure settings
 
-Only relevant if you are running your database in Azure.
+Only relevant if you are running your database in Azure. See our <a href="https://pganalyze.com/docs/log-insights/setup/azure-database#step-2-setup-azure-event-hub">Azure setup instructions</a> for details.
 
 <table>
   <thead>
@@ -309,44 +310,45 @@ Only relevant if you are running your database in Azure.
     <tr>
       <td>azure_eventhub_namespace (<code>AZURE_EVENTHUB_NAMESPACE</code>)</td>
       <td>n/a, required for Log Insights</td>
-      <td>See <a href="https://pganalyze.com/docs/log-insights/setup/azure-database#step-2-setup-azure-event-hub">Azure setup instructions</a> for details</td>
+      <td>Event Hub namespace to use for log handling</td>
     </tr>
     <tr>
       <td>azure_eventhub_name (<code>AZURE_EVENTHUB_NAME</code>)</td>
-      <td>n/a, required?</td>
-      <td>?</td>
+      <td>n/a, required for Log Insights</td>
+      <td>Event Hub name to use for log handling</td>
     </tr>
     <tr>
       <td>azure_ad_tenant_id (<code>AZURE_AD_TENANT_ID</code>)</td>
-      <td>n/a, required?</td>
-      <td>?</td>
+      <td>[none]</td>
+      <td>Only necessary if not using a recommended Managed Identity; see these <a href="https://pganalyze.com/docs/log-insights/setup/azure-database#setting-up-authentication-using-azure-ad-application-alternative-to-managed-identity">setup instructions</a>
+      for details</td>
     </tr>
     <tr>
       <td>azure_ad_client_id (<code>AZURE_AD_CLIENT_ID</code>)</td>
-      <td>n/a, required?</td>
-      <td></td>
+      <td>[none]</td>
+      <td>See above</td>
     </tr>
     <tr>
       <td>azure_ad_client_secret (<code>AZURE_AD_CLIENT_SECRET</code>)</td>
-      <td>n/a, required?</td>
-      <td></td>
+      <td>[none]</td>
+      <td>See above</td>
     </tr>
     <tr>
       <td>azure_ad_certificate_path (<code>AZURE_AD_CERTIFICATE_PATH</code>)</td>
-      <td>n/a, required?</td>
-      <td></td>
+      <td>[none]</td>
+      <td>See above</td>
     </tr>
     <tr>
       <td>azure_ad_certificate_password (<code>AZURE_AD_CERTIFICATE_PASSWORD</code>)</td>
-      <td>n/a, required?</td>
-      <td></td>
+      <td>[none]</td>
+      <td>See above</td>
     </tr>
   </tbody>
 </table>
 
 ## Google Cloud Platform
 
-Only relevant if you are running your database in GCP.
+Only relevant if you are running your database in GCP. See the <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql">GCP setup instructions</a> for details.
 
 <table>
   <thead>
@@ -359,8 +361,8 @@ Only relevant if you are running your database in GCP.
   <tbody>
     <tr>
       <td>gcp_cloudsql_instance_id (<code>GCP_CLOUDSQL_INSTANCE_ID</code>)</td>
-      <td>n/a, required?</td>
-      <td>?</td>
+      <td>n/a, required for Log Insights</td>
+      <td>GCP id of your database instance</td>
     </tr>
     <tr>
       <td>gcp_pubsub_subscription (<code>GCP_PUBSUB_SUBSCRIPTION</code>)</td>
@@ -371,13 +373,13 @@ Only relevant if you are running your database in GCP.
     </tr>
     <tr>
       <td>gcp_credentials_file (<code>GCP_CREDENTIALS_FILE</code>)</td>
-      <td>n/a, required?</td>
-      <td>?</td>
+      <td>[none]</td>
+      <td>Only necessary if not using the recommended method of assigning the Service Account to the VM directly; see <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql#step-3-setup-service-account">these setup instructions</a> for details</td>
     </tr>
     <tr>
       <td>gcp_project_id (<code>GCP_PROJECT_ID</code>)</td>
-      <td>n/a, required?</td>
-      <td>?</td>
+      <td>n/a, required</td>
+      <td>GCP Project id; see <a href="https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy#projects">Google documentation</a> for details</td>
     </tr>
   </tbody>
 </table>
@@ -443,13 +445,13 @@ Like the general settings above, but less commonly used.
     <tr>
       <td>query_stats_interval (<code>QUERY_STATS_INTERVAL</code>)</td>
       <td>60</td>
-      <td>how often to collect query statistics, in seconds; supported values are `60` (once a minute) and `600` (once every ten minutes)</td>
+      <td>How often to collect query statistics, in seconds; supported values are `60` (once a minute) and `600` (once every ten minutes)</td>
     </tr>
     <tr>
       <td>max_collector_connections (<code>MAX_COLLECTOR_CONNECTION</code>)</td>
       <td>10</td>
       <td>
-        maximum connections allowed to the database with the collector application_name, in order to protect
+        Maximum connections allowed to the database with the collector application_name, in order to protect
         against accidental connection leaks in the collector
       </td>
     </tr>
