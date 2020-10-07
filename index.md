@@ -82,6 +82,9 @@ title: 'Documentation'
       * [Unique](/docs/explain/other-nodes/unique)
       * [Window Aggregate](/docs/explain/other-nodes/window-aggregate)
 
+* **[Collector](/docs/collector)**
+  - [Settings overview](/docs/collector/settings)
+
 * **[Enterprise Edition](/docs/enterprise)**
   - [Initial Setup](/docs/enterprise/setup)
   - [Release Changelog](/docs/enterprise/releases)

@@ -53,7 +53,14 @@ Afterwards make sure to reload the pganalyze collector, so the setting takes eff
 sudo pganalyze-collector --test --reload
 ```
 
-### Step 2: Testing the configuration
+### Step 2: Create helper functions
+
+In order to use log-based EXPLAIN, the collector needs permissions to run EXPLAIN queries on your database.
+The safest way to permit this is to use the [helper function we provide](https://github.com/pganalyze/collector/#setting-up-log-explain-helper).
+Because EXPLAIN needs to run in the same database where the query ran, you will need to create this function
+in each database you want to monitor.
+
+### Step 3: Testing the configuration
 
 To test the configuration, we recommend running a `pg_sleep` statement that exceeds the `log_min_duration_statement` threshold:
 
