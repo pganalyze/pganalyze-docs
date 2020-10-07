@@ -20,9 +20,6 @@ After you make changes, you can run `pganalyze-collector --test --reload` to ver
 the new configuration in the collector background process if they work correctly. This minimizes monitoring
 interruptions and simplifies config file updates.
 
-
-## Configuration settings
-
 The tables below list configuration settings, their defaults if not set, and their descriptions. If a setting is
 configurable through environment variables, the environment variable name follows the setting in parentheses.
 Environment variables for boolean settings expect `1` for true and `0` for false.
