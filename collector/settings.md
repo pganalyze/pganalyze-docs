@@ -250,6 +250,12 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
       <td>See above</td>
     </tr>
     <tr>
+      <td>aws_account_id (<code>AWS_ACCOUNT_ID</code>)</td>
+      <td>[none]</td>
+      <td>If specified, and api_system_scope (see below) is not specified, this is prepended to the auto-generated system scope (optional, can be used
+      to, e.g., differentiate staging from production)</td>
+    </tr>
+    <tr>
       <td>aws_assume_role (<code>AWS_ASSUME_ROLE</code>)</td>
       <td>[none]</td>
       <td>If using cross-account role delegation, the ARN of the role to assume; see the <a target="_blank" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html">AWS documentation</a> for details</td>
@@ -432,6 +438,14 @@ talking to pganalyze support.
       <td>Automatically detected</td>
       <td>Overrides the scope of the system, used for uniquely identifying the server with the pganalyze API.
       Can be used for auxiliary identifying characteristics (e.g., region of a server ID that's re-used).</td>
+    </tr>
+    <tr>
+      <td>api_system_scope_fallback (<code>PGA_API_SYSTEM_SCOPE_FALLBACK</code>)</td>
+      <td>[none]</td>
+      <td>When the pganalyze backend receives a snapshot with a fallback scope set, and there is no server created
+      with the regular scope, it will first search the servers with the fallback scope. If found, that server's
+      scope will be updated to the (new) regular scope. If not found, a new server will be created with the regular
+      scope. The main goal of the fallback scope is to avoid creating a duplicate server when changing the scope value.</td>
     </tr>
     <tr>
       <td>db_log_docker_tail</td>
