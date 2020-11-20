@@ -1,7 +1,7 @@
 ---
 plan_node: Index Only Scan
 short_description: Scans through the index to fetch a single value or a range of values in index order without reading table data.
-important_fields: Filter, Rows Removed by Filter
+important_fields: Filter, Index Cond, Rows Removed by Filter, Rows Removed by Index Recheck, Scan Direction
 title: EXPLAIN - Index Only Scan
 backlink_href: /docs/explain/scan-nodes
 backlink_title: 'Documentation: EXPLAIN - Scan Nodes'
