@@ -1501,7 +1501,10 @@
       "shortDescription": "Scans through the index to fetch a single value or a range of values in index order without reading table data.",
       "importantFields": [
         "Filter",
-        "Rows Removed by Filter"
+        "Index Cond",
+        "Rows Removed by Filter",
+        "Rows Removed by Index Recheck",
+        "Scan Direction"
       ],
       "path": "/docs/explain/scan-nodes/index-only-scan"
     },
