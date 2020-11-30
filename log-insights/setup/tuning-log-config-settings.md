@@ -14,6 +14,7 @@ with:
 log_min_duration_statement = 1000
 log_lock_waits = on
 log_temp_files = 0
+# Note: log_checkpoints is not available on AWS Aurora (see below)
 log_checkpoints = on
 log_connections = on
 log_disconnections = on
@@ -79,6 +80,8 @@ to enable logging for them to get more details:
 ```
 log_checkpoints = on
 ```
+
+Note that this setting is not available on AWS Aurora (see [here](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Reference.html) and [here](https://aws.amazon.com/blogs/database/optimizing-and-tuning-queries-in-amazon-rds-postgresql-based-on-native-and-external-tools/)).
 
 This will then give you the following log events: [W40: Checkpoint starting](/docs/log-insights/checkpoints/W40), [W41: Checkpoint complete](/docs/log-insights/checkpoints/W41) as well as others.
 
