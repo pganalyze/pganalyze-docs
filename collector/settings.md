@@ -24,6 +24,8 @@ The tables below list configuration settings, their defaults if not set, and the
 configurable through environment variables, the environment variable name follows the setting in parentheses.
 Environment variables for boolean settings expect `1` for true and `0` for false.
 
+Note that these settings apply to the latest version of the collector.
+
 ```toc
 ```
 
