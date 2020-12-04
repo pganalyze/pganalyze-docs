@@ -75,6 +75,13 @@ Common settings for configuring collector behavior, independent of the platform.
       </td>
     </tr>
     <tr>
+      <td>skip_if_replica (<code>SKIP_IF_REPLICA</code>)</td>
+      <td>false</td>
+      <td>Skip all metadata collection and snapshot submission while this server is a replica (according to <code>pg_is_in_recovery</code>).
+      When the server is promoted and is no longer a replica, automatically start collecting and submitting metadata as configured.
+      </td>
+    </tr>
+    <tr>
       <td>enable_log_explain (<code>PGA_ENABLE_LOG_EXPLAIN</code>)</td>
       <td>false</td>
       <td>Enable log-based EXPLAIN. See <a href="/docs/explain/setup/log_explain">setup instructions</a>, but note 
