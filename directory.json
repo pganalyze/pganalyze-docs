@@ -157,7 +157,7 @@
       "path": "/docs/enterprise/upgrade"
     },
     "explain": {
-      "title": "Postgres EXPLAIN - Overview",
+      "title": "Monitoring Postgres EXPLAIN plans",
       "path": "/docs/explain"
     },
     "explain/basics-of-postgres-query-planning": {
