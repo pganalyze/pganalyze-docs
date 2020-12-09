@@ -1,20 +1,33 @@
 ---
-title: 'Postgres EXPLAIN - Overview'
+title: 'Monitoring Postgres EXPLAIN plans'
 backlink_href: /docs
 backlink_title: 'Documentation'
 ---
+
+## The Basics
 
 First time looking at **EXPLAIN**, or trying to understand how query plans work?
 
 Start here: **[The Basics of Postgres Query Planning](/docs/explain/basics-of-postgres-query-planning)**
 
+## Postgres Plan Nodes
+
+Understanding the behavior and performance of individual plan nodes (and when Postgres chooses them for a plan) is critical to understanding overall query planning.
+
+Node types can be broadly considered in three categories:
+
+* [Scan nodes](/docs/explain/scan-nodes): Produce rows from underlying table data
+* [Join nodes](/docs/explain/join-nodes): Combine rows from child nodes
+* [Other nodes](/docs/explain/other-nodes): Broad variety of functionality (e.g. aggregation, limiting, grouping, etc)
+
 ## Query Plan Visualization
 
-pganalyze includes built-in visualization of query plans:
+pganalyze includes built-in visualization of query plans, automatically collected from the Postgres logs:
 
-![Plan Visualization Example](visualization.png)
-
-Visualizations are available for all plans collected automatically.
+<a href="/postgres-explain">
+<img src="visualization.png" alt="Plan Visualization Example" />
+</a>
+<br />
 
 ## Set up automatic EXPLAIN plan collection
 
@@ -37,12 +50,6 @@ pganalyze automatically analyzes EXPLAIN plans to find the most important insigh
 * **[Slow Scan](/docs/explain/insights/slow-scan)**<br />Sequential Scan that removed a significant number of rows (an index would have helped to avoid this)
 * **[Stale Stats](/docs/explain/insights/stale-stats)**<br />The table referenced has not had an `ANALYZE` run recently (potentially leading to inefficient plans)
 
-## Postgres Plan Nodes
-
-Understanding the behavior and performance of individual plan nodes (and when Postgres chooses them for a plan) is critical to understanding overall query planning.
-
-Node types can be broadly considered in three categories:
-
-* [Scan nodes](/docs/explain/scan-nodes): Produce rows from underlying table data
-* [Join nodes](/docs/explain/join-nodes): Combine rows from child nodes
-* [Other nodes](/docs/explain/other-nodes): Broad variety of functionality (e.g. aggregation, limiting, grouping, etc)
+<br />
+<div><feature-page-cta event-label="Docs" title="Automatic Insights into Postgres Query Plans" description="pganalyze automatically gathers the auto_explain output on your behalf from the Postgres logs, so you can easily view the plans for slow queries without extra effort." path="/postgres-explain"></feature-page-cta></div>
+<br />
