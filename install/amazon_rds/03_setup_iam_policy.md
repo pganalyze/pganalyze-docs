@@ -28,29 +28,33 @@ Before saving, modify the policy so it reads as follows:
     "Statement": [
         {
             "Action": [
-                "rds:Describe*",
-                "rds:ListTagsForResource",
-                "ec2:DescribeAccountAttributes",
-                "ec2:DescribeAvailabilityZones",
-                "ec2:DescribeSecurityGroups",
-                "ec2:DescribeVpcs"
+                "rds:DescribeDBInstances",
+                "cloudwatch:GetMetricStatistics"
             ],
             "Effect": "Allow",
             "Resource": "*"
         },
         {
             "Action": [
-                "cloudwatch:GetMetricStatistics",
-                "logs:DescribeLogStreams",
                 "logs:GetLogEvents"
             ],
             "Effect": "Allow",
-            "Resource": "*"
+            "Resource": "arn:aws:logs:*:*:log-group:RDSOSMetrics:log-stream:*"
         },
         {
-            "Action": [ "rds:DownloadDBLogFilePortion" ],
+            "Action": [
+                "rds:DescribeDBParameters"
+            ],
             "Effect": "Allow",
-            "Resource": "*"
+            "Resource": "arn:aws:rds:*:*:pg:*"
+        },
+        {
+            "Action": [
+                "rds:DownloadDBLogFilePortion",
+                "rds:DescribeDBLogFiles"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:db:*"
         }
     ]
 }
