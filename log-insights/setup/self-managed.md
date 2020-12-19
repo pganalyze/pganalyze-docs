@@ -79,13 +79,19 @@ In the successful case, the log output will look like this:
 
 There are a few error cases, in particular permission related ones for the "log test with reduced privileges", which you will likely encounter. They are documented at the end of this page.
 
-### 4. Reload your collector
+### 4. Restart your collector
 
-Once the log test is successful you need to reload the collector for the new configuration to take effect:
+Once the log test is successful you need to restart the collector for the new configuration to take effect.
+The command to restart the collector will depend on the platform you're running on (and you may need to
+run as root or use sudo if available):
 
-```
-pganalyze-collector --reload
-```
+ * on systemd-based systems: systemctl reload pganalyze-collector
+ * on upstart-based systems: reload pganalyze-collector
+ * on sysvinit-based systems: service pganalyze-collector reload
+
+(If you're not sure what type of system you're running on, Ubuntu 16.04 LTS and newer, RHEL 7 and newer,
+Fedora 24 and newer, and Debian 8 and newer all use systemd; Ubuntu 14.04 LTS and older uses upstart; and
+Amazon Linux and RHEL 6 and older use sysvinit.)
 
 After this you should see data showing up in the "Log Insights" tab in pganalyze in less than a minute:
 
