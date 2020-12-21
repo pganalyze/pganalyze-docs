@@ -85,13 +85,11 @@ Once the log test is successful you need to restart the collector for the new co
 The command to restart the collector will depend on the platform you're running on (and you may need to
 run as root or use sudo if available):
 
- * on systemd-based systems: systemctl reload pganalyze-collector
- * on upstart-based systems: reload pganalyze-collector
- * on sysvinit-based systems: service pganalyze-collector reload
+ * on systemd-based systems: systemctl restart pganalyze-collector
+ * on upstart-based systems: restart pganalyze-collector
+ * on sysvinit-based systems: service pganalyze-collector restart
 
-(If you're not sure what type of system you're running on, Ubuntu 16.04 LTS and newer, RHEL 7 and newer,
-Fedora 24 and newer, and Debian 8 and newer all use systemd; Ubuntu 14.04 LTS and older uses upstart; and
-Amazon Linux and RHEL 6 and older use sysvinit.)
+(If you're not sure what type of system you're running on, you are most likely using systemd.)
 
 After this you should see data showing up in the "Log Insights" tab in pganalyze in less than a minute:
 
