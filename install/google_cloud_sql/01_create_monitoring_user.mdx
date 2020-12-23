@@ -1,0 +1,44 @@
+---
+title: Installation Guide (Google Cloud SQL)
+---
+
+import MonitoringUserSelector from "../../components/MonitoringUserSelector";
+
+We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
+
+## Enabling pg_stat_statements
+
+Connect to your database with **cloudsqlsuperuser privileges** (i.e. the initial user that was created on instance creation), e.g. using `psql`.
+
+Run the following SQL commands to enable the `pg_stat_statements` extension, and make sure it was installed correctly:
+
+```
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+SELECT * FROM pg_stat_statements LIMIT 1;
+```
+
+## Create monitoring user
+
+Now run the following to create a monitoring user, again whilst connected as a user with **cloudsqlsuperuser privileges**, replacing `mypassword` with one of your choosing:
+
+<MonitoringUserSelector minPostgres={100000} />
+
+Note that it is important you run these as a user with **cloudsqlsuperuser privileges** in order to pass down the full access to statistics tables.
+
+## Verify connection
+
+Let's make sure we can connect to the database with the new user:
+
+```
+PGPASSWORD=mypassword psql -h 1.2.3.4 -d mydatabase -U pganalyze
+```
+
+Write down the username and password of the monitoring user, we will use it in the last step of this tutorial.
+
+---
+
+Next we continue by installing the pganalyze collector:
+
+<Link className="btn btn-success" to="02_install_the_collector">
+  Proceed to Step 2: Install the collector
+</Link>

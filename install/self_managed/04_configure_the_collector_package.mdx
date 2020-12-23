@@ -1,0 +1,47 @@
+---
+title: Installation Guide (Self-Managed)
+---
+
+export const APIKeyInstructions = ({ apiKey }) => {
+  return apiKey ? (
+    <>
+      The <code>api_key</code> for the current organization is{" "}
+      <code>{apiKey}</code>
+    </>
+  ) : (
+    <>
+      The <code>api_key</code> can be found in the pganalyze API keys page for
+      your organization
+    </>
+  );
+};
+
+## Configuring the collector
+
+The collector configuration file lives in `/etc/pganalyze-collector.conf`, and looks like this:
+
+```
+[pganalyze]
+api_key: your_pga_organization_api_key
+
+[server]
+db_host: localhost
+db_name: your_database_name
+db_username: your_monitoring_user
+db_password: your_monitoring_user_password
+```
+
+Fill in the values step-by-step:
+
+1. <APIKeyInstructions apiKey={props.apiKey} />
+2. The `db_host` is the hostname of your PostgreSQL instance (usually `localhost`)
+3. The `db_name` is the database on the PostgreSQL server you want to monitor
+4. The `db_username` and `db_password` should be the credentials of the monitoring user we created in Step 1
+
+## Testing the new configuration
+
+Run the following to make sure the configuration works:
+
+```
+sudo pganalyze-collector --test --reload
+```

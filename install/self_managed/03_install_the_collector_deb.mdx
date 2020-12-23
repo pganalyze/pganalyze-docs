@@ -1,0 +1,87 @@
+---
+title: Installation Guide (Self-Managed)
+---
+
+export const AptInstallInstructions = ({ distro }) => {
+  return (
+    <pre style={{ maxWidth: "100%" }}>
+      <code>
+        {`curl -L https://packages.pganalyze.com/pganalyze_signing_key.asc | sudo apt-key add -
+echo "deb [arch=amd64] https://packages.pganalyze.com/${distro}/ stable main" | sudo tee /etc/apt/sources.list.d/pganalyze_collector.list
+sudo apt-get update
+sudo apt-get install pganalyze-collector`}
+      </code>
+    </pre>
+  );
+};
+
+In this step we'll install the collector which sends statistics information to pganalyze.
+
+First, you need to know which version of Ubuntu/Debian you are running. You can find out with this command:
+
+```
+lsb_release -a
+```
+
+Now run the appropriate commands for your version:
+
+<ul className="nav nav-tabs">
+  <li className="nav-item">
+    <a href="#bionic" data-toggle="tab" className="nav-link active">
+      Ubuntu 18.04
+    </a>
+  </li>
+  <li className="nav-item">
+    <a href="#xenial" data-toggle="tab" className="nav-link">
+      Ubuntu 16.04
+    </a>
+  </li>
+  <li className="nav-item">
+    <a href="#trusty" data-toggle="tab" className="nav-link">
+      Ubuntu 14.04
+    </a>
+  </li>
+  <li className="nav-item">
+    <a href="#buster" data-toggle="tab" className="nav-link">
+      Debian 10
+    </a>
+  </li>
+  <li className="nav-item">
+    <a href="#stretch" data-toggle="tab" className="nav-link">
+      Debian 9
+    </a>
+  </li>
+  <li className="nav-item">
+    <a href="#jessie" data-toggle="tab" className="nav-link">
+      Debian 8
+    </a>
+  </li>
+</ul>
+
+<div className="tab-content">
+  <div className="tab-pane active" id="bionic">
+    <AptInstallInstructions distro="ubuntu/bionic" />
+  </div>
+  <div className="tab-pane" id="xenial">
+    <AptInstallInstructions distro="ubuntu/xenial" />
+  </div>
+  <div className="tab-pane" id="trusty">
+    <AptInstallInstructions distro="ubuntu/trusty" />
+  </div>
+  <div className="tab-pane" id="buster">
+    <AptInstallInstructions distro="debian/buster" />
+  </div>
+  <div className="tab-pane" id="stretch">
+    <AptInstallInstructions distro="debian/stretch" />
+  </div>
+  <div class="tab-pane" id="jessie">
+    <AptInstallInstructions distro="debian/jessie" />
+  </div>
+</div>
+
+These repositories are updated by pganalyze whenever a new stable version of the
+collector is released.
+
+<Link className="btn btn-success" to="04_configure_the_collector_package">
+  Continue to Step 4: Configure the Collector
+</Link>

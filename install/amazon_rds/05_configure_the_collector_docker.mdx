@@ -1,0 +1,48 @@
+---
+title: Installation Guide (Amazon RDS and Amazon Aurora)
+---
+
+export const CollectorDotEnv = ({ apiKey }) => {
+  return (
+    <>
+      <pre>
+        <code>
+          {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
+DB_HOST=your_database_host
+DB_NAME=your_database_name
+DB_USERNAME=your_monitoring_user
+DB_PASSWORD=your_monitoring_user_password`}
+        </code>
+      </pre>
+      <p>
+        Replace the configuration values after the <code>=</code> with the
+        correct settings for your RDS instance.
+        <br />
+        {apiKey ? (
+          <>
+            <code>{apiKey}</code> is your pganalyze API key.
+          </>
+        ) : (
+          <>
+            You can find your <code>PGA_API_KEY</code> on your
+            organization&apos;s API keys page.
+          </>
+        )}
+      </p>
+    </>
+  );
+};
+
+## Configuring the collector with Docker
+
+Create your configuration file (e.g. named `pganalyze_collector.env`) with environment variables like this:
+
+<CollectorDotEnv apiKey={props.apiKey} />
+
+## Test snapshot
+
+Then run the following:
+
+```
+docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test
+```

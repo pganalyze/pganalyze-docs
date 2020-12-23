@@ -1,0 +1,143 @@
+---
+title: Installation Guide (Amazon RDS and Amazon Aurora)
+---
+
+export const InviteLink = ({ inviteLink, children }) => {
+  return (
+    <Link className="btn btn-success" to={inviteLink}>
+      {children}
+    </Link>
+  );
+};
+
+export const SSMConfig = ({ apiKey }) => {
+  return (
+    <>
+      <pre>
+        <code>
+          {`aws ssm put-parameter --name /pganalyze/DB_PASSWORD --type SecureString --value "YOUR_MONITORING_USER_PASSWORD"
+aws ssm put-parameter --name /pganalyze/PGA_API_KEY --type SecureString --value "${
+            apiKey || "YOUR_PGANALYZE_API_KEY"
+          }"`}
+        </code>
+      </pre>
+      <p>
+        {apiKey ? (
+          <>
+            Replace <code>YOUR_DB_PASSWORD</code> with the monitoring user
+            password for your database. <code>{apiKey}</code> is your
+            organization's API key.
+          </>
+        ) : (
+          <>
+            Replace <code>YOUR_PGANALYZE_API_KEY</code> with the API key from
+            your organization&apos;s API keys page, and{" "}
+            <code>YOUR_DB_PASSWORD</code> with the monitoring user password for
+            your database.
+          </>
+        )}
+      </p>
+    </>
+  );
+};
+
+## Configuring the collector on Amazon ECS
+
+To start, create SSM secrets for storing the pganalyze API key and database password:
+
+<SSMConfig apiKey={props.apiKey} />
+
+Now, save the following ECS task definition to a file, for example `pganalyze_task.json`:
+
+```
+{
+  "family": "pganalyze-fargate",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/pganalyzeTaskRole",
+  "taskRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/pganalyzeTaskRole",
+  "networkMode": "awsvpc",
+  "memory": "512",
+  "cpu": "256",
+  "containerDefinitions": [
+    {
+      "name": "pganalyze",
+      "image": "quay.io/pganalyze/collector:stable",
+      "essential": true,
+      "environment": [
+        {"name": "DB_HOST", "value": "your_database_host"},
+        {"name": "DB_USERNAME", "value": "your_monitoring_user"},
+        {"name": "DB_NAME", "value": "your_database_name"},
+      ],
+      "secrets": [
+        {"name": "PGA_API_KEY", "valueFrom": "/pganalyze/PGA_API_KEY"},
+        {"name": "DB_PASSWORD", "valueFrom": "/pganalyze/DB_PASSWORD"}
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/pganalyze",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "pganalyze"
+        }
+      },
+      "readonlyRootFilesystem": false,
+      "mountPoints": []
+    }
+  ]
+}
+```
+
+Make sure to modify the values for `DB_HOST`, `DB_USERNAME`, `DB_NAME`, `AWS_REGION`, `AWS_INSTANCE_ID` to be correct for your RDS instance. Also adjust `YOUR_ACCOUNT_ID` to be your AWS account ID (in the `executionRoleArn` field).
+
+We can now register the task definition like this, as well as create the log group:
+
+```
+aws ecs register-task-definition --cli-input-json file://pganalyze_task.json
+aws logs create-log-group --log-group-name /ecs/pganalyze
+```
+
+And then launch the task like this:
+
+```
+aws ecs run-task --task-definition pganalyze-fargate --launch-type FARGATE --platform-version 1.3.0 --cluster test-cluster --network-configuration "awsvpcConfiguration={assignPublicIp=ENABLED,subnets=[subnet-YOUR_SUBNET],securityGroups=[sg-YOUR_SECURITYGROUP]}"
+```
+
+You will need to make sure that `subnet-YOUR_SUBNET` and `sg-YOUR_SECURITYGROUP` are correctly specified.
+
+To verify that the task is running successfully, first retrieve the task ID:
+
+```
+$ aws ecs list-tasks --cluster test-cluster
+{
+    "taskArns": [
+        "arn:aws:ecs:us-east-1:ACCOUNTID:task/TASKID"
+    ]
+}
+```
+
+Now you can request the logs, which should look like this:
+
+```
+$ aws logs get-log-events --log-group-name /ecs/pganalyze --log-stream-name pganalyze/pganalyze/TASKID
+{
+    "nextForwardToken": "...",
+    "events": [
+        {
+            "ingestionTime": 1564856657429,
+            "timestamp": 1564856653493,
+            "message": "I [default] Submitted compact activity snapshot successfully"
+        },
+```
+
+The `Submitted compact activity snapshot successfully` message indicates that you have
+configured the collector correctly.
+
+**Your setup is complete. The dashboard will start showing data within 15 minutes.**
+
+In the meantime you can invite your colleagues:
+
+<InviteLink inviteLink={props.inviteLink}>
+  Finish setup and invite team members
+</InviteLink>

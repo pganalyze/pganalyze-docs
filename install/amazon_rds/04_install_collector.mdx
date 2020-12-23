@@ -1,0 +1,22 @@
+---
+title: Installation Guide (Amazon RDS and Amazon Aurora)
+---
+
+The [pganalyze collector](https://github.com/pganalyze/collector) is a daemon process that continuously collects database statistics, and submits them to the pganalyze dashboard in recurring intervals.
+
+We recommend installing the collector on an EC2 instance, but you can also run it through a Docker container:
+
+<div className="install-choice">
+  <Link className="install-choice--step" to="04_install_collector_ec2">
+    <img src="/images-old/docs/aws-ec2.svg" />
+    Amazon EC2 Instance
+  </Link>
+  <Link className="install-choice--step" to="04_install_collector_ecs">
+    <img src="/images-old/docs/aws-ecs.png" />
+    Amazon ECS
+  </Link>
+  <Link className="install-choice--step" to="04_install_collector_docker">
+    <img src="/images-old/docs/docker.png" />
+    Docker on EC2
+  </Link>
+</div>

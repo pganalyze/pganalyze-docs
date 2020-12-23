@@ -1,0 +1,56 @@
+---
+title: Installation Guide (Google Cloud SQL)
+---
+
+export const APIKeyInstructions = ({ apiKey }) => {
+  return apiKey ? (
+    <>
+      The <code>PGA_API_KEY</code> for the current organization is{" "}
+      <code>{apiKey}</code>
+    </>
+  ) : (
+    <>
+      The <code>PGA_API_KEY</code> can be found in the pganalyze API keys page
+      for your organization
+    </>
+  );
+};
+
+export const CollectorDotEnv = ({ apiKey }) => {
+  return (
+    <pre>
+      <code>
+        {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
+DB_HOST=1.2.3.4
+DB_NAME=your_database_name
+DB_USERNAME=your_monitoring_user
+DB_PASSWORD=your_monitoring_user_password
+GCP_PROJECT_ID=your_gcp_project_id
+GCP_CLOUDSQL_INSTANCE_ID=your_gcp_cloudsql_instance_id`}
+      </code>
+    </pre>
+  );
+};
+
+## Configuring the collector with Docker
+
+Create your configuration file (e.g. named `pganalyze_collector.env`) with environment variables like this:
+
+<CollectorDotEnv apiKey={props.apiKey} />
+
+Fill in the values step-by-step:
+
+1. <APIKeyInstructions apiKey={props.apiKey} />
+2. The `DB_HOST` is the IP address of your Google Cloud SQL instance
+3. The `DB_NAME` is the database on the Google Cloud SQL instance you want to monitor
+4. The `DB_USERNAME` and `DB_PASSWORD` should be the credentials of the monitoring user we created in Step 1
+5. The `GCP_PROJECT_ID` should match the name of the GCP project that contains your Cloud SQL instance
+6. The `GCP_CLOUDSQL_INSTANCE_ID` should match the name of the Cloud SQL instance
+
+## Test snapshot
+
+Then run the following:
+
+```
+docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test
+```

@@ -1,0 +1,49 @@
+---
+title: Installation Guide (Azure Database for PostgreSQL)
+---
+
+export const APIKeyInstructions = ({ apiKey }) => {
+  return apiKey ? (
+    <>
+      The <code>api_key</code> for the current organization is{" "}
+      <code>{apiKey}</code>
+    </>
+  ) : (
+    <>
+      The <code>api_key</code> can be found in the pganalyze API keys page for
+      your organization
+    </>
+  );
+};
+
+## Configuring the collector
+
+The collector configuration file lives in `/etc/pganalyze-collector.conf`, and looks like this:
+
+```
+[pganalyze]
+api_key: your_pga_organization_api_key
+
+[server]
+db_host: your_db.postgres.database.azure.com
+db_name: your_database_name
+db_username: your_monitoring_user@your_db
+db_password: your_monitoring_user_password
+azure_db_server_name: your_db
+```
+
+Fill in the values step-by-step:
+
+1. <APIKeyInstructions apiKey={props.apiKey} />
+2. The `db_host` is the IP address of your Azure Database server
+3. The `db_name` is the database on the Azure Database server you want to monitor
+4. The `db_username` and `db_password` should be the credentials of the monitoring user we created in Step 1
+5. (optional) The `azure_db_server_name` sets your Azure Database server name - this is automatically inferred from `db_host` and typically not needed
+
+## Testing the new configuration
+
+Run the following to make sure the configuration works:
+
+```
+sudo pganalyze-collector --test --reload
+```

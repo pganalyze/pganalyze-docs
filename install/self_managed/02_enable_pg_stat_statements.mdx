@@ -1,0 +1,34 @@
+---
+title: Installation Guide (Self-Managed)
+---
+
+In this step we setup [pg_stat_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html), which is used by pganalyze to collect Postgres query statistics.
+
+To continue, we need to know where your Postgres is running:
+
+<div className="install-choice">
+  <Link className="install-choice--step" to="02_enable_pg_stat_statements_deb">
+    <img src="/images-old/docs/logo_ubuntu.png" />
+    Ubuntu &amp; Debian
+  </Link>
+  <Link className="install-choice--step" to="02_enable_pg_stat_statements_yum">
+    <img src="/images-old/docs/logo_redhat.png" />
+    RHEL, CentOS &amp; Fedora
+  </Link>
+  <Link
+    className="install-choice--step"
+    to="02_enable_pg_stat_statements_docker"
+  >
+    <img src="/images-old/docs/docker.png" />
+    Docker
+  </Link>
+  {/*<Link className="install-choice--step" to="02_enable_pg_stat_statements_kubernetes">
+    <img src="/images-old/docs/logo_kubernetes.png" />
+    Kubernetes
+  </Link>*/}
+</div>
+
+<br />
+If your Postgres runs somewhere else, <a href="mailto:support@pganalyze.com">
+  let us know
+</a> & we're happy to help.

@@ -1,0 +1,39 @@
+---
+title: Installation Guide (Self-Managed)
+---
+
+## Enable pg_stat_statements in your Postgres container configuration
+
+To get query statistics in Postgres, we need to modify the Postgres config setting called `shared_preload_libraries`.
+
+You can do this by stopping your Postgres container, and then starting it again with the correct configuration as [part of the command line arguments](https://docs.docker.com/samples/library/postgres/#database-configuration):
+
+```
+docker run -d --name my-pg postgres -c "shared_preload_libraries='pg_stat_statements'"
+```
+
+## Verify that pg_stat_statements returns data
+
+As a superuser, run the following statements:
+
+```
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+SELECT calls, query FROM pg_stat_statements LIMIT 1;
+```
+
+If you have configured your database correctly, this will return a result like this:
+
+```
+ calls | query
+-------+-------
+     8 | SELECT * FROM t WHERE field = ?
+(1 row)
+```
+
+If you get an error you might not have restarted the container, or passed the configuration settings the right way. If you get stuck feel free to reach out to us, we're happy to help.
+
+Next we continue by installing the pganalyze collector:
+
+<Link className="btn btn-success" to="03_install_the_collector_docker">
+  Proceed to Step 3: Install the collector
+</Link>
