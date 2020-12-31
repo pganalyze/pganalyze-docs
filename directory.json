@@ -1178,6 +1178,17 @@
       "color": null,
       "hasAnalysis": null
     },
+    "U140": {
+      "title": "Range lower bound must be less than or equal to range upper bound",
+      "category": "app-errors",
+      "collectorKey": "INCONSISTENT_RANGE_BOUNDS",
+      "tooltip": "Data contains range bounds in the incorrect order",
+      "urgency": "medium",
+      "sqlstate": "22000 (Class 22 - Data Exception: data_exception)",
+      "path": "/docs/log-insights/app-errors/U140",
+      "color": null,
+      "hasAnalysis": null
+    },
     "V100": {
       "title": "Duplicate key value violates unique constraint",
       "category": "constraint-violations",
