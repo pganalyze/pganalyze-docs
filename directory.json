@@ -2,299 +2,443 @@
   "pages": {
     "": {
       "title": "Documentation",
-      "path": "/docs"
+      "path": ""
     },
-    "api": {
+    "/api": {
       "title": "pganalyze GraphQL API",
-      "path": "/docs/api"
+      "path": "/api"
     },
-    "api/create-api-key": {
+    "/api/create-api-key": {
       "title": "API: Creating an API key",
-      "path": "/docs/api/create-api-key"
+      "path": "/api/create-api-key"
     },
-    "api/mutations": {
+    "/api/mutations": {
       "title": "pganalyze GraphQL API Mutations",
-      "path": "/docs/api/mutations"
+      "path": "/api/mutations"
     },
-    "api/mutations/addServer": {
+    "/api/mutations/addServer": {
       "title": "addServer - Add a server to pganalyze Enterprise Edition",
-      "path": "/docs/api/mutations/addServer"
+      "path": "/api/mutations/addServer"
     },
-    "api/queries": {
+    "/api/queries": {
       "title": "pganalyze GraphQL API Queries",
-      "path": "/docs/api/queries"
+      "path": "/api/queries"
     },
-    "api/queries/getIssues": {
+    "/api/queries/getIssues": {
       "title": "getIssues - Get check-up issues and alerts",
-      "path": "/docs/api/queries/getIssues"
+      "path": "/api/queries/getIssues"
     },
-    "api/queries/getQueryStats": {
+    "/api/queries/getQueryStats": {
       "title": "getQueryStats - Export query statistics",
-      "path": "/docs/api/queries/getQueryStats"
+      "path": "/api/queries/getQueryStats"
     },
-    "collector": {
+    "/collector": {
       "title": "pganalyze Collector",
-      "path": "/docs/collector"
+      "path": "/collector"
     },
-    "collector/settings": {
+    "/collector/settings": {
       "title": "pganalyze Collector settings",
-      "path": "/docs/collector/settings"
+      "path": "/collector/settings"
     },
-    "enterprise": {
+    "/enterprise": {
       "title": "pganalyze Enterprise Edition",
-      "path": "/docs/enterprise"
+      "path": "/enterprise"
     },
-    "enterprise/google-auth": {
+    "/enterprise/google-auth": {
       "title": "Enterprise Edition: How to setup Google Auth Integration",
-      "path": "/docs/enterprise/google-auth"
+      "path": "/enterprise/google-auth"
     },
-    "enterprise/log-insights": {
+    "/enterprise/log-insights": {
       "title": "Enterprise Edition: Log Insights Setup",
-      "path": "/docs/enterprise/log-insights"
+      "path": "/enterprise/log-insights"
     },
-    "enterprise/log-insights-local": {
+    "/enterprise/log-insights-local": {
       "title": "Enterprise Edition: Log Insights Setup (Local Storage)",
-      "path": "/docs/enterprise/log-insights-local"
+      "path": "/enterprise/log-insights-local"
     },
-    "enterprise/log-insights-s3": {
+    "/enterprise/log-insights-s3": {
       "title": "Enterprise Edition: Log Insights Setup (Amazon S3)",
-      "path": "/docs/enterprise/log-insights-s3"
+      "path": "/enterprise/log-insights-s3"
     },
-    "enterprise/releases": {
+    "/enterprise/releases": {
       "title": "Enterprise Edition: Release Changelog",
-      "path": "/docs/enterprise/releases"
+      "path": "/enterprise/releases"
     },
-    "enterprise/releases/2017-08-0": {
+    "/enterprise/releases/2017-08-0": {
       "title": "2017.08.0 Release",
-      "path": "/docs/enterprise/releases/2017-08-0"
+      "path": "/enterprise/releases/2017-08-0"
     },
-    "enterprise/releases/2017-10-0": {
+    "/enterprise/releases/2017-10-0": {
       "title": "2017.10.0 Release",
-      "path": "/docs/enterprise/releases/2017-10-0"
+      "path": "/enterprise/releases/2017-10-0"
     },
-    "enterprise/releases/2017-11-0": {
+    "/enterprise/releases/2017-11-0": {
       "title": "2017.11.0 Release",
-      "path": "/docs/enterprise/releases/2017-11-0"
+      "path": "/enterprise/releases/2017-11-0"
     },
-    "enterprise/releases/2017-12-0": {
+    "/enterprise/releases/2017-12-0": {
       "title": "2017.12.0 Release",
-      "path": "/docs/enterprise/releases/2017-12-0"
+      "path": "/enterprise/releases/2017-12-0"
     },
-    "enterprise/releases/2018-02-0": {
+    "/enterprise/releases/2018-02-0": {
       "title": "2018.02.0 Release",
-      "path": "/docs/enterprise/releases/2018-02-0"
+      "path": "/enterprise/releases/2018-02-0"
     },
-    "enterprise/releases/2018-02-1": {
+    "/enterprise/releases/2018-02-1": {
       "title": "2018.02.1 Release",
-      "path": "/docs/enterprise/releases/2018-02-1"
+      "path": "/enterprise/releases/2018-02-1"
     },
-    "enterprise/releases/2018-02-2": {
+    "/enterprise/releases/2018-02-2": {
       "title": "2018.02.2 Release",
-      "path": "/docs/enterprise/releases/2018-02-2"
+      "path": "/enterprise/releases/2018-02-2"
     },
-    "enterprise/releases/2018-02-3": {
+    "/enterprise/releases/2018-02-3": {
       "title": "2018.02.3 Release",
-      "path": "/docs/enterprise/releases/2018-02-3"
+      "path": "/enterprise/releases/2018-02-3"
     },
-    "enterprise/releases/2018-02-4": {
+    "/enterprise/releases/2018-02-4": {
       "title": "2018.02.4 Release",
-      "path": "/docs/enterprise/releases/2018-02-4"
+      "path": "/enterprise/releases/2018-02-4"
     },
-    "enterprise/releases/2018-07-0": {
+    "/enterprise/releases/2018-07-0": {
       "title": "2018.07.0 Release",
-      "path": "/docs/enterprise/releases/2018-07-0"
+      "path": "/enterprise/releases/2018-07-0"
     },
-    "enterprise/releases/2018-08-0": {
+    "/enterprise/releases/2018-08-0": {
       "title": "2018.08.0 Release",
-      "path": "/docs/enterprise/releases/2018-08-0"
+      "path": "/enterprise/releases/2018-08-0"
     },
-    "enterprise/releases/2018-08-1": {
+    "/enterprise/releases/2018-08-1": {
       "title": "2018.08.1 Release",
-      "path": "/docs/enterprise/releases/2018-08-1"
+      "path": "/enterprise/releases/2018-08-1"
     },
-    "enterprise/releases/2018-08-2": {
+    "/enterprise/releases/2018-08-2": {
       "title": "2018.08.2 Release",
-      "path": "/docs/enterprise/releases/2018-08-2"
+      "path": "/enterprise/releases/2018-08-2"
     },
-    "enterprise/releases/2018-09-0": {
+    "/enterprise/releases/2018-09-0": {
       "title": "2018.09.0 Release",
-      "path": "/docs/enterprise/releases/2018-09-0"
+      "path": "/enterprise/releases/2018-09-0"
     },
-    "enterprise/releases/2019-04-0": {
+    "/enterprise/releases/2019-04-0": {
       "title": "2019.04.0 Release",
-      "path": "/docs/enterprise/releases/2019-04-0"
+      "path": "/enterprise/releases/2019-04-0"
     },
-    "enterprise/releases/2019-04-1": {
+    "/enterprise/releases/2019-04-1": {
       "title": "2019.04.1 Release",
-      "path": "/docs/enterprise/releases/2019-04-1"
+      "path": "/enterprise/releases/2019-04-1"
     },
-    "enterprise/releases/2020-07-0": {
+    "/enterprise/releases/2020-07-0": {
       "title": "2020.07.0 Release",
-      "path": "/docs/enterprise/releases/2020-07-0"
+      "path": "/enterprise/releases/2020-07-0"
     },
-    "enterprise/releases/2020-07-1": {
+    "/enterprise/releases/2020-07-1": {
       "title": "2020.07.1 Release",
-      "path": "/docs/enterprise/releases/2020-07-1"
+      "path": "/enterprise/releases/2020-07-1"
     },
-    "enterprise/releases/2020-07-2": {
+    "/enterprise/releases/2020-07-2": {
       "title": "2020.07.2 Release",
-      "path": "/docs/enterprise/releases/2020-07-2"
+      "path": "/enterprise/releases/2020-07-2"
     },
-    "enterprise/releases/2020-09-0": {
+    "/enterprise/releases/2020-09-0": {
       "title": "2020.09.0 Release",
-      "path": "/docs/enterprise/releases/2020-09-0"
+      "path": "/enterprise/releases/2020-09-0"
     },
-    "enterprise/setup": {
+    "/enterprise/setup": {
       "title": "Enterprise Edition: Initial Setup",
-      "path": "/docs/enterprise/setup"
+      "path": "/enterprise/setup"
     },
-    "enterprise/troubleshooting": {
+    "/enterprise/troubleshooting": {
       "title": "Enterprise Edition: Troubleshooting",
-      "path": "/docs/enterprise/troubleshooting"
+      "path": "/enterprise/troubleshooting"
     },
-    "enterprise/upgrade": {
+    "/enterprise/upgrade": {
       "title": "Enterprise Edition: Upgrading to new releases",
-      "path": "/docs/enterprise/upgrade"
+      "path": "/enterprise/upgrade"
     },
-    "explain": {
+    "/explain": {
       "title": "Monitoring Postgres EXPLAIN plans",
-      "path": "/docs/explain"
+      "path": "/explain"
     },
-    "explain/basics-of-postgres-query-planning": {
+    "/explain/basics-of-postgres-query-planning": {
       "title": "The Basics of Postgres Query Planning",
-      "path": "/docs/explain/basics-of-postgres-query-planning"
+      "path": "/explain/basics-of-postgres-query-planning"
     },
-    "explain/insights": {
+    "/explain/insights": {
       "title": "EXPLAIN - Insights",
-      "path": "/docs/explain/insights"
+      "path": "/explain/insights"
     },
-    "explain/join-nodes": {
+    "/explain/join-nodes": {
       "title": "EXPLAIN - Join Nodes",
-      "path": "/docs/explain/join-nodes"
+      "path": "/explain/join-nodes"
     },
-    "explain/other-nodes": {
+    "/explain/other-nodes": {
       "title": "EXPLAIN - Other Nodes",
-      "path": "/docs/explain/other-nodes"
+      "path": "/explain/other-nodes"
     },
-    "explain/scan-nodes": {
+    "/explain/scan-nodes": {
       "title": "EXPLAIN - Scan Nodes",
-      "path": "/docs/explain/scan-nodes"
+      "path": "/explain/scan-nodes"
     },
-    "explain/setup": {
-      "title": "Set up automatic EXPLAIN plan collection",
-      "path": "/docs/explain/setup"
-    },
-    "explain/setup/auto_explain": {
+    "/explain/setup/auto_explain": {
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
-      "path": "/docs/explain/setup/auto_explain"
+      "path": "/explain/setup/auto_explain"
     },
-    "explain/setup/log_explain": {
+    "/explain/setup/log_explain": {
       "title": "Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres",
-      "path": "/docs/explain/setup/log_explain"
+      "path": "/explain/setup/log_explain"
     },
-    "guides": {
+    "/guides": {
       "title": "Guides",
-      "path": "/docs/guides"
+      "path": "/guides"
     },
-    "guides/adjusting-work-mem": {
+    "/guides/adjusting-work-mem": {
       "title": "Guide: Adjusting work_mem based on temporary file creation",
-      "path": "/docs/guides/adjusting-work-mem"
+      "path": "/guides/adjusting-work-mem"
     },
-    "guides/monitoring-postgres-locks-using-log-insights": {
+    "/guides/monitoring-postgres-locks-using-log-insights": {
       "title": "Guide: Monitoring Postgres locks using Log Insights",
-      "path": "/docs/guides/monitoring-postgres-locks-using-log-insights"
+      "path": "/guides/monitoring-postgres-locks-using-log-insights"
     },
-    "guides/tuning-checkpoint-intervals": {
+    "/guides/tuning-checkpoint-intervals": {
       "title": "Guide: Tuning checkpoint intervals to reduce I/O spikes",
-      "path": "/docs/guides/tuning-checkpoint-intervals"
+      "path": "/guides/tuning-checkpoint-intervals"
     },
-    "install": {
-      "title": "Installation Guide",
-      "path": "/docs/install"
+    "/install": {
+      "title": "Get Started",
+      "path": "/install"
     },
-    "install/01_enabling_pg_stat_statements": {
-      "title": "Step 1: Enabling pg_stat_statements",
-      "path": "/docs/install/01_enabling_pg_stat_statements"
+    "/install/_monitoring_user_10": {
+      "title": "",
+      "path": "/install/_monitoring_user_10"
     },
-    "install/02_installing_the_collector": {
-      "title": "Step 2: Installing the Collector",
-      "path": "/docs/install/02_installing_the_collector"
+    "/install/_monitoring_user_94": {
+      "title": "",
+      "path": "/install/_monitoring_user_94"
     },
-    "install/03_configuring_the_collector": {
-      "title": "Step 3: Configuring the Collector",
-      "path": "/docs/install/03_configuring_the_collector"
+    "/install/_monitoring_user_96": {
+      "title": "",
+      "path": "/install/_monitoring_user_96"
     },
-    "install/amazon_rds": {
-      "title": "Installation Guide (Amazon RDS and Amazon Aurora for PostgreSQL)",
-      "path": "/docs/install/amazon_rds"
+    "/install/_monitoring_user_old": {
+      "title": "",
+      "path": "/install/_monitoring_user_old"
     },
-    "install/amazon_rds/01_configure_rds_instance": {
-      "title": "Step 1: Configure RDS instance",
-      "path": "/docs/install/amazon_rds/01_configure_rds_instance"
+    "/install/_package_apt": {
+      "title": "",
+      "path": "/install/_package_apt"
     },
-    "install/amazon_rds/02_create_monitoring_user": {
-      "title": "Step 2: Create Monitoring User",
-      "path": "/docs/install/amazon_rds/02_create_monitoring_user"
+    "/install/_package_yum": {
+      "title": "",
+      "path": "/install/_package_yum"
     },
-    "install/amazon_rds/03_setup_iam_policy": {
-      "title": "Step 3: Setup IAM Policy",
-      "path": "/docs/install/amazon_rds/03_setup_iam_policy"
+    "/install/amazon_rds/01_configure_rds_instance": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/01_configure_rds_instance"
     },
-    "install/amazon_rds/04_install_collector": {
-      "title": "Step 4: Install collector",
-      "path": "/docs/install/amazon_rds/04_install_collector"
+    "/install/amazon_rds/02_create_monitoring_user": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/02_create_monitoring_user"
     },
-    "install/heroku_postgres": {
-      "title": "Using pganalyze on Heroku Postgres",
-      "path": "/docs/install/heroku_postgres"
+    "/install/amazon_rds/03_setup_iam_policy": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/03_setup_iam_policy"
     },
-    "install/troubleshooting": {
-      "title": "Installation Troubleshooting",
-      "path": "/docs/install/troubleshooting"
+    "/install/amazon_rds/04_install_collector": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/04_install_collector"
     },
-    "install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries": {
-      "title": "Amazon RDS: Resolving the \"pg_stat_statements must be loaded via shared_preload_libraries\" error",
-      "path": "/docs/install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries"
+    "/install/amazon_rds/04_install_collector_docker": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/04_install_collector_docker"
     },
-    "log-insights": {
+    "/install/amazon_rds/04_install_collector_ec2": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/04_install_collector_ec2"
+    },
+    "/install/amazon_rds/04_install_collector_ecs": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/04_install_collector_ecs"
+    },
+    "/install/amazon_rds/05_configure_the_collector": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/05_configure_the_collector"
+    },
+    "/install/amazon_rds/05_configure_the_collector_docker": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/05_configure_the_collector_docker"
+    },
+    "/install/amazon_rds/05_configure_the_collector_ec2": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/05_configure_the_collector_ec2"
+    },
+    "/install/amazon_rds/05_configure_the_collector_ecs": {
+      "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
+      "path": "/install/amazon_rds/05_configure_the_collector_ecs"
+    },
+    "/install/azure_database/01_create_monitoring_user": {
+      "title": "Installation Guide (Azure Database for PostgreSQL)",
+      "path": "/install/azure_database/01_create_monitoring_user"
+    },
+    "/install/azure_database/02_install_the_collector": {
+      "title": "Installation Guide (Azure Database for PostgreSQL)",
+      "path": "/install/azure_database/02_install_the_collector"
+    },
+    "/install/azure_database/02_install_the_collector_deb": {
+      "title": "Installation Guide (Azure Database for PostgreSQL)",
+      "path": "/install/azure_database/02_install_the_collector_deb"
+    },
+    "/install/azure_database/02_install_the_collector_docker": {
+      "title": "Installation Guide (Azure Database for PostgreSQL)",
+      "path": "/install/azure_database/02_install_the_collector_docker"
+    },
+    "/install/azure_database/02_install_the_collector_yum": {
+      "title": "Installation Guide (Azure Database for PostgreSQL)",
+      "path": "/install/azure_database/02_install_the_collector_yum"
+    },
+    "/install/azure_database/03_configure_the_collector": {
+      "title": "Installation Guide (Azure Database for PostgreSQL)",
+      "path": "/install/azure_database/03_configure_the_collector"
+    },
+    "/install/azure_database/03_configure_the_collector_docker": {
+      "title": "Installation Guide (Azure Database for PostgreSQL)",
+      "path": "/install/azure_database/03_configure_the_collector_docker"
+    },
+    "/install/azure_database/03_configure_the_collector_package": {
+      "title": "Installation Guide (Azure Database for PostgreSQL)",
+      "path": "/install/azure_database/03_configure_the_collector_package"
+    },
+    "/install/google_cloud_sql/01_create_monitoring_user": {
+      "title": "Installation Guide (Google Cloud SQL)",
+      "path": "/install/google_cloud_sql/01_create_monitoring_user"
+    },
+    "/install/google_cloud_sql/02_install_the_collector": {
+      "title": "Installation Guide (Google Cloud SQL)",
+      "path": "/install/google_cloud_sql/02_install_the_collector"
+    },
+    "/install/google_cloud_sql/02_install_the_collector_deb": {
+      "title": "Installation Guide (Google Cloud SQL)",
+      "path": "/install/google_cloud_sql/02_install_the_collector_deb"
+    },
+    "/install/google_cloud_sql/02_install_the_collector_docker": {
+      "title": "Installation Guide (Google Cloud SQL)",
+      "path": "/install/google_cloud_sql/02_install_the_collector_docker"
+    },
+    "/install/google_cloud_sql/02_install_the_collector_yum": {
+      "title": "Installation Guide (Google Cloud SQL)",
+      "path": "/install/google_cloud_sql/02_install_the_collector_yum"
+    },
+    "/install/google_cloud_sql/03_configure_the_collector": {
+      "title": "Installation Guide (Google Cloud SQL)",
+      "path": "/install/google_cloud_sql/03_configure_the_collector"
+    },
+    "/install/google_cloud_sql/03_configure_the_collector_docker": {
+      "title": "Installation Guide (Google Cloud SQL)",
+      "path": "/install/google_cloud_sql/03_configure_the_collector_docker"
+    },
+    "/install/google_cloud_sql/03_configure_the_collector_package": {
+      "title": "Installation Guide (Google Cloud SQL)",
+      "path": "/install/google_cloud_sql/03_configure_the_collector_package"
+    },
+    "/install/heroku_postgres/01_deploy_the_collector": {
+      "title": "Installation Guide (Heroku Postgres)",
+      "path": "/install/heroku_postgres/01_deploy_the_collector"
+    },
+    "/install/heroku_postgres/02_attach_databases": {
+      "title": "Installation Guide (Heroku Postgres)",
+      "path": "/install/heroku_postgres/02_attach_databases"
+    },
+    "/install/heroku_postgres/03_verify_configuration": {
+      "title": "Installation Guide (Heroku Postgres)",
+      "path": "/install/heroku_postgres/03_verify_configuration"
+    },
+    "/install/self_managed/01_create_monitoring_user": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/01_create_monitoring_user"
+    },
+    "/install/self_managed/02_enable_pg_stat_statements": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/02_enable_pg_stat_statements"
+    },
+    "/install/self_managed/02_enable_pg_stat_statements_deb": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/02_enable_pg_stat_statements_deb"
+    },
+    "/install/self_managed/02_enable_pg_stat_statements_docker": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/02_enable_pg_stat_statements_docker"
+    },
+    "/install/self_managed/02_enable_pg_stat_statements_yum": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/02_enable_pg_stat_statements_yum"
+    },
+    "/install/self_managed/03_install_the_collector": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/03_install_the_collector"
+    },
+    "/install/self_managed/03_install_the_collector_deb": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/03_install_the_collector_deb"
+    },
+    "/install/self_managed/03_install_the_collector_docker": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/03_install_the_collector_docker"
+    },
+    "/install/self_managed/03_install_the_collector_yum": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/03_install_the_collector_yum"
+    },
+    "/install/self_managed/04_configure_the_collector": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/04_configure_the_collector"
+    },
+    "/install/self_managed/04_configure_the_collector_docker": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/04_configure_the_collector_docker"
+    },
+    "/install/self_managed/04_configure_the_collector_package": {
+      "title": "Installation Guide (Self-Managed)",
+      "path": "/install/self_managed/04_configure_the_collector_package"
+    },
+    "/log-insights": {
       "title": "pganalyze Log Insights",
-      "path": "/docs/log-insights"
+      "path": "/log-insights"
     },
-    "log-insights/setup": {
+    "/log-insights/setup": {
       "title": "Log Insights: Setup",
-      "path": "/docs/log-insights/setup"
+      "path": "/log-insights/setup"
     },
-    "log-insights/setup/amazon-rds": {
+    "/log-insights/setup/amazon-rds": {
       "title": "Log Insights: Install on Amazon RDS & Amazon Aurora",
-      "path": "/docs/log-insights/setup/amazon-rds"
+      "path": "/log-insights/setup/amazon-rds"
     },
-    "log-insights/setup/azure-database": {
+    "/log-insights/setup/azure-database": {
       "title": "Log Insights: Install on Azure Database for PostgreSQL",
-      "path": "/docs/log-insights/setup/azure-database"
+      "path": "/log-insights/setup/azure-database"
     },
-    "log-insights/setup/google-cloud-sql": {
+    "/log-insights/setup/google-cloud-sql": {
       "title": "Log Insights: Install on Google Cloud SQL",
-      "path": "/docs/log-insights/setup/google-cloud-sql"
+      "path": "/log-insights/setup/google-cloud-sql"
     },
-    "log-insights/setup/heroku-postgres": {
+    "/log-insights/setup/heroku-postgres": {
       "title": "Log Insights: Install on Heroku Postgres",
-      "path": "/docs/log-insights/setup/heroku-postgres"
+      "path": "/log-insights/setup/heroku-postgres"
     },
-    "log-insights/setup/self-managed": {
+    "/log-insights/setup/self-managed": {
       "title": "Log Insights: Install on Self-Managed Server",
-      "path": "/docs/log-insights/setup/self-managed"
+      "path": "/log-insights/setup/self-managed"
     },
-    "log-insights/setup/tuning-log-config-settings": {
+    "/log-insights/setup/tuning-log-config-settings": {
       "title": "Log Insights: Tuning Log Config Settings",
-      "path": "/docs/log-insights/setup/tuning-log-config-settings"
+      "path": "/log-insights/setup/tuning-log-config-settings"
     },
-    "open_source_components": {
+    "/open_source_components": {
       "title": "Open-Source Components",
-      "path": "/docs/open_source_components"
+      "path": "/open_source_components"
     },
-    "permissions": {
+    "/permissions": {
       "title": "Permissions and Roles",
-      "path": "/docs/permissions"
+      "path": "/permissions"
     }
   },
   "logClassifications": {
@@ -305,7 +449,7 @@
       "tooltip": "Autovacuum run on a table has been canceled",
       "urgency": "low",
       "sqlstate": "57014 (Class 57 - Operator Intervention: query_canceled)",
-      "path": "/docs/log-insights/autovacuum/A60",
+      "path": "/log-insights/autovacuum/A60",
       "color": null,
       "hasAnalysis": null
     },
@@ -316,7 +460,7 @@
       "tooltip": "Database is at risk of forced shutdown due to overdue VACUUM",
       "urgency": "high",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/autovacuum/A61",
+      "path": "/log-insights/autovacuum/A61",
       "color": null,
       "hasAnalysis": null
     },
@@ -327,7 +471,7 @@
       "tooltip": "The database has been interrupted due to imminent TXID wraparound - manual intervention required",
       "urgency": "high",
       "sqlstate": "54000 (Class 54 - Program Limit Exceeded: program_limit_exceeded)",
-      "path": "/docs/log-insights/autovacuum/A62",
+      "path": "/log-insights/autovacuum/A62",
       "color": null,
       "hasAnalysis": null
     },
@@ -338,7 +482,7 @@
       "tooltip": "The Postgres autovacuum launcher has started",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/autovacuum/A63",
+      "path": "/log-insights/autovacuum/A63",
       "color": null,
       "hasAnalysis": null
     },
@@ -349,7 +493,7 @@
       "tooltip": "The autovacuum launcher has been stopped",
       "urgency": "low",
       "sqlstate": "57P01 (Class 57 - Operator Intervention: admin_shutdown)",
-      "path": "/docs/log-insights/autovacuum/A64",
+      "path": "/log-insights/autovacuum/A64",
       "color": null,
       "hasAnalysis": null
     },
@@ -360,7 +504,7 @@
       "tooltip": "Automatic VACUUM for the referenced table has completed",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/autovacuum/A65",
+      "path": "/log-insights/autovacuum/A65",
       "color": "#8be",
       "hasAnalysis": null
     },
@@ -371,7 +515,7 @@
       "tooltip": "Automatic ANALYZE for the referenced table has completed",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/autovacuum/A66",
+      "path": "/log-insights/autovacuum/A66",
       "color": "#8be",
       "hasAnalysis": null
     },
@@ -382,7 +526,7 @@
       "tooltip": "Vacuum could not be started due to lock failure",
       "urgency": "low",
       "sqlstate": "55P03 (Class 55 - Object Not In Prerequisite State: lock_not_available)",
-      "path": "/docs/log-insights/autovacuum/A67",
+      "path": "/log-insights/autovacuum/A67",
       "color": null,
       "hasAnalysis": null
     },
@@ -393,7 +537,7 @@
       "tooltip": "Vacuum could not be started due to lock failure",
       "urgency": "low",
       "sqlstate": "55P03 (Class 55 - Object Not In Prerequisite State: lock_not_available)",
-      "path": "/docs/log-insights/autovacuum/A68",
+      "path": "/log-insights/autovacuum/A68",
       "color": null,
       "hasAnalysis": null
     },
@@ -404,7 +548,7 @@
       "tooltip": "Postgres has replayed a WAL file from the archive using restore_command",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/standby/B90",
+      "path": "/log-insights/standby/B90",
       "color": null,
       "hasAnalysis": null
     },
@@ -415,7 +559,7 @@
       "tooltip": "Streaming replication has successfully started/resumed",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/standby/B91",
+      "path": "/log-insights/standby/B91",
       "color": null,
       "hasAnalysis": null
     },
@@ -426,7 +570,7 @@
       "tooltip": "Streaming replication was interrupted due to a network issue",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/standby/B92",
+      "path": "/log-insights/standby/B92",
       "color": null,
       "hasAnalysis": null
     },
@@ -437,7 +581,7 @@
       "tooltip": "Streaming replication has stopped due to intervention",
       "urgency": "low",
       "sqlstate": "57P01 (Class 57 — Operator Intervention: admin_shutdown)",
-      "path": "/docs/log-insights/standby/B93",
+      "path": "/log-insights/standby/B93",
       "color": null,
       "hasAnalysis": null
     },
@@ -448,7 +592,7 @@
       "tooltip": "Standby is about to be ready for read-only connections",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/standby/B94",
+      "path": "/log-insights/standby/B94",
       "color": null,
       "hasAnalysis": null
     },
@@ -459,7 +603,7 @@
       "tooltip": "Statement tried to access data that is about to be removed",
       "urgency": "low",
       "sqlstate": "40001 (Class 40 - Transaction Rollback: serialization_failure)",
-      "path": "/docs/log-insights/standby/B95",
+      "path": "/log-insights/standby/B95",
       "color": null,
       "hasAnalysis": null
     },
@@ -470,7 +614,7 @@
       "tooltip": "New connection has been received by the server",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/connections/C20",
+      "path": "/log-insights/connections/C20",
       "color": "#8FBC8F",
       "hasAnalysis": null
     },
@@ -481,7 +625,7 @@
       "tooltip": "Connection has been successfully authorized to access the database",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/connections/C21",
+      "path": "/log-insights/connections/C21",
       "color": "#8FBC8F",
       "hasAnalysis": null
     },
@@ -492,7 +636,7 @@
       "tooltip": "New connection was rejected due to authentication/authorization errors",
       "urgency": "low",
       "sqlstate": "28000 (Class 28 - Invalid Authorization Specification: invalid_authorization_specification), 28P01 (Class 28 - Invalid Authorization Specification: invalid_password), 55000 (Class 55 - Object Not In Prerequisite State: object_not_in_prerequisite_state)",
-      "path": "/docs/log-insights/connections/C22",
+      "path": "/log-insights/connections/C22",
       "color": "#ff0000",
       "hasAnalysis": null
     },
@@ -503,7 +647,7 @@
       "tooltip": "A client has disconnected from the database",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/connections/C23",
+      "path": "/log-insights/connections/C23",
       "color": "#8FBC8F",
       "hasAnalysis": null
     },
@@ -514,7 +658,7 @@
       "tooltip": "The client opened a connection but didn't complete the initial process",
       "urgency": "low",
       "sqlstate": "08P01 (Class 08 - Connection Exception: protocol_violation)",
-      "path": "/docs/log-insights/connections/C24",
+      "path": "/log-insights/connections/C24",
       "color": "#999",
       "hasAnalysis": null
     },
@@ -525,7 +669,7 @@
       "tooltip": "Network connection to the client was interrupted",
       "urgency": "low",
       "sqlstate": "08006 (Class 08 - Connection Exception: connection_failure), 08P01 (Class 08 - Connection Exception: protocol_violation), XX000 (Class XX - Internal Error: internal_error)",
-      "path": "/docs/log-insights/connections/C25",
+      "path": "/log-insights/connections/C25",
       "color": "#999",
       "hasAnalysis": null
     },
@@ -536,7 +680,7 @@
       "tooltip": "Network interruption to client with an open transaction",
       "urgency": "medium",
       "sqlstate": "08006 (Class 08 - Connection Exception: connection_failure)",
-      "path": "/docs/log-insights/connections/C26",
+      "path": "/log-insights/connections/C26",
       "color": "#ff0000",
       "hasAnalysis": null
     },
@@ -547,7 +691,7 @@
       "tooltip": "This connection was terminated by a DBA / operator",
       "urgency": "low",
       "sqlstate": "57P01 (Class 57 - Operator Intervention: admin_shutdown)",
-      "path": "/docs/log-insights/connections/C27",
+      "path": "/log-insights/connections/C27",
       "color": "#ff0000",
       "hasAnalysis": null
     },
@@ -558,7 +702,7 @@
       "tooltip": "The number of connections has exceeded the max_connections setting",
       "urgency": "high",
       "sqlstate": "53300 (Class 53 - Insufficient Resources: too_many_connections)",
-      "path": "/docs/log-insights/connections/C28",
+      "path": "/log-insights/connections/C28",
       "color": "#ff0000",
       "hasAnalysis": null
     },
@@ -569,7 +713,7 @@
       "tooltip": "The number of connections for the role exceed the per-role limit",
       "urgency": "medium",
       "sqlstate": "53300 (Class 53 - Insufficient Resources: too_many_connections)",
-      "path": "/docs/log-insights/connections/C29",
+      "path": "/log-insights/connections/C29",
       "color": "#ff0000",
       "hasAnalysis": null
     },
@@ -580,7 +724,7 @@
       "tooltip": "The SSL connection could not be accepted due to a network error",
       "urgency": "low",
       "sqlstate": "08006 (Class 08 - Connection Exception: connection_failure), 08P01 (Class 08 - Connection Exception: protocol_violation), XX000 (Class XX - Internal Error: internal_error)",
-      "path": "/docs/log-insights/connections/C30",
+      "path": "/log-insights/connections/C30",
       "color": null,
       "hasAnalysis": null
     },
@@ -591,7 +735,7 @@
       "tooltip": "The client requested an unsupported protocol version",
       "urgency": "low",
       "sqlstate": "0A000 (Class 0A - Feature Not Supported: feature_not_supported)",
-      "path": "/docs/log-insights/connections/C31",
+      "path": "/log-insights/connections/C31",
       "color": null,
       "hasAnalysis": null
     },
@@ -602,7 +746,7 @@
       "tooltip": "Network issue or other interruption whilst client was sending data",
       "urgency": "low",
       "sqlstate": "08P01 (Class 08 - Connection Exception: protocol_violation)",
-      "path": "/docs/log-insights/connections/C32",
+      "path": "/log-insights/connections/C32",
       "color": null,
       "hasAnalysis": null
     },
@@ -613,7 +757,7 @@
       "tooltip": "The number of connections for the database exceed the per-database limit",
       "urgency": "medium",
       "sqlstate": "53300 (Class 53 - Insufficient Resources: too_many_connections)",
-      "path": "/docs/log-insights/connections/C33",
+      "path": "/log-insights/connections/C33",
       "color": "#ff0000",
       "hasAnalysis": null
     },
@@ -624,7 +768,7 @@
       "tooltip": "Lock was successfully acquired after exceeding deadlock_timeout",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/locks/L70",
+      "path": "/log-insights/locks/L70",
       "color": "#FF7F50",
       "hasAnalysis": null
     },
@@ -635,7 +779,7 @@
       "tooltip": "Lock has not been acquired yet after waiting for deadlock_timeout",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/locks/L71",
+      "path": "/log-insights/locks/L71",
       "color": "#FF7F50",
       "hasAnalysis": null
     },
@@ -646,7 +790,7 @@
       "tooltip": "Statement was canceled after exceeding lock_timeout",
       "urgency": "medium",
       "sqlstate": "55P03 (Class 55 - Object Not In Prerequisite State: lock_not_available)",
-      "path": "/docs/log-insights/locks/L72",
+      "path": "/log-insights/locks/L72",
       "color": null,
       "hasAnalysis": null
     },
@@ -657,7 +801,7 @@
       "tooltip": "Deadlock between two connections was found and resolved by transaction cancellation",
       "urgency": "medium",
       "sqlstate": "40P01 (Class 40 - Transaction Rollback: deadlock_detected)",
-      "path": "/docs/log-insights/locks/L73",
+      "path": "/log-insights/locks/L73",
       "color": "#ff0000",
       "hasAnalysis": null
     },
@@ -668,7 +812,7 @@
       "tooltip": "Deadlock between two connections was found and resolved by lock wait queue reordering",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/locks/L74",
+      "path": "/log-insights/locks/L74",
       "color": null,
       "hasAnalysis": null
     },
@@ -679,7 +823,7 @@
       "tooltip": "Postgres server processes have crashed, server will be restarted",
       "urgency": "high",
       "sqlstate": "57P02 (Class 57 — Operator Intervention: crash_shutdown)",
-      "path": "/docs/log-insights/server/S1",
+      "path": "/log-insights/server/S1",
       "color": null,
       "hasAnalysis": null
     },
@@ -690,7 +834,7 @@
       "tooltip": "Internal process has exited - check exit code/signal",
       "urgency": "medium",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/server/S10",
+      "path": "/log-insights/server/S10",
       "color": null,
       "hasAnalysis": null
     },
@@ -701,7 +845,7 @@
       "tooltip": "Internal connections to the stats collector are timing out",
       "urgency": "medium",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/server/S11",
+      "path": "/log-insights/server/S11",
       "color": null,
       "hasAnalysis": null
     },
@@ -712,7 +856,7 @@
       "tooltip": "The Postgres server is starting up",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/server/S2",
+      "path": "/log-insights/server/S2",
       "color": null,
       "hasAnalysis": null
     },
@@ -723,7 +867,7 @@
       "tooltip": "Postgres has restarted after a crash/forceful shutdown",
       "urgency": "medium",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/server/S3",
+      "path": "/log-insights/server/S3",
       "color": null,
       "hasAnalysis": null
     },
@@ -734,7 +878,7 @@
       "tooltip": "Postgres is shutting down",
       "urgency": "low",
       "sqlstate": "57P01 (Class 57 — Operator Intervention: admin_shutdown)",
-      "path": "/docs/log-insights/server/S4",
+      "path": "/log-insights/server/S4",
       "color": null,
       "hasAnalysis": null
     },
@@ -745,7 +889,7 @@
       "tooltip": "Not enough RAM available to complete the current task",
       "urgency": "high",
       "sqlstate": "53200 (Class 53 — Insufficient Resources: out_of_memory)",
-      "path": "/docs/log-insights/server/S5",
+      "path": "/log-insights/server/S5",
       "color": null,
       "hasAnalysis": null
     },
@@ -756,7 +900,7 @@
       "tooltip": "Failed to access table or index data due to corruption",
       "urgency": "high",
       "sqlstate": "XX001 (Class XX - Internal Error: data_corrupted)",
-      "path": "/docs/log-insights/server/S6",
+      "path": "/log-insights/server/S6",
       "color": null,
       "hasAnalysis": null
     },
@@ -767,7 +911,7 @@
       "tooltip": "Sorting/hashing operation was done through a file instead of in memory",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/server/S7",
+      "path": "/log-insights/server/S7",
       "color": "#FF7F50",
       "hasAnalysis": true
     },
@@ -778,7 +922,7 @@
       "tooltip": "Non-problematic server notice message that can usually be ignored",
       "urgency": "low",
       "sqlstate": "Multiple",
-      "path": "/docs/log-insights/server/S8",
+      "path": "/log-insights/server/S8",
       "color": "#999",
       "hasAnalysis": null
     },
@@ -789,7 +933,7 @@
       "tooltip": "Postgres is reloading the configuration files",
       "urgency": "low",
       "sqlstate": "Depending on the situation, F0000 (Class F0 - Configuration File Error: config_file_error)",
-      "path": "/docs/log-insights/server/S9",
+      "path": "/log-insights/server/S9",
       "color": "#FF7F50",
       "hasAnalysis": null
     },
@@ -800,7 +944,7 @@
       "tooltip": "Query execution took longer than log_min_duration_statement",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/statements/T80",
+      "path": "/log-insights/statements/T80",
       "color": "#FF7F50",
       "hasAnalysis": null
     },
@@ -811,7 +955,7 @@
       "tooltip": "Statement was canceled since it ran longer than statement_timeout",
       "urgency": "medium",
       "sqlstate": "57014 (Class 57 - Operator Intervention: query_canceled)",
-      "path": "/docs/log-insights/statements/T81",
+      "path": "/log-insights/statements/T81",
       "color": "#ff0000",
       "hasAnalysis": null
     },
@@ -822,7 +966,7 @@
       "tooltip": "Statement was canceled due to operator calling pg_cancel_backend",
       "urgency": "low",
       "sqlstate": "57014 (Class 57 - Operator Intervention: query_canceled)",
-      "path": "/docs/log-insights/statements/T82",
+      "path": "/log-insights/statements/T82",
       "color": "#FF7F50",
       "hasAnalysis": null
     },
@@ -833,7 +977,7 @@
       "tooltip": "Statement log based on log_statement setting",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/statements/T83",
+      "path": "/log-insights/statements/T83",
       "color": null,
       "hasAnalysis": null
     },
@@ -844,7 +988,7 @@
       "tooltip": "EXPLAIN output for query execution plan based on auto_explain settings",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/statements/T84",
+      "path": "/log-insights/statements/T84",
       "color": null,
       "hasAnalysis": null
     },
@@ -855,7 +999,7 @@
       "tooltip": "The query sent by the client couldn't be parsed by Postgres",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U110",
+      "path": "/log-insights/app-errors/U110",
       "color": null,
       "hasAnalysis": null
     },
@@ -866,7 +1010,7 @@
       "tooltip": "The value is invalid input for the column's data type",
       "urgency": "low",
       "sqlstate": "22P02 (Class 22 — Data Exception: invalid_text_representation)",
-      "path": "/docs/log-insights/app-errors/U111",
+      "path": "/log-insights/app-errors/U111",
       "color": null,
       "hasAnalysis": null
     },
@@ -877,7 +1021,7 @@
       "tooltip": "The value is too large for the column's data type",
       "urgency": "medium",
       "sqlstate": "22001 (Class 22 — Data Exception: string_data_right_truncation)",
-      "path": "/docs/log-insights/app-errors/U112",
+      "path": "/log-insights/app-errors/U112",
       "color": null,
       "hasAnalysis": null
     },
@@ -888,7 +1032,7 @@
       "tooltip": "The value passed to a function or config parameter is invalid",
       "urgency": "low",
       "sqlstate": "22007 and 22023 (Class 22 — Data Exception: invalid_datetime_format and invalid_parameter_value)",
-      "path": "/docs/log-insights/app-errors/U113",
+      "path": "/log-insights/app-errors/U113",
       "color": null,
       "hasAnalysis": null
     },
@@ -899,7 +1043,7 @@
       "tooltip": "The array value has the wrong formatting / syntax",
       "urgency": "low",
       "sqlstate": "22P02 (Class 22 — Data Exception: invalid_text_representation)",
-      "path": "/docs/log-insights/app-errors/U114",
+      "path": "/log-insights/app-errors/U114",
       "color": null,
       "hasAnalysis": null
     },
@@ -910,7 +1054,7 @@
       "tooltip": "The query is missing an alias name for a subquery",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U115",
+      "path": "/log-insights/app-errors/U115",
       "color": null,
       "hasAnalysis": null
     },
@@ -921,7 +1065,7 @@
       "tooltip": "The # of columns in your INSERT statements are different than the # of values per row",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U116",
+      "path": "/log-insights/app-errors/U116",
       "color": null,
       "hasAnalysis": null
     },
@@ -932,7 +1076,7 @@
       "tooltip": "Non-array value passed to ANY/ALL expression",
       "urgency": "low",
       "sqlstate": "42809 (Class 42 — Syntax Error or Access Rule Violation: wrong_object_type)",
-      "path": "/docs/log-insights/app-errors/U117",
+      "path": "/log-insights/app-errors/U117",
       "color": null,
       "hasAnalysis": null
     },
@@ -943,7 +1087,7 @@
       "tooltip": "Query uses an aggregate function without the correct GROUP BY",
       "urgency": "low",
       "sqlstate": "42803 (Class 42 — Syntax Error or Access Rule Violation: grouping_error)",
-      "path": "/docs/log-insights/app-errors/U118",
+      "path": "/log-insights/app-errors/U118",
       "color": null,
       "hasAnalysis": null
     },
@@ -954,7 +1098,7 @@
       "tooltip": "Query references a table or view that does not exist",
       "urgency": "low",
       "sqlstate": "42P01 (Class 42 — Syntax Error or Access Rule Violation: undefined_table)",
-      "path": "/docs/log-insights/app-errors/U119",
+      "path": "/log-insights/app-errors/U119",
       "color": null,
       "hasAnalysis": null
     },
@@ -965,7 +1109,7 @@
       "tooltip": "Query references a column that can't be found",
       "urgency": "low",
       "sqlstate": "42703 (Class 42 — Syntax Error or Access Rule Violation: undefined_column)",
-      "path": "/docs/log-insights/app-errors/U120",
+      "path": "/log-insights/app-errors/U120",
       "color": null,
       "hasAnalysis": null
     },
@@ -976,7 +1120,7 @@
       "tooltip": "The query text contains an operator that does not exist",
       "urgency": "low",
       "sqlstate": "42883 (Class 42 — Syntax Error or Access Rule Violation: undefined_function)",
-      "path": "/docs/log-insights/app-errors/U121",
+      "path": "/log-insights/app-errors/U121",
       "color": null,
       "hasAnalysis": null
     },
@@ -987,7 +1131,7 @@
       "tooltip": "Query references a column that exists multiple times",
       "urgency": "low",
       "sqlstate": "42702 and 42P09 (Class 42 — Syntax Error or Access Rule Violation: ambiguous_column and ambiguous_alias)",
-      "path": "/docs/log-insights/app-errors/U122",
+      "path": "/log-insights/app-errors/U122",
       "color": null,
       "hasAnalysis": null
     },
@@ -998,7 +1142,7 @@
       "tooltip": "Permission was denied when accessing a table or other database object",
       "urgency": "medium",
       "sqlstate": "42501 (Class 42 — Syntax Error or Access Rule Violation: insufficient_privilege)",
-      "path": "/docs/log-insights/app-errors/U123",
+      "path": "/log-insights/app-errors/U123",
       "color": null,
       "hasAnalysis": null
     },
@@ -1009,7 +1153,7 @@
       "tooltip": "Error when executing query in failed transaction",
       "urgency": "low",
       "sqlstate": "25P02 (Class 25 — Invalid Transaction State: in_failed_sql_transaction)",
-      "path": "/docs/log-insights/app-errors/U124",
+      "path": "/log-insights/app-errors/U124",
       "color": null,
       "hasAnalysis": null
     },
@@ -1020,7 +1164,7 @@
       "tooltip": "Missing unique/exclusion constraint for conflict resolution in ON CONFLICT statement",
       "urgency": "low",
       "sqlstate": "42P10 (Class 42 — Syntax Error or Access Rule Violation: invalid_column_reference)",
-      "path": "/docs/log-insights/app-errors/U125",
+      "path": "/log-insights/app-errors/U125",
       "color": null,
       "hasAnalysis": null
     },
@@ -1031,7 +1175,7 @@
       "tooltip": "INSERT statement contains the same row twice, as determined by ON CONFLICT constraint",
       "urgency": "low",
       "sqlstate": "21000 (Class 21 — Cardinality Violation: cardinality_violation)",
-      "path": "/docs/log-insights/app-errors/U126",
+      "path": "/log-insights/app-errors/U126",
       "color": null,
       "hasAnalysis": null
     },
@@ -1042,7 +1186,7 @@
       "tooltip": "The referenced column can't be cast to the specified data type",
       "urgency": "low",
       "sqlstate": "42804 (Class 42 — Syntax Error or Access Rule Violation: datatype_mismatch)",
-      "path": "/docs/log-insights/app-errors/U127",
+      "path": "/log-insights/app-errors/U127",
       "color": null,
       "hasAnalysis": null
     },
@@ -1053,7 +1197,7 @@
       "tooltip": "The statement couldn't be executed as it tried to divide by zero",
       "urgency": "low",
       "sqlstate": "22012 (Class 22 — Data Exception: division_by_zero)",
-      "path": "/docs/log-insights/app-errors/U128",
+      "path": "/log-insights/app-errors/U128",
       "color": null,
       "hasAnalysis": null
     },
@@ -1064,7 +1208,7 @@
       "tooltip": "The statement failed to drop the referenced object",
       "urgency": "low",
       "sqlstate": "2BP01 (Class 2B — Dependent Privilege Descriptors Still Exist: dependent_objects_still_exist)",
-      "path": "/docs/log-insights/app-errors/U129",
+      "path": "/log-insights/app-errors/U129",
       "color": null,
       "hasAnalysis": null
     },
@@ -1075,7 +1219,7 @@
       "tooltip": "The inserted integer value exceeds the size of the target column",
       "urgency": "medium",
       "sqlstate": "22003 (Class 22 — Data Exception: numeric_value_out_of_range)",
-      "path": "/docs/log-insights/app-errors/U130",
+      "path": "/log-insights/app-errors/U130",
       "color": null,
       "hasAnalysis": null
     },
@@ -1086,7 +1230,7 @@
       "tooltip": "The regular expression used in the query doesn't have correct syntax",
       "urgency": "low",
       "sqlstate": "2201B (Class 22 — Data Exception: invalid_regular_expression)",
-      "path": "/docs/log-insights/app-errors/U131",
+      "path": "/log-insights/app-errors/U131",
       "color": null,
       "hasAnalysis": null
     },
@@ -1097,7 +1241,7 @@
       "tooltip": "The referenced parameter $n is missing",
       "urgency": "low",
       "sqlstate": "42P02 (Class 42 — Syntax Error or Access Rule Violation: undefined_parameter)",
-      "path": "/docs/log-insights/app-errors/U132",
+      "path": "/log-insights/app-errors/U132",
       "color": null,
       "hasAnalysis": null
     },
@@ -1108,7 +1252,7 @@
       "tooltip": "The function referenced in the query does not exist",
       "urgency": "low",
       "sqlstate": "42883 (Class 42 — Syntax Error or Access Rule Violation: undefined_function)",
-      "path": "/docs/log-insights/app-errors/U133",
+      "path": "/log-insights/app-errors/U133",
       "color": null,
       "hasAnalysis": null
     },
@@ -1119,7 +1263,7 @@
       "tooltip": "The referenced SAVEPOINT does not exist",
       "urgency": "low",
       "sqlstate": "3B001 (Class 3B — Savepoint Exception: invalid_savepoint_specification)",
-      "path": "/docs/log-insights/app-errors/U134",
+      "path": "/log-insights/app-errors/U134",
       "color": null,
       "hasAnalysis": null
     },
@@ -1130,7 +1274,7 @@
       "tooltip": "The query string contains a syntax error due to an unclosed string",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U135",
+      "path": "/log-insights/app-errors/U135",
       "color": null,
       "hasAnalysis": null
     },
@@ -1141,7 +1285,7 @@
       "tooltip": "Query syntax is invalid due to an unterminated identifier",
       "urgency": "low",
       "sqlstate": "42601 (Class 42 — Syntax Error or Access Rule Violation: syntax_error)",
-      "path": "/docs/log-insights/app-errors/U136",
+      "path": "/log-insights/app-errors/U136",
       "color": null,
       "hasAnalysis": null
     },
@@ -1152,7 +1296,7 @@
       "tooltip": "Text data contains bytes that are not valid for the chosen encoding",
       "urgency": "low",
       "sqlstate": "22021 (Class 22 - Data Exception: character_not_in_repertoire)",
-      "path": "/docs/log-insights/app-errors/U137",
+      "path": "/log-insights/app-errors/U137",
       "color": null,
       "hasAnalysis": null
     },
@@ -1163,7 +1307,7 @@
       "tooltip": "UPDATE or DELETE was run concurrently on the same row with isolation level REPEATABLE READ",
       "urgency": "low",
       "sqlstate": "40001 (Class 40 - Transaction Rollback: serialization_failure)",
-      "path": "/docs/log-insights/app-errors/U138",
+      "path": "/log-insights/app-errors/U138",
       "color": null,
       "hasAnalysis": null
     },
@@ -1174,7 +1318,7 @@
       "tooltip": "Transaction could not be completed under SERIALIZABLE isolation level",
       "urgency": "low",
       "sqlstate": "40001 (Class 40 - Transaction Rollback: serialization_failure)",
-      "path": "/docs/log-insights/app-errors/U139",
+      "path": "/log-insights/app-errors/U139",
       "color": null,
       "hasAnalysis": null
     },
@@ -1196,7 +1340,7 @@
       "tooltip": "Unique constraint violated by INSERT/UPDATE",
       "urgency": "low",
       "sqlstate": "23505 (Class 23 — Integrity Constraint Violation: unique_violation)",
-      "path": "/docs/log-insights/constraint-violations/V100",
+      "path": "/log-insights/constraint-violations/V100",
       "color": "#8A2BE2",
       "hasAnalysis": null
     },
@@ -1207,7 +1351,7 @@
       "tooltip": "Foreign key constraint violated by INSERT/UPDATE/DELETE",
       "urgency": "low",
       "sqlstate": "23503 (Class 23 — Integrity Constraint Violation: foreign_key_violation)",
-      "path": "/docs/log-insights/constraint-violations/V101",
+      "path": "/log-insights/constraint-violations/V101",
       "color": "#8A2BE2",
       "hasAnalysis": null
     },
@@ -1218,7 +1362,7 @@
       "tooltip": "Not-null constraint on column is violated by INSERT/UPDATE",
       "urgency": "low",
       "sqlstate": "23502 (Class 23 — Integrity Constraint Violation: not_null_violation)",
-      "path": "/docs/log-insights/constraint-violations/V102",
+      "path": "/log-insights/constraint-violations/V102",
       "color": "#8A2BE2",
       "hasAnalysis": null
     },
@@ -1229,7 +1373,7 @@
       "tooltip": "Check constraint is violated by inserted/updated data",
       "urgency": "low",
       "sqlstate": "23514 (Class 23 — Integrity Constraint Violation: check_violation)",
-      "path": "/docs/log-insights/constraint-violations/V103",
+      "path": "/log-insights/constraint-violations/V103",
       "color": "#8A2BE2",
       "hasAnalysis": null
     },
@@ -1240,7 +1384,7 @@
       "tooltip": "Exclusion constraint violated by inserted/updated data",
       "urgency": "low",
       "sqlstate": "23P01 (Class 23 — Integrity Constraint Violation: exclusion_violation)",
-      "path": "/docs/log-insights/constraint-violations/V104",
+      "path": "/log-insights/constraint-violations/V104",
       "color": "#8A2BE2",
       "hasAnalysis": null
     },
@@ -1251,7 +1395,7 @@
       "tooltip": "Checkpoint to synchronize the data directory has started",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W40",
+      "path": "/log-insights/wal-checkpoints/W40",
       "color": "#8FBC8F",
       "hasAnalysis": true
     },
@@ -1262,7 +1406,7 @@
       "tooltip": "Checkpoint has completed synchronizing the data directory",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W41",
+      "path": "/log-insights/wal-checkpoints/W41",
       "color": "#8FBC8F",
       "hasAnalysis": null
     },
@@ -1273,7 +1417,7 @@
       "tooltip": "Checkpoints are occurring very quickly, causing I/O impact",
       "urgency": "medium",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W42",
+      "path": "/log-insights/wal-checkpoints/W42",
       "color": "#ff0000",
       "hasAnalysis": null
     },
@@ -1284,7 +1428,7 @@
       "tooltip": "Standby restartpoint has started to synchronize the data directory",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W43",
+      "path": "/log-insights/wal-checkpoints/W43",
       "color": "#8FBC8F",
       "hasAnalysis": null
     },
@@ -1295,7 +1439,7 @@
       "tooltip": "Standby restartpoint has completed synchronizing the data directory",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W44",
+      "path": "/log-insights/wal-checkpoints/W44",
       "color": "#8FBC8F",
       "hasAnalysis": null
     },
@@ -1306,7 +1450,7 @@
       "tooltip": "Reference for when a new safe restartpoint was established",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W45",
+      "path": "/log-insights/wal-checkpoints/W45",
       "color": "#8FBC8F",
       "hasAnalysis": null
     },
@@ -1317,7 +1461,7 @@
       "tooltip": "Phantom WAL segment file is associated to wrong timeline",
       "urgency": "medium",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W46",
+      "path": "/log-insights/wal-checkpoints/W46",
       "color": null,
       "hasAnalysis": null
     },
@@ -1328,7 +1472,7 @@
       "tooltip": "Low-level error reading a WAL file",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W50",
+      "path": "/log-insights/wal-checkpoints/W50",
       "color": null,
       "hasAnalysis": null
     },
@@ -1339,7 +1483,7 @@
       "tooltip": "WAL recovery process start/end",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W51",
+      "path": "/log-insights/wal-checkpoints/W51",
       "color": null,
       "hasAnalysis": null
     },
@@ -1350,7 +1494,7 @@
       "tooltip": "WAL archiving failed due to archive_command failure",
       "urgency": "medium",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W52",
+      "path": "/log-insights/wal-checkpoints/W52",
       "color": null,
       "hasAnalysis": null
     },
@@ -1361,7 +1505,7 @@
       "tooltip": "The pg_stop_backup command has succeeded (part of base backup)",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/wal-checkpoints/W53",
+      "path": "/log-insights/wal-checkpoints/W53",
       "color": null,
       "hasAnalysis": null
     },
@@ -1372,7 +1516,7 @@
       "tooltip": "This log event is not known / could not be parsed",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/unknown/Z00",
+      "path": "/log-insights/unknown/Z00",
       "color": null,
       "hasAnalysis": null
     },
@@ -1383,7 +1527,7 @@
       "tooltip": "Used by the pganalyze-collector to identify the database its connected to",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/unknown/Z1000",
+      "path": "/log-insights/unknown/Z1000",
       "color": null,
       "hasAnalysis": null
     }
@@ -1398,12 +1542,12 @@
         "Rows Removed by Filter",
         "Strategy"
       ],
-      "path": "/docs/explain/other-nodes/aggregate"
+      "path": "/explain/other-nodes/aggregate"
     },
     "Append": {
       "shortDescription": "Combines the results of its children.",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/append"
+      "path": "/explain/other-nodes/append"
     },
     "Bitmap Heap Scan": {
       "shortDescription": "Reads a Bitmap of physical row locations and fetches the data referenced in it.",
@@ -1415,24 +1559,24 @@
         "Rows Removed by Filter",
         "Rows Removed by Index Recheck"
       ],
-      "path": "/docs/explain/scan-nodes/bitmap-heap-scan"
+      "path": "/explain/scan-nodes/bitmap-heap-scan"
     },
     "Bitmap Index Scan": {
       "shortDescription": "Scans through the index and produces a bitmap of physical row locations to be processed by other Bitmap nodes.",
       "importantFields": [
         "Index Cond"
       ],
-      "path": "/docs/explain/scan-nodes/bitmap-index-scan"
+      "path": "/explain/scan-nodes/bitmap-index-scan"
     },
     "BitmapAnd": {
       "shortDescription": "Calculates the intersection of two physical row location bitmaps.",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/bitmap-and"
+      "path": "/explain/other-nodes/bitmap-and"
     },
     "BitmapOr": {
       "shortDescription": "Calculates the union of two physical row location bitmaps.",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/bitmap-or"
+      "path": "/explain/other-nodes/bitmap-or"
     },
     "CTE Scan": {
       "shortDescription": "Scans the result of a common table expression (WITH clause).",
@@ -1441,24 +1585,24 @@
         "Filter",
         "Rows Removed by Filter"
       ],
-      "path": "/docs/explain/scan-nodes/cte-scan"
+      "path": "/explain/scan-nodes/cte-scan"
     },
     "Custom Scan": {
       "shortDescription": "Scans the database object using a custom scan implementation from an external module.",
       "importantFields": [],
-      "path": "/docs/explain/scan-nodes/custom-scan"
+      "path": "/explain/scan-nodes/custom-scan"
     },
     "Foreign Scan": {
       "shortDescription": "Scans the foreign table (a table-like database object referencing data stored outside of Postgres).",
       "importantFields": [],
-      "path": "/docs/explain/scan-nodes/foreign-scan"
+      "path": "/explain/scan-nodes/foreign-scan"
     },
     "Function Scan": {
       "shortDescription": "Scans the result of a set-returning function (like unnest or regexp_split_to_table).",
       "importantFields": [
         "Function Name"
       ],
-      "path": "/docs/explain/scan-nodes/function-scan"
+      "path": "/explain/scan-nodes/function-scan"
     },
     "Gather": {
       "shortDescription": "Combines the results from several children producing data in parallel.",
@@ -1467,7 +1611,7 @@
         "Workers Launched",
         "Workers Planned"
       ],
-      "path": "/docs/explain/other-nodes/gather"
+      "path": "/explain/other-nodes/gather"
     },
     "Gather Merge": {
       "shortDescription": "Combines the results from several children producing sorted data in parallel, in the specified order.",
@@ -1475,14 +1619,14 @@
         "Workers Launched",
         "Workers Planned"
       ],
-      "path": "/docs/explain/other-nodes/gather-merge"
+      "path": "/explain/other-nodes/gather-merge"
     },
     "Group": {
       "shortDescription": "Processes sorted input and groups it by the specified field.",
       "importantFields": [
         "Group Key"
       ],
-      "path": "/docs/explain/other-nodes/group"
+      "path": "/explain/other-nodes/group"
     },
     "Hash": {
       "shortDescription": "Reads data into a hash table, where it can be looked up by the hash key.",
@@ -1493,7 +1637,7 @@
         "Original Hash Buckets",
         "Peak Memory Usage"
       ],
-      "path": "/docs/explain/other-nodes/hash"
+      "path": "/explain/other-nodes/hash"
     },
     "Hash Join": {
       "shortDescription": "Scans through the outer table, looking for matches in a hash table built from the inner table data and keyed by join key.",
@@ -1506,7 +1650,7 @@
         "Rows Removed by Filter",
         "Rows Removed by Join Filter"
       ],
-      "path": "/docs/explain/join-nodes/hash-join"
+      "path": "/explain/join-nodes/hash-join"
     },
     "Index Only Scan": {
       "shortDescription": "Scans through the index to fetch a single value or a range of values in index order without reading table data.",
@@ -1517,7 +1661,7 @@
         "Rows Removed by Index Recheck",
         "Scan Direction"
       ],
-      "path": "/docs/explain/scan-nodes/index-only-scan"
+      "path": "/explain/scan-nodes/index-only-scan"
     },
     "Index Scan": {
       "shortDescription": "Scans through the index to fetch a single value or a range of values in index order from the table.",
@@ -1528,7 +1672,7 @@
         "Rows Removed by Index Recheck",
         "Scan Direction"
       ],
-      "path": "/docs/explain/scan-nodes/index-scan"
+      "path": "/explain/scan-nodes/index-scan"
     },
     "Limit": {
       "shortDescription": "Sorts the output of a child node.",
@@ -1538,24 +1682,24 @@
         "Sort Space Type",
         "Sort Space Used"
       ],
-      "path": "/docs/explain/other-nodes/limit"
+      "path": "/explain/other-nodes/limit"
     },
     "Lock Rows": {
       "shortDescription": "Executes the locking behavior of a FOR UPDATE clause.",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/lock-rows"
+      "path": "/explain/other-nodes/lock-rows"
     },
     "Materialize": {
       "shortDescription": "Materialize the result of its child node in memory (to avoid re-computing the values).",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/materialize"
+      "path": "/explain/other-nodes/materialize"
     },
     "Merge Append": {
       "shortDescription": "Combines the results of its sorted children, in the specified order.",
       "importantFields": [
         "Sort Key"
       ],
-      "path": "/docs/explain/other-nodes/merge-append"
+      "path": "/explain/other-nodes/merge-append"
     },
     "Merge Join": {
       "shortDescription": "Joins two children already sorted by their shared join key.",
@@ -1568,7 +1712,7 @@
         "Rows Removed by Filter",
         "Rows Removed by Join Filter"
       ],
-      "path": "/docs/explain/join-nodes/merge-join"
+      "path": "/explain/join-nodes/merge-join"
     },
     "ModifyTable": {
       "shortDescription": "Modifies a table according to the rows referenced by its child.",
@@ -1581,7 +1725,7 @@
         "Rows Removed by Conflict Filter",
         "Tuples Inserted"
       ],
-      "path": "/docs/explain/other-nodes/modify-table"
+      "path": "/explain/other-nodes/modify-table"
     },
     "Nested Loop": {
       "shortDescription": "Loops through rows in the outer table, and for each, loops through rows in the inner table looking for matches.",
@@ -1593,22 +1737,22 @@
         "Rows Removed by Filter",
         "Rows Removed by Join Filter"
       ],
-      "path": "/docs/explain/join-nodes/nested-loop"
+      "path": "/explain/join-nodes/nested-loop"
     },
     "Project Set": {
       "shortDescription": "Apply a projection that includes set-returning functions to the output tuples of the outer plan.",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/project-set"
+      "path": "/explain/other-nodes/project-set"
     },
     "Recursive Union": {
       "shortDescription": "Evaluates a recursive common table expression (WITH RECURSIVE clause).",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/recursive-union"
+      "path": "/explain/other-nodes/recursive-union"
     },
     "Result": {
       "shortDescription": "Evaluates an expression that does not depend on table data.",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/result"
+      "path": "/explain/other-nodes/result"
     },
     "Seq Scan": {
       "shortDescription": "Scans through the entire table row-by-row in an arbitrary order.",
@@ -1616,7 +1760,7 @@
         "Filter",
         "Rows Removed by Filter"
       ],
-      "path": "/docs/explain/scan-nodes/sequential-scan"
+      "path": "/explain/scan-nodes/sequential-scan"
     },
     "SetOp": {
       "shortDescription": "Combines data from children for set operations like UNION, INTERSECT, and EXCEPT.",
@@ -1624,7 +1768,7 @@
         "Command",
         "Strategy"
       ],
-      "path": "/docs/explain/other-nodes/set-op"
+      "path": "/explain/other-nodes/set-op"
     },
     "Sort": {
       "shortDescription": "Takes data from a child node and produces sorted output, using either memory if available (depending on the work_mem setting) or “spilling” to disk. This is obviously necessary if the output needs to be sorted, though sometimes the input can be scanned in an already-sorted manner instead—e.g., if scanning a btree index compatible with the desired sort order.",
@@ -1633,7 +1777,7 @@
         "Sort Space Type",
         "Sort Space Used"
       ],
-      "path": "/docs/explain/other-nodes/sort"
+      "path": "/explain/other-nodes/sort"
     },
     "Subquery Scan": {
       "shortDescription": "Scans the output of a subquery.",
@@ -1641,69 +1785,69 @@
         "Filter",
         "Rows Removed by Filter"
       ],
-      "path": "/docs/explain/scan-nodes/subquery-scan"
+      "path": "/explain/scan-nodes/subquery-scan"
     },
     "Table Sample Scan": {
       "shortDescription": "Scans the table using the TABLESAMPLE sampling mechanism.",
       "importantFields": [],
-      "path": "/docs/explain/scan-nodes/table-sample-scan"
+      "path": "/explain/scan-nodes/table-sample-scan"
     },
     "Tid Scan": {
       "shortDescription": "Scan through a table using internal row identifiers.",
       "importantFields": [],
-      "path": "/docs/explain/scan-nodes/tid-scan"
+      "path": "/explain/scan-nodes/tid-scan"
     },
     "Unique": {
       "shortDescription": "Processes sorted input and eliminates adjacent duplicates.",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/unique"
+      "path": "/explain/other-nodes/unique"
     },
     "Values Scan": {
       "shortDescription": "Scans the literal VALUES clause (an inline table).",
       "importantFields": [],
-      "path": "/docs/explain/scan-nodes/values-scan"
+      "path": "/explain/scan-nodes/values-scan"
     },
     "Window Aggregate": {
       "shortDescription": "Implements aggregation in window functions (OVER clause).",
       "importantFields": [],
-      "path": "/docs/explain/other-nodes/window-aggregate"
+      "path": "/explain/other-nodes/window-aggregate"
     },
     "Work Table Scan": {
       "shortDescription": "Scans the work table used in evaluating a recursive common table expression (WITH clause).",
       "importantFields": [],
-      "path": "/docs/explain/scan-nodes/work-table-scan"
+      "path": "/explain/scan-nodes/work-table-scan"
     }
   },
   "explainInsights": {
     "disk sort": {
-      "path": "/docs/explain/insights/disk-sort"
+      "path": "/explain/insights/disk-sort"
     },
     "expensive": {
-      "path": "/docs/explain/insights/expensive"
+      "path": "/explain/insights/expensive"
     },
     "hash batches": {
-      "path": "/docs/explain/insights/hash-batches"
+      "path": "/explain/insights/hash-batches"
     },
     "i/o-heavy": {
-      "path": "/docs/explain/insights/io-heavy"
+      "path": "/explain/insights/io-heavy"
     },
     "inefficient index": {
-      "path": "/docs/explain/insights/inefficient-index"
+      "path": "/explain/insights/inefficient-index"
     },
     "large offset": {
-      "path": "/docs/explain/insights/large-offset"
+      "path": "/explain/insights/large-offset"
     },
     "lossy bitmaps": {
-      "path": "/docs/explain/insights/lossy-bitmaps"
+      "path": "/explain/insights/lossy-bitmaps"
     },
     "mis-estimate": {
-      "path": "/docs/explain/insights/mis-estimate"
+      "path": "/explain/insights/mis-estimate"
     },
     "slow scan": {
-      "path": "/docs/explain/insights/slow-scan"
+      "path": "/explain/insights/slow-scan"
     },
     "stale stats": {
-      "path": "/docs/explain/insights/stale-stats"
+      "path": "/explain/insights/stale-stats"
     }
   },
   "logCategories": {
