@@ -4,12 +4,13 @@ backlink_href: /docs/explain/setup
 backlink_title: 'Set up automatic EXPLAIN plan collection'
 ---
 
+import ToC from '../components/Toc'
+
 EXPLAIN plans are essential to understand why exactly a query is slow. We generally recommend using [auto_explain](/docs/explain/setup/auto_explain) to collect EXPLAIN plans automatically.
 
 However, not all environments support the `auto_explain` extension (bundled with Postgres), and therefore we support an alternative mechanism.
 
-```toc
-```
+<ToC items={props.toc} />
 
 ## How Log-based EXPLAIN works
 

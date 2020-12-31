@@ -4,6 +4,8 @@ backlink_href: /docs/collector
 backlink_title: 'pganalyze Collector'
 ---
 
+import ToC from '../components/Toc'
+
 The collector can be configured either through an `INI` config file (in a package-based install) or environment
 variables (typically for running via its Docker image). Most settings can be configured through either mechanism.
 If both are present, the config file takes precedence. Note that a single collector instance can monitor more than
@@ -26,8 +28,7 @@ Environment variables for boolean settings expect `1` for true and `0` for false
 
 Note that these settings apply to the latest version of the collector.
 
-```toc
-```
+<ToC items={props.toc} />
 
 ## General settings
 
