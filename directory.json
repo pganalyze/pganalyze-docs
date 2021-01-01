@@ -208,30 +208,6 @@
       "title": "Get Started",
       "path": "/install"
     },
-    "/install/_monitoring_user_10": {
-      "title": "",
-      "path": "/install/_monitoring_user_10"
-    },
-    "/install/_monitoring_user_94": {
-      "title": "",
-      "path": "/install/_monitoring_user_94"
-    },
-    "/install/_monitoring_user_96": {
-      "title": "",
-      "path": "/install/_monitoring_user_96"
-    },
-    "/install/_monitoring_user_old": {
-      "title": "",
-      "path": "/install/_monitoring_user_old"
-    },
-    "/install/_package_apt": {
-      "title": "",
-      "path": "/install/_package_apt"
-    },
-    "/install/_package_yum": {
-      "title": "",
-      "path": "/install/_package_yum"
-    },
     "/install/amazon_rds/01_configure_rds_instance": {
       "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
       "path": "/install/amazon_rds/01_configure_rds_instance"
