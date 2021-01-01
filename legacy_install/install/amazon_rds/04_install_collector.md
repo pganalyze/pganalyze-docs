@@ -44,7 +44,7 @@ If you know AWS a bit these should be straightforward to configure. Please reach
 
 SSH into your EC2 instance, and run the following to download and install the package:
 
-<div><docs-collector-install default-tab="yum"></docs-collector-install></div>
+<div><DocsCollectorInstall defaultTab="yum" /></div>
 
 ## Configure the collector
 

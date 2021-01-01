@@ -62,4 +62,4 @@ sudo service postgresql restart
 [Continue to Step 2: Installing the Collector](/docs/install/02_installing_the_collector)
 
 <br>
-<div><signup-cta event-label="Docs"></signup-cta></div>
+<div><SignupCTA eventLabel="Docs" /></div>

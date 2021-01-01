@@ -8,6 +8,6 @@ In this step we'll install the collector which sends statistics information to o
 
 We offer ready-made packages for common Linux systems:
 
-<div><docs-collector-install></docs-collector-install></div>
+<div><DocsCollectorInstall /></div>
 
 [Continue to Step 3: Configuring the Collector](/docs/install/03_configuring_the_collector)
