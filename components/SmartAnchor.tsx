@@ -3,8 +3,11 @@ import React from "react";
 type AnchorProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
 type LinkProps = Omit<AnchorProps, 'href'> & {
-  to: string
-};
+  // N.B. "to" can be a string, but also a location descriptor object (i.e., a destructured URL);
+  // it's not worth copying the full type definition (especially since there may be differences between
+  // the public site type and the in-app type)
+  to: any
+ };
 
 type Props = (AnchorProps | LinkProps) & {
   linkComponent: React.ComponentType<LinkProps>
