@@ -40,7 +40,7 @@ pganalyze will then show these as query samples on the query detail page:
 
 ## EXPLAIN plans
 
-See **[Collect Postgres EXPLAIN plans using auto_explain](/docs/log-insights/setup/auto_explain)**.
+See **[Collect Postgres EXPLAIN plans using auto_explain](/docs/explain/setup)**.
 
 ## Lock waits
 
