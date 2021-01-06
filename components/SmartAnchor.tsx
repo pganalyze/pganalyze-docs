@@ -15,29 +15,40 @@ type Props = (AnchorProps | LinkProps) & {
 }
 
 const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelative, ...rest}) => {
-  let target: string;
+  let destination: string;
   if ('to' in rest) {
-    target = rest.to;
+    destination = rest.to;
     delete rest.to
   } else {
-    target = rest.href;
+    destination = rest.href;
     delete rest.href
   }
-  const isExternal = /^[a-zA-Z]+:/.test(target)
+  const isFragmentLink = destination?.startsWith('#')
+  const isExternal = /^[a-zA-Z]+:/.test(destination)
+  const isBareAnchor = isFragmentLink || isExternal
 
-  if (isExternal) {
-    const rel = [ "noopener" ]
-    const isPganalyze = /^https?:\/\/[a-zA-Z-]+\.pganalyze\.com/.test(target)
-
-    if (!isPganalyze) {
-      rel.push("noreferrer")
+  if (isBareAnchor) {
+    const props = {
+      ...rest,
+      href: destination,
     }
-    return <a {...rest} href={target} target="_blank" rel={rel.join(' ')} />
+
+    if (isExternal) {
+      const rel = []
+      rel.push("noopener")
+      const isPganalyze = /^https?:\/\/[a-zA-Z-]+\.pganalyze\.com/.test(destination)
+      if (!isPganalyze) {
+        rel.push("noreferrer")
+      }
+      props.rel = rel.join(' ')
+    }
+
+    return <a {...props} />
   }
 
   const Link = linkComponent
-  target = linkRelative ? '../' + target : target;
-  return <Link {...rest} to={target} />
+  destination = linkRelative ? '../' + destination : destination;
+  return <Link {...rest} to={destination} />
 };
 
 export function makeSmartAnchor(linkComponent: React.ComponentType<LinkProps>, linkRelative: boolean): React.ComponentType<Props> {
