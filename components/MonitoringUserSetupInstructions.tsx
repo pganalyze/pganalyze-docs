@@ -9,7 +9,7 @@ type Props = {
   minPostgres: number;
 };
 
-const MonitoringUserSelector: React.FunctionComponent<Props> = ({
+const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
   minPostgres = 90200,
 }) => {
   return (
@@ -82,4 +82,4 @@ const MonitoringUserSelector: React.FunctionComponent<Props> = ({
   );
 };
 
-export default MonitoringUserSelector;
+export default MonitoringUserSetupInstructions;

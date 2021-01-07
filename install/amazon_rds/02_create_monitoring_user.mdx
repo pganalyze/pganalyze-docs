@@ -2,13 +2,13 @@
 title: Installation Guide (Amazon RDS and Amazon Aurora)
 ---
 
-import MonitoringUserSelector from "../../components/MonitoringUserSelector";
+import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
 
 We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
 
 Run the following whilst connected as an RDS superuser, replacing `mypassword` with one of your choosing:
 
-<MonitoringUserSelector />
+<MonitoringUserSetupInstructions />
 
 Note that it is important you run these as RDS superuser in order to pass down the full access to statistics tables.
 

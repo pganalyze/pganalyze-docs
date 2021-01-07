@@ -2,13 +2,13 @@
 title: Installation Guide (Self-Managed)
 ---
 
-import MonitoringUserSelector from "../../components/MonitoringUserSelector";
+import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
 
 We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
 
 Run the following to create a new user, whilst connected as a **PostgreSQL superuser**, replacing `mypassword` with one of your choosing:
 
-<MonitoringUserSelector />
+<MonitoringUserSetupInstructions />
 
 Note that it is important you run these as the Postgres superuser in order to pass down the full access to statistics tables.
 

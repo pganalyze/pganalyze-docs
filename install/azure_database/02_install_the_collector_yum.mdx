@@ -2,25 +2,7 @@
 title: Installation Guide (Azure Database for PostgreSQL)
 ---
 
-export const YumInstallInstructions = ({ distro }) => {
-  return (
-    <pre style={{ maxWidth: "100%" }}>
-      <code>
-        {`echo "[pganalyze_collector]
-name=pganalyze_collector
-baseurl=https://packages.pganalyze.com/${distro}
-repo_gpgcheck=1
-enabled=1
-gpgkey=https://packages.pganalyze.com/pganalyze_signing_key.asc
-sslverify=1
-sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-metadata_expire=300" | sudo tee -a /etc/yum.repos.d/pganalyze_collector.repo\n
-sudo yum makecache
-sudo yum install pganalyze-collector`}
-      </code>
-    </pre>
-  );
-};
+import CollectorPkgInstallInstructions from "../../components/CollectorPkgInstallInstructions"
 
 In this step we'll install the collector which sends statistics information to pganalyze.
 
@@ -32,51 +14,7 @@ cat /etc/system-release
 
 Now run the appropriate commands for your version:
 
-<ul className="nav nav-tabs">
-  <li className="nav-item">
-    <a href="#el8" data-toggle="tab" className="nav-link active">
-      RHEL 8
-    </a>
-  </li>
-  <li className="nav-item">
-    <a href="#el7" data-toggle="tab" className="nav-link">
-      RHEL 7 / Amazon Linux 2
-    </a>
-  </li>
-  <li className="nav-item">
-    <a href="#el6" data-toggle="tab" className="nav-link">
-      RHEL 6 / Amazon Linux
-    </a>
-  </li>
-  <li className="nav-item">
-    <a href="#fedora30" data-toggle="tab" className="nav-link">
-      Fedora 30
-    </a>
-  </li>
-  <li className="nav-item">
-    <a href="#fedora29" data-toggle="tab" className="nav-link">
-      Fedora 29
-    </a>
-  </li>
-</ul>
-
-<div className="tab-content">
-  <div className="tab-pane active" id="el8">
-    <YumInstallInstructions distro="el/8" />
-  </div>
-  <div className="tab-pane" id="el7">
-    <YumInstallInstructions distro="el/7" />
-  </div>
-  <div className="tab-pane" id="el6">
-    <YumInstallInstructions distro="el/6" />
-  </div>
-  <div className="tab-pane" id="fedora30">
-    <YumInstallInstructions distro="fedora/30" />
-  </div>
-  <div className="tab-pane" id="fedora29">
-    <YumInstallInstructions distro="fedora/29" />
-  </div>
-</div>
+<CollectorPkgInstallInstructions kind='yum' />
 
 These repositories are updated by pganalyze whenever a new stable version of the collector is released.
 

@@ -2,8 +2,7 @@
 title: Installation Guide (Amazon RDS and Amazon Aurora)
 ---
 
-import PackageApt from "../_package_apt.mdx";
-import PackageYum from "../_package_yum.mdx";
+import CollectorPkgInstallInstructions from "../../components/CollectorPkgInstallInstructions"
 
 ## Installing the collector on an Amazon EC2 Instance
 
@@ -34,29 +33,13 @@ If you know AWS a bit these should be straightforward to configure. Please reach
 
 ## Installing the collector on the instance
 
-SSH into your EC2 instance, and run the following to download and install the package:
+SSH into your EC2 instance. If using an apt-based distribution, run the following to download and install the package:
 
-<ul className="nav nav-tabs">
-  <li className="nav-item">
-    <a href="#yum" data-toggle="tab" className="nav-link active">
-      YUM (RedHat/CentOS/Amazon Linux)
-    </a>
-  </li>
-  <li className="nav-item">
-    <a href="#apt" data-toggle="tab" className="nav-link">
-      APT (Debian/Ubuntu)
-    </a>
-  </li>
-</ul>
+<CollectorPkgInstallInstructions kind='deb' />
 
-<div className="tab-content">
-  <div className="tab-pane active" id="yum">
-    <PackageYum />
-  </div>
-  <div className="tab-pane" id="apt">
-    <PackageApt />
-  </div>
-</div>
+If using an apt-based distribution, run the following to download and install the package:
+
+<CollectorPkgInstallInstructions kind='yum' />
 
 ---
 
