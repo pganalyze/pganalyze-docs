@@ -2,6 +2,7 @@
 title: Installation Guide (Heroku Postgres)
 ---
 
+import imgHerokuPaidDyno from "../../images/heroku_paid_dyno.png"
 import { collectorAppName } from "./util";
 
 export const APIKey = ({ apiKey }) => <code>{apiKey}</code>;
@@ -38,7 +39,7 @@ After the app was created, configure it to use the **paid Hobby dyno** instead o
 
 <img
   style={{ border: "1px solid grey", width: 400 }}
-  src="/images/docs/heroku_paid_dyno.png"
+  src={imgHerokuPaidDyno}
 />
 
 Now you can continue by attaching your databases:

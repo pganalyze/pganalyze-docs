@@ -2,24 +2,28 @@
 title: Installation Guide (Self-Managed)
 ---
 
+import imgLogoUbuntu from '../../images/logo_ubuntu.png'
+import imgLogoRedhat from '../../images/logo_redhat.png'
+import imgLogoDocker from '../../images/docker.png'
+
 In this step we setup [pg_stat_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html), which is used by pganalyze to collect Postgres query statistics.
 
 To continue, we need to know where your Postgres is running:
 
 <div className="install-choice">
   <Link className="install-choice--step" to="02_enable_pg_stat_statements_deb">
-    <img src="/images/docs/logo_ubuntu.png" />
+    <img src={imgLogoUbuntu} />
     Ubuntu &amp; Debian
   </Link>
   <Link className="install-choice--step" to="02_enable_pg_stat_statements_yum">
-    <img src="/images/docs/logo_redhat.png" />
+    <img src={imgLogoRedhat} />
     RHEL, CentOS &amp; Fedora
   </Link>
   <Link
     className="install-choice--step"
     to="02_enable_pg_stat_statements_docker"
   >
-    <img src="/images/docs/docker.png" />
+    <img src={imgLogoDocker} />
     Docker
   </Link>
   {/*<Link className="install-choice--step" to="02_enable_pg_stat_statements_kubernetes">
