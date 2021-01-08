@@ -2,7 +2,7 @@
 title: Get Started
 ---
 
-import './style.css'
+import styles from './style.module.css'
 
 import imgLogoAws from './images/logo_aws.svg'
 import imgLogoAzure from './images/logo_microsoft_azure.png'
@@ -18,16 +18,16 @@ import PublicOverview from './_install_public.mdx'
 
 To continue please select in which environment you are running your Postgres database:
 
-<div className="install-choice">
+<div className={styles.installChoice}>
   <Link
-    className="install-choice--step"
+    className={styles.installChoiceStep}
     to="install/amazon_rds/01_configure_rds_instance"
   >
     <img src={imgLogoAws} />
     Amazon RDS &amp; Aurora
   </Link>
   <Link
-    className="install-choice--step"
+    className={styles.installChoiceStep}
     to="install/azure_database/01_create_monitoring_user"
   >
     <img
@@ -37,16 +37,16 @@ To continue please select in which environment you are running your Postgres dat
     Azure Database
   </Link>
   <Link
-    className="install-choice--step"
+    className={styles.installChoiceStep}
     to="install/google_cloud_sql/01_create_monitoring_user"
   >
     <img src={imgLogoGcp} />
     Google Cloud SQL
   </Link>
 </div>
-<div className="install-choice">
+<div className={styles.installChoice}>
   <Link
-    className="install-choice--step"
+    className={styles.installChoiceStep}
     to="install/self_managed/01_create_monitoring_user"
   >
     <img src={imgLogoPgsql} />
@@ -57,7 +57,7 @@ To continue please select in which environment you are running your Postgres dat
     </small>
   </Link>
   <Link
-    className="install-choice--step"
+    className={styles.installChoiceStep}
     to="install/heroku_postgres/01_deploy_the_collector"
   >
     <img src={imgLogoHeroku} />
