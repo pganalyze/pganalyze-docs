@@ -43,7 +43,7 @@ const CollectorPkgInstallInstructions: React.FunctionComponent<Props> = ({ kind 
       <ul className="nav nav-tabs">
         {installOpts.map(([id, _distro, label], idx) => {
           return (
-            <li className="nav-item">
+            <li key={id} className="nav-item">
               <a href={`#${id}`} data-toggle="tab" className={classNames('nav-link', idx === 0 && 'active')}>
                 {label}
               </a>
@@ -54,7 +54,7 @@ const CollectorPkgInstallInstructions: React.FunctionComponent<Props> = ({ kind 
       <div className="tab-content">
         {installOpts.map(([id, distro, _label], idx) => {
           return (
-            <div className={classNames("tab-pane", idx === 0 && 'active')} id={id}>
+            <div key={id} className={classNames("tab-pane", idx === 0 && 'active')} id={id}>
               <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
             </div>
           )
