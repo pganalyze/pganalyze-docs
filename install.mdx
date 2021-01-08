@@ -2,6 +2,12 @@
 title: Get Started
 ---
 
+import imgLogoAws from './images/logo_aws.svg'
+import imgLogoAzure from './images/logo_microsoft_azure.png'
+import imgLogoGcp from './images/logo_google_cloud_platform.png'
+import imgLogoPgsql from './images/logo_postgres.svg'
+import imgLogoHeroku from './images/logo_heroku.svg'
+
 import PublicOverview from './_install_public.mdx'
 
 <PublicOnly>
@@ -15,7 +21,7 @@ To continue please select in which environment you are running your Postgres dat
     className="install-choice--step"
     to="install/amazon_rds/01_configure_rds_instance"
   >
-    <img src="/images/docs/logo_aws.svg" />
+    <img src={imgLogoAws} />
     Amazon RDS &amp; Aurora
   </Link>
   <Link
@@ -23,7 +29,7 @@ To continue please select in which environment you are running your Postgres dat
     to="install/azure_database/01_create_monitoring_user"
   >
     <img
-      src="/images/docs/logo_microsoft_azure.png"
+      src={imgLogoAzure}
       style={{ padding: "5px" }}
     />
     Azure Database
@@ -32,7 +38,7 @@ To continue please select in which environment you are running your Postgres dat
     className="install-choice--step"
     to="install/google_cloud_sql/01_create_monitoring_user"
   >
-    <img src="/images/docs/logo_google_cloud_platform.png" />
+    <img src={imgLogoGcp} />
     Google Cloud SQL
   </Link>
 </div>
@@ -41,7 +47,7 @@ To continue please select in which environment you are running your Postgres dat
     className="install-choice--step"
     to="install/self_managed/01_create_monitoring_user"
   >
-    <img src="/images/docs/logo_postgres.svg" />
+    <img src={imgLogoPgsql} />
     Self-Managed
     <br />
     <small style={{ marginTop: "-5px", fontSize: "12px" }}>
@@ -52,7 +58,7 @@ To continue please select in which environment you are running your Postgres dat
     className="install-choice--step"
     to="install/heroku_postgres/01_deploy_the_collector"
   >
-    <img src="/images/docs/logo_heroku.svg" />
+    <img src={imgLogoHeroku} />
     Heroku Postgres
   </Link>
   {/*<Link className="install-choice--step" to="install/heroku_postgres/01_deploy_the_collector">
