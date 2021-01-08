@@ -4,6 +4,8 @@ title: Installation Guide (Amazon RDS and Amazon Aurora)
 
 import imgRdsSetUpIamPolicy from "../../images/rds_iam_role.png"
 
+export const ImgWorkaround = (props) => <img {...props} />
+
 Almost done! 🎉
 
 We now need to setup an IAM policy and user that the collector can use to access RDS information.
@@ -58,7 +60,7 @@ We recommend naming the policy "pganalyze" or similar, so you can easily identif
 
 To complete this step, create an IAM role for pganalyze, and assign it the policy.
 
-<img
+<ImgWorkaround
   src={imgRdsSetUpIamPolicy}
   width="520"
   style={{ border: "1px solid grey" }}
