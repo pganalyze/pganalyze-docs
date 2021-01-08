@@ -1,40 +1,41 @@
-.install-choice {
-  display: flex;
-  margin-top: 20px;
-}
+:global {
+  .install-choice {
+    display: flex;
+    margin-top: 20px;
 
-.install-choice--step {
-  flex-grow: 1;
-  width: 33%;
-  height: 110px;
-  border: 1px solid black;
-  border-radius: 5px;
-  justify-content: space-between;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 24px 10px 16px;
-  background-color: #f8f8f8;
-  border-color: #e8e8e8;
-  font-weight: bold;
-  margin-right: 30px;
-  color: inherit;
-}
+    .install-choice--step {
+      flex-grow: 1;
+      width: 33%;
+      height: 110px;
+      border: 1px solid black;
+      border-radius: 5px;
+      justify-content: space-between;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      padding: 24px 10px 16px;
+      background-color: #f8f8f8;
+      border-color: #e8e8e8;
+      font-weight: bold;
+      margin-right: 30px;
+      color: inherit;
 
-.install-choice--step img {
-  max-width: 70%;
-  height: 55%;
-  margin: 0;
-  padding: 0 0 5px 0;
-  border: none;
-}
+      img {
+        max-width: 70%;
+        height: 55%;
+        margin: 0;
+        padding: 0 0 5px 0;
+        border: none;
+      }
 
-.install-choice--step:hover {
-  color: inherit;
-  border-color: #e0e0e0;
-  background-color: #f0f0f0;
-}
-
-.install-choice--step:last-child {
-  margin-right: 0;
+      &:hover {
+        color: inherit;
+        border-color: #e0e0e0;
+        background-color: #f0f0f0;
+      }
+    }
+    .install-choice--step:last-child {
+      margin-right: 0;
+    }
+  }
 }
