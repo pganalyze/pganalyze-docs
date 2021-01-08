@@ -14,7 +14,7 @@ type Props = (AnchorProps | LinkProps) & {
   linkRelative: boolean
 }
 
-const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelative, ...rest}) => {
+const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelative: adjustLinks, ...rest}) => {
   let destination: string;
   if ('to' in rest) {
     destination = rest.to;
@@ -47,7 +47,7 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
   }
 
   const Link = linkComponent
-  destination = linkRelative ? '../' + destination : destination;
+  destination = adjustLinks && !destination.startsWith('/') ? '../' + destination : destination;
   return <Link {...rest} to={destination} />
 };
 
