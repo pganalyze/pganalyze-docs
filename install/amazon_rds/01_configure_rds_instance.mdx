@@ -2,35 +2,12 @@
 title: Installation Guide (Amazon RDS and Amazon Aurora)
 ---
 
-In order to setup pganalyze monitoring for Amazon RDS or Amazon Aurora for Postgres you'll need to enable the [pg_stat_statements](http://www.postgresql.org/docs/10/static/pgstatstatements.html) extension for collecting query statistics.
+import PublicStepOne from './_01_public.mdx'
+import InAppStepOne from './_01_in_app.mdx'
 
----
-
-## Enabling pg_stat_statements
-
-Connect to your database as an RDS superuser (usually the credentials you created the database with), e.g. using `psql`.
-
-Run the following SQL commands to enable the extension, and make sure it was installed correctly:
-
-```
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
-SELECT * FROM pg_stat_statements LIMIT 1;
-```
-
-**Important:** If you get the error `pg_stat_statements must be loaded via shared_preload_libraries` follow the instructions below. But, if the query returns one row of query statistics we are ready for the next step:
-
-<Link className="btn btn-success" to="02_create_monitoring_user">
-  Proceed to Step 2: Create Monitoring User
-</Link>
-
----
-
-## Getting the "pg_stat_statements must be loaded via shared_preload_libraries" error?
-
-This error indicates that you have not fully enabled pg_stat_statements in your database yet. To enable it, go to your [AWS Console](https://console.aws.amazon.com/rds/), modify your existing custom DB Parameter Group, or create a new custom DB Parameter Group.
-
-In the custom parameter group, modify the `shared_preload_libraries` setting and make sure it includes `pg_stat_statements`.
-
-In case you created a **new** parameter group you'll have to modify your database to use this new parameter group.
-
-To apply the configuration change you will need to reboot your database. Then re-run `SELECT * FROM pg_stat_statements LIMIT 1` and make sure you get a result.
+<PublicOnly>
+  <PublicStepOne />
+</PublicOnly>
+<InAppOnly>
+  <InAppStepOne />
+</InAppOnly>

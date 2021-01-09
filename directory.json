@@ -208,6 +208,10 @@
       "title": "Get Started",
       "path": "/install"
     },
+    "/install/01_enabling_pg_stat_statements": {
+      "title": "Enabling pg_stat_statements",
+      "path": "/install/01_enabling_pg_stat_statements"
+    },
     "/install/amazon_rds/01_configure_rds_instance": {
       "title": "Installation Guide (Amazon RDS and Amazon Aurora)",
       "path": "/install/amazon_rds/01_configure_rds_instance"
@@ -1305,7 +1309,7 @@
       "tooltip": "Data contains range bounds in the incorrect order",
       "urgency": "medium",
       "sqlstate": "22000 (Class 22 - Data Exception: data_exception)",
-      "path": "/docs/log-insights/app-errors/U140",
+      "path": "/log-insights/app-errors/U140",
       "color": null,
       "hasAnalysis": null
     },

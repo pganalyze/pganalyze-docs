@@ -1,10 +1,8 @@
----
-title: 'Step 1: Configure RDS instance'
-backlink_href: /docs/install/amazon_rds
-backlink_title: 'Installation Guide (Amazon RDS)'
----
+import imgRdsParamGroup from '../../images/rds_parameter_group.png'
+import imgRdsParamGroup2 from '../../images/rds_parameter_group2.gif'
+import imgRdsEnableParamGroup from '../../images/rds_enable_parameter_group.png'
 
-In order to setup pganalyze monitoring for [Amazon RDS](https://aws.amazon.com/rds/postgresql/) you'll need to first follow these steps<br>
+In order to setup pganalyze monitoring for [Amazon RDS](https://aws.amazon.com/rds/postgresql/) you'll need to first follow these steps<br />
 to enable the [pg\_stat\_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html) extension for collecting query statistics.
 
 This guide assumes you have an already running Amazon RDS PostgreSQL server you want to monitor.
@@ -15,13 +13,13 @@ This guide assumes you have an already running Amazon RDS PostgreSQL server you 
 
 In your [AWS Console](https://console.aws.amazon.com/rds/), modify your existing custom DB Parameter Group, or create a new custom DB Parameter Group:
 
-![](rds_parameter_group.png)
+<img src={imgRdsParamGroup} />
 
 ---
 
 Then set the following configuration parameters:
 
-![](rds_parameter_group2.gif)
+<img src={imgRdsParamGroup2} />
 
  Name | New Value | &nbsp;
  ---- | ------ | -------
@@ -31,14 +29,14 @@ Then set the following configuration parameters:
 
 ---
 
-In case you created a new parameter group you'll have to modify your database to use the Parameter Group you created earlier:<br>
+In case you created a new parameter group you'll have to modify your database to use the Parameter Group you created earlier:<br />
 
-![](rds_enable_parameter_group.png)
+<img src={imgRdsEnableParamGroup} />
 
 ## Enable Enhanced Monitoring
 
-We also highly recommend turning on Enhanced Monitoring, if you haven't already - it will give you<br>
-more detailed system-level statistics that can be helpful, e.g. to debug I/O issues.<br>
+We also highly recommend turning on Enhanced Monitoring, if you haven't already - it will give you<br />
+more detailed system-level statistics that can be helpful, e.g. to debug I/O issues.<br />
 
 If Enhanced Monitoring is enabled, pganalyze will automatically collect and show this additional information in the dashboard as well.
 
@@ -69,5 +67,5 @@ Continue by creating the monitoring user:
 
 [Proceed to Step 2: Create Monitoring User](/docs/install/amazon_rds/02_create_monitoring_user)
 
-<br>
-<div><signup-cta event-label="Docs"></signup-cta></div>
+<br />
+<div><SignupCTA event-label="Docs"></SignupCTA></div>
