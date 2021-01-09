@@ -2,63 +2,13 @@
 title: Installation Guide (Self-Managed)
 ---
 
-export const AptInstallInstructions = ({ version }) => {
-  return (
-    <pre>
-      <code>sudo apt-get install postgresql-contrib-{version}</code>
-    </pre>
-  );
-};
+import PgContribPkgInstallInstructions from '../../components/PgContribPkgInstallInstructions'
 
 ## Install official PostgreSQL contrib package
 
 On your database server, make sure that the extensions package is installed for your Postgres version:
 
-<ul className="nav nav-tabs">
-  <li className="nav-item">
-    <a href="#pg11" data-toggle="tab" className="nav-link active">
-      Postgres 11
-    </a>
-  </li>
-  <li className="nav-item">
-    <a href="#pg10" data-toggle="tab" className="nav-link">
-      Postgres 10
-    </a>
-  </li>
-  <li className="nav-item">
-    <a href="#pg96" data-toggle="tab" className="nav-link">
-      Postgres 9.6
-    </a>
-  </li>
-  <li className="nav-item">
-    <a href="#pg95" data-toggle="tab" className="nav-link">
-      Postgres 9.5
-    </a>
-  </li>
-  <li className="nav-item">
-    <a href="#pg94" data-toggle="tab" className="nav-link">
-      Postgres 9.4
-    </a>
-  </li>
-</ul>
-
-<div className="tab-content">
-  <div className="tab-pane active" id="pg11">
-    <AptInstallInstructions version="11" />
-  </div>
-  <div className="tab-pane" id="pg10">
-    <AptInstallInstructions version="10" />
-  </div>
-  <div className="tab-pane" id="pg96">
-    <AptInstallInstructions version="9.6" />
-  </div>
-  <div className="tab-pane" id="pg95">
-    <AptInstallInstructions version="9.5" />
-  </div>
-  <div className="tab-pane" id="pg94">
-    <AptInstallInstructions version="9.4" />
-  </div>
-</div>
+<PgContribPkgInstallInstructions />
 
 ## Enable pg_stat_statements
 

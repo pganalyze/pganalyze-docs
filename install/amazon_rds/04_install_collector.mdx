@@ -2,7 +2,7 @@
 title: Installation Guide (Amazon RDS and Amazon Aurora)
 ---
 
-import '../../style.module.scss'
+import styles from '../../style.module.scss'
 
 import imgAwsEc2 from '../../images/aws-ec2.svg'
 import imgAwsEcs from '../../images/aws-ecs.png'
@@ -12,16 +12,16 @@ The [pganalyze collector](https://github.com/pganalyze/collector) is a daemon pr
 
 We recommend installing the collector on an EC2 instance, but you can also run it through a Docker container:
 
-<div className="install-choice">
-  <Link className="install-choice--step" to="04_install_collector_ec2">
+<div className={styles.installChoice}>
+  <Link className={styles.installChoiceStep} to="04_install_collector_ec2">
     <img src={imgAwsEc2} />
     Amazon EC2 Instance
   </Link>
-  <Link className="install-choice--step" to="04_install_collector_ecs">
+  <Link className={styles.installChoiceStep} to="04_install_collector_ecs">
     <img src={imgAwsEcs} />
     Amazon ECS
   </Link>
-  <Link className="install-choice--step" to="04_install_collector_docker">
+  <Link className={styles.installChoiceStep} to="04_install_collector_docker">
     <img src={imgDocker} />
     Docker on EC2
   </Link>

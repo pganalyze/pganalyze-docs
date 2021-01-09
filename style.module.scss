@@ -38,3 +38,12 @@
     }
   }
 }
+
+.navTabs {
+  .navLink.active,
+  .navItem.show .navLink {
+    color: #555;
+    background-color: #fff;
+    border-color: #ddd #ddd transparent;
+  }
+}

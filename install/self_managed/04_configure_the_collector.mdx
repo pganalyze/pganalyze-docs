@@ -10,26 +10,26 @@ import imgLogoDocker from '../../images/docker.png'
 
 To continue, we need to know where your Postgres is running:
 
-<div className="install-choice">
+<div className={styles.installChoice}>
   <Link
-    className="install-choice--step"
+    className={styles.installChoiceStep}
     to="04_configure_the_collector_package"
   >
     <img src={imgLogoUbuntu} />
     Ubuntu &amp; Debian
   </Link>
   <Link
-    className="install-choice--step"
+    className={styles.installChoiceStep}
     to="04_configure_the_collector_package"
   >
     <img src={imgLogoRedhat} />
     RHEL, CentOS &amp; Fedora
   </Link>
-  <Link className="install-choice--step" to="04_configure_the_collector_docker">
+  <Link className={styles.installChoiceStep} to="04_configure_the_collector_docker">
     <img src={imgLogoDocker} />
     Docker
   </Link>
-  {/*<Link className="install-choice--step" to="03_enable_pg_stat_statements_kubernetes">
+  {/*<Link className={styles.installChoiceStep} to="03_enable_pg_stat_statements_kubernetes">
     <img src="/images/docs/logo_kubernetes.png" />
     Kubernetes
   </Link>*/}
