@@ -1,36 +1,25 @@
 import React from 'react'
-import classNames from 'classnames'
 
-import styles from '../style.module.scss'
+import TabPanel, { TabItem } from './TabPanel'
 
 const PgContribPkgInstallInstructions: React.FunctionComponent = () => {
   const versions: string[] = [ '11', '10', '9.6', '9.5', '9.4' ];
+  const tabs = versions.map<TabItem>(version => {
+    const id = `pg${version.replace(/\D/, '')}`
+    const label = `Postgres ${version}`
+    return [ id, label ]
+  })
   return (
-  <>
-    <ul className={classNames(styles.nav, styles.navTabs)}>
-      {versions.map((version, idx) => {
-        const id = `pg${version.replace(/\D/, '')}`
-        const label = `Postgres ${version}`
+    <TabPanel items={tabs}>
+      {(idx: number) => {
+        const version = versions[idx];
         return (
-          <a key={id} href={`#${id}`} data-toggle="tab" className={classNames(styles.navLink, idx === 0 && styles.active)}>
-          {label}
-        </a>
+          <pre>
+            <code>sudo apt-get install postgresql-contrib-{version}</code>
+          </pre>
         )
-      })}
-    </ul>
-    <div className={styles.tabContent}>
-      {versions.map((version, idx) => {
-        const id = `pg${version.replace(/\D/, '')}`
-        return (
-          <div key={id} id={id} className={classNames(styles.tabPane, idx === 0 && styles.active)}>
-            <pre>
-              <code>sudo apt-get install postgresql-contrib-{version}</code>
-            </pre>
-          </div>
-        )
-      })}
-    </div>
-  </>
+      }}
+    </TabPanel>
   )
 }
 

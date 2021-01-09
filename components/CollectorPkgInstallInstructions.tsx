@@ -1,5 +1,6 @@
 import React from 'react'
-import classNames from 'classnames'
+
+import TabPanel, { TabItem } from './TabPanel'
 
 type YumProps = {
   kind: 'yum'
@@ -37,30 +38,14 @@ const CollectorPkgInstallInstructions: React.FunctionComponent<Props> = ({ kind 
       ]
       break
   }
-
+  const tabs = installOpts.map<TabItem>(opt => [opt[0], opt[2]])
   return (
-    <>
-      <ul className="nav nav-tabs">
-        {installOpts.map(([id, _distro, label], idx) => {
-          return (
-            <li key={id} className="nav-item">
-              <a href={`#${id}`} data-toggle="tab" className={classNames('nav-link', idx === 0 && 'active')}>
-                {label}
-              </a>
-            </li>
-          )
-        })}
-      </ul>
-      <div className="tab-content">
-        {installOpts.map(([id, distro, _label], idx) => {
-          return (
-            <div key={id} className={classNames("tab-pane", idx === 0 && 'active')} id={id}>
-              <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
-            </div>
-          )
-        })}        
-      </div>
-    </>
+    <TabPanel items={tabs}>
+      {(idx: number) => {
+        const distro = installOpts[idx][1];
+        return <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
+      }}
+    </TabPanel>
   )
 }
 
