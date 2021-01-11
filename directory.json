@@ -180,6 +180,10 @@
       "title": "EXPLAIN - Scan Nodes",
       "path": "/docs/explain/scan-nodes"
     },
+    "explain/setup": {
+      "title": "Set up automatic EXPLAIN plan collection",
+      "path": "/docs/explain/setup"
+    },
     "explain/setup/auto_explain": {
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/explain/setup/auto_explain"
