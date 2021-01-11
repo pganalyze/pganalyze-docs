@@ -47,7 +47,7 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
   }
 
   const Link = linkComponent
-  destination = adjustLinks && !destination.startsWith('/') ? '../' + destination : destination;
+  destination = adjustLinks && destination && !destination.startsWith('/') ? '../' + destination : destination;
   return <Link {...rest} to={destination} />
 };
 
