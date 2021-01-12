@@ -4,12 +4,12 @@ import TabPanel, { TabItem } from './TabPanel'
 
 type YumProps = {
   kind: 'yum'
-  distro: 'el/8' | 'el/7' | 'el/6' | 'fedora/30' | 'fedora/29'
+  distro: 'el/8' | 'el/7' | 'fedora/30' | 'fedora/29'
 }
 
 type DebProps = {
   kind: 'deb'
-  distro: "ubuntu/bionic" | "ubuntu/xenial" | "ubuntu/trusty" | "debian/buster" | "debian/stretch" | "debian/jessie"
+  distro: "ubuntu/bionic" | "ubuntu/xenial" | "debian/buster" | "debian/stretch" | "debian/jessie"
 }
 
 type Props = YumProps | DebProps
@@ -22,7 +22,6 @@ const CollectorPkgInstallInstructions: React.FunctionComponent<Props> = ({ kind 
       installOpts = [
         [ 'el8', 'el/8', 'RHEL 8' ],
         [ 'el7', 'el/7', 'RHEL 7 / Amazon Linux 2' ],
-        [ 'el6', 'el/6', 'RHEL 6 / Amazon Linux' ],
         [ 'fedora30', 'fedora/30', 'Fedora 30' ],
         [ 'fedora29', 'fedora/29', 'Fedora 29' ],
       ]
@@ -31,7 +30,6 @@ const CollectorPkgInstallInstructions: React.FunctionComponent<Props> = ({ kind 
       installOpts = [
         ["bionic", "ubuntu/bionic", "Ubuntu 18.04"],
         ["xenial", "ubuntu/xenial", "Ubuntu 16.04"],
-        ["trusty", "ubuntu/trusty", "Ubuntu 14.04"],
         ["buster", "debian/buster", "Debian 10"],
         ["stretch","debian/stretch",  "Debian 9"],
         ["jessie", "debian/jessie", "Debian 8"],
