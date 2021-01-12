@@ -14,6 +14,7 @@ const TabPanel: React.FunctionComponent<Props> = ({items, children}) => {
   const [ activeIdx, setActiveIdx ] = useState(0)
   const activeTab = items[activeIdx];
   const handleTabClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
     const tabIdx = parseInt(e.currentTarget.dataset.tabIdx, 10)
     setActiveIdx(tabIdx)
   }
