@@ -15,14 +15,12 @@ export const InviteLink = ({ inviteLink, children }) => {
 export const SSMConfig = ({ apiKey }) => {
   return (
     <>
-      <pre>
-        <code>
-          {`aws ssm put-parameter --name /pganalyze/DB_PASSWORD --type SecureString --value "YOUR_MONITORING_USER_PASSWORD"
+      <CodeBlock>
+        {`aws ssm put-parameter --name /pganalyze/DB_PASSWORD --type SecureString --value "YOUR_MONITORING_USER_PASSWORD"
 aws ssm put-parameter --name /pganalyze/PGA_API_KEY --type SecureString --value "${
             apiKey || "YOUR_PGANALYZE_API_KEY"
           }"`}
-        </code>
-      </pre>
+      </CodeBlock>
       <p>
         {apiKey ? (
           <>

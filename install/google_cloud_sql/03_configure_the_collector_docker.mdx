@@ -20,17 +20,15 @@ export const APIKeyInstructions = ({ apiKey }) => {
 
 export const CollectorDotEnv = ({ apiKey }) => {
   return (
-    <pre>
-      <code>
-        {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
+    <CodeBlock>
+      {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
 DB_HOST=1.2.3.4
 DB_NAME=your_database_name
 DB_USERNAME=your_monitoring_user
 DB_PASSWORD=your_monitoring_user_password
 GCP_PROJECT_ID=your_gcp_project_id
 GCP_CLOUDSQL_INSTANCE_ID=your_gcp_cloudsql_instance_id`}
-      </code>
-    </pre>
+    </CodeBlock>
   );
 };
 

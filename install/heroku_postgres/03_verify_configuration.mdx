@@ -8,48 +8,40 @@ import { collectorAppName, attachmentName } from "./util";
 
 export const HerokuConfigCommand = ({ organizationSlug }) => {
   return (
-    <pre>
-      <code>heroku config -a {collectorAppName(organizationSlug)}</code>
-    </pre>
+    <CodeBlock>heroku config -a {collectorAppName(organizationSlug)}</CodeBlock>
   );
 };
 
 export const HerokuConfigOutput = ({ organizationSlug }) => {
   return (
-    <pre>
-      <code>
-        {`=== ${collectorAppName(organizationSlug)} Config Vars
+    <CodeBlock>
+      {`=== ${collectorAppName(organizationSlug)} Config Vars
 ${attachmentName(organizationSlug)}_URL: postgres://...:...@...:.../...
 PGA_API_KEY: ...`}
-      </code>
-    </pre>
+    </CodeBlock>
   );
 };
 
 export const TestCommand = ({ organizationSlug }) => {
   return (
-    <pre>
-      <code>
-        $ heroku run -a {collectorAppName(organizationSlug)} collector --test
-      </code>
-    </pre>
+    <CodeBlock>
+      $ heroku run -a {collectorAppName(organizationSlug)} collector --test
+    </CodeBlock>
   );
 };
 
 export const TestOutput = ({ organizationSlug }) => {
   const attUrl = attachmentName(organizationSlug) + "_URL";
   return (
-    <pre>
-      <code>
-        {`Running collector --test on ⬢ ${collectorAppName(
-          organizationSlug
-        )}... up, run.6337 (Hobby)
+    <CodeBlock>
+      {`Running collector --test on ⬢ ${collectorAppName(
+        organizationSlug
+      )}... up, run.6337 (Hobby)
 2019/12/18 10:41:10 I [${attUrl}] Testing statistics collection...
 2019/12/18 10:41:12 I [${attUrl}]   Test submission successful (362 KB received, server ...)
 2019/12/18 10:41:12 I [${attUrl}] Testing activity snapshots...
 2019/12/18 10:41:13 I [${attUrl}]   Test submission successful (20.7 KB received, server ...)`}
-      </code>
-    </pre>
+    </CodeBlock>
   );
 };
 

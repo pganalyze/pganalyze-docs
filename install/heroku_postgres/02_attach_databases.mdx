@@ -8,13 +8,11 @@ import { collectorAppName, attachmentName } from "./util";
 
 export const AddonsAttachCommand = ({ organizationSlug }) => {
   return (
-    <pre>
-      <code>
-        heroku addons:attach postgresql-objective-11111 -a{" "}
-        {collectorAppName(organizationSlug)} --as{" "}
-        {attachmentName(organizationSlug)}
-      </code>
-    </pre>
+    <CodeBlock>
+      heroku addons:attach postgresql-objective-11111 -a{" "}
+      {collectorAppName(organizationSlug)} --as{" "}
+      {attachmentName(organizationSlug)}
+    </CodeBlock>
   );
 };
 
@@ -22,12 +20,10 @@ export const AddonsAttachOutput = ({ organizationSlug }) => {
   const appName = collectorAppName(organizationSlug);
   const attName = attachmentName(organizationSlug);
   return (
-    <pre>
-      <code>
-        {`Attaching postgresql-objective-11111 as ${attName} to ⬢ ${appName}... done
+    <CodeBlock>
+      {`Attaching postgresql-objective-11111 as ${attName} to ⬢ ${appName}... done
 Setting ${attName} config vars and restarting ⬢ ${appName}... done, v9`}
-      </code>
-    </pre>
+    </CodeBlock>
   );
 };
 

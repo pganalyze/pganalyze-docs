@@ -20,16 +20,14 @@ export const APIKeyInstructions = ({ apiKey }) => {
 
 export const CollectorDotEnv = ({ apiKey }) => {
   return (
-    <pre>
-      <code>
-        {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
+    <CodeBlock>
+      {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
 DB_HOST=your_db.postgres.database.azure.com
 DB_NAME=your_database_name
 DB_USERNAME=your_monitoring_user@your_db
 DB_PASSWORD=your_monitoring_user_password
 AZURE_DB_SERVER_NAME=your_db`}
-      </code>
-    </pre>
+    </CodeBlock>
   );
 };
 

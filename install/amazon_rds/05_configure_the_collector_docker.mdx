@@ -7,15 +7,13 @@ backlink_title: 'Installation Guide'
 export const CollectorDotEnv = ({ apiKey }) => {
   return (
     <>
-      <pre>
-        <code>
-          {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
+      <CodeBlock>
+        {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
 DB_HOST=your_database_host
 DB_NAME=your_database_name
 DB_USERNAME=your_monitoring_user
 DB_PASSWORD=your_monitoring_user_password`}
-        </code>
-      </pre>
+      </CodeBlock>
       <p>
         Replace the configuration values after the <code>=</code> with the
         correct settings for your RDS instance.
