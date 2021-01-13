@@ -384,6 +384,14 @@
       "title": "Installation Guide (Self-Managed)",
       "path": "/docs/install/self_managed/04_configure_the_collector_package"
     },
+    "install/troubleshooting": {
+      "title": "Installation Troubleshooting",
+      "path": "/docs/install/troubleshooting"
+    },
+    "install/troubleshooting/collector_crash": {
+      "title": "Collector crashes",
+      "path": "/docs/install/troubleshooting/collector_crash"
+    },
     "log-insights": {
       "title": "pganalyze Log Insights",
       "path": "/docs/log-insights"
