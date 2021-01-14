@@ -1,6 +1,7 @@
 import React from 'react'
 
 import TabPanel, { TabItem } from './TabPanel'
+import { useCodeBlock } from './CodeBlock'
 
 type YumProps = {
   kind: 'yum'
@@ -52,6 +53,7 @@ const CollectorDistroPkgInstallInstructions: React.FunctionComponent<{
   distro: string
 }> = ({ kind, distro }) => {
   let instructions: string;
+  const CodeBlock = useCodeBlock();
   switch (kind) {
     case 'yum':
       instructions = `echo "[pganalyze_collector]
@@ -75,11 +77,9 @@ sudo apt-get install pganalyze-collector`
   }
 
   return (
-    <pre style={{ maxWidth: "100%" }}>
-      <code>
-        {instructions}
-      </code>
-    </pre>
+    <CodeBlock style={{ maxWidth: "100%" }}>
+      {instructions}
+    </CodeBlock>
   )
 }
 

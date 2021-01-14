@@ -1,4 +1,5 @@
 import React from 'react'
+import { useCodeBlock } from './CodeBlock';
 
 import TabPanel, { TabItem } from './TabPanel'
 
@@ -9,14 +10,13 @@ const PgContribPkgInstallInstructions: React.FunctionComponent = () => {
     const label = `Postgres ${version}`
     return [ id, label ]
   })
+  const CodeBlock = useCodeBlock();
   return (
     <TabPanel items={tabs}>
       {(idx: number) => {
         const version = versions[idx];
         return (
-          <pre>
-            <code>sudo apt-get install postgresql-contrib-{version}</code>
-          </pre>
+          <CodeBlock>sudo apt-get install postgresql-contrib-{version}</CodeBlock>
         )
       }}
     </TabPanel>
