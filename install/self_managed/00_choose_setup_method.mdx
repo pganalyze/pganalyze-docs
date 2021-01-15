@@ -1,0 +1,32 @@
+---
+title: 'Step 0: Choose Setup Method'
+install_track_title: Installation Guide (Self-Managed)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+To monitor a new Postgres server with pganalyze, you must make some configuration changes
+to your database and install and run the pganalyze collector. There are two
+ways of doing this: manually stepping through our instructions, or running the guided
+setup program included with the collector, which will prompt you for input and confirmation
+and make the necessary changes on your behalf.
+
+The guided setup program is in a pilot stage and we do not recommend using it on production
+systems yet. However, it's a simpler way to get started on development sytems.
+
+If your system meets the following criteria
+
+ * Ubuntu 14.04 or newer, or Debian 10 or newer
+ * Postgres 10 or newer
+ * Collector installed on the same system as your Postgres server
+ * Not a production system
+
+We recommend trying the guided setup program. Otherwise, you'll need to follow the manual
+setup instructions. We plan to expand the configurations supported for guided setup soon.
+
+<Link className="btn btn-primary" to="01_guided_setup">
+  Proceed to guided setup instructions
+</Link>
+<Link style={{marginLeft: '8px'}} className="btn btn-primary" to="01_create_monitoring_user">
+  Proceed to manual setup instructions
+</Link>
