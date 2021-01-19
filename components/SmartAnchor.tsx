@@ -10,7 +10,10 @@ type LinkProps = Omit<AnchorProps, 'href'> & {
  };
 
 type Props = (AnchorProps | LinkProps) & {
+  // Accepting the linkComponent as a prop allows us to render under different routers
   linkComponent: React.ComponentType<LinkProps>
+  // In some situations, relative links can be evaluated as siblings of the current route, and
+  // some as children. To standardize this, we can adjust the route in this component by accepting a flag.
   linkRelative: boolean
 }
 
@@ -24,8 +27,8 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
     delete rest.href
   }
   const isFragmentLink = destination?.startsWith('#')
-  const isExternal = /^[a-zA-Z]+:/.test(destination)
-  const isBareAnchor = isFragmentLink || isExternal
+  const isAbsolute = /^[a-zA-Z]+:/.test(destination)
+  const isBareAnchor = isFragmentLink || isAbsolute
 
   if (isBareAnchor) {
     const props = {
@@ -33,11 +36,11 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
       href: destination,
     }
 
-    if (isExternal) {
+    if (isAbsolute) {
       const rel = []
       rel.push("noopener")
-      const isPganalyze = /^https?:\/\/[a-zA-Z-]+\.pganalyze\.com/.test(destination)
-      if (!isPganalyze) {
+      const isPganalyzeWebLink = /^https?:\/\/pganalyze\.com/.test(destination)
+      if (!isPganalyzeWebLink) {
         rel.push("noreferrer")
       }
       props.rel = rel.join(' ')
