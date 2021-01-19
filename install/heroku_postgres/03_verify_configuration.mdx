@@ -1,0 +1,63 @@
+---
+title: 'Step 3: Verify Configuration'
+install_track_title: Installation Guide (Heroku Postgres)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import { collectorAppName, attachmentName } from "./util";
+
+export const HerokuConfigCommand = ({ organizationSlug }) => {
+  return (
+    <CodeBlock>heroku config -a {collectorAppName(organizationSlug)}</CodeBlock>
+  );
+};
+
+export const HerokuConfigOutput = ({ organizationSlug }) => {
+  return (
+    <CodeBlock>
+      {`=== ${collectorAppName(organizationSlug)} Config Vars
+${attachmentName(organizationSlug)}_URL: postgres://...:...@...:.../...
+PGA_API_KEY: ...`}
+    </CodeBlock>
+  );
+};
+
+export const TestCommand = ({ organizationSlug }) => {
+  return (
+    <CodeBlock>
+      $ heroku run -a {collectorAppName(organizationSlug)} collector --test
+    </CodeBlock>
+  );
+};
+
+export const TestOutput = ({ organizationSlug }) => {
+  const attUrl = attachmentName(organizationSlug) + "_URL";
+  return (
+    <CodeBlock>
+      {`Running collector --test on ⬢ ${collectorAppName(
+        organizationSlug
+      )}... up, run.6337 (Hobby)
+2019/12/18 10:41:10 I [${attUrl}] Testing statistics collection...
+2019/12/18 10:41:12 I [${attUrl}]   Test submission successful (362 KB received, server ...)
+2019/12/18 10:41:12 I [${attUrl}] Testing activity snapshots...
+2019/12/18 10:41:13 I [${attUrl}]   Test submission successful (20.7 KB received, server ...)`}
+    </CodeBlock>
+  );
+};
+
+You can verify that your database has been attached by checking the `heroku config` of the collector application:
+
+<HerokuConfigCommand organizationSlug={props.organizationSlug} />
+
+This will output something like the following:
+
+<HerokuConfigOutput organizationSlug={props.organizationSlug} />
+
+Now, you can verify the configuration by running the test command:
+
+<TestCommand organizationSlug={props.organizationSlug} />
+
+This should output something similar to the following:
+
+<TestOutput organizationSlug={props.organizationSlug} />

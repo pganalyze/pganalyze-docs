@@ -1,0 +1,57 @@
+---
+title: 'Monitoring Postgres EXPLAIN plans'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+import imgVisualization from './visualization.png'
+
+## The Basics
+
+First time looking at **EXPLAIN**, or trying to understand how query plans work?
+
+Start here: **[The Basics of Postgres Query Planning](/docs/explain/basics-of-postgres-query-planning)**
+
+## Postgres Plan Nodes
+
+Understanding the behavior and performance of individual plan nodes (and when Postgres chooses them for a plan) is critical to understanding overall query planning.
+
+Node types can be broadly considered in three categories:
+
+* [Scan nodes](/docs/explain/scan-nodes): Produce rows from underlying table data
+* [Join nodes](/docs/explain/join-nodes): Combine rows from child nodes
+* [Other nodes](/docs/explain/other-nodes): Broad variety of functionality (e.g. aggregation, limiting, grouping, etc)
+
+## Query Plan Visualization
+
+pganalyze includes built-in visualization of query plans, automatically collected from the Postgres logs:
+
+<a href="/postgres-explain">
+<img src={imgVisualization} alt="Plan Visualization Example" />
+</a>
+<br />
+
+## Set up automatic EXPLAIN plan collection
+
+Learn how to **[enable automatic EXPLAIN plan collection](/docs/explain/setup)**.
+
+## pganalyze EXPLAIN Insights
+
+Wondering how you should optimize a particular query?
+
+pganalyze automatically analyzes EXPLAIN plans to find the most important insights:
+
+* **[Disk Sort](/docs/explain/insights/disk-sort)**<br />When a Sort operation spills to disk due to low work_mem settings
+* **[Expensive](/docs/explain/insights/expensive)**<br />When particular nodes are more expensive than others in a plan
+* **[Hash Batches](/docs/explain/insights/hash-batches)**<br />When a Hash operation spilles to disk due to low work_mem settings
+* **[Inefficient Index](/docs/explain/insights/inefficient-index)**<br />When an index is inefficient because it's loading too much data and then filters rows without an index
+* **[I/O Heavy](/docs/explain/insights/io-heavy)**<br />When most plan I/O happens in just a few plan nodes
+* **[Large Offset](/docs/explain/insights/large-offset)**<br />When OFFSET is used for pagination, instead of an efficient method such as keyset-based pagination
+* **[Lossy Bitmaps](/docs/explain/insights/lossy-bitmaps)**<br />Bitmap Heap Scan that utilizes a lossy bitmap due to low work_mem 
+* **[Mis-Estimate](/docs/explain/insights/mis-estimate)**<br />The Postgres planner mis-estimated the number of rows a particular plan node returns
+* **[Slow Scan](/docs/explain/insights/slow-scan)**<br />Sequential Scan that removed a significant number of rows (an index would have helped to avoid this)
+* **[Stale Stats](/docs/explain/insights/stale-stats)**<br />The table referenced has not had an `ANALYZE` run recently (potentially leading to inefficient plans)
+
+<br />
+<div><FeaturePageCTA eventLabel="Docs" title="Automatic Insights into Postgres Query Plans" description="pganalyze automatically gathers the auto_explain output on your behalf from the Postgres logs, so you can easily view the plans for slow queries without extra effort." path="/postgres-explain" /></div>
+<br />

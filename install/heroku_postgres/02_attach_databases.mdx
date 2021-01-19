@@ -1,0 +1,63 @@
+---
+title: 'Step 2: Attach Databases'
+install_track_title: Installation Guide (Heroku Postgres)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import { collectorAppName, attachmentName } from "./util";
+
+export const AddonsAttachCommand = ({ organizationSlug }) => {
+  return (
+    <CodeBlock>
+      heroku addons:attach postgresql-objective-11111 -a{" "}
+      {collectorAppName(organizationSlug)} --as{" "}
+      {attachmentName(organizationSlug)}
+    </CodeBlock>
+  );
+};
+
+export const AddonsAttachOutput = ({ organizationSlug }) => {
+  const appName = collectorAppName(organizationSlug);
+  const attName = attachmentName(organizationSlug);
+  return (
+    <CodeBlock>
+      {`Attaching postgresql-objective-11111 as ${attName} to ⬢ ${appName}... done
+Setting ${attName} config vars and restarting ⬢ ${appName}... done, v9`}
+    </CodeBlock>
+  );
+};
+
+## Find out Heroku Postgres add-on name
+
+First, find out the add-on name if your database - this is not the same as your application name on Heroku.
+
+```
+heroku addons
+```
+
+This will output something like the following:
+
+```
+Owning App                Add-on                        Plan                          Price        State
+────────────────────────  ────────────────────────────  ────────────────────────────  ───────────  ───────
+testapp                   postgresql-objective-11111    heroku-postgresql:hobby-dev   free         created
+```
+
+## Attach database
+
+Now, use that add-on name (`postgresql-objective-11111` in the example) to attach the Heroku Postgres database to the collector.
+
+You can utilize the `--as` parameter to specify an alias for this database, this is in particular useful when you attach multiple databases to the same collector.
+
+<AddonsAttachCommand organizationSlug={props.organizationSlug} />
+
+This will output the following:
+
+<AddonsAttachOutput organizationSlug={props.organizationSlug} />
+
+You can now verify the configuration:
+
+<Link className="btn btn-success" to="03_verify_configuration">
+  Continue to Step 3: Verify configuration
+</Link>

@@ -1,0 +1,45 @@
+---
+title: Collector crashes
+backlink_href: /docs/install/troubleshooting
+backlink_title: 'Installation Troubleshooting'
+---
+
+If you find the collector crashing, the most likely cause is running out of memory. We recommend
+a small instance size by default as that is enough for the typical case, but with a very large
+schema or a large or diverse query workload, that may not be sufficient.
+
+Collector memory may be limited either through available instance memory, or through systemd (if
+your platform uses it).
+
+If you believe the collector is crashing for other reasons, please [contact us](/contact).
+
+## Systemd limits
+
+To avoid impacting other programs on the same instance, the pganalyze collector runs with a memory
+limit of 1024MB by default.
+
+If running out of memory, you may see log messages like the following:
+
+```
+Dec 31 06:20:17 ip-1.compute.internal pganalyze-collector[5568]: I [server1] Submitted snapshot successfully
+Dec 31 06:20:25 ip-1.compute.internal systemd[1]: pganalyze-collector.service: main process exited, code=killed, status=9/KILL
+Dec 31 06:20:25 ip-1.compute.internal systemd[1]: Unit pganalyze-collector.service entered failed state.
+Dec 31 06:20:25 ip-1.compute.internal systemd[1]: pganalyze-collector.service failed.
+```
+
+The best way to resolve that is to define a local override for the limit. Run `systemctl edit pganalyze-collector.service`
+and then enter
+
+```
+[Service]
+MemoryLimit=2048M
+```
+
+(or whatever limit you feel is appropriate) in that file. Then restart the collector with `systemctl restart pganalyze-collector`.
+
+
+## Instance limits
+
+If you are not using systemd or you have increased those limits to available instance memory and
+you are still seeing problems, try running the collector on a larger instance. If that does not
+help, please [contact us](/contact).

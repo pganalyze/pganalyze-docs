@@ -1,0 +1,20 @@
+---
+title: 'Step 2: Install the Collector'
+install_track_title: Installation Guide (Azure Database for PostgreSQL)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+## Downloading the collector container
+
+On a VM of your choice, download the Docker image:
+
+```
+docker pull quay.io/pganalyze/collector:stable
+```
+
+Note that you can't use Google Cloud Run for this, as the collector needs to always be running in the background.
+
+<Link className="btn btn-success" to="03_configure_the_collector_docker">
+  Continue to Step 3: Configure the Collector
+</Link>

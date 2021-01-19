@@ -1,0 +1,59 @@
+---
+title: 'Step 1: Deploy the Collector'
+install_track_title: Installation Guide (Heroku Postgres)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import imgHerokuPaidDyno from "../../images/heroku_paid_dyno.png"
+import { collectorAppName } from "./util";
+
+export const APIKey = ({ apiKey }) => !!apiKey ? <> <code>{apiKey}</code></> : null;
+
+export const HerokuButton = ({ apiKey }) => {
+  let href = 'https://heroku.com/deploy?template=https://github.com/pganalyze/collector'
+  if (apiKey) {
+    href += `&env[PGA_API_KEY]=${props.apiKey}`
+  }
+  return (
+    <p>
+      <a href={href} target="_blank">
+        <img
+          src="https://www.herokucdn.com/deploy/button.svg"
+          alt="Deploy"
+          style={{ border: "none" }}
+        />
+      </a>
+    </p>
+  )
+}
+
+export const CollectorApp = ({ organizationSlug }) => (
+  <code>{collectorAppName(organizationSlug)}</code>
+);
+
+In order to monitor a Heroku Postgres database you need to run the pganalyze
+collector as an app inside your Heroku account. Through Heroku's add-on attachment system you then attach all databases that should be monitored.
+
+## Deploy collector
+
+First, deploy the collector to your own Heroku account with your pganalyze API key<APIKey apiKey={props.apiKey} />:
+
+<HerokuButton apiKey={props.apiKey}/>
+
+Remember the name of the collector app. We assume you called it <CollectorApp organizationSlug={props.organizationSlug} /> for the next step.
+
+## Configure collector to use paid dyno
+
+After the app was created, configure it to use the **paid Hobby dyno** instead of the Free dyno, otherwise the tracking will stop working once the dyno goes idle:
+
+<img
+  style={{ border: "1px solid grey", width: 400 }}
+  src={imgHerokuPaidDyno}
+/>
+
+Now you can continue by attaching your databases:
+
+<Link className="btn btn-success" to="02_attach_databases">
+  Continue to Step 2: Attach databases
+</Link>
