@@ -8,7 +8,25 @@ backlink_title: 'Installation Guide'
 import imgHerokuPaidDyno from "../../images/heroku_paid_dyno.png"
 import { collectorAppName } from "./util";
 
-export const APIKey = ({ apiKey }) => <code>{apiKey}</code>;
+export const APIKey = ({ apiKey }) => !!apiKey ? <> <code>{apiKey}</code></> : null;
+
+export const HerokuButton = ({ apiKey }) => {
+  let href = 'https://heroku.com/deploy?template=https://github.com/pganalyze/collector'
+  if (apiKey) {
+    href += `&env[PGA_API_KEY]=${props.apiKey}`
+  }
+  return (
+    <p>
+      <a href={href} target="_blank">
+        <img
+          src="https://www.herokucdn.com/deploy/button.svg"
+          alt="Deploy"
+          style={{ border: "none" }}
+        />
+      </a>
+    </p>
+  )
+}
 
 export const CollectorApp = ({ organizationSlug }) => (
   <code>{collectorAppName(organizationSlug)}</code>
@@ -19,20 +37,9 @@ collector as an app inside your Heroku account. Through Heroku's add-on attachme
 
 ## Deploy collector
 
-First, deploy the collector to your own Heroku account with your pganalyze API key <APIKey apiKey={props.apiKey} />:
+First, deploy the collector to your own Heroku account with your pganalyze API key<APIKey apiKey={props.apiKey} />:
 
-<p>
-  <a
-    href={`https://heroku.com/deploy?template=https://github.com/pganalyze/collector&env[PGA_API_KEY]=${props.apiKey}`}
-    target="_blank"
-  >
-    <img
-      src="https://www.herokucdn.com/deploy/button.svg"
-      alt="Deploy"
-      style={{ border: "none" }}
-    />
-  </a>
-</p>
+<HerokuButton apiKey={props.apiKey}/>
 
 Remember the name of the collector app. We assume you called it <CollectorApp organizationSlug={props.organizationSlug} /> for the next step.
 
