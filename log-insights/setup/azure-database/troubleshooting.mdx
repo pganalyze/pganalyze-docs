@@ -1,0 +1,35 @@
+---
+title: 'Troubleshooting'
+install_track_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
+backlink_href: /docs/log-insights/setup/azure-database
+backlink_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
+---
+
+### Error: "Could not get logs through Azure Event Hub: Timeout"
+
+This error can occur when you went quickly through the steps, and the Postgres database
+server has not been able to deliver a message yet to the Event Hub. There is a delay of
+2-5 minutes for log messages to reach the Event Hub.
+
+We recommend waiting 5 minutes, and then retrying. You can verify whether the Event Hub
+has received any messages by navigating to it in the Azure Portal.
+
+If this error persists, verify that you've configured the diagnostic setting in Step 3 correctly.
+
+### Error: "status code 401 and description: Attempted to perform an unauthorized operation."
+
+This occurs when the collector can't access the Azure Event Hub API.
+
+Review whether you have followed Step 1 correctly for Managed Identity, or have setup
+the Azure AD application as documented below.
+
+### Error: "failed to configure Azure AD JWT provider"
+
+This error occurs when there is no authentication configured - when using Managed Identity,
+verify that you have actually assigned the identity to your VM.
+
+### Error: "failed to connect to the Event Hub management node"
+
+Double check your Event Hub namespace and Event Hub name that you have configured in Step 4.
+
+
