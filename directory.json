@@ -336,9 +336,17 @@
       "title": "Step 3: Verify Configuration",
       "path": "/docs/install/heroku_postgres/03_verify_configuration"
     },
+    "install/self_managed/00_choose_setup_method": {
+      "title": "Step 0: Choose Setup Method",
+      "path": "/docs/install/self_managed/00_choose_setup_method"
+    },
     "install/self_managed/01_create_monitoring_user": {
       "title": "Step 1: Create Monitoring User",
       "path": "/docs/install/self_managed/01_create_monitoring_user"
+    },
+    "install/self_managed/01_guided_setup": {
+      "title": "Step 1: Guided Setup",
+      "path": "/docs/install/self_managed/01_guided_setup"
     },
     "install/self_managed/02_enable_pg_stat_statements": {
       "title": "Step 2: Enable pg_stat_statements",

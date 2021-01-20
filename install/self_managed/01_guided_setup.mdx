@@ -1,0 +1,49 @@
+---
+title: 'Step 1: Guided Setup'
+install_track_title: Installation Guide (Self-Managed)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import CollectorPkgInstallInstructions from '../../components/CollectorPkgInstallInstructions'
+
+To begin guided setup, you'll need to install the collector, which sends statistics information
+and query activity to pganalyze.
+
+First, you need to know which version of Ubuntu/Debian you are running. You can find out with this command:
+
+```
+lsb_release -a
+```
+
+Note that guided setup is supported for Ubuntu 14.04 or newer or Debian 10 or newer. If you are
+running an older version, please follow the manual setup instructions.
+
+If your OS distribution is supported, run the appropriate commands for your version:
+
+<CollectorPkgInstallInstructions kind='deb' />
+
+These repositories are updated by pganalyze whenever a new stable version of the
+collector is released.
+
+Now check to ensure the installed collector version supports guided setup:
+
+```
+pganalyze-collector --version
+```
+
+Guided setup is supported starting in version 0.36.
+
+You'll need to run guided setup as root or using sudo:
+
+```
+sudo pganalyze-collector-setup
+```
+
+You'll be shown additional instructions, and prompted to confirm any changes to your system.
+<PublicOnly>
+  Once finished, check the <a href='https://app.pganalyze.com'>pganalyze app</a> to continue.
+</PublicOnly>
+<InAppOnly>
+  Once finished, check back here to continue.
+</InAppOnly>
