@@ -1,0 +1,20 @@
+---
+title: 'Step 3: Reload Collector'
+install_track_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+backlink_href: /docs/log-insights/setup/amazon-rds
+backlink_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+---
+
+In order to make this change permanent, reload the collector:
+
+```
+pganalyze-collector --reload
+```
+
+You will then see Log Insights data on your database within a few minutes:
+
+![](../log_insights_screenshot.png)
+
+We recommend that you also
+[tune a few configuration parameters](/docs/log-insights/setup/tuning-log-config-settings)
+to get useful log output from Postgres.

@@ -1,0 +1,37 @@
+---
+title: 'Step 2: Test Log Download'
+install_track_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+backlink_href: /docs/log-insights/setup/amazon-rds
+backlink_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+---
+
+Now you can test whether the collector can actually access your RDS logs correctly,
+by running the following:
+
+```
+pganalyze-collector --test
+```
+
+If this works correctly you will see output like this:
+
+```
+I [server1] Testing statistics collection...
+I [server1]   Test submission successful (106 KB received, server abc123)
+I [server1] Testing activity snapshots...
+I [server1]   Test submission successful (2.12 KB received, server abc123)
+I [server1] Testing log collection (Amazon RDS)...
+I [server1]   Test submission successful (86 Bytes received, server abc123)
+I [server1]   Log test successful
+```
+
+If you are getting an error, it sometimes helps to run the test with the `-v` flag to show all details:
+
+```
+pganalyze-collector --test -v
+```
+
+In case you get permission errors, make sure your IAM user has the [appropriate policy associated](/docs/install/amazon_rds/03_setup_iam_policy).
+
+<Link className="btn btn-success" to="03_reload_collector">
+  Continue to Step 3: Reload the collector
+</Link>

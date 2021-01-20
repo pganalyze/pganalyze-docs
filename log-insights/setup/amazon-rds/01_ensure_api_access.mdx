@@ -1,0 +1,32 @@
+---
+title: 'Step 1: Ensure API Access'
+install_track_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+backlink_href: /docs/log-insights/setup/amazon-rds
+backlink_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+---
+
+The collector will only collect log data when you have an Amazon RDS host name specified (the instance name is auto-detected),
+or you manually specify the `aws_db_instance_id` and `aws_region` settings.
+
+In addition, you need to ensure that AWS APIs can be accessed either by using the EC2 metadata service, or by manually specifying
+the `aws_access_key_id` and `aws_secret_access_key` settings. A complete configuration with all settings looks like this:
+
+```
+[pganalyze]
+api_key: your_api_key
+
+[server1]
+db_name: mydb
+db_username: myusername
+db_password: mypassword
+db_host: mydb.abc123.us-west-1.rds.amazonaws.com
+db_port: 5432
+aws_db_instance_id: your_rds_instance
+aws_region: us-west-2
+aws_access_key_id: mykey
+aws_secret_access_key: mysecret
+```
+
+<Link className="btn btn-success" to="02_test_log_download">
+  Continue to Step 2: Test log download
+</Link>
