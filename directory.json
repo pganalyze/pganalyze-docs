@@ -425,8 +425,20 @@
       "path": "/docs/log-insights/setup/google-cloud-sql"
     },
     "log-insights/setup/heroku-postgres": {
-      "title": "Log Insights: Install on Heroku Postgres",
+      "title": "Log Insights: Setup (Heroku Postgres)",
       "path": "/docs/log-insights/setup/heroku-postgres"
+    },
+    "log-insights/setup/heroku-postgres/01_add_log_drain": {
+      "title": "Step 1: Add Log Drain",
+      "path": "/docs/log-insights/setup/heroku-postgres/01_add_log_drain"
+    },
+    "log-insights/setup/heroku-postgres/02_verify_log_drain": {
+      "title": "Step 2: Verify Log Drain",
+      "path": "/docs/log-insights/setup/heroku-postgres/02_verify_log_drain"
+    },
+    "log-insights/setup/heroku-postgres/03_restart_collector": {
+      "title": "Step 3: Restart Collector",
+      "path": "/docs/log-insights/setup/heroku-postgres/03_restart_collector"
     },
     "log-insights/setup/self-managed": {
       "title": "Log Insights: Install on Self-Managed Server",

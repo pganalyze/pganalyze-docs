@@ -1,0 +1,39 @@
+---
+title: 'Step 3: Restart Collector'
+install_track_title: 'Log Insights: Setup (Heroku Postgres)'
+backlink_href: /docs/log-insights/setup/heroku-postgres
+backlink_title: 'Log Insights: Setup (Heroku Postgres)'
+---
+
+To finish, restart the collector app:
+
+```bash
+heroku restart -a testapp-pganalyze-collector
+```
+
+Afterwards, check the app logs again.
+
+```bash
+heroku logs -a testapp-pganalyze-collector -t
+```
+
+If the collector was able to match the log data to the correct database, you will see a log line like this after about a minute:
+
+```
+2018-05-20T21:22:19.854980+00:00 app[web.1]: I [TESTAPP_URL] Submitted compact logs snapshot successfully
+```
+
+And then when you check the pganalyze interface, you will see Log Insights data:
+
+![](log_insights.png)
+
+Note that on Heroku Postgres you have [limited configuration options](https://devcenter.heroku.com/articles/heroku-postgres-settings),
+but you may want to review the defaults of:
+
+```
+log_min_duration_statement = 2000
+log_lock_waits = on
+log_statement = ddl
+```
+
+You can see details on what these settings do in our [tuning guide](/docs/log-insights/setup/tuning-log-config-settings).

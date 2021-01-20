@@ -1,0 +1,21 @@
+---
+title: 'Step 2: Verify Log Drain'
+install_track_title: 'Log Insights: Setup (Heroku Postgres)'
+backlink_href: /docs/log-insights/setup/heroku-postgres
+backlink_title: 'Log Insights: Setup (Heroku Postgres)'
+---
+
+First you can verify whether the log drain data is coming by looking at the router
+logs of the collector app:
+
+```bash
+heroku logs -a testapp-pganalyze-collector
+```
+
+```
+2018-05-20T21:20:40.993026+00:00 heroku[router]: at=info method=POST path="/logs/TESTAPP_URL" host=testapp-pganalyze-collector.herokuapp.com request_id=564088b7-05a9-4def-8aa0-3861b25f9334 fwd="55.22.33.44" dyno=web.1 connect=0ms service=0ms status=200 bytes=135 protocol=https
+```
+
+<Link className="btn btn-success" to="03_restart_collector">
+  Continue to Step 2: Restart collector
+</Link>
