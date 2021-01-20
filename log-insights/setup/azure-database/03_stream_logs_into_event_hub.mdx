@@ -1,0 +1,19 @@
+---
+title: 'Step 3: Stream Postgres Logs into Azure Event Hub'
+install_track_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
+backlink_href: /docs/log-insights/setup/azure-database
+backlink_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
+---
+
+To send logs to the Event Hub, within your database server, go to Diagnostic settings, and add a new diagnostic setting:
+
+* **Category Details:** Select "PostgreSQLLogs" under "log"
+* **Destination Details:** Select "Stream to an event hub", and then select your Event Hub Namespace and Event Hub Name
+
+![Screenshot of adding PostgreSQL Diagnostic Setting in Azure Portal](add-diagnostic-setting.png)
+
+Save the new diagnostic setting. Now your Event Hub should be receiving Postgres log messages.
+
+<Link className="btn btn-success" to="04_adjust_log_line_prefix">
+  Continue to Step 4: Adjust your Postgres log_line_prefix
+</Link>

@@ -429,8 +429,32 @@
       "path": "/docs/log-insights/setup/amazon-rds/03_reload_collector"
     },
     "log-insights/setup/azure-database": {
-      "title": "Log Insights: Install on Azure Database for PostgreSQL",
+      "title": "Log Insights: Setup (Azure Database for PostgreSQL)",
       "path": "/docs/log-insights/setup/azure-database"
+    },
+    "log-insights/setup/azure-database/01_set_up_managed_identity": {
+      "title": "Step 1: Set up Managed Identity",
+      "path": "/docs/log-insights/setup/azure-database/01_set_up_managed_identity"
+    },
+    "log-insights/setup/azure-database/02_set_up_azure_event_hub": {
+      "title": "Step 2: Set up Azure Event Hub",
+      "path": "/docs/log-insights/setup/azure-database/02_set_up_azure_event_hub"
+    },
+    "log-insights/setup/azure-database/03_stream_logs_into_event_hub": {
+      "title": "Step 3: Stream Postgres Logs into Azure Event Hub",
+      "path": "/docs/log-insights/setup/azure-database/03_stream_logs_into_event_hub"
+    },
+    "log-insights/setup/azure-database/04_adjust_log_line_prefix": {
+      "title": "Step 4: Adjust Postgres log_line_prefix",
+      "path": "/docs/log-insights/setup/azure-database/04_adjust_log_line_prefix"
+    },
+    "log-insights/setup/azure-database/05_configure_collector": {
+      "title": "Step 5: Configure Collector",
+      "path": "/docs/log-insights/setup/azure-database/05_configure_collector"
+    },
+    "log-insights/setup/azure-database/troubleshooting": {
+      "title": "Troubleshooting",
+      "path": "/docs/log-insights/setup/azure-database/troubleshooting"
     },
     "log-insights/setup/google-cloud-sql": {
       "title": "Log Insights: Install on Google Cloud SQL",
