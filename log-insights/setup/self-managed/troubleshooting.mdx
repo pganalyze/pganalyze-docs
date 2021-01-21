@@ -1,0 +1,63 @@
+---
+title: 'Troubleshooting'
+install_track_title: 'Log Insights: Setup (Self-Managed)'
+backlink_href: /docs/log-insights/setup/self-managed
+backlink_title: 'Log Insights: Setup (Self-Managed)'
+---
+
+### Collector test error: "log\_line\_prefix not supported"
+
+When you see output like this:
+
+```
+2018/05/20 19:56:18 I [server1] Testing statistics collection...
+2018/05/20 19:56:20 I [server1] Test submission successful (15.9 KB received)
+2018/05/20 19:56:20 I [server1] Testing local log tailing...
+2018/05/20 19:56:20 E [server1] ERROR - Could not tail logs for server: Unsupported log_line_prefix setting: '%t '
+```
+
+It means that the currently configured `log_line_prefix` is not supported by the collector. You need to change your PostgreSQL configuration, reload the Postgres server, and then re-run `pganalyze-collector --test`.
+
+Currently we support the following log\_line\_prefix settings when using Postgres built-in logging (`log_destination = stderr`):
+
+* **`log_line_prefix = '%m [%p] %q[user=%u,db=%d,app=%a] '`** (recommended)
+* `log_line_prefix = '%m [%p] %q[user=%u,db=%d,app=%a,host=%h] '`
+* `log_line_prefix = '%t:%r:%u@%d:[%p]:'`
+* `log_line_prefix = '%t [%p-%l] %q%u@%d '`
+* `log_line_prefix = '%t [%p]: [%l-1] user=%u,db=%d - PG-%e '`
+* `log_line_prefix = '%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '`
+* `log_line_prefix = '%t [%p]: [%l-1] [trx_id=%x] user=%u,db=%d '`
+
+The following are supported but not recommended, since they do not include the user name and database name:
+
+* `log_line_prefix = '%m %r %u %a [%c] [%p] '`
+* `log_line_prefix = '%m [%p][%v] : [%l-1] %q[app=%a] '`
+* `log_line_prefix = '%m [%p] '`
+
+We also support the parsing of `rsyslogd` log lines that look like the following default template, with an empty log\_line\_prefix:
+
+```
+Feb  2 09:04:39 ip-172-31-14-41 postgres[7395]: [3-1] LOG:  database system is ready to accept connections
+```
+
+If you have a log\_line\_prefix config thats not covered, please reach out to us, as it is easy for us to add additional parsing support.
+
+### Collector test error: "permission denied"
+
+When you see output like this:
+
+```
+2018/05/05 21:32:02 I [server1] Testing statistics collection...
+2018/05/05 21:32:03 I [server1] Test submission successful (15.9 KB received)
+2018/05/05 21:32:03 I [server1] Testing local log tailing...
+2018/05/05 21:32:09 I [server1] Log test successful
+2018/05/05 21:32:09 I Re-running log test with reduced privileges of "pganalyze" user (uid = 107, gid = 113)
+2018/05/05 21:32:09 I [server1] Testing local log tailing...
+2018/05/05 21:32:09 E [server1] ERROR - open /var/log/postgresql/postgresql-9.3-main.log: permission denied
+2018/05/05 21:32:19 E [server1] ERROR - Could not tail logs for server: Timeout
+```
+
+It means that the log test was able to run successfully as a root user, but could not be completed when testing with the "pganalyze" user that the collector background process runs as.
+
+See "Allowing access when using Postgres built-in logging" or "Allowing access when using rsyslogd built-in logging" below for details on how to fix this.
+

@@ -1,0 +1,20 @@
+---
+title: 'Step 3: Restart collector'
+install_track_title: 'Log Insights: Setup (Self-Managed)'
+backlink_href: /docs/log-insights/setup/self-managed
+backlink_title: 'Log Insights: Setup (Self-Managed)'
+---
+
+Once the log test is successful you need to restart the collector for the new configuration to take effect.
+The command to restart the collector will depend on the platform you're running on (and you may need to
+run as root or use sudo if available):
+
+ * on systemd-based systems: systemctl restart pganalyze-collector
+ * on upstart-based systems: restart pganalyze-collector
+ * on sysvinit-based systems: service pganalyze-collector restart
+
+(If you're not sure what type of system you're running on, you are most likely using systemd.)
+
+After this you should see data showing up in the "Log Insights" tab in pganalyze in less than a minute:
+
+![](../log_insights_screenshot.png)
