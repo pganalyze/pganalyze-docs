@@ -457,8 +457,28 @@
       "path": "/docs/log-insights/setup/azure-database/troubleshooting"
     },
     "log-insights/setup/google-cloud-sql": {
-      "title": "Log Insights: Install on Google Cloud SQL",
+      "title": "Log Insights: Setup (Google Cloud SQL)",
       "path": "/docs/log-insights/setup/google-cloud-sql"
+    },
+    "log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber": {
+      "title": "Step 1: Create Topic and Subscriber",
+      "path": "/docs/log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber"
+    },
+    "log-insights/setup/google-cloud-sql/02_configure_log_routing": {
+      "title": "Step 2: Configure Log Routing",
+      "path": "/docs/log-insights/setup/google-cloud-sql/02_configure_log_routing"
+    },
+    "log-insights/setup/google-cloud-sql/03_set_up_service_account": {
+      "title": "Step 3: Set Up Service Account",
+      "path": "/docs/log-insights/setup/google-cloud-sql/03_set_up_service_account"
+    },
+    "log-insights/setup/google-cloud-sql/04_configure_collector": {
+      "title": "Step 4: Configure Collector",
+      "path": "/docs/log-insights/setup/google-cloud-sql/04_configure_collector"
+    },
+    "log-insights/setup/google-cloud-sql/troubleshooting": {
+      "title": "Troubleshooting",
+      "path": "/docs/log-insights/setup/google-cloud-sql/troubleshooting"
     },
     "log-insights/setup/heroku-postgres": {
       "title": "Log Insights: Setup (Heroku Postgres)",

@@ -1,0 +1,23 @@
+---
+title: 'Step 1: Create Topic and Subscriber'
+install_track_title: 'Log Insights: Setup (Google Cloud SQL)'
+backlink_href: /docs/log-insights/setup/google-cloud-sql
+backlink_title: 'Log Insights: Setup (Google Cloud SQL)'
+---
+
+In the Google Cloud Console, navigate to "Pub/Sub" and create a new Topic, e.g. calling it "postgres-logs".
+
+Next, create a Pub/Sub subscriber, with the following settings:
+
+* **Subscription ID:** Name of your choice (e.g. "pganalyze-collector")
+* **Cloud Pub/Sub topic:** Select the topic you just created
+* **Delivery type:** Pull
+* **Subscription expiration:** Leave at default (expire after 31 days)
+* **Message retention duration:** 1 day
+* **Retry policy:** Retry immediately
+
+You now have the Pub/Sub topic and subscriber that can receive the Postgres log messages.
+
+<Link className="btn btn-success" to="02_configure_log_routing">
+  Continue to Step 2: Configure log routing for the database instance
+</Link>
