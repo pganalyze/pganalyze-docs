@@ -497,8 +497,24 @@
       "path": "/docs/log-insights/setup/heroku-postgres/03_restart_collector"
     },
     "log-insights/setup/self-managed": {
-      "title": "Log Insights: Install on Self-Managed Server",
+      "title": "Log Insights: Setup (Self-Managed Server)",
       "path": "/docs/log-insights/setup/self-managed"
+    },
+    "log-insights/setup/self-managed/01_determine_log_location": {
+      "title": "Step 1: Determine Log Location",
+      "path": "/docs/log-insights/setup/self-managed/01_determine_log_location"
+    },
+    "log-insights/setup/self-managed/02_configure_collector": {
+      "title": "Step 2: Configure Collector",
+      "path": "/docs/log-insights/setup/self-managed/02_configure_collector"
+    },
+    "log-insights/setup/self-managed/03_restart_collector": {
+      "title": "Step 3: Restart collector",
+      "path": "/docs/log-insights/setup/self-managed/03_restart_collector"
+    },
+    "log-insights/setup/self-managed/troubleshooting": {
+      "title": "Troubleshooting",
+      "path": "/docs/log-insights/setup/self-managed/troubleshooting"
     },
     "log-insights/setup/tuning-log-config-settings": {
       "title": "Log Insights: Tuning Log Config Settings",
