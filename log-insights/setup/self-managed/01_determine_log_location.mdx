@@ -35,7 +35,7 @@ Note that both individual files and directories are supported for `db_log_locati
 <br />
 <br />
 
-### Allowing access when using Postgres built-in logging
+## Allowing access when using Postgres built-in logging
 
 In the case of built-in Postgres logging you may run into the issue that
 log files are by default written in a way that prevents users other than the
@@ -68,7 +68,7 @@ log_file_mode = 0640
 Reload Postgres afterwards, as well as **restart** the collector background process, and then re-run the permission
 test as described in Step 2.
 
-### Allowing access when using rsyslogd built-in logging
+## Allowing access when using rsyslogd built-in logging
 
 For rsyslogd and other syslog daemons, the issue can often be that new log files
 are created with permissions that don't allow the pganalyze user access.
