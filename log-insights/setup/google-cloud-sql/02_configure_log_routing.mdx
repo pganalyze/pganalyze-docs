@@ -5,13 +5,15 @@ backlink_href: /docs/log-insights/setup/google-cloud-sql
 backlink_title: 'Log Insights: Setup (Google Cloud SQL)'
 ---
 
+import imgCreateLogSink from './create-log-sink.png'
+
 Navigate to your Cloud SQL database instance, click on "View PostgreSQL error logs", and then click on "Logs Router".
 
 Click "Create Sink", and select your Pub/Sub topic. Make sure that the left side is actually
 showing PostgreSQL logs (as it does in this screenshot), and that you don't have a different
 type of resource selected:
 
-![Screenshot of creating a log sink in Google Cloud Console](create-log-sink.png)
+<img src={imgCreateLogSink} alt="Screenshot of creating a log sink in Google Cloud Console" />
 
 Now we need to create a service account that can access the logs sent to the Pub/Sub topic.
 

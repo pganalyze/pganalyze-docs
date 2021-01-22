@@ -5,6 +5,8 @@ backlink_href: /docs/log-insights/setup/self-managed
 backlink_title: 'Log Insights: Setup (Self-Managed)'
 ---
 
+import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
+
 Once the log test is successful you need to restart the collector for the new configuration to take effect.
 The command to restart the collector will depend on the platform you're running on (and you may need to
 run as root or use sudo if available):
@@ -17,4 +19,4 @@ run as root or use sudo if available):
 
 After this you should see data showing up in the "Log Insights" tab in pganalyze in less than a minute:
 
-![](../log_insights_screenshot.png)
+<img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />

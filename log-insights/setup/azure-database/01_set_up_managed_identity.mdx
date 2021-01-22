@@ -5,11 +5,13 @@ backlink_href: /docs/log-insights/setup/azure-database
 backlink_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
 ---
 
+import imgManagedIdentityVMAssignment from './managed-identity-vm-assignment.png'
+
 To start, we need [create a new user-assigned Managed Identity](https://portal.azure.com/#create/Microsoft.ManagedIdentity) through the Azure Portal.
 
 After the Managed Identity is created, assign it to your virtual machine:
 
-![Screenshot of Virtual Machine Identity configuration in Azure Portal](managed-identity-vm-assignment.png)
+<img src={imgManagedIdentityVMAssignment} alt="Screenshot of Virtual Machine Identity configuration in Azure Portal" />
 
 Now the pganalyze collector running inside the virtual machine will be able to call Azure REST APIs using the Managed Identity.
 
