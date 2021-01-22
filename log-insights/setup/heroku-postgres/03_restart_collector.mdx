@@ -5,6 +5,8 @@ backlink_href: /docs/log-insights/setup/heroku-postgres
 backlink_title: 'Log Insights: Setup (Heroku Postgres)'
 ---
 
+import imgLogInsights from './log_insights.png'
+
 To finish, restart the collector app:
 
 ```bash
@@ -25,7 +27,7 @@ If the collector was able to match the log data to the correct database, you wil
 
 And then when you check the pganalyze interface, you will see Log Insights data:
 
-![](log_insights.png)
+<img src={imgLogInsights} alt='Screenshot of pganalyze Log Insights feature' />
 
 Note that on Heroku Postgres you have [limited configuration options](https://devcenter.heroku.com/articles/heroku-postgres-settings),
 but you may want to review the defaults of:
