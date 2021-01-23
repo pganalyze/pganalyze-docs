@@ -6,7 +6,7 @@ backlink_title: 'Set up automatic EXPLAIN plan collection'
 
 import ToC from '../../../components/Toc'
 
-EXPLAIN plans are essential to understand why exactly a query is slow. We generally recommend using [auto_explain](/docs/explain/setup/auto_explain) to collect EXPLAIN plans automatically.
+We generally recommend using [auto_explain](/docs/explain/setup/auto_explain) to collect EXPLAIN plans automatically.
 
 However, not all environments support the `auto_explain` extension (bundled with Postgres), and therefore we support an alternative mechanism.
 
@@ -30,7 +30,10 @@ Note the Log-based EXPLAIN method has the following limitations:
 * The collector only runs EXPLAIN, not EXPLAIN ANALYZE (to avoid any performance impact)
 * Execution metrics, such as I/O time and Buffer counts are not captured
 * The pganalyze monitoring user needs to have sufficient permissions to run EXPLAIN on the query
-* Statements involving temporary tables are not supported
+* Plans for some queries may not be attainable due to
+  * use of temporary tables
+  * query parameter handling limitations
+  * differences in `search_path` or other configuration settings
 
 ## Setup steps
 

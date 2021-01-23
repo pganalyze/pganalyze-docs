@@ -4,6 +4,12 @@ backlink_href: /docs/explain
 backlink_title: 'Documentation: EXPLAIN - Overview'
 ---
 
+EXPLAIN plans are essential to understanding why exactly a query is slow. SQL is a declarative language,
+but to get query results, the Postgres executor performs a series of steps determined by the query planner.
+The EXPLAIN command gives you access to those query plans, allowing you to diagnose and optimize performance
+problems. The pganalyze Automated EXPLAIN feature gives you easy access to these query plans, and adds
+EXPLAIN insights to help you interpret the raw plan information.
+
 ### Pre-requisites
 
 * Automatic explain plan collection requires [Log Insights](/docs/log-insights) to be set up successfully
