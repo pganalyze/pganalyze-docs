@@ -4,13 +4,9 @@ backlink_href: /docs/explain/setup
 backlink_title: 'Set up automatic EXPLAIN plan collection'
 ---
 
-import ToC from '../../../components/Toc'
-
 We generally recommend using [auto_explain](/docs/explain/setup/auto_explain) to collect EXPLAIN plans automatically.
 
 However, not all environments support the `auto_explain` extension (bundled with Postgres), and therefore we support an alternative mechanism.
-
-<ToC items={props.toc} />
 
 ## How Log-based EXPLAIN works
 
@@ -35,51 +31,12 @@ Note the Log-based EXPLAIN method has the following limitations:
   * query parameter handling limitations
   * differences in `search_path` or other configuration settings
 
-## Setup steps
-
-### Pre-requisites
+## Pre-requisites
 
 * You have a working [Log Insights integration](/docs/log-insights) that is showing data in the pganalyze UI
 
-### Step 1: Enabling log-based EXPLAIN
+## Setup steps
 
-Enabling log-based EXPLAIN only requires adding the following configuration setting to your collector:
-
-```
-enable_log_explain: 1
-```
-
-When using the Docker container, instead use `PGA_ENABLE_LOG_EXPLAIN=1` as an environment variable setting.
-
-Afterwards make sure to reload the pganalyze collector, so the setting takes effect:
-
-```
-sudo pganalyze-collector --test --reload
-```
-
-### Step 2: Create helper functions
-
-In order to use log-based EXPLAIN, the collector needs permissions to run EXPLAIN queries on your database.
-The safest way to permit this is to use the [helper function we provide](https://github.com/pganalyze/collector/#setting-up-log-explain-helper).
-Because EXPLAIN needs to run in the same database where the query ran, you will need to create this function
-in each database you want to monitor.
-
-### Step 3: Testing the configuration
-
-To test the configuration, we recommend running a `pg_sleep` statement that exceeds the `log_min_duration_statement` threshold:
-
-```
-SELECT pg_sleep(5);
-```
-
-Assuming the collector is running in the background, after a few minutes you should then see an EXPLAIN plan show up in the pganalyze EXPLAIN plan list:
-
-![Screenshot of EXPLAIN list in pganalyze](log-explain-overview.png)
-
-When you go to the details, you will find the corresponding plan:
-
-![Screenshot of EXPLAIN plan in pganalyze](log-explain-details.png)
-
-From now on, you will now get EXPLAIN plans automatically in the pganalyze UI, for all your slow queries.
-
-[Learn more about how pganalyze works with EXPLAIN data.](/docs/explain)
+ * [Step 1: Enabling log-based EXPLAIN](/docs/explain/setup/log_explain/01_enable_log_based_explain)
+ * [Step 2: Create helper functions](/docs/explain/setup/log_explain/02_create_helper_functions)
+ * [Step 3: Testing the configuration](/docs/explain/setup/log_explain/03_testing_the_configuration)

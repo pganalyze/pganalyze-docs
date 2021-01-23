@@ -204,6 +204,18 @@
       "title": "Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres",
       "path": "/docs/explain/setup/log_explain"
     },
+    "explain/setup/log_explain/01_enable_log_based_explain": {
+      "title": "Step 1: Enable log-based EXPLAIN",
+      "path": "/docs/explain/setup/log_explain/01_enable_log_based_explain"
+    },
+    "explain/setup/log_explain/02_create_helper_functions": {
+      "title": "Step 2: Create helper functions",
+      "path": "/docs/explain/setup/log_explain/02_create_helper_functions"
+    },
+    "explain/setup/log_explain/03_testing_the_configuration": {
+      "title": "Step 3: Testing the configuration",
+      "path": "/docs/explain/setup/log_explain/03_testing_the_configuration"
+    },
     "guides": {
       "title": "Guides",
       "path": "/docs/guides"

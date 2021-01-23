@@ -1,0 +1,27 @@
+---
+title: 'Step 3: Testing the configuration'
+install_track_title: 'Automated EXPLAIN: Setup (log-based)'
+backlink_href: /docs/explain/setup/log_explain
+backlink_title: 'Automated EXPLAIN: Setup (log-based)'
+---
+
+import imgLogExplainOverview from './log-explain-overview.png'
+import imgLogExplainDetails from './log-explain-details.png'
+
+To test the configuration, we recommend running a `pg_sleep` statement that exceeds the `log_min_duration_statement` threshold:
+
+```
+SELECT pg_sleep(5);
+```
+
+Assuming the collector is running in the background, after a few minutes you should then see an EXPLAIN plan show up in the pganalyze EXPLAIN plan list:
+
+<img src={imgLogExplainOverview} alt="Screenshot of EXPLAIN list in pganalyze" />
+
+When you go to the details, you will find the corresponding plan:
+
+<img src={imgLogExplainDetails} alt="Screenshot of EXPLAIN plan in pganalyze" />
+
+From now on, you will now get EXPLAIN plans automatically in the pganalyze UI, for all your slow queries.
+
+[Learn more about how pganalyze works with EXPLAIN data.](https://pganalyze.com/docs/explain)
