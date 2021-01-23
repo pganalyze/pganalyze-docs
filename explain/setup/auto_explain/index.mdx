@@ -4,103 +4,16 @@ backlink_href: /docs/explain/setup
 backlink_title: 'Set up automatic EXPLAIN plan collection'
 ---
 
-import ToC from '../../../components/Toc'
-
 The Postgres `auto_explain` module can automatically log EXPLAIN information about queries that
 meet certain criteria (usually, exceeding an execution time threshold). We support extraction of
 EXPLAIN plans from `auto_explain` log output.
 
-<ToC items={props.toc} />
-
-## Setup steps
-
-### Pre-requisites
+## Pre-requisites
 
 * You have a working [Log Insights integration](/docs/log-insights) that is showing data in the pganalyze UI
 
-### Step 1: Enabling auto_explain
+## Setup steps
 
-First, connect to your database as a Postgres superuser, and ensure `auto_explain` is available.
-
-```
-LOAD 'auto_explain';
-```
-
-The only expected output is an echo of the "LOAD" command. Then, check the `shared_preload_libraries` setting:
-
-```
-SHOW shared_preload_libraries;
-```
-
-If it already includes `auto_explain`, you can proceed to the [Step 3](#step-3-configure-auto_explain). If not, note that **you will need
-to restart Postgres to enable auto_explain**. If you are not ready to do that, stop before making any configuration
-changes.
-
-The `shared_preload_libraries` setting likely includes `pg_stat_statements` and may include other libraries.
-Append `auto_explain` to the end of the list and run a statement like the following:
-
-```
-ALTER SYSTEM SET shared_preload_libraries = pg_stat_statements, auto_explain;
-```
-
-Make sure you include all your existing `shared_preload_libraries` in the new list or you may disable some critical
-functionality.
-
-
-### Step 2: Restart Postgres
-
-Postgres must be restarted for the `shared_preload_libraries` changes to take effect. If you are not ready to restart
-your database, return to Step 1 and run `ALTER SYSTEM` to restore your `shared_preload_libraries` setting to its
-previous value before abandoning setup.
-
-The command to restart Postgres will vary based on your environment (you will need to run the command as root or use sudo):
-
- * on systemd-based systems: systemctl restart postgresql
- * on upstart-based systems: restart postgresql
- * on sysvinit-based systems: service postgresql restart
-
-Once Postgres restarts, verify that the change took effect:
-
-```
-SHOW shared_preload_libraries;
-```
-
-This output should now include `auto_explain`.
-
-
-### Step 3: Configure auto_explain
-
-The auto_explain module offers extensive customizability to help you collect the plans
-for queries causing problems for your system while minimizing the overhead of `auto_explain` itself.
-Please review the [auto_explain documentation](https://www.postgresql.org/docs/current/static/auto-explain.html)
-carefully to see what makes sense for your system.
-
-We've had good experience with a configuration like this, which will log the
-EXPLAIN output for every query slower than 1s:
-
-```
-auto_explain.log_analyze = 1
-auto_explain.log_buffers = 1
-auto_explain.log_timing = 0
-auto_explain.log_triggers = 1
-auto_explain.log_verbose = 1
-auto_explain.log_format = json
-auto_explain.log_min_duration = 1000
-auto_explain.log_nested_statements = 1
-auto_explain.sample_rate = 1
-```
-
-The important detail here is that `auto_explain.log_timing` is turned off, as this will have a
-significant negative performance impact on query execution.
-
-You may also want to turn off `auto_explain.log_analyze` if you see increased CPU utilization after enabling `auto_explain`.
-
-You will need to reload the Postgres configuration for changes to these settings to take effect:
-
-```
-SELECT pg_reload_conf()
-```
-
-EXPLAIN plans are visualized on the associated query detail page, and include **[EXPLAIN insights](/docs/explain)**:
-
-![](query_details_explain_plan.png)
+ * [Step 1: Enable auto_explain](/docs/explain/setup/auto_explain/01_enable_auto_explain)
+ * [Step 2: Restart Postgres](/docs/explain/setup/auto_explain/02_restart_postgres)
+ * [Step 3: Configure auto_explain](/docs/explain/setup/auto_explain/03_configure_auto_explain)

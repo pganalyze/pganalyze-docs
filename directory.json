@@ -188,6 +188,18 @@
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/explain/setup/auto_explain"
     },
+    "explain/setup/auto_explain/01_enable_auto_explain": {
+      "title": "Step 1: Enable auto_explain",
+      "path": "/docs/explain/setup/auto_explain/01_enable_auto_explain"
+    },
+    "explain/setup/auto_explain/02_restart_postgres": {
+      "title": "Step 2: Restart Postgres",
+      "path": "/docs/explain/setup/auto_explain/02_restart_postgres"
+    },
+    "explain/setup/auto_explain/03_configure_auto_explain": {
+      "title": "Step 3: Configure auto_explain",
+      "path": "/docs/explain/setup/auto_explain/03_configure_auto_explain"
+    },
     "explain/setup/log_explain": {
       "title": "Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres",
       "path": "/docs/explain/setup/log_explain"

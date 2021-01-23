@@ -1,0 +1,43 @@
+---
+title: 'Step 3: Configure auto_explain'
+install_track_title: 'Automated EXPLAIN: Setup (auto_explain)'
+backlink_href: /docs/explain/setup/auto_explain
+backlink_title: 'Automated EXPLAIN: Setup (auto_explain)'
+---
+
+import imgQueryDetailsExplainPlan from './query_details_explain_plan.png'
+
+The `auto_explain` module can be configured to collect plans for queries causing performance
+problems while minimizing the overhead of `auto_explain` itself. Please review the
+[auto_explain documentation](https://www.postgresql.org/docs/current/static/auto-explain.html)
+carefully to see what makes sense for your system.
+
+We've had good experience with a configuration like this, which will log the
+EXPLAIN output for every query slower than 1s:
+
+```
+auto_explain.log_analyze = 1
+auto_explain.log_buffers = 1
+auto_explain.log_timing = 0
+auto_explain.log_triggers = 1
+auto_explain.log_verbose = 1
+auto_explain.log_format = json
+auto_explain.log_min_duration = 1000
+auto_explain.log_nested_statements = 1
+auto_explain.sample_rate = 1
+```
+
+The important detail here is that `auto_explain.log_timing` is turned off, as this will have a
+significant negative performance impact on query execution.
+
+You may also want to turn off `auto_explain.log_analyze` if you see increased CPU utilization after enabling `auto_explain`.
+
+You will need to reload the Postgres configuration for changes to these settings to take effect:
+
+```
+SELECT pg_reload_conf()
+```
+
+EXPLAIN plans are visualized on the associated query detail page, and include **[EXPLAIN insights](https://pganalyze.com/docs/explain)**:
+
+<img src={imgQueryDetailsExplainPlan} alt='Screenshot of pganalyze Automated EXPLAIN feature' />
