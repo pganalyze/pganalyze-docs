@@ -1,0 +1,53 @@
+The Automated EXPLAIN feature gives you easy access to query execution plans, and adds
+EXPLAIN insights to help you interpret the raw plan information. There are two ways to
+set up Automated EXPLAIN in pganalyze: using the auto_explain Postgres module,
+or using log-based EXPLAIN. You can change the mechanism used after initial setup.
+
+# Integration options
+
+## auto_explain method
+
+The auto_explain feature is a Postgres contrib module. It automatically logs execution plan information and
+metrics for any queries that meet certain configurable criteria (typically, an execution time threshold). It
+reflects the actual plan that was used. If not already installed, requires a Postgres restart.
+
+
+## Log-based explain
+
+As an alternative, our log-based EXPLAIN relies on Postgres slow query logging, based on the
+`log_min_duration_statement` setting.
+
+For example, when we have configured `log_min_duration_statement = 1000`, we will get output like the following
+for all queries slower than 1,000 ms:
+
+```
+LOG: duration: 3205.800 ms execute a2: SELECT "servers".* FROM "servers" WHERE "servers"."id" = 1 LIMIT 2
+```
+
+When the pganalyze collector sees these events, it runs EXPLAIN automatically, so you get the EXPLAIN plan for
+each slow query, together with the log event.
+
+Note the Log-based EXPLAIN method has the following limitations:
+
+* Plans might be different from the executed plans, as the EXPLAIN runs after a statement has finished
+* The collector only runs EXPLAIN, not EXPLAIN ANALYZE (to avoid any performance impact)
+* Execution metrics, such as I/O time and Buffer counts are not captured
+* The pganalyze monitoring user needs to have sufficient permissions to run EXPLAIN on the query
+* Plans for some queries may not be attainable due to
+  * use of temporary tables
+  * query parameter handling limitations
+  * differences in `search_path` or other configuration settings
+
+
+# Choose integration method
+
+Your platform supports both mechanisms. We recommend using **auto_explain**, as it provides higher data quality.
+Log-based EXPLAIN is not guaranteed to show the same plan that was executed, and cannot show execution metrics
+like I/O timing or buffer usage.
+
+<Link className="btn btn-success" to="explain/auto_explain/01_enable_auto_explain">
+  Proceed to auto_explain instructions
+</Link>
+<Link style={{marginLeft: '8px'}} className="btn btn-success" to="explain/log_explain/01_enable_log_based_explain">
+  Proceed to log-based EXPLAIN instructions
+</Link>
