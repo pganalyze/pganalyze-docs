@@ -1,0 +1,37 @@
+---
+title: 'Step 1: Enable auto_explain'
+install_track_title: 'Automated EXPLAIN: Setup (auto_explain)'
+backlink_href: /docs/explain/setup/auto_explain
+backlink_title: 'Automated EXPLAIN: Setup (auto_explain)'
+---
+
+First, connect to your database as a Postgres superuser, and ensure the `auto_explain`
+module is available.
+
+```
+LOAD 'auto_explain';
+```
+
+The only expected output is an echo of the "LOAD" command. Then, check the `shared_preload_libraries` setting:
+
+```
+SHOW shared_preload_libraries;
+```
+
+If it already includes `auto_explain`, you can proceed to [Step 3](03_configure_auto_explain). If not, note that
+**you will need to restart Postgres to enable auto_explain**. If you are not ready to do that, stop before making
+any configuration changes.
+
+The `shared_preload_libraries` setting should include `pg_stat_statements` and may include other libraries.
+Append `auto_explain` to the end of the list and run a statement like the following:
+
+```
+ALTER SYSTEM SET shared_preload_libraries = pg_stat_statements, auto_explain;
+```
+
+Make sure you include all your existing `shared_preload_libraries` in the new list or you may disable some critical
+functionality.
+
+<Link className='btn btn-success' to='02_restart_postgres'>
+  Proceed to Step 2: Restart Postgres
+</Link>

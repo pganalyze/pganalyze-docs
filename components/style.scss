@@ -1,0 +1,27 @@
+.recommendations {
+  padding-left: 8px;
+
+  dt {
+    float: left;
+    margin-right: 10%;
+    max-width: 30%;
+  }
+  
+  dd {
+    margin-left: 50%;
+    margin-bottom: 4px;
+  }
+  
+  dd::after {
+    content: " ";
+    display: block;
+    clear: left;
+  }
+}
+
+.settingDescription {
+  font-size: 70%;
+  line-height: 16px;
+  color: #555;
+  padding-left: 8px;
+}

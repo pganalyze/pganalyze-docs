@@ -1,0 +1,53 @@
+---
+title: 'Step 2: Create helper functions'
+install_track_title: 'Automated EXPLAIN: Setup (log-based)'
+backlink_href: /docs/explain/setup/log_explain
+backlink_title: 'Automated EXPLAIN: Setup (log-based)'
+---
+
+In order to use log-based EXPLAIN, the collector needs permissions to run EXPLAIN queries on your database.
+The safest way to permit this is to use the following helper function:
+
+```
+CREATE OR REPLACE FUNCTION pganalyze.explain(query text, params text[]) RETURNS text AS
+$$
+DECLARE
+  prepared_query text;
+  prepared_params text;
+  result text;
+BEGIN
+  SELECT regexp_replace(query, ';+\s*\Z', '') INTO prepared_query;
+  IF prepared_query LIKE '%;%' THEN
+    RAISE EXCEPTION 'cannot run EXPLAIN when query contains semicolon';
+  END IF;
+
+  IF array_length(params, 1) > 0 THEN
+    SELECT string_agg(quote_literal(param) || '::unknown', ',') FROM unnest(params) p(param) INTO prepared_params;
+
+    EXECUTE 'PREPARE pganalyze_explain AS ' || prepared_query;
+    BEGIN
+      EXECUTE 'EXPLAIN (VERBOSE, FORMAT JSON) EXECUTE pganalyze_explain(' || prepared_params || ')' INTO STRICT result;
+    EXCEPTION WHEN OTHERS THEN
+      DEALLOCATE pganalyze_explain;
+      RAISE;
+    END;
+    DEALLOCATE pganalyze_explain;
+  ELSE
+    EXECUTE 'EXPLAIN (VERBOSE, FORMAT JSON) ' || prepared_query INTO STRICT result;
+  END IF;
+
+  RETURN result;
+END
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+```
+
+Note that this function contains a check for semicolons in the query text. This is to minimize collector access to your
+data: it ensures that the collector cannot piggyback other queries that could exfiltrate data.
+
+Because EXPLAIN needs to run in the same database where the query ran, you will need to create this function
+in each database you want to monitor. You should create the function as a Postgres superuser to ensure EXPLAIN
+access to all queries.
+
+<Link className='btn btn-success' to='03_testing_the_configuration'>
+  Proceed to Step 3: Testing the configuration
+</Link>

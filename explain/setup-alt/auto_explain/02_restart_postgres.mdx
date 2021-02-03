@@ -1,0 +1,30 @@
+---
+title: 'Step 2: Restart Postgres'
+install_track_title: 'Automated EXPLAIN: Setup (auto_explain)'
+backlink_href: /docs/explain/setup/auto_explain
+backlink_title: 'Automated EXPLAIN: Setup (auto_explain)'
+---
+
+Postgres must be restarted for the `shared_preload_libraries` changes to take effect. If you are not ready to restart
+your database, return to Step 1 and run `ALTER SYSTEM` to restore your `shared_preload_libraries` setting to its
+previous value before abandoning setup.
+
+The command to restart Postgres will vary based on your environment (you will need to run the command as root or use sudo):
+
+ * on systemd-based systems: systemctl restart postgresql
+ * on upstart-based systems: restart postgresql
+ * on sysvinit-based systems: service postgresql restart
+
+(If you're not sure what type of system you're running on, you are most likely using systemd.)
+
+Once Postgres restarts, verify that the change took effect:
+
+```
+SHOW shared_preload_libraries;
+```
+
+This output should now include `auto_explain`.
+
+<Link className='btn btn-success' to='03_configure_auto_explain'>
+  Proceed to Step 3: Configure auto_explain
+</Link>

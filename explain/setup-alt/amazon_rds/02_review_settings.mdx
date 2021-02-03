@@ -1,0 +1,30 @@
+---
+title: 'Step 2: Review auto_explain settings'
+install_track_title: 'Automated EXPLAIN: Setup (Amazon RDS and Amazon Aurora)'
+backlink_href: /docs/explain/setup/auto_explain
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import PgSettingsRecommendations, { getAutoExplainRecommendations } from "../../../components/PgSettingsRecommendations";
+
+import SettingsChangePublic from './_settings_change_public.mdx'
+import SettingsChangeInApp from './_settings_change_in_app.mdx'
+
+import imgRdsParamGroup2 from '../../../images/rds_parameter_group2.gif'
+
+There are a number of `auto_explain` settings that allow you to configure which queries
+will generate EXPLAIN plans. The right configuration will depend on your server and workload,
+but we've found the following configuration is a good starting point:
+
+<PgSettingsRecommendations recommendations={getAutoExplainRecommendations(props.settings)} />
+
+Find the parameter group for your database and apply the settings above.
+
+<img src={imgRdsParamGroup2} />
+
+<PublicOnly>
+  <SettingsChangePublic />
+</PublicOnly>
+<InAppOnly>
+  <SettingsChangeInApp autoExplainEnabled={props.autoExplainEnabled} />
+</InAppOnly>

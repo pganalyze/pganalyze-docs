@@ -1,0 +1,34 @@
+import AutoExplainNotice from './_auto_explain_notice.mdx'
+
+export const AutoExplainEnabled = () => {
+  return (
+    <>
+      <p>
+        It looks like <code>auto_explain</code> is already enabled on this server.
+      </p>
+      <Link className="btn btn-success" to="02_review_settings">
+        Proceed to Step 2: Review auto_explain settings
+      </Link>
+    </>
+  )
+}
+
+export const AutoExplainNotEnabled = () => {
+  return (
+    <>
+      <p>
+        It looks like <code>auto_explain</code> is not enabled on this server.
+      </p>
+      <AutoExplainNotice />
+      <Link className="btn btn-success" to="02_review_settings">
+        Proceed to Step 2: Enable and configure auto_explain
+      </Link>
+    </>
+  )
+}
+
+export const AutoExplainCheck = ({enabled}) => {
+  return enabled ? <AutoExplainEnabled /> : <AutoExplainNotEnabled />
+}
+
+<AutoExplainCheck enabled={props.autoExplainEnabled} />

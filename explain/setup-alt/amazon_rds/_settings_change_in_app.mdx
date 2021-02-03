@@ -1,0 +1,27 @@
+export const SettingsChangeNeedsRestart = () => {
+  return (
+    <>
+      <p>After making these changes, if you had to add <code>auto_explain</code> to <code>shared_preload_libraries</code>, you</p>
+      <Link className="btn btn-success" to="03_restart_postgres">
+        Proceed to Step 3: Restart Postgres
+      </Link>
+    </>
+  )
+}
+
+export const SettingsChangeNoRestart = () => {
+  return (
+    <>
+      <p>Since <code>shared_preload_libraries</code> already included <code>auto_explain</code>, you can skip Step 3 and continue to Step 4:</p>
+      <Link className="btn btn-success" to="04_test_and_verify">
+        Proceed to Step 4: Test and verify
+      </Link>
+    </>
+  )
+}
+
+export const SettingsChangeInApp = ({autoExplainEnabled}) => {
+  return autoExplainEnabled ? <SettingsChangeNoRestart /> : <SettingsChangeNeedsRestart /> 
+}
+
+<SettingsChangeInApp autoExplainEnabled={props.autoExplainEnabled} />

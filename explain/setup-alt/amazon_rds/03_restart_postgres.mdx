@@ -1,0 +1,19 @@
+---
+title: 'Step 3: Restart Postgres'
+install_track_title: 'Automated EXPLAIN: Setup (Amazon RDS and Amazon Aurora)'
+backlink_href: /docs/explain/setup/auto_explain
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import imgRDSReboot from '../../../images/rds_reboot.png'
+
+In order for the changes to `shared_preload_libraries` to be applied, your database
+must be restarted. You can do so from the Actions menu in the AWS console:
+
+<img src={imgRDSReboot} alt="Restart your RDS database" />
+
+After the reboot completes, continue to Step 4:
+
+<Link className="btn btn-success" to="04_test_and_verify">
+   Proceed to Step 4: Test and verify
+</Link>
