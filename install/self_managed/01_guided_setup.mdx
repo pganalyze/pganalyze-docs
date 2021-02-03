@@ -7,6 +7,12 @@ backlink_title: 'Installation Guide'
 
 import CollectorPkgInstallInstructions from '../../components/CollectorPkgInstallInstructions'
 
+export const GuidedSetupInvocationExample = ({ apiKey }) => {
+  return (
+    <CodeBlock>sudo pganalyze-collector-setup{apiKey && ` --api-key=${apiKey}`}</CodeBlock>
+  );
+};
+
 To begin guided setup, you'll need to install the collector, which sends statistics information
 and query activity to pganalyze.
 
@@ -34,16 +40,16 @@ pganalyze-collector --version
 
 Guided setup is supported starting in version 0.36.
 
+You will need an API key for the install. <PublicOnly>It can be found in the pganalyze Settings page for your organization.</PublicOnly><InAppOnly>It is included in the command below.</InAppOnly>
+
 You'll need to run guided setup as root or using sudo:
 
-```
-sudo pganalyze-collector-setup
-```
+<GuidedSetupInvocationExample apiKey={props.apiKey} />
 
 You'll be shown additional instructions, and prompted to confirm any changes to your system.
 <PublicOnly>
   Once finished, check the <a href='https://app.pganalyze.com'>pganalyze app</a> to continue.
 </PublicOnly>
 <InAppOnly>
-  Once finished, check back here to continue.
+  Once finished, check back here to continue. <br />
 </InAppOnly>
