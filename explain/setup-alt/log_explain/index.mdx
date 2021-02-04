@@ -10,26 +10,6 @@ However, not all environments support the `auto_explain` extension (bundled with
 
 ## How Log-based EXPLAIN works
 
-This method relies on Postgres logging slow queries to the logs, based on the `log_min_duration_statement` setting.
-
-For example, when we have configured `log_min_duration_statement = 1000`, we will get output like the following for all queries slower than 1,000 ms:
-
-```
-LOG: duration: 3205.800 ms execute a2: SELECT "servers".* FROM "servers" WHERE "servers"."id" = 1 LIMIT 2
-```
-
-When the pganalyze collector sees these events, it runs EXPLAIN automatically, so you get the EXPLAIN plan for each slow query, together with the log event.
-
-Note the Log-based EXPLAIN method has the following limitations:
-
-* Plans might be different from the executed plans, as the EXPLAIN runs after a statement has finished
-* The collector only runs EXPLAIN, not EXPLAIN ANALYZE (to avoid any performance impact)
-* Execution metrics, such as I/O time and Buffer counts are not captured
-* The pganalyze monitoring user needs to have sufficient permissions to run EXPLAIN on the query
-* Plans for some queries may not be attainable due to
-  * use of temporary tables
-  * query parameter handling limitations
-  * differences in `search_path` or other configuration settings
 
 ## Pre-requisites
 
