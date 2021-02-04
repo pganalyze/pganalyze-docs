@@ -18,7 +18,11 @@ Note that Log-based EXPLAIN method has the following limitations:
 * The collector only runs EXPLAIN, not EXPLAIN ANALYZE (to avoid any performance impact)
 * Execution metrics, such as I/O time and Buffer counts are not captured
 * The pganalyze monitoring user needs to have sufficient permissions to run EXPLAIN on the query
-* Plans for some queries may not be attainable due to
+* Plans for some queries may not be obtainable due to
   * use of temporary tables
   * query parameter handling limitations
   * differences in `search_path` or other configuration settings
+
+<Link className='btn btn-success' to='02_create_helper_functions'>
+  Proceed to Step 2: Create helper functions
+</Link>

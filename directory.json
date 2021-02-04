@@ -240,6 +240,10 @@
       "title": "Step 3: Testing the configuration",
       "path": "/docs/explain/setup-alt/log_explain/04_test_and_verify"
     },
+    "explain/setup-alt/log_explain/troubleshooting": {
+      "title": "",
+      "path": "/docs/explain/setup-alt/log_explain/troubleshooting"
+    },
     "explain/setup/auto_explain": {
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/explain/setup/auto_explain"
