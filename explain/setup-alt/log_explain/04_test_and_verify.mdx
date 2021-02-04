@@ -5,29 +5,29 @@ backlink_href: /docs/explain/setup/log_explain
 backlink_title: 'Automated EXPLAIN: Setup (log-based)'
 ---
 
-import Step04Public from './_04_public.mdx'
+import VerifyExplainPublic from '../_verify_explain_public.mdx'
 
 At this point, your pganalyze setup should be ready to collect EXPLAIN plans. Since
 you may not have any slow queries in your system right now, we can generate a
 synthetic slow query that we can use to confirm everything is working.
 
 The Postgres `pg_sleep` function, which just waits for the specified number of seconds,
-is perfect for this. Check your current `auto_explain.log_min_duration`:
+is perfect for this. Check your current `log_min_duration_statement`:
 
 ```sql
-SHOW 'auto_explain.log_min_duration';
+SHOW 'log_min_duration_statement';
 ```
 
-And then run a `pg_sleep` with a value just over this (remember, the `log_min_duration`
+And then run a `pg_sleep` with a value just over this (remember, the `log_min_duration_statement`
 value will be shown in milliseconds, but `pg_sleep` takes an argument in seconds). E.g.,
-if your `auto_explain.log_min_duration` is 1000ms, you can run
+if your `log_min_duration_statement` is 1000ms, you can run
 
 ```sql
 SELECT pg_sleep(1.1)
 ```
 
 <PublicOnly>
-  <Step04Public />
+  <VerifyExplainPublic />
 </PublicOnly>
 <InAppOnly>
   After a few minutes, you should be able to see the plan for this query on the EXPLAIN Plans page.
