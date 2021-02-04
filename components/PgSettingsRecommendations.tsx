@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import styles from './style.scss';
+import styles from './style.module.scss';
 
 type PGSettingRecommendation = {
   name: string;
@@ -24,6 +24,7 @@ const PGSettingsRecommendations: React.FunctionComponent<{ recommendations: PGSe
     const doChange = e.currentTarget.checked
     setChanges(curr => ({ ...curr, [setting]: doChange }))
   }
+
   return (
     <div>
       <table>

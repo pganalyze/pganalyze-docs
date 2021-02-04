@@ -5,13 +5,16 @@
     float: left;
     margin-right: 10%;
     max-width: 30%;
+    font-weight: normal;
+    line-height: 24px;
   }
-  
+
   dd {
     margin-left: 50%;
     margin-bottom: 4px;
+    font-family: monospace;
   }
-  
+
   dd::after {
     content: " ";
     display: block;
