@@ -8,10 +8,10 @@ backlink_title: 'Automated EXPLAIN: Setup (log-based)'
 Enabling log-based EXPLAIN only requires adding the following configuration setting to your collector:
 
 ```
-enable_log_explain: 1
+enable_log_explain: true
 ```
 
-When using the Docker container, instead use `PGA_ENABLE_LOG_EXPLAIN=1` as an environment variable setting.
+When using the Docker container, instead use `PGA_ENABLE_LOG_EXPLAIN=true` as an environment variable setting.
 
 Afterwards make sure to reload the pganalyze collector, so the setting takes effect:
 
@@ -19,6 +19,8 @@ Afterwards make sure to reload the pganalyze collector, so the setting takes eff
 sudo pganalyze-collector --test --reload
 ```
 
-<Link className='btn btn-success' to='02_create_helper_functions'>
-  Proceed to Step 2: Create helper functions
+If this test succeeds, continue to the next step to test plan collection:
+
+<Link className='btn btn-success' to='04_test_and_verify'>
+  Proceed to Step 4: Test and verify
 </Link>
