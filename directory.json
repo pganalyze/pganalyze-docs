@@ -184,6 +184,62 @@
       "title": "Set up automatic EXPLAIN plan collection",
       "path": "/docs/explain/setup"
     },
+    "explain/setup-alt": {
+      "title": "Set up automatic EXPLAIN plan collection",
+      "path": "/docs/explain/setup-alt"
+    },
+    "explain/setup-alt/amazon_rds/01_auto_explain_check": {
+      "title": "Step 1: Check for auto_explain",
+      "path": "/docs/explain/setup-alt/amazon_rds/01_auto_explain_check"
+    },
+    "explain/setup-alt/amazon_rds/02_review_settings": {
+      "title": "Step 2: Review auto_explain settings",
+      "path": "/docs/explain/setup-alt/amazon_rds/02_review_settings"
+    },
+    "explain/setup-alt/amazon_rds/03_restart_postgres": {
+      "title": "Step 3: Restart Postgres",
+      "path": "/docs/explain/setup-alt/amazon_rds/03_restart_postgres"
+    },
+    "explain/setup-alt/amazon_rds/04_test_and_verify": {
+      "title": "Step 4: Test and Verify",
+      "path": "/docs/explain/setup-alt/amazon_rds/04_test_and_verify"
+    },
+    "explain/setup-alt/auto_explain": {
+      "title": "Collect Postgres EXPLAIN plans using auto_explain",
+      "path": "/docs/explain/setup-alt/auto_explain"
+    },
+    "explain/setup-alt/auto_explain/01_enable_auto_explain": {
+      "title": "Step 1: Enable auto_explain",
+      "path": "/docs/explain/setup-alt/auto_explain/01_enable_auto_explain"
+    },
+    "explain/setup-alt/auto_explain/02_restart_postgres": {
+      "title": "Step 2: Restart Postgres",
+      "path": "/docs/explain/setup-alt/auto_explain/02_restart_postgres"
+    },
+    "explain/setup-alt/auto_explain/03_configure_auto_explain": {
+      "title": "Step 3: Configure auto_explain",
+      "path": "/docs/explain/setup-alt/auto_explain/03_configure_auto_explain"
+    },
+    "explain/setup-alt/log_explain": {
+      "title": "Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres",
+      "path": "/docs/explain/setup-alt/log_explain"
+    },
+    "explain/setup-alt/log_explain/01_overview": {
+      "title": "",
+      "path": "/docs/explain/setup-alt/log_explain/01_overview"
+    },
+    "explain/setup-alt/log_explain/02_create_helper_functions": {
+      "title": "Step 2: Create helper functions",
+      "path": "/docs/explain/setup-alt/log_explain/02_create_helper_functions"
+    },
+    "explain/setup-alt/log_explain/03_enable_log_based_explain": {
+      "title": "Step 3: Enable log-based EXPLAIN",
+      "path": "/docs/explain/setup-alt/log_explain/03_enable_log_based_explain"
+    },
+    "explain/setup-alt/log_explain/04_test_and_verify": {
+      "title": "Step 3: Testing the configuration",
+      "path": "/docs/explain/setup-alt/log_explain/04_test_and_verify"
+    },
     "explain/setup/auto_explain": {
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/explain/setup/auto_explain"
