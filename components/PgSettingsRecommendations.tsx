@@ -35,7 +35,7 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
 
   return (
     <div>
-      <table>
+      <table className={styles.recommendationsTable}>
         <thead>
           <tr>
             <th>Setting</th>
