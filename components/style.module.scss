@@ -1,4 +1,4 @@
-.recommendations {
+.recommendationsList {
   padding-left: 8px;
 
   dt {
@@ -19,6 +19,18 @@
     content: " ";
     display: block;
     clear: left;
+  }
+}
+
+.recommendationsAlterSystem {
+  padding-left: 8px;
+  padding-bottom: 16px;
+  line-height: 24px;
+  font-family: monospace;
+  font-size: 16px;
+
+  span {
+    display: block;
   }
 }
 

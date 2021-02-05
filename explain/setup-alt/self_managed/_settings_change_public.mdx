@@ -1,0 +1,20 @@
+After making these changes, if you had to add `auto_explain` to `shared_preload_libraries`,
+
+<Link className="btn btn-success" to="03_restart_postgres">
+   Proceed to Step 3: Restart Postgres
+</Link>
+<br />
+<br />
+
+If `shared_preload_libraries` already included `auto_explain`, you can apply the remaining
+changes with a configuration reload:
+
+```sql
+SELECT pg_reload_conf();
+```
+
+You can then skip Step 3 and continue sto Step 4:
+
+<Link className="btn btn-success" to="04_test_and_verify">
+   Proceed to Step 4: Test and verify
+</Link>

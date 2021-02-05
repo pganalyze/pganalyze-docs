@@ -1,9 +1,20 @@
 import AutoExplainNotice from '../_auto_explain_notice.mdx'
 
+# Check if auto_explain is available
+
+To check if `auto_explain` is available, connect as a Postgres superuser and run the following command:
+
+```
+LOAD 'auto_explain';
+```
+
+If there is an error, please contact us to troubleshoot. Otherwise, you can proceed to enable the module.
+
+
 # Check if auto_explain already enabled
 
-First, to check if `auto_explain` is already enabled on your system, run the following
-query as an RDS superuser:
+Next, to check if `auto_explain` is already enabled on your system, run the following
+query as a Postgres superuser:
 
 ```sql
 SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';

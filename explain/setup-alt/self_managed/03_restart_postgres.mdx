@@ -1,0 +1,22 @@
+---
+title: 'Step 3: Restart Postgres'
+install_track_title: 'Automated EXPLAIN: Setup (Self-Managed)'
+backlink_href: /docs/explain/setup/auto_explain
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+In order for the changes to `shared_preload_libraries` to be applied, your database
+must be restarted. The command to restart Postgres will depend on the platform you're
+running on (and you may need to run as root or use sudo if available):
+
+ * on systemd-based systems: systemctl restart postgresql
+ * on upstart-based systems: restart postgresql
+ * on sysvinit-based systems: service postgresql restart
+
+(If you're not sure what type of system you're running on, you are most likely using systemd.)
+
+After the reboot completes, continue to Step 4:
+
+<Link className="btn btn-success" to="04_test_and_verify">
+   Proceed to Step 4: Test and verify
+</Link>

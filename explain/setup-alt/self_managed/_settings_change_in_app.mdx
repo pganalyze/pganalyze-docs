@@ -13,8 +13,10 @@ export const SettingsChangeNeedsRestart = () => {
 export const SettingsChangeNoRestart = () => {
   return (
     <>
-      <p>Since <code>shared_preload_libraries</code> already included <code>auto_explain</code>, after you save the parameter
-      group changes, you can skip Step 3 and continue to Step 4:</p>
+      <p>Since <code>shared_preload_libraries</code> already included <code>auto_explain</code>, you can apply the
+      remaining changes with a reload:</p>
+      <CodeBlock>SELECT pg_reload_conf()</CodeBlock>
+      <p>You can then skip Step 3 and continue to Step 4:</p>
       <Link className="btn btn-success" to="04_test_and_verify">
         Proceed to Step 4: Test and verify
       </Link>

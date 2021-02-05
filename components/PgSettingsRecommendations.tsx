@@ -11,7 +11,14 @@ type PGSettingRecommendation = {
   description?: string;
 }
 
-const PGSettingsRecommendations: React.FunctionComponent<{ recommendations: PGSettingRecommendation[] }> = ({ recommendations }) => {
+type RecommendationMode = 'list' | 'alter system';
+
+type Props ={
+  mode?: RecommendationMode,
+  recommendations: PGSettingRecommendation[]
+}
+
+const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'list', recommendations }) => {
   const [ changes, setChanges ] = useState(() => {
     return recommendations.reduce((result, curr) => {
       result[curr.name] = curr.recommendChange
@@ -24,6 +31,7 @@ const PGSettingsRecommendations: React.FunctionComponent<{ recommendations: PGSe
     const doChange = e.currentTarget.checked
     setChanges(curr => ({ ...curr, [setting]: doChange }))
   }
+  const recommendedChanges = recommendations.filter(s => changes[s.name]);
 
   return (
     <div>
@@ -53,21 +61,48 @@ const PGSettingsRecommendations: React.FunctionComponent<{ recommendations: PGSe
       </table>
       <div>
         <h3>Summary of recommended changes</h3>
-        <dl className={styles.recommendations}>
-          {recommendations.filter(s => changes[s.name]).map(s => {
-            return (
-              <React.Fragment key={s.name}>
-                <dt>
-                  {s.name}
-                </dt>
-                <dd key={s.name}>
-                  {s.recommended}
-                </dd>
-              </React.Fragment>
-            )
-          })}
-        </dl>
+        {mode === 'list'
+        ? <ListRecommendations recommendations={recommendedChanges} />
+        : mode === 'alter system'
+        ? <AlterSystemRecommendations recommendations={recommendedChanges} />
+        : null}
       </div>
+    </div>
+  )
+}
+
+const ListRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({recommendations}) => {
+  return (
+    <dl className={styles.recommendationsList}>
+      {recommendations.map(s => {
+        return (
+          <React.Fragment key={s.name}>
+            <dt>
+              {s.name}
+            </dt>
+            <dd key={s.name}>
+              {s.recommended}
+            </dd>
+          </React.Fragment>
+        )
+      })}
+    </dl>
+  )
+}
+
+const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({recommendations}) => {
+  return (
+    <div className={styles.recommendationsAlterSystem}>
+      {recommendations.map(s => {
+        // List-style settings like shared_preload_libraries must be passed to ALTER SYSTEM unquoted,
+        // or Postgres will treat the whole list as a single library, which of course normally does
+        // not exist and the server will fail to boot, and you'll need to edit the ALTER SYSTEM file
+        // that says "do not edit" or use even more convoluted workarounds to get things running again.
+        const value = s.name === 'shared_preload_libraries' ? s.recommended : `'${s.recommended}'`
+        return (
+          <span key={s.name}>ALTER SYSTEM SET {s.name} TO {value};</span>
+        )
+      })}
     </div>
   )
 }
