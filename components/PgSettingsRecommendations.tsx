@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import CodeBlock from './CodeBlock';
 
 import styles from './style.module.scss';
 
@@ -39,8 +40,8 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
         <thead>
           <tr>
             <th>Setting</th>
-            <th>Recommended</th>
             {hasCurrent && <th>Current</th>}
+            <th>Recommended</th>
             <th>Change?</th>
           </tr>
         </thead>
@@ -49,8 +50,8 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
             return (
               <tr key={s.name}>
                 <td>{s.name}{s.description && <div className={styles.settingDescription}>{s.description}</div>}</td>
-                <td>{s.recommended}</td>
                 {hasCurrent && <td>{s.current ?? '<not set>'}</td>}
+                <td>{s.recommended}</td>
                 <td>
                   <input data-setting={s.name} type="checkbox" checked={changes[s.name]} disabled={s.required} title={s.required && 'required'} onChange={handleToggleChange} />
                 </td>
@@ -92,7 +93,7 @@ const ListRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'
 
 const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({recommendations}) => {
   return (
-    <div className={styles.recommendationsAlterSystem}>
+    <CodeBlock>
       {recommendations.map(s => {
         // List-style settings like shared_preload_libraries must be passed to ALTER SYSTEM unquoted,
         // or Postgres will treat the whole list as a single library, which of course normally does
@@ -100,10 +101,10 @@ const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommend
         // that says "do not edit" or use even more convoluted workarounds to get things running again.
         const value = s.name === 'shared_preload_libraries' ? s.recommended : `'${s.recommended}'`
         return (
-          <span key={s.name}>ALTER SYSTEM SET {s.name} TO {value};</span>
+          <div key={s.name}>ALTER SYSTEM SET {s.name} TO {value};</div>
         )
       })}
-    </div>
+    </CodeBlock>
   )
 }
 
