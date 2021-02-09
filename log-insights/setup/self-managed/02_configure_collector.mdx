@@ -5,20 +5,26 @@ backlink_href: /docs/log-insights/setup/self-managed
 backlink_title: 'Log Insights: Setup (Self-Managed)'
 ---
 
-We can now configure the log directory for the collector, by adding the `db_log_location` setting, so the configuration file looks similar to this:
-
-```
-[pganalyze]
-api_key: XXX
-
+export const ExampleConfig = ({apiKey}) => {
+  return (
+    <CodeBlock>
+      {`[pganalyze]
+api_key: ${apiKey ?? '...'}\n
 [server1]
 db_name: postgres, *
 db_username: pganalyze
 db_password: mypassword
 db_host: 127.0.0.1
 db_port: 5432
-db_log_location: /var/log/postgresql/postgresql-9.3-main.log
-```
+db_log_location: /var/log/postgresql/postgresql-12-main.log
+`}
+    </CodeBlock>
+  )
+}
+
+We can now configure the log directory for the collector, by adding the `db_log_location` setting, so the configuration file looks similar to this:
+
+<ExampleConfig apiKey={props.apiKey} />
 
 Now we can use the `--test` option of the collector to verify that log collection and parsing works:
 

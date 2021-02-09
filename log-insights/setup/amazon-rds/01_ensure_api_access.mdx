@@ -5,18 +5,11 @@ backlink_href: /docs/log-insights/setup/amazon-rds
 backlink_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
 ---
 
-<PublicOnly>
-  The collector will only collect log data when you have an Amazon RDS host name specified (the instance name is auto-detected),
-or you manually specify the <code>aws_db_instance_id</code> and <code>aws_region</code> settings.
-</PublicOnly>
-
-In addition, you need to ensure that AWS APIs can be accessed either by using the EC2 metadata service, or by manually specifying
-the `aws_access_key_id` and `aws_secret_access_key` settings. A complete configuration with all settings looks like this:
-
-```
-[pganalyze]
-api_key: your_api_key
-
+export const ExampleConfig = ({apiKey}) => {
+  return (
+    <CodeBlock>
+      {`[pganalyze]
+api_key: ${apiKey ?? '...'}\n
 [server1]
 db_name: mydb
 db_username: myusername
@@ -26,8 +19,20 @@ db_port: 5432
 aws_db_instance_id: your_rds_instance
 aws_region: us-west-2
 aws_access_key_id: mykey
-aws_secret_access_key: mysecret
-```
+aws_secret_access_key: mysecret`}
+    </CodeBlock>
+  )
+}
+
+<PublicOnly>
+  The collector will only collect log data when you have an Amazon RDS host name specified (the instance name is auto-detected),
+or you manually specify the <code>aws_db_instance_id</code> and <code>aws_region</code> settings.
+</PublicOnly>
+
+In addition, you need to ensure that AWS APIs can be accessed either by using the EC2 metadata service, or by manually specifying
+the `aws_access_key_id` and `aws_secret_access_key` settings. A complete configuration with all settings looks like this:
+
+<ExampleConfig apiKey={props.apiKey} />
 
 <Link className="btn btn-success" to="02_test_log_download">
   Continue to Step 2: Test log download

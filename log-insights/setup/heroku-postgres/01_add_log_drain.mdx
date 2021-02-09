@@ -5,6 +5,16 @@ backlink_href: /docs/log-insights/setup/heroku-postgres
 backlink_title: 'Log Insights: Setup (Heroku Postgres)'
 ---
 
+export const TestAppConfigVars = ({apiKey}) => {
+  return (
+    <CodeBlock>
+      {`=== testapp-pganalyze-collector Config Vars
+TESTAPP_URL: postgres://...:...@...:.../...
+PGA_API_KEY: ${apiKey ?? '...'}`}
+    </CodeBlock>
+  )
+}
+
 Log output support is only available on Heroku Postgres Standard, Premium and higher plans.
 
 Log output for Heroku Postgres databases is sent to the application that the
@@ -24,11 +34,7 @@ configuration of your collector app (e.g. `testapp-pganalyze-collector`):
 ```bash
 heroku config -a testapp-pganalyze-collector
 ```
-```
-=== testapp-pganalyze-collector Config Vars
-TESTAPP_URL: postgres://...:...@...:.../...
-PGA_API_KEY: ...
-```
+<TestAppConfigVars apiKey={props.apiKey} />
 
 So in this case we would use `TESTAPP_URL` as our alias, and then we would add the log drain
 like this:
