@@ -1,17 +1,15 @@
 ---
-title: 'Step 3: Set Up IAM Policy'
-install_track_title: Installation Guide (Amazon RDS and Amazon Aurora)
-backlink_href: /docs/install
-backlink_title: 'Installation Guide'
+title: 'Step 1: Set Up IAM Policy'
+install_track_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+backlink_href: /docs/log-insights/setup/amazon-rds
+backlink_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
 ---
 
-import imgRdsSetUpIamPolicy from "../../images/rds_iam_role.png"
+import imgRdsSetUpIamPolicy from "../../../images/rds_iam_role.png"
 
 export const ImgWorkaround = (props) => <img {...props} />
 
-Almost done! 🎉
-
-We now need to setup an IAM policy and user that the collector can use to access RDS information.
+We first need to setup an IAM policy and user that the collector can use to access RDS information.
 
 To start, go to **[Create IAM policy](https://console.aws.amazon.com/iam/home#/policies$new?step=edit)**, select JSON and then paste the following policy:
 
@@ -71,9 +69,8 @@ To complete this step, create an IAM role for pganalyze, and assign it the polic
 
 ---
 
-In the next step we'll download and run the pganalyze collector software to one
-of your EC2 instances:
+In the next step we'll use this role to set up fetching your database logs for analysis:
 
-<Link className="btn btn-success" to="04_install_collector">
-  Proceed to Step 4: Install the Collector on an EC2 Instance
+<Link className="btn btn-success" to="02_ensure_api_access">
+  Proceed to Step 2: Ensure API access
 </Link>
