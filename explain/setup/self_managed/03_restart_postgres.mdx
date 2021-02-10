@@ -5,17 +5,22 @@ backlink_href: /docs/explain/setup/auto_explain
 backlink_title: 'Automated EXPLAIN: Setup'
 ---
 
+import InitServiceRestartInstructions from '../../../components/InitServiceRestartInstructions'
+
 In order for the changes to `shared_preload_libraries` to be applied, your database
 must be restarted. The command to restart Postgres will depend on the platform you're
 running on (and you may need to run as root or use sudo if available):
 
- * on systemd-based systems: systemctl restart postgresql
- * on upstart-based systems: restart postgresql
- * on sysvinit-based systems: service postgresql restart
+<InitServiceRestartInstructions service="postgresql" />
 
-(If you're not sure what type of system you're running on, you are most likely using systemd.)
+After the reboot completes, verify that `shared_preload_libraries` now includes `auto_explain`
+and that the setting change does not require a restart (`pending_restart` should be `f`):
 
-After the reboot completes, continue to Step 4:
+```sql
+SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
+```
+
+If `auto_explain` is present, continue to Step 4:
 
 <Link className="btn btn-success" to="04_test_and_verify">
    Proceed to Step 4: Test and verify

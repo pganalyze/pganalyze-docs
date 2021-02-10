@@ -12,7 +12,14 @@ must be restarted. You can do so from the Actions menu in the AWS console:
 
 <img src={imgRDSReboot} alt="Restart your RDS database" />
 
-After the reboot completes, continue to Step 4:
+After the reboot completes, verify that `shared_preload_libraries` now includes `auto_explain`
+and that the setting change does not require a restart (`pending_restart` should be `f`):
+
+```sql
+SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
+```
+
+If `auto_explain` is present, continue to Step 4:
 
 <Link className="btn btn-success" to="04_test_and_verify">
    Proceed to Step 4: Test and verify
