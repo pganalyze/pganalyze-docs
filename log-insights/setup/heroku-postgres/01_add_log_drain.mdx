@@ -8,7 +8,7 @@ backlink_title: 'Log Insights: Setup (Heroku Postgres)'
 export const TestAppConfigVars = ({apiKey}) => {
   return (
     <CodeBlock>
-      {`=== testapp-pganalyze-collector Config Vars
+      {`=== [your-collector-app-name] Config Vars
 TESTAPP_URL: postgres://...:...@...:.../...
 PGA_API_KEY: ${apiKey ?? '...'}`}
     </CodeBlock>
@@ -29,10 +29,10 @@ https://testapp-pganalyze-collector.herokuapp.com/logs/[ALIAS]
 
 For the `[ALIAS]` value we recommend you use the add-on attachment name you've chosen
 in the initial setup, which you can determine by viewing the current Heroku
-configuration of your collector app (e.g. `testapp-pganalyze-collector`):
+configuration of your collector app:
 
 ```bash
-heroku config -a testapp-pganalyze-collector
+heroku config -a [your-collector-app-name]
 ```
 <TestAppConfigVars apiKey={props.apiKey} />
 
@@ -40,10 +40,11 @@ So in this case we would use `TESTAPP_URL` as our alias, and then we would add t
 like this:
 
 ```bash
-heroku drains:add https://testapp-pganalyze-collector.herokuapp.com/logs/TESTAPP_URL -a testapp
+heroku drains:add https://[your-collector-app-name].herokuapp.com/logs/TESTAPP_URL -a testapp
 ```
 
-Make sure to replace `testapp-pganalyze-collector` with the name of your own collector application that you've deployed in your Heroku account.
+Make sure to replace `[your-collector-app-name]` with the name of your own collector application
+that you've deployed in your Heroku account.
 
 <Link className="btn btn-success" to="02_verify_log_drain">
   Continue to Step 2: Verify log drain
