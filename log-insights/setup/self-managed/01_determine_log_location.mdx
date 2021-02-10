@@ -5,11 +5,12 @@ backlink_href: /docs/log-insights/setup/self-managed
 backlink_title: 'Log Insights: Setup (Self-Managed)'
 ---
 
-Log Insights works by continuously tailing your local Postgres log files, and classifying log lines,
-and submitting log data and statistics to pganalyze.
+Log Insights works by continuously tailing your local Postgres log files, classifying log lines,
+and submitting log data and statistics to pganalyze. This requires your collector to run on the same
+instance as your Postgres server.
 
-In order to do that, you need to configure the `db_log_location` in the `pganalyze-collector.conf` file,
-which should be either the Postgres log file, or the directory in which log files are located.
+In order to do set this up, you need to configure the `db_log_location` in the `pganalyze-collector.conf`
+file, which should be either the Postgres log file, or the directory in which log files are located.
 
 We provide a helper for discovering the log directory, which you can run like this as root:
 
