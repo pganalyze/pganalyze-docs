@@ -15,7 +15,7 @@ The Postgres `pg_sleep` function, which just waits for the specified number of s
 is perfect for this. Check your current `log_min_duration_statement`:
 
 ```sql
-SHOW 'log_min_duration_statement';
+SHOW log_min_duration_statement;
 ```
 
 And then run a `pg_sleep` with a value just over this (remember, the `log_min_duration_statement`
@@ -23,12 +23,9 @@ value will be shown in milliseconds, but `pg_sleep` takes an argument in seconds
 if your `log_min_duration_statement` is 1000ms, you can run
 
 ```sql
-SELECT pg_sleep(1.1)
+SELECT pg_sleep(1.1);
 ```
 
 <PublicOnly>
   <VerifyExplainPublic />
 </PublicOnly>
-<InAppOnly>
-  After a few minutes, you should be able to see the plan for this query on the EXPLAIN Plans page.
-</InAppOnly>

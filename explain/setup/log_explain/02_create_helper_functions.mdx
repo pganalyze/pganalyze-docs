@@ -6,7 +6,7 @@ backlink_title: 'Automated EXPLAIN: Setup (log-based)'
 ---
 
 In order to use log-based EXPLAIN, the collector needs permissions to run EXPLAIN queries on your database.
-The safest way to permit this is to use the following helper function:
+The safest way to permit this is to create the following helper function **in each database you want to monitor**:
 
 ```sql
 CREATE OR REPLACE FUNCTION pganalyze.explain(query text, params text[]) RETURNS text AS
@@ -45,7 +45,7 @@ Note that this function contains a check for semicolons in the query text. This 
 data: it ensures that the collector cannot piggyback other queries that could exfiltrate data.
 
 Because EXPLAIN needs to run in the same database where the query ran, you will need to create this function
-in each database you want to monitor. You should create the function as a Postgres superuser to ensure EXPLAIN
+**in each database you want to monitor**. You should create the function as a Postgres superuser to ensure EXPLAIN
 access to all queries.
 
 <Link className='btn btn-success' to='03_enable_log_explain'>

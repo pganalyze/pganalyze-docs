@@ -5,13 +5,13 @@ backlink_href: /docs/explain/setup/log_explain
 backlink_title: 'Automated EXPLAIN: Setup (log-based)'
 ---
 
-Enabling log-based EXPLAIN only requires adding the following configuration setting to your collector:
+import CollectorSettings from '../../../components/CollectorSettings'
 
-```
-enable_log_explain: true
-```
+You will need to update the collector configuration to enable log-based EXPLAIN.
 
-When using the Docker container, instead use `PGA_ENABLE_LOG_EXPLAIN=true` as an environment variable setting.
+<CollectorSettings settings={[
+  ['enable_log_explain', 'true']
+]} configFromEnv={props.configFromEnv} />
 
 Afterwards make sure to reload the pganalyze collector, so the setting takes effect:
 
