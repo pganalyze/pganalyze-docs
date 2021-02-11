@@ -5,20 +5,16 @@ backlink_href: /docs/log-insights/setup/azure-database
 backlink_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
 ---
 
+import CollectorSettings from '../../../components/CollectorSettings'
+
 To complete the setup, we can now go to your virtual machine that is running the collector, and enable access to the Azure Event Hub.
 
-We go into the `pganalyze-collector.conf` configuration file, and add these two settings.
-Note the values need to match what you created in Step 2:
+Next, update the collector configuration for this server. Note the **values need to match** what you created in Step 2.
 
-```
-azure_eventhub_namespace: pganalyze-test
-azure_eventhub_name: postgres
-```
-
-When running the collector in a container, you will need to use these environment variables instead of the configuration file:
-
-* `AZURE_EVENTHUB_NAMESPACE` (same as `azure_eventhub_namespace`)
-* `AZURE_EVENTHUB_NAME` (same as `azure_eventhub_name`)
+<CollectorSettings settings={[
+  ['azure_eventhub_namespace', '[namespace from step 2]'],
+  ['azure_eventhub_name', '[name from step 2]'],
+]} configFromEnv={props.configFromEnv} />
 
 Thanks to the Managed Identity that's assigned to the VM, we don't need to specify any credentials here.
 
