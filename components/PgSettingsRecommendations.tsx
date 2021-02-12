@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import CodeBlock from './CodeBlock';
+import Null from './Null';
 
 import styles from './style.module.scss';
+import { useIcon } from './WithIcons';
 
 type PGSettingRecommendation = {
   name: string;
@@ -20,19 +22,7 @@ type Props ={
 }
 
 const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'list', recommendations }) => {
-  const [ changes, setChanges ] = useState(() => {
-    return recommendations.reduce((result, curr) => {
-      result[curr.name] = curr.recommendChange
-      return result
-    }, {})
-  })
-  const hasCurrent = recommendations.some(s => s.current != null)
-  const handleToggleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const setting = e.currentTarget.dataset.setting;
-    const doChange = e.currentTarget.checked
-    setChanges(curr => ({ ...curr, [setting]: doChange }))
-  }
-  const recommendedChanges = recommendations.filter(s => changes[s.name]);
+  const hasCurrent = recommendations.some(s => s.current != null);
 
   return (
     <div>
@@ -42,34 +32,87 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
             <th>Setting</th>
             {hasCurrent && <th>Current</th>}
             <th>Recommended</th>
-            <th>Change?</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {recommendations.map(s => {
+          {recommendations.map(r => {
             return (
-              <tr key={s.name}>
-                <td>{s.name}{s.description && <div className={styles.settingDescription}>{s.description}</div>}</td>
-                {hasCurrent && <td>{s.current ?? '<not set>'}</td>}
-                <td>{s.recommended}</td>
+              <tr key={r.name}>
+                <td>{r.name}{r.description && <div className={styles.settingDescription}>{r.description}</div>}</td>
+                {hasCurrent && <td>{r.current ?? '[not set]'}</td>}
+                <td>{r.recommended}</td>
                 <td>
-                  <input data-setting={s.name} type="checkbox" checked={changes[s.name]} disabled={s.required} title={s.required && 'required'} onChange={handleToggleChange} />
+                  <RecommendationStatus recommendation={r} />
                 </td>
               </tr>
             )
           })}
         </tbody>
       </table>
-      <div>
-        <h3>Summary of recommended changes</h3>
-        {mode === 'list'
-        ? <ListRecommendations recommendations={recommendedChanges} />
-        : mode === 'alter system'
-        ? <AlterSystemRecommendations recommendations={recommendedChanges} />
-        : null}
-      </div>
+      <RecommendationSummary mode={mode} recommendations={recommendations} />
     </div>
   )
+}
+
+const RecommendationSummary: React.FunctionComponent<Props> = ({mode, recommendations}) => {
+  const requiredChanges = recommendations.filter(r => r.recommendChange && r.required);
+  const recommendedChanges = recommendations.filter(r => r.recommendChange && !r.required);
+
+  const hasRequired = requiredChanges.length > 0;
+  const hasRecommended = recommendedChanges.length > 0
+  if (!hasRequired && !hasRecommended) {
+    return <div>No changes are required or recommended</div>
+  }
+
+  const Recommendations: React.ComponentType<Pick<Props, 'recommendations'>> = mode === 'list'
+    ? ListRecommendations
+    : mode === 'alter system'
+    ? AlterSystemRecommendations
+    : Null
+
+  return (
+    <div>
+      {hasRequired && (
+        <>
+          <h3>Summary of required changes</h3>
+          <Recommendations recommendations={requiredChanges} />
+        </>
+      )}
+      {hasRecommended && (
+        <>
+          <h3>Summary of recommended changes</h3>
+          <Recommendations recommendations={recommendedChanges} />
+        </>
+      )}
+    </div>
+  )
+}
+
+const RecommendationStatus: React.FunctionComponent<{recommendation: PGSettingRecommendation}> = ({recommendation}) => {
+  const OkayIcon = useIcon('okay');
+  const ChangeRequiredIcon = useIcon('changeRequired');
+  const InfoIcon = useIcon('info');
+
+  if (!recommendation.recommendChange) {
+    return (
+      <div title="no changes required">
+        <OkayIcon />
+      </div>
+    )
+  } else if (recommendation.required) {
+    return (
+      <div title="update required">
+        <ChangeRequiredIcon />
+      </div>
+    )
+  } else {
+    return (
+      <div title="update recommended">
+        <InfoIcon />
+      </div>
+    )
+  }
 }
 
 const ListRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({recommendations}) => {
