@@ -3,6 +3,7 @@ import CodeBlock from './CodeBlock';
 import Null from './Null';
 
 import styles from './style.module.scss';
+import { useExtraInfo } from './WithExtraInfo';
 import { useIcon } from './WithIcons';
 
 type PGSettingRecommendation = {
@@ -23,6 +24,7 @@ type Props ={
 
 const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'list', recommendations }) => {
   const hasCurrent = recommendations.some(s => s.current != null);
+  const Description = useExtraInfo()
 
   return (
     <div>
@@ -39,7 +41,7 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
           {recommendations.map(r => {
             return (
               <tr key={r.name}>
-                <td>{r.name}{r.description && <div className={styles.settingDescription}>{r.description}</div>}</td>
+                <td>{r.name}<Description className={styles.settingDescription} info={r.description} /></td>
                 {hasCurrent && <td>{r.current ?? '[not set]'}</td>}
                 <td>{r.recommended}</td>
                 <td>
