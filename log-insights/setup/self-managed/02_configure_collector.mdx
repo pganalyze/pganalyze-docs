@@ -5,28 +5,14 @@ backlink_href: /docs/log-insights/setup/self-managed
 backlink_title: 'Log Insights: Setup (Self-Managed)'
 ---
 
-export const ExampleConfig = ({apiKey}) => {
-  return (
-    <CodeBlock>
-      {`[pganalyze]
-api_key: ${apiKey ?? '...'}\n
-[server1]
-db_name: postgres, *
-db_username: pganalyze
-db_password: mypassword
-db_host: 127.0.0.1
-db_port: 5432
+We can now configure the log directory for the collector, by adding the `db_log_location` setting,
+similar to this:
+
+```
 db_log_location: /var/log/postgresql/postgresql-12-main.log
-`}
-    </CodeBlock>
-  )
-}
+```
 
-We can now configure the log directory for the collector, by adding the `db_log_location` setting, so the configuration file looks similar to this:
-
-<ExampleConfig apiKey={props.apiKey} />
-
-Now we can use the `--test` option of the collector to verify that log collection and parsing works:
+Then, use the `--test` option of the collector to verify that log collection and parsing works:
 
 ```
 pganalyze-collector --test
@@ -43,8 +29,6 @@ In the successful case, the log output will look like this:
 2018/05/08 08:40:13 I [server1] Testing local log tailing...
 2018/05/08 08:40:19 I [server1] Log test successful
 ```
-
-There are a few error cases, in particular permission related ones for the "log test with reduced privileges", which you will likely encounter. They are documented at the end of this page.
 
 <Link className="btn btn-success" to="03_restart_collector">
   Continue to Step 3: Restart collector

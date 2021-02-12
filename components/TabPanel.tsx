@@ -40,4 +40,10 @@ const TabPanel: React.FunctionComponent<Props> = ({items, children}) => {
   )
 }
 
+export const TabTextContent: React.FunctionComponent = ({children}) => {
+  return (
+    <div className={styles.tabPanelTextContent}>{children}</div>
+  )
+}
+
 export default TabPanel;

@@ -1,0 +1,44 @@
+import InitServiceRestartInstructions from '../../../components/InitServiceRestartInstructions'
+
+Note that both individual files and directories are supported for `db_log_location`.
+
+In the case of built-in Postgres logging you may run into the issue that
+log files are by default written in a way that prevents users other than the
+postgres user from accessing them. This is typically the case if the Postgres
+`log_directory` is configured to be inside the `data_directory`.
+
+We can check whether this is the case. Run the following command:
+
+```
+SHOW data_directory;
+```
+
+If the output is **not** a prefix of the `db_log_location` discovered above, you can
+**skip the rest of this section** and proceed to the next step below.
+
+Otherwise, if the `db_log_location` **is** inside the data directory, we need to make
+some adjustments to grant the pganalyze user access to the logs.
+
+First, choose a location for log files that is outside of the Postgres data directory,
+and then set it up like this:
+
+```
+mkdir /my/log/directory
+chown postgres:postgres /my/log/directory
+```
+
+Also make sure that the pganalyze user can access this directory, by making it a member
+of the postgres group:
+
+```
+usermod -a -G postgres pganalyze
+```
+
+Then, adjust the Postgres configuration to log everything to this new directory by running
+the following commands as a Postgres superuser:
+
+```
+ALTER SYSTEM SET log_directory = '/my/log/directory';
+ALTER SYSTEM SET log_file_mode = '0640';
+SELECT pg_reload_conf();
+```

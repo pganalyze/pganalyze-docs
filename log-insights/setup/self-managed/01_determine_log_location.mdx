@@ -5,14 +5,41 @@ backlink_href: /docs/log-insights/setup/self-managed
 backlink_title: 'Log Insights: Setup (Self-Managed)'
 ---
 
+import TabPanel, {TabTextContent} from '../../../components/TabPanel'
+import SyslogInstructions from './_01_syslog_instructions.mdx'
+import LogFileInstructions from './_01_log_file_instructions.mdx'
+
+export const SelfHostedLogAlternatives = () => {
+  const tabs = [
+    [ 'log_file', 'If using log file or directory'],
+    [ 'syslog', 'If using syslog']
+  ];
+  return (
+    <TabPanel items={tabs}>
+      {(idx) => {
+        const tab = tabs[idx][0];
+        switch (tab) {
+          case 'log_file':
+            return <TabTextContent><LogFileInstructions /></TabTextContent>;
+          case 'syslog':
+            return <TabTextContent><SyslogInstructions /></TabTextContent>;
+          default:
+          return null;
+        }
+      }}
+    </TabPanel>
+  )
+}
+
 Log Insights works by continuously tailing your local Postgres log files, classifying log lines,
-and submitting log data and statistics to pganalyze. This requires your collector to run on the same
-instance as your Postgres server.
+and submitting log data and statistics to pganalyze. The self-managed configuration requires
+your collector to run on the same instance as your Postgres server.
 
 In order to do set this up, you need to configure the `db_log_location` in the `pganalyze-collector.conf`
 file, which should be either the Postgres log file, or the directory in which log files are located.
 
-We provide a helper for discovering the log directory, which you can run like this as root:
+We provide a helper for discovering the log directory, which you must run as root or using sudo. Run the
+command like this:
 
 ```
 pganalyze-collector --discover-log-location
@@ -25,86 +52,19 @@ This will then produce output like this:
 db_log_location = /var/log/postgresql/postgresql-9.3-main.log
 ```
 
+Or alternately, like this:
+
+```
+2018/05/20 19:51:30 I [server1] Log location detected as syslog - please check our setup guide for rsyslogd or syslog-ng instructions
+```
+
 In some cases where discovery doesn't work you might have to review in more detail how your system is set up. Please
 reach out to pganalyze support for help if needed.
 
-Note that both individual files and directories are supported for `db_log_location`.
+Otherwise, continue below according to the discovered log location:
 
-<Link className="btn btn-success" to="02_configure_collector">
-  Continue to Step 2: Configure collector
-</Link>
-<br />
-<br />
-
-## Allowing access when using Postgres built-in logging
-
-In the case of built-in Postgres logging you may run into the issue that
-log files are by default written in a way that prevents users other than the
-postgres user from accessing them. This is typically the case if the Postgres
-`log_directory` is configured to be inside the `data_directory`.
-
-We need to grant the pganalyze user access to them, by doing the following:
-
-First choose a location for log files thats outside of the Postgres data directory,
-and then set it up like this:
-
-```
-mkdir /my/log/directory
-chown postgres:postgres /my/log/directory
-```
-
-Also make sure that the pganalyze user can access this directory, by making it a member of the postgres group:
-
-```
-usermod -a -G postgres pganalyze
-```
-
-Adjust the Postgres configuration to log everything to this new directory by doing the following:
-
-```
-log_directory = '/my/log/directory'
-log_file_mode = 0640
-```
-
-Reload Postgres afterwards, as well as **restart** the collector background process, and then re-run the permission
-test as described in Step 2.
-
-<Link className="btn btn-success" to="02_configure_collector">
-  Continue to Step 2: Configure collector
-</Link>
-<br />
-<br />
-
-## Allowing access when using rsyslogd built-in logging
-
-For rsyslogd and other syslog daemons, the issue can often be that new log files
-are created with permissions that don't allow the pganalyze user access.
-
-Assuming that the log files are owned by the Postgres user, you first
-need to add the pganalyze user to the postgres group:
-
-```
-usermod -a -G postgres pganalyze
-```
-
-And then make sure that new files are written with chmod 640, in your `/etc/rsyslog.conf`:
-
-```
-# Place this at the beginning of the rsyslog.conf file:
-$umask 0000
-$FileCreateMode 0600
-
-# Place this where the postgres log is being output
-$FileCreateMode 0640
-local0.* /var/log/postgres/postgres.log
-$FileCreateMode 0600
-```
-
-As well as making sure the current log file has the correct permissions:
-
-```
-chmod 640 /var/log/postgres/postgres.log
-```
+<br/>
+<SelfHostedLogAlternatives />
 
 <Link className="btn btn-success" to="02_configure_collector">
   Continue to Step 2: Configure collector
