@@ -28,7 +28,7 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
 
   return (
     <div>
-      <table className={styles.recommendationsTable}>
+      <table>
         <thead>
           <tr>
             <th>Setting</th>
@@ -41,7 +41,7 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
           {recommendations.map(r => {
             return (
               <tr key={r.name}>
-                <td>{r.name}<Description className={styles.settingDescription} info={r.description} /></td>
+                <td className={styles.noWrap}>{r.name}<Description className={styles.settingDescription} info={r.description} /></td>
                 {hasCurrent && <td>{r.current ?? '[not set]'}</td>}
                 <td>{r.recommended}</td>
                 <td>
