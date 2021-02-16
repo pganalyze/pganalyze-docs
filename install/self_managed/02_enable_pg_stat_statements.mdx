@@ -10,6 +10,7 @@ import styles from '../../style.module.scss'
 import imgLogoUbuntu from '../../images/logo_ubuntu.png'
 import imgLogoRedhat from '../../images/logo_redhat.png'
 import imgLogoDocker from '../../images/docker.png'
+import imgLogoAL2 from '../../images/aws-ec2.svg'
 
 In this step we setup [pg_stat_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html), which is used by pganalyze to collect Postgres query statistics.
 
@@ -24,6 +25,15 @@ To continue, we need to know where your Postgres is running:
     <img src={imgLogoRedhat} />
     RHEL, CentOS &amp; Fedora
   </Link>
+</div>
+<div className={styles.installChoice}>
+  <Link
+    className={styles.installChoiceStep}
+    to="02_enable_pg_stat_statements_yum"
+  >
+    <img src={imgLogoAL2} />
+    Amazon Linux 2
+  </Link>
   <Link
     className={styles.installChoiceStep}
     to="02_enable_pg_stat_statements_docker"
@@ -31,10 +41,6 @@ To continue, we need to know where your Postgres is running:
     <img src={imgLogoDocker} />
     Docker
   </Link>
-  {/*<Link className={styles.installChoiceStep} to="02_enable_pg_stat_statements_kubernetes">
-    <img src="/images/docs/logo_kubernetes.png" />
-    Kubernetes
-  </Link>*/}
 </div>
 
 <br />
