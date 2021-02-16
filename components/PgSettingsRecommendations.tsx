@@ -27,8 +27,8 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
   const Description = useExtraInfo()
 
   return (
-    <div>
-      <table>
+    <>
+      <table className={styles.settingsTable}>
         <thead>
           <tr>
             <th>Setting</th>
@@ -53,7 +53,7 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
         </tbody>
       </table>
       <RecommendationSummary mode={mode} recommendations={recommendations} />
-    </div>
+    </>
   )
 }
 
@@ -157,7 +157,15 @@ type CurrentSettings = {
   [name: string]: string
 }
 
-export const getAutoExplainRecommendations = (settings: CurrentSettings | undefined): PGSettingRecommendation[] => {
+export const getSPLEnableAutoExplainRecommendation = (settings: CurrentSettings | undefined): PGSettingRecommendation => {
+  return getAllAutoExplainRecommendations(settings).find(s => s.name === 'shared_preload_libraries');
+}
+
+export const getAutoExplainSettingRecommendations = (settings: CurrentSettings | undefined) => {
+  return getAllAutoExplainRecommendations(settings).filter(s => s.name !== 'shared_preload_libraries');
+}
+
+export const getAllAutoExplainRecommendations = (settings: CurrentSettings | undefined): PGSettingRecommendation[] => {
   const defaultRecommened: PGSettingRecommendation[] = [
     {
       name: 'shared_preload_libraries',
@@ -226,10 +234,19 @@ export const getAutoExplainRecommendations = (settings: CurrentSettings | undefi
   return defaultRecommened.map(r => {
     const current = settings?.[r.name]
     if (current == null) {
+      // don't recommend changing this from the default if we know you haven't set it
+      if (!!settings && r.name === 'auto_explain.sample_rate') {
+        return {
+          ...r,
+          recommendChange: false,
+        }
+      }
       return r;
     }
     if (r.name === 'shared_preload_libraries') {
-      const newPgss = current.split(/\s*,\s*/)
+      // We should never have an empty shared_preload_libraries here because we always expect
+      // to have at least pg_stat_statements but handle it gracefully anyway to avoid surprises.
+      const newPgss = current.split(/\s*,\s*/).filter(splElem => splElem !== '')
       const recommendChange = !newPgss.includes('auto_explain')
       if (recommendChange) {
         newPgss.concat('auto_explain')
@@ -240,7 +257,7 @@ export const getAutoExplainRecommendations = (settings: CurrentSettings | undefi
         recommended: recommendChange ? newPgss.join(',') : current,
         recommendChange,
       } 
-    } else if (r.name === 'log_min_duration') {
+    } else if (r.name === 'auto_explain.log_min_duration') {
       const currLogMinDuration = parseInt(current, 10)
       const recommenedLogMinDuration = parseInt(r.recommended, 10)
       // N.B.: including -1 for disabled--this must be enabled for auto_explain to be useful

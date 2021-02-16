@@ -1,0 +1,43 @@
+
+import imgRDSReboot from '../../../images/rds_reboot.png'
+
+export const SPLRecommendation = ({recommendation}) => {
+   if (recommendation.current == null) {
+      return (
+         <p>
+            For example, if the current value is <code>pg_stat_statements</code>,
+            you can set the new value to <code>pg_stat_statements, auto_explain</code>.
+         </p>
+      )
+   }
+   return (
+      <>
+         <p>
+            The current value appears to be <code>{recommendation.current}</code>.
+            You can confirm this in the parameter group and set the new value to
+            <code>{recommendation.recommended}</code>.
+         </p>
+      </>
+   )
+}
+
+To enable `auto_explain`, you will need to find the parameter group for this server and
+add the auto_explain module to the `shared_preload_libraries` setting.
+
+<SPLRecommendation recommendation={props.splRecommendation} />
+
+Since changes to `shared_preload_libraries` only take effect at server start, after you apply
+these settings, you will need to restart Postgres. You can do so from the Actions menu in the
+AWS console:
+
+<img src={imgRDSReboot} alt="Restart your RDS database" />
+
+After the reboot completes, verify that `shared_preload_libraries` now includes `auto_explain`
+and that the setting change does not require a restart (`pending_restart` should be `f`):
+
+```sql
+SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
+```
+
+If `auto_explain` is enabled and no longer requires a restart, you can proceed to
+review our recommended `auto_explain` configuration settings:
