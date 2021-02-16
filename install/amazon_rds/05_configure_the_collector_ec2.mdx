@@ -19,22 +19,27 @@ export const APIKeyInstructions = ({ apiKey }) => {
   );
 };
 
-## Configuring the collector on an Amazon EC2 instance
-
-The collector configuration file lives in `/etc/pganalyze-collector.conf`, and looks like this:
-
-```
-[pganalyze]
-api_key: your_pga_organization_api_key
-
-[server]
+export const ConfigSample = ({ apiKey }) => {
+  return (
+    <CodeBlock>
+      {`[pganalyze]
+api_key: ${apiKey ?? 'your_pga_organization_api_key'}\n
+[server1]
 db_host: instance-id.account-id.us-east-1.rds.amazonaws.com
 db_name: your_database_name
 db_username: your_monitoring_user
 db_password: your_monitoring_user_password
 db_sslrootcert: rds-ca-2019-root
-db_sslmode: verify-full
-```
+db_sslmode: verify-full`}
+    </CodeBlock>
+  )
+}
+
+## Configuring the collector on an Amazon EC2 instance
+
+The collector configuration file lives in `/etc/pganalyze-collector.conf`, and looks like this:
+
+<ConfigSample apiKey={props.apiKey} />
 
 **Fill in the values step-by-step:**
 
