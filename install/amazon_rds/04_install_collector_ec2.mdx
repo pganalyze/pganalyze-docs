@@ -10,6 +10,7 @@ import { useState } from 'react'
 import imgRdsNewInstanceRole from "../../images/rds_new_instance_role.png"
 
 import CollectorPkgInstallInstructions from "../../components/CollectorPkgInstallInstructions"
+import RepositorySigningKey from "../../components/RepositorySigningKey"
 
 export const CollectorInstallInstructions = () => {
   const [ pkgKind, setPkgKind ] = useState('yum')
@@ -66,6 +67,7 @@ Then follow the step to install the collector on Amazon Linux 2 based instances.
 
 <CollectorInstallInstructions />
 
+<RepositorySigningKey />
 ---
 
 After successful installation the pganalyze collector will now be running in the background on your server.
