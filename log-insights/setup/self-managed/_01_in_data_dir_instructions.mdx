@@ -1,0 +1,38 @@
+If the Postgres `log_directory` is configured to be inside the `data_directory`,
+log files are written out in a way that prevents users other than the postgres
+user from accessing them by default. It's difficult to set up permissions that
+both conform to security best practices and allow the pganalyze user access to
+the logs in this configuration, so we recommend moving the `log_directory` out
+of the data directory.
+
+First, choose a location for log files that is outside of the Postgres data directory,
+and then set it up like this:
+
+```
+sudo mkdir /my/log/directory
+sudo chown postgres:postgres /my/log/directory
+```
+
+Also make sure that the pganalyze user can access this directory, by making it a member
+of the postgres group:
+
+```
+sudo usermod -a -G postgres pganalyze
+```
+
+Then, adjust the Postgres configuration to log everything to this new directory by running
+the following commands as a Postgres superuser:
+
+```
+ALTER SYSTEM SET log_directory = '/my/log/directory';
+ALTER SYSTEM SET log_file_mode = '0640';
+SELECT pg_reload_conf();
+```
+
+Now, re-run
+
+```
+sudo pganalyze-collector --discover-log-location
+```
+
+and you should get the expected output from above with the `log_directory` you just configured.

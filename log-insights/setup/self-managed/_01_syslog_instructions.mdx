@@ -5,10 +5,11 @@ Assuming that the log files are owned by the Postgres user, you first
 need to add the pganalyze user to the postgres group:
 
 ```
-usermod -a -G postgres pganalyze
+sudo usermod -a -G postgres pganalyze
 ```
 
-And then make sure that new files are written with chmod 640, in your `/etc/rsyslog.conf`:
+And then make sure that new files are written with chmod 640. For rsyslog, adjust
+your `/etc/rsyslog.conf` as follows:
 
 ```
 # Place this at the beginning of the rsyslog.conf file:
@@ -21,8 +22,11 @@ local0.* /var/log/postgres/postgres.log
 $FileCreateMode 0600
 ```
 
-As well as making sure the current log file has the correct permissions:
+For syslog-ng and other syslog implementations, the configuration changes may be
+different; consult your syslog documentation.
+
+After this, make sure the current log file has the correct permissions:
 
 ```
-chmod 640 /var/log/postgres/postgres.log
+sudo chmod 640 /var/log/postgres/postgres.log
 ```

@@ -6,25 +6,30 @@ backlink_title: 'Log Insights: Setup (Self-Managed)'
 ---
 
 import TabPanel, {TabTextContent} from '../../../components/TabPanel'
+
+import StandardInstructions from './_01_standard_instructions.mdx'
+import InDataDirInstructions from './_01_in_data_dir_instructions.mdx'
 import SyslogInstructions from './_01_syslog_instructions.mdx'
-import LogFileInstructions from './_01_log_file_instructions.mdx'
 
 export const SelfHostedLogAlternatives = () => {
   const tabs = [
-    [ 'log_file', 'If using log file or directory'],
-    [ 'syslog', 'If using syslog']
+    [ 'standard', 'Found log location' ],
+    [ 'in_data_dir', 'Log location in data directory'],
+    [ 'syslog', 'Using syslog']
   ];
   return (
     <TabPanel items={tabs}>
       {(idx) => {
         const tab = tabs[idx][0];
         switch (tab) {
-          case 'log_file':
-            return <TabTextContent><LogFileInstructions /></TabTextContent>;
+          case 'standard':
+            return <TabTextContent><StandardInstructions /></TabTextContent>;
+          case 'in_data_dir':
+            return <TabTextContent><InDataDirInstructions /></TabTextContent>;
           case 'syslog':
             return <TabTextContent><SyslogInstructions /></TabTextContent>;
           default:
-          return null;
+            return null;
         }
       }}
     </TabPanel>
@@ -35,11 +40,11 @@ Log Insights works by continuously tailing your local Postgres log files, classi
 and submitting log data and statistics to pganalyze. The self-managed configuration requires
 your collector to run on the same instance as your Postgres server.
 
-In order to do set this up, you need to configure the `db_log_location` in the `pganalyze-collector.conf`
-file, which should be either the Postgres log file, or the directory in which log files are located.
+You will need to configure the `db_log_location` in the `pganalyze-collector.conf` file, and set
+it to either the filename of the Postgres log file, or the directory in which log files are located.
 
-We provide a helper for discovering the log directory, which you must run as root or using sudo. Run the
-command like this:
+We provide a helper for discovering the log directory, which you must run as root or using sudo. Run
+the command like this:
 
 ```
 sudo pganalyze-collector --discover-log-location
@@ -52,18 +57,12 @@ This will then produce output like this:
 db_log_location = /var/log/postgresql/postgresql-9.3-main.log
 ```
 
-Or alternately, like this:
+Or alternately, you may get a warning, in which case some extra configuration is necessary. In some cases where discovery
+doesn't work you might have to review in more detail how your system is set up. Please reach out to pganalyze support
+for help if needed.
 
-```
-2018/05/20 19:51:30 I [server1] Log location detected as syslog - please check our setup guide for rsyslogd or syslog-ng instructions
-```
+Otherwise, continue below according to the output:
 
-In some cases where discovery doesn't work you might have to review in more detail how your system is set up. Please
-reach out to pganalyze support for help if needed.
-
-Otherwise, continue below according to the discovered log location:
-
-<br/>
 <SelfHostedLogAlternatives />
 
 <Link className="btn btn-success" to="02_configure_collector">
