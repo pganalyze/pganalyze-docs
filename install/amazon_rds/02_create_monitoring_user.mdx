@@ -6,13 +6,16 @@ backlink_title: 'Installation Guide'
 ---
 
 import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
+import { generatePassword } from "../../util/password"
+
+export const password = generatePassword()
 
 We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
 
-As an RDS superuser, connect to the database you will be monitoring and
-run the following, replacing `mypassword` with one of your choosing:
+As an RDS superuser, connect to the database you will be monitoring and run the following (we've
+generated a random password for you, but you can replace it with one of your choosing):
 
-<MonitoringUserSetupInstructions />
+<MonitoringUserSetupInstructions password={password} />
 
 Note that it is important you run these as RDS superuser in order to pass down the full access to statistics tables.
 

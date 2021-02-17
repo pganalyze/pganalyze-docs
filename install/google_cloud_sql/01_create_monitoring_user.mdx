@@ -6,6 +6,15 @@ backlink_title: 'Installation Guide'
 ---
 
 import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
+import { generatePassword } from "../../util/password"
+
+export const password = generatePassword()
+
+export const VerifyConnection = ({password}) => {
+  return (
+    <CodeBlock>PGPASSWORD={password} psql -h 1.2.3.4 -d mydatabase -U pganalyze</CodeBlock>
+  )
+}
 
 We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
 
@@ -23,9 +32,10 @@ SELECT * FROM pg_stat_statements LIMIT 1;
 ## Create monitoring user
 
 Connect to the database you will be monitoring, again as a user with **cloudsqlsuperuser privileges**.
-Then run the following to create a monitoring user, replacing `mypassword` with one of your choosing:
+Then run the following to create a monitoring user (we've generated a random password for you, but you
+can replace it with one of your choosing):
 
-<MonitoringUserSetupInstructions minPostgres={100000} />
+<MonitoringUserSetupInstructions minPostgres={100000} password={password} />
 
 Note that it is important you run these as a user with **cloudsqlsuperuser privileges** in order to pass down the full access to statistics tables.
 
@@ -33,9 +43,7 @@ Note that it is important you run these as a user with **cloudsqlsuperuser privi
 
 Let's make sure we can connect to the database with the new user:
 
-```
-PGPASSWORD=mypassword psql -h 1.2.3.4 -d mydatabase -U pganalyze
-```
+<VerifyConnection password={password} />
 
 Write down the username and password of the monitoring user, we will use it in the last step of this tutorial.
 
