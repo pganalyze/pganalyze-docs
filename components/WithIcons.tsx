@@ -5,12 +5,14 @@ type Icons = {
   okay: React.ComponentType;
   changeRequired: React.ComponentType;
   info: React.ComponentType;
+  externalLink: React.ComponentType;
 }
 
 const IconContext = React.createContext<Icons>({
   okay: Null,
   changeRequired: Null,
   info: Null,
+  externalLink: Null,
 });
 
 const WithIcons: React.FunctionComponent<{icons: Icons}> = ({icons, children}) => {

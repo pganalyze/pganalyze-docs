@@ -1,4 +1,5 @@
 import React from "react";
+import { useIcon } from "./WithIcons";
 
 type AnchorProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
@@ -18,6 +19,7 @@ type Props = (AnchorProps | LinkProps) & {
 }
 
 const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelative: adjustLinks, ...rest}) => {
+  const ExternaLinkIcon = useIcon('externalLink')
   let destination: string;
   if ('to' in rest) {
     destination = rest.to;
@@ -46,7 +48,10 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
       props.rel = rel.join(' ')
     }
 
-    return <a {...props} />
+    const { children, ...otherProps } = props;
+    return (
+      <a {...otherProps} >{children}<ExternaLinkIcon /></a>
+    )
   }
 
   const Link = linkComponent
