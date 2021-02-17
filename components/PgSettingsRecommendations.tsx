@@ -249,7 +249,7 @@ export const getAllAutoExplainRecommendations = (settings: CurrentSettings | und
       const newPgss = current.split(/\s*,\s*/).filter(splElem => splElem !== '')
       const recommendChange = !newPgss.includes('auto_explain')
       if (recommendChange) {
-        newPgss.concat('auto_explain')
+        newPgss.push('auto_explain')
       }
       return {
         ...r,
