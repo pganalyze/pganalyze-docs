@@ -246,7 +246,8 @@ export const getAllAutoExplainRecommendations = (settings: CurrentSettings | und
     if (r.name === 'shared_preload_libraries') {
       // We should never have an empty shared_preload_libraries here because we always expect
       // to have at least pg_stat_statements but handle it gracefully anyway to avoid surprises.
-      const newPgss = current.split(/\s*,\s*/).filter(splElem => splElem !== '')
+      // We also filter out rdsutils, since users can neither add it nor remove it.
+      const newPgss = current.split(/\s*,\s*/).filter(splElem => splElem !== '' && splElem !== 'rdsutils')
       const recommendChange = !newPgss.includes('auto_explain')
       if (recommendChange) {
         newPgss.push('auto_explain')
