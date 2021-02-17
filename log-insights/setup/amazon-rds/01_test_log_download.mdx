@@ -1,0 +1,68 @@
+---
+title: 'Step 1: Ensure API Access'
+install_track_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+backlink_href: /docs/log-insights/setup/amazon-rds
+backlink_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+---
+
+import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
+
+Log Insights works by continuously fetching your Postgres log files from AWS, classifying log
+lines, and submitting log data and statistics to pganalyze. The RDS configuration usually
+does not require any additional configuration beyond the steps you performed as part of basic
+setup, so we can proceed directly to testing the integration.
+
+You can test whether the collector can actually access your RDS logs correctly by running
+the following:
+
+```
+pganalyze-collector --test --reload
+```
+
+If this works, you will see output like this:
+
+```
+I [server1] Testing statistics collection...
+I [server1]   Test submission successful (106 KB received, server abc123)
+I [server1] Testing activity snapshots...
+I [server1]   Test submission successful (2.12 KB received, server abc123)
+I [server1] Testing log collection (Amazon RDS)...
+I [server1]   Test submission successful (86 Bytes received, server abc123)
+I [server1]   Log test successful
+I Successfully reloaded pganalyze collector (PID 123)
+```
+
+The collector will start sending logs shortly.
+
+If you are getting an error, it sometimes helps to run the test with the `-v` flag to show all
+details:
+
+```
+pganalyze-collector --test -v
+```
+
+<PublicOnly>
+  <p>
+    The collector will only collect log data when you have an Amazon RDS host name specified (the
+    instance name is auto-detected), or you manually specify the <code>aws_db_instance_id</code> and
+    <code>aws_region</code> settings.
+  </p>
+  <p>
+    In addition, you need to ensure that AWS APIs can be accessed either by using the EC2 metadata
+    service, or by manually specifying the <code>aws_access_key_id</code> and <code>aws_secret_access_key</code>
+    settings.
+  </p>
+</PublicOnly>
+
+In case you get permission errors, make sure your IAM user has the [appropriate policy associated](https://pganalyze.com/docs/install/amazon_rds/03_setup_iam_policy).
+
+<PublicOnly>
+  <p>You will then see Log Insights data on your database within a few minutes:</p>
+  <p>
+    <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
+  </p>
+  <p>
+    We recommend that you also <a href="https://pganalyze.com/docs/log-insights/setup/tuning-log-config-settings">tune a few configuration parameters</a>
+    to get useful log output from Postgres.
+  </p>
+</PublicOnly>
