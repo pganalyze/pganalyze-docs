@@ -4,7 +4,7 @@ import { useCodeBlock } from './CodeBlock';
 import TabPanel, { TabItem } from './TabPanel'
 
 const PgContribPkgInstallInstructions: React.FunctionComponent = () => {
-  const versions: string[] = [ '11', '10', '9.6', '9.5', '9.4' ];
+  const versions: string[] = [ '13', '12', '11', '10', '9.6' ];
   const tabs = versions.map<TabItem>(version => {
     const id = `pg${version.replace(/\D/, '')}`
     const label = `Postgres ${version}`
