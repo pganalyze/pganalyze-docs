@@ -1,5 +1,5 @@
 import React from 'react'
-import CodeBlock, { useCodeBlock } from './CodeBlock'
+import { useCodeBlock } from './CodeBlock'
 
 type CollectorSetting = [ name: string, value: string ];
 
