@@ -10,7 +10,7 @@ type YumProps = {
 
 type DebProps = {
   kind: 'deb'
-  distro: "ubuntu/bionic" | "ubuntu/xenial" | "debian/buster" | "debian/stretch" | "debian/jessie"
+  distro: "ubuntu/focal" | "ubuntu/bionic" | "ubuntu/xenial" | "debian/buster" | "debian/stretch"
 }
 
 type Props = YumProps | DebProps
@@ -29,11 +29,11 @@ const CollectorPkgInstallInstructions: React.FunctionComponent<Props> = ({ kind 
       break
     case 'deb':
       installOpts = [
+        ["focal", "ubuntu/focal", "Ubuntu 20.04"],
         ["bionic", "ubuntu/bionic", "Ubuntu 18.04"],
         ["xenial", "ubuntu/xenial", "Ubuntu 16.04"],
         ["buster", "debian/buster", "Debian 10"],
         ["stretch","debian/stretch",  "Debian 9"],
-        ["jessie", "debian/jessie", "Debian 8"],
       ]
       break
   }
