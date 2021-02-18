@@ -188,21 +188,17 @@
       "title": "Step 1: Check for auto_explain",
       "path": "/docs/explain/setup/amazon_rds/01_auto_explain_check"
     },
-    "explain/setup/amazon_rds/02_review_settings": {
-      "title": "Step 2: Review auto_explain settings",
-      "path": "/docs/explain/setup/amazon_rds/02_review_settings"
+    "explain/setup/amazon_rds/02_enable_auto_explain": {
+      "title": "Step 2: Enable auto_explain",
+      "path": "/docs/explain/setup/amazon_rds/02_enable_auto_explain"
     },
-    "explain/setup/amazon_rds/03_restart_postgres": {
-      "title": "Step 3: Restart Postgres",
-      "path": "/docs/explain/setup/amazon_rds/03_restart_postgres"
+    "explain/setup/amazon_rds/03_review_settings": {
+      "title": "Step 3: Review auto_explain settings",
+      "path": "/docs/explain/setup/amazon_rds/03_review_settings"
     },
     "explain/setup/amazon_rds/04_test_and_verify": {
       "title": "Step 4: Test and Verify",
       "path": "/docs/explain/setup/amazon_rds/04_test_and_verify"
-    },
-    "explain/setup/log_explain": {
-      "title": "Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres",
-      "path": "/docs/explain/setup/log_explain"
     },
     "explain/setup/log_explain/01_overview": {
       "title": "Step 1: Overview",
@@ -224,13 +220,13 @@
       "title": "Step 1: Check for auto_explain",
       "path": "/docs/explain/setup/self_managed/01_auto_explain_check"
     },
-    "explain/setup/self_managed/02_review_settings": {
-      "title": "Step 2: Review auto_explain settings",
-      "path": "/docs/explain/setup/self_managed/02_review_settings"
+    "explain/setup/self_managed/02_enable_auto_explain": {
+      "title": "Step 2: Enable auto_explain",
+      "path": "/docs/explain/setup/self_managed/02_enable_auto_explain"
     },
-    "explain/setup/self_managed/03_restart_postgres": {
-      "title": "Step 3: Restart Postgres",
-      "path": "/docs/explain/setup/self_managed/03_restart_postgres"
+    "explain/setup/self_managed/03_review_settings": {
+      "title": "Step 3: Review auto_explain settings",
+      "path": "/docs/explain/setup/self_managed/03_review_settings"
     },
     "explain/setup/self_managed/04_test_and_verify": {
       "title": "Step 4: Test and Verify",
@@ -456,25 +452,9 @@
       "title": "Log Insights: Setup",
       "path": "/docs/log-insights/setup"
     },
-    "log-insights/setup/amazon-rds": {
-      "title": "Log Insights: Setup (Amazon RDS & Amazon Aurora)",
-      "path": "/docs/log-insights/setup/amazon-rds"
-    },
-    "log-insights/setup/amazon-rds/01_ensure_api_access": {
-      "title": "Step 1: Ensure API Access",
-      "path": "/docs/log-insights/setup/amazon-rds/01_ensure_api_access"
-    },
-    "log-insights/setup/amazon-rds/02_test_log_download": {
-      "title": "Step 2: Test Log Download",
-      "path": "/docs/log-insights/setup/amazon-rds/02_test_log_download"
-    },
-    "log-insights/setup/amazon-rds/03_reload_collector": {
-      "title": "Step 3: Reload Collector",
-      "path": "/docs/log-insights/setup/amazon-rds/03_reload_collector"
-    },
-    "log-insights/setup/azure-database": {
-      "title": "Log Insights: Setup (Azure Database for PostgreSQL)",
-      "path": "/docs/log-insights/setup/azure-database"
+    "log-insights/setup/amazon-rds/01_test_log_download": {
+      "title": "Step 1: Test Log Download",
+      "path": "/docs/log-insights/setup/amazon-rds/01_test_log_download"
     },
     "log-insights/setup/azure-database/01_set_up_managed_identity": {
       "title": "Step 1: Set up Managed Identity",
@@ -500,10 +480,6 @@
       "title": "Troubleshooting",
       "path": "/docs/log-insights/setup/azure-database/troubleshooting"
     },
-    "log-insights/setup/google-cloud-sql": {
-      "title": "Log Insights: Setup (Google Cloud SQL)",
-      "path": "/docs/log-insights/setup/google-cloud-sql"
-    },
     "log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber": {
       "title": "Step 1: Create Topic and Subscriber",
       "path": "/docs/log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber"
@@ -524,10 +500,6 @@
       "title": "Troubleshooting",
       "path": "/docs/log-insights/setup/google-cloud-sql/troubleshooting"
     },
-    "log-insights/setup/heroku-postgres": {
-      "title": "Log Insights: Setup (Heroku Postgres)",
-      "path": "/docs/log-insights/setup/heroku-postgres"
-    },
     "log-insights/setup/heroku-postgres/01_add_log_drain": {
       "title": "Step 1: Add Log Drain",
       "path": "/docs/log-insights/setup/heroku-postgres/01_add_log_drain"
@@ -540,10 +512,6 @@
       "title": "Step 3: Restart Collector",
       "path": "/docs/log-insights/setup/heroku-postgres/03_restart_collector"
     },
-    "log-insights/setup/self-managed": {
-      "title": "Log Insights: Setup (Self-Managed Server)",
-      "path": "/docs/log-insights/setup/self-managed"
-    },
     "log-insights/setup/self-managed/01_determine_log_location": {
       "title": "Step 1: Determine Log Location",
       "path": "/docs/log-insights/setup/self-managed/01_determine_log_location"
@@ -551,10 +519,6 @@
     "log-insights/setup/self-managed/02_configure_collector": {
       "title": "Step 2: Configure Collector",
       "path": "/docs/log-insights/setup/self-managed/02_configure_collector"
-    },
-    "log-insights/setup/self-managed/03_restart_collector": {
-      "title": "Step 3: Restart collector",
-      "path": "/docs/log-insights/setup/self-managed/03_restart_collector"
     },
     "log-insights/setup/self-managed/troubleshooting": {
       "title": "Troubleshooting",
