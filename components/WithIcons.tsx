@@ -1,12 +1,16 @@
 import React, { useContext } from 'react'
 import Null from './Null';
 
+export type IconProps = {
+  className: string;
+}
+
 type Icons = {
-  okay: React.ComponentType;
-  changeRequired: React.ComponentType;
-  info: React.ComponentType;
-  externalLink: React.ComponentType;
-  secure: React.ComponentType;
+  okay: React.ComponentType<IconProps>;
+  changeRequired: React.ComponentType<IconProps>;
+  info: React.ComponentType<IconProps>;
+  externalLink: React.ComponentType<IconProps>;
+  secure: React.ComponentType<IconProps>;
 }
 
 const IconContext = React.createContext<Icons>({
@@ -25,7 +29,7 @@ const WithIcons: React.FunctionComponent<{icons: Icons}> = ({icons, children}) =
   )
 }
 
-export const useIcon = (kind: keyof Icons): React.ComponentType => {
+export const useIcon = (kind: keyof Icons): React.ComponentType<IconProps> => {
   return useContext(IconContext)[kind];
 }
 

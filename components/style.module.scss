@@ -30,9 +30,38 @@
   width: 100%;
 }
 
-.settingDescription {
-  font-size: 70%;
-  line-height: 16px;
-  color: #555;
-  padding-left: 8px;
+.descriptionPopupIcon {
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+.statusIcon {
+  font-size: 18px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.okayIcon {
+  color: #93bf3b;
+}
+
+.changeRequiredIcon {
+  color: #ffa700;
+}
+
+.infoIcon {
+  color: #4682b4;
+}
+
+.externalLinkIcon {
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.secureIcon {
+  font-size: 12px;
+  margin-right: 4px;
+  color: #5cb85c;
+  vertical-align: baseline;
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import { useIcon } from "./WithIcons";
 
+import styles from './style.module.scss';
+
 type AnchorProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
 type LinkProps = Omit<AnchorProps, 'href'> & {
@@ -50,7 +52,7 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
 
     const { children, ...otherProps } = props;
     return (
-      <a {...otherProps} >{children}<ExternaLinkIcon /></a>
+      <a {...otherProps} >{children}<ExternaLinkIcon className={styles.externalLinkIcon} /></a>
     )
   }
 

@@ -3,7 +3,7 @@ import { useCodeBlock } from './CodeBlock';
 import Null from './Null';
 
 import styles from './style.module.scss';
-import { useExtraInfo } from './WithExtraInfo';
+import { useDescriptionPopup } from './WithDescriptionPopup';
 import { useIcon } from './WithIcons';
 
 type PGSettingRecommendation = {
@@ -24,7 +24,7 @@ type Props ={
 
 const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'list', recommendations }) => {
   const hasCurrent = recommendations.some(s => s.current != null);
-  const Description = useExtraInfo()
+  const DescriptionPopup = useDescriptionPopup()
 
   return (
     <>
@@ -41,7 +41,9 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
           {recommendations.map(r => {
             return (
               <tr key={r.name}>
-                <td className={styles.noWrap}>{r.name}<Description className={styles.settingDescription} info={r.description} /></td>
+                <td className={styles.noWrap}>
+                  {r.name}<DescriptionPopup className={styles.descriptionPopupIcon} info={r.description} />
+                </td>
                 {hasCurrent && <td>{r.current ?? '[not set]'}</td>}
                 <td>{r.recommended}</td>
                 <td>
@@ -95,23 +97,25 @@ const RecommendationStatus: React.FunctionComponent<{recommendation: PGSettingRe
   const OkayIcon = useIcon('okay');
   const ChangeRequiredIcon = useIcon('changeRequired');
   const InfoIcon = useIcon('info');
+  // add stripped down classNames hack to avoid dependency
+  const classNames = (...classes: string[]) => classes.join(' ');
 
   if (!recommendation.recommendChange) {
     return (
       <div title="no changes required">
-        <OkayIcon />
+        <OkayIcon className={classNames(styles.statusIcon, styles.okayIcon)} />
       </div>
     )
   } else if (recommendation.required) {
     return (
       <div title="update required">
-        <ChangeRequiredIcon />
+        <ChangeRequiredIcon className={classNames(styles.statusIcon, styles.changeRequiredIcon)} />
       </div>
     )
   } else {
     return (
       <div title="update recommended">
-        <InfoIcon />
+        <InfoIcon className={classNames(styles.statusIcon, styles.infoIcon)} />
       </div>
     )
   }

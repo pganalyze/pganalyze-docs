@@ -1,6 +1,8 @@
 import React from 'react'
 import { useIcon } from './WithIcons';
 
+import styles from './style.module.scss';
+
 const RepositorySigningKey: React.FunctionComponent = () => {
   const SecureIcon = useIcon('secure');
   const keyUrl = 'https://packages.pganalyze.com/pganalyze_signing_key.asc';
@@ -8,7 +10,7 @@ const RepositorySigningKey: React.FunctionComponent = () => {
     <div style={{fontSize: '14px', padding: '6px 16px 4px', borderTop: '1px solid gray', borderBottom: '1px solid gray'}}>
       <div>
         <strong>
-          <SecureIcon />Repository Signing Key
+          <SecureIcon className={styles.secureIcon} />Repository Signing Key
         </strong>
       </div>
       <div>
