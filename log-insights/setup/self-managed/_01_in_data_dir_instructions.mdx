@@ -23,7 +23,7 @@ sudo usermod -a -G postgres pganalyze
 Then, adjust the Postgres configuration to log everything to this new directory by running
 the following commands as a Postgres superuser:
 
-```
+```sql
 ALTER SYSTEM SET log_directory = '/my/log/directory';
 ALTER SYSTEM SET log_file_mode = '0640';
 SELECT pg_reload_conf();
