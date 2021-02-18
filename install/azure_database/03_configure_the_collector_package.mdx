@@ -23,13 +23,13 @@ export const ConfigSample = ({ apiKey }) => {
   return (
     <CodeBlock>
       {`[pganalyze]
-api_key: ${apiKey ?? 'your_pga_organization_api_key'}\n
+api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
 [server1]
-db_host: your_db.postgres.database.azure.com
-db_name: your_database_name
-db_username: your_monitoring_user@your_db
-db_password: your_monitoring_user_password
-azure_db_server_name: your_db`}
+db_host = your_db.postgres.database.azure.com
+db_name = your_database_name
+db_username = your_monitoring_user@your_db
+db_password = your_monitoring_user_password
+azure_db_server_name = your_db`}
     </CodeBlock>
   )
 }
