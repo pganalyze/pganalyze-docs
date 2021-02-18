@@ -8,7 +8,7 @@ backlink_title: 'Automated EXPLAIN: Setup'
 The log-based EXPLAIN mechanism is an alternative to the `auto_explain` module for EXPLAIN plan collection.
 We generally recommend using [auto_explain](/docs/explain/setup) to collect EXPLAIN plans
 automatically, but not all environments support the `auto_explain` module (bundled with Postgres), so we
-support an alternative mechanism.
+offer an alternative mechanism.
 
 This method relies on Postgres logging slow queries, based on the `log_min_duration_statement` setting.
 
@@ -30,7 +30,7 @@ Note that log-based EXPLAIN method has the following limitations:
 * Plans may sometimes be different from the executed plans (e.g., due to session-specific configuration settings)
 * Plans for some queries may not be obtainable (e.g., due to use of temporary tables or `search_path` differences)
 
-In spite of this, we find log-based Automated EXPLAIN to provide valuable insights into your database performance.
+In spite of this, we find log-based Automated EXPLAIN provides valuable insights into database performance.
 
 <Link className='btn btn-success' to='02_create_helper_functions'>
   Proceed to Step 2: Create helper functions
