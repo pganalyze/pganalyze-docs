@@ -59,5 +59,4 @@ When you see output like this:
 
 It means that the log test was able to run successfully as a root user, but could not be completed when testing with the "pganalyze" user that the collector background process runs as.
 
-See "Allowing access when using Postgres built-in logging" or "Allowing access when using rsyslogd built-in logging" below for details on how to fix this.
-
+See the appropriate instructions on moving the log directory out of the data directory or configuring syslog in [the first step](01_determine_log_location).
