@@ -452,9 +452,17 @@
       "title": "Log Insights: Setup",
       "path": "/docs/log-insights/setup"
     },
+    "log-insights/setup/amazon-rds": {
+      "title": "Log Insights: Setup (Amazon RDS & Amazon Aurora)",
+      "path": "/docs/log-insights/setup/amazon-rds"
+    },
     "log-insights/setup/amazon-rds/01_test_log_download": {
       "title": "Step 1: Test Log Download",
       "path": "/docs/log-insights/setup/amazon-rds/01_test_log_download"
+    },
+    "log-insights/setup/azure-database": {
+      "title": "Log Insights: Setup (Azure Database for PostgreSQL)",
+      "path": "/docs/log-insights/setup/azure-database"
     },
     "log-insights/setup/azure-database/01_set_up_managed_identity": {
       "title": "Step 1: Set up Managed Identity",
@@ -480,6 +488,10 @@
       "title": "Troubleshooting",
       "path": "/docs/log-insights/setup/azure-database/troubleshooting"
     },
+    "log-insights/setup/google-cloud-sql": {
+      "title": "Log Insights: Setup (Google Cloud SQL)",
+      "path": "/docs/log-insights/setup/google-cloud-sql"
+    },
     "log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber": {
       "title": "Step 1: Create Topic and Subscriber",
       "path": "/docs/log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber"
@@ -500,6 +512,10 @@
       "title": "Troubleshooting",
       "path": "/docs/log-insights/setup/google-cloud-sql/troubleshooting"
     },
+    "log-insights/setup/heroku-postgres": {
+      "title": "Log Insights: Setup (Heroku Postgres)",
+      "path": "/docs/log-insights/setup/heroku-postgres"
+    },
     "log-insights/setup/heroku-postgres/01_add_log_drain": {
       "title": "Step 1: Add Log Drain",
       "path": "/docs/log-insights/setup/heroku-postgres/01_add_log_drain"
@@ -511,6 +527,10 @@
     "log-insights/setup/heroku-postgres/03_restart_collector": {
       "title": "Step 3: Restart Collector",
       "path": "/docs/log-insights/setup/heroku-postgres/03_restart_collector"
+    },
+    "log-insights/setup/self-managed": {
+      "title": "Log Insights: Setup (Self-Managed)",
+      "path": "/docs/log-insights/setup/self-managed"
     },
     "log-insights/setup/self-managed/01_determine_log_location": {
       "title": "Step 1: Determine Log Location",
