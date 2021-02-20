@@ -7,7 +7,7 @@ const RepositorySigningKey: React.FunctionComponent = () => {
   const SecureIcon = useIcon('secure');
   const keyUrl = 'https://packages.pganalyze.com/pganalyze_signing_key.asc';
   return (
-    <div style={{fontSize: '14px', padding: '6px 16px 4px', borderTop: '1px solid gray', borderBottom: '1px solid gray'}}>
+    <div style={{fontSize: '14px', padding: '6px 16px 4px', borderTop: '1px solid gray', borderBottom: '1px solid gray', marginBottom: '16px'}}>
       <div>
         <strong>
           <SecureIcon className={styles.secureIcon} />Repository Signing Key
