@@ -34,7 +34,7 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
             <th>Setting</th>
             {hasCurrent && <th>Current</th>}
             <th>Recommended</th>
-            <th>Status</th>
+            {hasCurrent && <th>Status</th>}
           </tr>
         </thead>
         <tbody>
@@ -46,9 +46,9 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
                 </td>
                 {hasCurrent && <td>{r.current ?? '[not set]'}</td>}
                 <td>{r.recommended}</td>
-                <td>
+                {hasCurrent && <td>
                   <RecommendationStatus recommendation={r} />
-                </td>
+                </td>}
               </tr>
             )
           })}
