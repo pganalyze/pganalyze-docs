@@ -11,20 +11,15 @@ At this point, your pganalyze setup should be ready to collect EXPLAIN plans. Si
 you may not have any slow queries in your system right now, we can generate a
 synthetic slow query that we can use to confirm everything is working.
 
-The Postgres `pg_sleep` function, which just waits for the specified number of seconds,
-is perfect for this. Check your current `auto_explain.log_min_duration`:
+The collector includes a flag to do this for you automatically, based on your
+`auto_explain.log_min_duration`:
 
-```sql
-SHOW auto_explain.log_min_duration;
+```
+pganalyze-collector --test-explain
 ```
 
-And then run a `pg_sleep` with a value just over this (remember, the `log_min_duration`
-value will be shown in milliseconds, but `pg_sleep` takes an argument in seconds). E.g.,
-if your `auto_explain.log_min_duration` is 1000ms, you can run
-
-```sql
-SELECT pg_sleep(1.1);
-```
+This will produce no output but will run an artificially slow query using the
+Postgres `pg_sleep` function.
 
 <PublicOnly>
   <VerifyExplainPublic />
