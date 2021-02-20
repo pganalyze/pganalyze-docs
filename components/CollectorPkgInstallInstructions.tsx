@@ -2,6 +2,7 @@ import React from 'react'
 
 import TabPanel, { TabItem } from './TabPanel'
 import { useCodeBlock } from './CodeBlock'
+import RepositorySigningKey from './RepositorySigningKey'
 
 type YumProps = {
   kind: 'yum'
@@ -39,12 +40,15 @@ const CollectorPkgInstallInstructions: React.FunctionComponent<Props> = ({ kind 
   }
   const tabs = installOpts.map<TabItem>(opt => [opt[0], opt[2]])
   return (
-    <TabPanel items={tabs}>
-      {(idx: number) => {
-        const distro = installOpts[idx][1];
-        return <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
-      }}
-    </TabPanel>
+    <>
+      <TabPanel items={tabs}>
+        {(idx: number) => {
+          const distro = installOpts[idx][1];
+          return <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
+        }}
+      </TabPanel>
+      <RepositorySigningKey />
+    </>
   )
 }
 
