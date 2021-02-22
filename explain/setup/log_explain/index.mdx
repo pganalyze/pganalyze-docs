@@ -1,14 +1,15 @@
 ---
-title: 'Step 1: Overview'
-install_track_title: 'Automated EXPLAIN: Setup (log-based)'
+title: 'Collect Postgres EXPLAIN plans using log-based EXPLAIN'
 backlink_href: /docs/explain/setup
-backlink_title: 'Automated EXPLAIN: Setup'
+backlink_title: 'Set up automatic EXPLAIN plan collection'
 ---
 
 The log-based EXPLAIN mechanism is an alternative to the `auto_explain` module for EXPLAIN plan collection.
-We generally recommend using [auto_explain](/docs/explain/setup) to collect EXPLAIN plans
+We generally recommend using [auto_explain](/docs/explain/setup/auto_explain) to collect EXPLAIN plans
 automatically, but not all environments support the `auto_explain` module (bundled with Postgres), so we
 offer an alternative mechanism.
+
+## How log-based EXPLAIN works
 
 This method relies on Postgres logging slow queries, based on the `log_min_duration_statement` setting.
 
@@ -32,6 +33,8 @@ Note that log-based EXPLAIN method has the following limitations:
 
 In spite of this, we find log-based Automated EXPLAIN provides valuable insights into database performance.
 
-<Link className='btn btn-success' to='02_create_helper_functions'>
-  Proceed to Step 2: Create helper functions
-</Link>
+## Setup
+
+Follow the setup instructions here:
+
+ * [Log-based Automated EXPLAIN (all platforms)](/docs/explain/setup/log_explain/01_create_helper_functions)

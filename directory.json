@@ -200,21 +200,25 @@
       "title": "Step 4: Test and Verify",
       "path": "/docs/explain/setup/amazon_rds/04_test_and_verify"
     },
-    "explain/setup/log_explain/01_overview": {
-      "title": "Step 1: Overview",
-      "path": "/docs/explain/setup/log_explain/01_overview"
+    "explain/setup/auto_explain": {
+      "title": "Collect Postgres EXPLAIN plans using auto_explain",
+      "path": "/docs/explain/setup/auto_explain"
     },
-    "explain/setup/log_explain/02_create_helper_functions": {
-      "title": "Step 2: Create helper functions",
-      "path": "/docs/explain/setup/log_explain/02_create_helper_functions"
+    "explain/setup/log_explain": {
+      "title": "Collect Postgres EXPLAIN plans using log-based EXPLAIN",
+      "path": "/docs/explain/setup/log_explain"
     },
-    "explain/setup/log_explain/03_enable_log_explain": {
-      "title": "Step 3: Enable log-based EXPLAIN",
-      "path": "/docs/explain/setup/log_explain/03_enable_log_explain"
+    "explain/setup/log_explain/01_create_helper_functions": {
+      "title": "Step 1: Create helper functions",
+      "path": "/docs/explain/setup/log_explain/01_create_helper_functions"
     },
-    "explain/setup/log_explain/04_test_and_verify": {
-      "title": "Step 4: Test and verify",
-      "path": "/docs/explain/setup/log_explain/04_test_and_verify"
+    "explain/setup/log_explain/02_enable_log_explain": {
+      "title": "Step 2: Enable log-based EXPLAIN",
+      "path": "/docs/explain/setup/log_explain/02_enable_log_explain"
+    },
+    "explain/setup/log_explain/03_test_and_verify": {
+      "title": "Step 3: Test and verify",
+      "path": "/docs/explain/setup/log_explain/03_test_and_verify"
     },
     "explain/setup/self_managed/01_auto_explain_check": {
       "title": "Step 1: Check for auto_explain",

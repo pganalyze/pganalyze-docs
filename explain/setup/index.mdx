@@ -20,8 +20,8 @@ EXPLAIN insights to help you interpret the raw plan information.
 
 pganalyze supports two different mechanisms for collecting EXPLAIN plans automatically:
 
-* **auto_explain**<br />Postgres collects EXPLAIN (or EXPLAIN ANALYZE) data as part of query processing, based on `auto_explain.log_min_duration`, reflecting the actual plan that was used
-* **Log-based EXPLAIN**<br />pganalyze collector runs EXPLAIN (without ANALYZE) on all queries logged based on `log_min_duration_statement`, after the query has completed
+* **[auto_explain](/docs/explain/setup/auto_explain)**<br />Postgres collects EXPLAIN (or EXPLAIN ANALYZE) data as part of query processing, based on `auto_explain.log_min_duration`, reflecting the actual plan that was used
+* **[Log-based EXPLAIN](/docs/explain/setup/log_explain)**<br />pganalyze collector runs EXPLAIN (without ANALYZE) on all queries logged based on `log_min_duration_statement`, after the query has completed
 
 Generally we recommend utilizing **auto_explain** where available, as it provides higher data quality.
 
@@ -45,10 +45,10 @@ We are constantly evaluating new platform to support - please [reach out](/conta
 
 ### Setup
 
-See the following pages for details on how to install pganalyze Log Insights:
+See the following pages for details on how to install pganalyze Automated EXPLAIN:
 
 * [Amazon RDS & Amazon Aurora](/docs/explain/setup/amazon_rds/01_auto_explain_check)
-* [Azure Database for PostgreSQL](/docs/explain/setup/log_explain/01_overview)
-* [Google Cloud SQL](/docs/explain/setup/log_explain/01_overview)
-* [Heroku Postgres](/docs/explain/setup/log_explain/01_overview)
+* [Azure Database for PostgreSQL](/docs/explain/setup/log_explain/01_create_helper_functions)
+* [Google Cloud SQL](/docs/explain/setup/log_explain/01_create_helper_functions)
+* [Heroku Postgres](/docs/explain/setup/log_explain/01_create_helper_functions)
 * [Self-Managed Server](/docs/explain/setup/self_managed/01_auto_explain_check)

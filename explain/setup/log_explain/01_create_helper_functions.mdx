@@ -1,9 +1,18 @@
 ---
-title: 'Step 2: Create helper functions'
+title: 'Step 1: Create helper functions'
 install_track_title: 'Automated EXPLAIN: Setup (log-based)'
 backlink_href: /docs/explain/setup
 backlink_title: 'Automated EXPLAIN: Setup'
 ---
+
+The log-based EXPLAIN mechanism is an alternative to the `auto_explain` module for EXPLAIN plan collection.
+We generally recommend using [auto_explain](https://pganalyze.com/docs/explain/setup/auto_explain) to collect
+EXPLAIN plans automatically, but not all environments support the `auto_explain` module (bundled with Postgres),
+so we offer an alternative mechanism.
+
+The log-based EXPLAIN mechanism by watching your logs for slow queries (according to `log_min_duration_statement`)
+and running EXPLAIN for each one. This has some limitations (most notably, we only run EXPLAIN, not EXPLAIN ANALYZE), but still
+provides valuable insights. Learn more in our [Log-based EXPLAIN overview](https://pganalyze.com/docs/explain/setup/log_explain).
 
 In order to use log-based EXPLAIN, the collector needs permissions to run EXPLAIN queries on your database.
 The safest way to permit this is to create the following helper function **in each database you want to monitor**:
@@ -48,6 +57,6 @@ Because EXPLAIN needs to run in the same database where the query ran, you will 
 **in each database you want to monitor**. You should create the function as a Postgres superuser to ensure EXPLAIN
 access to all queries.
 
-<Link className='btn btn-success' to='03_enable_log_explain'>
-  Proceed to Step 3: Configure collector
+<Link className='btn btn-success' to='02_enable_log_explain'>
+  Proceed to Step 2: Configure collector
 </Link>
