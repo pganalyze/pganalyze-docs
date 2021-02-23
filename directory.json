@@ -144,6 +144,10 @@
       "title": "2020.09.0 Release",
       "path": "/docs/enterprise/releases/2020-09-0"
     },
+    "enterprise/releases/2021-02-0": {
+      "title": "2021.02.0 Release",
+      "path": "/docs/enterprise/releases/2021-02-0"
+    },
     "enterprise/setup": {
       "title": "Enterprise Edition: Initial Setup",
       "path": "/docs/enterprise/setup"

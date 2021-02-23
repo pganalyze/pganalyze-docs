@@ -1,0 +1,147 @@
+---
+title: '2021.02.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2021.02.0`
+
+## Notes
+
+* This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+  - Note that the migration might run for a little while (depending on data size) due to some tables being partitioned for better performance
+* Old connection tracing data will be lost after this upgrade - note that connection tracing data already has a short retention time (24 hours), so this is usually not noticable
+* After upgrading, you may experience connectivity issues for certain Amazon RDS databases when using the `verify-full` SSL mode, this is a [documented bug in Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.SSL-certificate-rotation.html) (see note regarding Go 1.15),
+  and can be resolved by rotating the instance certificate. To mitigate in the short term you can turn off SSL verification for affected instances, which will avoid the problem.
+
+## New features
+
+* Significant navigation refactoring
+  - Use single combined navigation, move server/database select to top
+  - Move VACUUM statistics, system statistics and Postgres config settings to server level
+  - Merge organization and server settings into one "Settings" nav item
+* Introduce server-wide query overview
+  - As a new standard metric, introduce "Queries Per Second" (QPS) that
+    is the indicator of which databases are most active on a particular
+    server
+* Add per-server schema statistics view that shows stats for each database
+* Add per-server EXPLAIN list, showing plans for all databases on a server
+* Redesign of the in-app check and alerting experience
+* Query details: Restructure the header design to make it more compact
+* Navigate to most recently visited recent server when opening the pganalyze app
+  - Previously this would go to the very first server in the organization, which
+    is often not the server that is most interesting.
+* Add option to automatically run pending pganalyze database migrations upon container start
+  - Specify `AUTO_DB_MIGRATE=1` in your environment configuration to automatically run the
+    `rake db:migrate` command when the pganalyze container starts in web/worker/default mode
+  - Note that this assumes you don't have a healthcheck that would shut down the container
+    before the migrations have finished, as the migrations are run before the container fully
+    starts
+* Log Insights
+  - Add U140 log event (Inconsistent range bounds)
+  - Add support for `%m [%p]: [%l-1] db=%d,user=%u `, `pid=%p,user=%u,db=%d,app=%a,client=%h ` and `user=%u,db=%d,app=%a,client=%h ` log_line_prefix settings
+  - Correctly handle `%a` (application name) containing commas/square brackets
+* Other collector improvements (only applicable when running the collector version `0.37.0` or newer separately from the Enterprise image)
+  * Add support for GKE workload identity
+  * Add support for assuming AWS instance roles
+  * Add support for receiving logs over syslog with new `db_log_syslog_server` config setting
+  * Add new `pganalyze-collector-setup` program for easier installation on self-managed servers
+
+
+## Bugfixes
+
+* Schema data processing fixes
+  - Fix issue where incomplete schema information in snapshots was not marked correctly, leading to schema objects disappearing and being re-created
+  - Avoid broken index information in case of crashes
+  - Correctly ignore databases that are not included in the collector's database list
+* Query statistics improvements
+  - Fix query text normalization when IN list starts with a line break
+  - Ignore "insufficient privilege" queries w/o queryid, avoiding misleading statistics
+* Automatic EXPLAIN
+  - Fix log-based EXPLAIN bug where query samples could be dropped if EXPLAIN failed
+  - Improved text to JSON plan conversion (function scans, `track_io_timing` = `on`)
+* Environment specific improvements
+  * Ignore I/O stats for AWS Aurora utility statements
+    * AWS Aurora appears to report incorrect blk_read_time and blk_write_time values
+      for utility statements (i.e., non-SELECT/INSERT/UPDATE/DELETE); we zero these out for now
+  * Fix trailing newline handling for GCP and self-hosted log streams
+    * This could lead to queries being poorly formatted in the UI, or some queries
+      with single-line comments being ignored
+  * Ignore internal admin databases for GCP and Azure
+  * Self-managed servers: Improve handling of multi-line log events
+  * System information for self-managed servers:
+    - Use storage mountpoint instead of path to show data directory
+    - Fix dashboard display for self-managed servers
+* Other fixes
+  - Treat missing wait event types as unknown (instead of failing the snapshot)
+  - Index check: Ignore (non-materialized) views to avoid unnecessary recommendations
+  - Query Samples: Correctly handle NULL parameters
+  - Extract query tags from all comments present in query (not just the first one)
+  - Active query check: Ignore `walsender: ` connections
+ - Allow roles that have deleted users associated to be removed from an organization
+
+## Performance improvements
+
+* Optimize `getQueryStatsForQuery` GraphQL API (used for query details page)
+* Optimize `getQueryStats` GraphQL API (used for query overview page)
+  - This improvement only applies when all query types are selected, thus this
+    is now the default (unless already chosen otherwise)
+* Partition additional tables to improve overall performance
+* Utilize extended statistics for some internal statistics tables
+* Refactor connection tracing data model
+  * This significantly reduces the overhead of how connection tracing data is processed and stored
+  * Drop application name from frontend (expensive to store)
+  * Note that this change causes old connection tracing data to be lost after the upgrade, due
+    to the low retention time (24h) this is deemed acceptable
+* Schema storage: Group upserts together, reduce peak memory consumption
+* Query list: Avoid unnecessary backend calls by debouncing the requests during search
+* Collector: Optimize log handling logic for reduced CPU consumption
+
+
+## Security improvements
+
+* Fixes low-severity security issues in dependencies (CVE-2021-22880, CVE-2021-22881, CVE-2020-26247, CVE-2020-26298 and CVE-2020-15169)
+* Updates OS packages used in collector image
+
+
+## Other changes
+
+* Consistently use "read from disk" for `shared_blks_read`, avoid using hits
+  - The query details page and check-up were using a combined read+hit metric
+    before, but that can be very misleading since Postgres can access the
+    same buffer over and over again during execution, artificially increasing
+    the hit counter. Thus, only use the `shared_blks_read` metric when we
+    show a byte value in the UI, and consistently call that "read from disk".
+* Identify RDS instances by region and account ID to ensure API scope uniqueness
+  - Previously we identified RDS databases by there ID and region only, but
+    the ID does not have to be unique within a region, it only has to be
+    unique within the same AWS account in that region. Thus, adjust the
+    scope to include both the region and AWS Account ID (if configured or
+    auto-detected), and use the fallback scope mechanism to migrate existing
+    servers.
+* Log Insights improvements
+  - Self-managed server: Process logs every 3 seconds, instead of on-demand
+  - Google Cloud SQL: Always acknowledge Pub Sub messages, even if collector doesn't handle them
+* Test snapshot: Include link to view server in success message
+  - This improves the setup experience for the collector running outside the
+    main Enterprise container. Make sure to set the `DOMAIN_NAME` environment variable
+    for the URL to be correct.
+* Check and report problematic log collection settings
+  - Some Postgres settings almost always cause a drastic increase in log
+    volume for little actual benefit. They tend to cause operational problems
+    for the collector (due to the load of additional log parsing) and the
+    pganalyze service itself (or indeed, likely for any service that would
+    process collector snapshots), and do not add any meaningful insights.
+    Furthermore, we found that these settings are often turned on
+    accidentally.
+  - The settings in question are:
+     * [log_min_duration_statement](https://www.postgresql.org/docs/current/runtime-config-logging.html#GUC-LOG-MIN-DURATION-STATEMENT) less than 10ms
+     * [log_statement](https://www.postgresql.org/docs/current/runtime-config-logging.html#GUC-LOG-STATEMENT) set to 'all'
+     * [log_duration](https://www.postgresql.org/docs/current/runtime-config-logging.html#GUC-LOG-DURATION) set to 'on'
+     * [log_error_verbosity](https://www.postgresql.org/docs/current/runtime-config-logging.html#GUC-LOG-ERROR-VERBOSITY) set to 'verbose'
+  - If any of these are set to these unsupported values, all log collection will be
+    disabled for that server. The settings are re-checked every full snapshot, and can be
+    explicitly re-checked with a collector reload.
+* Drop support for monitoring Postgres 9.2
+  - Postgres 9.2 has been end-of-life (EOL) for almost 4 years, and is now no longer supported by pganalyze
+  - Note that whilst 9.3 and 9.4 are also EOL, we still support them in this release
