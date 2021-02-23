@@ -1,0 +1,34 @@
+---
+title: 'Step 3: Review auto_explain settings'
+install_track_title: 'Automated EXPLAIN: Setup (Self-Managed)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import PgSettingsRecommendations, { getAutoExplainSettingRecommendations } from "../../../components/PgSettingsRecommendations";
+
+export const AutoExplainLink = ({version, children}) => {
+  return (
+    <a href={`https://www.postgresql.org/docs/${version ?? 'current'}/auto-explain.html`} target='_blank'>
+      {children}
+    </a>
+  )
+}
+
+There are a number of `auto_explain` settings that allow you to configure which queries
+will generate EXPLAIN plans. You can read the full Postgres documentation about
+these <AutoExplainLink version={props.pgMajorVersion}>here</AutoExplainLink>.
+The right configuration will depend on your server and workload,
+but we've found the following is a good starting point:
+
+<PgSettingsRecommendations mode='alter system' recommendations={getAutoExplainSettingRecommendations(props.settings)} />
+
+Run the above commands as a Postgres superuser. Then, to apply these settings, run
+
+```sql
+SELECT pg_reload_conf();
+```
+
+<Link className="btn btn-success" to="04_test_and_verify">
+  Continue to Step 4: Test and verify
+</Link>

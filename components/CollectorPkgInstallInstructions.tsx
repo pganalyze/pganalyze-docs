@@ -2,6 +2,7 @@ import React from 'react'
 
 import TabPanel, { TabItem } from './TabPanel'
 import { useCodeBlock } from './CodeBlock'
+import RepositorySigningKey from './RepositorySigningKey'
 
 type YumProps = {
   kind: 'yum'
@@ -10,7 +11,7 @@ type YumProps = {
 
 type DebProps = {
   kind: 'deb'
-  distro: "ubuntu/bionic" | "ubuntu/xenial" | "debian/buster" | "debian/stretch" | "debian/jessie"
+  distro: "ubuntu/focal" | "ubuntu/bionic" | "ubuntu/xenial" | "debian/buster" | "debian/stretch"
 }
 
 type Props = YumProps | DebProps
@@ -29,22 +30,25 @@ const CollectorPkgInstallInstructions: React.FunctionComponent<Props> = ({ kind 
       break
     case 'deb':
       installOpts = [
+        ["focal", "ubuntu/focal", "Ubuntu 20.04"],
         ["bionic", "ubuntu/bionic", "Ubuntu 18.04"],
         ["xenial", "ubuntu/xenial", "Ubuntu 16.04"],
         ["buster", "debian/buster", "Debian 10"],
         ["stretch","debian/stretch",  "Debian 9"],
-        ["jessie", "debian/jessie", "Debian 8"],
       ]
       break
   }
   const tabs = installOpts.map<TabItem>(opt => [opt[0], opt[2]])
   return (
-    <TabPanel items={tabs}>
-      {(idx: number) => {
-        const distro = installOpts[idx][1];
-        return <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
-      }}
-    </TabPanel>
+    <>
+      <TabPanel items={tabs}>
+        {(idx: number) => {
+          const distro = installOpts[idx][1];
+          return <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
+        }}
+      </TabPanel>
+      <RepositorySigningKey />
+    </>
   )
 }
 

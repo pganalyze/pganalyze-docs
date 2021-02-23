@@ -1,0 +1,26 @@
+---
+title: 'Step 2: Enable log-based EXPLAIN'
+install_track_title: 'Automated EXPLAIN: Setup (log-based)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import CollectorSettings from '../../../components/CollectorSettings'
+
+You will need to update the collector configuration to enable log-based EXPLAIN.
+
+<CollectorSettings settings={[
+  ['enable_log_explain', 'true']
+]} configFromEnv={props.configFromEnv} />
+
+Afterwards make sure to reload the pganalyze collector, so the setting takes effect:
+
+```
+sudo pganalyze-collector --test --reload
+```
+
+If this test succeeds, continue to the next step to test plan collection:
+
+<Link className='btn btn-success' to='03_test_and_verify'>
+  Proceed to Step 3: Test and verify
+</Link>

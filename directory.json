@@ -184,13 +184,57 @@
       "title": "Set up automatic EXPLAIN plan collection",
       "path": "/docs/explain/setup"
     },
+    "explain/setup/amazon_rds/01_auto_explain_check": {
+      "title": "Step 1: Check for auto_explain",
+      "path": "/docs/explain/setup/amazon_rds/01_auto_explain_check"
+    },
+    "explain/setup/amazon_rds/02_enable_auto_explain": {
+      "title": "Step 2: Enable auto_explain",
+      "path": "/docs/explain/setup/amazon_rds/02_enable_auto_explain"
+    },
+    "explain/setup/amazon_rds/03_review_settings": {
+      "title": "Step 3: Review auto_explain settings",
+      "path": "/docs/explain/setup/amazon_rds/03_review_settings"
+    },
+    "explain/setup/amazon_rds/04_test_and_verify": {
+      "title": "Step 4: Test and Verify",
+      "path": "/docs/explain/setup/amazon_rds/04_test_and_verify"
+    },
     "explain/setup/auto_explain": {
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/explain/setup/auto_explain"
     },
     "explain/setup/log_explain": {
-      "title": "Log-based EXPLAIN - Automatically EXPLAIN slow queries in Postgres",
+      "title": "Collect Postgres EXPLAIN plans using log-based EXPLAIN",
       "path": "/docs/explain/setup/log_explain"
+    },
+    "explain/setup/log_explain/01_create_helper_functions": {
+      "title": "Step 1: Create helper functions",
+      "path": "/docs/explain/setup/log_explain/01_create_helper_functions"
+    },
+    "explain/setup/log_explain/02_enable_log_explain": {
+      "title": "Step 2: Enable log-based EXPLAIN",
+      "path": "/docs/explain/setup/log_explain/02_enable_log_explain"
+    },
+    "explain/setup/log_explain/03_test_and_verify": {
+      "title": "Step 3: Test and verify",
+      "path": "/docs/explain/setup/log_explain/03_test_and_verify"
+    },
+    "explain/setup/self_managed/01_auto_explain_check": {
+      "title": "Step 1: Check for auto_explain",
+      "path": "/docs/explain/setup/self_managed/01_auto_explain_check"
+    },
+    "explain/setup/self_managed/02_enable_auto_explain": {
+      "title": "Step 2: Enable auto_explain",
+      "path": "/docs/explain/setup/self_managed/02_enable_auto_explain"
+    },
+    "explain/setup/self_managed/03_review_settings": {
+      "title": "Step 3: Review auto_explain settings",
+      "path": "/docs/explain/setup/self_managed/03_review_settings"
+    },
+    "explain/setup/self_managed/04_test_and_verify": {
+      "title": "Step 4: Test and Verify",
+      "path": "/docs/explain/setup/self_managed/04_test_and_verify"
     },
     "guides": {
       "title": "Guides",
@@ -413,24 +457,96 @@
       "path": "/docs/log-insights/setup"
     },
     "log-insights/setup/amazon-rds": {
-      "title": "Log Insights: Install on Amazon RDS & Amazon Aurora",
+      "title": "Log Insights: Setup (Amazon RDS & Amazon Aurora)",
       "path": "/docs/log-insights/setup/amazon-rds"
     },
+    "log-insights/setup/amazon-rds/01_test_log_download": {
+      "title": "Step 1: Test Log Download",
+      "path": "/docs/log-insights/setup/amazon-rds/01_test_log_download"
+    },
     "log-insights/setup/azure-database": {
-      "title": "Log Insights: Install on Azure Database for PostgreSQL",
+      "title": "Log Insights: Setup (Azure Database for PostgreSQL)",
       "path": "/docs/log-insights/setup/azure-database"
     },
+    "log-insights/setup/azure-database/01_set_up_managed_identity": {
+      "title": "Step 1: Set up Managed Identity",
+      "path": "/docs/log-insights/setup/azure-database/01_set_up_managed_identity"
+    },
+    "log-insights/setup/azure-database/02_set_up_azure_event_hub": {
+      "title": "Step 2: Set up Azure Event Hub",
+      "path": "/docs/log-insights/setup/azure-database/02_set_up_azure_event_hub"
+    },
+    "log-insights/setup/azure-database/03_stream_logs_into_event_hub": {
+      "title": "Step 3: Stream Postgres Logs into Azure Event Hub",
+      "path": "/docs/log-insights/setup/azure-database/03_stream_logs_into_event_hub"
+    },
+    "log-insights/setup/azure-database/04_adjust_log_line_prefix": {
+      "title": "Step 4: Adjust Postgres log_line_prefix",
+      "path": "/docs/log-insights/setup/azure-database/04_adjust_log_line_prefix"
+    },
+    "log-insights/setup/azure-database/05_configure_collector": {
+      "title": "Step 5: Configure Collector",
+      "path": "/docs/log-insights/setup/azure-database/05_configure_collector"
+    },
+    "log-insights/setup/azure-database/troubleshooting": {
+      "title": "Troubleshooting",
+      "path": "/docs/log-insights/setup/azure-database/troubleshooting"
+    },
     "log-insights/setup/google-cloud-sql": {
-      "title": "Log Insights: Install on Google Cloud SQL",
+      "title": "Log Insights: Setup (Google Cloud SQL)",
       "path": "/docs/log-insights/setup/google-cloud-sql"
     },
+    "log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber": {
+      "title": "Step 1: Create Topic and Subscriber",
+      "path": "/docs/log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber"
+    },
+    "log-insights/setup/google-cloud-sql/02_configure_log_routing": {
+      "title": "Step 2: Configure Log Routing",
+      "path": "/docs/log-insights/setup/google-cloud-sql/02_configure_log_routing"
+    },
+    "log-insights/setup/google-cloud-sql/03_set_up_service_account": {
+      "title": "Step 3: Set Up Service Account",
+      "path": "/docs/log-insights/setup/google-cloud-sql/03_set_up_service_account"
+    },
+    "log-insights/setup/google-cloud-sql/04_configure_collector": {
+      "title": "Step 4: Configure Collector",
+      "path": "/docs/log-insights/setup/google-cloud-sql/04_configure_collector"
+    },
+    "log-insights/setup/google-cloud-sql/troubleshooting": {
+      "title": "Troubleshooting",
+      "path": "/docs/log-insights/setup/google-cloud-sql/troubleshooting"
+    },
     "log-insights/setup/heroku-postgres": {
-      "title": "Log Insights: Install on Heroku Postgres",
+      "title": "Log Insights: Setup (Heroku Postgres)",
       "path": "/docs/log-insights/setup/heroku-postgres"
     },
+    "log-insights/setup/heroku-postgres/01_add_log_drain": {
+      "title": "Step 1: Add Log Drain",
+      "path": "/docs/log-insights/setup/heroku-postgres/01_add_log_drain"
+    },
+    "log-insights/setup/heroku-postgres/02_verify_log_drain": {
+      "title": "Step 2: Verify Log Drain",
+      "path": "/docs/log-insights/setup/heroku-postgres/02_verify_log_drain"
+    },
+    "log-insights/setup/heroku-postgres/03_restart_collector": {
+      "title": "Step 3: Restart Collector",
+      "path": "/docs/log-insights/setup/heroku-postgres/03_restart_collector"
+    },
     "log-insights/setup/self-managed": {
-      "title": "Log Insights: Install on Self-Managed Server",
+      "title": "Log Insights: Setup (Self-Managed)",
       "path": "/docs/log-insights/setup/self-managed"
+    },
+    "log-insights/setup/self-managed/01_determine_log_location": {
+      "title": "Step 1: Determine Log Location",
+      "path": "/docs/log-insights/setup/self-managed/01_determine_log_location"
+    },
+    "log-insights/setup/self-managed/02_configure_collector": {
+      "title": "Step 2: Configure Collector",
+      "path": "/docs/log-insights/setup/self-managed/02_configure_collector"
+    },
+    "log-insights/setup/self-managed/troubleshooting": {
+      "title": "Troubleshooting",
+      "path": "/docs/log-insights/setup/self-managed/troubleshooting"
     },
     "log-insights/setup/tuning-log-config-settings": {
       "title": "Log Insights: Tuning Log Config Settings",

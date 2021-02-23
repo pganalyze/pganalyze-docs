@@ -5,6 +5,8 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
+
 export const CollectorDotEnv = ({ apiKey }) => {
   return (
     <>
@@ -47,3 +49,5 @@ Then run the following:
 ```
 docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test
 ```
+
+<PublicLastStepLogInsightsLink />

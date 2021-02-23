@@ -1,0 +1,48 @@
+---
+title: 'Step 5: Configure Collector'
+install_track_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+import CollectorSettings from '../../../components/CollectorSettings'
+
+To complete the setup, we can now go to your virtual machine that is running the collector, and enable access to the Azure Event Hub.
+
+Next, update the collector configuration for this server. Note the **values need to match** what you created in Step 2.
+
+<CollectorSettings settings={[
+  ['azure_eventhub_namespace', '[namespace from step 2]'],
+  ['azure_eventhub_name', '[name from step 2]'],
+]} configFromEnv={props.configFromEnv} />
+
+Thanks to the Managed Identity that's assigned to the VM, we don't need to specify any credentials here.
+
+Run the collector test to verify the setup works:
+
+```
+sudo pganalyze-collector --test --reload
+```
+
+And you will see this output when its successful:
+
+```
+I [server1] Testing statistics collection...
+I [server1]   Test submission successful (29.3 KB received, server abc123)
+I [server1] Testing activity snapshots...
+I [server1]   Test submission successful (2.44 KB received, server abc123)
+I [server1] Testing log collection (Azure Database)...
+I [server1]   Log test successful
+I Successfully reloaded pganalyze collector (PID 123)
+```
+
+If you get an error here, please check our
+[troubleshooting documentation](https://pganalyze.com/docs/log-insights/setup/azure-database/troubleshooting).
+
+<PublicOnly>
+  <p>You will start seeing log data in pganalyze Log Insights within a few minutes.</p>
+  <p>
+    We recommend setting up <a href="/docs/explain/setup/log_explain/01_create_helper_functions">Log-based EXPLAIN</a>
+    as follow-up step, to automatically EXPLAIN slow queries in Postgres.
+  </p>
+</PublicOnly>

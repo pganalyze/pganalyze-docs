@@ -1,0 +1,15 @@
+---
+title: 'Troubleshooting'
+install_track_title: 'Log Insights: Setup (Google Cloud SQL)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+### Error: "Could not get logs through Google Cloud Pub/Sub: Timeout"
+
+This error occurs when we could not send a message end-to-end through the
+database log and Pub/Sub pipeline in 10 seconds.
+
+A common error cause is that the Project ID and/or CloudSQL instance ID do not
+match the names that show in the log stream. Double check your pganalyze
+collector configuration settings.

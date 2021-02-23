@@ -4,13 +4,21 @@ backlink_href: /docs/explain
 backlink_title: 'Documentation: EXPLAIN - Overview'
 ---
 
+EXPLAIN plans are essential to understanding why exactly a query is slow. SQL is a declarative language,
+but to get query results, the Postgres executor performs a series of steps determined by the query planner.
+The EXPLAIN command gives you access to those query plans, allowing you to diagnose and optimize performance
+problems. The pganalyze Automated EXPLAIN feature gives you easy access to these query plans, and adds
+EXPLAIN insights to help you interpret the raw plan information.
+
+
 ### Pre-requisites
 
 * Automatic explain plan collection requires [Log Insights](/docs/log-insights) to be set up successfully
 
-### Choose integration method
 
-pganalyze integrates with two mechanisms for collecting EXPLAIN plans automatically:
+### Overview
+
+pganalyze supports two different mechanisms for collecting EXPLAIN plans automatically:
 
 * **[auto_explain](/docs/explain/setup/auto_explain)**<br />Postgres collects EXPLAIN (or EXPLAIN ANALYZE) data as part of query processing, based on `auto_explain.log_min_duration`, reflecting the actual plan that was used
 * **[Log-based EXPLAIN](/docs/explain/setup/log_explain)**<br />pganalyze collector runs EXPLAIN (without ANALYZE) on all queries logged based on `log_min_duration_statement`, after the query has completed
@@ -18,6 +26,7 @@ pganalyze integrates with two mechanisms for collecting EXPLAIN plans automatica
 Generally we recommend utilizing **auto_explain** where available, as it provides higher data quality.
 
 Log-based EXPLAIN is not guaranteed to show the same plan that was executed, and cannot show execution metrics like I/O timing or buffer usage.
+
 
 ### Supported platforms
 
@@ -29,6 +38,17 @@ Google Cloud SQL | Yes               | No                |
 Heroku Postgres  | Yes               | No                |
 Self-managed VM  | Yes               | Yes (Recommended) |
 Kubernetes       | No                | No                |
-Other PaaS       | No                | No                |
+Other PaaS       | Contact support   | Contact support   |
 
 We are constantly evaluating new platform to support - please [reach out](/contact) if you're missing an integration, to help us prioritize.
+
+
+### Setup
+
+See the following pages for details on how to install pganalyze Automated EXPLAIN:
+
+* [Amazon RDS & Amazon Aurora](/docs/explain/setup/amazon_rds/01_auto_explain_check)
+* [Azure Database for PostgreSQL](/docs/explain/setup/log_explain/01_create_helper_functions)
+* [Google Cloud SQL](/docs/explain/setup/log_explain/01_create_helper_functions)
+* [Heroku Postgres](/docs/explain/setup/log_explain/01_create_helper_functions)
+* [Self-Managed Server](/docs/explain/setup/self_managed/01_auto_explain_check)

@@ -1,0 +1,26 @@
+---
+title: 'Step 4: Test and Verify'
+install_track_title: 'Automated EXPLAIN: Setup (Self-Managed)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import VerifyExplainPublic from '../_verify_explain_public.mdx'
+
+At this point, your pganalyze setup should be ready to collect EXPLAIN plans. Since
+you may not have any slow queries in your system right now, we can generate a
+synthetic slow query that we can use to confirm everything is working.
+
+The collector includes a flag to do this for you automatically, based on your
+`auto_explain.log_min_duration`:
+
+```
+sudo pganalyze-collector --test-explain
+```
+
+This will produce no output but will run an artificially slow query using the
+Postgres `pg_sleep` function.
+
+<PublicOnly>
+  <VerifyExplainPublic />
+</PublicOnly>

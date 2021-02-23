@@ -4,32 +4,17 @@ backlink_href: /docs/explain/setup
 backlink_title: 'Set up automatic EXPLAIN plan collection'
 ---
 
-We support extraction of EXPLAIN plans from `auto_explain` output. Please
-review the [auto_explain documentation](https://www.postgresql.org/docs/current/static/auto-explain.html)
-carefully to see what makes sense for your system.
+The recommended way to set up Automated EXPLAIN is to use the Postgres `auto_explain` module.
+This module is part of core Postgres but is not enabled by default. It can instrument all queries
+on your system and log detailed execution information for ones slower than a certain threshold.
+With our recommended configuration, performance impact is minimal.
 
-We've had good experience with a configuration like this, which will log the
-EXPLAIN output for every query slower than 1s:
+Here are the instructions for environments that support `auto_explain`:
 
-```
-auto_explain.log_analyze = 1
-auto_explain.log_buffers = 1
-auto_explain.log_timing = 0
-auto_explain.log_triggers = 1
-auto_explain.log_verbose = 1
-auto_explain.log_format = json
-auto_explain.log_min_duration = 1000
-auto_explain.log_nested_statements = 1
-auto_explain.sample_rate = 1
+ * [Amazon RDS & Amazon Aurora](../amazon_rds/01_auto_explain_check)
+ * [Self-Managed Server](../self_managed/01_auto_explain_check)
 
-# Also add auto_explain to shared_preload_libraries:
-shared_preload_libraries = 'auto_explain, pg_stat_statements'
-```
-
-The important detail here is that `auto_explain.log_timing` is turned off, as this will have a
-negative performance impact on query execution.
-
-You may also want to turn off `auto_explain.log_analyze` if you see increased CPU utilization after enabling `auto_explain`.
+For other environments, we also offer an alternative [log-based Automated EXPLAIN](../log_explain) mechanism.
 
 EXPLAIN plans are visualized on the associated query detail page, and include **[EXPLAIN insights](/docs/explain)**:
 

@@ -1,0 +1,22 @@
+---
+title: 'Step 1: Set up Managed Identity'
+install_track_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+import imgManagedIdentityVMAssignment from './managed-identity-vm-assignment.png'
+
+Log output on Azure Database for PostgreSQL is available through Azure Event Hub.
+
+To start, we need to [create a new user-assigned Managed Identity](https://portal.azure.com/#create/Microsoft.ManagedIdentity) through the Azure Portal.
+
+After the Managed Identity is created, assign it to your virtual machine:
+
+<img src={imgManagedIdentityVMAssignment} alt="Screenshot of Virtual Machine Identity configuration in Azure Portal" />
+
+Now the pganalyze collector running inside the virtual machine will be able to call Azure REST APIs using the Managed Identity.
+
+<Link className="btn btn-success" to="02_set_up_azure_event_hub">
+  Continue to Step 2: Set Up Azure Event Hub
+</Link>

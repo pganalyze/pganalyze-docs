@@ -1,0 +1,29 @@
+---
+title: 'Step 2: Set up Azure Event Hub'
+install_track_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+import imgCreateEventHub from './create-event-hub.png'
+import imgAddEventHubPermission from './add-event-hub-permission.png'
+
+In order to retrieve logs from your database server continuously, the pganalyze collector utilizes an Azure Event Hub in your account.
+
+To start, create a new [Azure Event Hub namespace](https://portal.azure.com/#create/Microsoft.EventHub), using the Basic pricing tier.
+
+Next, create an Event Hub inside the namespace, using the standard partition count (2):
+
+<p style={{maxWidth: '400px'}}>
+  <img src={imgCreateEventHub} alt="Screenshot of Create Event Hub in Azure Portal" />
+</p>
+
+Within the Event Hub, grant the "Azure Event Hubs Data Receiver" permission for the Managed Identity (or Azure AD application) we created earlier:
+
+<img src={imgAddEventHubPermission} alt="Screenshot of adding Azure Event Hubs Data Receiver Permission to Managed Identity in Azure Portal" />
+
+Now the pganalyze collector will be able to read log data that is sent into the Azure Event Hub.
+
+<Link className="btn btn-success" to="03_stream_logs_into_event_hub">
+  Continue to Step 3: Stream Postgres logs into Azure Event Hub
+</Link>

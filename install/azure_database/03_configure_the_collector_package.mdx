@@ -5,6 +5,8 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
+
 export const APIKeyInstructions = ({ apiKey }) => {
   return apiKey ? (
     <>
@@ -19,21 +21,26 @@ export const APIKeyInstructions = ({ apiKey }) => {
   );
 };
 
+export const ConfigSample = ({ apiKey }) => {
+  return (
+    <CodeBlock>
+      {`[pganalyze]
+api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
+[server1]
+db_host = your_db.postgres.database.azure.com
+db_name = your_database_name
+db_username = your_monitoring_user@your_db
+db_password = your_monitoring_user_password
+azure_db_server_name = your_db`}
+    </CodeBlock>
+  )
+}
+
 ## Configuring the collector
 
 The collector configuration file lives in `/etc/pganalyze-collector.conf`, and looks like this:
 
-```
-[pganalyze]
-api_key: your_pga_organization_api_key
-
-[server]
-db_host: your_db.postgres.database.azure.com
-db_name: your_database_name
-db_username: your_monitoring_user@your_db
-db_password: your_monitoring_user_password
-azure_db_server_name: your_db
-```
+<ConfigSample apiKey={props.apiKey} />
 
 Fill in the values step-by-step:
 
@@ -50,3 +57,5 @@ Run the following to make sure the configuration works:
 ```
 sudo pganalyze-collector --test --reload
 ```
+
+<PublicLastStepLogInsightsLink />

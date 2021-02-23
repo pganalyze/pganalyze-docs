@@ -4,10 +4,23 @@ backlink_href: /docs/log-insights
 backlink_title: 'Log Insights'
 ---
 
+[Log Insights](https://pganalyze.com/log-insights) automatically extracts your Postgres
+logs into structured data, and filters any sensitive information.
+
+Note that you must be on the pganalyze **Scale** plan, or in your initial
+14-day trial period, to integrate Log Insights. You must also have completed
+the basic [query performance setup](/docs/install).
+
 See the following pages for details on how to install pganalyze Log Insights:
 
-* [Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds)
-* [Azure Database for PostgreSQL](/docs/log-insights/setup/azure-database)
-* [Google Cloud SQL](/docs/log-insights/setup/google-cloud-sql)
-* [Heroku Postgres](/docs/log-insights/setup/heroku-postgres)
-* [Self-Managed Server](/docs/log-insights/setup/self-managed)
+* [Amazon RDS & Amazon Aurora](/docs/log-insights/setup/amazon-rds/01_test_log_download)
+* [Azure Database for PostgreSQL](/docs/log-insights/setup/azure-database/01_set_up_managed_identity)
+* [Google Cloud SQL](/docs/log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber)
+* [Heroku Postgres](/docs/log-insights/setup/heroku-postgres/01_add_log_drain)
+* [Self-Managed Server](/docs/log-insights/setup/self-managed/01_determine_log_location)
+
+For troubleshooting instructions, check the following pages:
+
+* [Azure Database for PostgreSQL](/docs/log-insights/setup/azure-database/troubleshooting)
+* [Google Cloud SQL](/docs/log-insights/setup/google-cloud-sql/troubleshooting)
+* [Self-Managed Server](/docs/log-insights/setup/self-managed/troubleshooting)

@@ -26,7 +26,7 @@ ALTER SYSTEM SET shared_preload_libraries = 'pg_stat_statements';
 If you have not used pg_stat_statements before, you will need a full Postgres restart to enable it for the first time:
 
 ```
-sudo service postgresql restart
+sudo systemctl restart postgresql
 ```
 
 ## Verify that pg_stat_statements returns data

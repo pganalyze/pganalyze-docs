@@ -1,0 +1,67 @@
+.noWrap {
+  white-space: nowrap;
+}
+
+.recommendationsList {
+  padding-left: 8px;
+
+  dt {
+    float: left;
+    margin-right: 10%;
+    max-width: 30%;
+    font-weight: normal;
+    line-height: 24px;
+  }
+
+  dd {
+    margin-left: 50%;
+    margin-bottom: 4px;
+    font-family: monospace;
+  }
+
+  dd::after {
+    content: " ";
+    display: block;
+    clear: left;
+  }
+}
+
+.settingsTable {
+  width: 100%;
+}
+
+.descriptionPopupIcon {
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+.statusIcon {
+  font-size: 18px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.okayIcon {
+  color: #93bf3b;
+}
+
+.changeRequiredIcon {
+  color: #ffa700;
+}
+
+.infoIcon {
+  color: #4682b4;
+}
+
+.externalLinkIcon {
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.secureIcon {
+  font-size: 12px;
+  margin-right: 4px;
+  color: #5cb85c;
+  vertical-align: baseline;
+}

@@ -1,0 +1,32 @@
+import AutoExplainNotice from '../_auto_explain_notice.mdx'
+
+# Check if auto_explain already enabled
+
+First, to check if `auto_explain` is already enabled on your system, run the following
+query as an RDS superuser:
+
+```sql
+SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
+```
+
+If `auto_explain` is included in the `shared_preload_libraries` value and `pending_restart`
+is false, the module is already enabled.
+
+
+# If auto_explain is not enabled
+
+<AutoExplainNotice />
+<Link className="btn btn-success" to="02_enable_auto_explain">
+   Continue to Step 2: Enable auto_explain
+</Link>
+<br />
+<br />
+
+# If auto_explain is already enabled
+
+If `auto_explain` is already enabled, you can skip the next step and proceed to
+review our recommended `auto_explain` configuration settings:
+
+<Link className="btn btn-success" to="03_review_settings">
+   Skip to Step 3: Review auto_explain settings
+</Link>
