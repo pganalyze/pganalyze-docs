@@ -1,0 +1,13 @@
+---
+title: 'Log Insights: Syslog server setup'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+If your database logs are available via syslog, you can use the [`db_log_syslog_server`](/docs/collector/settings#self-managed-servers)
+setting to have the collector listen for syslog messages from a remote server. This should be a local address like
+"0.0.0.0:32514" and it's recommended to use an unprivileged port number (1024 and up) to avoid running
+the collector as root.
+
+Note that you need to use protocol RFC5424, with an unencrypted TCP connection. Due to syslog not being
+an authenticated protocol it is recommended to only use this integration over private networks.

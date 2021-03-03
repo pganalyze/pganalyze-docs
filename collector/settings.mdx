@@ -410,11 +410,18 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
   <tbody>
     <tr>
       <td>db_log_location (<code>LOG_LOCATION</code>)</td>
-      <td>n/a, required for Log Insights</td>
+      <td>[none]</td>
       <td>database log file or directory location (must be readable by pganalyze system user)</td>
+    </tr>
+    <tr>
+      <td>db_log_syslog_server (<code>LOG_SYSLOG_SERVER</code>)</td>
+      <td>[none]</td>
+      <td>local address (host:port) to listen on for syslog messages
+        (see <a href="/docs/log-insights/setup/syslog-server">syslog server instructions</a>)</td>
     </tr>
   </tbody>
 </table>
+
 
 ## Additional settings
 

@@ -68,6 +68,8 @@ function toEnvSetting(configFileSetting: string):string {
       return 'PGA_API_BASEURL';
     case 'db_log_location':
       return 'LOG_LOCATION';
+    case 'db_log_syslog_server':
+      return 'LOG_SYSLOG_SERVER';
     case 'aws_db_instance_id':
       return 'AWS_INSTANCE_ID';
     case 'api_key':
