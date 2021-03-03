@@ -552,6 +552,10 @@
       "title": "Troubleshooting",
       "path": "/docs/log-insights/setup/self-managed/troubleshooting"
     },
+    "log-insights/setup/syslog-server": {
+      "title": "Log Insights: Syslog server setup",
+      "path": "/docs/log-insights/setup/syslog-server"
+    },
     "log-insights/setup/tuning-log-config-settings": {
       "title": "Log Insights: Tuning Log Config Settings",
       "path": "/docs/log-insights/setup/tuning-log-config-settings"

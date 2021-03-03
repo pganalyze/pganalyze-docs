@@ -416,20 +416,11 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     <tr>
       <td>db_log_syslog_server (<code>LOG_SYSLOG_SERVER</code>)</td>
       <td>[none]</td>
-      <td>local address (host:port) to listen on for syslog messages (see below)</td>
+      <td>local address (host:port) to listen on for syslog messages
+        (see <a href="/docs/log-insights/setup/syslog-server">syslog server instructions</a>)</td>
     </tr>
   </tbody>
 </table>
-
-### Syslog-based Log Insights support
-
-If your database logs are available via syslog, you can use the `db_log_syslog_server` setting to have
-the collector listen for syslog messages from a remote server. This should be a local address like
-"0.0.0.0:32514" and it's recommended to use an unprivileged port number (1024 and up) to avoid running
-the collector as root.
-
-Note that you need to use protocol RFC5424, with an unencrypted TCP connection. Due to syslog not being
-an authenticated protocol it is recommended to only use this integration over private networks.
 
 
 ## Additional settings
