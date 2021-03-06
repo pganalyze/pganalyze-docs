@@ -1,0 +1,25 @@
+---
+title: 'pganalyze Collector packages'
+backlink_href: /docs/collector
+backlink_title: 'pganalyze Collector'
+---
+
+import CollectorPkgInstallInstructions from '../components/CollectorPkgInstallInstructions'
+
+The collector is available on common Debian-based and Red Hat-based Linux distributions.
+We recommend running our install script to automatically detect your platform and
+install the correct package:
+
+```
+curl https://packages.pganalyze.com/collector-install.sh | bash
+```
+
+Alternately, you can install these packages manually.
+
+<CollectorPkgInstallInstructions />
+
+These repositories are updated by pganalyze whenever a new stable version of the
+collector is released.
+
+You can also build the collector from source: Go 1.16 and `make` are required. To build,
+just run `make`.

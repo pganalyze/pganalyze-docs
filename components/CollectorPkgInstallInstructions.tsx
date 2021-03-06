@@ -1,8 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import TabPanel, { TabItem } from './TabPanel'
 import { useCodeBlock } from './CodeBlock'
 import RepositorySigningKey from './RepositorySigningKey'
+
+const CollectorPkgInstallInstructions = () => {
+  const [ pkgKind, setPkgKind ] = useState('yum')
+  const handleDistroChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPkgKind(e.currentTarget.value)
+  }
+  return (
+    <>
+      <p>
+        Choose which OS distribution you are running:
+      </p>
+      <div style={{paddingLeft: '16px', paddingBottom: '8px'}}>
+        <label style={{display: 'block', fontWeight: 'normal'}}>
+          <input style={{marginRight: '4px'}} type='radio' name='distro' value='yum' onChange={handleDistroChange} checked={pkgKind === 'yum'} />
+          RPM based (RHEL, Amazon Linux, Fedora, CentOS)
+        </label>
+        <label style={{display: 'block', fontWeight: 'normal'}}>
+          <input style={{marginRight: '4px'}} type='radio' name='distro' value='deb' onChange={handleDistroChange} checked={pkgKind === 'deb'} />
+          Debian based (Debian, Ubuntu)
+        </label>
+      </div>
+      <p>
+        SSH into your system and run the following to download and install the package:
+      </p>
+      {pkgKind === 'deb' ? (
+        <CollectorDistroInstallInstructions kind='deb' />
+      ) : pkgKind === 'yum' ? (
+        <CollectorDistroInstallInstructions kind='yum' />
+      ) : null}
+    </>
+  )
+}
 
 type YumProps = {
   kind: 'yum'
@@ -16,7 +48,7 @@ type DebProps = {
 
 type Props = YumProps | DebProps
 
-const CollectorPkgInstallInstructions: React.FunctionComponent<Props> = ({ kind }) => {
+const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'kind'>> = ({ kind }) => {
   type InstallOpt = [id: string, distro: YumProps['distro'] | DebProps['distro'], label: string];
   let installOpts: InstallOpt[] = [];
   switch (kind) {

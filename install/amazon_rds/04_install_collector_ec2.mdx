@@ -5,44 +5,9 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
-import { useState } from 'react'
+import CollectorInstallInstructions from "../../components/CollectorInstallInstructions"
 
 import imgRdsNewInstanceRole from "../../images/rds_new_instance_role.png"
-
-import CollectorPkgInstallInstructions from "../../components/CollectorPkgInstallInstructions"
-import RepositorySigningKey from "../../components/RepositorySigningKey"
-
-export const CollectorInstallInstructions = () => {
-  const [ pkgKind, setPkgKind ] = useState('yum')
-  const handleDistroChange = (e) => {
-    setPkgKind(e.currentTarget.value)
-  }
-  return (
-    <>
-      <p>
-        Choose which OS distribution you are running on your EC2 instance:
-      </p>
-      <div style={{paddingLeft: '16px', paddingBottom: '8px'}}>
-        <label style={{display: 'block', fontWeight: 'normal'}}>
-          <input style={{marginRight: '4px'}} type='radio' name='distro' value='yum' onChange={handleDistroChange} checked={pkgKind === 'yum'} />
-          RPM based (RHEL, Amazon Linux, Fedora, CentOS)
-        </label>
-        <label style={{display: 'block', fontWeight: 'normal'}}>
-          <input style={{marginRight: '4px'}} type='radio' name='distro' value='deb' onChange={handleDistroChange} checked={pkgKind === 'deb'} />
-          Debian based (Debian, Ubuntu)
-        </label>
-      </div>
-      <p>
-        SSH into your EC2 instance and, run the following to download and install the package:
-      </p>
-      {pkgKind === 'deb' ? (
-        <CollectorPkgInstallInstructions kind='deb' />
-      ) : pkgKind === 'yum' ? (
-        <CollectorPkgInstallInstructions kind='yum' />
-      ) : null}
-    </>
-  )
-}
 
 ## Installing the collector on an Amazon EC2 Instance
 
