@@ -26,7 +26,7 @@ const CollectorInstallInstructions: React.FunctionComponent<Props> = ({env}) => 
       <CodeBlock>
         curl https://packages.pganalyze.com/collector-install.sh | {bashCmd}
       </CodeBlock>
-      <RepositorySigningKey />
+      <RepositorySigningKey small />
       <p>
         Alternately, you can follow the <a href="https://pganalyze.com/docs/collector/packages">manual install instructions</a>.
       </p>
