@@ -14,7 +14,7 @@ const CollectorInstallInstructions: React.FunctionComponent<Props> = ({apiKey, g
     env['PGA_API_KEY'] = apiKey
   }
   if (guided) {
-    env['PGA_API_GUIDED_SETUP'] = 'true'
+    env['PGA_GUIDED_SETUP'] = 'true'
   }
 
   return <CollectorEnvInstallInstructions env={env} />
