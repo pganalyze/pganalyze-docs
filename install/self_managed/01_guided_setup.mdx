@@ -7,16 +7,6 @@ backlink_title: 'Installation Guide'
 
 import CollectorInstallInstructions from '../../components/CollectorInstallInstructions'
 
-export const GuidedSetupInvocationExample = ({ apiKey }) => {
-  const installEnv = { PGA_GUIDED_SETUP: 'true' }
-  if (!!apiKey) {
-    installEnv['PGA_API_KEY'] = apiKey
-  }
-  return (
-    <CollectorInstallInstructions env={installEnv} />
-  );
-};
-
 To begin guided setup, you'll need to install the collector, which sends statistics information
 and query activity to pganalyze.
 
@@ -27,7 +17,7 @@ You will need an API key for the install. <PublicOnly>It can be found in the pga
 
 To install the collector and start guided setup, run the following command:
 
-<GuidedSetupInvocationExample apiKey={props.apiKey} />
+<CollectorInstallInstructions apiKey={props.apiKey} guided />
 
 You'll be shown additional instructions, and prompted to confirm any changes to your system.
 <PublicOnly>

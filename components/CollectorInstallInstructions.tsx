@@ -4,13 +4,28 @@ import { useCodeBlock } from './CodeBlock'
 import RepositorySigningKey from './RepositorySigningKey'
 
 type Props = {
-  env?: { [key: string]: string }
+  apiKey?: string
+  guided?: boolean
 }
 
-const CollectorInstallInstructions: React.FunctionComponent<Props> = ({env}) => {
+const CollectorInstallInstructions: React.FunctionComponent<Props> = ({apiKey, guided}) => {
+  const env = {};
+  if (apiKey) {
+    env['PGA_API_KEY'] = apiKey
+  }
+  if (guided) {
+    env['PGA_API_GUIDED_SETUP'] = 'true'
+  }
+
+  return <CollectorEnvInstallInstructions env={env} />
+}
+
+const CollectorEnvInstallInstructions: React.FunctionComponent<{
+  env: { [key: string]: string }
+}> = ({env}) => {
   const CodeBlock = useCodeBlock();
   let bashCmd: string;
-  if (!env || Object.keys(env).length === 0) {
+  if (Object.keys(env).length === 0) {
     bashCmd = 'bash';
   } else {
     bashCmd = Object.entries(env).reduce((cmdStr, [ nextKey, nextVal ]) => {
