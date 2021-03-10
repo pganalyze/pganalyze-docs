@@ -5,21 +5,11 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
-import CollectorPkgInstallInstructions from '../../components/CollectorPkgInstallInstructions'
+import CollectorInstallInstructions from '../../components/CollectorInstallInstructions'
 
 In this step we'll install the collector which sends statistics information to pganalyze.
 
-First, you need to know which version of RHEL/CentOS/Fedora you are running. You can find out with this command:
-
-```
-cat /etc/system-release
-```
-
-Now run the appropriate commands for your version:
-
-<CollectorPkgInstallInstructions kind='yum' />
-
-These repositories are updated by pganalyze whenever a new stable version of the collector is released.
+<CollectorInstallInstructions apiKey={props.apiKey} />
 
 <Link className="btn btn-success" to="04_configure_the_collector_package">
   Continue to Step 4: Configure the Collector

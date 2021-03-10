@@ -36,6 +36,10 @@
       "title": "pganalyze Collector",
       "path": "/docs/collector"
     },
+    "collector/packages": {
+      "title": "pganalyze Collector packages",
+      "path": "/docs/collector/packages"
+    },
     "collector/settings": {
       "title": "pganalyze Collector settings",
       "path": "/docs/collector/settings"
