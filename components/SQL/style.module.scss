@@ -1,0 +1,29 @@
+.sql {
+  white-space: pre-wrap;
+}
+.keyword {
+  text-transform: uppercase;
+  color: #090;
+  word-break: normal;
+}
+.aggregate {
+  color: inherit;
+}
+.string,
+.number {
+  color: #555;
+}
+.comment {
+  color: #888;
+}
+
+.noborder {
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
+.inline {
+  display: inline;
+}

@@ -1,0 +1,145 @@
+export const CHECK_TITLES = {
+  queries: {
+    slowness: "New Slow Queries",
+  },
+  connections: {
+    active_query: "Active Queries",
+    idle_transaction: "Idle Transactions",
+  },
+  schema: {
+    index_invalid: "Invalid Indexes",
+    index_unused: "Unused Indexes",
+  },
+  settings: {
+    enable_features: "Config - Disabled features",
+    fsync: "Config - Disabled fsync",
+    shared_buffers: "Config - Too small shared_buffers",
+    stats: "Config - Disabled stats collection",
+    work_mem: "Config - Too small work_mem",
+  },
+  system: {
+    storage_space: "Out Of Disk Space",
+  },
+  replication: {
+    high_lag: "Replication - High Lag",
+    follower_missing: "Replication - Missing HA Follower",
+  },
+};
+
+export function checkTitle(checkGroup: string, checkName: string): string {
+  return CHECK_TITLES[checkGroup]?.[checkName] ?? "Unknown check";
+}
+
+export const CHECK_FREQUENCY_30MIN = "Every 30 minutes";
+export const CHECK_FREQUENCY_REALTIME = "Near Realtime (every 10 seconds)";
+export const CHECK_FREQUENCY_DAILY = "Daily";
+export const CHECK_FREQUENCY = {
+  queries: {
+    slowness: CHECK_FREQUENCY_DAILY,
+  },
+  connections: {
+    active_query: CHECK_FREQUENCY_REALTIME,
+    idle_transaction: CHECK_FREQUENCY_REALTIME,
+  },
+  schema: {
+    index_invalid: CHECK_FREQUENCY_30MIN,
+    index_unused: CHECK_FREQUENCY_DAILY,
+  },
+  settings: {
+    enable_features: CHECK_FREQUENCY_30MIN,
+    fsync: CHECK_FREQUENCY_30MIN,
+    shared_buffers: CHECK_FREQUENCY_30MIN,
+    stats: CHECK_FREQUENCY_30MIN,
+    work_mem: CHECK_FREQUENCY_30MIN,
+  },
+  system: {
+    storage_space: CHECK_FREQUENCY_30MIN,
+  },
+  replication: {
+    high_lag: CHECK_FREQUENCY_30MIN,
+    follower_missing: CHECK_FREQUENCY_30MIN,
+  },
+};
+
+export function checkFrequency(
+  checkGroup: string,
+  checkName: string
+): string | undefined {
+  return CHECK_FREQUENCY[checkGroup]?.[checkName];
+}
+
+// This type describes the documentation format to use for checks, and a rough style
+// guide for documenting them. The intent is to have these feel natural and consistent
+// in the UI. Note that the documentation has access to the check and issue for concrete
+// resolution guidance.
+
+export type CheckConfig = {
+  enabled: boolean;
+  settings: { [key: string]: string | number | boolean };
+};
+
+export type CheckTriggerProps = {
+  config: CheckConfig;
+};
+
+export type IssueGuidanceUrls = {
+  referenceUrl: string;
+  SettingLink: React.ComponentType<{ setting: string }>;
+  queriesUrl: string;
+  serverSystemUrl: string;
+  serverVacuumsUrl: string;
+  backendsUrl: string;
+  databaseWaitEventsUrl: string;
+  databaseTableUrl: string;
+  serverLogInsightsUrl: string;
+  serverSchemaUrl: string;
+};
+
+export type IssueReferenceBackend = {
+  pid: string;
+};
+
+export type IssueReferenceIndex = {
+  tableId: string;
+  schemaName: string;
+  name: string;
+};
+
+export type IssueType = {
+  referenceDetail: IssueReferenceBackend | IssueReferenceIndex | unknown;
+  detailsJson: string;
+};
+
+export type CheckGuidanceProps = {
+  urls: IssueGuidanceUrls;
+  issue: IssueType;
+};
+
+export type CheckDocs = {
+  description: string;
+  // Used in CheckUpDetail to describe the check at a high level. We may want to consolidate this
+  // with trigger below, but note that this is in the context of the check itself, whereas
+  // the trigger docs are displayed in the context of a specific issue raised by the check.
+
+  Trigger: React.ComponentType<CheckTriggerProps>;
+  // wording:
+  //  - starts with "Detects ..."
+  //  - "creates an issue with severity ..." -- a little verbose, open to better ideas especially here
+  //  - "Escalates to ..." to describe when an issue escalates to a higher severity
+  //  - does not mention severity downgrades (do we do these?)
+  //  - "Resolves automatically ..." to describe when an issue resolves
+  //  - "Ignores ..." for any exceptions to the check (whether configurable or not)
+  //
+  // note this may reference check settings defined in DEFAULT_CHECK_CONFIGS in app/services/checks.rb
+
+  Guidance: React.ComponentType<CheckGuidanceProps>;
+  // wording:
+  // - Impact: why is this a problem?
+  // - (optional) Common causes: why did this happen?
+  //   - omit this if there's always a clear cause (like an incorrect setting value)
+  //   - each cause should have guidance as to how to investigate it (to determine if it's indeed the cause in this case)
+  //     and how to address the cause if relevant
+  // - (optional) Solution: what can i do about it?
+  //   - only include this if there's a clear action to take regardless of cause (or if there's only one cause like an incorrect setting)
+  //   - if both this and Common Causes are included, avoid duplicating information across the two
+};

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import Null from './Null';
 
 export type IconProps = {
-  className: string;
+  className?: string;
 }
 
 type Icons = {
