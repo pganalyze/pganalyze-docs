@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useIcon } from "./WithIcons";
 
 import styles from './style.module.scss';
@@ -10,9 +10,11 @@ type LinkProps = Omit<AnchorProps, 'href'> & {
   // it's not worth copying the full type definition (especially since there may be differences between
   // the public site type and the in-app type)
   to: any
- };
+};
 
-type Props = (AnchorProps | LinkProps) & {
+type BaseProps = (AnchorProps | LinkProps);
+
+type Props = BaseProps & {
   // Accepting the linkComponent as a prop allows us to render under different routers
   linkComponent: React.ComponentType<LinkProps>
   // In some situations, relative links can be evaluated as siblings of the current route, and
@@ -30,6 +32,11 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
     destination = rest.href;
     delete rest.href
   }
+  if (destination == null) {
+    // If we have no destination, just return children not linked to anything
+    return <span className={rest.className}>{rest.children}</span>;
+  }
+
   const isFragmentLink = destination?.startsWith('#')
   const isAbsolute = /^[a-zA-Z]+:/.test(destination)
   const isBareAnchor = isFragmentLink || isAbsolute
@@ -66,6 +73,27 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
   return <Link {...rest} to={destination} />
 };
 
-export function makeSmartAnchor(linkComponent: React.ComponentType<LinkProps>, linkRelative: boolean): React.ComponentType<Props> {
-  return (props: Props) => <SmartAnchor {...props} linkComponent={linkComponent} linkRelative={linkRelative} />
+const SmartAnchorContext = React.createContext<React.ComponentType<BaseProps> | undefined>(undefined);
+
+export const WithSmartAnchor: React.FunctionComponent<{
+  linkComponent: React.ComponentType<LinkProps>;
+  linkRelative: boolean;
+}> = ({linkComponent, linkRelative, children}) => {
+  return (
+    <SmartAnchorContext.Provider value={makeSmartAnchor(linkComponent, linkRelative)}>
+      {children}
+    </SmartAnchorContext.Provider>
+  )
+}
+
+export function useSmartAnchor(): React.ComponentType<BaseProps> {
+  const value = useContext(SmartAnchorContext);
+  if (!value) {
+    throw new Error('must be used within WithSmartAnchor');
+  }
+  return value;
+}
+
+export function makeSmartAnchor(linkComponent: React.ComponentType<LinkProps>, linkRelative: boolean): React.ComponentType<BaseProps> {
+  return (props: BaseProps) => <SmartAnchor {...props} linkComponent={linkComponent} linkRelative={linkRelative} />
 }
