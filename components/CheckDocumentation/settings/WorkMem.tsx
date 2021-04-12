@@ -1,7 +1,7 @@
 import React from "react";
 
 import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/checks";
-import { formatBytes } from "util/format";
+import { formatBytes } from "../../../util/format";
 
 import PGDocsLink from "../../PGDocsLink";
 import { useSmartAnchor } from "../../SmartAnchor";

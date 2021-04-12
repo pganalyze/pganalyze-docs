@@ -1,4 +1,4 @@
-import SQL from "components/SQL";
+import SQL from "../../SQL";
 import React from "react";
 
 import {
@@ -7,7 +7,7 @@ import {
   CheckTriggerProps,
   IssueReferenceIndex,
 } from "../../../util/checks";
-import { formatSqlObjectName } from "util/format";
+import { formatSqlObjectName } from "../../../util/format";
 
 const IndexInvalidTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
   return (

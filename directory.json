@@ -32,6 +32,10 @@
       "title": "getQueryStats - Export query statistics",
       "path": "/docs/api/queries/getQueryStats"
     },
+    "checks": {
+      "title": "Alerts & Check-Up",
+      "path": "/docs/checks"
+    },
     "collector": {
       "title": "pganalyze Collector",
       "path": "/docs/collector"

@@ -6,9 +6,9 @@ import {
   CheckTriggerProps,
   IssueReferenceIndex,
 } from "../../../util/checks";
-import { formatSqlObjectName } from "util/format";
+import { formatSqlObjectName } from "../../../util/format";
 
-import SQL from "components/SQL";
+import SQL from "../../SQL";
 import { useSmartAnchor } from "../../SmartAnchor";
 
 const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {

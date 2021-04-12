@@ -1,0 +1,39 @@
+---
+title: 'Alerts & Check-Up'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+import * as checkUtil from '../util/checks'
+
+export const CheckLinks = () => {
+  const checkTitles = checkUtil.CHECK_TITLES;
+  return (
+    <ul>
+      {Object.entries(checkTitles).map(([checkGroup, items]) => {
+        return (
+          <li key={checkGroup}>
+            <strong>{checkGroup}</strong>
+            <ul>
+              {Object.entries(items).map(([checkName, checkTitle]) => {
+                return (
+                  <li key={checkName}>
+                    <Link to={`/docs/checks/${checkGroup}/${checkName}`}>
+                      {checkTitle}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
+To help you discover potential problems with your database, pganalyze includes
+a number of checks performed automatically on the metrics reported by your
+database.
+
+<CheckLinks />
