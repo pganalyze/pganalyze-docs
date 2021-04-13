@@ -113,7 +113,8 @@ export const DEFAULT_CHECK_CONFIGS = {
     },
   },
   system: {
-    disk_space: {
+    // N.B.: server defaults uses system/disk_space
+    storage_space: {
       enabled: true,
       settings: {
         critical_pct: 98,
