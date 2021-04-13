@@ -79,7 +79,7 @@ const IdleTransactionGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           inline
           sql={`SELECT pg_terminate_backend(${
             (issue?.referenceDetail as IssueReferenceBackend)?.pid ??
-            '"<session pid>"'
+            '"<session_pid>"'
           });`}
         />
         . Note that this only treats the symptom: unless this is due to a

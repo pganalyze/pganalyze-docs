@@ -115,7 +115,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           inline
           sql={`SELECT pg_cancel_backend(${
             (issue?.referenceDetail as IssueReferenceBackend)?.pid ??
-            '"<query pid>"'
+            '"<query_pid>"'
           });`}
         />
         . Note that this only treats the symptom: if the query runs again

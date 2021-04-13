@@ -39,7 +39,7 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   const idx = issue?.referenceDetail as IssueReferenceIndex;
   const qualifiedIdx = idx?.name
     ? formatSqlObjectName(idx.schemaName, idx.name)
-    : '"<index name>"';
+    : '"<index_name>"';
   return (
     <div>
       <h4>Impact</h4>
