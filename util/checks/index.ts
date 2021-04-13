@@ -86,57 +86,57 @@ export const DEFAULT_CHECK_CONFIGS = {
         critical_max_idle_tx_age_secs: 3600
       }
     },
-    schema: {
-      index_invalid: {
-        enabled: true
-      },
-      index_unused: {
-        enabled: true
-      },
+  },
+  schema: {
+    index_invalid: {
+      enabled: true
     },
-    settings: {
-      enable_features: {
-        enabled: true
-      },
-      fsync: {
-        enabled: true
-      },
-      shared_buffers: {
-        enabled: true
-      },
-      stats: {
-        enabled: true
-      },
-      work_mem: {
-        enabled: true
-      },
+    index_unused: {
+      enabled: true
     },
-    system: {
-      disk_space: {
-        enabled: true,
-        settings: {
-          critical_pct: 98,
-          warning_pct: 90,
-          base_threshold_gigabytes: 50
-        }
-      },
+  },
+  settings: {
+    enable_features: {
+      enabled: true
     },
-    replication: {
-      high_lag: {
-        enabled: true,
-        settings: {
-          warning_threshold_mb: 100,
-          critical_threshold_mb: 1024
-        }
-      },
-      follower_missing: {
-        enabled: true,
-        settings: {
-          expected_count: 0
-        }
+    fsync: {
+      enabled: true
+    },
+    shared_buffers: {
+      enabled: true
+    },
+    stats: {
+      enabled: true
+    },
+    work_mem: {
+      enabled: true
+    },
+  },
+  system: {
+    disk_space: {
+      enabled: true,
+      settings: {
+        critical_pct: 98,
+        warning_pct: 90,
+        base_threshold_gigabytes: 50
+      }
+    },
+  },
+  replication: {
+    high_lag: {
+      enabled: true,
+      settings: {
+        warning_threshold_mb: 100,
+        critical_threshold_mb: 1024
+      }
+    },
+    follower_missing: {
+      enabled: true,
+      settings: {
+        expected_count: 0
       }
     }
-  },  
+  },
 }
 
 export function checkDefaultConfig(
