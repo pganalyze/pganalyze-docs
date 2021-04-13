@@ -178,6 +178,7 @@ export type IssueGuidanceUrls = {
   databaseTableUrl: string;
   serverLogInsightsUrl: string;
   serverSchemaUrl: string;
+  sectionUrl: (mainUrl: string | undefined, section: string) => string | undefined;
 };
 
 export function sectionUrl (mainUrl: string | undefined, section: string): string | undefined {

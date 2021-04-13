@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CheckDocs, CheckGuidanceProps, CheckTriggerProps, sectionUrl } from "../../../util/checks";
+import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/checks";
 import { formatBytes } from "../../../util/format";
 
 import PGDocsLink from "../../PGDocsLink";
@@ -18,7 +18,7 @@ const WorkMemTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
 };
 
 const WorkMemGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
-  urls: { serverLogInsightsUrl, SettingLink },
+  urls: { serverLogInsightsUrl, SettingLink, sectionUrl },
   issue,
 }) => {
   const Link = useSmartAnchor();

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CheckDocs, CheckGuidanceProps, CheckTriggerProps, sectionUrl } from "../../../util/checks";
+import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/checks";
 
 import PGDocsLink from "../../PGDocsLink";
 import { useSmartAnchor } from "../../SmartAnchor";
@@ -31,6 +31,7 @@ const SlownessGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     serverSystemUrl,
     serverVacuumsUrl,
     databaseWaitEventsUrl,
+    sectionUrl,
   },
 }) => {
   const Link = useSmartAnchor();

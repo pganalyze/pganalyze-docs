@@ -5,7 +5,6 @@ import {
   CheckGuidanceProps,
   CheckTriggerProps,
   IssueReferenceBackend,
-  sectionUrl,
 } from "../../../util/checks";
 
 import PGDocsLink from "../../PGDocsLink";
@@ -37,7 +36,7 @@ const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 };
 
 const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
-  urls: { referenceUrl, serverVacuumsUrl, SettingLink },
+  urls: { referenceUrl, serverVacuumsUrl, SettingLink, sectionUrl, },
   issue,
 }) => {
   const Link = useSmartAnchor();
