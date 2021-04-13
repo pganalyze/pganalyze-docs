@@ -32,8 +32,32 @@ export const CheckLinks = () => {
   )
 }
 
-To help you discover potential problems with your database, pganalyze includes
-a number of checks performed automatically on the metrics reported by your
-database.
+To help you discover potential problems, pganalyze automatically performs a number
+of checks on your database.
+
+Checks run regularly, at different frequencies depending on the check type. When
+a problem is detected, an issue is created for the server or database where the
+problem is found.
+
+Issues may have severity "info", "warning", or "critical". Critical issues may
+cause a serious performance problem or lead to a database outage within a matter
+of hours. Warnings are less serious, but should still be investigated as they can
+often escalate to critical severity. Info-level issues encourage best practices and
+indicate opportunities for performance improvements.
+
+
+## Alerting
+
+If an issue is of severity "critical" (either because it starts as critical or
+escalates to that level), it will alert organization users according to their
+configured Alert Policy. You can edit Alert Policies in the Configure section
+of the Alerts & Check-Up page. You can edit organization members' assigned
+policies in each member's organization profile page, accessible from the Members
+section of the organization Settings page.
+
+
+## Checks
+
+Checks are organized into several different categories:
 
 <CheckLinks />
