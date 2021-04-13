@@ -99,7 +99,7 @@ class SQL extends React.Component<Props> {
     }
 
     return (
-      <pre
+      <span
         className={classNames(
           styles.noborder,
           styles.sql,
@@ -110,7 +110,7 @@ class SQL extends React.Component<Props> {
         }}
       >
         {sql}
-      </pre>
+      </span>
     );
   }
 }

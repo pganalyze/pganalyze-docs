@@ -1,4 +1,6 @@
 .sql {
+  display: block;
+  font-family: monospace;
   white-space: pre-wrap;
 }
 .keyword {
@@ -25,5 +27,5 @@
 }
 
 .inline {
-  display: inline;
+  display: inline-block;
 }

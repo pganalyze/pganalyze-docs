@@ -5,6 +5,7 @@ import {
   CheckGuidanceProps,
   CheckTriggerProps,
   IssueReferenceBackend,
+  sectionUrl,
 } from "../../../util/checks";
 
 import PGDocsLink from "../../PGDocsLink";
@@ -55,11 +56,11 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           <h5>Locks</h5>
           <p>
             The query may be waiting for a lock. Check the{" "}
-            <Link to={`${referenceUrl}/wait_events`}>Wait Events</Link> page for
+            <Link to={sectionUrl(referenceUrl, 'wait_events')}>Wait Events</Link> page for
             the associated backend for any wait events of type Lock. If you have{" "}
             <SettingLink setting="log_lock_waits" /> turned on, you can also see
             details about locking in the{" "}
-            <Link to={`${referenceUrl}/logs`}>logs page</Link> for the backend.
+            <Link to={sectionUrl(referenceUrl, 'logs')}>logs page</Link> for the backend.
           </p>
         </li>
         <li>
@@ -84,7 +85,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             If a query lacks the necessary indexes to execute efficiently, it
             may take longer and use more I/O than necessary, causing a negative
             impact on the whole system. Check the the Index Check tab for the{" "}
-            <Link to={`${referenceUrl}/queries`}>query</Link> to review indexing
+            <Link to={sectionUrl(referenceUrl, 'queries')}>query</Link> to review indexing
             recommendations.
           </p>
         </li>
@@ -98,7 +99,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             </PGDocsLink>
             ), the query may start performing poorly. You may need to review the
             EXPLAIN plans for{" "}
-            <Link to={`${referenceUrl}/queries`}>the query</Link>, change
+            <Link to={sectionUrl(referenceUrl, 'queries')}>the query</Link>, change
             indexes, or create auxiliary statistics to give Postgres more
             information about the distribution of the underlying data. You
             should also check <Link to={serverVacuumsUrl}>vacuum activity</Link>{" "}
@@ -114,8 +115,8 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         <SQL
           inline
           sql={`SELECT pg_cancel_backend(${
-            (issue.referenceDetail as IssueReferenceBackend)?.pid ??
-            "<query pid>"
+            (issue?.referenceDetail as IssueReferenceBackend)?.pid ??
+            '"<query pid>"'
           });`}
         />
         . Note that this only treats the symptom: if the query runs again
