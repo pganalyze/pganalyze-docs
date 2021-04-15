@@ -36,7 +36,7 @@ const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 };
 
 const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
-  urls: { referenceUrl, serverVacuumsUrl, SettingLink, sectionUrl, },
+  urls: { referenceUrl, serverVacuumsUrl, SettingLink, featureUrl, },
   issue,
 }) => {
   const Link = useSmartAnchor();
@@ -55,11 +55,11 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           <h5>Locks</h5>
           <p>
             The query may be waiting for a lock. Check the{" "}
-            <Link to={sectionUrl(referenceUrl, 'wait_events')}>Wait Events</Link> page for
+            <Link to={featureUrl(referenceUrl, 'wait_events')}>Wait Events</Link> page for
             the associated backend for any wait events of type Lock. If you have{" "}
             <SettingLink setting="log_lock_waits" /> turned on, you can also see
             details about locking in the{" "}
-            <Link to={sectionUrl(referenceUrl, 'logs')}>logs page</Link> for the backend.
+            <Link to={featureUrl(referenceUrl, 'logs')}>logs page</Link> for the backend.
           </p>
         </li>
         <li>
@@ -84,7 +84,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             If a query lacks the necessary indexes to execute efficiently, it
             may take longer and use more I/O than necessary, causing a negative
             impact on the whole system. Check the the Index Check tab for the{" "}
-            <Link to={sectionUrl(referenceUrl, 'queries')}>query</Link> to review indexing
+            <Link to={featureUrl(referenceUrl, 'queries')}>query</Link> to review indexing
             recommendations.
           </p>
         </li>
@@ -98,7 +98,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             </PGDocsLink>
             ), the query may start performing poorly. You may need to review the
             EXPLAIN plans for{" "}
-            <Link to={sectionUrl(referenceUrl, 'queries')}>the query</Link>, change
+            <Link to={featureUrl(referenceUrl, 'queries')}>the query</Link>, change
             indexes, or create auxiliary statistics to give Postgres more
             information about the distribution of the underlying data. You
             should also check <Link to={serverVacuumsUrl}>vacuum activity</Link>{" "}

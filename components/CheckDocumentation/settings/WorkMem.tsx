@@ -18,7 +18,7 @@ const WorkMemTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
 };
 
 const WorkMemGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
-  urls: { serverLogInsightsUrl, SettingLink, sectionUrl },
+  urls: { serverLogInsightsUrl, SettingLink, featureUrl },
   issue,
 }) => {
   const Link = useSmartAnchor();
@@ -42,7 +42,7 @@ const WorkMemGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         If you have <SettingLink setting="log_temp_files" /> set to an
         appropriate value (or 0 to log all temporary files) you can see the
         temporary files created, split by query, in{" "}
-        <Link to={sectionUrl(serverLogInsightsUrl, 'S7')}>Log Insights</Link>. Increasing
+        <Link to={featureUrl(serverLogInsightsUrl, 'S7')}>Log Insights</Link>. Increasing
         work_mem would likely improve performance for these queries.
       </p>
       <h4>Solution</h4>

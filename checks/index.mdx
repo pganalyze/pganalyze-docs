@@ -35,12 +35,14 @@ export const CheckLinks = () => {
 To help you discover potential problems, pganalyze automatically performs a number
 of checks on your database.
 
+![Screenshot of Alerts & Check-Up feature](./checks-screenshot.png)
+
 Checks run regularly, at different frequencies depending on the check type. When
 a problem is detected, an issue is created for the server or database where the
 problem is found.
 
 Issues may have severity "info", "warning", or "critical". Critical issues may
-cause a serious performance problem or lead to a database outage within a matter
+indicate a serious performance problem or potential database outage within a matter
 of hours. Warnings are less serious, but should still be investigated as they can
 often escalate to critical severity. Info-level issues encourage best practices and
 indicate opportunities for performance improvements.

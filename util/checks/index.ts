@@ -179,10 +179,10 @@ export type IssueGuidanceUrls = {
   databaseTableUrl: string;
   serverLogInsightsUrl: string;
   serverSchemaUrl: string;
-  sectionUrl: (mainUrl: string | undefined, section: string) => string | undefined;
+  featureUrl: (mainUrl: string | undefined, section: string) => string | undefined;
 };
 
-export function sectionUrl (mainUrl: string | undefined, section: string): string | undefined {
+export function featureUrl (mainUrl: string | undefined, section: string): string | undefined {
   if (mainUrl == undefined) {
     return undefined;
   }
