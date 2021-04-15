@@ -1,0 +1,65 @@
+---
+title: 'Alerts & Check-Up'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+import * as checkUtil from '../util/checks'
+
+export const CheckLinks = () => {
+  const checkTitles = checkUtil.CHECK_TITLES;
+  return (
+    <ul>
+      {Object.entries(checkTitles).map(([checkGroup, items]) => {
+        return (
+          <li key={checkGroup}>
+            <strong>{checkGroup}</strong>
+            <ul>
+              {Object.entries(items).map(([checkName, checkTitle]) => {
+                return (
+                  <li key={checkName}>
+                    <Link to={`/docs/checks/${checkGroup}/${checkName}`}>
+                      {checkTitle}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
+
+To help you discover potential problems, pganalyze automatically performs a number
+of checks on your database.
+
+![Screenshot of Alerts & Check-Up feature](./checks-screenshot.png)
+
+Checks run regularly, at different frequencies depending on the check type. When
+a problem is detected, an issue is created for the server or database where the
+problem is found.
+
+Issues may have severity "info", "warning", or "critical". Critical issues may
+indicate a serious performance problem or potential database outage within a matter
+of hours. Warnings are less serious, but should still be investigated as they can
+often escalate to critical severity. Info-level issues encourage best practices and
+indicate opportunities for performance improvements.
+
+
+## Alerting
+
+If an issue is of severity "critical" (either because it starts as critical or
+escalates to that level), it will alert organization users according to their
+configured Alert Policy. You can edit Alert Policies in the Configure section
+of the Alerts & Check-Up page. You can edit organization members' assigned
+policies in each member's organization profile page, accessible from the Members
+section of the organization Settings page.
+
+
+## Checks
+
+Checks are organized into several different categories:
+
+<CheckLinks />

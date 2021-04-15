@@ -6,9 +6,9 @@ import {
   CheckTriggerProps,
   IssueReferenceIndex,
 } from "../../../util/checks";
-import { formatSqlObjectName } from "util/format";
+import { formatSqlObjectName } from "../../../util/format";
 
-import SQL from "components/SQL";
+import SQL from "../../SQL";
 import { useSmartAnchor } from "../../SmartAnchor";
 
 const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
@@ -36,10 +36,10 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 }) => {
   const Link = useSmartAnchor();
 
-  const idx = issue.referenceDetail as IssueReferenceIndex;
+  const idx = issue?.referenceDetail as IssueReferenceIndex;
   const qualifiedIdx = idx?.name
     ? formatSqlObjectName(idx.schemaName, idx.name)
-    : "<index name>";
+    : '"<index_name>"';
   return (
     <div>
       <h4>Impact</h4>

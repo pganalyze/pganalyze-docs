@@ -31,6 +31,7 @@ const SlownessGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     serverSystemUrl,
     serverVacuumsUrl,
     databaseWaitEventsUrl,
+    featureUrl,
   },
 }) => {
   const Link = useSmartAnchor();
@@ -65,7 +66,7 @@ const SlownessGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             If a query lacks the necessary indexes to execute efficiently, it
             may take longer and use more I/O than necessary, causing a negative
             impact on the whole system. Check the{" "}
-            <Link to={`${referenceUrl}/indexcheck`}>query page</Link> to review
+            <Link to={featureUrl(referenceUrl, 'indexcheck')}>query page</Link> to review
             indexing recommendations.
           </p>
         </li>
@@ -98,7 +99,7 @@ const SlownessGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           <p>
             The query may be executing slowly due to an inefficient plan for
             other reasons. Review the{" "}
-            <Link to={`${referenceUrl}/explains`}>query execution plans</Link>{" "}
+            <Link to={featureUrl(referenceUrl, 'explains')}>query execution plans</Link>{" "}
             and Explain Insights listed for the query.
           </p>
         </li>

@@ -1,4 +1,4 @@
-import SQL from "components/SQL";
+import SQL from "../../SQL";
 import React from "react";
 
 import {
@@ -7,7 +7,7 @@ import {
   CheckTriggerProps,
   IssueReferenceIndex,
 } from "../../../util/checks";
-import { formatSqlObjectName } from "util/format";
+import { formatSqlObjectName } from "../../../util/format";
 
 const IndexInvalidTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
   return (
@@ -23,10 +23,10 @@ const IndexInvalidTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => 
 const IndexInvalidGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   issue,
 }) => {
-  const idx = issue.referenceDetail as IssueReferenceIndex;
+  const idx = issue?.referenceDetail as IssueReferenceIndex;
   const qualifiedIdx = idx?.name
     ? formatSqlObjectName(idx.schemaName, idx.name)
-    : "<index name>";
+    : '"<index_name>"';
   return (
     <div>
       <h4>Impact</h4>

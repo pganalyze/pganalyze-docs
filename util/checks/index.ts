@@ -61,6 +61,92 @@ export const CHECK_FREQUENCY = {
   },
 };
 
+export const DEFAULT_CHECK_CONFIGS = {
+  queries: {
+    slowness: {
+      enabled: true,
+      settings: {
+        threshold_ms: 50,
+        minimum_calls: 50
+      }
+    },
+  },
+  connections: {
+    active_query: {
+      enabled: true,
+      settings: {
+        warning_max_query_age_secs: 1800,
+        critical_max_query_age_secs: 3600
+      }
+    },
+    idle_transaction: {
+      enabled: true,
+      settings: {
+        warning_max_idle_tx_age_secs: 1800,
+        critical_max_idle_tx_age_secs: 3600
+      }
+    },
+  },
+  schema: {
+    index_invalid: {
+      enabled: true
+    },
+    index_unused: {
+      enabled: true
+    },
+  },
+  settings: {
+    enable_features: {
+      enabled: true
+    },
+    fsync: {
+      enabled: true
+    },
+    shared_buffers: {
+      enabled: true
+    },
+    stats: {
+      enabled: true
+    },
+    work_mem: {
+      enabled: true
+    },
+  },
+  system: {
+    // N.B.: server defaults uses system/disk_space
+    storage_space: {
+      enabled: true,
+      settings: {
+        critical_pct: 98,
+        warning_pct: 90,
+        base_threshold_gigabytes: 50
+      }
+    },
+  },
+  replication: {
+    high_lag: {
+      enabled: true,
+      settings: {
+        warning_threshold_mb: 100,
+        critical_threshold_mb: 1024
+      }
+    },
+    follower_missing: {
+      enabled: true,
+      settings: {
+        expected_count: 0
+      }
+    }
+  },
+}
+
+export function checkDefaultConfig(
+  checkGroup: string,
+  checkName: string
+): string {
+  return DEFAULT_CHECK_CONFIGS[checkGroup]?.[checkName];
+}
+
 export function checkFrequency(
   checkGroup: string,
   checkName: string
@@ -93,7 +179,15 @@ export type IssueGuidanceUrls = {
   databaseTableUrl: string;
   serverLogInsightsUrl: string;
   serverSchemaUrl: string;
+  featureUrl: (mainUrl: string | undefined, section: string) => string | undefined;
 };
+
+export function featureUrl (mainUrl: string | undefined, section: string): string | undefined {
+  if (mainUrl == undefined) {
+    return undefined;
+  }
+  return `${mainUrl}/${section}`;
+}
 
 export type IssueReferenceBackend = {
   pid: string;
