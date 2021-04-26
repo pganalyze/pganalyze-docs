@@ -160,6 +160,10 @@
       "title": "Enterprise Edition: Initial Setup",
       "path": "/docs/enterprise/setup"
     },
+    "enterprise/setup/kubernetes_amazon_eks": {
+      "title": "Enterprise Edition: Initial Setup (Kubernetes on Amazon EKS)",
+      "path": "/docs/enterprise/setup/kubernetes_amazon_eks"
+    },
     "enterprise/troubleshooting": {
       "title": "Enterprise Edition: Troubleshooting",
       "path": "/docs/enterprise/troubleshooting"
