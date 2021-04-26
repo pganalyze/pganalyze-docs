@@ -26,7 +26,7 @@ Perform the next steps on a machine that has full internet connectivity, e.g you
 
 The goal of this first step is to publish the pganalyze software to your private AWS Container Registry, which can be accessed from your Amazon EKS cluster.
 
-First, login with your license information, shared with you by the pganalyze team:
+First, log in with your license information, shared with you by the pganalyze team:
 
 ```
 docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io
@@ -44,7 +44,7 @@ Create a new container repository for pganalyze in the account-specific AWS cont
 aws ecr create-repository --repository-name pganalyze-enterprise
 ```
 
-Login to the AWS container registry, replacing `ACCOUNTID` with your AWS account ID, replacing `REGION` with your AWS region (e.g. "us-west-1"):
+Log in to the AWS container registry, replacing `ACCOUNTID` with your AWS account ID, replacing `REGION` with your AWS region (e.g. "us-west-1"):
 
 ```
 aws ecr get-login-password --region REGION | docker login --username AWS --password-stdin ACCOUNTID.dkr.ecr.REGION.amazonaws.com
@@ -122,7 +122,7 @@ We need to create two separate policies. First, one for pganalyze storing data i
 }
 ```
 
-Modify the S3 bucket names and KMS key ID to match your setup. And then create the policy:
+Modify the S3 bucket names (`BUCKETNAME`) to match your setup, and adjust the KMS key details by updating `REGION`/`ACCOUNTID`/`KEYID` to match the key's ARN. And then create the policy:
 
 ```
 aws iam create-policy --policy-name pganalyze_s3_kms_policy --policy-document file://pganalyze_s3_kms_policy.json
@@ -181,13 +181,13 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::ACCOUNTID:policy/pganalyze_
 aws iam attach-role-policy --policy-arn arn:aws:iam::ACCOUNTID:policy/pganalyze_rds_policy --role-name eksctl-CLUSTER-NodeInstanceRole
 ```
 
-### Step 4: Setup a Kubernetes secret for configuration settings
+### Step 4: Set up a Kubernetes secret for configuration settings
 
 You can manage Kubernetes secrets using [kubectl](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)
 
 There are two sensitive settings, `DATABASE_URL` and `LICENSE_KEY` that we store using a Kubernetes secret.
 
-The `DATABASE_URL` has the format `postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE` and specifies the connection used for storing the pganalyze statistics data. We recommend using an administrative user on the statistic sdatabase for this connection.
+The `DATABASE_URL` has the format `postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE` and specifies the connection used for storing the pganalyze statistics data. We recommend using an administrative user on the statistics database for this connection.
 
 The `LICENSE_KEY` has been provided to you by the pganalyze Team - replace `KEYKEYKEY` in the command with the actual key.
 
@@ -373,9 +373,9 @@ When you go to the hostname in your browser you should see the login page. You c
 
 ![](login.png)
 
-### Step 8: Login to pganalyze
+### Step 8: Log in to pganalyze
 
-Please now login to the pganalyze interface using the generated credentials you've seen earlier when setting up the database. If successful you should see this screen:
+Please now log in to the pganalyze interface using the generated credentials you've seen earlier when setting up the database. If successful you should see this screen:
 
 ![](create_organization.png)
 
