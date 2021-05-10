@@ -271,6 +271,16 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
       <td>If using cross-account role delegation, the ARN of the role to assume; see the <a target="_blank" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html">AWS documentation</a> for details</td>
     </tr>
     <tr>
+      <td>aws_web_identity_token_file (<code>AWS_WEB_IDENTITY_TOKEN_FILE</code>)</td>
+      <td>[none]</td>
+      <td>If running the collector inside EKS, can be used with aws_role_arn in order to access AWS resources; see the <a target="_blank" href="https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html">AWS documentation</a> for details</td>
+    </tr>
+    <tr>
+      <td>aws_role_arn (<code>AWS_ROLE_ARN</code>)</td>
+      <td>[none]</td>
+      <td>If running the collector inside EKS, can be used with aws_web_identity_token_file in order to access AWS resources; see the <a target="_blank" href="https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html">AWS documentation</a> for details</td>
+    </tr>
+    <tr>
       <td>aws_endpoint_signing_region (<code>AWS_ENDPOINT_SIGNING_REGION</code>)</td>
       <td>[none]</td>
       <td>Region to use for signing requests (optional, usually not required)</td>
