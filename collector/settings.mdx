@@ -69,13 +69,6 @@ Common settings for configuring collector behavior, independent of the platform.
       </tr>
     */}
     <tr>
-      <td>ignore_schema_regexp (<code>IGNORE_SCHEMA_REGEXP</code>)</td>
-      <td>[none]</td>
-      <td>Skip collecting metadata for all matching tables, schemas, or functions; match is checked against
-      schema-qualified object names (e.g. to ignore table "foo" only in the public schema, set to <code>^public\.foo$</code>)
-      </td>
-    </tr>
-    <tr>
       <td>skip_if_replica (<code>SKIP_IF_REPLICA</code>)</td>
       <td>false</td>
       <td>Skip all metadata collection and snapshot submission while this server is a replica (according to <code>pg_is_in_recovery</code>).
@@ -222,6 +215,46 @@ Note that this automatically turns off the query sample and EXPLAIN plan feature
 data in the query text. We are working to provide more fine-grained PII filtering options in the future, including
 the option to sanitize EXPLAIN plans automatically.
 
+## Schema filter settings
+
+The pganalyze collector limits the number of schema objects (tables, views, etc.) that can be monitored on each database server. This limit is currently 5,000 tables or views per database server. If this limit is exceeded, no schema information will be collected.
+
+You can avoid reaching this limit by using the following setting to select which tables/views should be excluded:
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ignore_schema_regexp (<code>IGNORE_SCHEMA_REGEXP</code>)</td>
+      <td>[none]</td>
+      <td>Skip collecting metadata for all matching tables, schemas, or functions; match is checked against
+      schema-qualified object names (e.g. to ignore table "foo" only in the public schema, set to <code>^public\.foo$</code>)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+To validate whether the setting is working as intended, you can run a query on your database server to count the number of monitored tables and views. Note you would have to run this on each database on the server and then summarize the counts, which should not exceed the 5,000 limit in aggregate:
+
+```sql
+SELECT current_database() AS dbname,
+       COUNT(*) AS table_and_view_count
+  FROM pg_class c
+       LEFT JOIN pg_catalog.pg_namespace n ON (n.oid = c.relnamespace)
+ WHERE c.relkind IN ('r','v','m','p')
+       AND c.relpersistence <> 't'
+       AND c.relname NOT IN ('pg_stat_statements')
+       AND n.nspname NOT IN ('pg_catalog','pg_toast','information_schema')
+       AND (n.nspname || '.' || c.relname) !~* 'REGEXP';
+```
+
+Make sure to replace `REGEXP` with the value of your `ignore_schema_regexp` setting.
 
 ## AWS settings
 
