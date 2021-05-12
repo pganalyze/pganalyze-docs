@@ -6,8 +6,8 @@ const SharedBuffersTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) =>
   return (
     <p>
       Detects when the shared_buffers Postgres setting seems too low for the
-      amount of RAM in your machine. Resolves once the setting has been adjusted
-      to within the recommended range.
+      amount of RAM in your machine, and creates an issue with severity "warning".
+      Resolves once the setting has been adjusted to within the recommended range.
     </p>
   );
 };
