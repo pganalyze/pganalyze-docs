@@ -10,7 +10,8 @@ const FollowerMissingTrigger: React.FunctionComponent<CheckTriggerProps> = ({
       <p>
         Detects when the actual number of followers registered with the primary
         is lower than the expected number (
-        <code>{config.settings["expected_count"]}</code>).
+        <code>{config.settings["expected_count"]}</code>), and creates an issue
+        with severity "critical".
       </p>
       <p>Configure this on the primary server in your replication setup.</p>
     </>

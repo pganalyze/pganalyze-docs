@@ -5,8 +5,9 @@ import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/
 const StatsTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
   return (
     <p>
-      Detects when statistics collection is disabled in your database. Resolves
-      once statistics collection is enabled again.
+      Detects when statistics collection is disabled in your database, and creates
+      an issue with severity "warning". Resolves once statistics collection is
+      enabled again.
     </p>
   );
 };

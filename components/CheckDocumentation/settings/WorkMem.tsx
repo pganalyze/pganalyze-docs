@@ -11,8 +11,8 @@ const WorkMemTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
     <p>
       Detects when the Postgres <code>work_mem</code> setting seems too low for
       the amount of RAM in your machine and the number of connections you have
-      configured. Resolves once the setting has been adjusted to within 50% of
-      the recommended range.
+      configured, and creates an issue with severity "warning". Resolves once
+      the setting has been adjusted to within 50% of the recommended range.
     </p>
   );
 };
