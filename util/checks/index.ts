@@ -26,6 +26,51 @@ export const CHECK_TITLES = {
   },
 };
 
+export const CHECK_SEVERITIES = {
+  queries: {
+    slowness: ['info'],
+  },
+  connections: {
+    active_query: ['warning', 'critical'],
+    idle_transaction: ['warning', 'critical'],
+  },
+  schema: {
+    index_invalid: ['info'],
+    index_unused: ['info'],
+  },
+  settings: {
+    enable_features: ['info'],
+    fsync: ['critical'],
+    shared_buffers: ['warning'],
+    stats: ['warning'],
+    work_mem: ['warning'],
+  },
+  system: {
+    storage_space: ['warning', 'critical'],
+  },
+  replication: {
+    high_lag: ['warning', 'critical'],
+    follower_missing: ['critical'],
+  },
+}
+
+export function checkMaxSeverity(checkGroup: string, checkName: string): string | undefined {
+  const severities = CHECK_SEVERITIES[checkGroup]?.[checkName];
+  if (!severities) {
+    return undefined;
+  }
+  if (severities.includes('critical')) {
+    return 'critical';
+  } else if (severities.includes('warning')) {
+    return 'warning';
+  } else if (severities.includes('info')) {
+    return 'info';
+  } else {
+    return undefined;
+  }
+}
+
+
 export function checkTitle(checkGroup: string, checkName: string): string {
   return CHECK_TITLES[checkGroup]?.[checkName] ?? "Unknown check";
 }
