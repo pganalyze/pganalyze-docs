@@ -1,7 +1,7 @@
 import React from 'react'
 import { useIcon } from './WithIcons';
 
-import styles from './style.module.scss';
+import * as styles from './style.module.scss';
 
 type Props = {
   small?: boolean

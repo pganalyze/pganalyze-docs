@@ -2,7 +2,7 @@ import React from 'react'
 import { useCodeBlock } from './CodeBlock';
 import Null from './Null';
 
-import styles from './style.module.scss';
+import * as styles from './style.module.scss';
 import { useDescriptionPopup } from './WithDescriptionPopup';
 import { useIcon } from './WithIcons';
 

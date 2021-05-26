@@ -3,7 +3,7 @@ import classNames from "classnames";
 import hljs from "highlight.js/lib/highlight";
 import sql from "highlight.js/lib/languages/sql";
 
-import styles from "./style.module.scss";
+import * as styles from "./style.module.scss";
 
 type Props = {
   sql: string;

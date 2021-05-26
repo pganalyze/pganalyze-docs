@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useIcon } from "./WithIcons";
 
-import styles from './style.module.scss';
+import * as styles from './style.module.scss';
 
 type AnchorProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
