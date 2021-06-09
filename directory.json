@@ -36,6 +36,10 @@
       "title": "Alerts & Check-Up",
       "path": "/docs/checks"
     },
+    "checks/pagerduty": {
+      "title": "PagerDuty Integration",
+      "path": "/docs/checks/pagerduty"
+    },
     "collector": {
       "title": "pganalyze Collector",
       "path": "/docs/collector"
