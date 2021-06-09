@@ -1,0 +1,91 @@
+---
+title: 'PagerDuty Integration'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+## PagerDuty + pganalyze Integration Benefits
+
+ * Notify on-call responders based on alerts sent from pganalyze
+ * Link PagerDuty incidents to issue details in pganalyze
+ * Automatically acknowledge PagerDuty incidents when issues are acknowledged in pganalyze
+ * Automatically resolve PagerDuty incidents when pganalyze detects an issue has been resolved
+
+## How it Works
+
+In order to ensure your database is running smoothly, pganalyze runs a number of checks every time
+it receives statistics snapshots about your database from the [Collector](/docs/collector).
+These checks can create issues in pganalyze, which you can view by navigating to the **Alerts & Check-Up**
+page in the left menu in pganalyze. Once the underlying problem has been resolved, pganalyze will
+automatically resolve the issue.
+
+Integration with PagerDuty can trigger incidents on a PagerDuty service when new critical issues are
+created (or when existing issues escalate to critical severity). Once a pganalyze issue has been resolved,
+the associated PagerDuty incident will be automatically resolved as well.
+
+
+## Requirements
+
+In order to set up the initial integration with PagerDuty, you will need [modify permissions](/docs/permissions)
+on the pganalyze organization. In order to configure alerts for a specific server, you will need **modify**
+permissions on that server.
+
+
+## Support
+
+If you need help with this integration, please contact [support@pganalyze.com](mailto:support@pganalyze.com).
+
+
+## Integration Walkthrough
+
+Follow these instructions for your selected organization in pganalyze.
+
+
+### Initial setup
+
+Before configuring alerts, you will need to connect your pganalyze organization to PagerDuty:
+
+1. In the top menu, click the **x** in the **Server** dropdown if a server is selected to clear the active server
+2. In the left menu, click the **Settings** item
+3. On the organization settings page, click the **Integrations** tab
+4. In the panel labeled **PagerDuty**, click the **Connect to PagerDuty** button
+5. Continue to authenticate with PagerDuty and select which services you would like to connect to pganalyze
+   * services you select will later be available to configure for alerting; no alerting is enabled by default
+6. Once connected, select a service from the dropdown and click **Test integration** to trigger a test alert
+   to the selected service and verify that the integration is configured correctly
+
+
+### Configuring alerts
+
+1. In the top menu, use the **Server** dropdown to select the server to configure
+2. In the left menu, click the **Alerts & Check-Up** item
+3. On the server alerts page, click the **Configure** tab
+4. Click the **Configure alerts for this server** link
+5. Select a service from the **PagerDuty service** dropdown
+6. Check the checkboxes in the **PagerDuty Alert** column for the checks you would like to enable
+   * only checks which escalate to critical severity will be selectable
+7. Click the **Save Changes** button
+8. You should see "Success! Configuration changes saved" and pganalyze will create incidents the next time any of
+   the configured checks trigger
+
+Note: If you change the configuration to disable PagerDuty alerts for some checks while there are open
+incidents, you will need to resolve these incidents manually.
+
+
+### Uninstalling the integration
+
+1. In the top menu, click the **x** in the server dropdown if a server is selected to clear the active server
+2. In the left menu, click the **Settings** item
+3. On the organization settings page, click the **Integrations** tab
+4. In the panel labeled **PagerDuty**, click the **Reset integration** button
+5. You should see "Success! Reset complete!" and the integration will be removed
+
+Note: If you uninstall the PagerDuty integration while there are open incidents, you will need to resolve
+these incidents manually.
+
+### Resetting the integration
+
+If you would like to change the PagerDuty services you connect with pganalyze, go through the uninstall steps
+and the initial setup steps. Your alerting configuration will be maintained. If your alerting configuration
+references channels that no longer exist, you will need to update these manually or contact [support@pganalyze.com](mailto:support@pganalyze.com).
+
