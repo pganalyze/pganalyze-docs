@@ -59,11 +59,13 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
 
     const { children, className, ...otherProps } = props;
     const mergedClassname = styles.noWrap + (className === null ? '' : ' ' + className);
-    // Don't show external icon link for Heroku button
-    const showExternalLinkIcon = !destination.startsWith('https://heroku.com/deploy') && !destination.startsWith('#')
+    // Don't show external icon link in some situations
+    const skipExternalLinkIcon = destination.startsWith('https://heroku.com/deploy')
+      || destination.startsWith('#')
+      || destination.startsWith('mailto:')
     return (
       <a {...otherProps} className={mergedClassname}>
-        {children}{showExternalLinkIcon && <ExternaLinkIcon className={styles.externalLinkIcon} />}
+        {children}{!skipExternalLinkIcon && <ExternaLinkIcon className={styles.externalLinkIcon} />}
       </a>
     )
   }
