@@ -1,6 +1,13 @@
 export const collectorAppName = (organizationSlug: string) =>
-  `${organizationSlug || "testapp"}-pganalyze-collector`;
+  `${simpleOrgSlug(organizationSlug, '-') || "testapp"}-pganalyze-collector`;
 export const attachmentName = (organizationSlug: string) =>
   organizationSlug
-    ? `${organizationSlug.toUpperCase()}_PRIMARY`
+    ? `${simpleOrgSlug(organizationSlug).toUpperCase()}_PRIMARY`
     : "MYDB_PRIMARY";
+
+const simpleOrgSlug = (organizationSlug: string, replacement: string = '_') => {
+  if (organizationSlug == null) {
+    return null;
+  }
+  return organizationSlug.replace(/[^a-zA-Z0-9]+/g, replacement);
+}
