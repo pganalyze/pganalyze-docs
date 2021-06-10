@@ -10,13 +10,13 @@ import imgLogInsights from './log_insights.png'
 To finish, restart the collector app:
 
 ```bash
-heroku restart -a testapp-pganalyze-collector
+heroku restart -a [your-collector-app-name]
 ```
 
 Afterwards, check the app logs again.
 
 ```bash
-heroku logs -a testapp-pganalyze-collector -t
+heroku logs -a [your-collector-app-name] -t
 ```
 
 If the collector was able to match the log data to the correct database, you will see a log line like this after about a minute:
