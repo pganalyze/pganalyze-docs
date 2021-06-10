@@ -18,6 +18,7 @@ In order to use log-based EXPLAIN, the collector needs permissions to run EXPLAI
 The safest way to permit this is to create the following helper function **in each database you want to monitor**:
 
 ```sql
+CREATE SCHEMA IF NOT EXISTS pganalyze;
 CREATE OR REPLACE FUNCTION pganalyze.explain(query text, params text[]) RETURNS text AS
 $$
 DECLARE
