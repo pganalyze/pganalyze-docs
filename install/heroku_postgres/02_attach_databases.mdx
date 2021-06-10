@@ -30,7 +30,7 @@ Setting ${attName} config vars and restarting ⬢ ${appName}... done, v9`}
 
 ## Find out Heroku Postgres add-on name
 
-First, find out the add-on name if your database - this is not the same as your application name on Heroku.
+First, find out the add-on name of your database - this is not the same as your application name on Heroku.
 
 ```
 heroku addons
@@ -39,9 +39,9 @@ heroku addons
 This will output something like the following:
 
 ```
-Owning App                Add-on                        Plan                          Price        State
-────────────────────────  ────────────────────────────  ────────────────────────────  ───────────  ───────
-testapp                   postgresql-objective-11111    heroku-postgresql:hobby-dev   free         created
+Owning App  Add-on                       Plan                          Price  State
+─────────── ───────────────────────────  ────────────────────────────  ────── ───────
+testapp     postgresql-objective-11111   heroku-postgresql:hobby-dev   free   created
 ```
 
 ## Attach database
