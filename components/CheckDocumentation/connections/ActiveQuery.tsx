@@ -114,7 +114,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         <SQL
           inline
           sql={`SELECT pg_cancel_backend(${
-            (issue?.referenceDetail as IssueReferenceBackend)?.pid ??
+            (issue?.reference?.object as IssueReferenceBackend)?.pid ??
             '"<query_pid>"'
           });`}
         />

@@ -23,7 +23,7 @@ const IndexInvalidTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => 
 const IndexInvalidGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   issue,
 }) => {
-  const idx = issue?.referenceDetail as IssueReferenceIndex;
+  const idx = issue?.reference?.object as IssueReferenceIndex; 
   const qualifiedIdx = idx?.name
     ? formatSqlObjectName(idx.schemaName, idx.name)
     : '"<index_name>"';
