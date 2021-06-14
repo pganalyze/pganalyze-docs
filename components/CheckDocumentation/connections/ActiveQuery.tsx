@@ -36,7 +36,7 @@ const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 };
 
 const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
-  urls: { referenceUrl, serverVacuumsUrl, SettingLink, featureUrl, },
+  urls: { serverVacuumsUrl, SettingLink },
   issue,
 }) => {
   const Link = useSmartAnchor();
@@ -54,20 +54,19 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         <li>
           <h5>Locks</h5>
           <p>
-            The query may be waiting for a lock. Check the{" "}
-            <Link to={featureUrl(referenceUrl, 'wait_events')}>Wait Events</Link> page for
-            the associated backend for any wait events of type Lock. If you have{" "}
+            The queries may be waiting for locks. Check the <strong>Wait Events</strong> page for
+            the associated backend, and look for any wait events of type <strong>Lock</strong>. If you have{" "}
             <SettingLink setting="log_lock_waits" /> turned on, you can also see
             details about locking in the{" "}
-            <Link to={featureUrl(referenceUrl, 'logs')}>logs page</Link> for the backend.
+            <strong>Logs</strong> page for the backend.
           </p>
         </li>
         <li>
           <h5>Long-running migration</h5>
           <p>
-            If this query is DDL that is part of a database migration, it may
-            need to rewrite a table (e.g., changing the type of a column) or
-            scan the whole table (e.g., <code>CREATE INDEX</code> without{" "}
+            If some of these queries are DDL that is part of a database migration,
+            they may need to rewrite a table (e.g., changing the type of a column) or
+            scan a whole table (e.g., <code>CREATE INDEX</code> without{" "}
             <code>CONCURRENTLY</code>), which can take much longer in production
             than in a staging or development environment. If your migration is
             transactional, consider canceling it and refactor it to avoid table
@@ -83,9 +82,8 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           <p>
             If a query lacks the necessary indexes to execute efficiently, it
             may take longer and use more I/O than necessary, causing a negative
-            impact on the whole system. Check the the Index Check tab for the{" "}
-            <Link to={featureUrl(referenceUrl, 'queries')}>query</Link> to review indexing
-            recommendations.
+            impact on the whole system. Check the the <strong>Index Check</strong> tab for
+            the referenced queries to review indexing recommendations.
           </p>
         </li>
         <li>
@@ -96,9 +94,8 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             <PGDocsLink path="/planner-stats.html">
               statistics relevant to query planning
             </PGDocsLink>
-            ), the query may start performing poorly. You may need to review the
-            EXPLAIN plans for{" "}
-            <Link to={featureUrl(referenceUrl, 'queries')}>the query</Link>, change
+            ), the query may start performing poorly. You may need to review
+            the <strong>EXPLAIN plans</strong> for the query, change
             indexes, or create auxiliary statistics to give Postgres more
             information about the distribution of the underlying data. You
             should also check <Link to={serverVacuumsUrl}>vacuum activity</Link>{" "}
@@ -109,8 +106,8 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
       </ul>
       <h4>Solution</h4>
       <p>
-        If you've confirmed the query is causing problems, you can cancel it
-        with{" "}
+        If you've confirmed the queries are causing problems, you can cancel any of
+        them with{" "}
         <SQL
           inline
           sql={`SELECT pg_cancel_backend(${
