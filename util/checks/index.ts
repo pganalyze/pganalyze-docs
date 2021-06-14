@@ -245,7 +245,9 @@ export type IssueReferenceIndex = {
 };
 
 export type IssueType = {
-  referenceDetail: IssueReferenceBackend | IssueReferenceIndex | unknown;
+  reference?: {
+    object: IssueReferenceBackend | IssueReferenceIndex | unknown;
+  },
   detailsJson: string;
 };
 
