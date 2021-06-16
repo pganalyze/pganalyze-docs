@@ -51,12 +51,11 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
       </p>
       <h4>Solution</h4>
       <p>
-        First, make sure this index is not in use in another database. You may
-        need to check other environments that share the same schema, or verify
-        that the index is not used on a read replica. If this server is a
-        staging, QA or dev environment you may want to turn off the index unused
-        check and only run it on production. You can also check usage of the
-        associated table on the{" "}
+        First, make sure these indexes are not in use in another database. You may
+        need to check other environments that share the same schema, or verify that
+        the index is not used on a read replica. If this server is a staging, QA or
+        dev environment you may want to turn off the index unused check and only run
+        it on production. You can also check usage of the associated table on the{" "}
         <Link to={databaseTableUrl}>Schema Statistics page for the table</Link>.
         Once you have confirmed the index is safe to drop, you can clean up this
         unused index by running{" "}
