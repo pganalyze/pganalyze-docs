@@ -23,19 +23,33 @@ const IndexInvalidTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => 
 const IndexInvalidGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   issue,
 }) => {
-  const idx = issue?.reference?.object as IssueReferenceIndex; 
-  const qualifiedIdx = idx?.name
-    ? formatSqlObjectName(idx.schemaName, idx.name)
-    : '"<index_name>"';
+  const indexes = issue?.references?.map((ref) => {
+    const schemaIdx = ref.object as IssueReferenceIndex;
+    return formatSqlObjectName(schemaIdx.schemaName, schemaIdx.name);
+  })
   return (
     <div>
       <h4>Impact</h4>
       <p>Invalid indexes take up disk space but are not usable by queries.</p>
       <h4>Solution</h4>
       <p>
-        You can clean up this ununsed index by running{" "}
-        <SQL inline sql={`DROP INDEX CONCURRENTLY ${qualifiedIdx};`} />.
+        You can safely drop these invalid indexes.
       </p>
+      {indexes && (
+        <>
+          <h4>Commands</h4>
+          <p>
+            You can drop these indexes by running the following commands:
+            <code>
+              <pre>
+                {indexes.map((qualifiedIdx) => (
+                  <><SQL inline sql={`DROP INDEX CONCURRENTLY ${qualifiedIdx};`} />{"\n"}</>
+                ))}
+              </pre>
+            </code>
+          </p>
+        </>
+      )}
     </div>
   );
 };

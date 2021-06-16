@@ -4,7 +4,6 @@ import {
   CheckDocs,
   CheckGuidanceProps,
   CheckTriggerProps,
-  IssueReferenceBackend,
 } from "../../../util/checks";
 
 import PGDocsLink from "../../PGDocsLink";
@@ -37,7 +36,6 @@ const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 
 const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   urls: { serverVacuumsUrl, SettingLink },
-  issue,
 }) => {
   const Link = useSmartAnchor();
   return (
@@ -110,10 +108,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         them with{" "}
         <SQL
           inline
-          sql={`SELECT pg_cancel_backend(${
-            (issue?.reference?.object as IssueReferenceBackend)?.pid ??
-            '"<query_pid>"'
-          });`}
+          sql={`SELECT pg_cancel_backend('"<query_pid>"');`}
         />
         . Note that this only treats the symptom: if the query runs again
         without any changes, it is likely to run slowly again.

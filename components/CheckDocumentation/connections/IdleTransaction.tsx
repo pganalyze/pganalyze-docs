@@ -4,7 +4,6 @@ import {
   CheckDocs,
   CheckGuidanceProps,
   CheckTriggerProps,
-  IssueReferenceBackend,
 } from "../../../util/checks";
 
 import SQL from "../../SQL";
@@ -28,7 +27,6 @@ const IdleTransactionTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 };
 const IdleTransactionGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   urls: { SettingLink },
-  issue,
 }) => {
   return (
     <div>
@@ -77,10 +75,7 @@ const IdleTransactionGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         transaction with{" "}
         <SQL
           inline
-          sql={`SELECT pg_terminate_backend(${
-            (issue?.reference?.object as IssueReferenceBackend)?.pid ??
-            '"<session_pid>"'
-          });`}
+          sql={`SELECT pg_terminate_backend('"<session_pid>"');`}
         />
         . Note that this only treats the symptom: unless this is due to a
         one-off manual session, you may run into this problem again.
