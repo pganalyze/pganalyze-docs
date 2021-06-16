@@ -10,6 +10,7 @@ import { formatSqlObjectName } from "../../../util/format";
 
 import SQL from "../../SQL";
 import { useSmartAnchor } from "../../SmartAnchor";
+import { useCodeBlock } from "../../CodeBlock";
 
 const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
   return (
@@ -34,12 +35,13 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   urls: { databaseTableUrl },
   issue,
 }) => {
+  const CodeBlock = useCodeBlock();
   const Link = useSmartAnchor();
 
-  const idx = issue?.reference?.object as IssueReferenceIndex;
-  const qualifiedIdx = idx?.name
-    ? formatSqlObjectName(idx.schemaName, idx.name)
-    : '"<index_name>"';
+  const indexes = issue?.references?.map((ref) => {
+    const schemaIdx = ref.object as IssueReferenceIndex;
+    return formatSqlObjectName(schemaIdx.schemaName, schemaIdx.name);
+  })
   return (
     <div>
       <h4>Impact</h4>
@@ -56,11 +58,27 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         the index is not used on a read replica. If this server is a staging, QA or
         dev environment you may want to turn off the index unused check and only run
         it on production. You can also check usage of the associated table on the{" "}
-        <Link to={databaseTableUrl}>Schema Statistics page for the table</Link>.
-        Once you have confirmed the index is safe to drop, you can clean up this
-        unused index by running{" "}
-        <SQL inline sql={`DROP INDEX CONCURRENTLY ${qualifiedIdx};`} />.
+        <Link to={databaseTableUrl}>Schema Statistics page for the table</Link>.{!indexes && (
+          <>
+            {" "}Once you've confirmed the indexes are safe to drop, you can clean them up by running{" "}
+            <SQL inline sql={`DROP INDEX CONCURRENTLY "<index_name>";`} />.
+          </>
+        )}
       </p>
+      {indexes && (
+        <>
+          <h4>Commands</h4>
+          <p>
+            Once you have confirmed the indexes are safe to drop, you can clean them up
+            by running the following commands:
+            <CodeBlock>
+              {indexes.map((qualifiedIdx) => (
+                <><SQL inline sql={`DROP INDEX CONCURRENTLY ${qualifiedIdx};`} />{"\n"}</>
+              ))}
+            </CodeBlock>
+          </p>
+        </>
+      )}
     </div>
   );
 };
