@@ -71,12 +71,14 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           <p>
             Once you have confirmed the indexes are safe to drop, you can clean them up
             by running the following commands:
-            <CodeBlock>
-              {indexes.map((qualifiedIdx) => (
-                <><SQL inline sql={`DROP INDEX CONCURRENTLY ${qualifiedIdx};`} />{"\n"}</>
-              ))}
-            </CodeBlock>
           </p>
+          <CodeBlock>
+            {indexes.map((qualifiedIdx) => (
+              <React.Fragment key={qualifiedIdx} >
+                <SQL inline sql={`DROP INDEX CONCURRENTLY ${qualifiedIdx};`} />{"\n"}
+              </React.Fragment>
+            ))}
+          </CodeBlock>
         </>
       )}
     </div>
