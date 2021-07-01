@@ -1,0 +1,83 @@
+---
+title: '2021.06.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2021.06.0`
+
+## Notes
+
+* This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+* The query fingerprint format has been changed due to the pg_query 2.0 update - historic data will show as separate query records from the query records for new data
+
+
+## New features
+
+* Update to [pg_query 2.0](https://pganalyze.com/blog/pg-query-2-0-postgres-query-parser) and Postgres 13 query parser
+* Integrate with Slack for alerts about new issues
+  - To use the new Slack integration, create your own Slack application for use with pganalyze, and then configure `SLACK_CLIENT_ID` and `SLACK_CLIENT_SECRET`
+* Integrate with PagerDuty for alerts about new critical issues
+  - To use the new PagerDuty integration, create your own PagerDuty application for use with pganalyze, and then configure the `PAGERDUTY_APP_ID` - reach out to [support](mailto:support@pganalyze.com) for more details
+* Introduce server-wide issues
+  - Previously certain issues showed up multiple times, once for each database on a server, e.g.
+    when a configuration setting should be tuned
+  - This is now clearly separated into a server-wide list, with database-specific issues shown separately
+  - If you use the public API method `getIssues` we recommend querying by `serverId` instead going forward
+* New issue detail page
+  - This gives an overview of an issue triggered by a check, shows its
+    activity, describes what triggered it and links to the check
+    configuration, and offers guidance on how to resolve the problem.
+  - E-mail alerts for critical issues now link to this issue detail page,
+    and in-app issue lists link to the page as well.
+* Use Postgres scanner for syntax highlighting
+  - This handles Postgres-specific keywords better when SQL text is shown in-app (e.g. on the query details page)
+  - In addition, table references within a query are now linked to the table details page.
+* Re-activate weekly reports
+  - This was previously turned off for performance reasons, but has now been refactored and improved
+  - If `MAILER_URL` is set on your installation all organization members will start receiving weekly report emails every Monday
+  - This can be turned off in each user's profile settings (accessible through the link on the bottom left of the navigation)
+* Re-activate unused index check
+  - This was previously turned off for performance reasons, but is now active again with updated logic
+  - Unused indexes are identified as indexes that have not had any scans for 2 weeks
+* Members: Add "copy invite link" to invite new members without requiring `MAILER_URL` to be set
+* Add support for AWS WebIdentity for use in Amazon EKS
+* Per-table VACUUM graph: Full support for 7-day history, improve visual cues
+* Per-table ANALYZE: Show related configuration settings
+
+## Bugfixes
+
+* `DEFAULT_ORG_ROLE` now defaults to `none`, ensuring all users that sign up need an invite to join an organization
+* Show relation-does-not-exist errors in log-based EXPLAIN errors (instead of "Internal Error")
+* Active query / Idle TX check: Only consider backend type "client backend"
+* Index invalid check: Increase threshold for when indices are detected from 1 hour to 24 hours (to better handle long `CREATE INDEX CONCURRENTLY` builds)
+* Minor fixes to EXPLAIN node formatting:
+  - Better handling for long CTE names
+  - Include Sort Key field as a significant field
+  - Fix array-valued significant fields
+* Replication followers: Don't list followers without any activity
+* Organization-wide database list: Auto-grow server name field
+* Upgrade built-in pganalyze collector from 0.37.0 to [0.40.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md)
+  - Reduce timeout for accessing EC2 instance metadata service
+  - Fix reporting of replication statistics for more than 1 follower
+  - Amazon RDS: Support long log events beyond 2,000 lines
+
+
+## Performance improvements
+
+* Per-table query overview: Optimize backend queries for better performance
+* Per-table VACUUM graph: Calculate more data server-side, keeping data sent to client smaller
+* Pre-aggregate daily and hourly schema table/index statistics
+* Top navigation: Avoid N+1 on each server's database list
+* Organization overview: Fix N+1 for loading database counts for each server
+
+
+## Security improvements
+
+* Update OS base image packages to latest versions
+* Update app dependencies for CVE-2021-28965, CVE-2021-22904, CVE-2021-22885, CVE-2021-22903, CVE-2021-22902, CVE-2021-29509, GHSA-7rrm-v45f-jp64
+
+
+## Other changes
+
+* Rename all user-facing instances of "indices" to "indexes", to match Postgres project terminology
