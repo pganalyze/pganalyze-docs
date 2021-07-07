@@ -39,7 +39,7 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   const Link = useSmartAnchor();
 
   const indexes = issue?.references?.map((ref) => {
-    const schemaIdx = ref.object as IssueReferenceIndex;
+    const schemaIdx = ref.referent as IssueReferenceIndex;
     return formatSqlObjectName(schemaIdx.schemaName, schemaIdx.name);
   })
   return (
