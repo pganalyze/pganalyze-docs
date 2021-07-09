@@ -214,7 +214,7 @@ export type CheckTriggerProps = {
 };
 
 export type IssueGuidanceUrls = {
-  referenceUrl: string;
+  firstReferenceUrl: string;
   SettingLink: React.ComponentType<{ setting: string }>;
   queriesUrl: string;
   serverSystemUrl: string;

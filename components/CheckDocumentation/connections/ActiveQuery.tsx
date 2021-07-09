@@ -19,10 +19,10 @@ const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
         Detects queries currently running for longer than the specified
         threshold of{" "}
         <code>{config.settings["warning_max_query_age_secs"]}</code> seconds and
-        creates an issue with severity "warning". Escalates to "critical" if the
-        query is still running after{" "}
+        creates an issue with severity "warning". Escalates to "critical" if any
+        queries are running longer than{" "}
         <code>{config.settings["critical_max_query_age_secs"]}</code> seconds.
-        Resolves automatically once the query stops running.
+        Resolves automatically once these queries stop running.
       </p>
       <p>
         Ignores queries from backup programs (<code>pg_dump</code>,{" "}
@@ -53,10 +53,9 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           <h5>Locks</h5>
           <p>
             The queries may be waiting for locks. Check the <strong>Wait Events</strong> page for
-            the associated backend, and look for any wait events of type <strong>Lock</strong>. If you have{" "}
-            <SettingLink setting="log_lock_waits" /> turned on, you can also see
-            details about locking in the{" "}
-            <strong>Logs</strong> page for the backend.
+            the associated backends, and look for any wait events of type <strong>Lock</strong>.
+            If you have <SettingLink setting="log_lock_waits" /> turned on, you can also see
+            details about locking in the <strong>Logs</strong> page for the backend.
           </p>
         </li>
         <li>
@@ -108,7 +107,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         them with{" "}
         <SQL
           inline
-          sql={`SELECT pg_cancel_backend('"<query_pid>"');`}
+          sql={`SELECT pg_cancel_backend('<query_pid>');`}
         />
         . Note that this only treats the symptom: if the query runs again
         without any changes, it is likely to run slowly again.
