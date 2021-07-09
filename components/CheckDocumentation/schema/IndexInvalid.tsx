@@ -8,14 +8,16 @@ import {
   IssueReferenceIndex,
 } from "../../../util/checks";
 import { formatSqlObjectName } from "../../../util/format";
+import { useCodeBlock } from "../../CodeBlock";
 
 const IndexInvalidTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
   return (
     <p>
       Detects indexes that are not recognized as valid in Postgres and creates
-      an issue with severity "info". These indexes typically are left over when
+      an issue with severity "info", one for each table (or table hierarchy in
+      case of inheritance or partitioning). These indexes typically are left over when
       using <SQL inline sql="CREATE INDEX CONCURRENTLY" /> and the command fails
-      or is aborted by the user. Resolves once the index has been dropped.
+      or is aborted by the user. Resolves once all invalid indexes on a table have been dropped.
     </p>
   );
 };
@@ -23,6 +25,7 @@ const IndexInvalidTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => 
 const IndexInvalidGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   issue,
 }) => {
+  const CodeBlock = useCodeBlock();
   const indexes = issue?.references?.map((ref) => {
     const schemaIdx = ref.referent as IssueReferenceIndex;
     return formatSqlObjectName(schemaIdx.schemaName, schemaIdx.name);
@@ -40,14 +43,14 @@ const IndexInvalidGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           <h4>Commands</h4>
           <p>
             You can drop these indexes by running the following commands:
-            <code>
-              <pre>
-                {indexes.map((qualifiedIdx) => (
-                  <><SQL inline sql={`DROP INDEX CONCURRENTLY ${qualifiedIdx};`} />{"\n"}</>
-                ))}
-              </pre>
-            </code>
           </p>
+          <CodeBlock>
+            {indexes.map((qualifiedIdx) => (
+              <React.Fragment key={qualifiedIdx} >
+                <SQL inline sql={`DROP INDEX CONCURRENTLY ${qualifiedIdx};`} />{"\n"}
+              </React.Fragment>
+            ))}
+          </CodeBlock>
         </>
       )}
     </div>
