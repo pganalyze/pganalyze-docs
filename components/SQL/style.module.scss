@@ -1,8 +1,10 @@
 .sql {
   display: block;
   font-family: monospace;
-  white-space: pre-wrap;
   hyphens: none;
+}
+.wrap {
+  white-space: pre-wrap;
 }
 .keyword {
   text-transform: uppercase;
