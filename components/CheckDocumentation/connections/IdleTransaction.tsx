@@ -4,7 +4,6 @@ import {
   CheckDocs,
   CheckGuidanceProps,
   CheckTriggerProps,
-  IssueReferenceBackend,
 } from "../../../util/checks";
 
 import SQL from "../../SQL";
@@ -18,17 +17,16 @@ const IdleTransactionTrigger: React.FunctionComponent<CheckTriggerProps> = ({
       <code>idle in transaction</code> state) for longer than the specified
       threshold of{" "}
       <code>{config.settings["warning_max_idle_tx_age_secs"]}</code> seconds and
-      creates an issue with severity "warning". Escalates to "critical" if the
-      transaction is still idle after{" "}
+      creates an issue with severity "warning". Escalates to "critical" if any
+      transactions are still idle after{" "}
       <code>{config.settings["critical_max_idle_tx_age_secs"]}</code> seconds.
-      Resolves automatically once the transaction is committed, rolled back, or
-      shows activity again.
+      Resolves automatically once the transactions are committed, rolled back, or
+      show activity again.
     </p>
   );
 };
 const IdleTransactionGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   urls: { SettingLink },
-  issue,
 }) => {
   return (
     <div>
@@ -77,10 +75,7 @@ const IdleTransactionGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         transaction with{" "}
         <SQL
           inline
-          sql={`SELECT pg_terminate_backend(${
-            (issue?.referenceDetail as IssueReferenceBackend)?.pid ??
-            '"<session_pid>"'
-          });`}
+          sql={`SELECT pg_terminate_backend('<session_pid>');`}
         />
         . Note that this only treats the symptom: unless this is due to a
         one-off manual session, you may run into this problem again.

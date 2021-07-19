@@ -8,6 +8,7 @@ import styles from "./style.module.scss";
 type Props = {
   sql: string;
   inline?: boolean;
+  nowrap?: boolean;
 };
 
 // Keywords that should not be highlighted
@@ -103,6 +104,7 @@ class SQL extends React.Component<Props> {
         className={classNames(
           styles.noborder,
           styles.sql,
+          !this.props.nowrap && styles.wrap,
           this.props.inline && styles.inline
         )}
         ref={(r: HTMLElement | null) => {
