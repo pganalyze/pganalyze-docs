@@ -276,6 +276,10 @@
       "title": "Guide: Tuning checkpoint intervals to reduce I/O spikes",
       "path": "/docs/guides/tuning-checkpoint-intervals"
     },
+    "index-advisor": {
+      "title": "",
+      "path": "/docs/index-advisor"
+    },
     "install": {
       "title": "Get Started",
       "path": "/docs/install"
