@@ -52,6 +52,9 @@ be analyzed (or, in some cases, the quality of the recommendations). We are work
 to address these limitations and will update this list as more types of queries and
 schemas are supported.
 
+ - The Index Advisor is based on Postgres 13.4 and may not give accurate results for
+   older Postgres versions.
+ - Column statistics are not configurable, which may affect plans for some queries.
  - Queries on partitioned tables do not take the hierarchy into account, so you will
    receive recommendations for individual partitions.
  - Queries that call custom functions are not supported.
