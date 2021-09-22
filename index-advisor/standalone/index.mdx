@@ -94,7 +94,9 @@ are due to the limitations outlined above. Please review the limitations
 and, if applicable, try the workarounds we suggest.
 
  - Unexpected execution of function 
-   - Custom functions are not supported.
+   - The index advisor planner executed a function unexpectedly. If this is a built-in function provided by
+     Postgres, [let us know](https://github.com/pganalyze/index-advisor-feedback/discussions). If this error
+     occurs for a custom function you created this is an unsupported scenario.
  - Unsupported extension: ...
    - Only a limited set of extensions are supported (see above).
  - operator class ... does not exist
