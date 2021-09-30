@@ -97,3 +97,20 @@ and, if applicable, try the workarounds we suggest.
      is not filtered during collection (see above) and ensure it appears on the Schema Statistics page.
  - type ... does not exist
    - Custom types are not supported.
+
+Many other problems are due to an outdated collector version:
+
+ - Partitioned table support requires collector version 0.33.0 or higher
+   - Queries on partitioned tables need metadata not reported by older collector
+     versions.
+ - there is no parameter $0
+   - Older collector versions used a query normalization mechanism that
+     generates nonstandard parameter markers.
+ - type modifiers must be simple constants or identifiers
+   - Older collector versions used a query normalization mechanism that
+     can mangle some query texts.
+ - column ... must appear in the GROUP BY clause
+   - As above, this is due to an invalid query normalization from an
+     older collector version.
+
+All of these problems can be resolved by upgrading to the latest collector.
