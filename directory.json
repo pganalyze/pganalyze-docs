@@ -276,6 +276,10 @@
       "title": "Guide: Tuning checkpoint intervals to reduce I/O spikes",
       "path": "/docs/guides/tuning-checkpoint-intervals"
     },
+    "index-advisor": {
+      "title": "Index Advisor (in pganalyze)",
+      "path": "/docs/index-advisor"
+    },
     "index-advisor/standalone": {
       "title": "Index Advisor",
       "path": "/docs/index-advisor/standalone"
