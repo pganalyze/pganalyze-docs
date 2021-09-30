@@ -1,0 +1,99 @@
+---
+title: 'Index Advisor (in pganalyze)'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+import imgIndexAdvisorInAppScreenshot from './index-advisor-in-app-screenshot.png'
+
+The pganalyze Index Advisor is a tool to analyze your queries, determine how Postgres
+will scan the tables involved, and suggest indexes to make those scans more efficient.
+
+<img src={imgIndexAdvisorInAppScreenshot} alt="Index Advisor Screenshot" />
+<br />
+
+## Overview
+
+The Index Advisor uses information pganalyze already collects about your schema in order
+to provide an analysis for any query (though see [limitations](#limitations) below). Just
+navigate to the Query Details page for any query (you can see the list of queries under
+Query Performance in the menu), and select the "Index Advisor tab".
+
+If the tab has a count, this is the number of index recommendations Index Advisor found for this query.
+If there is a checkmark, the query was analyzed successfully, but no improvements were found.
+If there is a question mark, something went wrong in the analysis.
+
+On the Index Advisor tab, you'll see a list of panels, one for each table scan in the query.
+Each panel shows the index currently used for that table scan (if any), and possibly a
+recommendation for a better index. Recommendations (if present) are listed first, in order
+of biggest potential improvement.
+
+You can copy the full `CREATE INDEX` command, or expand the advanced analysis to see more details.
+There, you can see the various options that the Index Advisor considered for each table scan,
+the filter clauses (`WHERE` or `JOIN` conditions) on the scan, whether each index can help with
+each clause, and relative cost comparisons of the current scan and any alternatives.
+
+
+## How it works
+
+When the Postgres query planner decides how to execute a query, it considers a number of
+factors to determine if existing indexes can help the query complete more efficiently.
+The Index Advisor builds on this core Postgres code and extends it to determine what indexes
+could be useful even if they do not exist. By evaluating many different possible plans,
+the Index Advisor can find index recommendations to help you optimize your schema for
+your specific queries. Since pganalyze already monitors information about your schema (like
+table and index definitions and sizes), we can use this to analyze any query.
+
+
+## Limitations
+
+The Index Advisor has a number of limitations that affect the types of queries that can
+be analyzed (or, in some cases, the quality of the recommendations). We are working
+to address these limitations and will update this list as more types of queries and
+schemas are supported.
+
+ - The Index Advisor is based on Postgres 13.4 and may not give accurate results for
+   older Postgres versions.
+ - Support for custom search_path settings is best-effort: if you have multiple tables
+   with the same name in different schemas and rely on search_path to disambiguate these,
+   this may not be handled correctly.
+ - Custom types (including domains and enums) are not supported.
+ - Column statistics are not yet considered, which may affect plans for some queries.
+ - Queries on partitioned tables do not take the hierarchy into account, so you will
+   receive recommendations for individual partitions.
+ - Queries that call custom functions are not supported.
+ - Postgres parameter markers ($1, $2, etc.) are supported, but sometimes there is not
+   enough information to infer parameter types, leading to errors in analysis.
+ - Temporary tables are not supported. You can work around this by creating a dummy
+   schema with dummy table definitions matching the temp table structure: pganalyze should
+   pick these up and substitute them when analyzing the query.
+ - The Index Advisor relies on information collected for the Schema Statistics page--if
+   [filtering](https://pganalyze.com/docs/collector/settings#schema-filter-settings) the
+   tables you collect, ensure any tables referenced in queries you are interested in are
+   not excluded.
+ - Extension support is limited. The following extensions are supported:
+   - citext
+   - hstore
+   - intarray
+   - pg_trgm
+
+## Common Errors
+
+Many of the errors you are likely to run into in Index Advisor output
+are due to the limitations outlined above. Please review the limitations
+and, if applicable, try the workarounds we suggest.
+
+ - Unexpected execution of function 
+   - The index advisor planner executed a function unexpectedly. If this is a built-in function provided by
+     Postgres, [let us know](mailto:support@pganalyze.com). If this error
+     occurs for a custom function you created this is an unsupported scenario.
+ - operator class ... does not exist
+   - If using parameter markers in your query, try adding a cast to the parameter to indicate the data type
+ - operator does not exist
+   - If using parameter markers in your query, try adding a cast to the parameter to indicate the data type
+ - relation ... does not exist
+   - If this is a temporary table, try creating a real table in a different schema to give
+     the Index Advisor information about the table structure. Otherwise, ensure the table
+     is not filtered during collection (see above) and ensure it appears on the Schema Statistics page.
+ - type ... does not exist
+   - Custom types are not supported.
