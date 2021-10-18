@@ -9,15 +9,15 @@ import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_lin
 
 export const APIKeyInstructions = ({ apiKey }) => {
   return apiKey ? (
-    <>
+    <React.Fragment>
       The <code>PGA_API_KEY</code> for the current organization is{" "}
       <code>{apiKey}</code>
-    </>
+    </React.Fragment>
   ) : (
-    <>
+    <React.Fragment>
       The <code>PGA_API_KEY</code> can be found in the pganalyze API keys page
       for your organization
-    </>
+    </React.Fragment>
   );
 };
 

@@ -1,7 +1,7 @@
 export const SPLRecommendation = ({recommendation}) => {
    if (recommendation.current == null) {
       return (
-         <>
+         <React.Fragment>
             <p>
                For example, if the current value is <code>pg_stat_statements</code>,
                you can set the new value to <code>pg_stat_statements, auto_explain</code>:
@@ -9,11 +9,11 @@ export const SPLRecommendation = ({recommendation}) => {
             <CodeBlock>
                ALTER SYSTEM SET shared_preload_libraries TO pg_stat_statements, auto_explain;
             </CodeBlock>
-         </>
+         </React.Fragment>
       )
    }
    return (
-      <>
+      <React.Fragment>
          <p>
             The current value appears to be <code>{recommendation.current}</code>.
             You can confirm this by running
@@ -27,7 +27,7 @@ export const SPLRecommendation = ({recommendation}) => {
          <CodeBlock>
             ALTER SYSTEM SET shared_preload_libraries TO {recommendation.recommended};
          </CodeBlock>
-      </>
+      </React.Fragment>
    )
 }
 

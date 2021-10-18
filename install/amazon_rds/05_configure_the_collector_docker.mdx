@@ -9,7 +9,7 @@ import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_lin
 
 export const CollectorDotEnv = ({ apiKey }) => {
   return (
-    <>
+    <React.Fragment>
       <CodeBlock>
         {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
 DB_HOST=your_database_host
@@ -22,17 +22,17 @@ DB_PASSWORD=your_monitoring_user_password`}
         correct settings for your RDS instance.
         <br />
         {apiKey ? (
-          <>
+          <React.Fragment>
             <code>{apiKey}</code> is your pganalyze API key.
-          </>
+          </React.Fragment>
         ) : (
-          <>
+          <React.Fragment>
             You can find your <code>PGA_API_KEY</code> on your
             organization&apos;s API keys page.
-          </>
+          </React.Fragment>
         )}
       </p>
-    </>
+    </React.Fragment>
   );
 };
 

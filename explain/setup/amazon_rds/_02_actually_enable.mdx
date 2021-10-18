@@ -12,13 +12,13 @@ export const SPLRecommendation = ({recommendation}) => {
       )
    }
    return (
-      <>
+      <React.Fragment>
          <p>
             The current value appears to be <code>{recommendation.current}</code>.
             You can confirm this in the parameter group and set the new value to
             <code>{recommendation.recommended}</code>.
          </p>
-      </>
+      </React.Fragment>
    )
 }
 

@@ -7,17 +7,20 @@ backlink_title: 'Installation Guide'
 
 import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
 
-export const InviteLink = ({ inviteLink, children }) => {
+export const FinishSetup = ({ inviteLink }) => {
   return (
-    <Link className="btn btn-success" to={inviteLink}>
-      {children}
-    </Link>
-  );
-};
+    <div>
+      In the meantime you can invite your colleagues:
+      <Link className="btn btn-success" to={inviteLink}>
+        Finish setup and invite team members
+      </Link>
+    </div>
+  )
+}
 
 export const SSMConfig = ({ apiKey }) => {
   return (
-    <>
+    <React.Fragment>
       <CodeBlock>
         {`aws ssm put-parameter --name /pganalyze/DB_PASSWORD --type SecureString --value "YOUR_MONITORING_USER_PASSWORD"
 aws ssm put-parameter --name /pganalyze/PGA_API_KEY --type SecureString --value "${
@@ -26,21 +29,21 @@ aws ssm put-parameter --name /pganalyze/PGA_API_KEY --type SecureString --value 
       </CodeBlock>
       <p>
         {apiKey ? (
-          <>
+          <React.Fragment>
             Replace <code>YOUR_DB_PASSWORD</code> with the monitoring user
             password for your database. <code>{apiKey}</code> is your
             organization's API key.
-          </>
+          </React.Fragment>
         ) : (
-          <>
+          <React.Fragment>
             Replace <code>YOUR_PGANALYZE_API_KEY</code> with the API key from
             your organization&apos;s API keys page, and{" "}
             <code>YOUR_DB_PASSWORD</code> with the monitoring user password for
             your database.
-          </>
+          </React.Fragment>
         )}
       </p>
-    </>
+    </React.Fragment>
   );
 };
 
@@ -140,11 +143,7 @@ configured the collector correctly.
 **Your setup is complete. The dashboard will start showing data within 15 minutes.**
 
 <InAppOnly>
-  In the meantime you can invite your colleagues:
-
-  <InviteLink inviteLink={props.inviteLink}>
-    Finish setup and invite team members
-  </InviteLink>
+  <FinishSetup inviteLink={props.inviteLink} />
 </InAppOnly>
 
 <PublicLastStepLogInsightsLink />

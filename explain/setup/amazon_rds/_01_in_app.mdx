@@ -2,20 +2,20 @@ import AutoExplainNotice from '../_auto_explain_notice.mdx'
 
 export const AutoExplainEnabled = () => {
   return (
-    <>
+    <React.Fragment>
       <p>
         It looks like <code>auto_explain</code> is already enabled on this server.
       </p>
       <Link className="btn btn-success" to="03_review_settings">
         Skip to Step 3: Review auto_explain settings
       </Link>
-    </>
+    </React.Fragment>
   )
 }
 
 export const AutoExplainNotEnabled = () => {
   return (
-    <>
+    <React.Fragment>
       <p>
         It looks like <code>auto_explain</code> is not enabled on this server.
       </p>
@@ -23,7 +23,7 @@ export const AutoExplainNotEnabled = () => {
       <Link className="btn btn-success" to="02_enable_auto_explain">
         Proceed to Step 2: Enable auto_explain
       </Link>
-    </>
+    </React.Fragment>
   )
 }
 
