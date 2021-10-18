@@ -8,7 +8,7 @@ backlink_title: 'Installation Guide'
 import imgHerokuPaidDyno from "../../images/heroku_paid_dyno.png"
 import { collectorAppName } from "./util";
 
-export const APIKey = ({ apiKey }) => !!apiKey ? <> <code>{apiKey}</code></> : null;
+export const APIKey = ({ apiKey }) => !!apiKey ? <React.Fragment> <code>{apiKey}</code></React.Fragment> : null;
 
 export const HerokuButton = ({ apiKey }) => {
   let href = 'https://heroku.com/deploy?template=https://github.com/pganalyze/collector'

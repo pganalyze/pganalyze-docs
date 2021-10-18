@@ -5,6 +5,22 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+export const SetupOptions = () => {
+  return (
+    <div>
+      <Link className="btn btn-success" to="01_guided_setup">
+        Continue with guided setup
+      </Link>
+      <span style={{fontSize: '14px', marginLeft: '6px'}}>
+        <span> or proceed with </span>
+        <Link to="01_create_monitoring_user">
+          manual setup
+        </Link>
+      </span>
+    </div>
+  )
+}
+
 To monitor a new Postgres server with pganalyze, you must make some configuration changes
 to your database and install and run the pganalyze collector. There are two
 ways of doing this:
@@ -21,12 +37,4 @@ The guided setup program is our recommended way to set up on systems that meet t
 
 Otherwise, you'll need to follow the manual setup instructions.
 
-<Link className="btn btn-success" to="01_guided_setup">
-  Continue with guided setup
-</Link>
-<span style={{fontSize: '14px', marginLeft: '6px'}}>
-<span> or proceed with </span>
-<Link to="01_create_monitoring_user">
-  manual setup
-</Link>
-</span>
+<SetupOptions />
