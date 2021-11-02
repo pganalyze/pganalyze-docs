@@ -1,0 +1,153 @@
+---
+title: 'Index Advisor Table Statistics'
+backlink_href: /docs/index-advisor/standalone
+backlink_title: 'Documentation: Index Advisor (Standalone)'
+---
+
+## Introduction
+
+The Index Advisor utilizes the Postgres planner to make recommendations for specific indexes, their type, and the columns to be included as well as their order.
+
+In order to make accurate recommendations and comparisons, you need to pass in as many production statistics as are available, to increase the accuracy of the planning and recommendation process.
+
+If these statistics are not passed to the index advisor, defaults will be assumed, that may lead to incorrect recommendations or assessments.
+
+## Example of setting statistics
+
+For the standalone version of the pganalyze Index Advisor, you can use special `SET` commands to set values that Postgres typically collects through its `ANALYZE` command. Note that these steps are automatically collected and set for the in-app version of the Index Advisor, only the standalone version requires these adjustments.
+
+The simplest example is setting the size of a table. This gets specified in the number of 8Kb pages, as this is how Postgres handles it internally. For the default table size of 10GB, the following SET command happens behind the scenes:
+
+```sql
+SET pganalyze.curpages."public"."test" = 1310720;
+```
+
+The table size can be set directly through the Index Advisor UI. Other settings must be configured using the special `SET` syntax as part of your schema definition:
+
+## Supported settings
+
+Table settings must be written as:
+
+```
+SET pganalyze.[settingname].[schemaname].[tablename] = [value];
+```
+
+For tables you can set the following parameters:
+
+* `reltuples`: Table tuple count (row count) determined by the last analyze/vacuum run
+* `relpages`: Table size (counted in 8kb pages) determined by the last analyze/vacuum run
+* `curpages`: Current table size on disk (counted in 8kb pages)
+
+Index settings must be written as:
+
+```
+SET pganalyze.[settingname].[schemaname].[indexname] = [value];
+```
+
+For indexes you can set the following parameters:
+
+* `reltuples`: Index tuple count determined by the last analyze/vacuum run (typically the same as the table itself, except for partial indexes)
+* `relpages`: Index size (counted in 8kb pages) determined by the last analyze/vacuum run
+* `curpages`: Current index size on disk (counted in 8kb pages)
+* `btrootheight`: Location of the B-tree root page in the index, defaults to 1 (only applicable for B-tree index types)
+
+Attribute settings must be written as:
+
+```
+SET pganalyze.[settingname].[schemaname].[tablename].[attributename] = [value];
+```
+
+For table attributes you can set the following parameters (based on `pg_stats`):
+
+* `avg_width`: Average width in bytes of column's entries
+* `null_frac`: Fraction of column entries that are null
+* `n_distinct`: If greater than zero, the estimated number of distinct values in the column. If less than zero, the negative of the number of distinct values divided by the number of rows. 
+* `correlation`: Statistical correlation between physical row ordering and logical ordering of the column values.
+* `most_common_vals`: A list of the most common values in the column, represented as an array (`'{"value1", "value2"}'`)
+* `most_common_freqs`: A list of the frequencies of the most common values, i.e., number of occurrences of each divided by total number of rows, represented as an array (`'{0.24, 0.13}'`)
+* `histogram_bounds`: A list of values that divide the column's values into groups of approximately equal population, represented as an array (`'{"value1", "value2"}'`)
+
+In addition, all table attributes can also be suffixed by `_inherited` to set statistics for partition table parents instead (which include child partitions).
+
+## Automatically generating SET statements for table statistics
+
+You can run the following SQL statement to automatically generate the appropriate `SET` statements for all
+tables in your database.
+
+Note that using the `pgstattuple` and `pageinspect` extensions is optional. Since most common values can be sensitive, e.g.
+for a password column, the most common values data is not collected for array/composite/string or user-defined types.
+
+You should audit the resulting SET statements for any sensitive information, and especially consider numeric columns that
+could contain sensitive data. For example, if you have salary or revenue data stored in your database, the `pg_stats` data may
+contain samples of that data.
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pgstattuple; --- For pg_relpages (also uncomment the relevant lines below)
+CREATE EXTENSION IF NOT EXISTS pageinspect; --- For bt_metap (also uncomment the relevant line below)
+
+WITH input_tables AS (
+  SELECT pg_class.oid AS relid, nspname, relname
+    FROM pg_class
+    JOIN pg_namespace ON (relnamespace = pg_namespace.oid)
+   WHERE relkind = 'r'
+         AND relpersistence <> 't'
+		 AND nspname NOT IN ('pg_catalog','pg_toast','information_schema')
+), helper(is_superuser) AS (
+  SELECT current_setting('is_superuser') = 'on' OR pg_has_role('rds_superuser', 'usage')
+), tables(cfgobject, relpages, reltuples, curpages) AS (
+  SELECT quote_ident(t.nspname) || '.' || quote_ident(t.relname),
+         relpages,
+         reltuples::bigint,
+         NULL ---CASE WHEN (SELECT is_superuser FROM helper) THEN pg_relpages(c.oid) ELSE NULL END
+    FROM pg_class c
+    JOIN input_tables t ON (c.oid = t.relid)
+), indexes(cfgobject, relpages, reltuples, curpages, btrootheight) AS (
+  SELECT quote_ident(t.nspname) || '.' || quote_ident(c.relname),
+         relpages,
+         reltuples::bigint,
+         NULL, ---CASE WHEN (SELECT is_superuser FROM helper) THEN pg_relpages(c.oid) ELSE NULL END,
+         NULL ---CASE WHEN (SELECT is_superuser FROM helper) THEN (bt_metap(c.relname)).fastlevel ELSE NULL END
+    FROM pg_class c
+    JOIN pg_index i ON (i.indexrelid = c.oid)
+    JOIN input_tables t ON (i.indrelid = t.relid)
+), attributes AS (
+  SELECT quote_ident(schemaname) || '.' || quote_ident(tablename) || '.' || quote_ident(s.attname) AS cfgobject,
+         avg_width,
+         null_frac,
+         n_distinct,
+         correlation,
+         CASE WHEN typcategory IN ('A', 'C', 'S', 'U') AND typlen = '-1' THEN NULL ELSE '''' || most_common_vals::text || '''' END AS most_common_vals,
+         CASE WHEN typcategory IN ('A', 'C', 'S', 'U') AND typlen = '-1' THEN NULL ELSE '''' || most_common_freqs::text || '''' END AS most_common_freqs,
+         CASE WHEN typcategory IN ('A', 'C', 'S', 'U') AND typlen = '-1' THEN NULL ELSE '''' || histogram_bounds::text || '''' END AS histogram_bounds
+    FROM pg_stats s
+    JOIN input_tables t ON (s.schemaname = t.nspname AND s.tablename = t.relname)
+    JOIN pg_attribute a ON (a.attrelid = t.relid AND s.attname = a.attname)
+    JOIN pg_type typ ON (a.atttypid = typ.oid)
+), combined(j) AS (
+    SELECT to_jsonb(tables.*) FROM tables
+    UNION
+    SELECT to_jsonb(indexes.*) FROM indexes
+    UNION
+    SELECT to_jsonb(attributes.*) FROM attributes
+)
+SELECT format('SET pganalyze.%s.%s = %s;', x.k, j->>'cfgobject', x.v)
+  FROM combined,
+       jsonb_each_text(combined.j - 'cfgobject') x(k, v)
+ WHERE x.v IS NOT NULL
+ ORDER BY j->>'cfgobject', x.k;
+```
+
+Running this will give you a result like this:
+
+```sql
+SET pganalyze.avg_width.public.test.col1 = 4;
+SET pganalyze.correlation.public.test.col1 = 0.061594862;
+SET pganalyze.most_common_freqs.public.test.col1 = '{0.0653,0.06446667,0.063766666,0.06363333,0.063533336,0.063433334,0.0629,0.061966665,0.061833333,0.0618,0.0611,0.0605,0.0604,0.060366668,0.059666667,0.0332,0.032133333}';
+SET pganalyze.most_common_vals.public.test.col1 = '{2,3,7,12,13,4,1,5,11,14,9,6,10,8,15,16,0}';
+SET pganalyze.n_distinct.public.test.col1 = 17;
+SET pganalyze.null_frac.public.test.col1 = 0;
+```
+
+Simply paste this at the end of your schema definition, and you're good to go!
+
+Not sure if your statistics are taking effect? Watch the selectivity for each filter clause - if non-default statistics are being considered you will typically see different selectivity values for each of your clauses.

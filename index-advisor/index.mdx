@@ -1,13 +1,16 @@
 ---
-title: 'Index Advisor (in pganalyze)'
+title: 'Index Advisor (in-app in pganalyze)'
 backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
 import imgIndexAdvisorInAppScreenshot from './index-advisor-in-app-screenshot.png'
+import imgIndexAdvisorArchitecture from './index-advisor-architecture.png'
 
 The pganalyze Index Advisor is a tool to analyze your queries, determine how Postgres
 will scan the tables involved, and suggest indexes to make those scans more efficient.
+
+This page describes the in-app Index Advisor. Looking for the standalone Index Advisor documentation? [Continue here.](/docs/index-advisor/standalone)
 
 <img src={imgIndexAdvisorInAppScreenshot} alt="Index Advisor Screenshot" />
 <br />
@@ -33,7 +36,6 @@ There, you can see the various options that the Index Advisor considered for eac
 the filter clauses (`WHERE` or `JOIN` conditions) on the scan, whether each index can help with
 each clause, and relative cost comparisons of the current scan and any alternatives.
 
-
 ## How it works
 
 When the Postgres query planner decides how to execute a query, it considers a number of
@@ -43,6 +45,11 @@ could be useful even if they do not exist. By evaluating many different possible
 the Index Advisor can find index recommendations to help you optimize your schema for
 your specific queries. Since pganalyze already monitors information about your schema (like
 table and index definitions and sizes), we can use this to analyze any query.
+
+The architecture of the index advisor roughly looks like this:
+
+<img src={imgIndexAdvisorArchitecture} alt="Index Advisor Architecture Diagram" />
+<br />
 
 
 ## Limitations

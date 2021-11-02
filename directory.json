@@ -277,12 +277,16 @@
       "path": "/docs/guides/tuning-checkpoint-intervals"
     },
     "index-advisor": {
-      "title": "Index Advisor (in pganalyze)",
+      "title": "Index Advisor (in-app in pganalyze)",
       "path": "/docs/index-advisor"
     },
     "index-advisor/standalone": {
-      "title": "Index Advisor",
+      "title": "Index Advisor (Standalone)",
       "path": "/docs/index-advisor/standalone"
+    },
+    "index-advisor/standalone/settings": {
+      "title": "Index Advisor Table Statistics",
+      "path": "/docs/index-advisor/standalone/settings"
     },
     "install": {
       "title": "Get Started",
