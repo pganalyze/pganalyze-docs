@@ -28,6 +28,12 @@ export const HerokuButton = ({ apiKey }) => {
   )
 }
 
+export const ImgPaidDyno = () => {
+  return (
+    <img style={{ border: "1px solid grey", width: 400 }} src={imgHerokuPaidDyno} />
+  )
+}
+
 export const CollectorApp = ({ organizationSlug }) => (
   <code>{collectorAppName(organizationSlug)}</code>
 );
@@ -47,10 +53,7 @@ Remember the name of the collector app. We assume you called it <CollectorApp or
 
 After the app was created, configure it to use the **paid Hobby dyno** instead of the Free dyno, otherwise the tracking will stop working once the dyno goes idle:
 
-<img
-  style={{ border: "1px solid grey", width: 400 }}
-  src={imgHerokuPaidDyno}
-/>
+<ImgPaidDyno />
 
 Now you can continue by attaching your databases:
 
