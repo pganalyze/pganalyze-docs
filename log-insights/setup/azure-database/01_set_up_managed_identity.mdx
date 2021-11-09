@@ -7,13 +7,15 @@ backlink_title: 'Log Insights: Setup'
 
 import imgManagedIdentityVMAssignment from './managed-identity-vm-assignment.png'
 
+export const ImgManagedIdentityVMAssignment = () => <img src={imgManagedIdentityVMAssignment} alt="Screenshot of Virtual Machine Identity configuration in Azure Portal" />
+
 Log output on Azure Database for PostgreSQL is available through Azure Event Hub.
 
 To start, we need to [create a new user-assigned Managed Identity](https://portal.azure.com/#create/Microsoft.ManagedIdentity) through the Azure Portal.
 
 After the Managed Identity is created, assign it to your virtual machine:
 
-<img src={imgManagedIdentityVMAssignment} alt="Screenshot of Virtual Machine Identity configuration in Azure Portal" />
+<ImgManagedIdentityVMAssignment />
 
 Now the pganalyze collector running inside the virtual machine will be able to call Azure REST APIs using the Managed Identity.
 

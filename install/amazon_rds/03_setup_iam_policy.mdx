@@ -7,7 +7,7 @@ backlink_title: 'Installation Guide'
 
 import imgRdsSetUpIamPolicy from "../../images/rds_iam_role.png"
 
-export const ImgWorkaround = (props) => <img {...props} />
+export const ImgRdsSetUpIamPolicy = () => <img src={imgRdsSetUpIamPolicy} width="520" style={{ border: "1px solid grey" }} />
 
 Almost done! 🎉
 
@@ -66,11 +66,7 @@ We recommend naming the policy "pganalyze" or similar, so you can easily identif
 To complete this step, [create an IAM role](https://console.aws.amazon.com/iam/home?#/roles$new?step=type)
 for pganalyze, and assign the policy to this new role.
 
-<ImgWorkaround
-  src={imgRdsSetUpIamPolicy}
-  width="520"
-  style={{ border: "1px solid grey" }}
-/>
+<ImgRdsSetUpIamPolicy />
 
 ---
 

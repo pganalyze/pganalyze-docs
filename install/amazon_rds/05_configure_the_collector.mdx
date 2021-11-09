@@ -11,19 +11,25 @@ import imgAwsEc2 from '../../images/aws-ec2.svg'
 import imgAwsEcs from '../../images/aws-ecs.png'
 import imgDocker from '../../images/docker.png'
 
+export const SelectCollectorPlatform = () => {
+  return (
+    <div className={styles.installChoice}>
+      <Link className={styles.installChoiceStep} to="05_configure_the_collector_ec2">
+        <img src={imgAwsEc2} />
+        Amazon EC2 Instance
+      </Link>
+      <Link className={styles.installChoiceStep} to="05_configure_the_collector_ecs">
+        <img src={imgAwsEcs} />
+        Amazon ECS
+      </Link>
+      <Link className={styles.installChoiceStep} to="05_configure_the_collector_docker">
+        <img src={imgDocker} />
+        Docker on EC2
+      </Link>
+    </div>
+  )
+}
+
 Choose where you have installed the collector:
 
-<div className={styles.installChoice}>
-  <Link className={styles.installChoiceStep} to="05_configure_the_collector_ec2">
-    <img src={imgAwsEc2} />
-    Amazon EC2 Instance
-  </Link>
-  <Link className={styles.installChoiceStep} to="05_configure_the_collector_ecs">
-    <img src={imgAwsEcs} />
-    Amazon ECS
-  </Link>
-  <Link className={styles.installChoiceStep} to="05_configure_the_collector_docker">
-    <img src={imgDocker} />
-    Docker on EC2
-  </Link>
-</div>
+<SelectCollectorPlatform />

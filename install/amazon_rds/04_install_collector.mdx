@@ -11,21 +11,27 @@ import imgAwsEc2 from '../../images/aws-ec2.svg'
 import imgAwsEcs from '../../images/aws-ecs.png'
 import imgDocker from '../../images/docker.png'
 
+export const SelectCollectorPlatform = () => {
+  return (
+    <div className={styles.installChoice}>
+      <Link className={styles.installChoiceStep} to="04_install_collector_ec2">
+        <img src={imgAwsEc2} />
+        Amazon EC2 Instance
+      </Link>
+      <Link className={styles.installChoiceStep} to="04_install_collector_ecs">
+        <img src={imgAwsEcs} />
+        Amazon ECS
+      </Link>
+      <Link className={styles.installChoiceStep} to="04_install_collector_docker">
+        <img src={imgDocker} />
+        Docker on EC2
+      </Link>
+    </div>
+  )
+}
+
 The [pganalyze collector](https://pganalyze.com/docs/collector) is a daemon process that continuously collects database statistics, and submits them to the pganalyze dashboard in recurring intervals.
 
 We recommend installing the collector on an EC2 instance, but you can also run it through a Docker container:
 
-<div className={styles.installChoice}>
-  <Link className={styles.installChoiceStep} to="04_install_collector_ec2">
-    <img src={imgAwsEc2} />
-    Amazon EC2 Instance
-  </Link>
-  <Link className={styles.installChoiceStep} to="04_install_collector_ecs">
-    <img src={imgAwsEcs} />
-    Amazon ECS
-  </Link>
-  <Link className={styles.installChoiceStep} to="04_install_collector_docker">
-    <img src={imgDocker} />
-    Docker on EC2
-  </Link>
-</div>
+<SelectCollectorPlatform />

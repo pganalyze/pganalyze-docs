@@ -12,36 +12,44 @@ import imgLogoRedhat from '../../images/logo_redhat.png'
 import imgLogoDocker from '../../images/docker.png'
 import imgLogoAL2 from '../../images/aws-ec2.svg'
 
+export const SelectCollectorPlatform = () => {
+  return (
+    <React.Fragment>
+      <div className={styles.installChoice}>
+        <Link className={styles.installChoiceStep} to="02_enable_pg_stat_statements_deb">
+          <img src={imgLogoUbuntu} />
+          Ubuntu &amp; Debian
+        </Link>
+        <Link className={styles.installChoiceStep} to="02_enable_pg_stat_statements_yum">
+          <img src={imgLogoRedhat} />
+          RHEL, CentOS &amp; Fedora
+        </Link>
+      </div>
+      <div className={styles.installChoice}>
+        <Link
+          className={styles.installChoiceStep}
+          to="02_enable_pg_stat_statements_yum"
+        >
+          <img src={imgLogoAL2} />
+          Amazon Linux 2
+        </Link>
+        <Link
+          className={styles.installChoiceStep}
+          to="02_enable_pg_stat_statements_docker"
+        >
+          <img src={imgLogoDocker} />
+          Docker
+        </Link>
+      </div>
+    </React.Fragment>
+  )
+}
+
 In this step we setup [pg_stat_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html), which is used by pganalyze to collect Postgres query statistics.
 
 To continue, we need to know where your Postgres is running:
 
-<div className={styles.installChoice}>
-  <Link className={styles.installChoiceStep} to="02_enable_pg_stat_statements_deb">
-    <img src={imgLogoUbuntu} />
-    Ubuntu &amp; Debian
-  </Link>
-  <Link className={styles.installChoiceStep} to="02_enable_pg_stat_statements_yum">
-    <img src={imgLogoRedhat} />
-    RHEL, CentOS &amp; Fedora
-  </Link>
-</div>
-<div className={styles.installChoice}>
-  <Link
-    className={styles.installChoiceStep}
-    to="02_enable_pg_stat_statements_yum"
-  >
-    <img src={imgLogoAL2} />
-    Amazon Linux 2
-  </Link>
-  <Link
-    className={styles.installChoiceStep}
-    to="02_enable_pg_stat_statements_docker"
-  >
-    <img src={imgLogoDocker} />
-    Docker
-  </Link>
-</div>
+<SelectCollectorPlatform />
 
 <br />
 If your Postgres runs somewhere else, <a href="mailto:support@pganalyze.com">
