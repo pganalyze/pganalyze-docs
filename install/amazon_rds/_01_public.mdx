@@ -2,7 +2,14 @@ import imgRdsParamGroup from '../../images/rds_parameter_group.png'
 import imgRdsParamGroup2 from '../../images/rds_parameter_group2.gif'
 import imgRdsEnableParamGroup from '../../images/rds_enable_parameter_group.png'
 
-In order to setup pganalyze monitoring for [Amazon RDS](https://aws.amazon.com/rds/postgresql/) you'll need
+export const ImgRdsParamGroup = () => <img src={imgRdsParamGroup} />
+
+export const ImgRdsParamGroup2 = () => <img src={imgRdsParamGroup2} />
+
+export const ImgRdsEnableParamGroup = () => <img src={imgRdsEnableParamGroup} />
+
+
+In order to set up pganalyze monitoring for [Amazon RDS](https://aws.amazon.com/rds/postgresql/) you'll need
 to first follow these steps to enable the [pg\_stat\_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html)
 extension for collecting query statistics.
 
@@ -14,13 +21,13 @@ This guide assumes you have an already running Amazon RDS PostgreSQL server you 
 
 In your [AWS Console](https://console.aws.amazon.com/rds/), modify your existing custom DB Parameter Group, or create a new custom DB Parameter Group:
 
-<img src={imgRdsParamGroup} />
+<ImgRdsParamGroup />
 
 ---
 
 Then set the following configuration parameters:
 
-<img src={imgRdsParamGroup2} />
+<ImgRdsParamGroup2 />
 
  Name | New Value | &nbsp;
  ---- | ------ | -------
@@ -32,7 +39,7 @@ Then set the following configuration parameters:
 
 In case you created a new parameter group you'll have to modify your database to use the Parameter Group you created earlier:<br />
 
-<img src={imgRdsEnableParamGroup} />
+<ImgRdsEnableParamGroup />
 
 ## Enable Enhanced Monitoring
 

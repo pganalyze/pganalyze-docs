@@ -1,13 +1,17 @@
 import imgLogExplainOverview from './log-explain-overview.png'
 import imgLogExplainDetails from './log-explain-details.png'
 
+export const ImgLogExplainOverview = () => <img src={imgLogExplainOverview} alt="Screenshot of EXPLAIN list in pganalyze" />
+
+export const ImgLogExplainDetails = () => <img src={imgLogExplainDetails} alt="Screenshot of EXPLAIN plan in pganalyze" />
+
 Assuming the collector is running in the background, after a few minutes you should then see an EXPLAIN plan show up in the pganalyze EXPLAIN plan list:
 
-<img src={imgLogExplainOverview} alt="Screenshot of EXPLAIN list in pganalyze" />
+<ImgLogExplainOverview />
 
 When you go to the details, you will find the corresponding plan:
 
-<img src={imgLogExplainDetails} alt="Screenshot of EXPLAIN plan in pganalyze" />
+<ImgLogExplainDetails />
 
 From now on, you will now get EXPLAIN plans automatically in the pganalyze UI, for all your slow queries.
 

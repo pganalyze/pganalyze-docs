@@ -11,32 +11,38 @@ import imgLogoUbuntu from '../../images/logo_ubuntu.png'
 import imgLogoRedhat from '../../images/logo_redhat.png'
 import imgLogoDocker from '../../images/docker.png'
 
+export const SelectCollectorPlatform = () => {
+  return (
+    <div className={styles.installChoice}>
+      <Link
+        className={styles.installChoiceStep}
+        to="03_configure_the_collector_package"
+      >
+        <img src={imgLogoUbuntu} />
+        Ubuntu &amp; Debian
+      </Link>
+      <Link
+        className={styles.installChoiceStep}
+        to="03_configure_the_collector_package"
+      >
+        <img src={imgLogoRedhat} />
+        RHEL, CentOS &amp; Fedora
+      </Link>
+      <Link className={styles.installChoiceStep} to="03_configure_the_collector_docker">
+        <img src={imgLogoDocker} />
+        Docker
+      </Link>
+      {/*<Link className={styles.installChoiceStep} to="03_configure_the_collector_kubernetes">
+        <img src="/images/docs/logo_kubernetes.png" />
+        Kubernetes
+      </Link>*/}
+    </div>
+  )
+}
+
 To continue, we need to know where your Postgres is running:
 
-<div className={styles.installChoice}>
-  <Link
-    className={styles.installChoiceStep}
-    to="03_configure_the_collector_package"
-  >
-    <img src={imgLogoUbuntu} />
-    Ubuntu &amp; Debian
-  </Link>
-  <Link
-    className={styles.installChoiceStep}
-    to="03_configure_the_collector_package"
-  >
-    <img src={imgLogoRedhat} />
-    RHEL, CentOS &amp; Fedora
-  </Link>
-  <Link className={styles.installChoiceStep} to="03_configure_the_collector_docker">
-    <img src={imgLogoDocker} />
-    Docker
-  </Link>
-  {/*<Link className={styles.installChoiceStep} to="03_configure_the_collector_kubernetes">
-    <img src="/images/docs/logo_kubernetes.png" />
-    Kubernetes
-  </Link>*/}
-</div>
+<SelectCollectorPlatform />
 
 <br />
 If your Postgres runs somewhere else, <a href="mailto:support@pganalyze.com">

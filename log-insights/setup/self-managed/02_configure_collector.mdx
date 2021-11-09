@@ -7,6 +7,8 @@ backlink_title: 'Log Insights: Setup'
 
 import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
 
+export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
+
 We can now configure the log directory for the collector, by adding the `db_log_location` setting,
 similar to this:
 
@@ -48,7 +50,7 @@ sudo systemctl restart pganalyze-collector
     Once ready, you will see log events on the Log Insights page in pganalyze.
   </p>
   <p>
-    <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
+    <ImgLogInsightsScreenshot />
   </p>
   <p>
     We recommend setting up <a href="/docs/explain/setup">Automated EXPLAIN</a> as

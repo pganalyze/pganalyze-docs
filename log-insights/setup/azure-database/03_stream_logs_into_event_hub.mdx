@@ -7,12 +7,14 @@ backlink_title: 'Log Insights: Setup'
 
 import imgAddDiagnosticSetting from './add-diagnostic-setting.png'
 
+export const ImgAddDiagnosticSetting = () => <img src={imgAddDiagnosticSetting} alt="Screenshot of adding PostgreSQL Diagnostic Setting in Azure Portal" />
+
 To send logs to the Event Hub, within your database server, go to Diagnostic settings, and add a new diagnostic setting:
 
 * **Category Details:** Select "PostgreSQLLogs" under "log"
 * **Destination Details:** Select "Stream to an event hub", and then select your Event Hub Namespace and Event Hub Name
 
-<img src={imgAddDiagnosticSetting} alt="Screenshot of adding PostgreSQL Diagnostic Setting in Azure Portal" />
+<ImgAddDiagnosticSetting />
 
 Save the new diagnostic setting. Now your Event Hub should be receiving Postgres log messages.
 

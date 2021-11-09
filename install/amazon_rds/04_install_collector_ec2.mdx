@@ -9,6 +9,8 @@ import CollectorInstallInstructions from "../../components/CollectorInstallInstr
 
 import imgRdsNewInstanceRole from "../../images/rds_new_instance_role.png"
 
+export const ImgRdsNewInstanceRole = () => <img src={imgRdsNewInstanceRole} width="694.4" />
+
 ## Installing the collector on an Amazon EC2 Instance
 
 For this step, you first need to choose whether you want to install the collector on an existing EC2 instance, or run a new one.
@@ -22,7 +24,7 @@ You can either run it on a small instance (a `t3.small` suffices), or add it to 
 Start a new `t3.small` instance, Amazon Linux 2 based, that has the IAM role applied:
 
 <p>
-  <img src={imgRdsNewInstanceRole} width="694.4" />
+  <ImgRdsNewInstanceRole />
 </p>
 
 Then follow the step to install the collector on Amazon Linux 2 based instances.

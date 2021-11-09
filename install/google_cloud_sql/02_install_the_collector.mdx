@@ -11,25 +11,31 @@ import imgLogoUbuntu from '../../images/logo_ubuntu.png'
 import imgLogoRedhat from '../../images/logo_redhat.png'
 import imgLogoDocker from '../../images/docker.png'
 
+export const SelectCollectorPlatform = () => {
+  return (
+    <div className={styles.installChoice}>
+      <Link className={styles.installChoiceStep} to="02_install_the_collector_deb">
+        <img src={imgLogoUbuntu} />
+        Ubuntu &amp; Debian VM
+      </Link>
+      <Link className={styles.installChoiceStep} to="02_install_the_collector_yum">
+        <img src={imgLogoRedhat} />
+        RHEL, CentOS &amp; Fedora VM
+      </Link>
+      <Link className={styles.installChoiceStep} to="02_install_the_collector_docker">
+        <img src={imgLogoDocker} />
+        Docker
+      </Link>
+      {/*<Link className={styles.installChoiceStep} to="02_enable_pg_stat_statements_kubernetes">
+        <img src="/images/docs/logo_kubernetes.png" />
+        Kubernetes
+      </Link>*/}
+    </div>
+  )
+}
+
 To continue, we need to know where you'd like to install the pganalyze collector.
 
 The collector needs to run on a virtual machine or container and be able to reach your Google Cloud SQL database:
 
-<div className={styles.installChoice}>
-  <Link className={styles.installChoiceStep} to="02_install_the_collector_deb">
-    <img src={imgLogoUbuntu} />
-    Ubuntu &amp; Debian VM
-  </Link>
-  <Link className={styles.installChoiceStep} to="02_install_the_collector_yum">
-    <img src={imgLogoRedhat} />
-    RHEL, CentOS &amp; Fedora VM
-  </Link>
-  <Link className={styles.installChoiceStep} to="02_install_the_collector_docker">
-    <img src={imgLogoDocker} />
-    Docker
-  </Link>
-  {/*<Link className={styles.installChoiceStep} to="02_enable_pg_stat_statements_kubernetes">
-    <img src="/images/docs/logo_kubernetes.png" />
-    Kubernetes
-  </Link>*/}
-</div>
+<SelectCollectorPlatform />

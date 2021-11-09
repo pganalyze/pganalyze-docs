@@ -7,6 +7,8 @@ backlink_title: 'Log Insights: Setup'
 
 import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
 
+export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
+
 Log Insights works by continuously fetching your Postgres log files from AWS, classifying log
 lines, and submitting log data and statistics to pganalyze. The RDS configuration usually
 does not require any additional configuration beyond the steps you performed as part of basic
@@ -59,7 +61,7 @@ In case you get permission errors, make sure your IAM user has the [appropriate 
 <PublicOnly>
   <p>You will then see Log Insights data on your database within a few minutes:</p>
   <p>
-    <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
+    <ImgLogInsightsScreenshot />
   </p>
   <p>
     We recommend that you also <a href="https://pganalyze.com/docs/log-insights/setup/tuning-log-config-settings">tune a

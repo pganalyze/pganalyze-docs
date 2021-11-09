@@ -7,6 +7,8 @@ backlink_title: 'Log Insights: Setup'
 
 import imgLogInsights from './log_insights.png'
 
+export const ImgLogInsights = () => <img src={imgLogInsights} alt='Screenshot of pganalyze Log Insights feature' />
+
 To finish, restart the collector app:
 
 ```bash
@@ -28,7 +30,7 @@ If the collector was able to match the log data to the correct database, you wil
 <PublicOnly>
   <p>And then when you check the pganalyze interface, you will see Log Insights data:</p>
   <p>
-    <img src={imgLogInsights} alt='Screenshot of pganalyze Log Insights feature' />
+    <ImgLogInsights />
   </p>
 </PublicOnly>
 
