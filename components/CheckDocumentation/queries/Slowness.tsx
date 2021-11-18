@@ -28,6 +28,7 @@ const SlownessGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   urls: {
     firstReferenceUrl,
     queriesUrl,
+    indexRecommendationUrl,
     serverSystemUrl,
     serverVacuumsUrl,
     databaseWaitEventsUrl,
@@ -66,7 +67,7 @@ const SlownessGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             If a query lacks the necessary indexes to execute efficiently, it
             may take longer and use more I/O than necessary, causing a negative
             impact on the whole system. Check the{" "}
-            <Link to={featureUrl(firstReferenceUrl, 'indexcheck')}>query page</Link> to review
+            <Link to={indexRecommendationUrl}>query page</Link> to review
             indexing recommendations.
           </p>
         </li>
