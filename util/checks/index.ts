@@ -217,6 +217,7 @@ export type IssueGuidanceUrls = {
   firstReferenceUrl: string;
   SettingLink: React.ComponentType<{ setting: string }>;
   queriesUrl: string;
+  indexRecommendationUrl: string;
   serverSystemUrl: string;
   serverVacuumsUrl: string;
   backendsUrl: string;
