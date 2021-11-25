@@ -263,6 +263,11 @@ The following environment variables can be passed into the Docker image. Note th
 * `AWS_ACCESS_KEY_ID:` AWS Access Key ID (optional)
 * `AWS_SECRET_ACCESS_KEY`: AWS Secret Access Key (optional)
 * `AWS_REGION`: Default AWS region (optional)
+* `DEFAULT_ORG_ROLE`: How new users are added to the organization when they sign up (optional, default: `none`)
+  - `none` - new users are not organization members and have to be invited by an existing user
+  - `admin` - assigns the role named "Admin (All Servers)"
+  - `modify_all` - assigns the role named "View & Modify (All Servers)"
+  - `view_all` - assigns the role named "View (All Servers)"
 
 An example configuration looks like this:
 
