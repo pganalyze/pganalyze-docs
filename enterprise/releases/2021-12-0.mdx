@@ -1,0 +1,75 @@
+---
+title: '2021.12.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2021.12.0`
+
+## Notes
+
+* This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+* New feature: pganalyze Index Advisor
+  - Note that due to the additional background processing you may need additional worker capacity
+* New feature: Single Sign-On with SAML
+  - If you migrate an existing username/password based setup to the new SSO integration, be aware that if an SSO user already has an existing user account with the same email, they will need to change their email address on the existing account first, before signing in with SSO
+
+
+## New features
+
+* **Index Advisor**
+  - This is a major new feature - you can read more about it here:
+    - [Index Advisor documentation](/docs/index-advisor)
+    - [A better way to index your Postgres database: pganalyze Index Advisor](/blog/introducing-pganalyze-index-advisor)
+    - [How we deconstructed the Postgres planner to find indexing opportunities](/blog/deconstructing-the-postgres-planner)
+* **Single Sign-On with SAML**, supporting Okta & others
+  - You can now enable Single Sign-On using the Integrations page (under Settings)
+  - Once enabled the main login page will ask users to login with SSO instead
+* Add updateServer and deleteServer GraphQL mutations
+  - These can be used for automating updating the pganalyze configuration, e.g. to adjust the database hostname when using the local built-in collector
+* Track custom types for the Index Advisor
+* Track table column statistics (collected by ANALYZE) for the Index Advisor
+  - This only collects frequency and similar information, not actual table values
+  - Note this requires adding the special `get_column_stats` [helper function](https://github.com/pganalyze/collector#setting-up-a-restricted-monitoring-user) when using the restricted monitoring user
+* Update to [pganalyze-collector 0.41.2](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md)
+* Increase per-server table limit
+  - This adjusts the maximum permitted number of tables to 100,000 tables (from 5,000)
+  - Note that utilizing this limit may not be possible on all databases, using the [schema filter settings](/docs/collector/settings#schema-filter-settings) is advised when running into missing data points
+* Show EXPLAIN plans on query detail graph
+  - This makes it easy to find outliers recorded via `auto_explain` or log-based EXPLAIN, directly in each query's runtime performance graph
+* Check-up: Group multiple references for an issue when appropriate
+  - e.g. this now groups together long-running idle transactions for the same role, or unused indexes on the same table
+
+
+## Bugfixes
+
+* Docker image: Use setpriv consistently for dropping privileges
+* Improve Enterprise license check error handling (e.g. when running into a firewall issue)
+* Enterprise self check: Don't test Redis connection if it's built-in
+* Fix server issue links in e-mail notifications
+* Ignore explains with errors for weekly reports
+* Fix undefined region handling in database-level query performance summary
+* Shorten 'Queries Per Second' column heading to 'Queries / Second' to fix styling issue
+* Check-up: Fix coalescing almost-concurrent email issue notifications
+* Check-up: Avoid errors when role not present when processing connection issues
+* Improve query normalization of "GROUP BY" clauses
+* Add `<unparsable query>` to special query texts
+
+
+## Performance improvements
+
+* Improve performance of loading EXPLAIN plan lists
+* Improve API authentication performance
+* Improve performance of processing compact snapshots (activity, logs, system data)
+* Optimize schema processing (to allow higher table limits)
+* Improve issue loading performance for organizations with many members
+
+## Security improvements
+
+* Update OS base image packages to latest versions
+* Update app dependencies for CVE-2021-41136, CVE-2021-30151, CVE-2021-22942, CVE-2021-32740
+
+
+## Other changes
+
+* We have upgraded our front-end build pipeline (from webpack to Vite/esbuild), if you encounter styling issues or browser compatibility issues, [please let us know](/contact)
