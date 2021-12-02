@@ -9,18 +9,22 @@ backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
 ## Notes
 
 * This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
-* This release introduces the [pganalyze Index Advisor](/blog/introducing-pganalyze-index-advisor), note that due to the additional background processing you may need additional worker capacity
+* New feature: pganalyze Index Advisor
+  - Note that due to the additional background processing you may need additional worker capacity
+* New feature: Single Sign-On with SAML
+  - If you migrate an existing username/password based setup to the new SSO integration, be aware that if an SSO user already has an existing user account with the same email, they will need to change their email address on the existing account first, before signing in with SSO
+
 
 ## New features
 
-* Index Advisor
-  - This is a major new feature - you can read more about it in our blog posts:
+* **Index Advisor**
+  - This is a major new feature - you can read more about it here:
+    - [Index Advisor documentation](/docs/index-advisor)
     - [A better way to index your Postgres database: pganalyze Index Advisor](/blog/introducing-pganalyze-index-advisor)
     - [How we deconstructed the Postgres planner to find indexing opportunities](/blog/deconstructing-the-postgres-planner)
-* Single Sign-On with SAML, supporting Okta & others
+* **Single Sign-On with SAML**, supporting Okta & others
   - You can now enable Single Sign-On using the Integrations page (under Settings)
   - Once enabled the main login page will ask users to login with SSO instead
-  - Note that existing users with conflicting email addresses will need to change their email or have their user removed before SSO logins are permitted
 * Add updateServer and deleteServer GraphQL mutations
   - These can be used for automating updating the pganalyze configuration, e.g. to adjust the database hostname when using the local built-in collector
 * Track custom types for the Index Advisor
@@ -30,7 +34,7 @@ backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
 * Update to [pganalyze-collector 0.41.2](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md)
 * Increase per-server table limit
   - This adjusts the maximum permitted number of tables to 100,000 tables (from 5,000)
-  - Note that you may run into statistics processing timeouts on some systems when monitoring higher table counts
+  - Note that utilizing this limit may not be possible on all databases, using the [schema filter settings](/docs/collector/settings#schema-filter-settings) is advised when running into missing data points
 * Show EXPLAIN plans on query detail graph
   - This makes it easy to find outliers recorded via `auto_explain` or log-based EXPLAIN, directly in each query's runtime performance graph
 * Check-up: Group multiple references for an issue when appropriate
@@ -41,7 +45,7 @@ backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
 
 * Docker image: Use setpriv consistently for dropping privileges
 * Improve Enterprise license check error handling (e.g. when running into a firewall issue)
-* Enterprise self check: Don't test Redis connection if its built-in
+* Enterprise self check: Don't test Redis connection if it's built-in
 * Fix server issue links in e-mail notifications
 * Ignore explains with errors for weekly reports
 * Fix undefined region handling in database-level query performance summary
@@ -49,7 +53,6 @@ backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
 * Check-up: Fix coalescing almost-concurrent email issue notifications
 * Check-up: Avoid errors when role not present when processing connection issues
 * Improve query normalization of "GROUP BY" clauses
-* Query Details Graph: ignore clicks when no corresponding EXPLAIN found
 * Add `<unparsable query>` to special query texts
 
 
