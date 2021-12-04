@@ -107,10 +107,12 @@ query {
 '''
 
 uri = URI(API_ENDPOINT)
-req = Net::HTTP::Post.new(uri.request_uri)
+req = Net::HTTP::Post.new(uri.path)
 req['authorization'] = 'Token ' + API_TOKEN
 req.form_data = { 'query' => format(QUERY, DATABASE_ID) }
-res = Net::HTTP.new(uri.host, uri.port).request(req)
+https = Net::HTTP.new(uri.host, uri.port)
+https.use_ssl = true
+res = https.request(req)
 
 stats = JSON.parse(res.body)['data']['getQueryStats']
 exit(1) if stats.empty?
