@@ -1,0 +1,33 @@
+---
+title: 'Step 1: Enable log_explain'
+install_track_title: 'Automated EXPLAIN: Setup (Heroku)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+
+We generally recommend using [auto_explain](https://pganalyze.com/docs/explain/setup/auto_explain) to collect
+EXPLAIN plans automatically, but Heroku does not support the required `auto_explain` module, so we offer an
+alternative, log-based, EXPLAIN mechanism.
+
+The log-based EXPLAIN mechanism works by watching your logs for slow queries (according to `log_min_duration_statement`)
+and running EXPLAIN for each one. This has some limitations (most notably, we only run EXPLAIN, not EXPLAIN ANALYZE), but still
+provides valuable insights. Learn more in our [Log-based EXPLAIN overview](https://pganalyze.com/docs/explain/setup/log_explain).
+
+Once Log Insights is working, enabling EXPLAIN plan collection just requires turning on the collector setting. You
+can do this by setting a config var on your Heroku app:
+
+```
+$ heroku config:set PGA_ENABLE_LOG_EXPLAIN=true -a [your-collector-app-name]
+```
+
+This will show output like the following:
+
+```
+Setting PGA_ENABLE_LOG_EXPLAIN and restarting ⬢ [your-collector-app-name]... done, v42
+PGA_ENABLE_LOG_EXPLAIN: true
+```
+
+<Link className='btn btn-success' to='02_test_and_verify'>
+  Proceed to Step 2: Test and verify
+</Link>
