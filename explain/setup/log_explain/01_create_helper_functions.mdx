@@ -10,7 +10,7 @@ We generally recommend using [auto_explain](https://pganalyze.com/docs/explain/s
 EXPLAIN plans automatically, but not all environments support the `auto_explain` module (bundled with Postgres),
 so we offer an alternative mechanism.
 
-The log-based EXPLAIN mechanism by watching your logs for slow queries (according to `log_min_duration_statement`)
+The log-based EXPLAIN mechanism works by watching your logs for slow queries (according to `log_min_duration_statement`)
 and running EXPLAIN for each one. This has some limitations (most notably, we only run EXPLAIN, not EXPLAIN ANALYZE), but still
 provides valuable insights. Learn more in our [Log-based EXPLAIN overview](https://pganalyze.com/docs/explain/setup/log_explain).
 
