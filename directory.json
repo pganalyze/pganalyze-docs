@@ -4,6 +4,26 @@
       "title": "Documentation",
       "path": "/docs"
     },
+    "accounts": {
+      "title": "Account Management",
+      "path": "/docs/accounts"
+    },
+    "accounts/permissions": {
+      "title": "Permissions and Roles",
+      "path": "/docs/accounts/permissions"
+    },
+    "accounts/sso": {
+      "title": "Single Sign-On",
+      "path": "/docs/accounts/sso"
+    },
+    "accounts/sso/okta": {
+      "title": "Single Sign-On: Okta integration",
+      "path": "/docs/accounts/sso/okta"
+    },
+    "accounts/sso/saml2": {
+      "title": "Single Sign-On: Custom SAML 2.0 integration",
+      "path": "/docs/accounts/sso/saml2"
+    },
     "api": {
       "title": "pganalyze GraphQL API",
       "path": "/docs/api"
@@ -607,10 +627,6 @@
     "open_source_components": {
       "title": "Open-Source Components",
       "path": "/docs/open_source_components"
-    },
-    "permissions": {
-      "title": "Permissions and Roles",
-      "path": "/docs/permissions"
     }
   },
   "logClassifications": {
