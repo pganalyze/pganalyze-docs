@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import hljs from "highlight.js/lib/highlight";
+import hljs from "highlight.js/lib/core";
 import sql from "highlight.js/lib/languages/sql";
 
 import styles from "./style.module.scss";
