@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { useIcon } from "./WithIcons";
 
+import classNames from "classnames";
+
 import styles from './style.module.scss';
 
 type AnchorProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
@@ -58,13 +60,12 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
     }
 
     const { children, className, ...otherProps } = props;
-    const mergedClassname = styles.noWrap + (className === null ? '' : ' ' + className);
     // Don't show external icon link in some situations
     const skipExternalLinkIcon = destination.startsWith('https://heroku.com/deploy')
       || destination.startsWith('#')
       || destination.startsWith('mailto:')
     return (
-      <a {...otherProps} className={mergedClassname}>
+      <a {...otherProps} className={classNames(styles.noWrap, className)}>
         {children}{!skipExternalLinkIcon && <ExternaLinkIcon className={styles.externalLinkIcon} />}
       </a>
     )
