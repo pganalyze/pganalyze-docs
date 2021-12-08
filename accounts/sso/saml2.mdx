@@ -56,7 +56,7 @@ SSO setup is now complete. Going forward your team members can now sign in to pg
 
 ## Reference: pganalyze SAML IdP settings template
 
-When not copying the values directly from the pganalyze app (recommended), you can construct the IdP settings based on this template.
+We recommend copying the IdP settings directly from the pganalyze app, but you can alternately construct the IdP settings based on this template.
 
 The settings follow this format for cloud-based pganalyze accounts:
 
@@ -64,13 +64,13 @@ The settings follow this format for cloud-based pganalyze accounts:
 * Metadata URL: `https://app.pganalyze.com/users/auth/saml/[ORGANIZATION_SHORT_NAME]/metadata`
 * Audience URI: `app.pganalyze.com`
 
+Replace `[ORGANIZATION_SHORT_NAME]` with your organization's short name
+(e.g. used in `/organizations/[ORGANIZATION_SHORT_NAME]` URLs).
+
 The format for pganalyze Enterprise Server installs is similar, but based on your chosen domain name:
 
 * ACS URL: `https://[DOMAIN_NAME]/users/auth/saml/[ORGANIZATION_SHORT_NAME]/callback`
 * Metadata URL: `https://[DOMAIN_NAME]/users/auth/saml/[ORGANIZATION_SHORT_NAME]/metadata`
 * Audience URI: `[DOMAIN_NAME]`
-
-Replace `[ORGANIZATION_SHORT_NAME]` with your organization's short name
-(e.g. used in `/organizations/[ORGANIZATION_SHORT_NAME]` URLs).
 
 If you are using pganalyze Enterprise Server, also replace `[DOMAIN_NAME]` with the value of your `DOMAIN_NAME` environment variable.
