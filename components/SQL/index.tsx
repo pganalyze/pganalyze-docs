@@ -40,7 +40,7 @@ class SQL extends React.Component<Props> {
   componentDidMount() {
     if (this.preRef) {
       hljs.registerLanguage("sql", sql);
-      this.preRef && hljs.highlightBlock(this.preRef);
+      this.preRef && hljs.highlightElement(this.preRef);
 
       this.preRef &&
         this.preRef
