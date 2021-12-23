@@ -1,0 +1,44 @@
+---
+title: '2021.12.1 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2021.12.1`
+
+## Notes
+
+* This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+## New features
+
+* Index Advisor
+  - Allow simple alias domain types
+  - Support tables with foreign key references
+- Optimize Enterprise docker image for size by using a multi-stage build + other improvements
+  - This results in a roughly 75% size reduction for the Enterprise docker image (from 1.1GB to 307MB)
+* Update to [pganalyze-collector 0.42.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md)
+  - If you have previously upgraded to 2021.12.0 and use the built-in collector, this
+    update should resolve query reporting gaps occuring roughly every 30 minutes
+  - Cache AWS API call results to avoid running into rate limits
+  - Log Insights: Add "invalid input syntax for type json" log event
+  - Log Insights: Improve handling of "malformed array literal" log event
+  - Fix incorrect index recorded for unknown parent or foreign key tables
+
+
+## Bugfixes
+
+* Index Advisor: Fix "AccessExclusiveLock required to add toast table" errors
+* Avoid unnecessary consumption of ID sequence values for internal tables
+* Correctly track creation timestamp for internal records of databases and queries
+
+
+## Performance improvements
+
+* Index Advisor: Optimize performance of background processing, avoid unnecessary planning for special queries (e.g. `<query text unavailable>`)
+* Reduce number of web requests for most page loads, avoiding duplicate data loading
+
+
+## Security improvements
+
+* Update app dependencies for CVE-2021-44528
