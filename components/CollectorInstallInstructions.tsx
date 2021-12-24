@@ -17,12 +17,13 @@ const CollectorInstallInstructions: React.FunctionComponent<Props> = ({apiKey, g
     env['PGA_GUIDED_SETUP'] = 'true'
   }
 
-  return <CollectorEnvInstallInstructions env={env} />
+  return <CollectorEnvInstallInstructions env={env} hideManualInstall={guided} />
 }
 
 const CollectorEnvInstallInstructions: React.FunctionComponent<{
-  env: { [key: string]: string }
-}> = ({env}) => {
+  env: { [key: string]: string },
+  hideManualInstall?: boolean,
+}> = ({env, hideManualInstall}) => {
   const CodeBlock = useCodeBlock();
   let bashCmd: string;
   if (Object.keys(env).length === 0) {
@@ -34,17 +35,17 @@ const CollectorEnvInstallInstructions: React.FunctionComponent<{
   }
   return (
     <>
-      <p>
+      {!hideManualInstall && <p>
         We recommend running our install script to automatically detect your platform and
         install the correct package:
-      </p>
+      </p>}
       <CodeBlock>
         curl https://packages.pganalyze.com/collector-install.sh | {bashCmd}
       </CodeBlock>
       <RepositorySigningKey small />
-      <p>
+      {!hideManualInstall && <p>
         Alternately, you can follow the <a href="https://pganalyze.com/docs/collector/packages">manual install instructions</a>.
-      </p>
+      </p>}
     </>
   )
 }
