@@ -1,0 +1,23 @@
+import gcpEnableAutoExplain from '../../../images/gcp_enable_auto_explain.png'
+
+export const ImgGCPEnableAutoExplain = () => <img src={gcpEnableAutoExplain} alt="Enable auto_explain for your Google Cloud SQL database" />
+
+To enable `auto_explain`, you will need to go to click "EDIT" on top of the Overview page
+for your database, scroll down to the Flags section, and turn on the `cloudsql.enable_auto_explain`
+flag. This will add `auto_explain` to the Postgres `shared_preload_libraries` setting (you cannot
+modify this directly on Google Cloud SQL):
+
+<ImgGCPEnableAutoExplain />
+
+Note that this change will require a database restart. After adding the flag, click
+the "SAVE" button to apply the change and reboot your database.
+
+After the reboot completes, verify that `shared_preload_libraries` now includes `auto_explain`
+and that the setting change does not require a restart (`pending_restart` should be `f`):
+
+```sql
+SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
+```
+
+If `auto_explain` is enabled and no longer requires a restart, you can proceed to
+review our recommended `auto_explain` configuration settings:

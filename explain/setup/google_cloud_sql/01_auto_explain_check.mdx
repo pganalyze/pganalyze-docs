@@ -1,21 +1,21 @@
 ---
 title: 'Step 1: Check for auto_explain'
-install_track_title: 'Automated EXPLAIN: Setup (Amazon RDS and Amazon Aurora)'
+install_track_title: 'Automated EXPLAIN: Setup (Google Cloud SQL)'
 backlink_href: /docs/explain/setup
 backlink_title: 'Automated EXPLAIN: Setup'
 ---
 
-import RDSStep01InApp from './_01_in_app.mdx'
-import RDSStep01Public from './_01_public.mdx'
+import GCPStep01InApp from './_01_in_app.mdx'
+import GCPStep01Public from './_01_public.mdx'
 
-The recommended Automated EXPLAIN configuration for Amazon RDS and Amazon Aurora is to use
+The recommended Automated EXPLAIN configuration for Google Cloud SQL is to use
 the Postgres `auto_explain` contrib module. This ensures accurate and detailed plan
 information, including runtime information (as gathered by EXPLAIN ANALYZE). With our
 recommended configuration (presented in a later step), performance overhead is minimal.
 
 <PublicOnly>
-   <RDSStep01Public />
+   <GCPStep01Public />
 </PublicOnly>
 <InAppOnly>
-   <RDSStep01InApp autoExplainEnabled={props.autoExplainEnabled} />
+   <GCPStep01InApp autoExplainEnabled={props.autoExplainEnabled} />
 </InAppOnly>
