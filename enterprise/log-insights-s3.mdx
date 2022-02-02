@@ -21,7 +21,7 @@ If you are not using Amazon Web Services, the [local storage setup](/docs/enterp
 
 The pganalyze Docker container needs to have authenticated access to the S3 bucket and KMS key. You can create a regular user, save the access keys, and then assign the following policy:
 
-```
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -62,11 +62,15 @@ The pganalyze Docker container needs to have authenticated access to the S3 buck
 
 You will also need to assign this IAM user as a "Key User" to the KMS key.
 
+## 3. S3 bucket retention policy and CORS settings
+
 Please ensure that S3 buckets don't have public access enabled. All S3 objects created by pganalyze are created as private only.
 
-On the S3 bucket you also need to configure this CORS policy (under the Permissions tab):
+To avoid keeping data forever, we recommend configuring the S3 buckets to expire objects after 35 days using [lifecycle rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/how-to-set-lifecycle-configuration-intro.html).
 
-```
+For the logs S3 bucket you also need to configure this CORS policy (under the Permissions tab) for the Log Insights functionality:
+
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
 <CORSRule>
@@ -84,19 +88,19 @@ On the S3 bucket you also need to configure this CORS policy (under the Permissi
 </CORSConfiguration>
 ```
 
-## 3. Configuration on pganalyze Docker container
+## 4. Configuration on pganalyze Docker container
 
 You will need to add the following configuration to the Docker container:
 
-```
-AWS_ACCESS_KEY_ID=...
-AWS_SECRET_ACCESS_KEY=...
+```sh
 AWS_REGION=us-east-1
 AWS_S3_SNAPSHOTS_BUCKET=mydb-snapshots
 AWS_S3_LOGS_BUCKET=mydb-logs
 AWS_KMS_LOGS_CMK=...
 ```
 
-The AWS\_KMS\_LOGS\_CMK is the "ARN" thats listed on the encryption key.
+By default pganalyze will attempt IAM authentication using the AWS metadata service / instance roles. If you want to use static keys you can set the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` variables.
+
+The `AWS_KMS_LOGS_CMK` is the "ARN" thats listed on the encryption key.
 
 After a pganalyze container restart you can continue with the [general steps](/docs/enterprise/log-insights).

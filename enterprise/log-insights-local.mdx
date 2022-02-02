@@ -13,11 +13,10 @@ which can be run in a small Docker container, together with a mounted directory.
 The easiest way to get started is to simply launch a Minio container like this,
 whilst making sure to choose secure and randomly generated keys:
 
+```sh
+# Replace "my_access_key" and "my_secret_key" with two randomly generated strings!
+docker run --name minio -e MINIO_ACCESS_KEY=my_access_key -e MINIO_SECRET_KEY=my_secret_key -d -v /storage:/data -p 9000:9000 minio/minio server /data
 ```
-docker run --name minio -e MINIO_ACCESS_KEY=securesecuresecure -e MINIO_SECRET_KEY=securesecuresecure -d -v /storage:/data -p 9000:9000 minio/minio server /data
-```
-
-(please make sure to replace `securesecuresecure` with two randomly generated strings!)
 
 This assumes that you have sufficient storage available on the server where you are
 launching the container, and that this storage is provided under the `/storage` directory.
@@ -28,7 +27,22 @@ that way.
 
 When you now go to the URL `http://minio.internal:9000` (replace `minio.internal` with the actual hostname of the server) you should see the minio login page.
 
-### 2. Configuration of the pganalyze container
+### 2. Create buckets and configure retention policies
+
+By default, Minio will keep objects forever, which can cause issues with exhausting disk storage after a while. We recommend setting a 35 day expiry policy for Minio using the [mc](https://docs.min.io/minio/baremetal/reference/minio-mc.html#mc-install) client:
+
+```sh
+# Replace "my_access_key" and "my_secret_key" with correct values set earlier
+mc alias set pganalyze-minio http://localhost:9000 my_access_key my_secret_key
+
+mc mb pganalyze-minio/pganalyze-logs
+mc mb pganalyze-minio/pganalyze-snapshots
+
+mc ilm add pganalyze-minio/pganalyze-logs --expiry-days 35
+mc ilm add pganalyze-minio/pganalyze-snapshots --expiry-days 35
+```
+
+### 3. Configuration of the pganalyze container
 
 With the Minio server working, you can now configure the pganalyze container.
 
