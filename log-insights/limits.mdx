@@ -1,0 +1,43 @@
+---
+title: 'pganalyze Log Insights Limits'
+backlink_href: /docs/log-insights
+backlink_title: 'Log Insights'
+---
+
+Log Insights has a rate limit of 1 GB of log data per day for each server. Limits for
+each server in your organization are tracked separately.
+
+Log Insights limits are not present in the [Enterprise version](/enterprise-postgres-monitoring).
+
+
+## How Log Insights rate limiting works
+
+As the collector sends Log Insights data to pganalyze for processing, the service tracks
+the total number of bytes received for each server. Each server starts with a 1 GB quota
+that is continuously refilled at the rate of 1 GB per day.
+
+Effectively, each server has a 1 GB allotment of log data over a rolling 1 day period. This
+allows for sending bursts of log data as long as the average rate is under 1 GB per day.
+
+When incoming log data exceeds the limit for a particular server, the affected log lines
+are not recorded by pganalyze and will not show up in Log Insights. Query samples present
+in affected lines are still recorded. The amount of log lines dropped, in bytes, is
+recorded whenever the rate limit is exceeded. This is visible as a warning when you visit
+the Log Insights page for an affected server.
+
+All Postgres logs processed by the collector count toward this limit.
+
+## Settings to adjust to stay under the rate limit
+
+There are a number of [Postgres log settings](https://www.postgresql.org/docs/current/runtime-config-logging.html)
+that can be adjusted to help you stay under this threshold:
+
+ - Disable `log_duration` if set
+ - Set `log_statement` to 'none' or 'ddl'
+ - Ensure `log_min_messages` is not set below the default level of 'warning'
+ - Raise `auto_explain.log_min_duration` (if using `auto_explain`) or `log_min_duration_statement`
+ - Use `auto_explain.sample_rate` (if using `auto_explain`)
+ - Use `log_min_duration_sample` and `log_statement_sample_rate` instead of `log_min_duration_statement`
+ - Disable `log_disconnections` and `log_connections` if you do not need these for auditing
+ - Increase `deadlock_timeout` or disable `log_lock_waits`
+

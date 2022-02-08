@@ -540,6 +540,10 @@
       "title": "pganalyze Log Insights",
       "path": "/docs/log-insights"
     },
+    "log-insights/limits": {
+      "title": "pganalyze Log Insights Limits",
+      "path": "/docs/log-insights/limits"
+    },
     "log-insights/setup": {
       "title": "Log Insights: Setup",
       "path": "/docs/log-insights/setup"
