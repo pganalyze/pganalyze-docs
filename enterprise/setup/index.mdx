@@ -282,9 +282,9 @@ AWS_REGION=us-east-1
 
 ### Appendix D - LDAP configuration
 
-If configuring LDAP after initially setting up an organization with standard password-based login,
-be sure to set DEFAULT_ORG_ROLE (see above) to ensure that new LDAP users are added to the existing
-organization.
+When using LDAP, it is recommended to also set DEFAULT_ORG_ROLE to a non-empty value (see above)
+to ensure that new LDAP users are added to the existing organization.
+
 
 * `LDAP_HOST`: Internal hostname or IP of your LDAP server
 * `LDAP_PORT`: Port of your LDAP server. Use port 636 for LDAPS
