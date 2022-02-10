@@ -55,6 +55,9 @@ After the app was created, configure it to use the **paid Hobby dyno** instead o
 
 <ImgPaidDyno />
 
+Note: if you have a large schema, a lot of query activity, or high log volume, you may need a larger dyno size.
+Check the Heroku dashboard to see if your collector dyno is swapping or crashing.
+
 Now you can continue by attaching your databases:
 
 <Link className="btn btn-success" to="02_attach_databases">
