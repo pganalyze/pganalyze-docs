@@ -282,6 +282,10 @@ AWS_REGION=us-east-1
 
 ### Appendix D - LDAP configuration
 
+When using LDAP, it is recommended to also set DEFAULT_ORG_ROLE to a non-empty value (see above)
+to ensure that new LDAP users are added to the existing organization.
+
+
 * `LDAP_HOST`: Internal hostname or IP of your LDAP server
 * `LDAP_PORT`: Port of your LDAP server. Use port 636 for LDAPS
 * `LDAP_BASE_DN`: Base DN that all lookups should be done with. You can use this to restrict access to a subset of your LDAP accounts
