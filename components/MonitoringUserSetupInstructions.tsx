@@ -12,6 +12,7 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
   minPostgres = 90200,
   password = 'mypassword'
 }) => {
+  const CodeBlock = useCodeBlock();
   type SetupOpt = [ id: string, version: number, label: string, instructions: React.ComponentType<{password: string}> ];
   const opts: SetupOpt[] = [
     [ 'monitoring_user_10', 100000, 'PostgreSQL 10+', MonitoringUser10 ],
@@ -21,12 +22,27 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
 
   const tabs = opts.map<TabItem>(opt => [opt[0], opt[2]])
   return (
-    <TabPanel items={tabs}>
-      {(idx: number) => {
-        const ActiveTab = opts[idx][3];
-        return <ActiveTab password={password} />
-      }}
-    </TabPanel>
+    <>
+      <TabPanel items={tabs}>
+        {(idx: number) => {
+          const ActiveTab = opts[idx][3];
+          return <ActiveTab password={password} />
+        }}
+      </TabPanel>
+      <p>
+        Then, connect to every database that you plan to monitor on this server and
+        run the following:
+      </p>
+      <CodeBlock>
+        {`CREATE OR REPLACE FUNCTION pganalyze.get_column_stats() RETURNS SETOF pg_stats AS
+$$
+  /* pganalyze-collector */ SELECT schemaname, tablename, attname, inherited, null_frac, avg_width,
+  n_distinct, NULL::anyarray, most_common_freqs, NULL::anyarray, correlation, NULL::anyarray,
+  most_common_elem_freqs, elem_count_histogram
+  FROM pg_catalog.pg_stats;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+    </>
   );
 };
 
