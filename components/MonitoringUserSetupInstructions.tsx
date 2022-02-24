@@ -30,7 +30,7 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
         }}
       </TabPanel>
       <p>
-        Then, connect to every database that you plan to monitor on this server and
+        Then, connect to each database that you plan to monitor on this server and
         run the following:
       </p>
       <CodeBlock>
