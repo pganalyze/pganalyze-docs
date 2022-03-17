@@ -6,6 +6,9 @@ export const CHECK_TITLES = {
     active_query: "Active Queries",
     idle_transaction: "Idle Transactions",
   },
+  index_advisor: {
+    missing_index: "Missing Index",
+  },
   schema: {
     index_invalid: "Invalid Indexes",
     index_unused: "Unused Indexes",
@@ -33,6 +36,9 @@ export const CHECK_SEVERITIES = {
   connections: {
     active_query: ['warning', 'critical'],
     idle_transaction: ['warning', 'critical'],
+  },
+  index_advisor: {
+    missing_index: ['info'],
   },
   schema: {
     index_invalid: ['info'],
@@ -86,6 +92,9 @@ export const CHECK_FREQUENCY = {
     active_query: CHECK_FREQUENCY_REALTIME,
     idle_transaction: CHECK_FREQUENCY_REALTIME,
   },
+  index_advisor: {
+    missing_index: CHECK_FREQUENCY_DAILY,
+  },
   schema: {
     index_invalid: CHECK_FREQUENCY_30MIN,
     index_unused: CHECK_FREQUENCY_DAILY,
@@ -131,6 +140,11 @@ export const DEFAULT_CHECK_CONFIGS = {
         critical_max_idle_tx_age_secs: 3600
       }
     },
+  },
+  index_advisor: {
+    missing_index: {
+      enabled: true
+    }
   },
   schema: {
     index_invalid: {
