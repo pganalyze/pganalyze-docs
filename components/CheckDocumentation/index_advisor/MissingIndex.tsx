@@ -5,9 +5,9 @@ import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/
 const MissingIndexTrigger: React.FunctionComponent<CheckTriggerProps> = () => {
   return (
     <p>
-      Detects when a table might be missing an index based on the query workload and creates an issue
-      with severity "info". Resolves once the recommended index has been created, or the workload
-      has changed such that the index is no longer relevant.
+      Detects when a table might be missing an index based on the query workload over the last
+      seven days and creates an issue with severity "info". Resolves once the recommended index
+      has been created, or the workload has changed such that the index is no longer relevant.
     </p>
   );
 };
