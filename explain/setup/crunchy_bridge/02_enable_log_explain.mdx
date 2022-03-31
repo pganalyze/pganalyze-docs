@@ -1,0 +1,36 @@
+---
+title: 'Step 1: Enable log_explain'
+install_track_title: 'Automated EXPLAIN: Setup (Crunchy Bridge)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import { CollectorStartCommand } from "../../../install/crunchy_bridge/01_deploy_the_collector.mdx";
+
+In order to use log-based EXPLAIN, you must have integrated Log Insights successfully.
+
+Once Log Insights is working, enabling EXPLAIN plan collection just requires turning on the collector setting. You
+can do this by first stopping the running Postgres Container App for the collector:
+
+```
+postgres=# SELECT list_containers();
+                                                      list_containers
+----------------------------------------------------------------------------------------------------------------------------
+ CONTAINER ID  IMAGE                               COMMAND     CREATED         STATUS             PORTS       NAMES
+ c90e8cf8a3ea  quay.io/pganalyze/collector:stable  collector   54 minutes ago  Up 54 minutes ago              elegant_turing
+(1 row)
+
+postgres=# SELECT stop_container('elegant_turing');
+ stop_container 
+----------------
+ elegant_turing
+(1 row)
+```
+
+And then starting it again with the `PGA_ENABLE_LOG_EXPLAIN` setting turned on, whilst making sure you set the correct `DB_URL`:
+
+<CollectorStartCommand apiKey={props.apiKey} logExplain={true} />
+
+<Link className='btn btn-success' to='03_test_and_verify'>
+  Proceed to Step 3: Test and verify
+</Link>

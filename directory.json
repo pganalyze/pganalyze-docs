@@ -256,6 +256,18 @@
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/explain/setup/auto_explain"
     },
+    "explain/setup/crunchy_bridge/01_create_helper_functions": {
+      "title": "Step 1: Create helper functions",
+      "path": "/docs/explain/setup/crunchy_bridge/01_create_helper_functions"
+    },
+    "explain/setup/crunchy_bridge/02_enable_log_explain": {
+      "title": "Step 1: Enable log_explain",
+      "path": "/docs/explain/setup/crunchy_bridge/02_enable_log_explain"
+    },
+    "explain/setup/crunchy_bridge/03_test_and_verify": {
+      "title": "Step 3: Test and verify",
+      "path": "/docs/explain/setup/crunchy_bridge/03_test_and_verify"
+    },
     "explain/setup/google_cloud_sql/01_auto_explain_check": {
       "title": "Step 1: Check for auto_explain",
       "path": "/docs/explain/setup/google_cloud_sql/01_auto_explain_check"
@@ -424,6 +436,10 @@
       "title": "Step 3: Configure the Collector",
       "path": "/docs/install/azure_database/03_configure_the_collector_package"
     },
+    "install/crunchy_bridge/01_deploy_the_collector": {
+      "title": "Step 1: Deploy the Collector",
+      "path": "/docs/install/crunchy_bridge/01_deploy_the_collector"
+    },
     "install/google_cloud_sql/01_create_monitoring_user": {
       "title": "Step 1: Create Monitoring User",
       "path": "/docs/install/google_cloud_sql/01_create_monitoring_user"
@@ -583,6 +599,10 @@
     "log-insights/setup/azure-database/troubleshooting": {
       "title": "Troubleshooting",
       "path": "/docs/log-insights/setup/azure-database/troubleshooting"
+    },
+    "log-insights/setup/crunchy-bridge/01_create_helper_function_and_test": {
+      "title": "Step 1: Create helper function and test",
+      "path": "/docs/log-insights/setup/crunchy-bridge/01_create_helper_function_and_test"
     },
     "log-insights/setup/google-cloud-sql": {
       "title": "Log Insights: Setup (Google Cloud SQL)",

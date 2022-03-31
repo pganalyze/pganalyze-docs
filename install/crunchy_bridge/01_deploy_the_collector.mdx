@@ -1,0 +1,81 @@
+---
+title: 'Step 1: Deploy the Collector'
+install_track_title: Installation Guide (Crunchy Bridge)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx';
+import { MonitoringUserColumnStats, MonitoringUserLogRead } from "../../components/MonitoringUserSetupInstructions";
+
+export const CollectorStartCommand = ({ apiKey, cmd, logExplain }) => {
+  return (
+    <CodeBlock>
+      {`SELECT run_container('` + (cmd ? '' : '-d ') + `-t -e DB_URL="REPLACE_ME" -e PGA_API_KEY="` + (apiKey ? apiKey : 'API_KEY') + '"' + (logExplain ? ' -e PGA_ENABLE_LOG_EXPLAIN=true' : '') + ` quay.io/pganalyze/collector:stable` + (cmd ? ` ${cmd}` : '') + `');`}
+    </CodeBlock>
+  );
+};
+
+
+In order to monitor a Crunchy Bridge database you run the pganalyze collector directly on your database server using Postgres Container Apps.
+
+## Grant pg_monitor role and log file access to the application user
+
+We recommend using a role with limited privileges for monitoring. You can use Crunchy Bridge's application user as the user for monitoring, or create a separate role. The instructions here assume you are using the application user.
+
+To ensure the application user can access monitoring statistics for all users (not just itself), and can read the server log, **run the following with the superuser credentials**:
+
+```sql
+GRANT pg_monitor TO application;
+```
+
+Additionally, run the following to allow the application user to read the Postgres server log:
+
+<MonitoringUserLogRead username="application" />
+
+<MonitoringUserColumnStats username="application" />
+
+In later steps you can now specify the application user credentials as the `DB_URL`.
+
+## Enable Postgres Container Apps
+
+If you have not yet enabled Postgres Container Apps, connect to your Crunchy Bridge Postgres database, and run the following commands as a superuser:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pgpodman;
+```
+
+## Run collector test
+
+Run the following command to verify the configuration. For the `DB_URL` specify the application user credentials.
+
+<CollectorStartCommand apiKey={props.apiKey} cmd="test" />
+
+This should return output like this:
+
+```
+                                run_container                                   
+--------------------------------------------------------------------------------
+ I Running collector test with pganalyze-collector X.XX.X
+ I [default] Testing statistics collection...
+ I [default]   Test collection successful for PostgreSQL XX.X
+ I [default]   Test snapshot successful (27.9 KB)
+ I [default] Testing activity snapshots...
+ I [default]   Test snapshot successful (2.28 KB)
+ I [default] Testing log download...
+ I [default]   Test snapshot successful (1.45 KB)
+ I [default]   Log test successful
+
+ Test successful. View servers in pganalyze:
+  - [default]: https://app.pganalyze.com/servers/SERVER_ID
+
+(1 row)
+```
+
+## Start collector in the background
+
+With a successful test, you can now start the collector container in the background:
+
+<CollectorStartCommand apiKey={props.apiKey} />
+
+<PublicLastStepLogInsightsLink />
