@@ -12,7 +12,6 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
   minPostgres = 90200,
   password = 'mypassword'
 }) => {
-  const CodeBlock = useCodeBlock();
   type SetupOpt = [ id: string, version: number, label: string, instructions: React.ComponentType<{password: string}> ];
   const opts: SetupOpt[] = [
     [ 'monitoring_user_10', 100000, 'PostgreSQL 10+', MonitoringUser10 ],
@@ -29,19 +28,34 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
           return <ActiveTab password={password} />
         }}
       </TabPanel>
+      <MonitoringUserColumnStats username="pganalyze" />
+    </>
+  );
+};
+
+export const MonitoringUserColumnStats: React.FunctionComponent<{ username: string }> = ({username}) => {
+  const CodeBlock = useCodeBlock();
+  return (
+    <>
       <p>
-        Then, connect to each database that you plan to monitor on this server and
-        run the following:
+        Then, connect to each database that you plan to monitor on this server as a superuser (or equivalent) and
+        run the following to enable the collection of additional column statistics:
       </p>
       <CodeBlock>
-        {`CREATE OR REPLACE FUNCTION pganalyze.get_column_stats() RETURNS SETOF pg_stats AS
+        {`CREATE SCHEMA IF NOT EXISTS pganalyze;
+GRANT USAGE ON SCHEMA pganalyze TO ${username};
+CREATE OR REPLACE FUNCTION pganalyze.get_column_stats() RETURNS SETOF pg_stats AS
 $$
   /* pganalyze-collector */ SELECT schemaname, tablename, attname, inherited, null_frac, avg_width,
-  n_distinct, NULL::anyarray, most_common_freqs, NULL::anyarray, correlation, NULL::anyarray,
-  most_common_elem_freqs, elem_count_histogram
+    n_distinct, NULL::anyarray, most_common_freqs, NULL::anyarray, correlation, NULL::anyarray,
+    most_common_elem_freqs, elem_count_histogram
   FROM pg_catalog.pg_stats;
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
+      <p>
+        <strong>Note:</strong> We never collect actual table data through this method (see the <code>NULL</code> values in the function), but we do collect statistics about the distribution of values in your tables. You can skip creating the <code>get_column_stats</code> helper function if the database
+        contains highly sensitive information.
+      </p>
     </>
   );
 };
