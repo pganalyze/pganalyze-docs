@@ -147,6 +147,7 @@ const MonitoringUser10: React.FunctionComponent<{password: string}> = ({password
     <CodeBlock>
       {`CREATE USER pganalyze WITH PASSWORD '${password}' CONNECTION LIMIT 5;
 GRANT pg_monitor TO pganalyze;
+
 CREATE SCHEMA pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
 GRANT USAGE ON SCHEMA public TO pganalyze;
