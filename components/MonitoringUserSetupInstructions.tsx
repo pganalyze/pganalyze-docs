@@ -141,6 +141,24 @@ $$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;`}
   );
 }
 
+const MonitoringUser10: React.FunctionComponent<{password: string}> = ({password}) => {
+  const CodeBlock = useCodeBlock();
+  return (
+    <CodeBlock>
+      {`CREATE USER pganalyze WITH PASSWORD '${password}' CONNECTION LIMIT 5;
+GRANT pg_monitor TO pganalyze;
+CREATE SCHEMA pganalyze;
+GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
+GRANT USAGE ON SCHEMA public TO pganalyze;
+
+CREATE OR REPLACE FUNCTION pganalyze.get_stat_replication() RETURNS SETOF pg_stat_replication AS
+$$
+  /* pganalyze-collector */ SELECT * FROM pg_catalog.pg_stat_replication;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+    </CodeBlock>
+  )
+}
+
 const MonitoringUser96: React.FunctionComponent<{password: string}> = ({password}) => {
   const CodeBlock = useCodeBlock();
   return (
