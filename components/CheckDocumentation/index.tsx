@@ -5,6 +5,7 @@ import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../util/che
 import QuerySlowness from "./queries/Slowness";
 import ActiveQuery from "./connections/ActiveQuery";
 import IdleTransaction from "./connections/IdleTransaction";
+import MissingIndex from "./index_advisor/MissingIndex";
 import IndexInvalid from "./schema/IndexInvalid";
 import IndexUnused from "./schema/IndexUnused";
 import EnableFeatures from "./settings/EnableFeatures";
@@ -25,6 +26,9 @@ const Docs: {
   connections: {
     active_query: ActiveQuery,
     idle_transaction: IdleTransaction,
+  },
+  index_advisor: {
+    missing_index: MissingIndex,
   },
   schema: {
     index_invalid: IndexInvalid,
