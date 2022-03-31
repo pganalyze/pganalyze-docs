@@ -1,0 +1,58 @@
+---
+title: 'Step 1: Create helper function and test'
+install_track_title: 'Log Insights: Setup (Crunchy Bridge)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+import { CollectorStartCommand } from "../../../install/crunchy_bridge/01_deploy_the_collector.mdx";
+
+import { MonitoringUserLogRead } from "../../../components/MonitoringUserSetupInstructions";
+
+import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
+
+export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
+
+Log output for Crunchy Bridge database servers is collected directly from the database server using SQL functions.
+
+If you are using the application user, an additional function needs to be created to grant access to the logs:
+
+<MonitoringUserLogRead username="application" />
+
+You can then verify whether this is working by running the test command:
+
+<CollectorStartCommand apiKey={props.apiKey} cmd="test" />
+
+This should show an output like this:
+
+```
+                                run_container
+--------------------------------------------------------------------------------
+ I Running collector test with pganalyze-collector X.XX.X
+ I [default] Testing statistics collection...
+ I [default]   Test collection successful for PostgreSQL XX.X
+ I [default]   Test snapshot successful (27.9 KB)
+ I [default] Testing activity snapshots...
+ I [default]   Test snapshot successful (2.28 KB)
+ I [default] Testing log download...
+ I [default]   Test snapshot successful (1.45 KB)
+ I [default]   Log test successful
+
+ Test successful. View servers in pganalyze:
+  - [default]: https://app.pganalyze.com/servers/SERVER_ID
+
+(1 row)
+```
+
+Note the "Log test successful", which indicates that the helper method works correctly.
+
+<PublicOnly>
+  <p>You will then see Log Insights data on your database within a few minutes:</p>
+  <p>
+    <ImgLogInsightsScreenshot />
+  </p>
+  <p>
+    We recommend that you also <a href="https://pganalyze.com/docs/log-insights/setup/tuning-log-config-settings">tune a
+    few configuration parameters</a> to get useful log output from Postgres.
+  </p>
+</PublicOnly>

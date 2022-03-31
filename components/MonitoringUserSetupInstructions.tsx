@@ -60,23 +60,85 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
   );
 };
 
-const MonitoringUser10: React.FunctionComponent<{password: string}> = ({password}) => {
+export const MonitoringUserExplain: React.FunctionComponent<{ username: string }> = ({username}) => {
   const CodeBlock = useCodeBlock();
   return (
-    <CodeBlock>
-      {`CREATE USER pganalyze WITH PASSWORD '${password}' CONNECTION LIMIT 5;
-GRANT pg_monitor TO pganalyze;
-
-CREATE SCHEMA pganalyze;
-GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
-GRANT USAGE ON SCHEMA public TO pganalyze;
-
-CREATE OR REPLACE FUNCTION pganalyze.get_stat_replication() RETURNS SETOF pg_stat_replication AS
+    <>
+      <CodeBlock>
+        {`CREATE SCHEMA IF NOT EXISTS pganalyze;
+GRANT USAGE ON SCHEMA pganalyze TO ${username};
+CREATE OR REPLACE FUNCTION pganalyze.explain(query text, params text[]) RETURNS text AS
 $$
-  /* pganalyze-collector */ SELECT * FROM pg_catalog.pg_stat_replication;
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
-    </CodeBlock>
-  )
+DECLARE
+  prepared_query text;
+  prepared_params text;
+  result text;
+BEGIN
+  SELECT regexp_replace(query, ';+\s*\Z', '') INTO prepared_query;
+  IF prepared_query LIKE '%;%' THEN
+    RAISE EXCEPTION 'cannot run EXPLAIN when query contains semicolon';
+  END IF;
+
+  IF array_length(params, 1) > 0 THEN
+    SELECT string_agg(quote_literal(param) || '::unknown', ',') FROM unnest(params) p(param) INTO prepared_params;
+
+    EXECUTE 'PREPARE pganalyze_explain AS ' || prepared_query;
+    BEGIN
+      EXECUTE 'EXPLAIN (VERBOSE, FORMAT JSON) EXECUTE pganalyze_explain(' || prepared_params || ')' INTO STRICT result;
+    EXCEPTION WHEN OTHERS THEN
+      DEALLOCATE pganalyze_explain;
+      RAISE;
+    END;
+    DEALLOCATE pganalyze_explain;
+  ELSE
+    EXECUTE 'EXPLAIN (VERBOSE, FORMAT JSON) ' || prepared_query INTO STRICT result;
+  END IF;
+
+  RETURN result;
+END
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+      <p>
+        Note that this function contains a check for semicolons in the query text. This is to minimize collector access to your
+        data: it ensures that the collector cannot piggyback other queries that could exfiltrate data.
+      </p>
+      <p>
+        Because EXPLAIN needs to run in the same database where the query ran, you will need to create this function
+        <strong>in each database you want to monitor</strong>. You should create the function as a Postgres superuser to ensure EXPLAIN
+        access to all queries.
+      </p>
+    </>
+  );
+};
+
+export const MonitoringUserLogRead: React.FunctionComponent<{ username: string }> = ({username}) => {
+  const CodeBlock = useCodeBlock();
+  return (
+    <>
+      <CodeBlock>
+        {`CREATE SCHEMA IF NOT EXISTS pganalyze;
+GRANT USAGE ON SCHEMA pganalyze TO ${username};
+CREATE OR REPLACE FUNCTION pganalyze.read_log_file(log_filename text, read_offset bigint, read_length bigint) RETURNS text AS
+$$
+DECLARE
+  result text;
+BEGIN
+  IF log_filename !~ '\A[\w\.-]+\Z' THEN
+    RAISE EXCEPTION 'invalid log filename';
+  END IF;
+
+  SELECT pg_catalog.pg_read_file(
+    pg_catalog.current_setting('data_directory') || '/' || pg_catalog.current_setting('log_directory') || '/' || log_filename,
+    read_offset,
+    read_length
+  ) INTO result;
+
+  RETURN result;
+END
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+    </>
+  );
 }
 
 const MonitoringUser96: React.FunctionComponent<{password: string}> = ({password}) => {

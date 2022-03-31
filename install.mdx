@@ -9,6 +9,7 @@ import imgLogoAzure from './images/logo_microsoft_azure.png'
 import imgLogoGcp from './images/logo_google_cloud_platform.png'
 import imgLogoPgsql from './images/logo_postgres.svg'
 import imgLogoHeroku from './images/logo_heroku.svg'
+import imgLogoCrunchyBridge from './images/logo_crunchy_bridge.svg'
 
 import PublicOverview from './_install_public.mdx'
 
@@ -61,6 +62,13 @@ To continue please select in which environment you are running your Postgres dat
   >
     <img src={imgLogoHeroku} />
     Heroku Postgres
+  </Link>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/crunchy_bridge/01_deploy_the_collector"
+  >
+    <img src={imgLogoCrunchyBridge} />
+    Crunchy Bridge
   </Link>
   {/*<Link className="install-choice--step" to="install/heroku_postgres/01_deploy_the_collector">
     <img src="/images/docs/logo_aiven.png" />
