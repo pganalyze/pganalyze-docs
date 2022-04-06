@@ -22,13 +22,11 @@ Users that authenticate through SSO for the first time will receive the standard
 
 ## Migrating to Single Sign-On
 
-When you enable Single Sign-On for the first time you can continue to utilize username/password authentication for existing users. You currently cannot turn off username/password authentication for your whole organization, but you can remove all members utilizing it, and then only rely on Single Sign-On going forward.
-
-Members utilizing Single Sign-On can be identified on the **Members** settings page by the `Single Sign-On Required?` column:
+Once you have enabled Single Sign-On, in order to authenticate to pganalyze with SSO, users must sign in through your SSO provider portal, not through pganalyze itself. You currently cannot turn off username/password authentication for your whole organization. Instead, you can remove all non-SSO users from the organization. Members utilizing Single Sign-On can be identified on the **Members** settings page by the `Single Sign-On Required?` column:
 
 ![Screenshot of pganalyze Members page indicating the Single Sign-On Required column for each member](members_with_sso.png)
 
-When a user tries to sign in through SSO that previously used username/password authentication, they may receive the error "Email has already been taken". In this situation the existing user account needs to change their email address, in order to avoid the conflict with the separate SSO managed user. The user can also request their old user account to be deleted by contacting [pganalyze Support](mailto:support@pganalyze.com).
+Any existing username/password users you remove like this must then sign in through pganalyze directly using their old credentials, go to the user settings page by clicking on their name in the lower left, and change their e-mail in pganalyze to something different than the e-mail address they will use for SSO. Otherwise, when they try to log in through SSO, they will receive the error "Email has already been taken" due to the conflict with the separate username/password user. The user can also request their old, non-SSO, user account to be deleted by contacting [pganalyze Support](mailto:support@pganalyze.com).
 
 ## Removing user accounts
 
