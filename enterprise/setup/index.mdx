@@ -259,6 +259,7 @@ The following environment variables can be passed into the Docker image. Note th
 
 * `DATABASE_URL`: PostgreSQL server used for storing statistics information (required)
 * `LICENSE_KEY`: License key provided to you by the pganalyze team (required)
+* `DOMAIN_NAME`: Domain name where you are hosting the pganalyze app (optional, but recommended, and required for SSO)
 * `MAILER_URL`: SMTP server used to send system emails, e.g. user invites (optional, recommended)
 * `MAILER_FROM`: "From" address used to send system emails (optional, recommended if setting MAILER_URL)
 * `AWS_ACCESS_KEY_ID:` AWS Access Key ID (optional)
@@ -275,6 +276,7 @@ An example configuration looks like this:
 ```
 DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
 LICENSE_KEY=KEYKEYKEY
+DOMAIN_NAME=pganalyze.example.com
 MAILER_URL=smtp://myusername:mypassword@example.com:25
 MAILER_FROM=pganalyze@example.com
 AWS_ACCESS_KEY_ID=AKIAXXXXXXXXXXXX
