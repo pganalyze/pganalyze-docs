@@ -1,0 +1,86 @@
+---
+title: '2022.05.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2022.05.0`
+
+## Notes
+
+* This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+* This includes a number of backend changes for the upcoming version of the Index Advisor
+  - We're looking forward to share the new version with you soon!
+
+
+## Features
+
+- Query analysis (for Index Advisor) improvements
+  - Support more data type functions (fixes many cases of `Unexpected execution of function` errors)
+  - Fix MergeAppend handling
+  - Find extensions used in custom types
+  - Support existing indexes that reference UDFs
+  - Custom function support
+  - Custom range type support
+- Preserve whitespace when showing Postgres config settings
+- Update embedded Postgres docs
+  - This refreshes the bundled Postgres docs used on config settings pages to the latest releases
+    (previously these were out of date, showing older versions of Postgres in some cases)
+- Adds support for Crunchy Bridge database provider
+- Update Enterprise collector to v0.43.1
+
+
+## Performance
+
+- Increases statistics processing performance for servers with a lot of databases
+- Introduces a default log quota of "1 GB log data / server / day" to avoid busy servers overly consuming log processing resources
+  - If you'd like to raise the default quota on your installation, please [reach out to us for instructions](...)
+- Partition connection monitoring data (`backend_counts` table) for better scalability
+- Snapshot API: Turn off KMS retries and lower timeout to avoid API server timeouts
+- Query analysis: Move background process for Index Advisor to a dedicated queue, and run daily (instead of continuously)
+  - If you've seen queue backlogs in the last Enterprise release, this should most likely resolve the backlog issues
+- Query analysis: Time out background task after 1 minute
+  - This ensures overly complex queries don't consume the system's capacity
+- Avoid use of temporary tables, reducing churn on `pg_catalog` table
+- Improve performance for per-table query list
+- Improve performance for per-database table list
+- Analyze all newly created partitions twice (at different intervals) to improve query plans
+
+
+## Bugfixes
+
+- Ensure all statistics snapshots are only processed once by adding a unique index
+- Fix typecast problem when using Postgres 14 for statistics database
+- Improve Weekly Report rendering in Outlook
+- Avoid wrapping table headers when space is tight
+- Improve rendering of wait events graph data to avoid visual display bugs
+- Update `<query text unavailable>` guidance for clarity
+- Slack integration: Fix double redirect bug for errors
+- Log analysis: Avoid crashing when config settings are missing
+- Avoid recurring loading flash on connections view
+  - This restores the intended behaviour that keeps the old data visible until
+    the next data is loaded (whilst auto-refresh is active)
+- Query text truncation improvements (used in overview):
+  - Correctly handle UPDATE and ON CONFLICT target lists
+  - Simplify VALUES lists
+
+
+## Security
+
+- Enables Content Security Policy (CSP) headers in the pganalyze app
+- Sanitize local collector values to prevent malicious settings running arbitrary commands
+  - This protects against an internal actor who has manage permissions on the
+    organization. Previously, they could exploit local collector configuration
+    settings to run arbitrary commands within the Enterprise container
+- Snapshot API: Improve validation of locations against permitted paths
+  - This protects against an internal actor who has a valid API key to trick the server
+    into deleting arbitrary paths on the local filesystem of the Enterprise container
+- Dependency updates (none of these are exploitable, to our knowledge, but may have shown in dependency scanners)
+  - Update google-protobuf gem to address CVE-2021-22569
+  - Upgrade Rails to address CVE-2022-27777 and CVE-2022-23633
+  - Update nokogiri for CVE-2021-30560, CVE-2022-24836, CVE-2022-23437, CVE-2018-25032, and CVE-2022-24839
+  - Update Ruby for CVE-2022-28739 (#1947)
+  - Update Sidekiq for CVE-2022-23837
+  - Updates Ruby to 2.7.6 to fix vulnerabilities in cgi ([CVE-2021-41816](https://www.ruby-lang.org/en/news/2021/11/24/buffer-overrun-in-cgi-escape_html-cve-2021-41816/) and [CVE-2021-41819](https://www.ruby-lang.org/en/news/2021/11/24/cookie-prefix-spoofing-in-cgi-cookie-parse-cve-2021-41819/)) and rdoc ([CVE-2021-31799](https://www.ruby-lang.org/en/news/2021/05/02/os-command-injection-in-rdoc/)) libraries (these vulnerabilities are not exploitable in the app, but may be flagged in a dependency scanner)
+  - Go elliptic curve library ([CVE-2022-23806](https://nvd.nist.gov/vuln/detail/cve-2022-23806)) (this vulnerabilities is not exploitable in the app, but may be flagged in a dependency scanner)
+  - Other updates to sinatra, moment.js, puma, minimist, nanoid, lodash-es, follow-redirects, node-fetch and url-parse
