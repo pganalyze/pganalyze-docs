@@ -192,6 +192,10 @@
       "title": "2021.12.1 Release",
       "path": "/docs/enterprise/releases/2021-12-1"
     },
+    "enterprise/releases/2022-05-0": {
+      "title": "2022.05.0 Release",
+      "path": "/docs/enterprise/releases/2022-05-0"
+    },
     "enterprise/setup": {
       "title": "Enterprise Edition: Initial Setup",
       "path": "/docs/enterprise/setup"
