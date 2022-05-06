@@ -1,0 +1,96 @@
+---
+title: '2022.05.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2022.05.0`
+
+## Notes
+
+* This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+* There are two [security bugfixes](#security) contained in this release that protect against malicious use of manage/API permissions by an internal actor - upgrading is recommended
+* We've included a number of backend-only changes for the upcoming version of the Index Advisor
+  - We're looking forward to share the new version with you soon!
+
+
+## Features
+
+- Index Advisor query analysis improvements
+  - Support more data type functions
+  - Fixed many cases of `Unexpected execution of function` errors
+  - Fix MergeAppend handling
+  - Find extensions used in custom types
+  - Support existing indexes that reference UDFs
+  - Custom function support
+  - Custom range type support
+- Preserve whitespace when showing Postgres config settings
+- Update embedded Postgres docs
+  - This refreshes the bundled Postgres docs used on config settings pages to the latest releases
+    (previously these were out of date, showing older versions of Postgres in some cases)
+- Add support for Crunchy Bridge database provider
+- Introduces a default log quota of "1 GB log data / server / day" to avoid busy servers overly consuming log processing resources
+  - If you'd like to raise the default quota on your installation, please [reach out to us for instructions](mailto:support@pganalyze.com)
+- Index advisor query analysis: Move background process to a dedicated queue, and run daily (instead of continuously)
+  - If you've seen queue backlogs in the last Enterprise release, this should most likely resolve the backlog issues
+- Log Insights improvements
+  - Add support for Postgres 14 autovacuum and autoanalyze log events
+  - Add regexp match for "permission denied for table" event
+  - C22 Auth failed event: Detect additional DETAIL information
+  - Handle non-UTC/non-local log_timezone values correctly
+
+
+## Performance
+
+- Increases table statistics processing performance for servers with a lot of databases
+- Snapshot API: Turn off KMS retries and lower timeout to avoid API server timeouts
+- Improve performance for per-table query list
+- Improve performance for per-database table list
+- Analyze all newly created partitions twice (at different intervals) to improve query plans
+- Partition connection monitoring data (`backend_counts` table) for better scalability
+
+
+## Bugfixes
+
+- Ensure all statistics snapshots are only processed once by adding a unique index
+- Fix typecast problem when using Postgres 14 for statistics database
+- Improve Weekly Report rendering in Outlook
+- Avoid wrapping table headers when space is tight
+- Improve rendering of wait events graph data to avoid visual display bugs
+- Update `<query text unavailable>` guidance for clarity
+- Slack integration: Fix double redirect bug for errors
+- Log analysis: Avoid crashing when config settings are missing
+- Avoid recurring loading flash on connections view
+  - This restores the intended behaviour that keeps the old data visible until
+    the next data is loaded (whilst auto-refresh is active)
+- Query text truncation improvements (used in overview):
+  - Correctly handle UPDATE and ON CONFLICT target lists
+  - Simplify VALUES lists
+- Query analysis: Time out background task after 1 minute
+  - This ensures overly complex queries don't consume the system's capacity
+- Avoid use of temporary tables, reducing churn on `pg_catalog` table
+- Bundled local collector updated from 0.42.0 to [0.43.1](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0431------2022-05-02)
+  - Fix cleanup of temporary files used when processing logs
+  - Filter out vacuum records we cannot match to a table name
+  - Check citus.shard_replication_factor before querying citus_table_size
+
+
+## Security
+
+- **Security bugfix:** Sanitize local collector values to prevent malicious settings running arbitrary commands
+  - This protects against an internal actor who has manage permissions on the
+    organization. Previously, they could exploit local collector configuration
+    settings to run arbitrary commands within the Enterprise container
+- **Security bugfix:** Snapshot API: Improve validation of locations against permitted paths
+  - This protects against an internal actor who has a valid API key to trick the server
+    into deleting arbitrary paths on the local filesystem of the Enterprise container
+- Enables Content Security Policy (CSP) headers in the pganalyze app
+- Dependency updates (none of these are exploitable, to our knowledge, but may have shown in dependency scanners)
+  - Update google-protobuf gem to address [CVE-2021-22569](https://nvd.nist.gov/vuln/detail/CVE-2021-22569)
+  - Upgrade Rails to address [CVE-2022-27777](https://discuss.rubyonrails.org/t/cve-2022-27777-possible-xss-vulnerability-in-action-view-tag-helpers/80534) and [CVE-2022-23633](https://nvd.nist.gov/vuln/detail/CVE-2022-23633)
+  - Update nokogiri for [CVE-2021-30560](https://nvd.nist.gov/vuln/detail/CVE-2021-30560), [CVE-2022-24836](https://nvd.nist.gov/vuln/detail/CVE-2022-24836), [CVE-2022-23437](https://nvd.nist.gov/vuln/detail/CVE-2022-23437), [CVE-2018-25032](https://nvd.nist.gov/vuln/detail/CVE-2018-25032), and [CVE-2022-24839](https://nvd.nist.gov/vuln/detail/CVE-2022-24839)
+  - Update Ruby for [CVE-2022-28739](https://www.ruby-lang.org/en/news/2022/04/12/buffer-overrun-in-string-to-float-cve-2022-28739/)
+  - Update Sidekiq for [CVE-2022-23837](https://nvd.nist.gov/vuln/detail/CVE-2022-23837)
+  - Updates Ruby to 2.7.6 to fix vulnerabilities in cgi ([CVE-2021-41816](https://www.ruby-lang.org/en/news/2021/11/24/buffer-overrun-in-cgi-escape_html-cve-2021-41816/) and [CVE-2021-41819](https://www.ruby-lang.org/en/news/2021/11/24/cookie-prefix-spoofing-in-cgi-cookie-parse-cve-2021-41819/)) and rdoc ([CVE-2021-31799](https://www.ruby-lang.org/en/news/2021/05/02/os-command-injection-in-rdoc/)) libraries
+  - Go elliptic curve library ([CVE-2022-23806](https://nvd.nist.gov/vuln/detail/cve-2022-23806))
+  - Other updates to sinatra, moment.js, puma, minimist, nanoid, lodash-es, follow-redirects, node-fetch and url-parse
