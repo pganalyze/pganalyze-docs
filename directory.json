@@ -556,6 +556,10 @@
       "title": "Collector crashes",
       "path": "/docs/install/troubleshooting/collector_crash"
     },
+    "install/troubleshooting/column_stats_helper": {
+      "title": "Resolving the \"Limited access to table column statistics\" warning",
+      "path": "/docs/install/troubleshooting/column_stats_helper"
+    },
     "install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries": {
       "title": "Amazon RDS: Resolving the \"pg_stat_statements must be loaded via shared_preload_libraries\" error",
       "path": "/docs/install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries"
