@@ -1,0 +1,130 @@
+---
+title: 'Index Advisor: Behind the Scenes'
+backlink_href: /docs/index-advisor
+backlink_title: 'Index Advisor (in-app in pganalyze)'
+---
+
+## How Index Advisor detects missing index opportunities
+
+When the Postgres query planner decides how to execute a query, it considers a
+number of factors to determine if existing indexes can help the query complete
+more efficiently. The Index Advisor builds on this core Postgres code and
+extends it to determine what indexes could be useful even if they do not exist.
+
+By evaluating many different possible plans, the Index Advisor can find index
+recommendations to help you optimize your schema for your specific queries.
+Since pganalyze already monitors information about your schema (like table and
+index definitions and sizes), we can use this to analyze any of your queries,
+without requiring specific EXPLAIN plan samples.
+
+
+## The Index Advisor model
+
+The Index Advisor model used for recommendations is built on:
+
+ - Scans, extracted from the full query workload (collected by means of
+   pg_stat_statements)
+ - I/O estimates through the use of costing logic aligning with the Postgres
+   cost model (similar cost to the one shown in an EXPLAIN plan)
+ - Prioritizing indexes for frequent queries over infrequent queries
+ - Optimizing for reducing the amount of index pages fetched by prioritizing
+   conditions with higher index selectivity (high selectivity = match a small
+   number of rows)
+
+Future improvements to the Index Advisor may refine this model further. Index
+Advisor currently runs on a daily schedule, and looks at data in 7
+day-intervals.
+
+
+## Scans
+
+What exactly are scans? Let’s look at an example, in a simple query like this:
+
+```sql
+SELECT * FROM users
+  JOIN comments ON (users.id = comments.user_id)
+ WHERE users.site_id = 123 AND comments.parent_id IS NULL
+ ORDER BY comments.created_at DESC
+ LIMIT 10;
+```
+
+This query has two scans:
+
+- users:
+  - WHERE clause: (site_id = $n)
+  - JOIN clause: (id = $n)
+- comments:
+  - WHERE clause: (parent_id IS NULL)
+  - JOIN clause: (user_id = $n)
+  - ORDER BY clause: created_at
+
+Each of these scans also has an associated average estimated cost, that is
+averaged across all queries it’s referenced in. Note we replace specific values
+and fields from other tables with the $n parameter reference for easier
+grouping. 
+
+More broadly, each scan consists of:
+
+ - Zero or more WHERE clause conditions
+ - Zero or more JOIN clause conditions
+ - Zero or more an ORDER BY clause columns (Note: not yet considered by Index
+   Advisor; see [Limitations](/docs/index-advisor/limitations))
+ - Optionally, a LIMIT on how much data needs to be returned (Note: not yet
+   considered by Index Advisor; see
+   [Limitations](/docs/index-advisor/limitations))
+
+In case of JOIN conditions, a scan is considered twice, once as a plain index
+scan (without JOIN conditions), and once as a [parameterized index
+scan](https://pganalyze.com/blog/how-postgres-chooses-index#parameterized-index-scans-or-why-nested-loop-are-sometimes-a-good-join-type)
+(with JOIN conditions, which are only usable to target an index when the table
+is the inner relation in a Nested Loop). When displayed, the costs of these two
+types of index scans are averaged out to show one number.
+
+
+## The Index Advisor Cost Model
+
+When cost is shown it represents the total cost of performing the scan (i.e. to
+retrieve all rows requested) with the currently available scan method
+(Sequential Scan or Index Scan). This is the same notion of “cost” and “total
+cost” you see when running an EXPLAIN (without ANALYZE) in Postgres. The “cost”
+units are a unique measurement used for modeling only, and do not represent
+time, or bytes.
+
+The biggest contributor to the estimated cost for a Sequential Scan or Index
+Scan is the estimated I/O for the scan. This is based on the Postgres cost
+estimation functions used by the Postgres planner. You can read more about this
+in [our recent blog
+post](https://pganalyze.com/blog/how-postgres-chooses-index).
+
+Note that the Index Advisor planning process utilizes your production
+statistics, and therefore costs are based on the actual measured size of tables
+and indexes, where possible.
+
+When you see the Scans list on the Index Advisor opportunity page, each scan
+expression includes information about the current cost, estimated scans per
+minute, and weighted cost improvement if you were to apply the recommendation.
+Cost improvements are expressed as a multiplier, for example: 1.2x faster
+compared to the old estimated cost. The table is sorted by cost improvement.
+
+
+## Weighted cost improvement
+
+During the Index Advisor recommendation process, different variants of indexes
+are tried that overall produce the lowest cost (and thus the lowest estimated
+I/O). When a recommendation is found, the Index Advisor will show an expected
+weighted cost improvement for the recommendation. The weighted cost improvement
+is a weighted average across the individual cost improvements for each scan that
+can benefit from the query, weighted by the frequency of the scan (based on the
+queries that contain the scan). More frequent queries will have a bigger impact
+on the overall weighted cost improvement number.
+
+## Index Write Overhead
+
+To convey the cost of maintaining existing and proposed indexes, we define the
+Index Write Overhead metric as an estimate of the I/O impact of maintaining that
+index. This can guide you to consolidate indexes and drop little-used indexes to
+have more I/O headroom.
+
+This estimate will be available for both existing indexes, as well as new
+suggested indexes. We plan to initially focus on assessing B-tree index write
+overhead.

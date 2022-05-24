@@ -352,6 +352,30 @@
       "title": "Index Advisor (in-app in pganalyze)",
       "path": "/docs/index-advisor"
     },
+    "index-advisor/behind-the-scenes": {
+      "title": "Index Advisor: Behind the Scenes",
+      "path": "/docs/index-advisor/behind-the-scenes"
+    },
+    "index-advisor/checks-and-alerts": {
+      "title": "Index Advisor: Configuring Checks and Alerts",
+      "path": "/docs/index-advisor/checks-and-alerts"
+    },
+    "index-advisor/introduction": {
+      "title": "Index Advisor: Introduction",
+      "path": "/docs/index-advisor/introduction"
+    },
+    "index-advisor/limitations": {
+      "title": "Index Advisor: Limitations",
+      "path": "/docs/index-advisor/limitations"
+    },
+    "index-advisor/navigating": {
+      "title": "Index Advisor: Navigating",
+      "path": "/docs/index-advisor/navigating"
+    },
+    "index-advisor/reason-about-recommendations": {
+      "title": "Index Advisor: How to Reason About Recommendations",
+      "path": "/docs/index-advisor/reason-about-recommendations"
+    },
     "index-advisor/standalone": {
       "title": "Index Advisor (Standalone)",
       "path": "/docs/index-advisor/standalone"
@@ -359,6 +383,10 @@
     "index-advisor/standalone/settings": {
       "title": "Index Advisor Table Statistics",
       "path": "/docs/index-advisor/standalone/settings"
+    },
+    "index-advisor/test-recommendations": {
+      "title": "Index Advisor: How to Test Recommendations",
+      "path": "/docs/index-advisor/test-recommendations"
     },
     "install": {
       "title": "Get Started",

@@ -1,0 +1,38 @@
+---
+title: 'Index Advisor: How to Test Recommendations'
+backlink_href: /docs/index-advisor
+backlink_title: 'Index Advisor (in-app in pganalyze)'
+---
+
+We recommend testing recommendations in pre-production or staging environments
+first before deploying changes to production. If possible, it is advisable to
+use a copy of the production database for your tests, otherwise you may not see
+a representative performance improvement or query plan change.
+
+To perform a test and validate whether a recommendation improves performance:
+
+1. Pick one or more of the affected queries mentioned by the Index Advisor
+2. Run “EXPLAIN (ANALYZE, BUFFERS) SELECT …” for each of the queries, twice
+3. Note down the runtime of the second invocation (to avoid cold caches
+   affecting the test)
+4. Additionally, note down the sum of the top level numbers of “shared blocks
+   read” and “shared blocks hit” (this represents how much data the query was
+   loading)
+5. Create the recommended index by copying the “CREATE INDEX” command
+6. Re-run the EXPLAIN (ANALYZE, BUFFERS) test, and compare the numbers
+
+Note that the Index Advisor cost improvement is an estimate--always test and
+verify whether recommendations actually improve performance. In a warm cache
+test, as described above, it is likely that the measured improvement for the
+query timing is less than expected, as data in cache can be accessed quickly,
+even for larger amounts of data.
+
+The “shared buffers read” and “shared buffers hit” counts (combined together)
+give you a better measurement of what the true order of magnitude improvement of
+a change is, and reflects the cold cache performance better.
+
+You can also use the query statistics and EXPLAIN plans that pganalyze collects
+to verify production performance after deploying a change. Index Advisor runs
+every 24h, and will resolve a missing index by watching for changes in the
+schema. Resolved issues can be viewed by navigating to the Resolved tab on the
+Missing Index check page.
