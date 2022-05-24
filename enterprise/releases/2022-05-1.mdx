@@ -1,0 +1,37 @@
+---
+title: '2022.05.1 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2022.05.1`
+
+## Notes
+
+* This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+* There are multiple [security bugfixes](#security) contained in this release - upgrading is recommended
+* This includes an early access version of the new Index Advisor - [reach out to us](mailto:support@pganalyze.com) to try it out
+
+## Features
+
+* Multiple changes for early access version of the new Index Advisor
+
+## Performance
+
+* Speed up loading table partitions for a given set of parent tables
+* Speed up loading of replication statistics
+
+## Bugfixes
+
+* Local collector: Convert config values to string before sanitizing
+  - This was a bug in a security fix in the prior release, [2022.05.0](2022-05-0)
+  - If you have seen issues with missing data after the last upgrade, this should resolve these problems
+* Prevent panics when truncating queries with multi-byte characters
+* Allow turning off realtime issue checks
+* Only create schema shasum records when the shasum changes
+
+## Security
+
+* Improve policy for required password strength
+* Additional security fixes (medium to low severity) - details available upon request
+* Update nokogiri for [CVE-2022-29824](https://nvd.nist.gov/vuln/detail/CVE-2022-29824) and [CVE-2022-29181](https://nvd.nist.gov/vuln/detail/CVE-2022-29181)
