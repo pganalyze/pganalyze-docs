@@ -1,0 +1,19 @@
+---
+title: 'Indexing Engine: Changelog'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+On this page you can find changes made to the Indexing Engine itself, to help you
+understand better when recommendations change due to a logic change in the
+algorithm.
+
+The dates on this page represent when features were first released for the cloud-based
+version of pganalyze. For pganalyze Enterprise Server releases, we indicate on each
+[release page](/docs/enterprise/releases) which version of the Indexing Engine is included.
+
+## 2022-06-01 - v2.0.0
+
+* Initial release of the new Indexing Engine, powering the in-app Index Advisor for pganalyze
+  - This replaces the old Index Advisor logic (considered v1 within the context of the engine), and represents a major change in how the query workload is assessed - v1 worked on a per-query basis, this new version works on a per-table basis and assesses all queries referencing that table
+  - Note that GIN index support is currently deactivated, as we improve how cost recommendations are represented for GIN
