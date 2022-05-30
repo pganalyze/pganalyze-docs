@@ -1,0 +1,56 @@
+---
+title: 'Indexing Engine: Query to Scan breakdown'
+backlink_href: /docs/indexing-engine
+backlink_title: 'Indexing Engine'
+---
+
+Before the Indexing Engine starts considering how to index your queries, it first
+breaks down your query workload into a set of scans for each table referenced by
+your queries.
+
+These scans are the input into the Indexing Engine, and when trying to understand
+how the Indexing Engine reached a conclusion, it helps to verify which scans were
+extracted from your queries.
+
+## Scans
+
+What exactly are scans? Let’s look at an example, in a simple query like this:
+
+```sql
+SELECT * FROM users
+  JOIN comments ON (users.id = comments.user_id)
+ WHERE users.site_id = 123 AND comments.parent_id IS NULL
+ ORDER BY comments.created_at DESC
+ LIMIT 10;
+```
+
+This query has two scans:
+
+- users:
+  - WHERE clause: (site_id = $n)
+  - JOIN clause: (id = $n)
+- comments:
+  - WHERE clause: (parent_id IS NULL)
+  - JOIN clause: (user_id = $n)
+  - ORDER BY clause: created_at
+
+Each of these scans also has an associated average estimated cost, that is
+averaged across all queries it’s referenced in. Note we replace specific values
+and fields from other tables with the $n parameter reference for easier
+grouping. 
+
+More broadly, each scan consists of:
+
+ - Zero or more WHERE clause conditions
+ - Zero or more JOIN clause conditions
+ - Zero or more an ORDER BY clause columns (Note: not yet considered by the Indexing
+   Engine; see [Limitations](/docs/indexing-engine/limitations))
+ - Optionally, a LIMIT on how much data needs to be returned (Note: not yet
+   considered by the Indexing Engine; see [Limitations](/docs/index-advisor/limitations))
+
+In case of JOIN conditions, we run the Postgres planner to determine whether a JOIN clause
+is likely to be used as the inner relation of a Nested Loop, allowing use of a [parameterized index
+scan](https://pganalyze.com/blog/how-postgres-chooses-index#parameterized-index-scans-or-why-nested-loop-are-sometimes-a-good-join-type).
+
+If such a paramterized index scan is likely, we include the JOIN clause in the scan data provided
+to the second phase of the Indexing Engine - otherwise JOIN clauses are excluded.

@@ -11,10 +11,16 @@ export const ImgIndexAdvisorScreenshot = () => <img src={imgIndexAdvisorScreensh
 The pganalyze Index Advisor is a tool to analyze your queries, determine how Postgres
 will scan the tables involved, and suggest indexes to make those scans more efficient.
 
-<ImgIndexAdvisorScreenshot />
-<br />
+Note that you are reading the documentation for the standalone [Index Advisor](/index-advisor)
+tool provided on the pganalyze website, which works on a per-query basis.
+
+To get index recommendations for your whole query workload, we recommend to instead use the in-app
+[Index Advisor](/docs/index-advisor) that is built on the [pganalyze Indexing Engine](/docs/indexing-engine).
 
 ## Overview
+
+<ImgIndexAdvisorScreenshot />
+<br />
 
 The Index Advisor requires information about your schema and your query in order to
 provide an analysis. Note that the analysis runs in your browser; your query and

@@ -1,0 +1,140 @@
+---
+title: 'Indexing Engine: Index Write Overhead'
+backlink_href: /docs/indexing-engine
+backlink_title: 'Indexing Engine'
+---
+
+## Index Write Overhead
+
+To convey the cost of maintaining existing and proposed indexes, we define the
+Index Write Overhead metric as an estimate of the I/O impact of maintaining that
+index. This can guide you to consolidate indexes and drop little-used indexes to
+have more I/O headroom. This estimate will be available for both existing
+indexes, as well as new suggested indexes.
+
+
+### Index Writes in Postgres
+
+To understand this metric, it's important to understand the basics of how indexes
+are maintained in Postgres. When data is written to a table, indexes referencing
+that data may also need to be updated. Generally, indexes must be updated for
+inserts and updates, and when the table is VACUUMed (deletes are "free", but do
+incur a cost during VACUUM).
+
+The size of an index entry for a particular indexed value will depend on the
+the index type and the columns being indexed (plus
+any columns added with [INCLUDE](https://www.postgresql.org/docs/current/sql-createindex.html)).
+
+When considering index write overhead in aggregate, index storage parameters
+like `fillfactor`, [b-tree
+deduplication](https://www.postgresql.org/docs/current/btree-implementation.html#BTREE-DEDUPLICATION)
+(in Postgres 13+), and bottom-up index deletion (in Postgres 14+) can also
+affect the frequency of index writes. Similarly, partial indexes will only
+need to be updated for changes to rows matching their index predicate. Finally,
+indexes do not need to be touched for [HOT updates](https://git.postgresql.org/gitweb/?p=postgresql.git;a=blob;f=src/backend/access/heap/README.HOT;hb=HEAD).
+
+
+### Modeling Index Write Overhead
+
+To give a sense of the impact of writes, pganalyze models a simplified version
+of the above mechanism. The metric is defined as "bytes written to the index
+per byte written to the table": for every byte written to the table, this many
+bytes must be written to the index.
+
+The actual calculation is straightforward, though it involves some Postgres
+internals. The basic formula for overhead is:
+
+```
+write overhead = index entry size  / row size * partial index selectivity
+```
+
+The index entry size is an 8-byte header plus the average width (based on
+[column stats](/docs/install/troubleshooting/column_stats_helper) if available;
+otherwise using a generic estimate based on data type) of all indexed columns.
+
+The row size is a 23-byte header, plus a 4-byte item pointer, plus the average
+width (again, based on column stats if available) of all the columns in the
+table.
+
+The partial index selectivity is 1 for normal indexes (without a `WHERE`
+clause), and generically estimated at 10% for partial indexes.
+
+### Index Write Overhead Example
+
+Let's walk through a simple example. Let's say you have a schema like
+
+```sql
+CREATE TABLE users (
+  id bigserial primary key,
+  email text,
+  password_hash bytea,
+  organization_id bigint,
+  team_id bigint
+);
+CREATE INDEX ON users (organization_id);
+```
+
+To estimate the write overhead for the organization_id index, first we would
+look at the table stats. Say the column stats show the following average column
+widths:
+
+```
+             id =  8
+          email = 20
+  password_hash = 60
+organization_id =  8
+        team_id =  8
+```
+
+With this, we can calculate the index entry size as
+
+```
+8 bytes (header) + 8 bytes (organization_id) + 8 bytes (team_id) = 24 bytes
+```
+
+Similarly, the row size is
+
+```
+23 bytes (header) + 4 bytes (item pointer) + 8 + 20 + 60 + 8 + 8 (all columns) = 131 bytes
+```
+
+Since this is not a partial index, the selectivity is 1.
+
+The total index write overhead for this index is
+
+```
+24 / 131 * 1 ≈ 0.183
+```
+
+For every byte written to the table, approximately 0.183 bytes will be written
+to update this index.
+
+
+### Reasoning About Write Overhead
+
+Unfortunately, there's no one right value for write overhead. Whether the number
+from the example above is "good" or "bad" depends on several factors:
+
+ - how much I/O headroom does the database have?
+ - how frequently is this table written to? (exlcuding HOT updates which do not need to touch indexes)
+ - how important is the latency for queries relying on this index (and how slow would they be without it)?
+
+In general, it's useful to think of write overhead as a form of backpressure
+against the temptation to just index everything. It's a way to convey that
+indexing has a cost beyond just the disk space used, and to approximate that
+cost as you compare different indexes.
+
+
+### Limitations
+
+Though Index Write Overhead is a useful metric, it's important to undertand it's
+based on heuristics and simplifications. Here are the issues to be aware of:
+
+ - currently only supported for b-tree indexes
+ - uses a coarse heuristic for expression indexes (always assumes 8 bytes for expression result width)
+ - INCLUDEd columns are not accounted for
+ - partial index selectivity is always estimated at a generic 10%
+ - NULL index entries are not sized correctly
+ - memory alignment issues are ignored
+ - compression of values is ignored
+ - non-leaf pages in b-tree indexes are ignored (this is a reasonable approximation for even moderately large indexes)

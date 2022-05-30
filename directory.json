@@ -352,10 +352,6 @@
       "title": "Index Advisor (in-app in pganalyze)",
       "path": "/docs/index-advisor"
     },
-    "index-advisor/behind-the-scenes": {
-      "title": "Index Advisor: Behind the Scenes",
-      "path": "/docs/index-advisor/behind-the-scenes"
-    },
     "index-advisor/checks-and-alerts": {
       "title": "Index Advisor: Configuring Checks and Alerts",
       "path": "/docs/index-advisor/checks-and-alerts"
@@ -363,10 +359,6 @@
     "index-advisor/introduction": {
       "title": "Index Advisor: Introduction",
       "path": "/docs/index-advisor/introduction"
-    },
-    "index-advisor/limitations": {
-      "title": "Index Advisor: Limitations",
-      "path": "/docs/index-advisor/limitations"
     },
     "index-advisor/navigating": {
       "title": "Index Advisor: Navigating",
@@ -387,6 +379,42 @@
     "index-advisor/test-recommendations": {
       "title": "Index Advisor: How to Test Recommendations",
       "path": "/docs/index-advisor/test-recommendations"
+    },
+    "indexing-engine": {
+      "title": "pganalyze Indexing Engine for Postgres",
+      "path": "/docs/indexing-engine"
+    },
+    "indexing-engine/changelog": {
+      "title": "Indexing Engine: Changelog",
+      "path": "/docs/indexing-engine/changelog"
+    },
+    "indexing-engine/good-enough-index-selection": {
+      "title": "Indexing Engine: \"Good Enough\" Index Selection Algorithm",
+      "path": "/docs/indexing-engine/good-enough-index-selection"
+    },
+    "indexing-engine/index-parameter-extraction": {
+      "title": "Indexing Engine: Index Parameter Extraction",
+      "path": "/docs/indexing-engine/index-parameter-extraction"
+    },
+    "indexing-engine/index-write-overhead": {
+      "title": "Indexing Engine: Index Write Overhead",
+      "path": "/docs/indexing-engine/index-write-overhead"
+    },
+    "indexing-engine/limitations": {
+      "title": "Indexing Engine: Limitations",
+      "path": "/docs/indexing-engine/limitations"
+    },
+    "indexing-engine/multi-column-combinations": {
+      "title": "Indexing Engine: Multi-Column Combinations",
+      "path": "/docs/indexing-engine/multi-column-combinations"
+    },
+    "indexing-engine/query-to-scan-breakdown": {
+      "title": "Indexing Engine: Query to Scan breakdown",
+      "path": "/docs/indexing-engine/query-to-scan-breakdown"
+    },
+    "indexing-engine/what-if-analysis": {
+      "title": "Indexing Engine: \"What if?\" analysis",
+      "path": "/docs/indexing-engine/what-if-analysis"
     },
     "install": {
       "title": "Get Started",
