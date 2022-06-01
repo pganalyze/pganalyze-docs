@@ -1,0 +1,61 @@
+---
+title: 'Index Advisor: How to Reason About Missing Index Opportunities'
+backlink_href: /docs/index-advisor
+backlink_title: 'Index Advisor (in-app in pganalyze)'
+---
+
+![With our recommendations we also give you all the context you need to reason about them](/missing-index-detail.png)
+
+Index Advisor creates [issues](/docs/checks) for newly detected opportunities.
+They give you details on the opportunity, the root cause and analysis of data
+that Index Advisor does. When reasoning about an index recommendation you want
+to look at existing indexes on the table, queries affected, and table scans.
+
+Different variants of indexes are tried during the Index Advisor recommendation
+process that produces the lowest cost (and thus the lowest estimated I/O). When
+Index Advisor finds a recommendation, it will show an expected cost improvement.
+
+The cost improvement is an average across the individual cost improvements for
+each scan that can benefit from the query, weighted by the frequency of the scan
+(based on the queries that contain the scan). More frequent queries will have a
+more significant impact on the overall weighted cost improvement.
+
+
+## Table scans
+
+![](/scans.png)
+
+On both, specific index opportunities and the table and query pages, you will
+see a new section called “Scans”. Each scan has an associated estimated cost
+that is averaged across all queries it is referenced in. For more information
+about how this works, [read our documentation
+here](/docs/indexing-engine/query-to-scan-breakdown).
+
+Here is how you would reason about what you see see on the Scans list on the
+Index Advisor opportunity page: each scan expression includes information about
+
+ - the current cost,
+ - estimated scans per minute,
+ - and estimated cost improvement if you were to apply the recommendation.
+
+Cost improvements are expressed as a multiplier, for example, 1.2x than the old
+estimated cost—the table sorts by cost improvement.
+
+
+## Affected queries
+
+![](/affected-queries.png)
+
+Affected queries include all queries on a particular table that contain at least
+one condition in their WHERE or JOIN clause that would be affected by the index
+recommendation, e.g. because an indexed column is also used as a filter
+condition in the WHERE clause.
+
+
+## Existing indexes
+
+![](/existing-indexes.png)
+
+To reason about recommendations, the Index Advisor opportunity page also shows
+all existing indexes on the table, to make interpretation of the recommendation
+easier.

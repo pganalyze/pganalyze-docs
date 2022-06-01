@@ -353,20 +353,20 @@
       "path": "/docs/index-advisor"
     },
     "index-advisor/checks-and-alerts": {
-      "title": "Index Advisor: Configuring Checks and Alerts",
+      "title": "Index Advisor: Track Index Opportunities With Alerts",
       "path": "/docs/index-advisor/checks-and-alerts"
     },
-    "index-advisor/introduction": {
-      "title": "Index Advisor: Introduction",
-      "path": "/docs/index-advisor/introduction"
+    "index-advisor/getting-started": {
+      "title": "Index Advisor: Getting Started",
+      "path": "/docs/index-advisor/getting-started"
     },
     "index-advisor/navigating": {
       "title": "Index Advisor: Navigating",
       "path": "/docs/index-advisor/navigating"
     },
-    "index-advisor/reason-about-recommendations": {
-      "title": "Index Advisor: How to Reason About Recommendations",
-      "path": "/docs/index-advisor/reason-about-recommendations"
+    "index-advisor/reason-about-opportunities": {
+      "title": "Index Advisor: How to Reason About Missing Index Opportunities",
+      "path": "/docs/index-advisor/reason-about-opportunities"
     },
     "index-advisor/standalone": {
       "title": "Index Advisor (Standalone)",
@@ -376,9 +376,9 @@
       "title": "Index Advisor Table Statistics",
       "path": "/docs/index-advisor/standalone/settings"
     },
-    "index-advisor/test-recommendations": {
-      "title": "Index Advisor: How to Test Recommendations",
-      "path": "/docs/index-advisor/test-recommendations"
+    "index-advisor/test-opportunities": {
+      "title": "Index Advisor: How to Test Missing Index Opportunities",
+      "path": "/docs/index-advisor/test-opportunities"
     },
     "indexing-engine": {
       "title": "pganalyze Indexing Engine for Postgres",
