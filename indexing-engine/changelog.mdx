@@ -15,5 +15,5 @@ version of pganalyze. For pganalyze Enterprise Server releases, we indicate on e
 ## 2022-06-01
 
 * Initial release of the new Indexing Engine, powering the in-app Index Advisor for pganalyze
-  - This replaces the old Index Advisor logic (considered v1 within the context of the engine), and represents a major change in how the query workload is assessed - v1 worked on a per-query basis, this new version works on a per-table basis and assesses all queries referencing that table
+  - This replaces the old Index Advisor logic, and represents a major change in how the query workload is assessed - the previous version worked on a per-query basis, this new version works on a per-table basis and assesses all queries referencing that table
   - Note that GIN index support is currently deactivated, as we improve how cost recommendations are represented for GIN

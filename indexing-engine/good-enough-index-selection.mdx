@@ -18,6 +18,8 @@ This early reduction enables later stages of the algorithm to view this as a gre
 
 The starting point to index selection, looks like this for a simple table with 4 existing indexes, 14 index candidates and 15 scans ([extracted from queries](/docs/indexing-engine/query-to-scan-breakdown)):
 
+<div style="font-size:12px">
+
 |              | S1    | S2    | S3    | S4    | S5    | S6    | S7    | S8    | S9    | S10   | S11   | S12   | S13   | S14   | S15   |
 |--------------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
 |  X1          |       |       |  XXX  |       |       |       |  XXX  |       |       |       |       |       |  XXX  |       |       |
@@ -38,6 +40,8 @@ The starting point to index selection, looks like this for a simple table with 4
 |  I12 (0.09)  |       |  63.3 |       |       |  46.1 |       |       |       |       |  68.1 |  46.1 |       |       |       |  63.3 |
 |  I13 (0.16)  |       |  63.3 |       |       |  46.1 |       |       |       |       |  68.1 |  46.1 |       |       |       |  63.3 |
 |  I14 (0.17)  |       |  63.3 |       |       |  46.1 |       |       |       |       |  68.1 |  46.1 |       |       |       |  63.3 |
+
+</div>
 
 You can think of X.. and I.. being mapped to an index like `CREATE INDEX possible_index_1 ON table USING btree (some_column)`.
 
