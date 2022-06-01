@@ -1,0 +1,25 @@
+---
+title: 'Indexing Engine: Multi-Column Index Combinations'
+backlink_href: /docs/indexing-engine
+backlink_title: 'Indexing Engine'
+---
+
+When the Indexing Engine processes the scan list, it doesn't just [extract the individual index elements](/docs/indexing-engine/index-element-extraction).
+It also generates a list of potential combinations of these elements to allow consideration of multi-column
+index options. Multi-column indexes have two primary benefits:
+
+They allow a single index to provide a more selective answer, without having to resort to a BitmapAnd operation that combines multiple indexes
+They allow use of the same index by multiple queries with different clauses (in some cases)
+
+Adding more columns to an index increases its [Index Write Overhead](/docs/indexing-engine/index-write-overhead), as more data needs to be stored in the index.
+We avoid recommending a multi-column index when a single column index is good enough.
+
+To assess the best multi-column choice, we generate all different permutations of index elements for each index. We then sort
+the index elements based on a special set of rules, to make it most effective for each index type:
+
+* B-Tree: Lead with index elements referenced in a clause through an equality operator (e.g. `col = $1`), followed by all other elements. Within that set of elements, sort by selectivity (more selective parameters are ordered first).
+* GIST: Sort elements by number of distinct values in the table (more distinct elements are ordered first).
+
+Note that we are still fine tuning the GIST recommendation logic, as well as other indexing types such as GIN (which are not yet available with the Indexing Engine).
+
+Once different combinations have been generated, they are run through ["What If?" analysis](/docs/indexing-engine/what-if-analysis) to determine their cost improvements.

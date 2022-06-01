@@ -1,0 +1,19 @@
+---
+title: 'Indexing Engine: Index Parameter Extraction'
+backlink_href: /docs/indexing-engine
+backlink_title: 'Indexing Engine'
+---
+
+An important step in the Indexing Engine is the initial generation of potential candidates for index elements. Index elements are what you could also call the “columns” of an index, i.e., a list of table columns or expressions being indexed.
+
+We utilize the Postgres planner to tell us which operator classes are applicable for indexing a given clause.
+
+For example, the equality operator (`=`) in a clause such as `column1 = $1` is indexable by B-Tree indexes in Postgres.
+
+You may also have clauses that use operators that are only indexable by more specialized index types.
+
+For example, a clause like `inventory_items.tags @> ARRAY['milk']`, uses the containment operator `@>` that is [only indexable with a GIN index](https://www.postgresql.org/docs/current/gin-builtin-opclasses.html).
+
+In addition to remembering the potential index element to be used in an index, we also remember whether the operator was an equality operator (important for B-Tree column ordering), as well as the clause selectivity and number of distinct values in the referenced column.
+
+When then use these individual elements to generate [multi-column index combinations](/docs/indexing-engine/multi-column-indexes).

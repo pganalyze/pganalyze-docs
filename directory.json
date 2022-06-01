@@ -388,9 +388,9 @@
       "title": "Indexing Engine: \"Good Enough\" Index Selection Algorithm",
       "path": "/docs/indexing-engine/good-enough-index-selection"
     },
-    "indexing-engine/index-parameter-extraction": {
+    "indexing-engine/index-element-extraction": {
       "title": "Indexing Engine: Index Parameter Extraction",
-      "path": "/docs/indexing-engine/index-parameter-extraction"
+      "path": "/docs/indexing-engine/index-element-extraction"
     },
     "indexing-engine/index-write-overhead": {
       "title": "Indexing Engine: Index Write Overhead",
@@ -400,9 +400,9 @@
       "title": "Indexing Engine: Limitations",
       "path": "/docs/indexing-engine/limitations"
     },
-    "indexing-engine/multi-column-combinations": {
-      "title": "Indexing Engine: Multi-Column Combinations",
-      "path": "/docs/indexing-engine/multi-column-combinations"
+    "indexing-engine/multi-column-indexes": {
+      "title": "Indexing Engine: Multi-Column Index Combinations",
+      "path": "/docs/indexing-engine/multi-column-indexes"
     },
     "indexing-engine/query-to-scan-breakdown": {
       "title": "Indexing Engine: Query to Scan breakdown",

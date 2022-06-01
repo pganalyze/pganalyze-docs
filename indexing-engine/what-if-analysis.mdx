@@ -24,21 +24,15 @@ estimation functions used by the Postgres planner. You can read more about this
 in [our recent blog
 post](https://pganalyze.com/blog/how-postgres-chooses-index).
 
-Note that the Index Advisor planning process utilizes your production
+Note that the Indexing Engine planning process utilizes your production
 statistics, and therefore costs are based on the actual measured size of tables
 and indexes, where possible.
 
-When you see the Scans list on the Index Advisor opportunity page, each scan
-expression includes information about the current cost, estimated scans per
-minute, and weighted cost improvement if you were to apply the recommendation.
-Cost improvements are expressed as a multiplier, for example: 1.2x faster
-compared to the old estimated cost. The table is sorted by cost improvement.
-
 ## Potential cost improvement
 
-During the Index Advisor recommendation process, different variants of indexes
+During the Index Engine recommendation process, different variants of indexes
 are tried that overall produce the lowest cost (and thus the lowest estimated
-I/O). When a recommendation is found, the Index Advisor will show an expected
+I/O). When a recommendation is found, the Indexing Engine will show an expected
 cost improvement for the recommendation.
 
 When the cost improvement is summarized across multiple scans, it is shown as
@@ -55,3 +49,7 @@ planner within the pganalyze app, with zero overhead on your production system.
 
 You can read more behind the scenes the details in our blog post,
 [How we deconstructed the Postgres planner to find indexing opportunities](/blog/deconstructing-the-postgres-planner).
+
+After "What if?" analysis has completed, we utilize the
+["Good Enough" Index Selection Algorithm](/docs/indexing-engine/good-enough-index-selection)
+to determine the final recommendations.

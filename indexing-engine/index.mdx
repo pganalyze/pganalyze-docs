@@ -34,19 +34,20 @@ The Indexing Engine model used for recommendations is built on:
 
 ## Architecture overview
 
-![](./pganalyze-indexing-engine-architecture.png)
+![](./architecture.png)
 
 The Indexing Engine consists of multiple components, and runs in two phases:
 
-* Phase 1: Query and schema analysis
+* Phase 1: Query Analysis
   - [Query To Scan Breakdown](/docs/indexing-engine/query-to-scan-breakdown)
-  - [Index Write Overhead Calculation](/docs/indexing-engine/index-write-overhead)
 
-* Phase 2: Index recommendation algorithm
-  - [Index Parameter Extraction](/docs/indexing-engine/index-parameter-extraction)
-  - [Multi-Column Combinations](/docs/indexing-engine/multi-column-combinations)
+* Phase 2: Index Selection
+  - [Extracting Index Element Candidates](/docs/indexing-engine/index-element-extraction)
+  - [Multi-Column Index Combinations](/docs/indexing-engine/multi-column-indexes)
   - [What If? Analysis](/docs/indexing-engine/what-if-analysis)
   - ["Good Enough" Index Selection](/docs/indexing-engine/good-enough-index-selection)
+
+In addition you may find it useful to understand how we calculate [Index Write Overhead](/docs/indexing-engine/index-write-overhead).
 
 You can review the [changelog](/docs/indexing-engine/changelog) to see when changes to the Indexing Engine algorithm are made, or review current [limitations](/docs/indexing-engine/limitations) of the engine.
 
@@ -57,9 +58,9 @@ To learn more about how recommendations are presented in the pganalyze app, you 
 The Indexing Engine currently recommends the following index types:
 
 * B-tree: Single-column, Multi-Column, Partial Indexes
-* GIST: Single-column, Multi-Column, Partial Indexes
+* GIST: Single-column, Partial Indexes
 
-We plan to add support for more index types (such as GIN, Hash and BRIN), as well as expression and covering indexes in the future.
+We plan to add support for more index types (such as GIN, Hash, BRIN and multi-column GIST), as well as expression and covering indexes in the future.
 
 ## FAQ
 
@@ -91,6 +92,6 @@ As part of its optimization algorithm, the pganalyze Indexing Engine is able to 
 
 ### Is the Indexing Engine fully automating index creation for me?
 
-In the initial release the Indexing Engine results require a human review by a database operator. Specifically, when index recommendations are presented through the pganalyze Index Advisor, we expect you to [perform a benchmark on a production copy](/docs/index-advisor/test-recommendations), and if results are suitable, to deploy the index to production with your existing workflows.
+In the initial release the Indexing Engine results require a human review by a database operator. Specifically, when index recommendations are presented through the pganalyze Index Advisor, we expect you to [perform a benchmark on a production copy](/docs/index-advisor/test-opportunities), and if results are suitable, to deploy the index to production with your existing workflows.
 
 In future releases we plan to offer more workflow integrations, for example by automatically testing suggested indexes on a database copy, and, if suitable for your use case, applying them to your production database in a (semi-)automated manner.
