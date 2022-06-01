@@ -7,39 +7,53 @@ backlink_title: 'Index Advisor (in-app in pganalyze)'
 ![With our recommendations we also give you all the context you need to reason about them](/missing-index-detail.png)
 
 Index Advisor creates [issues](/docs/checks) for newly detected opportunities.
-They give you details on the opportunity, the root cause and analysis of data
-that Index Advisor does. When reasoning about an index recommendation you want
-to look at existing indexes on the table, queries affected, and table scans.
+They give you details on the opportunity and the context to evaluate the
+suggestion. When reasoning about an index recommendation, you may want to refer
+to existing indexes on the table, queries affected, and table scans.
 
 Different variants of indexes are tried during the Index Advisor recommendation
-process that produces the lowest cost (and thus the lowest estimated I/O). When
-Index Advisor finds a recommendation, it will show an expected cost improvement.
+process that produces the lowest cost (and thus the lowest estimated I/O when
+executing the query). When Index Advisor finds a recommendation, it will show an
+expected cost improvement.
 
-The cost improvement is an average across the individual cost improvements for
-each scan that can benefit from the query, weighted by the frequency of the scan
-(based on the queries that contain the scan). More frequent queries will have a
-more significant impact on the overall weighted cost improvement.
+The cost improvement is based on the [Postgres query execution cost
+model](https://www.postgresql.org/docs/current/using-explain.html). It is an
+average across the individual cost improvements for each scan that can benefit
+from the query, weighted by the frequency of the scan (based on the queries that
+contain the scan). More frequent queries will have a more significant impact on
+the overall weighted cost improvement.
 
 
 ## Table scans
 
 ![](/scans.png)
 
-On both, specific index opportunities and the table and query pages, you will
-see a new section called “Scans”. Each scan has an associated estimated cost
-that is averaged across all queries it is referenced in. For more information
-about how this works, [read our documentation
-here](/docs/indexing-engine/query-to-scan-breakdown).
+On specific index opportunities, query detail pages, and schema statistics table
+detail pages, you will see a section called “Scans”. Each scan has an associated
+estimated cost that is averaged across all queries it is referenced in. For more
+information about how this works, [read our Indexing Engine
+documentation](/docs/indexing-engine/query-to-scan-breakdown).
 
-Here is how you would reason about what you see see on the Scans list on the
-Index Advisor opportunity page: each scan expression includes information about
+On the Index Advisor opportunity page, the scan list includes the following:
 
- - the current cost,
- - estimated scans per minute,
- - and estimated cost improvement if you were to apply the recommendation.
+ - the current cost
+ - estimated scans per minute
+ - estimated cost improvement if you were to apply the recommendation
 
-Cost improvements are expressed as a multiplier, for example, 1.2x than the old
-estimated cost—the table sorts by cost improvement.
+Cost improvements are expressed as a multiplier, for example, 1.2× faster than
+the old estimated cost. The table sorts by cost improvement.
+
+On schema statistics table detail pages, the list includes:
+
+ - the scan method
+ - the current cost
+ - estimated scans per minute
+
+On query detail pages, the list includes:
+
+ - the scan method (with a check icon if using an index and a warning icon for sequential scans)
+ - the current cost
+ - the size of the table being scanned (scans are okay for small tables)
 
 
 ## Affected queries
@@ -48,8 +62,8 @@ estimated cost—the table sorts by cost improvement.
 
 Affected queries include all queries on a particular table that contain at least
 one condition in their WHERE or JOIN clause that would be affected by the index
-recommendation, e.g. because an indexed column is also used as a filter
-condition in the WHERE clause.
+recommendation. E.g., if a column in a proposed index is used as a filter
+condition in a WHERE clause, the query may benefit from this index.
 
 
 ## Existing indexes
@@ -57,5 +71,7 @@ condition in the WHERE clause.
 ![](/existing-indexes.png)
 
 To reason about recommendations, the Index Advisor opportunity page also shows
-all existing indexes on the table, to make interpretation of the recommendation
-easier.
+all existing indexes on the table. E.g., you may want to avoid adding a proposed
+index if it's very similar to an existing index, and instead you may want to
+rewrite the affected query so that it can take advantage of the existing index.
+

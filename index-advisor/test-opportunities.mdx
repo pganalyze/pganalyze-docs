@@ -21,11 +21,13 @@ To perform a test and validate whether a recommendation improves performance:
 5. Create the recommended index by copying the “CREATE INDEX” command
 6. Re-run the EXPLAIN (ANALYZE, BUFFERS) test, and compare the numbers
 
-Note that the Index Advisor cost improvement is an estimate - always test and
-verify whether recommendations actually improve performance. In a warm cache
+Note that the Index Advisor cost improvement is an estimate&mdash;always test
+and verify whether recommendations actually improve performance. In a warm cache
 test, as described above, it is likely that the measured improvement for the
 query timing is less than expected, as data in cache can be accessed quickly,
-even for larger amounts of data.
+even for larger amounts of data. The modeled execution cost improvement (the
+`cost=...` in the first line of plan output) should be closer, but may still
+vary due to the large number of variables in play.
 
 The “shared buffers read” and “shared buffers hit” counts (combined together)
 give you a better measurement of what the true order of magnitude improvement of
@@ -36,10 +38,3 @@ to verify production performance after deploying a change. Index Advisor runs
 every 24h, and will resolve a missing index by watching for changes in the
 schema. Resolved issues can be viewed by navigating to the Resolved tab on the
 Missing Index check page.
-
-## View opportunities on query detail pages
-
-![You can access the Index Advisor from query pages, too](/query-detail-page.png)
-
-Index Advisor is also available from query detail pages. Read more on how that
-works in the behind the scenes section.
