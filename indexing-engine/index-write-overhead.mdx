@@ -22,7 +22,7 @@ inserts and updates, and when the table is VACUUMed (deletes are "free", but do
 incur a cost during VACUUM).
 
 The size of an index entry for a particular indexed value will depend on the
-the index type and the columns being indexed (plus
+index type and the columns being indexed (plus
 any columns added with [INCLUDE](https://www.postgresql.org/docs/current/sql-createindex.html)).
 
 When considering index write overhead in aggregate, index storage parameters
@@ -116,7 +116,7 @@ Unfortunately, there's no one right value for write overhead. Whether the number
 from the example above is "good" or "bad" depends on several factors:
 
  - how much I/O headroom does the database have?
- - how frequently is this table written to? (exlcuding HOT updates which do not need to touch indexes)
+ - how frequently is this table written to? (excluding HOT updates which do not need to touch indexes)
  - how important is the latency for queries relying on this index (and how slow would they be without it)?
 
 In general, it's useful to think of write overhead as a form of backpressure
@@ -127,7 +127,7 @@ cost as you compare different indexes.
 
 ### Limitations
 
-Though Index Write Overhead is a useful metric, it's important to undertand it's
+Though Index Write Overhead is a useful metric, it's important to understand it's
 based on heuristics and simplifications. Here are the issues to be aware of:
 
  - currently only supported for b-tree indexes
