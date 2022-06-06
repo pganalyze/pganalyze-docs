@@ -80,6 +80,10 @@
       "title": "Enterprise Edition: How to setup Google Auth Integration",
       "path": "/docs/enterprise/google-auth"
     },
+    "enterprise/integrations": {
+      "title": "Enterprise Edition: How to Set Up Slack and PagerDuty Integration",
+      "path": "/docs/enterprise/integrations"
+    },
     "enterprise/log-insights": {
       "title": "Enterprise Edition: Log Insights Setup",
       "path": "/docs/enterprise/log-insights"
