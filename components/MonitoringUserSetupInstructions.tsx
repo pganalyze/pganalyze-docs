@@ -54,7 +54,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
       <p>
         <strong>Note:</strong> We never collect actual table data through this method (see the <code>NULL</code> values in the function), but we do collect statistics about the distribution of values in your tables. You can skip creating the <code>get_column_stats</code> helper function if the database
-        contains highly sensitive information.
+        contains highly sensitive information and statistics about it should not be collected. This will impact the accuracy of Index Advisor recommendations.
       </p>
     </>
   );
