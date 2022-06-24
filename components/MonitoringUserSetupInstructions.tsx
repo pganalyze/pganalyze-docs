@@ -74,7 +74,7 @@ DECLARE
   prepared_params text;
   result text;
 BEGIN
-  SELECT regexp_replace(query, ';+\s*\Z', '') INTO prepared_query;
+  SELECT regexp_replace(query, ';+\\s*\\Z', '') INTO prepared_query;
   IF prepared_query LIKE '%;%' THEN
     RAISE EXCEPTION 'cannot run EXPLAIN when query contains semicolon';
   END IF;
@@ -123,7 +123,7 @@ $$
 DECLARE
   result text;
 BEGIN
-  IF log_filename !~ '\A[\w\.-]+\Z' THEN
+  IF log_filename !~ '\\A[\\w\\.-]+\\Z' THEN
     RAISE EXCEPTION 'invalid log filename';
   END IF;
 
