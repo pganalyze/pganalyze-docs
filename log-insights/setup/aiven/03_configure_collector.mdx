@@ -1,0 +1,49 @@
+---
+title: 'Step 3: Configure the Collector'
+install_track_title: 'Log Insights: Setup (Aiven)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+
+We can now configure the syslog receiver in the collector. Edit the collector
+config and add the
+[`db_log_syslog_server`](https://pganalyze.com/docs/collector/settings#self-managed-servers)
+setting. This should be set to a local address on any free port:
+
+```
+db_log_syslog_server: 0.0.0.0:32514
+```
+
+(If using Docker, use the `LOG_SYSLOG_SERVER` environment variable instead.)
+
+It's recommended to use an unprivileged port number (1024 and up) to avoid
+running the collector as root.
+
+Restart the collector.
+
+Make sure that the port you've selected is not blocked by a firewall or security group rules.
+E.g., in GCP, you'll need to add a firewall rule:
+
+![GCP firewall rules allowing access on syslog port](./gcp-firewall-rules.png)
+
+In AWS, you'll need to add a security group rule:
+
+![AWS Security Group allowing access on syslog port](./aws-security-group.png)
+
+You can verify that the port is accessible with telnet:
+
+```
+$ telnet 203.0.113.2 50014
+Trying 203.0.113.2...
+Connected to 203.0.113.2.
+Escape character is '^]'.
+^]
+telnet> quit
+Connection closed.
+```
+
+
+<Link className="btn btn-success" to="04_configure_service_integration">
+  Continue to Step 4: Configure Service Integration
+</Link>

@@ -1,0 +1,53 @@
+---
+title: 'Step 4: Configure Service Integration'
+install_track_title: 'Log Insights: Setup (Aiven)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
+
+export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
+
+The last step is setting up the Aiven Service Integration. Go to the
+Service Integration page in your Aiven console, select Syslog from the
+list of options, and click "Add new endpoint".
+
+Fill in the Endpoint form with the internal IP of your collector instance and
+the port you selected in the previous step. Disable TLS (the collector does not
+support receiving logs over TLS, and since you're sending logs over the peered
+VPC connection, the traffic is already private). Leave the format as rfc5424,
+and the other fields blank:
+
+![Add new syslog service integration in Aiven Console](./add-syslog-integration.png)
+
+Once this is done, return to the service details page for your database, and
+click Manage Integrations:
+
+![Manage Integrations item in database details page](./manage-integrations.png)
+
+Scroll down to the bottom, find the Rsyslog tile, and click "Use Integration":
+
+![Select the Rsyslog integration](./use-syslog-integration.png)
+
+Select the endpoint you just created from the dropdown and click "Enable". Then
+dismiss the integrations screen.
+
+After a few minutes, the Service Integrations item should refresh automatically and
+show your integration as active:
+
+![Select the Rsyslog integration](./syslog-integration-active.png)
+
+<PublicOnly>
+  <p>
+    Once the syslog connection is active, you will start seeing log events on the
+    Log Insights page in pganalyze.
+  </p>
+  <p>
+    <ImgLogInsightsScreenshot />
+  </p>
+  <p>
+    We recommend setting up <a href="/docs/explain/setup">Automated EXPLAIN</a> as
+    a follow-up step, to automatically EXPLAIN slow queries in Postgres.
+  </p>
+</PublicOnly>

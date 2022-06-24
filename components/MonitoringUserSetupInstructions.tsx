@@ -6,13 +6,22 @@ import TabPanel, { TabItem } from './TabPanel'
 type Props = {
   minPostgres: number;
   password: string;
+  adminUsername?: string;
+  noPgMonitor?: boolean;
 };
 
 const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
   minPostgres = 90200,
-  password = 'mypassword'
+  password = 'mypassword',
+  adminUsername,
+  noPgMonitor
 }) => {
-  type SetupOpt = [ id: string, version: number, label: string, instructions: React.ComponentType<{password: string}> ];
+  type SetupOpt = [
+    id: string,
+    version: number,
+    label: string,
+    instructions: React.ComponentType<{password: string, noPgMonitor?: boolean, adminUsername?: string}>
+  ];
   const opts: SetupOpt[] = [
     [ 'monitoring_user_10', 100000, 'PostgreSQL 10+', MonitoringUser10 ],
     [ 'monitoring_user_96', 90600, 'PostgreSQL 9.6', MonitoringUser96 ],
@@ -25,20 +34,24 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
       <TabPanel items={tabs}>
         {(idx: number) => {
           const ActiveTab = opts[idx][3];
-          return <ActiveTab password={password} />
+          return <ActiveTab password={password} noPgMonitor={noPgMonitor} adminUsername={adminUsername} />
         }}
       </TabPanel>
-      <MonitoringUserColumnStats username="pganalyze" />
+      <MonitoringUserColumnStats username="pganalyze" adminUsername={adminUsername} />
     </>
   );
 };
 
-export const MonitoringUserColumnStats: React.FunctionComponent<{ username: string }> = ({username}) => {
+export const MonitoringUserColumnStats: React.FunctionComponent<{ username: string, adminUsername: string }> = ({
+  username,
+  adminUsername
+}) => {
+  const adminUserStr = !!adminUsername ? <strong>{adminUsername}</strong> : 'a superuser (or equivalent)'
   const CodeBlock = useCodeBlock();
   return (
     <>
       <p>
-        Then, connect to each database that you plan to monitor on this server as a superuser (or equivalent) and
+        Then, connect to each database that you plan to monitor on this server as {adminUserStr} and
         run the following to enable the collection of additional column statistics:
       </p>
       <CodeBlock>
@@ -103,8 +116,8 @@ $$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;`}
         data: it ensures that the collector cannot piggyback other queries that could exfiltrate data.
       </p>
       <p>
-        Because EXPLAIN needs to run in the same database where the query ran, you will need to create this function
-        <strong>in each database you want to monitor</strong>. You should create the function as a Postgres superuser to ensure EXPLAIN
+        Because EXPLAIN needs to run in the same database where the query ran, you will need to create this function <strong>in each
+        database you want to monitor</strong>. You should create the function as a Postgres superuser to ensure EXPLAIN
         access to all queries.
       </p>
     </>
@@ -141,13 +154,13 @@ $$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;`}
   );
 }
 
-const MonitoringUser10: React.FunctionComponent<{password: string}> = ({password}) => {
+const MonitoringUser10: React.FunctionComponent<{password: string, noPgMonitor?: boolean, adminUsername?: string}> = ({password, noPgMonitor, adminUsername}) => {
   const CodeBlock = useCodeBlock();
   return (
-    <CodeBlock>
-      {`CREATE USER pganalyze WITH PASSWORD '${password}' CONNECTION LIMIT 5;
-GRANT pg_monitor TO pganalyze;
-
+    <>
+      <CodeBlock>
+        {`CREATE USER pganalyze WITH PASSWORD '${password}' CONNECTION LIMIT 5;
+${noPgMonitor ? '' : 'GRANT pg_monitor TO pganalyze;\n'}
 CREATE SCHEMA pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
 GRANT USAGE ON SCHEMA public TO pganalyze;
@@ -156,7 +169,9 @@ CREATE OR REPLACE FUNCTION pganalyze.get_stat_replication() RETURNS SETOF pg_sta
 $$
   /* pganalyze-collector */ SELECT * FROM pg_catalog.pg_stat_replication;
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
-    </CodeBlock>
+      </CodeBlock>
+      {noPgMonitor && <NoPgMonitorPgStatStatementsHelpers adminUsername={adminUsername} />}
+    </>
   )
 }
 
@@ -258,6 +273,66 @@ $$
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
     </>
+  )
+}
+
+const NoPgMonitorPgStatStatementsHelpers: React.FunctionComponent<{adminUsername?: string}> = ({adminUsername}) => {
+  const adminUserStr = !!adminUsername ? <strong>{adminUsername}</strong> : 'a superuser (or equivalent)'
+  const CodeBlock = useCodeBlock();
+  return (
+    <>
+      <p>
+        Because your Postgres provider does not give you access to the <code>pg_monitor</code>
+        role that can read all queries from pg_stat_statements, you'll need to create a set of
+        SECURITY DEFINER helper functions to collect full query stats.
+      </p>
+      <p>
+        For each user whose queries you would like to monitor, you'll need to log in to your
+        database and create a function like the following (replace <code>username</code> with
+        the actual user name):
+      </p>
+      <CodeBlock>
+        {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements_<username>(showtext boolean = true)
+RETURNS SETOF pg_stat_statements AS
+$$
+  SELECT * FROM public.pg_stat_statements(showtext) WHERE userid = '<username>'::regrole;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+      <p>
+        For example, if you have two users, <code>app</code> and <code>analytics</code>, you'll
+        need to log in as <code>app</code> and run:
+      </p>
+      <CodeBlock>
+        {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements_app(showtext boolean = true)
+RETURNS SETOF pg_stat_statements AS
+$$
+  SELECT * FROM public.pg_stat_statements(showtext) WHERE userid = 'app'::regrole;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+      <p>
+        and then log in as <code>analytics</code> and run:
+      </p>
+      <CodeBlock>
+        {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements_analytics(showtext boolean = true)
+RETURNS SETOF pg_stat_statements AS
+$$
+  SELECT * FROM public.pg_stat_statements(showtext) WHERE userid = 'analytics'::regrole;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+      <p>
+        Then, log in as {adminUserStr} and create a helper function to combine these. For example,
+        for the case of the two users above, the final helper function will look like this:
+      </p>
+      <CodeBlock>
+        {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements(showtext boolean = true)
+RETURNS SETOF pg_stat_statements AS
+$$
+  SELECT * FROM pganalyze.get_stat_statements_app(showtext)
+    UNION ALL
+  SELECT * FROM pganalyze.get_stat_statements_analytics(showtext)
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+      </>
   )
 }
 

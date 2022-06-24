@@ -1,0 +1,46 @@
+---
+title: 'Step 2: Enable pg_stat_statements'
+install_track_title: Installation Guide (Aiven)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+In this step we set up
+[pg_stat_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html),
+which is used by pganalyze to collect Postgres query statistics.
+
+## Enable pg_stat_statements
+
+Run the following SQL statement as **avnadmin** to enable the `pg_stat_statements` extension:
+
+```
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+```
+
+
+## Verify that pg_stat_statements returns data
+
+As **avnadmin**, run the following statements:
+
+```
+SELECT calls, query FROM pg_stat_statements LIMIT 1;
+```
+
+If you have configured your database correctly, this will return a result like this:
+
+```
+ calls | query
+-------+-------
+     8 | SELECT * FROM t WHERE field = ?
+(1 row)
+```
+
+If you get an error you might not have restarted the server. If you get stuck feel free to reach out to us, we're happy to help.
+
+---
+
+Next we continue by installing the pganalyze collector:
+
+<Link className="btn btn-success" to="03_install_the_collector">
+  Proceed to Step 3: Install the collector
+</Link>

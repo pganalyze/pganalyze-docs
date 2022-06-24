@@ -1,0 +1,29 @@
+import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
+
+export const VerifyConnection = ({password}) => {
+  return (
+    <CodeBlock>PGPASSWORD={password} psql -h localhost -d mydatabase -U pganalyze</CodeBlock>
+  )
+}
+
+We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
+
+Connect to the database you will be monitoring as the **avnadmin user**.
+Then run the following to create a new user (we've generated a random password for you, but you
+can replace it with one of your choosing):
+
+<MonitoringUserSetupInstructions password={props.password} adminUsername='avnadmin' minPostgres={100000} noPgMonitor />
+
+Note that it is important you run these as the **avnadmin user** in order to
+pass down the full access to statistics tables.
+
+Write down the username and password of the monitoring user, we will need it in later
+steps of this guide.
+
+---
+
+Next we continue by enabling pg_stat_statements:
+
+<Link className="btn btn-success" to="02_enable_pg_stat_statements">
+  Proceed to Step 2: Enabling pg_stat_statements
+</Link>

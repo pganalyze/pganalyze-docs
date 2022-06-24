@@ -1,0 +1,63 @@
+---
+title: 'Step 4: Configure the Collector'
+install_track_title: Installation Guide (Aiven)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
+
+export const APIKeyInstructions = ({ apiKey }) => {
+  return apiKey ? (
+    <React.Fragment>
+      The <code>api_key</code> for the current organization is{" "}
+      <code>{apiKey}</code>
+    </React.Fragment>
+  ) : (
+    <React.Fragment>
+      The <code>api_key</code> can be found in the pganalyze Settings page for
+      your organization, under the API keys tab
+    </React.Fragment>
+  );
+};
+
+export const ConfigSample = ({ apiKey }) => {
+  return (
+    <CodeBlock>
+      {`[pganalyze]
+api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
+[server1]
+db_host = your_database_host
+db_port = your_database_port
+db_name = your_database_name
+db_username = your_monitoring_user
+db_password = your_monitoring_user_password`}
+    </CodeBlock>
+  )
+}
+
+## Configuring the collector
+
+The collector configuration file lives in `/etc/pganalyze-collector.conf`, and looks like this:
+
+<ConfigSample apiKey={props.apiKey} />
+
+Fill in the values from the info in your Aiven console:
+
+![Aiven database settings screenshot](./aiven-db-settings.png)
+
+1. <APIKeyInstructions apiKey={props.apiKey} />
+2. The `db_host` is the hostname of your PostgreSQL instance (`example.aivencloud.com` above)
+3. The `db_port` is the port your PostgreSQL server is running on (`12448` above)
+4. The `db_name` is the database you want to monitor (`defaultdb` above)
+5. The `db_username` and `db_password` should be the credentials of the monitoring user we created in Step 1
+
+## Testing the new configuration
+
+Run the following to make sure the configuration works:
+
+```
+sudo pganalyze-collector --test --reload
+```
+
+<PublicLastStepLogInsightsLink />
