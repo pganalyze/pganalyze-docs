@@ -9,8 +9,15 @@ import imgAddSyslogIntegration from './add-syslog-integration.png'
 import imgManageIntegrations from './manage-integrations.png'
 import imgUseSyslogIntegration from './use-syslog-integration.png'
 import imgSyslogIntegrationActive from './syslog-integration-active.png'
-
 import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
+
+export const ImgAddSyslogIntegration = () => <img alt="Add new syslog service integration in Aiven Console" src={imgAddSyslogIntegration} />
+
+export const ImgManageIntegrations = () => <img alt="Manage Integrations item in database details page" src={imgManageIntegrations} />
+
+export const ImgUseSyslogIntegration = () => <img alt="Select the Rsyslog integration in the integration list" src={imgUseSyslogIntegration} />
+
+export const ImgSyslogIntegrationActive = () => <img alt="Select the Rsyslog integration" src={imgSyslogIntegrationActive} />
 
 export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
 
@@ -24,16 +31,16 @@ support receiving logs over TLS, and since you're sending logs over the peered
 VPC connection, the traffic is already private). Leave the format as rfc5424,
 and the other fields blank:
 
-<img alt="Add new syslog service integration in Aiven Console" src={imgAddSyslogIntegration} />
+<ImgAddSyslogIntegration />
 
 Once this is done, return to the service details page for your database, and
 click Manage Integrations:
 
-<img alt="Manage Integrations item in database details page" src={imgManageIntegrations} />
+<ImgManageIntegrations />
 
 Scroll down to the bottom, find the Rsyslog tile, and click "Use Integration":
 
-<img alt="Select the Rsyslog integration in the integration list" src={imgUseSyslogIntegration} />
+<ImgUseSyslogIntegration />
 
 Select the endpoint you just created from the dropdown and click "Enable". Then
 dismiss the integrations screen.
@@ -41,7 +48,7 @@ dismiss the integrations screen.
 After a few minutes, the Service Integrations item should refresh automatically and
 show your integration as active:
 
-<img alt="Select the Rsyslog integration" src={imgSyslogIntegrationActive} />
+<ImgSyslogIntegrationActive />
 
 <PublicOnly>
   <p>

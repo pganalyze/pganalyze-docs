@@ -7,6 +7,8 @@ backlink_title: 'Log Insights: Setup'
 
 import imgAwsEditRouteTable from './aws-edit-route-table.png'
 
+export const ImgAwsEditRouteTable = () => <img alt="Editing AWS VPC route table" src={imgAwsEditRouteTable} />
+
 Once you have moved your database into a VPC, follow the [Aiven instructions to
 set up VPC
 peering](https://help.aiven.io/en/articles/778836-using-virtual-private-cloud-vpc-peering)
@@ -16,7 +18,7 @@ on the Service Cloud Provider you are using with Aiven.
 If running on AWS, be sure to also edit the route table for your collector VPC
 to add the destination IP range for your VPC and your Peering connection target:
 
-<img alt="Editing AWS VPC route table" src={imgAwsEditRouteTable} />
+<ImgAwsEditRouteTable />
 
 <Link className="btn btn-success" to="03_configure_collector">
   Continue to Step 3: Configure collector
