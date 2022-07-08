@@ -288,7 +288,7 @@ const NoPgMonitorPgStatStatementsHelpers: React.FunctionComponent<{adminUsername
       </p>
       <p>
         For each user whose queries you would like to monitor, you'll need to log in to your
-        database and create a function like the following (replace <code>username</code> with
+        database and create a function like the following (replace <code>&lt;username&gt;</code> with
         the actual user name):
       </p>
       <CodeBlock>
