@@ -5,6 +5,8 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import imgAivenDbSettings from './aiven-db-settings.png'
+
 import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
 
 export const APIKeyInstructions = ({ apiKey }) => {
@@ -44,7 +46,7 @@ The collector configuration file lives in `/etc/pganalyze-collector.conf`, and l
 
 Fill in the values from the info in your Aiven console:
 
-![Aiven database settings screenshot](./aiven-db-settings.png)
+<img alt="Aiven database settings screenshot" src={imgAivenDbSettings} />
 
 1. <APIKeyInstructions apiKey={props.apiKey} />
 2. The `db_host` is the hostname of your PostgreSQL instance (`example.aivencloud.com` above)
