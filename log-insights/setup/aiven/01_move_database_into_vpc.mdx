@@ -5,12 +5,15 @@ backlink_href: /docs/log-insights/setup
 backlink_title: 'Log Insights: Setup'
 ---
 
+import imgAivenCreateVpc from './aiven-create-vpc.png'
+import imgAivenMigrateVpc from './aiven-migrate-vpc.png'
+
 In order to securely deliver logs to the collector, your database must run in an
 Aiven VPC peered to a VPC the collector is running in. If you have not done so
 yet, go to the Aiven console and create a VPC for the project in the same region
 where your database is running:
 
-![Create a VPC in Aiven](./aiven-create-vpc.png)
+<img alt="Create a VPC in Aiven" src={imgAivenCreateVpc} />
 
 Make sure that the VPC IP range does not overlap with the collector VPC you will
 need to peer. For example, if your collector VPC uses the 10.0.0.0/24 range,
@@ -20,7 +23,7 @@ the networks.
 Then, go to the database details page in the Aiven console click "Migrate Cloud"
 to migrate your database to the VPC you just created:
 
-![Migrate database to a VPC](./aiven-migrate-vpc.png)
+<img alt="Migrate database to a VPC" src={imgAivenMigrateVpc} />
 
 Rebalancing your database nodes will take a few minutes after migration.
 

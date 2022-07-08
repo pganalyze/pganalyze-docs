@@ -5,6 +5,11 @@ backlink_href: /docs/log-insights/setup
 backlink_title: 'Log Insights: Setup'
 ---
 
+import imgAddSyslogIntegration from './add-syslog-integration.png'
+import imgManageIntegrations from './manage-integrations.png'
+import imgUseSyslogIntegration from './use-syslog-integration.png'
+import imgSyslogIntegrationActive from './syslog-integration-active.png'
+
 import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
 
 export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
@@ -19,16 +24,16 @@ support receiving logs over TLS, and since you're sending logs over the peered
 VPC connection, the traffic is already private). Leave the format as rfc5424,
 and the other fields blank:
 
-![Add new syslog service integration in Aiven Console](./add-syslog-integration.png)
+<img alt="Add new syslog service integration in Aiven Console" src={imgAddSyslogIntegration} />
 
 Once this is done, return to the service details page for your database, and
 click Manage Integrations:
 
-![Manage Integrations item in database details page](./manage-integrations.png)
+<img alt="Manage Integrations item in database details page" src={imgManageIntegrations} />
 
 Scroll down to the bottom, find the Rsyslog tile, and click "Use Integration":
 
-![Select the Rsyslog integration](./use-syslog-integration.png)
+<img alt="Select the Rsyslog integration in the integration list" src={imgUseSyslogIntegration} />
 
 Select the endpoint you just created from the dropdown and click "Enable". Then
 dismiss the integrations screen.
@@ -36,7 +41,7 @@ dismiss the integrations screen.
 After a few minutes, the Service Integrations item should refresh automatically and
 show your integration as active:
 
-![Select the Rsyslog integration](./syslog-integration-active.png)
+<img alt="Select the Rsyslog integration" src={imgSyslogIntegrationActive} />
 
 <PublicOnly>
   <p>
