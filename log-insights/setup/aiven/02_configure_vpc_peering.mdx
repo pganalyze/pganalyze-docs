@@ -15,8 +15,9 @@ peering](https://help.aiven.io/en/articles/778836-using-virtual-private-cloud-vp
 between your Aiven database VPC and your collector VPC. The details will vary depending
 on the Service Cloud Provider you are using with Aiven.
 
-If running on AWS, be sure to also edit the route table for your collector VPC
-to add the destination IP range for your VPC and your Peering connection target:
+If peering to a VPC on AWS, be sure to also edit the route table for your
+collector VPC to add the destination IP range for your VPC and your Peering
+connection target:
 
 <ImgAwsEditRouteTable />
 

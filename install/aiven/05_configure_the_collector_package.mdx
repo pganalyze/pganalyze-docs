@@ -1,5 +1,5 @@
 ---
-title: 'Step 4: Configure the Collector'
+title: 'Step 5: Configure the Collector'
 install_track_title: Installation Guide (Aiven)
 backlink_href: /docs/install
 backlink_title: 'Installation Guide'
@@ -53,7 +53,9 @@ Fill in the values from the info in your Aiven console:
 1. <APIKeyInstructions apiKey={props.apiKey} />
 2. The `db_host` is the hostname of your PostgreSQL instance (`example.aivencloud.com` above)
 3. The `db_port` is the port your PostgreSQL server is running on (`12448` above)
-4. The `db_name` is the database you want to monitor (`defaultdb` above)
+4. The `db_name` is the database you want to monitor (`defaultdb` above--make
+   sure this is the same database where you created the `pg_stat_statements`
+   extension in Step 2)
 5. The `db_username` and `db_password` should be the credentials of the monitoring user we created in Step 1
 
 ## Testing the new configuration

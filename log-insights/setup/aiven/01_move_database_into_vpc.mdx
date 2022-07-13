@@ -13,9 +13,10 @@ export const ImgAivenCreateVpc = () => <div style={{display: 'flex', justifyCont
 export const ImgAivenMigrateVpc = () => <img alt="Migrate database to a VPC" src={imgAivenMigrateVpc} />
 
 In order to securely deliver logs to the collector, your database must run in an
-Aiven VPC peered to a VPC the collector is running in. If you have not done so
-yet, go to the Aiven console and create a VPC for the project in the same region
-where your database is running:
+Aiven VPC peered to the VPC of the EC2 instance or container the collector is
+running in. In later steps we refer to this VPC as the "collector VPC". If you
+have not done so yet, go to the Aiven console and create a VPC for the project
+in the same region where your database is running:
 
 <ImgAivenCreateVpc />
 

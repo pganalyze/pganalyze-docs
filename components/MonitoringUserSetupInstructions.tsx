@@ -34,7 +34,7 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
       <TabPanel items={tabs}>
         {(idx: number) => {
           const ActiveTab = opts[idx][3];
-          return <ActiveTab password={password} noPgMonitor={noPgMonitor} adminUsername={adminUsername} />
+          return <ActiveTab password={password} noPgMonitor={noPgMonitor} />
         }}
       </TabPanel>
       <MonitoringUserColumnStats username="pganalyze" adminUsername={adminUsername} />
@@ -154,7 +154,10 @@ $$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;`}
   );
 }
 
-const MonitoringUser10: React.FunctionComponent<{password: string, noPgMonitor?: boolean, adminUsername?: string}> = ({password, noPgMonitor, adminUsername}) => {
+const MonitoringUser10: React.FunctionComponent<{
+  password: string;
+  noPgMonitor?: boolean;
+}> = ({password, noPgMonitor}) => {
   const CodeBlock = useCodeBlock();
   return (
     <>
@@ -170,7 +173,6 @@ $$
   /* pganalyze-collector */ SELECT * FROM pg_catalog.pg_stat_replication;
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
-      {noPgMonitor && <NoPgMonitorPgStatStatementsHelpers adminUsername={adminUsername} />}
     </>
   )
 }
@@ -276,15 +278,19 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
   )
 }
 
-const NoPgMonitorPgStatStatementsHelpers: React.FunctionComponent<{adminUsername?: string}> = ({adminUsername}) => {
-  const adminUserStr = !!adminUsername ? <strong>{adminUsername}</strong> : 'a superuser (or equivalent)'
+export const NoPgMonitorPgStatStatementsHelpers: React.FunctionComponent<{
+  adminUsername: string;
+  systemType: string;
+}> = ({adminUsername, systemType}) => {
+  const adminUserStr = <strong>{adminUsername}</strong>;
+  const pgProvider = getProviderName(systemType);
   const CodeBlock = useCodeBlock();
   return (
     <>
       <p>
-        Because your Postgres provider does not give you access to the <code>pg_monitor</code>
-        role that can read all queries from pg_stat_statements, you'll need to create a set of
-        SECURITY DEFINER helper functions to collect full query stats.
+        Because {pgProvider} does not give access to the <code>pg_monitor</code> role
+        that can read all queries from <code>pg_stat_statements</code>, you'll need to
+        create a set of SECURITY DEFINER helper functions to collect full query stats.
       </p>
       <p>
         For each user whose queries you would like to monitor, you'll need to log in to your
@@ -310,7 +316,7 @@ $$
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
       <p>
-        and then log in as <code>analytics</code> and run:
+        Then, log in as <code>analytics</code> and run:
       </p>
       <CodeBlock>
         {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements_analytics(showtext boolean = true)
@@ -320,8 +326,18 @@ $$
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
       <p>
-        Then, log in as {adminUserStr} and create a helper function to combine these. For example,
-        for the case of the two users above, the final helper function will look like this:
+        Make sure to also log in as {adminUserStr} and create a function for that user:
+      </p>
+      <CodeBlock>
+        {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements_${adminUsername}(showtext boolean = true)
+RETURNS SETOF pg_stat_statements AS
+$$
+  SELECT * FROM public.pg_stat_statements(showtext) WHERE userid = '${adminUsername}'::regrole;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+      <p>
+        Then, still logged in as {adminUserStr}, create a helper function to combine these. For example,
+        for the case of the three users above, the final helper function will look like this:
       </p>
       <CodeBlock>
         {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements(showtext boolean = true)
@@ -330,11 +346,37 @@ $$
   SELECT * FROM pganalyze.get_stat_statements_app(showtext)
     UNION ALL
   SELECT * FROM pganalyze.get_stat_statements_analytics(showtext)
+    UNION ALL
+  SELECT * FROM pganalyze.get_stat_statements_${adminUsername}(showtext)
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
-      </>
+      <p>
+        You will need to update these function definitions as new dataabse users are added and removed,
+        but it will allow you to have access to all users' queries without the <code>pg_monitor</code> role.
+      </p>
+    </>
   )
 }
 
+function getProviderName(systemType: string): string {
+  switch (systemType) {
+    case 'self_managed':
+      return 'your Postgres install';
+    case 'amazon_rds':
+      return 'Amazon RDS';
+    case 'heroku':
+      return 'Heroku Postgres';
+    case 'google_cloudsql':
+      return 'Google Cloud SQL';
+    case 'azure_database':
+      return 'Azure Database';
+    case 'crunchy_bridge':
+      return 'Crunchy Bridge';
+    case 'aiven':
+      return 'Aiven for PostgreSQL';
+    default:
+      return 'your Postgres provider';
+  }
+}
 
 export default MonitoringUserSetupInstructions;

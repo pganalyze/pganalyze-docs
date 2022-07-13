@@ -11,7 +11,8 @@ which is used by pganalyze to collect Postgres query statistics.
 
 ## Enable pg_stat_statements
 
-Run the following SQL statement as **avnadmin** to enable the `pg_stat_statements` extension:
+Connect to the primary database you will be monitoring as **avnadmin** and run
+the following SQL statement to enable the `pg_stat_statements` extension:
 
 ```
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
@@ -20,10 +21,10 @@ CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 ## Verify that pg_stat_statements returns data
 
-As **avnadmin**, run the following statements:
+As **avnadmin**, run the following statement:
 
 ```
-SELECT calls, query FROM pg_stat_statements LIMIT 1;
+SELECT calls, query FROM pg_stat_statements WHERE userid = current_user::regrole LIMIT 1;
 ```
 
 If you have configured your database correctly, this will return a result like this:
@@ -39,8 +40,8 @@ If you get an error or get stuck, feel free to reach out to us: we're happy to h
 
 ---
 
-Next we continue by installing the pganalyze collector:
+Next, we add helper functions to collect data from `pg_stat_statements`:
 
-<Link className="btn btn-success" to="03_install_the_collector">
-  Proceed to Step 3: Install the collector
+<Link className="btn btn-success" to="03_create_pg_stat_statements_helpers">
+  Proceed to Step 3: Create pg_stat_statements Helpers
 </Link>

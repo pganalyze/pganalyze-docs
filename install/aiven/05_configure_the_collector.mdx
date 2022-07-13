@@ -1,5 +1,5 @@
 ---
-title: 'Step 3: Install the Collector'
+title: 'Step 5: Configure the Collector'
 install_track_title: Installation Guide (Aiven)
 backlink_href: /docs/install
 backlink_title: 'Installation Guide'
@@ -10,17 +10,16 @@ import styles from '../../style.module.scss'
 import imgLogoUbuntu from '../../images/logo_ubuntu.png'
 import imgLogoRedhat from '../../images/logo_redhat.png'
 import imgLogoDocker from '../../images/docker.png'
-import imgLogoAL2 from '../../images/aws-ec2.svg'
 
 export const SelectCollectorPlatform = () => {
   return (
     <React.Fragment>
       <div className={styles.installChoice}>
-        <Link className={styles.installChoiceStep} to="03_install_the_collector_package">
+        <Link className={styles.installChoiceStep} to="05_configure_the_collector_package">
           <img src={imgLogoUbuntu} />
           Ubuntu &amp; Debian
         </Link>
-        <Link className={styles.installChoiceStep} to="03_install_the_collector_package">
+        <Link className={styles.installChoiceStep} to="05_configure_the_collector_package">
           <img src={imgLogoRedhat} />
           RHEL, CentOS &amp; Fedora
         </Link>
@@ -28,14 +27,14 @@ export const SelectCollectorPlatform = () => {
       <div className={styles.installChoice}>
         <Link
           className={styles.installChoiceStep}
-          to="03_install_the_collector_package"
+          to="05_configure_the_collector_package"
         >
           <img src={imgLogoAL2} />
           Amazon Linux 2
         </Link>
         <Link
           className={styles.installChoiceStep}
-          to="03_install_the_collector_docker"
+          to="05_configure_the_collector_docker"
         >
           <img src={imgLogoDocker} />
           Docker
@@ -45,12 +44,11 @@ export const SelectCollectorPlatform = () => {
   )
 }
 
-We recommend running the collector using a VM instance or container platform
-with the same Service Cloud Provider and in the same region that you are using
-for your Aiven database. The instructions assume you've already provisioned an
-instance to run the collector. We recommend at least 1GB of RAM (you may need
-more to handle large schemas or complex query workloads).
-
-To continue, select the environment where you plan to run the collector.
+To continue, we need to know where your collector is running:
 
 <SelectCollectorPlatform />
+
+<br />
+If your collector runs somewhere else, <a href="mailto:support@pganalyze.com">
+  let us know
+</a> & we're happy to help.

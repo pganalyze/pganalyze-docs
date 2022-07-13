@@ -1,11 +1,5 @@
 import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
 
-export const VerifyConnection = ({password}) => {
-  return (
-    <CodeBlock>PGPASSWORD={password} psql -h localhost -d mydatabase -U pganalyze</CodeBlock>
-  )
-}
-
 We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
 
 Connect to the database you will be monitoring as the **avnadmin user**.

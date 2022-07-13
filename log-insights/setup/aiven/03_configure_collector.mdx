@@ -28,8 +28,9 @@ running the collector as root.
 
 Restart the collector.
 
-Make sure that the port you've selected is not blocked by a firewall or security group rules.
-E.g., in GCP, you'll need to add a firewall rule:
+Make sure that the port you've selected is not blocked for TCP traffic by a
+firewall or security group rules. E.g., in GCP, you'll need to add a firewall
+rule:
 
 <ImgGcpFirewallRules />
 
@@ -37,18 +38,8 @@ In AWS, you'll need to add a security group rule:
 
 <ImgAwsSecurityGroup />
 
-You can verify that the port is accessible with telnet:
-
-```
-$ telnet 203.0.113.2 50014
-Trying 203.0.113.2...
-Connected to 203.0.113.2.
-Escape character is '^]'.
-^]
-telnet> quit
-Connection closed.
-```
-
+After the port is exposed to the peered network, configure Aiven to send
+logs to the collector:
 
 <Link className="btn btn-success" to="04_configure_service_integration">
   Continue to Step 4: Configure Service Integration
