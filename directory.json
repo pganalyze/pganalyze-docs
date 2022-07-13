@@ -424,6 +424,42 @@
       "title": "Enabling pg_stat_statements",
       "path": "/docs/install/01_enabling_pg_stat_statements"
     },
+    "install/aiven/01_create_monitoring_user": {
+      "title": "Step 1: Create Monitoring User",
+      "path": "/docs/install/aiven/01_create_monitoring_user"
+    },
+    "install/aiven/02_enable_pg_stat_statements": {
+      "title": "Step 2: Enable pg_stat_statements",
+      "path": "/docs/install/aiven/02_enable_pg_stat_statements"
+    },
+    "install/aiven/03_create_pg_stat_statements_helpers": {
+      "title": "Step 3: Create pg_stat_statements Helpers",
+      "path": "/docs/install/aiven/03_create_pg_stat_statements_helpers"
+    },
+    "install/aiven/04_install_the_collector": {
+      "title": "Step 4: Install the Collector",
+      "path": "/docs/install/aiven/04_install_the_collector"
+    },
+    "install/aiven/04_install_the_collector_docker": {
+      "title": "Step 4: Install the Collector",
+      "path": "/docs/install/aiven/04_install_the_collector_docker"
+    },
+    "install/aiven/04_install_the_collector_package": {
+      "title": "Step 4: Install the Collector",
+      "path": "/docs/install/aiven/04_install_the_collector_package"
+    },
+    "install/aiven/05_configure_the_collector": {
+      "title": "Step 5: Configure the Collector",
+      "path": "/docs/install/aiven/05_configure_the_collector"
+    },
+    "install/aiven/05_configure_the_collector_docker": {
+      "title": "Step 5: Configure the Collector",
+      "path": "/docs/install/aiven/05_configure_the_collector_docker"
+    },
+    "install/aiven/05_configure_the_collector_package": {
+      "title": "Step 5: Configure the Collector",
+      "path": "/docs/install/aiven/05_configure_the_collector_package"
+    },
     "install/amazon_rds/01_configure_rds_instance": {
       "title": "Step 1: Configure RDS Instance",
       "path": "/docs/install/amazon_rds/01_configure_rds_instance"
@@ -631,6 +667,22 @@
     "log-insights/setup": {
       "title": "Log Insights: Setup",
       "path": "/docs/log-insights/setup"
+    },
+    "log-insights/setup/aiven/01_move_database_into_vpc": {
+      "title": "Step 1: Move Database into VPC",
+      "path": "/docs/log-insights/setup/aiven/01_move_database_into_vpc"
+    },
+    "log-insights/setup/aiven/02_configure_vpc_peering": {
+      "title": "Step 2: Configure VPC Peering",
+      "path": "/docs/log-insights/setup/aiven/02_configure_vpc_peering"
+    },
+    "log-insights/setup/aiven/03_configure_collector": {
+      "title": "Step 3: Configure the Collector",
+      "path": "/docs/log-insights/setup/aiven/03_configure_collector"
+    },
+    "log-insights/setup/aiven/04_configure_service_integration": {
+      "title": "Step 4: Configure Service Integration",
+      "path": "/docs/log-insights/setup/aiven/04_configure_service_integration"
     },
     "log-insights/setup/amazon-rds": {
       "title": "Log Insights: Setup (Amazon RDS & Amazon Aurora)",

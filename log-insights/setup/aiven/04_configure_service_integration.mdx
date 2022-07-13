@@ -1,0 +1,65 @@
+---
+title: 'Step 4: Configure Service Integration'
+install_track_title: 'Log Insights: Setup (Aiven)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+import imgAddSyslogIntegration from './add-syslog-integration.png'
+import imgManageIntegrations from './manage-integrations.png'
+import imgUseSyslogIntegration from './use-syslog-integration.png'
+import imgSyslogIntegrationActive from './syslog-integration-active.png'
+import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
+
+export const ImgAddSyslogIntegration = () => <div style={{display: 'flex', justifyContent: 'center'}}><img alt="Add new syslog service integration in Aiven Console" src={imgAddSyslogIntegration} style={{maxWidth: 500}} /></div>
+
+export const ImgManageIntegrations = () => <img alt="Manage Integrations item in database details page" src={imgManageIntegrations} />
+
+export const ImgUseSyslogIntegration = () => <img alt="Select the Rsyslog integration in the integration list" src={imgUseSyslogIntegration} />
+
+export const ImgSyslogIntegrationActive = () => <img alt="Select the Rsyslog integration" src={imgSyslogIntegrationActive} />
+
+export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
+
+The last step is setting up the Aiven Service Integration. Go to the
+Service Integration page in your Aiven console, select Syslog from the
+list of options, and click "Add new endpoint".
+
+Fill in the Endpoint form with the internal IP of your collector instance and
+the port you selected in the previous step. Disable TLS (the collector does not
+support receiving logs over TLS, and since you're sending logs over the peered
+VPC connection, the traffic is already private). Leave the format as rfc5424,
+and the other fields blank:
+
+<ImgAddSyslogIntegration />
+
+Once this is done, return to the service details page for your database, and
+click Manage Integrations:
+
+<ImgManageIntegrations />
+
+Scroll down to the bottom, find the Rsyslog tile, and click "Use Integration":
+
+<ImgUseSyslogIntegration />
+
+Select the endpoint you just created from the dropdown and click "Enable". Then
+dismiss the integrations screen.
+
+After a few minutes, the Service Integrations item should refresh automatically and
+show your integration as active:
+
+<ImgSyslogIntegrationActive />
+
+<PublicOnly>
+  <p>
+    Once the syslog connection is active, you will start seeing log events on the
+    Log Insights page in pganalyze.
+  </p>
+  <p>
+    <ImgLogInsightsScreenshot />
+  </p>
+  <p>
+    We recommend setting up <a href="/docs/explain/setup">Automated EXPLAIN</a> as
+    a follow-up step, to automatically EXPLAIN slow queries in Postgres.
+  </p>
+</PublicOnly>

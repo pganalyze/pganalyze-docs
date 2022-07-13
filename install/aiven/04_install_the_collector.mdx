@@ -1,0 +1,56 @@
+---
+title: 'Step 4: Install the Collector'
+install_track_title: Installation Guide (Aiven)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import styles from '../../style.module.scss'
+
+import imgLogoUbuntu from '../../images/logo_ubuntu.png'
+import imgLogoRedhat from '../../images/logo_redhat.png'
+import imgLogoDocker from '../../images/docker.png'
+import imgLogoAL2 from '../../images/aws-ec2.svg'
+
+export const SelectCollectorPlatform = () => {
+  return (
+    <React.Fragment>
+      <div className={styles.installChoice}>
+        <Link className={styles.installChoiceStep} to="04_install_the_collector_package">
+          <img src={imgLogoUbuntu} />
+          Ubuntu &amp; Debian
+        </Link>
+        <Link className={styles.installChoiceStep} to="04_install_the_collector_package">
+          <img src={imgLogoRedhat} />
+          RHEL, CentOS &amp; Fedora
+        </Link>
+      </div>
+      <div className={styles.installChoice}>
+        <Link
+          className={styles.installChoiceStep}
+          to="04_install_the_collector_package"
+        >
+          <img src={imgLogoAL2} />
+          Amazon Linux 2
+        </Link>
+        <Link
+          className={styles.installChoiceStep}
+          to="04_install_the_collector_docker"
+        >
+          <img src={imgLogoDocker} />
+          Docker
+        </Link>
+      </div>
+    </React.Fragment>
+  )
+}
+
+We recommend running the collector using a VM instance or container platform
+with the same Service Cloud Provider and in the same region that you are using
+for your Aiven database. The instructions assume you've already provisioned an
+instance to run the collector. We recommend at least 1GB of RAM (you may need
+more to handle large schemas or complex query workloads).
+
+To continue, select the environment where you plan to run the collector.
+
+<SelectCollectorPlatform />

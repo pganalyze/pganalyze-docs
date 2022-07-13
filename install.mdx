@@ -4,6 +4,7 @@ title: Get Started
 
 import styles from './style.module.scss'
 
+import imgLogoAiven from './images/logo_aiven.png'
 import imgLogoAws from './images/logo_aws.svg'
 import imgLogoAzure from './images/logo_microsoft_azure.png'
 import imgLogoGcp from './images/logo_google_cloud_platform.png'
@@ -29,6 +30,53 @@ To continue please select in which environment you are running your Postgres dat
   </Link>
   <Link
     className={styles.installChoiceStep}
+    to="install/self_managed/00_choose_setup_method"
+  >
+    <img src={imgLogoPgsql} />
+    Self-Managed
+    <small style={{ marginTop: "-15px", fontSize: "12px" }}>
+      VM / Container / On-Premise
+    </small>
+  </Link>
+</div>
+<div className={styles.installChoice}>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/heroku_postgres/01_deploy_the_collector"
+  >
+    <img src={imgLogoHeroku} />
+    Heroku Postgres
+  </Link>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/crunchy_bridge/01_deploy_the_collector"
+  >
+    <img src={imgLogoCrunchyBridge} />
+    Crunchy Bridge
+  </Link>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/aiven/01_create_monitoring_user"
+  >
+    <img src={imgLogoAiven} />
+    Aiven
+  </Link>
+  {/*<Link className="install-choice--step" to="install/heroku_postgres/01_deploy_the_collector">
+    <img src="/images/docs/logo_aiven.png" />
+    Aiven
+  </Link>
+  <Link className="install-choice--step" to="install/heroku_postgres/01_deploy_the_collector">
+    <img src="/images/docs/logo_digital_ocean.png" />
+    Digital Ocean
+  </Link>
+  <Link className="install-choice--step" to="install/heroku_postgres/01_deploy_the_collector">
+    <img src="/images/docs/logo_enterprise_db.png" style={{padding: "8px"}} />
+    EnterpriseDB
+  </Link>*/}
+</div>
+<div className={styles.installChoice}>
+  <Link
+    className={styles.installChoiceStep}
     to="install/azure_database/01_create_monitoring_user"
   >
     <img
@@ -44,44 +92,6 @@ To continue please select in which environment you are running your Postgres dat
     <img src={imgLogoGcp} />
     Google Cloud SQL
   </Link>
-</div>
-<div className={styles.installChoice}>
-  <Link
-    className={styles.installChoiceStep}
-    to="install/self_managed/00_choose_setup_method"
-  >
-    <img src={imgLogoPgsql} />
-    Self-Managed
-    <small style={{ marginTop: "-15px", fontSize: "12px" }}>
-      VM / Container / On-Premise
-    </small>
-  </Link>
-  <Link
-    className={styles.installChoiceStep}
-    to="install/heroku_postgres/01_deploy_the_collector"
-  >
-    <img src={imgLogoHeroku} />
-    Heroku Postgres
-  </Link>
-  <Link
-    className={styles.installChoiceStep}
-    to="install/crunchy_bridge/01_deploy_the_collector"
-  >
-    <img src={imgLogoCrunchyBridge} />
-    Crunchy Bridge
-  </Link>
-  {/*<Link className="install-choice--step" to="install/heroku_postgres/01_deploy_the_collector">
-    <img src="/images/docs/logo_aiven.png" />
-    Aiven
-  </Link>
-  <Link className="install-choice--step" to="install/heroku_postgres/01_deploy_the_collector">
-    <img src="/images/docs/logo_digital_ocean.png" />
-    Digital Ocean
-  </Link>
-  <Link className="install-choice--step" to="install/heroku_postgres/01_deploy_the_collector">
-    <img src="/images/docs/logo_enterprise_db.png" style={{padding: "8px"}} />
-    EnterpriseDB
-  </Link>*/}
 </div>
 
 <PublicOnly>
