@@ -1,0 +1,20 @@
+---
+plan_node: Incremental Sort
+short_description: Takes partially sorted data from a child node and produces output sorted according to a more specific sort key, using either memory if available (depending on the work_mem setting) or “spilling” to disk. This can be used if the input can be scanned in a partially-sorted manner—e.g., if scanning a btree index compatible with the desired sort order.
+important_fields: Sort Key, Presorted Key, Pre-sorted Groups, Full-sort Groups
+
+title: EXPLAIN - Incremental Sort
+backlink_href: /docs/explain/other-nodes
+backlink_title: 'Documentation: EXPLAIN - Other Nodes'
+---
+
+**Description:**
+
+Takes partially sorted data from a child node and produces output sorted according to a more specific sort key, using either memory if available (depending on the work_mem setting) or “spilling” to disk. This can be used if the input can be scanned in a partially-sorted manner—e.g., if scanning a btree index compatible with the desired sort order.
+
+**Important Fields:**
+
+- Sort Key
+- Presorted Key
+- Pre-sorted Groups
+- Full-sort Groups

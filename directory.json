@@ -2004,6 +2004,16 @@
       ],
       "path": "/docs/explain/join-nodes/hash-join"
     },
+    "Incremental Sort": {
+      "shortDescription": "Takes partially sorted data from a child node and produces output sorted according to a more specific sort key, using either memory if available (depending on the work_mem setting) or “spilling” to disk. This can be used if the input can be scanned in a partially-sorted manner—e.g., if scanning a btree index compatible with the desired sort order.",
+      "importantFields": [
+        "Sort Key",
+        "Presorted Key",
+        "Pre-sorted Groups",
+        "Full-sort Groups"
+      ],
+      "path": "/docs/explain/other-nodes/incremental-sort"
+    },
     "Index Only Scan": {
       "shortDescription": "Scans through the index to fetch a single value or a range of values in index order without reading table data.",
       "importantFields": [
