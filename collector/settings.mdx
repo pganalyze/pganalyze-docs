@@ -193,7 +193,7 @@ settings to filter these before we collect them.
     <tr>
       <td>filter_query_sample (<code>FILTER_QUERY_SAMPLE</code>)</td>
       <td>none</td>
-      <td>Either <code>none</code> or <code>all</code></td>
+      <td>Either <code>none</code>, <code>normalize</code> or <code>all</code></td>
     </tr>
     <tr>
       <td>filter_query_text (<code>FILTER_QUERY_TEXT</code>)</td>
@@ -203,17 +203,17 @@ settings to filter these before we collect them.
   </tbody>
 </table>
 
-Our recommended configuration for servers containing highly sensitive data is as follows:
+By default the pganalyze collector does not filter data. Our recommended configuration for servers containing sensitive data is as follows:
 
 ```
 filter_log_secret: all
-filter_query_sample: all
+filter_query_sample: normalize
 filter_query_text: unparsable
 ```
 
-Note that this automatically turns off the query sample and EXPLAIN plan features, as they may contain sensitive
-data in the query text. We are working to provide more fine-grained PII filtering options in the future, including
-the option to sanitize EXPLAIN plans automatically.
+Note the `normalize` setting for `filter_query_sample`, which will remove all query parameter values from query samples, including those contained within automatically collected EXPLAIN plans.
+
+In order to utilize `auto_explain` with this configuration, make sure to set `auto_explain.log_format` to `json` (other formats are currently not supported by the EXPLAIN normalization).
 
 ## Schema filter settings
 
