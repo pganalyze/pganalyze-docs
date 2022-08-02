@@ -1,0 +1,35 @@
+---
+title: 'Enterprise Server: Separate collector installation'
+backlink_href: /docs/enterprise
+backlink_title: 'pganalyze Enterprise Server'
+---
+
+## Set up separate collector installation
+
+You may choose to run the collector outside of the pganalyze Enterprise Server container, for example to make use of all available [collector settings](/docs/collector/settings), or to better support a given network architecture.
+
+Note that this is different from the Enterprise Server setup we recommend for getting started, which runs the collector inside the central pganalyze Docker container.
+
+For using a separate collector, you do not need to add the server into pganalyze itself, as it will auto-register based on an API key, and send all statistics from the database server (instead of pulling them).
+
+### Pre-requisites
+
+* Enable the [object storage](/docs/enterprise/setup/object-storage) on your pganalyze Enterprise Server container.
+
+* Retrieve the collector API key from the "API Keys" organization tab in pganalyze (it should already be listed there). If you don't see it in the navigation make sure to click on your organization in the organization dropdown first.
+
+* Get the hostname of your pganalyze Enterprise Server container, which needs to be reachable from your database server.
+
+### Installing the collector
+
+Now install and enable the pganalyze collector on a database server (for self-managed servers) or on a nearby VM/container (for managed database providers), by following the cloud-based [instructions for collector setup](/docs/install).
+
+Note that you should be able to follow these instructions as written, with one difference. The `[pganalyze]` section of the config file needs to look like this, with the added `api_base_url` setting, which points to your central pganalyze Enterprise Server container (or a load balancer in front of it):
+
+```
+[pganalyze]
+api_key: your_pga_organization_api_key
+api_base_url: http://your-docker-container.internal
+```
+
+You can follow the regular instructions to issue a test command, and after a successful test you should see data show in the dashboard within 10-20 minutes.

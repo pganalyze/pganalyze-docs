@@ -94,13 +94,19 @@ title: 'Documentation'
       * [Unique](/docs/explain/other-nodes/unique)
       * [Window Aggregate](/docs/explain/other-nodes/window-aggregate)
 
-* **[Enterprise Edition](/docs/enterprise)**
+* **[pganalyze Enterprise Server](/docs/enterprise)**
   - [Initial Setup on a VM](/docs/enterprise/setup)
   - [Initial Setup on Kubernetes (Amazon EKS)](/docs/enterprise/setup/kubernetes_amazon_eks)
-  - [Release Changelog](/docs/enterprise/releases)
-  - [Log Insights Setup](/docs/enterprise/log-insights)
+  - [Object Storage Setup](/docs/enterprise/setup/object-storage)
+    - [Local Storage using Minio](/docs/enterprise/setup/object-storage-local)
+    - [Cloud Storage using Amazon S3](/docs/enterprise/setup/object-storage-s3)
+  - [Separate collector installation](/docs/enterprise/setup/separate-collector-install)
   - [Google Auth Setup](/docs/enterprise/google-auth)
+  - [PagerDuty and Slack Integration Setup](/docs/enterprise/integrations)
+  - [Release Changelog](/docs/enterprise/releases)
   - [Upgrading to new releases](/docs/enterprise/upgrade)
+  - [Reference Architecture](/docs/enterprise/architecture)
+  - [Troubleshooting](/docs/enterprise/troubleshooting)
 
 * **[pganalyze GraphQL API](/docs/api)**
   - [Creating an API key](/docs/api/create-api-key)
@@ -108,7 +114,7 @@ title: 'Documentation'
       * [getIssues - Get check-up issues and alerts](/docs/api/queries/getIssues)
       * [getQueryStats - Export query statistics](/docs/api/queries/getQueryStats)
   - [Mutations](/docs/api/mutations)
-      * [addServer - Add a server to pganalyze Enterprise Edition](/docs/api/mutations/addServer)
+      * [addServer - Add a server to pganalyze Enterprise Server](/docs/api/mutations/addServer)
 
 <>{/* **[Guides](/docs/guides)**
   - [Tuning checkpoint intervals to reduce I/O spikes](/docs/guides/tuning-checkpoint-intervals)

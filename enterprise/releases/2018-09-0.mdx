@@ -1,7 +1,7 @@
 ---
 title: '2018.09.0 Release'
 backlink_href: /docs/enterprise/releases
-backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 ---
 
 **Docker tag:** `quay.io/pganalyze/enterprise:v2018.09.0`
@@ -10,7 +10,7 @@ backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
 
 * Adds support for Postgres 11
 * Automated EXPLAIN plan collection through [auto_explain](https://www.postgresql.org/docs/10/static/auto-explain.html) (requires Log Insights)
-* Support for fully on-premise Log Insights setup (see [setup guide](/docs/enterprise/log-insights-local))
+* Support for fully on-premise Log Insights setup (see [setup guide](/docs/enterprise))
   * Previously we required log files and snapshots to be stored in an Amazon S3
     bucket, which doesn't always work, especially not when there are strict
     requirements for no data to leave an on-premise data center

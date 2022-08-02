@@ -37,7 +37,7 @@
       "path": "/docs/api/mutations"
     },
     "api/mutations/addServer": {
-      "title": "addServer - Add a server to pganalyze Enterprise Edition",
+      "title": "addServer - Add a server to pganalyze Enterprise Server",
       "path": "/docs/api/mutations/addServer"
     },
     "api/queries": {
@@ -73,31 +73,27 @@
       "path": "/docs/collector/settings"
     },
     "enterprise": {
-      "title": "pganalyze Enterprise Edition",
+      "title": "pganalyze Enterprise Server",
       "path": "/docs/enterprise"
     },
+    "enterprise/architecture": {
+      "title": "Enterprise Server: Reference Architecture",
+      "path": "/docs/enterprise/architecture"
+    },
     "enterprise/google-auth": {
-      "title": "Enterprise Edition: How to setup Google Auth Integration",
+      "title": "Enterprise Server: How to setup Google Auth Integration",
       "path": "/docs/enterprise/google-auth"
     },
     "enterprise/integrations": {
-      "title": "Enterprise Edition: How to Set Up Slack and PagerDuty Integration",
+      "title": "Enterprise Server: How to Set Up Slack and PagerDuty Integration",
       "path": "/docs/enterprise/integrations"
     },
     "enterprise/log-insights": {
       "title": "Enterprise Edition: Log Insights Setup",
       "path": "/docs/enterprise/log-insights"
     },
-    "enterprise/log-insights-local": {
-      "title": "Enterprise Edition: Log Insights Setup (Local Storage)",
-      "path": "/docs/enterprise/log-insights-local"
-    },
-    "enterprise/log-insights-s3": {
-      "title": "Enterprise Edition: Log Insights Setup (Amazon S3)",
-      "path": "/docs/enterprise/log-insights-s3"
-    },
     "enterprise/releases": {
-      "title": "Enterprise Edition: Release Changelog",
+      "title": "Enterprise Server: Release Changelog",
       "path": "/docs/enterprise/releases"
     },
     "enterprise/releases/2017-08-0": {
@@ -205,19 +201,35 @@
       "path": "/docs/enterprise/releases/2022-05-1"
     },
     "enterprise/setup": {
-      "title": "Enterprise Edition: Initial Setup",
+      "title": "Enterprise Server: Initial Setup",
       "path": "/docs/enterprise/setup"
     },
     "enterprise/setup/kubernetes_amazon_eks": {
-      "title": "Enterprise Edition: Initial Setup (Kubernetes on Amazon EKS)",
+      "title": "Enterprise Server: Initial Setup (Kubernetes on Amazon EKS)",
       "path": "/docs/enterprise/setup/kubernetes_amazon_eks"
     },
+    "enterprise/setup/object-storage": {
+      "title": "Enterprise Server: Object Storage Setup",
+      "path": "/docs/enterprise/setup/object-storage"
+    },
+    "enterprise/setup/object-storage-local": {
+      "title": "Enterprise Server: Object Storage Setup (Local Storage)",
+      "path": "/docs/enterprise/setup/object-storage-local"
+    },
+    "enterprise/setup/object-storage-s3": {
+      "title": "Enterprise Server: Object Storage Setup (Amazon S3)",
+      "path": "/docs/enterprise/setup/object-storage-s3"
+    },
+    "enterprise/setup/separate-collector-install": {
+      "title": "Enterprise Server: Separate collector installation",
+      "path": "/docs/enterprise/setup/separate-collector-install"
+    },
     "enterprise/troubleshooting": {
-      "title": "Enterprise Edition: Troubleshooting",
+      "title": "Enterprise Server: Troubleshooting",
       "path": "/docs/enterprise/troubleshooting"
     },
     "enterprise/upgrade": {
-      "title": "Enterprise Edition: Upgrading to new releases",
+      "title": "Enterprise Server: Upgrading to new releases",
       "path": "/docs/enterprise/upgrade"
     },
     "explain": {
