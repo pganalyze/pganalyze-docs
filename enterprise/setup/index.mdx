@@ -1,12 +1,12 @@
 ---
-title: 'Enterprise Edition: Initial Setup'
+title: 'Enterprise Server: Initial Setup'
 backlink_href: /docs/enterprise
-backlink_title: 'pganalyze Enterprise Edition'
+backlink_title: 'pganalyze Enterprise Server'
 ---
 
 import ToC from '../../components/Toc'
 
-These are the installation instructions for [pganalyze Enterprise Edition](/enterprise-postgres-monitoring), which runs fully-contained within your own environment.
+These are the installation instructions for [pganalyze Enterprise Server](/enterprise-postgres-monitoring), which runs fully-contained within your own environment.
 
 The pganalyze Docker image is mostly self-contained, and runs various services inside the Docker container.
 
@@ -19,7 +19,7 @@ The pganalyze Docker image is mostly self-contained, and runs various services i
 * Provision a virtual machine
   * Assign at least 4GB - 8GB of RAM, 1-2 dedicated CPU cores
 * Install Docker on your virtual machine
-  * pganalyze Enterprise Edition is delivered through a Docker image
+  * pganalyze Enterprise Server is delivered through a Docker image
 * Setup a PostgreSQL database that can be used for storing statistics data
   * PostgreSQL 10 or newer
   * 50 GB of dedicated disk space or more
@@ -39,7 +39,7 @@ docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.i
 
 Note that this will add the login information to your current user's `.dockercfg` file - you will need this on every host where you'd like to access the image.
 
-You should now be able to pull the pganalyze Enterprise Edition Docker image:
+You should now be able to pull the pganalyze Enterprise Server Docker image:
 
 ```
 docker pull quay.io/pganalyze/enterprise:[version]

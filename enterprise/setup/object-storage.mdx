@@ -1,0 +1,22 @@
+---
+title: 'Enterprise Server: Object Storage Setup'
+backlink_href: /docs/enterprise
+backlink_title: 'pganalyze Enterprise Server'
+---
+
+## Setting up an object storage backend
+
+Using pganalyze Enterprise Server with Log Insights requires some additional
+configuration for object storage. This is also required
+when running a [separate collector installation](/docs/enterprise/separate-collector-install).
+
+The object storage (e.g. Amazon S3) is used for two purposes:
+
+* Statistics snapshots - as a communication channel for sending statistics data
+* Log texts - to store log texts for the retention time (7 days)
+
+Please make a choice of which object storage to use and follow one of these two guides:
+
+1. [Local storage using the Minio storage server](/docs/enterprise/setup/object-storage-local)
+
+2. [Cloud storage using Amazon S3](/docs/enterprise/setup/object-storage-s3)

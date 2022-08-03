@@ -1,7 +1,7 @@
 ---
 title: '2018.08.1 Release'
 backlink_href: /docs/enterprise/releases
-backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 ---
 
 **Docker tag:** `quay.io/pganalyze/enterprise:v2018.08.1`
@@ -15,7 +15,7 @@ n/a
 
 - Fixes `rake db:setup` for initial setup on Postgres 9.6 and older
 - Disables high frequency query statistics collection when more than 5 servers are configured
-  - This caused issues due to the collector currently running serially for Enterprise Edition,
+  - This caused issues due to the collector currently running serially for Enterprise Server,
     we are working on introducing parallelism here, and will re-enable this feature once
     parallel statistics collection is available
 - Fix query statistics `collected_interval_secs` for full snapshot with historic stats

@@ -1,12 +1,12 @@
 ---
-title: 'Enterprise Edition: Upgrading to new releases'
+title: 'Enterprise Server: Upgrading to new releases'
 backlink_href: /docs/enterprise
-backlink_title: 'pganalyze Enterprise Edition'
+backlink_title: 'pganalyze Enterprise Server'
 ---
 
 ## Upgrade process
 
-The general upgrade process for pganalyze Enterprise Edition is as follows:
+The general upgrade process for pganalyze Enterprise Server is as follows:
 
 **1. Backup the statistics database (pg_dump or RDS snapshot)**
 
@@ -69,7 +69,7 @@ Starting in pganalyze Enterprise [2018.08.0](/docs/enterprise/releases/2018-08-0
 container requires the `LICENSE_KEY` environment variable to be configured.
 
 Before starting the new container, set the `LICENSE_KEY` environment variable to
-the download password that you have been given when first setting up pganalyze Enterprise Edition.
+the download password that you have been given when first setting up pganalyze Enterprise Server.
 
 Note that this requires the container to be able to make an HTTPS connection (port 443) to
 `enterprise-license-check.pganalyze.com` - if this is not possible in your setup

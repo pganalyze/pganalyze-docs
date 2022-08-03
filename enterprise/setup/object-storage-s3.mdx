@@ -1,16 +1,16 @@
 ---
-title: 'Enterprise Edition: Log Insights Setup (Amazon S3)'
+title: 'Enterprise Server: Object Storage Setup (Amazon S3)'
 backlink_href: /docs/enterprise/log-insights
-backlink_title: 'pganalyze Enterprise Edition: Log Insights Setup'
+backlink_title: 'pganalyze Enterprise Server: Object Storage Setup'
 ---
 
 ## 1. Pre-requisites
 
-Log Insights for pganalyze Enterprise Edition currently requires the following when storing logs in Amazon S3 and encrypting them using KMS:
+pganalyze Enterprise Server currently requires the following when storing statistics snapshots and logs in Amazon S3:
 
 - An Amazon S3 bucket to be used for temporary statistics data
 - An Amazon S3 bucket to be used for log data (this is where encrypted log data will be stored)
-- An Amazon KMS key to be used for encryption (you can find KMS under "Encryption Keys" in the IAM console)
+- An Amazon KMS key to be used for log text encryption (you can find KMS under "Encryption Keys" in the IAM console)
 - An Amazon IAM user that can access the S3 bucket and KMS key (we need the keys in the next steps)
 
 The setup for these should be straightforward - we recommend choosing a region thats close to your database servers, but latency shouldn't be too much of an issue in general.

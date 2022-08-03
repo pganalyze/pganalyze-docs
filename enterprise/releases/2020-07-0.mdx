@@ -1,7 +1,7 @@
 ---
 title: '2020.07.0 Release'
 backlink_href: /docs/enterprise/releases
-backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 ---
 
 **Docker tag:** `quay.io/pganalyze/enterprise:v2020.07.0`
@@ -45,7 +45,7 @@ backlink_title: 'pganalyze Enterprise Edition: Release Changelog'
   - Fix Checkpoint Starting and Temp File Created bucketing for larger timeframes
   - Fix visualization bugs for Z00 classification of unknown log lines
   - Connection tracing: Fix connection logs for cases where the `log_line_prefix` is missing %d
-* Internal Enterprise Edition logging
+* Internal Enterprise Server logging
   - Always output webserver logs to stdout, and hide request_id to make logs easier to read
   - Don't run collector in verbose mode
 * Verify `MAILER_URL` setting when doing self-check
