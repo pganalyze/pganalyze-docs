@@ -1,0 +1,83 @@
+---
+title: '2022.08.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2022.08.0`
+
+## Notes
+
+* This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+
+## Features
+
+* The new [pganalyze Index Advisor](/blog/automatic-postgres-indexing-balanced-approach), powered by the [pganalyze Indexing Engine](/blog/automatic-indexing-system-postgres-pganalyze-indexing-engine)
+  - This is a completely new version of Index Advisor that runs per-table (instead of per-query) and gives you a recommendation that optimizes for multiple queries
+  - The new [Index Write Overhead](/docs/indexing-engine/index-write-overhead) metric has been introduced to balance improved read performance with the added write overhead
+  - The new table writes / minute measurement helps understand which tables may see higher impact from additional indexes
+  - After upgrading, expect index recommendations to show within 48 hours
+  - For the best recommendations, you may need to install the new [pganalyze.get_column_stats_helper](https://github.com/pganalyze/collector#setting-up-a-restricted-monitoring-user)
+  - Read more details in the [Index Advisor documentation](/docs/index-advisor)
+  - If you are not seeing any recommendations (but believe there should be recommendations), or see errors, [please let us know](mailto:support@pganalyze.com)
+* Update collector inside pganalyze Enterprise Server image to v0.45.0
+  - [See full changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md)
+* Single Sign-On: Allow entering SAML IdP metadata manually instead of via metadata URL
+  - This enables easier configuration for providers that list out the configuration instead of providing the metadata URL
+* Add support for Aiven for PostgreSQL and Google AlloyDB for PostgreSQL managed database providers
+  - Note this requires [running the collector separately](/docs/enterprise/setup/separate-collector-install)
+* Connection Traces: Display query age for each connection and sort by it
+* Improved experience when adding new servers
+  - This clarifies how the collector works for Enterprise Server, and gives more clarity on when to run the collector within the pganalyze Enterprise Server container, vs when to run it separately
+* New "Collector Configuration Test" function on server settings page
+  - This is only available when using the collector within the pganalyze Enterprise Server container, and fulfills the same function as `pganalyze-collector --test` when running the collector separately
+* Support for Log Insights when monitoring self-managed servers using the collector within the pganalyze Enterprise Server container
+  - To enable this functionality, make sure the "Enable Log Insights" checkbox is enabled for the server
+  - This utilizes the built-in Postgres function `pg_read_file` to directly read the server log files over the Postgres connection (avoiding a separate collector install)
+  - If you are using the restricted monitoring user this requires [additional setup steps](https://github.com/pganalyze/collector#setting-up-log-pg_read_file-helper)
+
+
+## Performance
+
+* New Rust-based compact snapshot workers are enabled by default
+  - This improves the performance when processing a lot of log or activity data
+  - If you've set a high concurrency for workers previously, you may be able to reduce the `SIDEKIQ_CONCURRENCY` setting (but verify there are no queue backlogs when lowering the setting)
+* Avoid timeouts when loading EXPLAIN plan list for entire server
+* Improved statistics processing performance for servers with a lot of tables
+
+
+## Bugfixes
+
+* Fix search term debouncing on query list search form
+  - This was showing as slugish responsiveness and clobbered input in some cases
+* Fix storing VACUUM+ANALYZE events that have the exact same timestamp on the same table
+  - Previously the ANALYZE even would not have been recorded in such situations, potentially leading to inaccurate "stale stats" EXPLAIN insights
+* Hide settings for collector running inside pganalyze Enterprise Server container when using a collector running separately
+  - These settings did not have any effect before, but may have let to confusion as to which configuration is authorative
+* EXPLAIN plans
+  - Add information for Incremental Sort node
+  - Don't show loop count when there is no loop info due to plan without ANALYZE
+* Query details page
+  - Fix Query Details page trend comparison tooltips (incorrect timestamps were shown before)
+  - Don't break if we haven't received a full snapshot yet
+* Fix inaccurate member counts for member roles tab in organization settings
+* Skip data from hidden databases during compact snapshot processing
+* Fix pre-aggregation calculation (incorrect hourly aggregated data may have shown in rare cases)
+* Query parsing: Look for table references inside case expressions
+* Table/index tree map: Fix display issue if the same table name is used in different schemas
+
+
+## Security
+
+- Updated to Ubuntu 20.04 base image
+- Application dependency updates (none of these are exploitable, to our knowledge, but may have shown in dependency scanners)
+  - Update tzinfo for [CVE-2022-31163](https://nvd.nist.gov/vuln/detail/CVE-2022-31163)
+  - Update terser for [CVE-2022-25858](https://nvd.nist.gov/vuln/detail/CVE-2022-25858)
+  - Update Rails for [CVE-2022-32224](https://github.com/advisories/GHSA-3hhc-qp5v-9p2j)
+  - Update moment for [CVE-2022-31129](https://nvd.nist.gov/vuln/detail/CVE-2022-31129)
+  - Update parse-url for [CVE-2022-0722](https://nvd.nist.gov/vuln/detail/CVE-2022-0722)
+  - Update rails-html-sanitizer for [CVE-2022-32209](https://nvd.nist.gov/vuln/detail/CVE-2022-32209)
+  - Update jmespath for [CVE-2022-32511](https://nvd.nist.gov/vuln/detail/CVE-2022-32511)
+  - Update rack for [CVE-2022-30122](https://github.com/advisories/GHSA-hxqx-xwvh-44m2) and [CVE-2022-30123](https://github.com/advisories/GHSA-wq4h-7r42-5hrr)
+  - Drop jquery-ui, as its no longer used
