@@ -12,6 +12,17 @@ The dates on this page represent when features were first released for the cloud
 version of pganalyze. For pganalyze Enterprise Server releases, we indicate on each
 [release page](/docs/enterprise/releases) which release of the Indexing Engine is included.
 
+## 2022-08-09
+
+* Initial support for PostGIS
+  - Adds support for index analysis on queries that reference tables that have
+    PostGIS columns (or reference such tables through foreign key constraints) -
+    recommendations on actual PostGIS columns may still not work well, but we
+    welcome any feedback.
+* Support queries referencing tables within subqueries in cast expressions
+  - Previously these would error out because those tables were not recognized as
+    relevant to query analysis
+
 ## 2022-06-01
 
 * Initial release of the new Indexing Engine, powering the in-app Index Advisor for pganalyze

@@ -39,8 +39,8 @@ of queries and schemas are supported.
    schema in multiple databases (e.g. as part of a multi-tenant application), or
    with a read-replica, you will need to verify that recommendations make sense
    across these databases
- - PostGIS is not supported, and tables with PostGIS data types will lead to
-   errors
+ - PostGIS is only partially supported: index recommendations on PostGIS columns
+   should be reviewed more carefully before being implemented
  - Extension support is limited. The following extensions are supported:
    - citext
    - hstore
