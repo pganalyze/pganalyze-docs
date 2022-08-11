@@ -50,13 +50,13 @@ To tell pganalyze which IdP you trust, you need to retrieve the metadata URL
 from the IdP, and then configure it on the pganalyze **Integrations** settings
 page:
 
-![Screenshot of pganalyze SAML integration form for the IdP metadata URL](sso_idp_metadata_form.png)
+![Screenshot of pganalyze SAML integration form for the IdP metadata URL](sso_idp_metadata_form_url.png)
 
-Note that this is the only method of configuration supported, at this point you
-cannot specify Service Provider (SP) settings directly. Please reach out to
-[pganalyze Support](mailto:support@pganalyze.com) for alternate setup methods.
+Alternately, you can specify Service Provider (SP) settings directly:
 
-Once you submit the Metadata URL, pganalyze will verify the configuration, and
+![Screenshot of pganalyze SAML integration form for the IdP metadata details](sso_idp_metadata_form_details.png)
+
+Once you submit the metadata, pganalyze will verify the configuration, and
 either provide an error, or show the following indicating successful setup:
 
 ![Screenshot of successful pganalyze SAML integration](sso_success.png)
