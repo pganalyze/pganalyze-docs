@@ -1,0 +1,43 @@
+---
+title: '2022.08.1 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2022.08.1`
+
+## Notes
+
+* This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+* This is mainly a bugfix release to address Postgres connection issues and IAM authentication issues with certain configurations reported with the [v2022.08.0](2022-08-0) release
+
+
+## Features
+
+* Update collector inside pganalyze Enterprise Server image to [v0.45.1](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md)
+  - Auto-detect Aurora writer instance, as well as reader on two-node clusters
+    - Previously it was required to specify the individual instance to support log downloads and system metrics, but this now happens automatically
+    - The cluster name is auto-detected from the hostname, make sure to not specify the AWS DB Instance ID manually for the auto-detection to work
+    - This requires giving the IAM policy for the collector the `DescribeDBClusters` permission
+    - In case more than one reader instance is used, each reader instance must be specified individually instead of using the readonly cluster hostname
+  - Amazon RDS/Aurora: Show instance role hint when running collector test
+  - Amazon RDS/Aurora: Show permission errors during log download
+* Better handling of complex queries with parse trees more than 100 levels deep
+  - Previously query analysis could not be performed on such queries, causing
+    them to not have links to table references, and hiding them from Index Advisor
+
+
+## Bugfixes
+
+* Fix Postgres connection errors for certain configurations
+* Fix handling of IAM authentication with instance roles (when object storage is enabled)
+* Periodic worker restarts have been modified to run every 6 hours (instead of 30 minutes)
+  - This avoids issues with frequent restarts causing snapshots or automatic
+    analysis to be interrupted 
+
+
+## Security
+
+* Base image security updates (none of these are exploitable, to our knowledge, but may have shown in dependency scanners)
+  - GnuTLS ([CVE-2021-4209](https://ubuntu.com/security/CVE-2021-4209) and [CVE-2022-2509](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-2509))
+  - libxml2 ([CVE-2016-3709](https://nvd.nist.gov/vuln/detail/CVE-2016-3709))
