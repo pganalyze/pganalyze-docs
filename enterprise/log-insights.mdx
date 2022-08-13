@@ -4,44 +4,21 @@ backlink_href: /docs/enterprise
 backlink_title: 'pganalyze Enterprise Edition'
 ---
 
-## Setting up a storage backend
+<!-- Note this page is no longer referenced directly in the public docs, but still linked from in-app-->
 
-Using pganalyze Enterprise Edition with Log Insights requires some additional
-configuration, which is described in this document.
+## Log Insights setup
 
-First of all, you need to decide where to store the log files. Please make a choice
-and follow one of these two guides:
+Using pganalyze Enterprise Edition with Log Insights and Automated EXPLAIN requires some additional
+configuration.
 
-1. [Local storage using the Minio storage server](/docs/enterprise/log-insights-local)
+First of all, you need to [set up the object storage integration](/docs/enterprise/setup/object-storage).
 
-2. [Cloud storage using Amazon S3](/docs/enterprise/log-insights-s3)
+Once you have successfully completed this:
 
-Once you have successfully completed this, you can change the collector setup
-to run on the database servers themselves, in order to have log access:
+* For Amazon RDS and Aurora you can turn on the Log Insights flag on your servers in the settings page, or run the collector separately
+* For self-managed servers, you can either [add the pg_read_file helper](https://github.com/pganalyze/collector#setting-up-log-pg_read_file-helper) and then turn on the Log Insights flag on the server settings page, or run the collector separately
+* For all other providers you need to run the collector separately
 
-## Setup collector on self-managed database servers
+For running the collector separately, see [separate collector installation](/docs/enterprise/setup/separate-collector-install)
 
-In order to collect log information from your database server you will need to install the collector on
-the server itself, and configure it.
-
-Note that this is different from the standard Enterprise setup, which runs the collector inside the central pganalyze Docker container.
-
-For this approach, you do not need to add the server into pganalyze itself, as it will auto-register based on an API key, and send all statistics from the database server (instead of pulling them).
-
-Before we get started, retrieve the collector API key from the "API Keys" organization tab in pganalyze (it should already be listed there). If you don't see it in the navigation make sure to click on your organization in the organization dropdown first.
-
-You will also need the hostname of your pganalyze Docker container, which needs to be reachable from your database server.
-
-Now install and enable the pganalyze collector on a server, following the [instructions for pganalyze.com](/docs/install/self_managed/00_choose_setup_method).
-
-Note that you should be able to follow these instructions as written, with one difference. The [pganalyze] section of the config file needs to look like this:
-
-```
-[pganalyze]
-api_key: your_pga_organization_api_key
-api_base_url: http://your-docker-container.internal
-```
-
-Once this works successfully, you can enable [Log Insights for self-managed servers](/docs/log-insights/setup/self-managed).
-
-You should then see data flow into the dashboard correctly.
+You should then see data flow into the dashboard correctly. To troubleshoopt we recommend running a collector test. When using the collector inside the pganalyze Enterprise Server image, you can do so from the Server Settings page ("Collector Configuration Test").

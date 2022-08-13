@@ -23,9 +23,9 @@ The pganalyze Docker image is mostly self-contained, and runs various services i
 * Setup a PostgreSQL database that can be used for storing statistics data
   * PostgreSQL 10 or newer
   * 50 GB of dedicated disk space or more
-* Optional: If you use the RDS integration, setup an appropriate IAM role that can be used
+* Optional: If you use the RDS integration, setup an appropriate IAM role that can be used to download logs and system metrics
   * You can also assign the required policy to an existing EC2 instance and its instance role
-  * Appendix A lists out the exact IAM policy
+  * You will need both the [collector IAM policy](/docs/install/amazon_rds/03_setup_iam_policy) as well as the [object storage IAM policy](/docs/enterprise/setup/object-storage-s3)
 
 ### Step 1: Download the Docker Image
 
@@ -60,7 +60,9 @@ MAILER_URL=smtp://myusername:mypassword@example.com:25
 LICENSE_KEY=KEYKEYKEY
 ```
 
-You can find the full explanation of all variables in Appendix C.
+If you'd like to use the Log Insights or Automated EXPLAIN features, or want to run the collector separately from the Enterprise Server container, you also need to pass the [object storage configuration](/docs/enterprise/setup/object-storage) here.
+
+You can find the full explanation of all variables in the [settings documentation](/enterprise/settings).
 
 
 ### Step 3: Initialize Database & Verify Installation
@@ -189,151 +191,4 @@ For regular setups, you can invite additional team members on a per-database bas
 
 With LDAP authentication you can simply direct your colleagues to the root of your pganalyze URL, an account will be created when they first login.
 
-Note that only administrators can add new databases (see Appendix B).
-
-
-## Appendix
-
-### Appendix A - Amazon Web Services IAM Role
-
-Your IAM role will need two policies assigned - at first, the predefined `AmazonRDSReadOnlyAccess` policy that gives access to most Amazon RDS information and statistics.
-
-In addition, you'll also need to add an inline policy with the following content, if you want to use the log monitoring feature:
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": [
-                "rds:Describe*",
-                "rds:ListTagsForResource",
-                "ec2:DescribeAccountAttributes",
-                "ec2:DescribeAvailabilityZones",
-                "ec2:DescribeSecurityGroups",
-                "ec2:DescribeVpcs"
-            ],
-            "Effect": "Allow",
-            "Resource": "*"
-        },
-        {
-            "Action": [
-                "cloudwatch:GetMetricStatistics",
-                "logs:DescribeLogStreams",
-                "logs:GetLogEvents"
-            ],
-            "Effect": "Allow",
-            "Resource": "*"
-        },
-        {
-            "Action": [ "rds:DownloadDBLogFilePortion" ],
-            "Effect": "Allow",
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-This is required so that pganalyze can access and download the log files for each instance.
-
-
-### Appendix B - User Roles
-
-Administrator roles:
-* Can create new databases
-* Can access the /admin pages
-* Can modify database settings
-* Can delete databases
-
-Normal user roles:
-* Can view statistics and query information
-* Can view automated Check-Up information, and mark check-ups as acknowledged
-* Receive weekly email reports (if enabled)
-
-Users without valid accounts cannot access any information.
-
-
-### Appendix C - Environment Variables
-
-The following environment variables can be passed into the Docker image. Note that the examples are listed with multiple lines here for formatting reasons, but you need to pass them as one line.
-
-* `DATABASE_URL`: PostgreSQL server used for storing statistics information (required)
-* `LICENSE_KEY`: License key provided to you by the pganalyze team (required)
-* `DOMAIN_NAME`: Domain name where you are hosting the pganalyze app (optional, but recommended, and required for SSO)
-* `MAILER_URL`: SMTP server used to send system emails, e.g. user invites (optional, recommended)
-* `MAILER_FROM`: "From" address used to send system emails (optional, recommended if setting MAILER_URL)
-* `AWS_ACCESS_KEY_ID:` AWS Access Key ID (optional)
-* `AWS_SECRET_ACCESS_KEY`: AWS Secret Access Key (optional)
-* `AWS_REGION`: Default AWS region (optional)
-* `DEFAULT_ORG_ROLE`: How new users are added to the organization when they sign up (optional, default: `none`)
-  - `none` - new users are not organization members and have to be invited by an existing user
-  - `admin` - assigns the role named "Admin (All Servers)"
-  - `modify_all` - assigns the role named "View & Modify (All Servers)"
-  - `view_all` - assigns the role named "View (All Servers)"
-
-An example configuration looks like this:
-
-```
-DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
-LICENSE_KEY=KEYKEYKEY
-DOMAIN_NAME=pganalyze.example.com
-MAILER_URL=smtp://myusername:mypassword@example.com:25
-MAILER_FROM=pganalyze@example.com
-AWS_ACCESS_KEY_ID=AKIAXXXXXXXXXXXX
-AWS_SECRET_ACCESS_KEY=ReallyLongStringYouWillGetFromYourAwsConsole
-AWS_REGION=us-east-1
-```
-
-### Appendix D - LDAP configuration
-
-When using LDAP, it is recommended to also set DEFAULT_ORG_ROLE to a non-empty value (see above)
-to ensure that new LDAP users are added to the existing organization.
-
-
-* `LDAP_HOST`: Internal hostname or IP of your LDAP server
-* `LDAP_PORT`: Port of your LDAP server. Use port 636 for LDAPS
-* `LDAP_BASE_DN`: Base DN that all lookups should be done with. You can use this to restrict access to a subset of your LDAP accounts
-* `LDAP_ADMIN_GROUP_CN`: Common Name of the group used to identify pganalyze admins. Note that members don’t need to be LDAP admins
-* `LDAP_LOOKUP_CN`: Common Name of an account that will be used to run authentication lookups on your LDAP directory
-* `LDAP_LOOKUP_PASSWORD`: Password for the account that will be used to run authentication lookups
-* `LDAP_FIELD_UID`: UID field on your LDAP entries. This is usually `sAMAccountName` on Active Directory servers
-* `LDAP_ENCRYPTION`: Encryption mode to use for LDAP connections. Only add this when you want to use LDAPS (Port 636) or STARTTLS (Port 389) for a secure connection to your server. Specify `ssl` for LDAPS, and `tls` for STARTTLS (optional)
-
-Example LDAP configuration, in addition to regular environment variables:
-
-```
-LDAP_HOST=example.com
-LDAP_PORT=389
-LDAP_BASE_DN=OU=Users,OU=ldaptest,DC=ldaptest,DC=pganalyze,DC=com
-LDAP_ADMIN_GROUP_CN=opsteam
-LDAP_LOOKUP_CN=Admin
-LDAP_LOOKUP_PASSWORD=ReallyLongSecurePassword
-LDAP_FIELD_UID=sAMAccountName
-LDAP_ENCRYPTION=ssl
-```
-
-If LDAP authentication does not work, or you see an error message instead of this form, please check the container's logs using `docker logs` and verify your `LDAP_ADMIN_GROUP_CN` setting.
-
-### Appendix E - Command Line Debugging Tools
-
-There are two essential debugging tools:
-
-#### Enterprise Self Check
-
-```
-docker run --env-file ... rake enterprise:self_check
-```
-
-Verifies the environment variables you have passed in for errors.
-
-#### Docker Container Logs
-
-```
-docker logs -f pganalyze
-```
-
-Shows the full log messages from the pganalyze container - if you encounter an error screen in the software this will show the details. This information will be required when submitting issues to our support team.
-
-### Appendix F - Updating to a new Version
-
-See [upgrade instructions](/docs/enterprise/upgrade).
+Note that only users with the "Manage" permission can add new databases (see [Permissions and Roles](/docs/accounts/permissions)).

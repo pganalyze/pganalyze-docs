@@ -208,6 +208,10 @@
       "title": "2022.08.1 Release",
       "path": "/docs/enterprise/releases/2022-08-1"
     },
+    "enterprise/settings": {
+      "title": "Enterprise Server: Container settings",
+      "path": "/docs/enterprise/settings"
+    },
     "enterprise/setup": {
       "title": "Enterprise Server: Initial Setup",
       "path": "/docs/enterprise/setup"
