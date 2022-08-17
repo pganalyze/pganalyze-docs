@@ -4,7 +4,33 @@ backlink_href: /docs/enterprise
 backlink_title: 'pganalyze Enterprise Server'
 ---
 
-## Error: License Invalid or Expired
+## Tools
+
+## Self-check
+
+You can run the following command to check the configuration for basic errors:
+
+```
+docker run --env-file ... rake enterprise:self_check
+```
+
+This verifies the Postgres, Redis, SMTP and LDAP configuration (if applicable), as well as confirms that the license is active.
+
+### Docker Container Logs
+
+When running Docker on a virtual machine to run pganalyze, you can run the following command:
+
+```
+docker logs -f pganalyze
+```
+
+This will show the full log messages from the pganalyze app, as well as errors from the collector inside the Enterprise Server container.
+
+If you encounter an error screen in the software this will show the details. This information will be required when submitting issues to our support team.
+
+## Common errors
+
+### Error: License Invalid or Expired
 
 If you see the notice `Error: License Invalid or Expired` when logging into pganalyze,
 it means that pganalyze Enterprise Server wasn't able to verify the `LICENSE_KEY` that

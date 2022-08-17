@@ -1,0 +1,122 @@
+---
+title: 'Enterprise Server: Container settings'
+backlink_href: /docs/enterprise
+backlink_title: 'pganalyze Enterprise Server'
+---
+
+import ToC from '../components/Toc'
+
+The settings on this page can be passed in as environment variables into the pganalyze Enterprise Server container. Any change of these settings requires a container restart to read the new configuration.
+
+<ToC items={props.toc} />
+
+## Basic configuration
+
+* `DATABASE_URL`: PostgreSQL server used for storing statistics information (required)
+* `LICENSE_KEY`: License key provided to you by the pganalyze team (required)
+* `DOMAIN_NAME`: Domain name where you are hosting the pganalyze app (optional, but recommended, and required for SSO)
+* `MAILER_URL`: SMTP server used to send system emails, e.g. user invites (optional, recommended)
+* `MAILER_FROM`: "From" address used to send system emails (optional, recommended if setting MAILER_URL)
+* `REDIS_URL`: Redis server used for [scale out architecture](/enterprise/architecture) (optional, only needed when running Redis separately)
+* `DEFAULT_ORG_ROLE`: How new users are added to the organization when they sign up (optional, default: `none`)
+  - `none` - new users are not organization members and have to be invited by an existing user
+  - `admin` - assigns the role named "Admin (All Servers)"
+  - `modify_all` - assigns the role named "View & Modify (All Servers)"
+  - `view_all` - assigns the role named "View (All Servers)"
+
+An example configuration looks like this:
+
+```
+DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
+LICENSE_KEY=KEYKEYKEY
+DOMAIN_NAME=pganalyze.example.com
+MAILER_URL=smtp://myusername:mypassword@example.com:25
+MAILER_FROM=pganalyze@example.com
+```
+
+## Object storage
+
+For using Log Insights and Automated EXPLAIN, additional settings must be configured for [object storage](/docs/enterprise/setup/object-storage).
+
+## AWS-specific settings
+
+When using the [object storage on AWS](/docs/enterprise/setup/object-storage-s3), the required IAM credentials can either be set using an instance role (recommended), or by explicitly setting these environment variables:
+
+* `AWS_ACCESS_KEY_ID`: AWS Access Key ID (optional)
+* `AWS_SECRET_ACCESS_KEY`: AWS Secret Access Key (optional)
+
+You can also configure the following object storage settings:
+
+* `AWS_S3_SNAPSHOTS_BUCKET`: Name of the snapshots S3 bucket (required for object storage)
+* `AWS_S3_LOGS_BUCKET`: Name of the logs S3 bucket (required for object storage)
+* `AWS_KMS_LOGS_CMK`: Identifier for the KMS key used for client-side log text encryption (required for object storage)
+* `AWS_S3_SNAPSHOTS_PREFIX`: Prefix for all objects stored in snapshots bucket (optional, empty by default)
+* `AWS_S3_LOGS_PREFIX`: Prefix for all objects stored in logs bucket (optional, empty by default)
+
+Note that when using the collector inside the Enterprise Server container to monitor Amazon RDS or Aurora, the actual fetching of log data from RDS will also use these same credentials. Ensure to also set the [collector IAM policy](/docs/install/amazon_rds/03_setup_iam_policy) in that case.
+
+In addition, you can also set these other general settings:
+
+* `AWS_REGION`: Default AWS region (optional)
+* `AWS_ENDPOINT_S3_URL`: VPC endpoint to use for Amazon S3 API access (optional)
+* `AWS_ENDPOINT_KMS_URL`: VPC endpoint to use for Amazon KMS API access (optional)
+* `AWS_ENDPOINT_STS_URL`: VPC endpoint to use for Amazon STS API access (optional)
+
+When using Amazon EKS with [IAM roles associated to a service account](https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html), the following additional settings can be used:
+
+* `AWS_ROLE_ARN`: Role to assume for AWS API access (automatically set by EKS)
+* `AWS_WEB_IDENTITY_TOKEN_FILE`: Location of Web Identity token file (automatically set by EKS)
+* `AWS_ROLE_SESSION_NAME`: Session name to use when assuming roles (optional, defaults to "pganalyze")
+
+## Local object storage with Minio
+
+See [Object Storage Setup (Local Storage)](/docs/enterprise/setup/object-storage-local).
+
+Additionally the following optional settings are available:
+
+* `MINIO_SNAPSHOTS_BUCKET`: Name of the snapshots bucket in Minio (optional, defaults to `pganalyze-snapshots`)
+* `MINIO_LOGS_BUCKET`: Name of the logs bucket in Minio (optional, defaults to `pganalyze-logs`)
+
+## Google Auth integration
+
+Configured using `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`. See [separate instructions](/docs/enterprise/google-auth).
+
+## PagerDuty integration
+
+Configured using `PAGERDUTY_APP_ID`. See [separate instructions](/docs/enterprise/integrations).
+
+## Slack integration
+
+Configured using `SLACK_CLIENT_ID` and `SLACK_CLIENT_SECRET`. See [separate instructions](/docs/enterprise/integrations).
+
+## LDAP configuration
+
+The collector can optionally support using an LDAP connection to verify user credentials, instead of using a username/password stored in the pganalyze database. When LDAP is enabled regular user authentication is turned off.
+
+LDAP is commonly utilized when using Microsoft Active Directory on-premise. If possible we recommend using the [SAML integration](/docs/accounts/sso) instead, including when using Azure Active Directory.
+
+When using LDAP, it is recommended to also set `DEFAULT_ORG_ROLE` to a non-empty value (see above)
+to ensure that new LDAP users are added to the existing organization.
+
+* `LDAP_HOST`: Internal hostname or IP of your LDAP server
+* `LDAP_PORT`: Port of your LDAP server. Use port 636 for LDAPS
+* `LDAP_BASE_DN`: Base DN that all lookups should be done with. You can use this to restrict access to a subset of your LDAP accounts. Note that both the admin CN and regular users need to be members of this DN.
+* `LDAP_LOOKUP_CN`: Common Name of an account that will be used to run authentication lookups on your LDAP directory
+* `LDAP_LOOKUP_PASSWORD`: Password for the account that will be used to run authentication lookups
+* `LDAP_FIELD_UID`: UID field on your LDAP entries. This is usually `sAMAccountName` on Active Directory servers
+* `LDAP_ENCRYPTION`: Encryption mode to use for LDAP connections. Only add this when you want to use LDAPS (Port 636) or STARTTLS (Port 389) for a secure connection to your server. Specify `ssl` for LDAPS, and `tls` for STARTTLS (optional)
+
+Example LDAP configuration, with the required `DEFAULT_ORG_ROLE` setting, but without other unrelated settings:
+
+```
+LDAP_HOST=example.com
+LDAP_PORT=389
+LDAP_BASE_DN=OU=Users,OU=ldaptest,DC=ldaptest,DC=pganalyze,DC=com
+LDAP_LOOKUP_CN=Admin
+LDAP_LOOKUP_PASSWORD=ReallyLongSecurePassword
+LDAP_FIELD_UID=sAMAccountName
+LDAP_ENCRYPTION=ssl
+DEFAULT_ORG_ROLE=view_all
+```
+
+Note you can run an [Enterprise self-check](/docs/enterprise/troubleshooting) to verify the connection and lookup LDAP information, but some configuration errors are only visible once logging in.
