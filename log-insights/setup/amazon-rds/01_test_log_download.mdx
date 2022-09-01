@@ -46,7 +46,7 @@ sudo pganalyze-collector --test -v
 <PublicOnly>
   <p>
     The collector will only collect log data when you have an Amazon RDS host name specified (the
-    instance name is auto-detected), or you manually specify the <code>aws_db_instance_id</code> and
+    instance/cluster name is auto-detected), or you manually specify the <code>aws_db_instance_id</code>/<code>aws_db_cluster_id</code> and{" "}
     <code>aws_region</code> settings.
   </p>
   <p>
@@ -56,7 +56,7 @@ sudo pganalyze-collector --test -v
   </p>
 </PublicOnly>
 
-In case you get permission errors, make sure your IAM user has the [appropriate policy associated](https://pganalyze.com/docs/install/amazon_rds/03_setup_iam_policy).
+In case you get permission errors, make sure your IAM user has the [appropriate policy associated](/docs/install/amazon_rds/03_setup_iam_policy).
 
 <PublicOnly>
   <p>You will then see Log Insights data on your database within a few minutes:</p>
