@@ -21,7 +21,6 @@ To start, go to **[Create IAM policy](https://console.aws.amazon.com/iam/home#/p
     "Statement": [
         {
             "Action": [
-                "rds:DescribeDBInstances",
                 "cloudwatch:GetMetricStatistics"
             ],
             "Effect": "Allow",
@@ -43,6 +42,8 @@ To start, go to **[Create IAM policy](https://console.aws.amazon.com/iam/home#/p
         },
         {
             "Action": [
+                "rds:DescribeDBClusters",
+                "rds:DescribeDBInstances",
                 "rds:DownloadDBLogFilePortion",
                 "rds:DescribeDBLogFiles"
             ],
