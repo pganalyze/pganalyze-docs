@@ -278,9 +278,14 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
       <td>Region your AWS server is running in</td>
     </tr>
     <tr>
-      <td>aws_db_instance_id (<code>AWS_INSTANCE_ID</code>)</td>
+      <td>aws_db_instance_id (<code>AWS_DB_INSTANCE_ID</code>)</td>
       <td>auto-detected from hostname</td>
-      <td>Instance ID of your AWS server; may need to be set manually when using IP addresses or custom DNS records</td>
+      <td>Instance ID of your Amazon RDS instance; may need to be set manually when using IP addresses or custom DNS records</td>
+    </tr>
+    <tr>
+      <td>aws_db_cluster_id (<code>AWS_DB_CLUSTER_ID</code>)</td>
+      <td>auto-detected from hostname</td>
+      <td>Cluster ID of your Amazon Aurora cluster (either cluster or reader endpoint); may need to be set manually when using IP addresses or custom DNS records</td>
     </tr>
     <tr>
       <td>aws_access_key_id (<code>AWS_ACCESS_KEY_ID</code>)</td>

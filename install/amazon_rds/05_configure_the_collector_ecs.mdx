@@ -55,7 +55,7 @@ To start, create SSM secrets for storing the pganalyze API key and database pass
 
 Now, save the following ECS task definition to a file, for example `pganalyze_task.json`:
 
-```
+```json
 {
   "family": "pganalyze-fargate",
   "requiresCompatibilities": [
@@ -95,7 +95,31 @@ Now, save the following ECS task definition to a file, for example `pganalyze_ta
 }
 ```
 
-Make sure to modify the values for `DB_HOST`, `DB_USERNAME`, `DB_NAME`, `AWS_REGION`, `AWS_INSTANCE_ID` to be correct for your RDS instance. Also adjust `YOUR_ACCOUNT_ID` to be your AWS account ID (in the `executionRoleArn` field).
+Make sure to modify the values for `DB_HOST`, `DB_USERNAME`, `DB_NAME`, `AWS_REGION`, `AWS_INSTANCE_ID` to be correct for your RDS instance or Aurora cluster. Also adjust `YOUR_ACCOUNT_ID` to be your AWS account ID (in the `executionRoleArn` field).
+
+## Handling Amazon Aurora clusters vs instances
+
+In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance, and `cluster-ro` to the underlying reader instance:
+
+```json
+{"name": "DB_HOST", "value": "mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com"},
+```
+
+or
+
+```json
+{"name": "DB_HOST", "value": "mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com"},
+```
+
+For writer instances this is supported for any size of cluster, but for reader instances this is only supported in two-node clusters (i.e. single reader instance).
+
+If you have multiple readers you want to monitor you instead need to specify each instance endpoint separately, running one pganalyze collector Docker container for each instance:
+
+```json
+{"name": "DB_HOST", "value": "mydbinstance1.123456789012.us-east-1.rds.amazonaws.com"},
+```
+
+## Registering the task and launching it
 
 We can now register the task definition like this, as well as create the log group:
 

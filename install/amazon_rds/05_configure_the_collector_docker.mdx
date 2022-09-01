@@ -19,7 +19,7 @@ DB_PASSWORD=your_monitoring_user_password`}
       </CodeBlock>
       <p>
         Replace the configuration values after the <code>=</code> with the
-        correct settings for your RDS instance.
+        correct settings for your RDS instance or Amazon Aurora cluster.
         <br />
         {apiKey ? (
           <React.Fragment>
@@ -41,6 +41,28 @@ DB_PASSWORD=your_monitoring_user_password`}
 Create your configuration file (e.g. named `pganalyze_collector.env`) with environment variables like this:
 
 <CollectorDotEnv apiKey={props.apiKey} />
+
+## Handling Amazon Aurora clusters vs instances
+
+In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance, and `cluster-ro` to the underlying reader instance:
+
+```
+DB_HOST=mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
+```
+
+or
+
+```
+DB_HOST=mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
+```
+
+For writer instances this is supported for any size of cluster, but for reader instances this is only supported in two-node clusters (i.e. single reader instance).
+
+If you have multiple readers you want to monitor you instead need to specify each instance endpoint separately, running one pganalyze collector Docker container for each instance:
+
+```
+DB_HOST=mydbinstance1.123456789012.us-east-1.rds.amazonaws.com
+```
 
 ## Test snapshot
 
