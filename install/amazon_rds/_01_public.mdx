@@ -1,10 +1,7 @@
 import imgRdsParamGroup from '../../images/rds_parameter_group.png'
-import imgRdsParamGroup2 from '../../images/rds_parameter_group2.gif'
 import imgRdsEnableParamGroup from '../../images/rds_enable_parameter_group.png'
 
 export const ImgRdsParamGroup = () => <img src={imgRdsParamGroup} />
-
-export const ImgRdsParamGroup2 = () => <img src={imgRdsParamGroup2} />
 
 export const ImgRdsEnableParamGroup = () => <img src={imgRdsEnableParamGroup} />
 
@@ -27,13 +24,11 @@ In your [AWS Console](https://console.aws.amazon.com/rds/), modify your existing
 
 Then set the following configuration parameters:
 
-<ImgRdsParamGroup2 />
-
  Name | New Value | &nbsp;
  ---- | ------ | -------
  [pg\_stat\_statements.track](https://www.postgresql.org/docs/current/pgstatstatements.html#id-1.11.7.39.9) | ALL | Optional, enables tracking of queries inside stored procedures
 [shared\_preload\_libraries](https://www.postgresql.org/docs/current/runtime-config-client.html#RUNTIME-CONFIG-CLIENT-PRELOAD) | pg\_stat\_statements
-[track\_activity\_query\_size](https://www.postgresql.org/docs/current/runtime-config-statistics.html#RUNTIME-CONFIG-STATISTICS-COLLECTOR) | 2048
+ [track\_io\_timing](https://www.postgresql.org/docs/current/runtime-config-statistics.html#RUNTIME-CONFIG-STATISTICS-COLLECTOR) | on | Optional, enables tracking of per-query I/O statistics
 
 ---
 
