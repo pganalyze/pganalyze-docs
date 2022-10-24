@@ -42,13 +42,19 @@ To start, go to **[Create IAM policy](https://console.aws.amazon.com/iam/home#/p
         },
         {
             "Action": [
-                "rds:DescribeDBClusters",
                 "rds:DescribeDBInstances",
                 "rds:DownloadDBLogFilePortion",
                 "rds:DescribeDBLogFiles"
             ],
             "Effect": "Allow",
             "Resource": "arn:aws:rds:*:*:db:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBClusters"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:cluster:*"
         }
     ]
 }
