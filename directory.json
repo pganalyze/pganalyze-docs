@@ -72,6 +72,10 @@
       "title": "pganalyze Collector settings",
       "path": "/docs/collector/settings"
     },
+    "connections": {
+      "title": "Monitoring Postgres connections",
+      "path": "/docs/connections"
+    },
     "enterprise": {
       "title": "pganalyze Enterprise Server",
       "path": "/docs/enterprise"
