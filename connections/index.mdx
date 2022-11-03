@@ -16,7 +16,7 @@ This feature is only available on the [Scale Plan](/pricing) and higher.
 You can check the history of connection states in Connection States's chart.
 The chart is using the data collected every 10 minutes, this section helps you
 to understand the trend of your connections total count or some unusual pattern
-of the connections such as increase of the Waiting for Lock connections.
+of the connections such as the increase of the Waiting for Lock connections.
 
 When you have many Waiting for Lock connections, the database is likely having
 some trouble. You can use the Lock Monitoring feature described below to
@@ -40,14 +40,15 @@ to learn more about wait events.
 
 ## Connection Traces
 
-You can find a list of connections in Connection Traces section. The list shows
-the current connection data unless the history chart's specific time is clicked.
+You can find a list of connections in the Connection Traces section. The list
+shows the current connection data unless the history chart's specific time is
+clicked.
 
 ### Lock Monitoring
 
-You can monitor various wait events including locks with Wait Events section.
-Connection States chart also gives you the historical count of connections
-that were waiting for a lock.
+You can monitor various wait events including locks with the Wait Events
+section. Connection States chart also gives you the historical count of
+connections that were waiting for a lock.
 
 With lock monitoring, you can dig into this lock information deeper. Within
 Connection Traces, whenever the connection/query is waiting for a lock, the
@@ -60,7 +61,7 @@ queries) is also highlighted.
 
 When the trivial query is taking a long time, often it's waiting for something.
 With the Lock Monitoring, you can see which queries the query is waiting for.
-It is common that that waiting situation is "chained". For example, a query A
+It is common that the waiting situation is "chained". For example, a query A
 is waiting for a query B, and a query B is waiting for a query C. The Lock
 Monitoring supports the situation like this, and highlights query C the most
 with the lock icon. In this case, you can run `pg_cancel_backend` or
