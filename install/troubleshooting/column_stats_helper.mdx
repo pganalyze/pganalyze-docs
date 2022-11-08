@@ -12,12 +12,21 @@ You may get the following warning when running a collector test:
 Warning: Limited access to table column statistics detected in database postgres. Please set up the monitoring helper function pganalyze.get_column_stats (https://github.com/pganalyze/collector#setting-up-a-restricted-monitoring-user) or connect as superuser, to get column statistics for all tables.
 ```
 
+Or see the following warning in the pganalyze app:
+
+```
+Your database appears to be missing column stats monitoring helper functions, which can lead to inaccurate Index Advisor recommendations.
+Please review the relevant troubleshooting documentation.
+```
+
 This warning indicates that column statistics for the specific database are not being reported by the collector.
 Column statistics are used by pganalyze to improve Index Advisor recommendations. Index Advisor will still work
 without the helper functions, but index recommendations may be less accurate.
 
-To resolve this, find the name for the database role that's configured as the monitoring user
-in your collector installation (we'll assume "pganalyze" here).
+To resolve this, first, make sure you are running at least collector version 0.41.0 (and ideally the latest version).
+You can see which version you are currently running by checking the Debug Info panel on the Settings page for your
+server. Then, find the name for the database role that's configured as the monitoring user in your collector
+installation (we'll assume "pganalyze" here).
 
 <MonitoringUserColumnStats username="pganalyze" />
 
