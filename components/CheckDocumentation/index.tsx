@@ -26,6 +26,7 @@ const Docs: {
   connections: {
     active_query: ActiveQuery,
     idle_transaction: IdleTransaction,
+    blocking_query: BlockingQuery,
   },
   index_advisor: {
     missing_index: MissingIndex,
