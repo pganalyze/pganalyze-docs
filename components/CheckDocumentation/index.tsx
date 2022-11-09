@@ -5,6 +5,7 @@ import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../util/che
 import QuerySlowness from "./queries/Slowness";
 import ActiveQuery from "./connections/ActiveQuery";
 import IdleTransaction from "./connections/IdleTransaction";
+import BlockingQuery from "./connections/BlockingQuery";
 import MissingIndex from "./index_advisor/MissingIndex";
 import IndexInvalid from "./schema/IndexInvalid";
 import IndexUnused from "./schema/IndexUnused";
