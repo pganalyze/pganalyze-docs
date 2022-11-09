@@ -6,9 +6,7 @@ import {
   CheckTriggerProps,
 } from "../../../util/checks";
 
-import PGDocsLink from "../../PGDocsLink";
 import SQL from "../../SQL";
-import { useSmartAnchor } from "../../SmartAnchor";
 
 const BlockingQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
@@ -37,9 +35,8 @@ const BlockingQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 };
 
 const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
-  urls: { serverVacuumsUrl, SettingLink },
+  urls: { SettingLink },
 }) => {
-  const Link = useSmartAnchor();
   return (
     <div>
       <h4>Impact</h4>
