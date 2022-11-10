@@ -89,7 +89,7 @@ const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 
 const documentation: CheckDocs = {
   description:
-    "<p>Alerts on connections currently blocking other queries more than the specified threshold, as well as running longer than the specified threshold. This check only triggers on queries that are currently meeting the criteria and auto-resolves once the queries stop meeting the criteria.</p><p>Any blocking queries that contain the <code>/* pganalyze:no-alert */</code> or <code>/* pganalyze=no-alert */</code> magic comment.</p>",
+    "<p><b>(Available on Early Access Only)</b> Alerts on connections currently blocking other queries more than the specified threshold, as well as running longer than the specified threshold. This check only triggers on queries that are currently meeting the criteria and auto-resolves once the queries stop meeting the criteria.</p><p>Any blocking queries that contain the <code>/* pganalyze:no-alert */</code> or <code>/* pganalyze=no-alert */</code> magic comment.</p>",
   Trigger: BlockingQueryTrigger,
   Guidance: BlockingQueryGuidance,
 };
