@@ -148,8 +148,8 @@ export const DEFAULT_CHECK_CONFIGS = {
       settings: {
         warning_max_query_age_secs: 300,
         critical_max_query_age_secs: 600,
-        warning_max_query_count: 5,
-        critical_max_query_count: 10
+        warning_max_blocking_count: 5,
+        critical_max_blocking_count: 10
       }
     }
   },
