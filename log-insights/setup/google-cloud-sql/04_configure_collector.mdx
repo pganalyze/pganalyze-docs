@@ -6,6 +6,7 @@ backlink_title: 'Log Insights: Setup'
 ---
 
 Sign in to your virtual machine, and add the following configuration setting:
+import CollectorLogTest from '../../../components/CollectorLogTest'
 
 ```
 gcp_pubsub_subscription: projects/PROJECT_ID/subscriptions/SUBSCRIPTION_ID
@@ -15,23 +16,9 @@ This is the value of "Subscription name" you can see when clicking on the detail
 
 Now test the collector configuration:
 
-```
-sudo pganalyze-collector --test --reload
-```
+<CollectorLogTest provider="Google Cloud SQL" configFromEnv={props.configFromEnv} />
 
-This should return something like the following:
-
-```
-I [server1] Testing statistics collection...
-I [server1]   Test submission successful (29.3 KB received, server abc123)
-I [server1] Testing activity snapshots...
-I [server1]   Test submission successful (2.44 KB received, server abc123)
-I [server1] Testing log collection (Google Cloud SQL)...
-I [server1]   Log test successful
-I Successfully reloaded pganalyze collector (PID 123)
-```
-
-If you get an error here, please check our
+For additional help when you get an error please check our
 [troubleshooting documentation](https://pganalyze.com/docs/log-insights/setup/google-cloud-sql/troubleshooting).
 
 <PublicOnly>
