@@ -5,16 +5,16 @@ backlink_href: /docs/log-insights/setup
 backlink_title: 'Log Insights: Setup'
 ---
 
-Sign in to your virtual machine, and add the following configuration setting:
+import CollectorSettings from '../../../components/CollectorSettings'
 import CollectorLogTest from '../../../components/CollectorLogTest'
 
-```
-gcp_pubsub_subscription: projects/PROJECT_ID/subscriptions/SUBSCRIPTION_ID
-```
+Next, update the collector configuration for this server.
 
-This is the value of "Subscription name" you can see when clicking on the details for the Pub/Sub subscriber we created earlier.
+<CollectorSettings settings={[
+  ['gcp_pubsub_subscription', 'projects/PROJECT_ID/subscriptions/SUBSCRIPTION_ID'],
+]} configFromEnv={props.configFromEnv} />
 
-Now test the collector configuration:
+The value for the setting should be set to the "Subscription name" you can see when clicking on the details for the Pub/Sub subscriber we created earlier.
 
 <CollectorLogTest provider="Google Cloud SQL" configFromEnv={props.configFromEnv} />
 

@@ -53,7 +53,7 @@ const CollectorEnvConfigSettings: React.FunctionComponent<{settings: CollectorSe
     <ul>
       {settings.map(([setting, value]) => {
         return (
-          <li>
+          <li key={setting}>
             <code>{toEnvSetting(setting)}={value}</code>
           </li>
         )
