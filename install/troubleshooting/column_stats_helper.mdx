@@ -9,9 +9,8 @@ import { MonitoringUserColumnStats } from "../../components/MonitoringUserSetupI
 You may get the following warning when running a collector test:
 
 ```
-Warning: Limited access to table column statistics detected in database
-postgres. Please set up the monitoring helper function
-pganalyze.get_column_stats
+Warning: Limited access to table column statistics detected in database postgres. Please set up
+the monitoring helper function pganalyze.get_column_stats
 (https://github.com/pganalyze/collector#setting-up-a-restricted-monitoring-user)
 or connect as superuser, to get column statistics for all tables.
 ```
@@ -19,9 +18,8 @@ or connect as superuser, to get column statistics for all tables.
 Or see the following warning in the pganalyze app:
 
 ```
-Your database appears to be missing column stats monitoring helper functions,
-which can lead to inaccurate Index Advisor recommendations. Please review the
-relevant troubleshooting documentation.
+Your database appears to be missing column stats monitoring helper functions, which can lead to
+inaccurate Index Advisor recommendations. Please review the relevant troubleshooting documentation.
 ```
 
 This warning indicates that column statistics for the specific database are not
