@@ -8,6 +8,8 @@ import {
 
 import SQL from "../../SQL";
 
+import { useSmartAnchor } from "../../SmartAnchor";
+
 const BlockingQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
 }) => {
@@ -20,11 +22,10 @@ const BlockingQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
         <code>{config.settings["warning_blocked_age_secs"]}</code> seconds (as
         of the first blocked query started), and creates an issue with severity
         "warning". Escalates to "critical" if any queries are blocking more than{" "}
-        <code>{config.settings["critical_blocked_count"]}</code> queries
-        for longer than{" "}
-        <code>{config.settings["critical_blocked_age_secs"]}</code> seconds
-        (as of the first blocked query started). Resolves automatically once
-        these queries stop meeting the criteria.
+        <code>{config.settings["critical_blocked_count"]}</code> queries for
+        longer than <code>{config.settings["critical_blocked_age_secs"]}</code>{" "}
+        seconds (as of the first blocked query started). Resolves automatically
+        once these queries stop meeting the criteria.
       </p>
       <p>
         Ignores any blocking queries that contain the{" "}
@@ -36,8 +37,12 @@ const BlockingQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 };
 
 const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
-  urls: { SettingLink },
+  urls: { backendsUrl, SettingLink },
+  issue,
 }) => {
+  const Link = useSmartAnchor();
+  const issueDetails = issue && JSON.parse(issue.detailsJson);
+  const showAutovacuum = issueDetails?.["has_prevent_wraparound_autovacuum"];
   return (
     <div>
       <h4>Impact</h4>
@@ -51,17 +56,38 @@ const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
       </p>
       <h4>Common Causes</h4>
       <ul>
+        {showAutovacuum && (
+          <li>
+            <h5>Autovacuum (to prevent wraparound)</h5>
+            <p>
+              In general, autovacuum workers don't block other queries. Even if
+              the other query tries to acquire a lock that conflicts with the
+              running autovacuum, lock acquisition will interrupt the
+              autovacuum. However, if the autovacuum is running to prevent
+              transaction ID wraparound, the vacuum won't be interrupted and
+              will block other queries trying to acquire conflicting locks.
+            </p>
+          </li>
+        )}
         <li>
           <h5>Locks</h5>
           <p>
             The queries may be holding some strong locks. Check the{" "}
-            <strong>Connection Traces</strong> page for the queries these
-            queries are blocking. You can check <strong>Wait Events</strong>{" "}
-            page for the queries waiting for these blocking queries, and look
-            for any wait events of type <strong>Lock</strong>. If you have{" "}
+            <Link to={backendsUrl}>Connection Traces</Link> page for the queries
+            these queries are blocking. You can check{" "}
+            <strong>Wait Events</strong> page for the queries waiting for these
+            blocking queries, and look for any wait events of type{" "}
+            <strong>Lock</strong>. If you have{" "}
             <SettingLink setting="log_lock_waits" /> turned on, you can also see
             details about locking in the <strong>Logs</strong> page for these
             queries.
+          </p>
+          <p>
+            <code>ACCESS EXCLUSIVE</code> lock xis the strongest lock that can
+            even block a <code>SELECT</code> query. This lock is acquired by the
+            commands like <code>VACUUM FULL</code>. One of the table-rewriting
+            variants of <code>ALTER TABLE</code> also acquire a lock at this
+            level.
           </p>
         </li>
         <li>
@@ -84,13 +110,20 @@ const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         that this only treats the symptom: if the query runs again without any
         changes, it is likely to cause the blocking.
       </p>
+      {showAutovacuum && (
+        <p>
+          If you're canceling the autovacuum, please note that the autovacuum to
+          prevent wraparound is really important to run and it will most likely
+          come back.
+        </p>
+      )}
     </div>
   );
 };
 
 const documentation: CheckDocs = {
   description:
-    "<p>Alerts on queries currently blocking more than the specified threshold queries for longer than the specified threshold time. This check only triggers on queries that are currently meeting both criteria and auto-resolves once the queries stop meeting the criteria.</p><p>Ignores any blocking queries that contain the <code>/* pganalyze:no-alert */</code> or <code>/* pganalyze=no-alert */</code> magic comment.</p>",
+    "<p><b>(Available on Early Access Only)</b> Alerts on queries currently blocking more than the specified threshold queries for longer than the specified threshold time. This check only triggers on queries that are currently meeting both criteria and auto-resolves once the queries stop meeting the criteria.</p><p>Ignores any blocking queries that contain the <code>/* pganalyze:no-alert */</code> or <code>/* pganalyze=no-alert */</code> magic comment.</p>",
   Trigger: BlockingQueryTrigger,
   Guidance: BlockingQueryGuidance,
 };
