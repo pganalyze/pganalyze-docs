@@ -42,7 +42,7 @@ const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 }) => {
   const Link = useSmartAnchor();
   const issueDetails = issue && JSON.parse(issue.detailsJson);
-  const showAutovacuum = issueDetails?.["has_prevent_wraparound_autovacuum"];
+  const showAutovacuum = issueDetails?.["has_autovacuum_to_prevent_wraparound"];
   return (
     <div>
       <h4>Impact</h4>
