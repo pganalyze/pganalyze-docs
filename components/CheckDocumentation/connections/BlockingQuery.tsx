@@ -15,14 +15,14 @@ const BlockingQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
     <>
       <p>
         Detects queries currently blocking more than the specified threshold of{" "}
-        <code>{config.settings["warning_max_blocking_count"]}</code> queries for
+        <code>{config.settings["warning_blocked_count"]}</code> queries for
         longer than the specified threshold of{" "}
-        <code>{config.settings["warning_max_query_age_secs"]}</code> seconds (as
+        <code>{config.settings["warning_blocked_age_secs"]}</code> seconds (as
         of the first blocked query started), and creates an issue with severity
         "warning". Escalates to "critical" if any queries are blocking more than{" "}
-        <code>{config.settings["critical_max_blocking_count"]}</code> queries
+        <code>{config.settings["critical_blocked_count"]}</code> queries
         for longer than{" "}
-        <code>{config.settings["critical_max_query_age_secs"]}</code> seconds
+        <code>{config.settings["critical_blocked_age_secs"]}</code> seconds
         (as of the first blocked query started). Resolves automatically once
         these queries stop meeting the criteria.
       </p>
@@ -90,7 +90,7 @@ const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 
 const documentation: CheckDocs = {
   description:
-    "<p>Alerts on queries currently blocking more than the specified threshold queries for longer than the specified threshold time. This check only triggers on queries that are currently meeting the criteria and auto-resolves once the queries stop meeting the criteria.</p><p>Ignores any blocking queries that contain the <code>/* pganalyze:no-alert */</code> or <code>/* pganalyze=no-alert */</code> magic comment.</p>",
+    "<p>Alerts on queries currently blocking more than the specified threshold queries for longer than the specified threshold time. This check only triggers on queries that are currently meeting both criteria and auto-resolves once the queries stop meeting the criteria.</p><p>Ignores any blocking queries that contain the <code>/* pganalyze:no-alert */</code> or <code>/* pganalyze=no-alert */</code> magic comment.</p>",
   Trigger: BlockingQueryTrigger,
   Guidance: BlockingQueryGuidance,
 };
