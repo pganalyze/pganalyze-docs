@@ -15,15 +15,16 @@ const BlockingQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
     <>
       <p>
         Detects queries currently blocking more than the specified threshold of{" "}
-        <code>{config.settings["warning_max_blocking_count"]}</code> queries, as
-        well as running for longer than the specified threshold of{" "}
-        <code>{config.settings["warning_max_query_age_secs"]}</code> seconds and
-        creates an issue with severity "warning". Escalates to "critical" if any
-        queries are blocking more than{" "}
-        <code>{config.settings["critical_max_blocking_count"]}</code> queries and
-        running longer than{" "}
-        <code>{config.settings["critical_max_query_age_secs"]}</code> seconds.
-        Resolves automatically once these queries stop meeting the criteria.
+        <code>{config.settings["warning_max_blocking_count"]}</code> queries for
+        longer than the specified threshold of{" "}
+        <code>{config.settings["warning_max_query_age_secs"]}</code> seconds (as
+        of the first blocked query started), and creates an issue with severity
+        "warning". Escalates to "critical" if any queries are blocking more than{" "}
+        <code>{config.settings["critical_max_blocking_count"]}</code> queries
+        for longer than{" "}
+        <code>{config.settings["critical_max_query_age_secs"]}</code> seconds
+        (as of the first blocked query started). Resolves automatically once
+        these queries stop meeting the criteria.
       </p>
       <p>
         Ignores any blocking queries that contain the{" "}
@@ -89,7 +90,7 @@ const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 
 const documentation: CheckDocs = {
   description:
-    "<p><b>(Available on Early Access Only)</b> Alerts on connections currently blocking other queries more than the specified threshold, as well as running longer than the specified threshold. This check only triggers on queries that are currently meeting the criteria and auto-resolves once the queries stop meeting the criteria.</p><p>Any blocking queries that contain the <code>/* pganalyze:no-alert */</code> or <code>/* pganalyze=no-alert */</code> magic comment.</p>",
+    "<p>Alerts on queries currently blocking more than the specified threshold queries for longer than the specified threshold time. This check only triggers on queries that are currently meeting the criteria and auto-resolves once the queries stop meeting the criteria.</p><p>Ignores any blocking queries that contain the <code>/* pganalyze:no-alert */</code> or <code>/* pganalyze=no-alert */</code> magic comment.</p>",
   Trigger: BlockingQueryTrigger,
   Guidance: BlockingQueryGuidance,
 };
