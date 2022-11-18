@@ -148,8 +148,7 @@ export const DEFAULT_CHECK_CONFIGS = {
       settings: {
         warning_blocked_age_secs: 300,
         critical_blocked_age_secs: 600,
-        warning_blocked_count: 5,
-        critical_blocked_count: 10
+        blocked_count: 3
       }
     }
   },

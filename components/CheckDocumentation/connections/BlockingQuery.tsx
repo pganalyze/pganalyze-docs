@@ -17,15 +17,13 @@ const BlockingQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
     <>
       <p>
         Detects queries currently blocking more than the specified threshold of{" "}
-        <code>{config.settings["warning_blocked_count"]}</code> queries for
-        longer than the specified threshold of{" "}
-        <code>{config.settings["warning_blocked_age_secs"]}</code> seconds (as
-        of the first blocked query started), and creates an issue with severity
-        "warning". Escalates to "critical" if any queries are blocking more than{" "}
-        <code>{config.settings["critical_blocked_count"]}</code> queries for
-        longer than <code>{config.settings["critical_blocked_age_secs"]}</code>{" "}
-        seconds (as of the first blocked query started). Resolves automatically
-        once these queries stop meeting the criteria.
+        <code>{config.settings["blocked_count"]}</code> queries. When the oldest
+        blocked query is running for longer than the specified threshold of{" "}
+        <code>{config.settings["warning_blocked_age_secs"]}</code> seconds,
+        creates an issue with severity "warning". Escalates to "critical" if the
+        oldest blocked query continues to run longer than{" "}
+        <code>{config.settings["critical_blocked_age_secs"]}</code> seconds.
+        Resolves automatically once these queries stop meeting the criteria.
       </p>
       <p>
         Ignores any blocking queries that contain the{" "}
