@@ -16,15 +16,15 @@ const BlockingQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   return (
     <>
       <p>
-        Detects queries currently blocking equal or more than the specified
-        threshold of <code>{config.settings["blocked_count"]}</code> queries.
-        When any blocked query is running for longer than the specified
-        threshold of <code>{config.settings["warning_blocked_age_secs"]}</code>{" "}
-        seconds, creates an issue with severity "warning". Escalates to
-        "critical" if any blocked query continues to run longer than{" "}
+        Detects queries currently blocking at least{" "}
+        <code>{config.settings["blocked_count"]}</code> other queries. When any
+        blocked query is running for longer than{" "}
+        <code>{config.settings["warning_blocked_age_secs"]}</code> seconds,
+        creates an issue with severity "warning". Escalates to "critical" if any
+        blocked query continues to run longer than{" "}
         <code>{config.settings["critical_blocked_age_secs"]}</code> seconds.
-        Resolves automatically once these queries complete and release their
-        locks.
+        Resolves automatically once these queries complete or abort and release
+        their locks.
       </p>
       <p>
         Ignores any blocking queries that contain the{" "}
@@ -82,13 +82,13 @@ const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         <li>
           <h5>Other long-running queries</h5>
           <p>
-            A long running query could cause many blocking queries when that
-            query is holding locks that conflict with many other queries.
-            Navigate to the <Link to={backendsUrl}>Connection Traces</Link> page
-            to check the overview of which query is blocking which queries to
-            understand the impact. It is useful to know what kind of locks the
-            blocking query is holding and what kind of locks the blocked queries
-            are waiting for. You can check the wait event of these locks in the{" "}
+            A long running query could block other queries if it holds locks
+            that they require to make progress. Navigate to the{" "}
+            <Link to={backendsUrl}>Connection Traces</Link> page to check the
+            overview of which query is blocking which queries to understand the
+            impact. It is useful to know what kind of locks the blocking query
+            is holding and what kind of locks the blocked queries are waiting
+            for. You can check the wait event of these locks in the{" "}
             <strong>Wait Events</strong> page, with any wait events of type{" "}
             <strong>Lock</strong>. If you have{" "}
             <SettingLink setting="log_lock_waits" /> turned on, you can also see
@@ -108,9 +108,9 @@ const BlockingQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
               inline
               sql={`SELECT * FROM pg_locks WHERE pid = '<blocked_pid>' WHERE NOT granted;`}
             />{" "}
-            to see which locks it's waiting for. These information can be used
-            for your investigation to understand why this has happened and how
-            to change the query to prevent this from happening.
+            to see which locks it's waiting for. This information can be used to
+            investigate why this has happened and how to change the query to
+            prevent this from happening again in the future.
           </p>
         </li>
       </ul>
