@@ -5,6 +5,7 @@ export const CHECK_TITLES = {
   connections: {
     active_query: "Active Queries",
     idle_transaction: "Idle Transactions",
+    blocking_query: "Blocking Queries",
   },
   index_advisor: {
     missing_index: "Missing Index",
@@ -36,6 +37,7 @@ export const CHECK_SEVERITIES = {
   connections: {
     active_query: ['warning', 'critical'],
     idle_transaction: ['warning', 'critical'],
+    blocking_query: ['warning', 'critical'],
   },
   index_advisor: {
     missing_index: ['info'],
@@ -91,6 +93,7 @@ export const CHECK_FREQUENCY = {
   connections: {
     active_query: CHECK_FREQUENCY_REALTIME,
     idle_transaction: CHECK_FREQUENCY_REALTIME,
+    blocking_query: CHECK_FREQUENCY_REALTIME,
   },
   index_advisor: {
     missing_index: CHECK_FREQUENCY_DAILY,
@@ -140,6 +143,14 @@ export const DEFAULT_CHECK_CONFIGS = {
         critical_max_idle_tx_age_secs: 3600
       }
     },
+    blocking_query: {
+      enabled: true,
+      settings: {
+        warning_blocked_age_secs: 300,
+        critical_blocked_age_secs: 600,
+        blocked_count: 3
+      }
+    }
   },
   index_advisor: {
     missing_index: {
