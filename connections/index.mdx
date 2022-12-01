@@ -4,10 +4,10 @@ backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
-The Connections page in pganalyze contains information about database connections,
-using the data from the `pg_stat_activity` view.
-Select just a server to get overall connection info, or select a specific database
-as well to get more detailed data such as wait events.
+The Connections page in pganalyze contains information about database
+connections, using the data from the `pg_stat_activity` view.
+Select just a server to get overall connection info, or select a specific
+database as well to get more detailed data such as wait events.
 
 You can check the history of connection states in the History chart. This chart
 is using data collected every 10 minutes. This section helps you
@@ -20,12 +20,13 @@ such as an increase in Waiting For Lock connections.
 
 The Connection States tab has the History chart and the Connection Traces
 panel. The Connection Traces panel shows what kind of queries are running
-currently, with an automatic refresh to keep the display current (it will pause after a while).
-You can also jump to a certain time point's Connection Traces by clicking
-a specific time on the History chart.
+currently, with an automatic refresh to keep the display current (it will pause
+after a while).
+You can also jump to a certain time point's Connection Traces by clicking a
+specific time on the History chart.
 
-The Connection Traces panel is only available on the [Scale Plan](/pricing)
-and higher.
+The Connection Traces panel is only available on the [Scale Plan](/pricing) and
+higher.
 
 ### Lock Monitoring
 
@@ -33,27 +34,30 @@ You can monitor various wait events, including locks, with the Wait Events tab.
 The History chart of the Connection States tab also gives you the historical
 count of Waiting For Lock state connections.
 
-With the Lock Monitoring feature, you can dig deeper into this lock information. Within
-Connection Traces panel in Connection States tab, whenever a connection is
-waiting for a lock, the background color of the row will be highlighted.
+With the Lock Monitoring feature, you can dig deeper into this lock
+information. Within Connection Traces panel in Connection States tab, whenever
+a connection is waiting for a lock, the background color of the row will be
+highlighted.
 Connections that are blocking other queries are also highlighted.
 
 * 🔒: the lock icon with the red highlight indicates that the query is blocking other queries, and the number indicates how many queries it's blocking
 * 🕓: the clock icon with the yellow highlight indicates that the query is waiting for other queries, and the number indicates how many queries it's waiting for
 
 When a trivial query is taking a long time, it's often waiting for something.
-With the Lock Monitoring feature, you can see which queries the query is waiting for.
-It is common that the waiting situation is "chained". For example, a query A
-is waiting for a query B, and a query B is waiting for a query C. The Lock
-Monitoring feature supports situations like this, and highlights query C as the ultimate ("root cause") blocking query
-with the lock icon with the red highlight.
+With the Lock Monitoring feature, you can see which queries the query is
+waiting for.
+It is common that the waiting situation is "chained". For example, a query A is
+waiting for a query B, and a query B is waiting for a query C. The Lock
+Monitoring feature supports situations like this, and highlights query C as the
+ultimate ("root cause") blocking query with the lock icon with the red
+highlight.
 In this case, you can run `pg_cancel_backend` or `pg_terminate_backend` to
 cancel query C or terminate its database connection to unblock queries B and A.
 
-This information is available for historical data too. Let's say the
-database was slow and requests were timing out 3 hours ago. You can check out
-the History chart of the Connection States tab to see if there were any queries
-in a "Waiting for Lock" state during that time.
+This information is available for historical data too. Let's say the database
+was slow and requests were timing out 3 hours ago. You can check out the
+History chart of the Connection States tab to see if there were any queries in
+a "Waiting for Lock" state during that time.
 If so, you can click the chart to see the snapshot Connection Traces data at
 that time. The Lock Monitoring information will show you which queries were
 running, and which were blocking or blocked, at that time.
@@ -62,9 +66,9 @@ running, and which were blocking or blocked, at that time.
 
 ![](wait-events.png)
 
-Wait Events history gives you a historical overview of connections with
-wait events. For example, wait event `IO / DataFileRead` indicates that a
-process is currently waiting for data to be read from disk or the page cache.
+Wait Events history gives you a historical overview of connections with wait
+events. For example, wait event `IO / DataFileRead` indicates that a process is
+currently waiting for data to be read from disk or the page cache.
 
 The chart is using the data collected every 10 seconds, but the data is
 aggregated and plotted in 150-second buckets.
@@ -92,8 +96,8 @@ threshold or add the `/* pganalyze:no-alert */` or `/* pganalyze=no-alert */`
 magic comment to these queries to avoid creating an issue.
 The Blocking Queries alert is convenient to be notified when there is a query
 blocking other queries. Such situation could easily cause a system wide
-performance degradation, so you want to get notified way earlier than what
-Active Queries or Idle Transactions can notify.
+performance degradation, so you want to be notified much earlier than for
+Active Query or Idle Transaction issues.
 
 You can read more details about the [Alerts & Check-Up system](/docs/checks) in
 its own section of the documentation.
