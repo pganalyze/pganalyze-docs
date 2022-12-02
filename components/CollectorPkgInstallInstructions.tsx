@@ -17,7 +17,7 @@ const CollectorPkgInstallInstructions = () => {
       <div style={{paddingLeft: '16px', paddingBottom: '8px'}}>
         <label style={{display: 'block', fontWeight: 'normal'}}>
           <input style={{marginRight: '4px'}} type='radio' name='distro' value='yum' onChange={handleDistroChange} checked={pkgKind === 'yum'} />
-          RPM based (RHEL, Amazon Linux, Fedora, CentOS)
+          RPM based (RHEL, Amazon Linux, CentOS, Oracle Linux, Rocky Linux, Fedora)
         </label>
         <label style={{display: 'block', fontWeight: 'normal'}}>
           <input style={{marginRight: '4px'}} type='radio' name='distro' value='deb' onChange={handleDistroChange} checked={pkgKind === 'deb'} />
@@ -38,12 +38,12 @@ const CollectorPkgInstallInstructions = () => {
 
 type YumProps = {
   kind: 'yum'
-  distro: 'el/8' | 'el/7' | 'fedora/30' | 'fedora/29'
+  distro: 'el/8' | 'el/7' | 'fedora/35'
 }
 
 type DebProps = {
   kind: 'deb'
-  distro: "ubuntu/focal" | "ubuntu/bionic" | "ubuntu/xenial" | "debian/buster" | "debian/stretch"
+  distro: "ubuntu/jammy" | "ubuntu/focal" | "ubuntu/bionic" | "debian/buster" | "debian/stretch"
 }
 
 type Props = YumProps | DebProps
@@ -54,17 +54,17 @@ const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'k
   switch (kind) {
     case 'yum':
       installOpts = [
-        [ 'el8', 'el/8', 'RHEL 8' ],
-        [ 'el7', 'el/7', 'RHEL 7 / Amazon Linux 2' ],
-        [ 'fedora30', 'fedora/30', 'Fedora 30' ],
-        [ 'fedora29', 'fedora/29', 'Fedora 29' ],
+        [ 'el8', 'el/8', 'RHEL / Rocky / OL 8' ],
+        [ 'el7', 'el/7', 'RHEL / CentOS 7' ],
+        [ 'al2', 'el/7', 'Amazon Linux 2' ],
+        [ 'fedora35', 'fedora/35', 'Fedora 35' ],
       ]
       break
     case 'deb':
       installOpts = [
+        ["jammy", "ubuntu/jammy", "Ubuntu 22.04"],
         ["focal", "ubuntu/focal", "Ubuntu 20.04"],
         ["bionic", "ubuntu/bionic", "Ubuntu 18.04"],
-        ["xenial", "ubuntu/xenial", "Ubuntu 16.04"],
         ["buster", "debian/buster", "Debian 10"],
         ["stretch","debian/stretch",  "Debian 9"],
       ]
