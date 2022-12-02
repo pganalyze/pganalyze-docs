@@ -72,6 +72,10 @@
       "title": "pganalyze Collector settings",
       "path": "/docs/collector/settings"
     },
+    "collector/upgrading": {
+      "title": "Upgrading the pganalyze Collector",
+      "path": "/docs/collector/upgrading"
+    },
     "connections": {
       "title": "Monitoring Postgres connections",
       "path": "/docs/connections"
