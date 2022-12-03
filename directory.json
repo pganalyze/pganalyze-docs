@@ -757,7 +757,7 @@
       "path": "/docs/log-insights/setup/crunchy-bridge/01_create_helper_function_and_test"
     },
     "log-insights/setup/google-cloud-sql": {
-      "title": "Log Insights: Setup (Google Cloud SQL)",
+      "title": "Log Insights: Setup (Google Cloud SQL and AlloyDB)",
       "path": "/docs/log-insights/setup/google-cloud-sql"
     },
     "log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber": {

@@ -1,6 +1,6 @@
 ---
 title: 'Step 4: Configure Collector'
-install_track_title: 'Log Insights: Setup (Google Cloud SQL)'
+install_track_title: 'Log Insights: Setup (Google Cloud SQL and AlloyDB)'
 backlink_href: /docs/log-insights/setup
 backlink_title: 'Log Insights: Setup'
 ---
@@ -16,7 +16,7 @@ Next, update the collector configuration for this server.
 
 The value for the setting should be set to the "Subscription name" you can see when clicking on the details for the Pub/Sub subscriber we created earlier.
 
-<CollectorLogTest provider="Google Cloud SQL" configFromEnv={props.configFromEnv} />
+<CollectorLogTest provider="Google Cloud SQL and AlloyDB" configFromEnv={props.configFromEnv} />
 
 For additional help when you get an error please check our
 [troubleshooting documentation](https://pganalyze.com/docs/log-insights/setup/google-cloud-sql/troubleshooting).

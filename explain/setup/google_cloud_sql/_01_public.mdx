@@ -3,7 +3,7 @@ import AutoExplainNotice from '../_auto_explain_notice.mdx'
 # Check if auto_explain already enabled
 
 First, to check if `auto_explain` is already enabled on your system, run the following
-query as user with the `cloudsqlsuperuser` role:
+query as user with the `cloudsqlsuperuser` / `alloydbsuperuser` role:
 
 ```sql
 SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';

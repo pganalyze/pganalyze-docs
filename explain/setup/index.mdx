@@ -30,17 +30,17 @@ Log-based EXPLAIN is not guaranteed to show the same plan that was executed, and
 
 ### Supported platforms
 
-Platform         | Log-based EXPLAIN |    auto_explain   |
------------------|-------------------|-------------------|
-Amazon RDS       | Yes               | Yes (Recommended) |
-Azure Database   | Yes               | No                |
-Google Cloud SQL | Yes               | Yes (Recommended) |
-Heroku Postgres  | Yes               | No                |
-Crunchy Bridge   | Yes               | No                |
-Aiven            | Yes               | No                |
-Self-managed VM  | Yes               | Yes (Recommended) |
-Kubernetes       | No                | No                |
-Other PaaS       | Contact support   | Contact support   |
+Platform                      | Log-based EXPLAIN |    auto_explain   |
+------------------------------|-------------------|-------------------|
+Amazon RDS and Amazon Aurora  | Yes               | Yes (Recommended) |
+Azure Database for PostgreSQL | Yes               | No                |
+Google Cloud SQL and AlloyDB  | Yes               | Yes (Recommended) |
+Heroku Postgres               | Yes               | No                |
+Crunchy Bridge                | Yes               | No                |
+Aiven                         | Yes               | No                |
+Self-managed VM               | Yes               | Yes (Recommended) |
+Kubernetes                    | No                | No                |
+Other PaaS                    | Contact support   | Contact support   |
 
 We are constantly evaluating new platform to support - please [reach out](/contact) if you're missing an integration, to help us prioritize.
 
@@ -51,7 +51,7 @@ See the following pages for details on how to install pganalyze Automated EXPLAI
 
 * [Amazon RDS & Amazon Aurora](/docs/explain/setup/amazon_rds/01_auto_explain_check)
 * [Azure Database for PostgreSQL](/docs/explain/setup/log_explain/01_create_helper_functions)
-* [Google Cloud SQL](/docs/explain/setup/google_cloud_sql/01_auto_explain_check)
+* [Google Cloud SQL and AlloyDB](/docs/explain/setup/google_cloud_sql/01_auto_explain_check)
 * [Heroku Postgres](/docs/explain/setup/heroku/01_enable_log_explain)
 * [Crunchy Bridge](/docs/explain/setup/crunchy_bridge/01_create_helper_functions)
 * [Aiven](/docs/explain/setup/log_explain/01_create_helper_functions)

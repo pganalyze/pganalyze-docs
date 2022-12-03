@@ -1,6 +1,6 @@
 ---
 title: 'Step 3: Review auto_explain settings'
-install_track_title: 'Automated EXPLAIN: Setup (Google Cloud SQL)'
+install_track_title: 'Automated EXPLAIN: Setup (Google Cloud SQL and AlloyDB)'
 backlink_href: /docs/explain/setup
 backlink_title: 'Automated EXPLAIN: Setup'
 ---
@@ -9,7 +9,7 @@ import PgSettingsRecommendations, { getAutoExplainSettingRecommendations } from 
 
 import imgGcpAutoExplainSettings from '../../../images/gcp_auto_explain_settings.png'
 
-export const ImgGCPAutoExplainSettings = () => <img src={imgGcpAutoExplainSettings} alt="Configure auto_explain for your Google Cloud SQL database" />
+export const ImgGCPAutoExplainSettings = () => <img src={imgGcpAutoExplainSettings} alt="Configure auto_explain for your Google Cloud SQL / AlloyDB database" />
 
 export const AutoExplainLink = ({version, children}) => {
   return (
@@ -27,7 +27,7 @@ but we've found the following is a good starting point:
 
 <PgSettingsRecommendations recommendations={getAutoExplainSettingRecommendations(props.settings)} />
 
-Apply the settings above as Google Cloud SQL flags for your database:
+Apply the settings above as Google Cloud SQL / AlloyDB flags for your database:
 
 <ImgGCPAutoExplainSettings />
 

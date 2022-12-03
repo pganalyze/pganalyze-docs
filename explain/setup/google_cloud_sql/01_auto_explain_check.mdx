@@ -1,6 +1,6 @@
 ---
 title: 'Step 1: Check for auto_explain'
-install_track_title: 'Automated EXPLAIN: Setup (Google Cloud SQL)'
+install_track_title: 'Automated EXPLAIN: Setup (Google Cloud SQL and AlloyDB)'
 backlink_href: /docs/explain/setup
 backlink_title: 'Automated EXPLAIN: Setup'
 ---
@@ -8,7 +8,7 @@ backlink_title: 'Automated EXPLAIN: Setup'
 import GCPStep01InApp from './_01_in_app.mdx'
 import GCPStep01Public from './_01_public.mdx'
 
-The recommended Automated EXPLAIN configuration for Google Cloud SQL is to use
+The recommended Automated EXPLAIN configuration for Google Cloud SQL and AlloyDB is to use
 the Postgres `auto_explain` contrib module. This ensures accurate and detailed plan
 information, including runtime information (as gathered by EXPLAIN ANALYZE). With our
 recommended configuration (presented in a later step), performance overhead is minimal.

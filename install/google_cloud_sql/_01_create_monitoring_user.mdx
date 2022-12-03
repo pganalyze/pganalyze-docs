@@ -10,7 +10,7 @@ We recommend creating a separate monitoring user on your PostgreSQL database for
 
 ## Enabling pg_stat_statements
 
-Connect to your database with **cloudsqlsuperuser privileges** (i.e. the initial user that was created on instance creation), e.g. using `psql`.
+Connect to your database with **cloudsqlsuperuser / alloydbsuperuser** privileges (i.e. the initial user that was created on instance creation), e.g. using `psql`.
 
 Run the following SQL commands to enable the `pg_stat_statements` extension, and make sure it was installed correctly:
 
@@ -21,13 +21,13 @@ SELECT * FROM pg_stat_statements LIMIT 1;
 
 ## Create monitoring user
 
-Connect to the database you will be monitoring, again as a user with **cloudsqlsuperuser privileges**.
+Connect to the database you will be monitoring, again as a user with **cloudsqlsuperuser / alloydbsuperuser** privileges.
 Then run the following to create a monitoring user (we've generated a random password for you, but you
 can replace it with one of your choosing):
 
 <MonitoringUserSetupInstructions minPostgres={100000} password={props.password} />
 
-Note that it is important you run these as a user with **cloudsqlsuperuser privileges** in order to pass down the full access to statistics tables.
+Note that it is important you run these as a user with **cloudsqlsuperuser / alloydbsuperuser** privileges in order to pass down the full access to statistics tables.
 
 ## Verify connection
 
