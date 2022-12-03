@@ -1,0 +1,8 @@
+- mount: explain/join-nodes
+  items:
+  - name: Hash Join
+    href: explain/join-nodes/hash-join
+  - name: Merge Join
+    href: explain/join-nodes/merge-join
+  - name: Nested Loop
+    href: explain/join-nodes/nested-loop

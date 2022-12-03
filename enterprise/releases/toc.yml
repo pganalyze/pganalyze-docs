@@ -1,0 +1,58 @@
+- mount: enterprise/releases
+  items:
+  - name: 2022.08.1 Release
+    href: enterprise/releases/2022-08-1
+  - name: 2022.08.0 Release
+    href: enterprise/releases/2022-08-0
+  - name: 2022.05.1 Release
+    href: enterprise/releases/2022-05-1
+  - name: 2022.05.0 Release
+    href: enterprise/releases/2022-05-0
+  - name: 2021.12.1 Release
+    href: enterprise/releases/2021-12-1
+  - name: 2021.12.0 Release
+    href: enterprise/releases/2021-12-0
+  - name: 2021.06.0 Release
+    href: enterprise/releases/2021-06-0
+  - name: 2021.02.0 Release
+    href: enterprise/releases/2021-02-0
+  - name: 2020.09.0 Release
+    href: enterprise/releases/2020-09-0
+  - name: 2020.07.2 Release
+    href: enterprise/releases/2020-07-2
+  - name: 2020.07.1 Release
+    href: enterprise/releases/2020-07-1
+  - name: 2020.07.0 Release
+    href: enterprise/releases/2020-07-0
+  - name: 2019.04.1 Release
+    href: enterprise/releases/2019-04-1
+  - name: 2019.04.0 Release
+    href: enterprise/releases/2019-04-0
+  - name: 2018.09.0 Release
+    href: enterprise/releases/2018-09-0
+  - name: 2018.08.2 Release
+    href: enterprise/releases/2018-08-2
+  - name: 2018.08.1 Release
+    href: enterprise/releases/2018-08-1
+  - name: 2018.08.0 Release
+    href: enterprise/releases/2018-08-0
+  - name: 2018.07.0 Release
+    href: enterprise/releases/2018-07-0
+  - name: 2018.02.4 Release
+    href: enterprise/releases/2018-02-4
+  - name: 2018.02.3 Release
+    href: enterprise/releases/2018-02-3
+  - name: 2018.02.2 Release
+    href: enterprise/releases/2018-02-2
+  - name: 2018.02.1 Release
+    href: enterprise/releases/2018-02-1
+  - name: 2018.02.0 Release
+    href: enterprise/releases/2018-02-0
+  - name: 2017.12.0 Release
+    href: enterprise/releases/2017-12-0
+  - name: 2017.11.0 Release
+    href: enterprise/releases/2017-11-0
+  - name: 2017.10.0 Release
+    href: enterprise/releases/2017-10-0
+  - name: 2017.08.0 Release
+    href: enterprise/releases/2017-08-0

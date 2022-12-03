@@ -1,0 +1,28 @@
+- mount: explain/setup
+  items:
+  - name: Overview
+    href: explain/setup
+  - name: auto_explain
+    href: explain/setup/auto_explain
+  - name: Log-based EXPLAIN
+    href: explain/setup/log_explain
+- mount: explain/setup/auto_explain
+  items:
+  - name: Overview
+    href: explain/setup/auto_explain
+  - name: Amazon RDS & Amazon Aurora
+    href: explain/setup/amazon_rds
+  - name: Google Cloud SQL
+    href: explain/setup/google_cloud_sql
+  - name: Self-Managed Server
+    href: explain/setup/self_managed
+- mount: explain/setup/log_explain
+  items:
+  - name: Overview
+    href: explain/setup/log_explain
+  - name: Heroku Postgres
+    href: explain/setup/heroku
+  - name: Crunchy Bridge
+    href: explain/setup/crunchy_bridge
+  - name: Other platforms
+    href: explain/setup/log_explain/

@@ -1,0 +1,29 @@
+- mount: install
+  items:
+  - name: Overview
+    href: install
+  - name: Initial Setup
+    href: install/ # Not an actual link (mounted below)
+  - name: Log Insights Setup
+    href: log-insights/setup
+  - name: Automated EXPLAIN Setup
+    href: explain/setup
+  - name: Troubleshooting
+    href: install/troubleshooting
+- mount: install/
+  items:
+  - name: Amazon RDS and Amazon Aurora
+    href: install/amazon_rds
+  - name: Azure Database for PostgreSQL
+    href: install/azure_database
+  - name: Google Cloud SQL
+    href: install/google_cloud_sql
+  - name: Heroku Postgres
+    href: install/heroku_postgres
+  - name: Crunchy Bridge
+    href: install/crunchy_bridge
+  - name: Aiven
+    href: install/aiven
+  - name: Self-managed (and other hosted Postgres)
+    href: install/self_managed
+

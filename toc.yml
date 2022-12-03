@@ -1,0 +1,28 @@
+- root: true
+  items:
+  - name: Overview
+    href: ""
+  - name: Installation Guide
+    href: install
+  - name: pganalyze Collector
+    href: collector
+  - name: Index Advisor
+    href: index-advisor
+  - name: Indexing Engine
+    href: indexing-engine
+  - name: Alerts & Check-Up
+    href: checks
+  - name: Connections
+    href: connections
+  - name: Account Management
+    href: accounts
+  - name: Log Insights
+    href: log-insights
+  - name: EXPLAIN
+    href: explain
+  - name: pganalyze Enterprise Server
+    href: enterprise
+  - name: pganalyze GraphQL API
+    href: api
+  - name: Open-Source Components
+    href: open_source_components

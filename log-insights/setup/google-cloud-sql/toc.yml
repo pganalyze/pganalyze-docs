@@ -1,0 +1,10 @@
+- mount: log-insights/setup/google-cloud-sql
+  items:
+  - name: "Step 1: Create Topic and Subscriber"
+    href: log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber
+  - name: "Step 2: Configure Log Routing"
+    href: log-insights/setup/google-cloud-sql/02_configure_log_routing
+  - name: "Step 3: Set Up Service Account"
+    href: log-insights/setup/google-cloud-sql/03_set_up_service_account
+  - name: "Step 4: Configure Collector"
+    href: log-insights/setup/google-cloud-sql/04_configure_collector

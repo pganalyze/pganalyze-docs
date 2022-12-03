@@ -1,0 +1,42 @@
+- mount: explain/other-nodes
+  items:
+  - name: Aggregate
+    href: explain/other-nodes/aggregate
+  - name: Append
+    href: explain/other-nodes/append
+  - name: Bitmap And
+    href: explain/other-nodes/bitmap-and
+  - name: Bitmap Or
+    href: explain/other-nodes/bitmap-or
+  - name: Gather Merge
+    href: explain/other-nodes/gather-merge
+  - name: Gather
+    href: explain/other-nodes/gather
+  - name: Group
+    href: explain/other-nodes/group
+  - name: Hash
+    href: explain/other-nodes/hash
+  - name: Limit
+    href: explain/other-nodes/limit
+  - name: Lock Rows
+    href: explain/other-nodes/lock-rows
+  - name: Materialize
+    href: explain/other-nodes/materialize
+  - name: Merge Append
+    href: explain/other-nodes/merge-append
+  - name: Modify Table
+    href: explain/other-nodes/modify-table
+  - name: Project Set
+    href: explain/other-nodes/project-set
+  - name: Recursive Union
+    href: explain/other-nodes/recursive-union
+  - name: Result
+    href: explain/other-nodes/result
+  - name: SetOp
+    href: explain/other-nodes/set-op
+  - name: Sort
+    href: explain/other-nodes/sort
+  - name: Unique
+    href: explain/other-nodes/unique
+  - name: Window Aggregate
+    href: explain/other-nodes/window-aggregate

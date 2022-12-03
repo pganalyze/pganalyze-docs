@@ -1,0 +1,8 @@
+- mount: install/troubleshooting
+  items:
+  - name: Collector crashes
+    href: install/troubleshooting/collector_crash
+  - name: 'Resolving the "Limited access to table column statistics" warning'
+    href: install/troubleshooting/column_stats_helper
+  - name: 'Amazon RDS: Resolving the "pg_stat_statements must be loaded via shared_preload_libraries" error'
+    href: install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries

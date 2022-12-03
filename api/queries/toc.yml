@@ -1,0 +1,6 @@
+- mount: api/queries
+  items:
+  - name: getIssues
+    href: api/queries/getIssues
+  - name: getQueryStats
+    href: api/queries/getQueryStats

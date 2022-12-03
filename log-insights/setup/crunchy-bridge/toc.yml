@@ -1,0 +1,4 @@
+- mount: log-insights/setup/crunchy-bridge
+  items:
+  - name: "Step 1: Create helper function and test"
+    href: log-insights/setup/crunchy-bridge/01_create_helper_function_and_test

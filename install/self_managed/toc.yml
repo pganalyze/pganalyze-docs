@@ -1,0 +1,46 @@
+- mount: install/self_managed
+  items:
+  - name: "Choose Setup Method"
+    href: install/self_managed/00_choose_setup_method
+  - name: "Guided Setup"
+    href: install/self_managed/01_guided_setup
+  - name: "Manual Setup"
+    href: install/self_managed/ # Not an actual link (mounted below)
+- mount: install/self_managed/
+  items:
+  - name: "Step 1: Create Monitoring User"
+    href: install/self_managed/01_create_monitoring_user
+  - name: "Step 2: Enable pg_stat_statements"
+    href: install/self_managed/02_enable_pg_stat_statements
+  - name: "Step 3: Install the collector"
+    href: install/self_managed/03_install_the_collector
+  - name: "Step 4: Configure the collector"
+    href: install/self_managed/04_configure_the_collector
+- mount: install/self_managed/02_enable_pg_stat_statements
+  items:
+  - name: Choose deployment
+    href: install/self_managed/02_enable_pg_stat_statements
+  - name: Ubuntu & Debian
+    href: install/self_managed/02_enable_pg_stat_statements_deb
+  - name: RHEL, CentOS & Fedora
+    href: install/self_managed/02_enable_pg_stat_statements_yum
+  - name: Docker
+    href: install/self_managed/02_enable_pg_stat_statements_docker
+- mount: install/self_managed/03_install_the_collector
+  items:
+  - name: Choose deployment
+    href: install/self_managed/03_install_the_collector
+  - name: Ubuntu & Debian
+    href: install/self_managed/03_install_the_collector_deb
+  - name: RHEL, CentOS & Fedora
+    href: install/self_managed/03_install_the_collector_yum
+  - name: Docker
+    href: install/self_managed/03_install_the_collector_docker
+- mount: install/self_managed/04_configure_the_collector
+  items:
+  - name: Choose deployment
+    href: install/self_managed/04_configure_the_collector
+  - name: Package-based
+    href: install/self_managed/04_configure_the_collector_package
+  - name: Docker
+    href: install/self_managed/04_configure_the_collector_docker

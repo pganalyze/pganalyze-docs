@@ -1,0 +1,10 @@
+- mount: explain/setup/amazon_rds
+  items:
+  - name: "Step 1: Check for auto_explain"
+    href: explain/setup/amazon_rds/01_auto_explain_check
+  - name: "Step 2: Enable auto_explain"
+    href: explain/setup/amazon_rds/02_enable_auto_explain
+  - name: "Step 3: Review auto_explain settings"
+    href: explain/setup/amazon_rds/03_review_settings
+  - name: "Step 4: Test and Verify"
+    href: explain/setup/amazon_rds/04_test_and_verify

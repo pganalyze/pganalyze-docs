@@ -1,0 +1,8 @@
+- mount: log-insights/setup/heroku-postgres
+  items:
+  - name: "Step 1: Add Log Drain"
+    href: log-insights/setup/heroku-postgres/01_add_log_drain
+  - name: "Step 2: Verify Log Drain"
+    href: log-insights/setup/heroku-postgres/02_verify_log_drain
+  - name: "Step 3: Restar Collector"
+    href: log-insights/setup/heroku-postgres/03_restart_collector

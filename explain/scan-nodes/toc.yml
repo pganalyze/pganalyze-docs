@@ -1,0 +1,30 @@
+- mount: explain/scan-nodes
+  items:
+  - name: Sequential Scan
+    href: explain/scan-nodes/sequential-scan
+  - name: Index Scan
+    href: explain/scan-nodes/index-scan
+  - name: Index-Only Scan
+    href: explain/scan-nodes/index-only-scan
+  - name: Bitmap Heap Scan
+    href: explain/scan-nodes/bitmap-heap-scan
+  - name: Bitmap Index Scan
+    href: explain/scan-nodes/bitmap-index-scan
+  - name: CTE Scan
+    href: explain/scan-nodes/cte-scan
+  - name: Custom Scan
+    href: explain/scan-nodes/custom-scan
+  - name: Foreign Scan
+    href: explain/scan-nodes/foreign-scan
+  - name: Function Scan
+    href: explain/scan-nodes/function-scan
+  - name: Subquery Scan
+    href: explain/scan-nodes/subquery-scan
+  - name: Table Sample Scan
+    href: explain/scan-nodes/table-sample-scan
+  - name: Tid Scan
+    href: explain/scan-nodes/tid-scan
+  - name: Values Scan
+    href: explain/scan-nodes/values-scan
+  - name: Work Table Scan
+    href: explain/scan-nodes/work-table-scan

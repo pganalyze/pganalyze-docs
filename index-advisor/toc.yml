@@ -1,0 +1,10 @@
+- mount: index-advisor
+  items:
+  - name: "Getting Started"
+    href: index-advisor/getting-started
+  - name: "How to Reason About Missing Index Opportunities"
+    href: index-advisor/reason-about-opportunities
+  - name: "How to Test Missing Index Opportunities"
+    href: index-advisor/test-opportunities
+  - name: "Track Index Opportunities With Alerts"
+    href: index-advisor/checks-and-alerts 
