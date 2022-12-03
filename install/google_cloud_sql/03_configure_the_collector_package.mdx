@@ -1,6 +1,6 @@
 ---
 title: 'Step 3: Configure the Collector'
-install_track_title: Installation Guide (Google Cloud SQL)
+install_track_title: Installation Guide (Google Cloud SQL and AlloyDB)
 backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
@@ -46,11 +46,15 @@ The collector configuration file lives in `/etc/pganalyze-collector.conf`, and l
 Fill in the values step-by-step:
 
 1. <APIKeyInstructions apiKey={props.apiKey} />
-2. The `db_host` is the IP address of your Google Cloud SQL instance
-3. The `db_name` is the database on the Google Cloud SQL instance you want to monitor
+2. The `db_host` is the IP address of your Google Cloud SQL / AlloyDB instance
+3. The `db_name` is the database on the Google Cloud SQL / AlloyDB instance you want to monitor
 4. The `db_username` and `db_password` should be the credentials of the monitoring user we created in Step 1
-5. The `gcp_project_id` should match the name of the GCP project that contains your Cloud SQL instance
-6. The `gcp_cloudsql_instance_id` should match the name of the Cloud SQL instance
+5. The `gcp_project_id` should match the name of the GCP project that contains your Cloud SQL / AlloyDB instance
+6. The `gcp_cloudsql_instance_id` should match the name of the Cloud SQL instance - if using AlloyDB see below
+
+## Instructions for Google AlloyDB
+
+If you are using Google AlloyDB, do not specify `gcp_cloudsql_instance_id`, but instead specify `gcp_alloydb_cluster_id` (set to the name of the cluster) and `gcp_alloydb_instance_id` (set to the instance name within the cluster).
 
 ## Testing the new configuration
 

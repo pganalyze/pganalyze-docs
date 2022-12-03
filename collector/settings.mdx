@@ -406,7 +406,7 @@ Only relevant if you are running your database in Azure using Azure Database for
 
 ## Google Cloud Platform
 
-Only relevant if you are running your database in GCP using Google Cloud SQL. See the <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql">GCP setup instructions</a> for details.
+Only relevant if you are running your database in GCP using Google Cloud SQL or Google AlloyDB. See the <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql">GCP setup instructions</a> for details.
 
 <table>
   <thead>
@@ -419,8 +419,18 @@ Only relevant if you are running your database in GCP using Google Cloud SQL. Se
   <tbody>
     <tr>
       <td>gcp_cloudsql_instance_id (<code>GCP_CLOUDSQL_INSTANCE_ID</code>)</td>
-      <td>n/a, required for Log Insights</td>
+      <td>n/a, required for Log Insights (for Cloud SQL)</td>
       <td>Google Cloud SQL instance ID</td>
+    </tr>
+    <tr>
+      <td>gcp_alloydb_cluster_id (<code>GCP_ALLOYDB_CLUSTER_ID</code>)</td>
+      <td>n/a, required for Log Insights (for AlloyDB)</td>
+      <td>Google AlloyDB cluster ID</td>
+    </tr>
+    <tr>
+      <td>gcp_alloydb_instance_id (<code>GCP_ALLOYDB_INSTANCE_ID</code>)</td>
+      <td>n/a, required for Log Insights (for AlloyDB)</td>
+      <td>Google AlloyDB instance ID (within the given cluster)</td>
     </tr>
     <tr>
       <td>gcp_project_id (<code>GCP_PROJECT_ID</code>)</td>

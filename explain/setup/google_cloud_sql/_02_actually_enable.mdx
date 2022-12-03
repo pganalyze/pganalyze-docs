@@ -1,11 +1,11 @@
 import gcpEnableAutoExplain from '../../../images/gcp_enable_auto_explain.png'
 
-export const ImgGCPEnableAutoExplain = () => <img src={gcpEnableAutoExplain} alt="Enable auto_explain for your Google Cloud SQL database" />
+export const ImgGCPEnableAutoExplain = () => <img src={gcpEnableAutoExplain} alt="Enable auto_explain for your Google Cloud SQL / AlloyDB database" />
 
 To enable `auto_explain`, you will need to go to click "EDIT" on top of the Overview page
-for your database, scroll down to the Flags section, and turn on the `cloudsql.enable_auto_explain`
+for your database, scroll down to the Flags section, and turn on the `cloudsql.enable_auto_explain` / `alloydb.enable_auto_explain`
 flag. This will add `auto_explain` to the Postgres `shared_preload_libraries` setting (you cannot
-modify this directly on Google Cloud SQL):
+modify this directly on Google Cloud SQL / AlloyDB):
 
 <ImgGCPEnableAutoExplain />
 

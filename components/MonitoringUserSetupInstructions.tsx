@@ -363,13 +363,13 @@ function getProviderName(systemType: string): string {
     case 'self_managed':
       return 'your Postgres install';
     case 'amazon_rds':
-      return 'Amazon RDS';
+      return 'Amazon RDS and Amazon Aurora';
     case 'heroku':
       return 'Heroku Postgres';
     case 'google_cloudsql':
-      return 'Google Cloud SQL';
+      return 'Google Cloud SQL and AlloyDB';
     case 'azure_database':
-      return 'Azure Database';
+      return 'Azure Database for PostgreSQL';
     case 'crunchy_bridge':
       return 'Crunchy Bridge';
     case 'aiven':
