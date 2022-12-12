@@ -1,0 +1,54 @@
+---
+title: 'Step 1: Configure Azure Database for PostgreSQL Instance'
+install_track_title: Installation Guide (Azure Database for PostgreSQL)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import imgAzureServerParams from '../../images/azure_server_params.png'
+
+export const ImgAzureServerParams = () => <img src={imgAzureServerParams} />
+
+
+In order to set up pganalyze monitoring for [Azure Databse for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/) you'll need
+to first follow these steps to enable the [pg\_stat\_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html)
+extension for collecting query statistics.
+
+This guide assumes you have an already running Azure Database for PostgreSQL server you want to monitor.
+
+---
+
+## Enabling pg\_stat\_statements
+
+In your [Azure Portal](https://portal.azure.com/), find your DB instance, and open the Server Parameters
+page. Filter parameters by `azure.extensions`, and enable `PG_STAT_STATEMENTS`, making sure to save settings.
+
+<ImgAzureServerParams />
+
+Note that this will reboot your database, if you haven't enabled pg\_stat\_statments before.
+
+---
+
+## Verify that pg\_stat\_statements is enabled
+
+Connect to your database as a user with **azure_pg_admin** privileges (usually the credentials you created the database with), e.g. using `psql`.
+
+Run the following SQL commands to enable the extension, and make sure it was installed correctly:
+
+```
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+SELECT * FROM pg_stat_statements LIMIT 1;
+```
+
+This should return one row of query statistics information - if it gives an error you might not have restarted your database or changed the configuration correctly.
+
+---
+
+Continue by creating the monitoring user:
+
+<Link className="btn btn-success" to="02_create_monitoring_user">
+  Proceed to Step 2: Create Monitoring User
+</Link>
+<br />
+<br />
+<div><SignupCTA event-label="Docs"></SignupCTA></div>

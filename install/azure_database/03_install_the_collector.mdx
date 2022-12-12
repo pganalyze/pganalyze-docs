@@ -1,5 +1,5 @@
 ---
-title: 'Step 2: Install the Collector'
+title: 'Step 3: Install the Collector'
 install_track_title: Installation Guide (Azure Database for PostgreSQL)
 backlink_href: /docs/install
 backlink_title: 'Installation Guide'
@@ -14,15 +14,15 @@ import imgLogoDocker from '../../images/docker.png'
 export const SelectCollectorPlatform = () => {
   return (
     <div className={styles.installChoice}>
-      <Link className={styles.installChoiceStep} to="02_install_the_collector_deb">
+      <Link className={styles.installChoiceStep} to="03_install_the_collector_deb">
         <img src={imgLogoUbuntu} />
         Ubuntu &amp; Debian VM
       </Link>
-      <Link className={styles.installChoiceStep} to="02_install_the_collector_yum">
+      <Link className={styles.installChoiceStep} to="03_install_the_collector_yum">
         <img src={imgLogoRedhat} />
         RHEL, CentOS &amp; Fedora VM
       </Link>
-      <Link className={styles.installChoiceStep} to="02_install_the_collector_docker">
+      <Link className={styles.installChoiceStep} to="03_install_the_collector_docker">
         <img src={imgLogoDocker} />
         Docker
       </Link>
