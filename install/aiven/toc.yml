@@ -8,11 +8,19 @@
     href: install/aiven/03_create_pg_stat_statements_helpers
   - name: "Step 4: Install the Collector"
     href: install/aiven/04_install_the_collector
+  - name: "Step 5: Configure the Collector"
+    href: install/aiven/05_configure_the_collector
+- mount: install/aiven/04_install_the_collector
+  items:
+  - name: Choose deployment
+    href: install/aiven/04_install_the_collector
   - name: "Step 4: Install the Collector (Package)"
     href: install/aiven/04_install_the_collector_package
   - name: "Step 4: Install the Collector (Docker)"
     href: install/aiven/04_install_the_collector_docker
-  - name: "Step 5: Configure the Collector"
+- mount: install/aiven/05_configure_the_collector
+  items:
+  - name: Choose deployment
     href: install/aiven/05_configure_the_collector
   - name: "Step 5: Configure the Collector (Package)"
     href: install/aiven/05_configure_the_collector_package
