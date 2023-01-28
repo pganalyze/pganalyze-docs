@@ -1,7 +1,7 @@
 {
   "pages": {
     "": {
-      "title": "Documentation",
+      "title": "Welcome to the pganalyze documentation!",
       "path": "/docs"
     },
     "accounts": {

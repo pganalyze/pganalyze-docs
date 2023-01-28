@@ -1,5 +1,164 @@
 ---
-title: 'Documentation'
+title: 'Welcome to the pganalyze documentation!'
 ---
 
-Please select a navigation item on the left.
+import styles from './style.module.scss'
+
+import imgLogoAiven from './images/logo_aiven.png'
+import imgLogoAws from './images/logo_aws.svg'
+import imgLogoAzure from './images/logo_microsoft_azure.png'
+import imgLogoGcp from './images/logo_google_cloud_platform.png'
+import imgLogoPgsql from './images/logo_postgres.svg'
+import imgLogoHeroku from './images/logo_heroku.svg'
+import imgLogoCrunchyBridge from './images/logo_crunchy_bridge.svg'
+
+import PublicOverview from './_install_public.mdx'
+
+Learn more about how pganalyze works, and how to connect it with your Postgres database. pganalyze enables you to deliver consistent PostgreSQL performance and availability, at any scale.
+
+## Installation guides
+
+In order to use pganalyze you need to install the pganalyze collector in your environment, either on the database server directly, or a container / VM close to it when using managed database services. The collector sends query data and other statistics on a continuous basis — to the pganalyze cloud service, or to your pganalyze Enterprise Server installation.
+
+To continue, select in which environment you are running your Postgres database:
+
+<div className={styles.overviewInstallChoice}>
+  <Link
+    className={styles.overviewInstallChoiceStep}
+    to="/docs/install/amazon_rds/01_configure_rds_instance"
+  >
+    <img src={imgLogoAws} alt="Logo of Amazon Web Services" />
+    <strong>Amazon Web Services</strong>
+  </Link>
+  <Link
+    className={styles.overviewInstallChoiceStep}
+    to="/docs/install/google_cloud_sql/01_create_monitoring_user"
+  >
+    <img src={imgLogoGcp} alt="Logo of Google Cloud Platform" />
+    <strong>Google Cloud Platform</strong>
+  </Link>
+  <Link
+    className={styles.overviewInstallChoiceStep}
+    to="/docs/install/azure_database/01_create_monitoring_user"
+  >
+    <img src={imgLogoAzure} alt="Logo of Microsoft Azure" />
+    <strong>Microsoft Azure</strong>
+  </Link>
+</div>
+<div className={styles.overviewInstallChoice}>
+  <Link
+    className={styles.overviewInstallChoiceStep}
+    to="/docs/install/self_managed/00_choose_setup_method"
+  >
+    <img src={imgLogoPgsql} alt="Logo of the PostgreSQL project" />
+    <strong>Self-Managed</strong>
+  </Link>
+  <Link
+    className={styles.overviewInstallChoiceStep}
+    to="/docs/install/crunchy_bridge/01_deploy_the_collector"
+  >
+    <img src={imgLogoCrunchyBridge} alt="Logo of Crunchy Bridge" />
+    <strong>Crunchy Bridge</strong>
+  </Link>
+  <Link
+    className={styles.overviewInstallChoiceStep}
+    to="/docs/install/heroku_postgres/01_deploy_the_collector"
+  >
+    <img src={imgLogoHeroku} alt="Logo of Heroku" />
+    <strong>Heroku Postgres</strong>
+  </Link>
+  <Link
+    className={styles.overviewInstallChoiceStep}
+    to="/docs/install/aiven/01_create_monitoring_user"
+  >
+    <img src={imgLogoAiven} alt="Logo of Aiven" />
+    <strong>Aiven</strong>
+  </Link>
+  {/* <img src="" /> -- If this comment is missing no images are rendered.. */}
+</div>
+
+## Explore how pganalyze works
+
+<div className={styles.overviewFeatureChoice}>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/index-advisor/getting-started"
+  >
+    <strong>pganalyze Index Advisor</strong>
+    Automatically finds missing indexes and unused index opportunities
+  </Link>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/indexing-engine"
+  >
+    <strong>Indexing Engine</strong>
+    Extracts table scans and identifies missing indexes using "What If?" analysis
+  </Link>
+</div>
+<div className={styles.overviewFeatureChoice}>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/checks"
+  >
+    <strong>Alerts & Check-Up</strong>
+    Detects common database problems and notifies via email, Slack and PagerDuty
+  </Link>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/connections"
+  >
+    <strong>Connections</strong>
+    Monitors wait events, lock problems and other activity in near-realtime
+  </Link>
+</div>
+<div className={styles.overviewFeatureChoice}>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/explain"
+  >
+    <strong>EXPLAIN</strong>
+    Collects query plans for slow Postgres queries and finds insights
+  </Link>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/log-insights"
+  >
+    <strong>Log Insights</strong>
+    Continuously monitors your Postgres error log for unexpected events
+  </Link>
+</div>
+
+## Manage your pganalyze installation
+
+<div className={styles.overviewFeatureChoice}>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/accounts"
+  >
+    <strong>Account Management & SSO</strong>
+    Manage accounts with different roles, and enable Single Sign-On through SAML
+  </Link>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/enterprise"
+  >
+    <strong>pganalyze Enterprise Server</strong>
+    Install pganalyze as a fully self-hosted version behind your firewall
+  </Link>
+</div>
+<div className={styles.overviewFeatureChoice}>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/collector"
+  >
+    <strong>pganalyze collector</strong>
+    Configure the agent that runs within your environment to collect data
+  </Link>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/api"
+  >
+    <strong>GraphQL API</strong>
+    Retrieve data that is available in pganalyze programatically
+  </Link>
+</div>
