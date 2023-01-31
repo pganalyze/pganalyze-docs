@@ -1,0 +1,28 @@
+- mount: indexing-engine
+  items:
+  - name: Overview
+    href: indexing-engine
+  - name: "Phase 1: Query Analysis"
+    href: indexing-engine-phase-1 # Not an actual link (only used below)
+  - name: "Phase 2: Index Selection"
+    href: indexing-engine-phase-2 # Not an actual link (only used below)
+  - name: Index Write Overhead
+    href: indexing-engine/index-write-overhead
+  - name: Changelog
+    href: indexing-engine/changelog
+  - name: Limitations
+    href: indexing-engine/limitations
+- mount: indexing-engine-phase-1
+  items:
+  - name: Query To Scan Breakdown
+    href: indexing-engine/query-to-scan-breakdown
+- mount: indexing-engine-phase-2
+  items:
+  - name: Extracting Index Element Candidates
+    href: indexing-engine/index-element-extraction
+  - name: Multi-Column Index Combinations
+    href: indexing-engine/multi-column-indexes
+  - name: What If? Analysis
+    href: indexing-engine/what-if-analysis
+  - name: '"Good Enough" Index Selection'
+    href: indexing-engine/good-enough-index-selection

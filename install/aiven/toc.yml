@@ -1,0 +1,28 @@
+- mount: install/aiven
+  items:
+  - name: "Step 1: Create Monitoring User"
+    href: install/aiven/01_create_monitoring_user
+  - name: "Step 2: Enable pg_stat_statements"
+    href: install/aiven/02_enable_pg_stat_statements
+  - name: "Step 3: Create pg_stat_statements Helpers"
+    href: install/aiven/03_create_pg_stat_statements_helpers
+  - name: "Step 4: Install the Collector"
+    href: install/aiven/04_install_the_collector
+  - name: "Step 5: Configure the Collector"
+    href: install/aiven/05_configure_the_collector
+- mount: install/aiven/04_install_the_collector
+  items:
+  - name: Choose deployment
+    href: install/aiven/04_install_the_collector
+  - name: "Step 4: Install the Collector (Package)"
+    href: install/aiven/04_install_the_collector_package
+  - name: "Step 4: Install the Collector (Docker)"
+    href: install/aiven/04_install_the_collector_docker
+- mount: install/aiven/05_configure_the_collector
+  items:
+  - name: Choose deployment
+    href: install/aiven/05_configure_the_collector
+  - name: "Step 5: Configure the Collector (Package)"
+    href: install/aiven/05_configure_the_collector_package
+  - name: "Step 5: Configure the Collector (Docker)"
+    href: install/aiven/05_configure_the_collector_docker

@@ -1,0 +1,63 @@
+- mount: checks
+  items:
+  - name: Overview
+    href: checks/
+  - name: Queries
+    href: checks/queries
+  - name: Connections
+    href: checks/connections
+  - name: Index Advisor
+    href: checks/index_advisor
+  - name: Schema
+    href: checks/schema
+  - name: Settings
+    href: checks/settings
+  - name: System
+    href: checks/system
+  - name: Replication
+    href: checks/replication
+# TODO: Should the check TOC items be auto-generated from the list in util/checks?
+- mount: checks/queries
+  items:
+  - name: New Slow Queries
+    href: checks/queries/slowness
+- mount: checks/connections
+  items:
+  - name: Active Queries
+    href: checks/connections/active_query
+  - name: Idle Transactions
+    href: checks/connections/idle_transaction
+  - name: Blocking Queries
+    href: checks/connections/blocking_query
+- mount: checks/index_advisor
+  items:
+  - name: Missing Index
+    href: checks/index_advisor/missing_index
+- mount: checks/schema
+  items:
+  - name: Invalid Indexes
+    href: checks/schema/index_invalid
+  - name: Unused Indexes
+    href: checks/schema/index_unused
+- mount: checks/settings
+  items:
+  - name: Config - Disabled features
+    href: checks/settings/enable_features
+  - name: Config - Disabled fsync
+    href: checks/settings/fsync
+  - name: Config - Too small shared_buffers
+    href: checks/settings/shared_buffers
+  - name: Config - Disabled stats collection
+    href: checks/settings/stats
+  - name: Config - Too small work_mem
+    href: checks/settings/work_mem
+- mount: checks/system
+  items:
+  - name: Out Of Disk Space
+    href: checks/system/storage_space
+- mount: checks/replication
+  items:
+  - name: Replication - High Lag
+    href: checks/replication/high_lag
+  - name: Replication - Missing HA Follower
+    href: checks/replication/follower_missing

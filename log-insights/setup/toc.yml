@@ -1,0 +1,30 @@
+- mount: log-insights/setup
+  items:
+  - name: Overview
+    href: log-insights/setup
+  - name: Amazon RDS and Amazon Aurora
+    href: log-insights/setup/amazon-rds
+  - name: Azure Database for PostgreSQL
+    href: log-insights/setup/azure-database
+  - name: Google Cloud SQL and AlloyDB
+    href: log-insights/setup/google-cloud-sql
+  - name: Heroku Postgres
+    href: log-insights/setup/heroku-postgres
+  - name: Crunchy Bridge
+    href: log-insights/setup/crunchy-bridge
+  - name: Aiven
+    href: log-insights/setup/aiven
+  - name: Self-Managed Server
+    href: log-insights/setup/self-managed
+  - name: Receive logs using Syslog
+    href: log-insights/setup/syslog-server
+  - name: Troubleshooting
+    href: log-insights/setup/troubleshooting # Not an actual link (mounted below)
+- mount: log-insights/setup/troubleshooting
+  items:
+  - name: Azure Database for PostgreSQL
+    href: log-insights/setup/azure-database/troubleshooting
+  - name: Google Cloud SQL and AlloyDB
+    href: log-insights/setup/google-cloud-sql/troubleshooting
+  - name: Self-Managed Server
+    href: log-insights/setup/self-managed/troubleshooting

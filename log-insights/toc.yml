@@ -1,0 +1,31 @@
+- mount: log-insights
+  items:
+  - name: Overview
+    href: log-insights
+  - name: Tuning Log Config Settings
+    href: log-insights/setup/tuning-log-config-settings
+  - name: Limits
+    href: log-insights/limits
+  - name: Classifications
+    href: log-insights/classifications
+    # ^ This is not an actual link, we just use it to attach ourselves
+- mount: log-insights/classifications
+  items:
+  - name: Server
+    href: log-insights/server
+  - name: Connections
+    href: log-insights/connections
+  - name: WAL & Checkpoints
+    href: log-insights/wal-checkpoints
+  - name: Autovacuum
+    href: log-insights/autovacuum
+  - name: Locks
+    href: log-insights/locks
+  - name: Statements
+    href: log-insights/statements
+  - name: Standby Servers
+    href: log-insights/standby
+  - name: Constraint Violations
+    href: log-insights/constraint-violations
+  - name: Application / User Errors
+    href: log-insights/app-errors

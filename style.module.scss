@@ -1,3 +1,82 @@
+.overviewInstallChoice, .overviewFeatureChoice {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.overviewInstallChoice, .overviewFeatureChoice {
+  margin-top: 15px;
+}
+.overviewInstallChoice + h2, .overviewFeatureChoice + h2 {
+  margin-top: 32px;
+}
+.overviewInstallChoiceStep, .overviewFeatureChoiceStep {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 8px 10px 8px;
+  background-color: #f8f8f8;
+  border-color: #e8e8e8;
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+    border-color: #e0e0e0;
+    background-color: #f0f0f0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  strong {
+    font-weight: 600;
+    display: block;
+  }
+}
+
+.overviewInstallChoiceStep {
+  img {
+    max-width: 100px;
+    height: 60px;
+    margin: 0;
+    padding: 5px 0 5px 0;
+    border: none;
+    order: 1;
+  }
+
+  img, strong {
+    align-self: center;
+    text-align: center;
+  }
+}
+
+.overviewFeatureChoiceStep {
+  flex-direction: column;
+}
+
+@media (min-width: 620px) {
+  .overviewInstallChoiceStep img {
+    order: 0;
+  }
+  .overviewInstallChoice, .overviewFeatureChoice {
+    margin-bottom: 10px;
+  }
+  .overviewInstallChoice {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .overviewInstallChoiceThree {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .overviewFeatureChoice {
+    grid-template-columns: 1fr 1fr;
+  }
+  .overviewInstallChoiceStep, .overviewFeatureChoiceStep {
+    flex-direction: column;
+  }
+}
+
 .installChoice {
   display: flex;
   margin-top: 20px;

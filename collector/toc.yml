@@ -1,0 +1,10 @@
+- mount: collector
+  items:
+  - name: Overview
+    href: collector
+  - name: Packages
+    href: collector/packages
+  - name: Configuration Settings
+    href: collector/settings
+  - name: Upgrading
+    href: collector/upgrading

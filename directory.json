@@ -1,7 +1,7 @@
 {
   "pages": {
     "": {
-      "title": "Documentation",
+      "title": "Welcome to the pganalyze documentation!",
       "path": "/docs"
     },
     "accounts": {
@@ -305,7 +305,7 @@
       "path": "/docs/explain/setup/crunchy_bridge/01_create_helper_functions"
     },
     "explain/setup/crunchy_bridge/02_enable_log_explain": {
-      "title": "Step 1: Enable log_explain",
+      "title": "Step 1: Enable log-based EXPLAIN",
       "path": "/docs/explain/setup/crunchy_bridge/02_enable_log_explain"
     },
     "explain/setup/crunchy_bridge/03_test_and_verify": {

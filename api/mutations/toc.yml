@@ -1,0 +1,4 @@
+- mount: api/mutations
+  items:
+  - name: addServer
+    href: api/mutations/addServer

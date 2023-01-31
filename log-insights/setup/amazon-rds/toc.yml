@@ -1,0 +1,4 @@
+- mount: log-insights/setup/amazon-rds
+  items:
+  - name: "Step 1: Test Log Download"
+    href: log-insights/setup/amazon-rds/01_test_log_download

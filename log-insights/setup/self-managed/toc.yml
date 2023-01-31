@@ -1,0 +1,6 @@
+- mount: log-insights/setup/self-managed
+  items:
+  - name: "Step 1: Determine Log Location"
+    href: log-insights/setup/self-managed/01_determine_log_location
+  - name: "Step 2: Configure Collector"
+    href: log-insights/setup/self-managed/02_configure_collector
