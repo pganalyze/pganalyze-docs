@@ -1,18 +1,21 @@
 .overviewInstallChoice, .overviewFeatureChoice {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.overviewInstallChoice, .overviewFeatureChoice {
   margin-top: 15px;
 }
 .overviewInstallChoice + h2, .overviewFeatureChoice + h2 {
   margin-top: 32px;
 }
 .overviewInstallChoiceStep, .overviewFeatureChoiceStep {
-  width: 90%;
   display: flex;
   justify-content: space-between;
-  align-items: left;
   border: 1px solid black;
   border-radius: 5px;
   padding: 8px 10px 8px;
-  margin-bottom: 10px;
   background-color: #f8f8f8;
   border-color: #e8e8e8;
   color: inherit;
@@ -29,13 +32,14 @@
 
   strong {
     font-weight: 600;
+    display: block;
   }
 }
 
 .overviewInstallChoiceStep {
   img {
-    max-width: 70%;
-    height: 55%;
+    max-width: 100px;
+    height: 60px;
     margin: 0;
     padding: 5px 0 5px 0;
     border: none;
@@ -48,9 +52,6 @@
   }
 }
 
-.overviewInstallChoiceStep {
-  height: 50px;
-}
 .overviewFeatureChoiceStep {
   flex-direction: column;
 }
@@ -60,19 +61,18 @@
     order: 0;
   }
   .overviewInstallChoice, .overviewFeatureChoice {
-    display: flex;
     margin-bottom: 10px;
   }
-  .overviewFeatureChoiceStep {
-    justify-content: space-between;
-    align-items: left;
+  .overviewInstallChoice {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .overviewInstallChoiceThree {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .overviewFeatureChoice {
+    grid-template-columns: 1fr 1fr;
   }
   .overviewInstallChoiceStep, .overviewFeatureChoiceStep {
-    flex-grow: 1;
-    width: 33%;
-    height: 80px;
-    margin-right: 20px;
-    margin-bottom: 0;
     flex-direction: column;
   }
 }
