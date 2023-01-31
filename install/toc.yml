@@ -26,4 +26,3 @@
     href: install/aiven
   - name: Self-managed (and other hosted Postgres)
     href: install/self_managed
-
