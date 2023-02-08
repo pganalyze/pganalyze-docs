@@ -162,7 +162,10 @@ export const DEFAULT_CHECK_CONFIGS = {
       enabled: true
     },
     index_unused: {
-      enabled: true
+      enabled: true,
+      settings: {
+        unused_days: 35
+      }
     },
   },
   settings: {

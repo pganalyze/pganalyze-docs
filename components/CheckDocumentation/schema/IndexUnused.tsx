@@ -12,15 +12,18 @@ import SQL from "../../SQL";
 import { useSmartAnchor } from "../../SmartAnchor";
 import { useCodeBlock } from "../../CodeBlock";
 
-const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
+const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({
+  config,
+}) => {
   return (
     <>
       <p>
-        Detects indexes that are not in use by any queries within the last 14
-        days and creates an issue with severity "info", one for each table (or
-        table hierarchy in case of inheritance or partitioning). Resolves once all unused indexes on a table
-        are dropped or start being used. Note that if you have gaps in your
-        collector reporting, this check may miss usage during un-reported
+        Detects indexes that are not in use by any queries within the last
+        <code>{config.settings["unused_days"]}</code> days and creates an
+        issue with severity "info", one for each table (or table hierarchy in
+        case of inheritance or partitioning). Resolves once all unused indexes
+        on a table are dropped or start being used. Note that if you have gaps
+        in your collector reporting, this check may miss usage during un-reported
         periods.
       </p>
       <p>
