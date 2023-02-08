@@ -11,7 +11,7 @@ import { MonitoringUserColumnStats, MonitoringUserLogRead } from "../../componen
 export const CollectorStartCommand = ({ apiKey, cmd, logExplain }) => {
   return (
     <CodeBlock>
-      {`SELECT run_container('` + (cmd ? '' : '-d ') + `-t -e DB_URL="REPLACE_ME" -e PGA_API_KEY="` + (apiKey ? apiKey : 'API_KEY') + '"' + (logExplain ? ' -e PGA_ENABLE_LOG_EXPLAIN=true' : '') + ` DB_ALL_NAMES=1 quay.io/pganalyze/collector:stable` + (cmd ? ` ${cmd}` : '') + `');`}
+      {`SELECT run_container('` + (cmd ? '' : '-d ') + `-t -e DB_URL="REPLACE_ME" -e PGA_API_KEY="` + (apiKey ? apiKey : 'API_KEY') + '"' + (logExplain ? ' -e PGA_ENABLE_LOG_EXPLAIN=true' : '') + ` -e DB_ALL_NAMES=1 quay.io/pganalyze/collector:stable` + (cmd ? ` ${cmd}` : '') + `');`}
     </CodeBlock>
   );
 };
