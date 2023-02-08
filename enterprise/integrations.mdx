@@ -21,11 +21,12 @@ this is done, go through the following:
     include the address where you're hosting pganalyze&mdash;e.g.,
     https://app.pganalyze.com for the public pganalyze app
  2. On the same page, the Scopes should be "channels:read" and "chat:write"
- 3. Copy the generated Client ID and Client Secret and set those as
-    `SLACK_CLIENT_ID` and `SLACK_CLIENT_SECRET` in your pganalyze config
- 4. Install your Slack app to your Slack workspace: You can do this in Slack
+ 3. Copy the generated Client ID and Client Secret and set those as environment variables
+    `SLACK_CLIENT_ID` and `SLACK_CLIENT_SECRET` in your pganalyze container configuration
+ 4. Restart the pganalyze Enterprise Server container to apply the new configuration
+ 5. Install your Slack app to your Slack workspace: You can do this in Slack
     through the Apps section in the left-hand menu
- 5. In pganalyze, go to the Integrations tab in the Settings page and enable
+ 6. In pganalyze, go to the Integrations tab in the Settings page and enable
     the Slack integration
 
 
@@ -40,9 +41,10 @@ through the following:
     include the address where you're hosting pganalyze&mdash;e.g.,
     https://app.pganalyze.com for the public pganalyze app (make sure to
     save your changes when done)
- 2. Copy the `app_id` from Integration Setup URL in that same section section,
-    and add that to your pganalyze config as `PAGERDUTY_APP_ID` (note that this
-    is *not* the same id you see in the URL bar)
- 3. In pganalyze, go to the Integrations tab in the Settings page and enable
+ 2. Copy the `app_id` from Integration Setup URL in that same section section
+    (note that this is *not* the same id you see in the URL bar),
+    and add that as the `PAGERDUTY_APP_ID` environment variable to your pganalyze configuration
+ 3. Restart the pganalyze Enterprise Server container to apply the new configuration
+ 4. In pganalyze, go to the Integrations tab in the Settings page and enable
     PagerDuty integration
 
