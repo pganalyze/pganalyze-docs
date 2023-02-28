@@ -1,26 +1,28 @@
 - mount: install/azure_database
   items:
-  - name: "Step 1: Create Monitoring User"
-    href: install/azure_database/01_create_monitoring_user
-  - name: "Step 2: Install the Collector"
-    href: install/azure_database/02_install_the_collector
-  - name: "Step 3: Configure the Collector"
-    href: install/azure_database/03_configure_the_collector
-- mount: install/azure_database/02_install_the_collector
+  - name: "Step 1: Configure Azure Instance"
+    href: install/azure_database/01_configure_azure_instance
+  - name: "Step 2: Create Monitoring User"
+    href: install/azure_database/02_create_monitoring_user
+  - name: "Step 3: Install the Collector"
+    href: install/azure_database/03_install_the_collector
+  - name: "Step 4: Configure the Collector"
+    href: install/azure_database/04_configure_the_collector
+- mount: install/azure_database/03_install_the_collector
   items:
   - name: Choose platform
-    href: install/azure_database/02_install_the_collector
+    href: install/azure_database/03_install_the_collector
   - name: Ubuntu & Debian
-    href: install/azure_database/02_install_the_collector_deb
+    href: install/azure_database/03_install_the_collector_deb
   - name: RHEL, CentOS & Fedora
-    href: install/azure_database/02_install_the_collector_yum
+    href: install/azure_database/03_install_the_collector_yum
   - name: Docker
-    href: install/azure_database/02_install_the_collector_docker
-- mount: install/azure_database/03_configure_the_collector
+    href: install/azure_database/03_install_the_collector_docker
+- mount: install/azure_database/04_configure_the_collector
   items:
   - name: Choose platform
-    href: install/azure_database/03_configure_the_collector
+    href: install/azure_database/04_configure_the_collector
   - name: Package-based
-    href: install/azure_database/03_configure_the_collector_package
+    href: install/azure_database/04_configure_the_collector_package
   - name: Docker
-    href: install/azure_database/03_configure_the_collector_docker
+    href: install/azure_database/04_configure_the_collector_docker
