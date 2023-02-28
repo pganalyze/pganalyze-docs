@@ -8,7 +8,7 @@ const CollectorSettings: React.FunctionComponent<{settings: CollectorSetting[], 
     return (
       <div>
         <p>
-          If using the config file, make the following changes to your <code>pganalyze-collector.conf</code>:
+          If using the config file, make the following changes, typically in <code>/etc/pganalyze-collector.conf</code>:
         </p>
         <CollectorConfigFileSettings settings={settings} />
         <p>
@@ -41,7 +41,7 @@ const CollectorConfigFileSettings: React.FunctionComponent<{settings: CollectorS
   return (
     <CodeBlock>
       {settings.map(([setting, value]) => {
-        return `${setting}: ${value}`
+        return `${setting} = ${value}`
       }).join("\n")}
     </CodeBlock>
   )
