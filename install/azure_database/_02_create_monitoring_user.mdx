@@ -2,7 +2,7 @@ import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetu
 
 export const VerifyConnection = ({password}) => {
   return (
-    <CodeBlock>PGPASSWORD={password} psql -h mydb.postgres.database.azure.com -d mydatabase -U pganalyze@mydb</CodeBlock>
+    <CodeBlock>PGPASSWORD={password} psql -h mydb.postgres.database.azure.com -d mydatabase -U pganalyze</CodeBlock>
   )
 }
 
