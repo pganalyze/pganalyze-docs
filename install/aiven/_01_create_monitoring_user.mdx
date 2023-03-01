@@ -6,7 +6,7 @@ Connect to the database you will be monitoring as the **avnadmin user**.
 Then run the following to create a new user (we've generated a random password for you, but you
 can replace it with one of your choosing):
 
-<MonitoringUserSetupInstructions password={props.password} adminUsername='avnadmin' minPostgres={100000} noPgMonitor />
+<MonitoringUserSetupInstructions password={props.password} adminUsername='avnadmin' noPgMonitor />
 
 Note that it is important you run these as the **avnadmin user** in order to
 pass down the full access to statistics tables.

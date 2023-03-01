@@ -25,7 +25,7 @@ Connect to the database you will be monitoring, again as a user with **cloudsqls
 Then run the following to create a monitoring user (we've generated a random password for you, but you
 can replace it with one of your choosing):
 
-<MonitoringUserSetupInstructions minPostgres={100000} password={props.password} />
+<MonitoringUserSetupInstructions password={props.password} />
 
 Note that it is important you run these as a user with **cloudsqlsuperuser / alloydbsuperuser** privileges in order to pass down the full access to statistics tables.
 
