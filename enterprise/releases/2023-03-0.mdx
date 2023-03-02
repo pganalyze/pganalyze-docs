@@ -23,7 +23,8 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 - Index Advisor improvements
   - New status page that shows when Index Advisor last processed a table, as well as any errors
   - Improve row size estimates for Index Write Overhead
-  - Multiple fixes to query analysis phase (if you've previously seen Index Advisor errors, these may now be resolved)
+  - Multiple fixes to query analysis phase
+    - If you've previously seen Index Advisor errors, these may now be resolved after the analysis has re-run (typically takes up to 24 hours)
   - Missing indexes:
     - Speed up detection of missing indexes on newly added databases
     - Detect newly added indexes that resolve a missing index recommendation right away
