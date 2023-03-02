@@ -18,11 +18,6 @@ The settings on this page can be passed in as environment variables into the pga
 * `MAILER_URL`: SMTP server used to send system emails, e.g. user invites (optional, recommended)
 * `MAILER_FROM`: "From" address used to send system emails (optional, recommended if setting MAILER_URL)
 * `REDIS_URL`: Redis server used for [scale out architecture](/enterprise/architecture) (optional, only needed when running Redis separately)
-* `DEFAULT_ORG_ROLE`: How new users are added to the organization when they sign up (optional, default: `none`)
-  - `none` - new users are not organization members and have to be invited by an existing user
-  - `admin` - assigns the role named "Admin (All Servers)"
-  - `modify_all` - assigns the role named "View & Modify (All Servers)"
-  - `view_all` - assigns the role named "View (All Servers)"
 
 An example configuration looks like this:
 
@@ -33,6 +28,19 @@ DOMAIN_NAME=pganalyze.example.com
 MAILER_URL=smtp://myusername:mypassword@example.com:25
 MAILER_FROM=pganalyze@example.com
 ```
+
+## Access control settings
+
+* `DISABLE_DIRECT_SIGNUP`: Whether direct signups to the pganalyze application are permitted (without requiring an invite or going through Single Sign-On)
+* `DEFAULT_ORG_ROLE`: How new users are added to the organization when they sign up (optional, default: `none`)
+  - `none` - new users are not organization members and have to be invited by an existing user (recommended)
+  - `admin` - assigns the role named "Admin (All Servers)"
+  - `modify_all` - assigns the role named "View & Modify (All Servers)"
+  - `view_all` - assigns the role named "View (All Servers)"
+
+**Important:** If you are hosting your pganalyze Enterprise Server installation on a publicly available interface (i.e. without explicit access control at the network level), we recommend setting `DISABLE_DIRECT_SIGNUP` to `1`. 
+
+Note that `DISABLE_DIRECT_SIGNUP` is not compatible with the `DEFAULT_ORG_ROLE` setting: If `DISABLE_DIRECT_SIGNUP` is enabled, and `DEFAULT_ORG_ROLE` is not `none`, it will be the same as setting it to `none`, since direct registrations are not possible.
 
 ## Object storage
 
