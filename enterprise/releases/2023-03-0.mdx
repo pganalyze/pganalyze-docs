@@ -1,0 +1,122 @@
+---
+title: '2023.03.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2023.03.0`
+
+## Notes
+
+- New minimum Postgres version for monitored servers: **Postgres 10 or newer**
+- New minimum required pganalyze collector version: [0.38.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0380------2021-03-31) or newer
+  - You may need to upgrade the collector if you run it outside the Enterprise Server container
+- Updated query fingerprinting mechanism to be compatible with Postgres 15
+  - You may see some queries in the system appear as new query records after the upgrade
+
+## Features
+
+- **Lock Monitoring**
+  - In the Connections view, you can now clearly see when queries are blocking each other, and find the root query blocking others
+  - New check-up for "Blocking Queries", which can proactively alert you of locking problems
+  - Read more in the [announcement blog post](https://pganalyze.com/blog/postgres-lock-monitoring)
+- Index Advisor improvements
+  - New status page that shows when Index Advisor last processed a table, as well as any errors
+  - Improve row size estimates for Index Write Overhead
+  - Multiple fixes to query analysis phase (if you've previously seen Index Advisor errors, these may now be resolved)
+  - Missing indexes:
+    - Speed up detection of missing indexes on newly added databases
+    - Detect newly added indexes that resolve a missing index recommendation right away
+    - Add support for fuzzystrmatch and unaccent extensions
+    - Avoid errors on materialized views involved in a schema definition
+    - Fix costing for Bitmap Heap Scans on existing indexes
+  - Unused indexes:
+    - Increase lookback period to 35 days by default, and make it customizable
+    - Improve handling of partitioned tables to determine whether an index is unused
+- Query tags improvements
+  - Add full support for [sqlcommenter](https://google.github.io/sqlcommenter/) syntax, including trace context
+  - Better detection of query comments by using Postgres scanner (instead of regexp matching)
+- Support for Postgres 15, including new query syntax
+  - Adds support for newer Postgres syntax added in 14 and 15, such as the MERGE command
+  - Note that this will cause query entries to reset in some cases, due to updates to the query fingerprint
+- Bundled collector upgraded to release [0.49.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0490------2023-02-27) (from v0.45.1 in the prior release)
+  - Enforce maximum time for each snapshot collection using deadlines
+    - This will help ensure consistent reporting intervals for collectors with a lot of monitored servers, and avoid "noisy neighbor" problems during reporting
+  - Amazon RDS / Aurora
+    - Avoid DescribeDBInstances calls for log downloads for RDS instances
+    - Auto-detection of Aurora instances from the cluster hostname
+    - Multiple improvements to Log Insights integration
+  - Additional statistics tracking for autovacuum and TXID consumption rates
+  - Add Postgres 15 support
+  - See [full collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md)
+- Better account management
+  - Allow calling the membership delete action via the GraphQL API
+  - SAML integration: Easier migration of existing users when turning on SAML for the first time
+  - SAML integration: Option to add identity provider metadata manually (instead of via URL)
+- Improved API key management
+  - Ability to create collector and read-only keys directly in the pganalyze UI
+  - Ability to revoke API keys (e.g. useful for key rotation)
+  - API key values are hidden by default when viewing the API keys page
+  - Increased random bytes for API keys for additional protection
+  - New API keys now start with a "pga" prefix, to make it easier to identify pganalyze API keys
+  - API key usage is now tracked in the `audit_logs` table (at most once per day per client IP)
+  - API key creation and revocation is now tracked in the `audit_logs` table
+- VACUUM monitoring improvements
+  - New per-table graph that shows the age of the oldest unfrozen XID on a table (to help understand anti-wraparound vacuums better)
+  - Extend VACUUM data retention time to 35 days (from 7 days)
+  - Additionally this release includes preparation for new autovacuum metrics and tuning recommendations, coming in a future Enterprise Server release
+- Other improvements
+  - Show Amazon RDS / Aurora instance tags on servers in pganalyze
+    - For instance with tags applied in AWS (e.g. to indicate which application team owns the instance),
+      pganalyze will now automatically show these tags in the server overview list
+  - Add `DISABLE_DIRECT_SIGNUP` setting to prevent uninvited users from registering a user account
+    - In case you are hosting your pganalyze instance on a publicly accessible host, we recommend enabling this new setting as an extra measure to prevent unexpected user registrations
+    - Note that this setting is not compatible with the `DEFAULT_ORG_ROLE` setting (which when enabled automatically adds new users to the initial organization in pganalyze)
+  - Add support for AWS IMDSv2 instance metadata protocol to retrieve credentials for accessing object storage
+  - Table columns page: Show NULL % and avg. width (requires [pganalyze.get_column_stats](/docs/install/amazon_rds/01_configure_rds_instance) helper)
+  - Connections page: Show Postgres roles for each connection
+  - System metrics: Add support for Crunchy Bridge
+  - Update in-app Postgres documentation to the latest versions
+  - Help identifying queue backlogs by printing background queue statistics to Enterprise Server container output every 10 minutes
+
+
+## Performance
+
+* Speed up loading of per-query sample list
+* Speed up query EXPLAIN plan graph when looking up multiple days
+* Reduce storage requirements for Log Insights indexes
+* Background workers
+  - New Rust-based full snapshot workers
+    - This completes the move of the snapshot processing logic to Rust, lowering memory and CPU consumption when processing many statistics
+    - No action is needed to migrate to the new workers, they will automatically be in use after upgrading to this release
+  - Schema processing:
+    - Collect oldest unfrozen XID and MultiXact ID separate from table data, to reduce overhead
+    - Limit the number of schema table events processed per snapshot (to avoid timing out in edge cases)
+  - Query samples: Avoid collecting unnecessary query samples for the same query within the same log snapshot
+  - Queries: Stop storing `received_query` in `queries` table to reduce storage overhead
+  - Expiry of old data: Reduce lock contention when handling a large number of servers
+  - Index advisor: Reduce overhead of initial query analysis step
+  - Improve pre-aggregation queries for hourly/daily statistics buckets
+
+## Bugfix
+
+* Query overview: Default empty query text to `<unknown query text>`
+  - This can occur when the pg_stat_statements query text file can't be loaded
+* Issue page:
+  - Avoid errors when the reference for a check-up issue was removed (due to the data having expired)
+  - Show references for the issue even when the problem has been resolved (e.g. individual active queries for an active query issue)
+* Replication lag alerts: Correctly average statistics when lag is below threshold
+* Fix removal of deleted Postgres roles from pganalyze (they were previously shown even when already removed)
+* Connections page: Improve retrieval of historic statistics and show correct query age
+* Setup instructions: Add port to local collector configuration
+* Query text normalization: Use last complete row in VALUES instead of ? character
+* Skip full snapshots missing tables due to locks/timeouts (this avoids tables/indexes disappearing unexpectedly)
+* Allow additional special characters in passwords to fulfill complexity requirements
+* Avoid errors storing functions with overly long argument lists
+
+## Security
+
+* Update to Ruby 2.7.7 and Rails 6.1
+* Use more random bytes for initial admin password
+* Fix multiple reported CVEs in modules / packages used by pganalyze
+  - None of these are exploitable, to our knowledge, but may have shown in dependency scanners
