@@ -62,33 +62,7 @@ The pganalyze Docker container needs to have authenticated access to the S3 buck
 
 You will also need to assign this IAM user as a "Key User" to the KMS key.
 
-## 3. S3 bucket retention policy and CORS settings
-
-Please ensure that S3 buckets don't have public access enabled. All S3 objects created by pganalyze are created as private only.
-
-To avoid keeping data forever, we recommend configuring the S3 buckets to expire objects after 35 days using [lifecycle rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/how-to-set-lifecycle-configuration-intro.html).
-
-For the logs S3 bucket you also need to configure this CORS policy (under the Permissions tab) for the Log Insights functionality:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
-<CORSRule>
-    <AllowedOrigin>*</AllowedOrigin>
-    <AllowedMethod>GET</AllowedMethod>
-    <ExposeHeader>x-amz-meta-x-amz-iv</ExposeHeader>
-    <ExposeHeader>x-amz-meta-x-amz-unencrypted-content-length</ExposeHeader>
-    <ExposeHeader>x-amz-meta-x-amz-wrap-alg</ExposeHeader>
-    <ExposeHeader>x-amz-meta-x-amz-cek-alg</ExposeHeader>
-    <ExposeHeader>x-amz-meta-x-amz-key-v2</ExposeHeader>
-    <ExposeHeader>x-amz-meta-x-amz-matdesc</ExposeHeader>
-    <AllowedHeader>Authorization</AllowedHeader>
-    <AllowedHeader>Range</AllowedHeader>
-</CORSRule>
-</CORSConfiguration>
-```
-
-## 4. Configuration on pganalyze Docker container
+## 3. Configuration on pganalyze Docker container
 
 You will need to add the following configuration to the Docker container:
 
