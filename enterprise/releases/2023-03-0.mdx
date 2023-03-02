@@ -72,7 +72,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
       pganalyze will now automatically show these tags in the server overview list
   - Add `DISABLE_DIRECT_SIGNUP` setting to prevent uninvited users from registering a user account
     - In case you are hosting your pganalyze instance on a publicly accessible host, we recommend enabling this new setting as an extra measure to prevent unexpected user registrations
-    - Note that this setting is not compatible with the `DEFAULT_ORG_ROLE` setting (which when enabled automatically adds new users to the initial organization in pganalyze)
+    - See [details on access control settings](/docs/enterprise/settings#access-control-settings)
   - Add support for AWS IMDSv2 instance metadata protocol to retrieve credentials for accessing object storage
   - Table columns page: Show NULL % and avg. width (requires [pganalyze.get_column_stats](/docs/install/amazon_rds/02_create_monitoring_user) helper)
   - Connections page: Show Postgres roles for each connection
