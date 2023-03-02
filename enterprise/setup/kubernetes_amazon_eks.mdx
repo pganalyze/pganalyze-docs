@@ -136,7 +136,6 @@ And second, create the policy that permits access to Amazon RDS instances you wa
     "Statement": [
         {
             "Action": [
-                "rds:DescribeDBInstances",
                 "cloudwatch:GetMetricStatistics"
             ],
             "Effect": "Allow",
@@ -158,11 +157,19 @@ And second, create the policy that permits access to Amazon RDS instances you wa
         },
         {
             "Action": [
+                "rds:DescribeDBInstances",
                 "rds:DownloadDBLogFilePortion",
                 "rds:DescribeDBLogFiles"
             ],
             "Effect": "Allow",
             "Resource": "arn:aws:rds:*:*:db:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBClusters"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:cluster:*"
         }
     ]
 }
