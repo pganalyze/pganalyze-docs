@@ -124,7 +124,9 @@ helper functions are expected to be defined, and the one we connect to for serve
     <tr>
       <td>db_host (<code>DB_HOST</code>)</td>
       <td>n/a, either this or db_url is required</td>
-      <td>Host to connect to</td>
+      <td>
+        Host to connect to.<br /><br />Or, if connecting to a local server using <a href="https://www.postgresql.org/docs/current/auth-peer.html">peer authentication</a>, the path to a local unix domain socket as configured by <a href="https://www.postgresql.org/docs/current/runtime-config-connection.html#GUC-UNIX-SOCKET-DIRECTORIES">unix_socket_directories</a>.
+      </td>
     </tr>
     <tr>
       <td>db_port (<code>DB_PORT</code>)</td>
