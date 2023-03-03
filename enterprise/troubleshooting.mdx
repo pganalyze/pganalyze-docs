@@ -57,3 +57,31 @@ Verifying enterprise license... FAILED
 
   ERROR: You need to specify the LICENSE_KEY environment variable
 ```
+
+### Error: "no credentials in the property bag"
+
+When using IAM authentication on AWS (e.g. with an instance role), you may see an error like this in the logs of the pganalyze Enterprise Server container:
+
+```
+... | [... ERROR pganalyze_workers::full_snapshot_worker] job failed: failed to construct request
+... |
+... |     Caused by:
+... |         no credentials in the property bag
+... |
+... |     Stack backtrace:
+... |         ...
+```
+
+One common cause of this problem can be the HTTP response limit set on the IMDSv2 metadata endpoint, since the container that pganalyze Enterprise Server runs in counts as an extra hop on the network layer.
+
+Typically you can fix this error by raising the IMDSv2 hop limit to `2`, like this:
+
+```
+aws ec2 modify-instance-metadata-options \
+    --instance-id YOUR_INSTANCE_ID \
+    --http-tokens required \
+    --http-endpoint enabled \
+    --http-put-response-hop-limit 2
+```
+
+If this does not resolve the error, please [reach out to us](/contact).
