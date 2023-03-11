@@ -1,0 +1,33 @@
+---
+title: Resolving the 'permission denied to create extension "pg_stat_statements"' error
+backlink_href: /docs/install/troubleshooting
+backlink_title: 'Installation Troubleshooting'
+---
+
+If the collector cannot find the `pg_stat_statements` extension it will attempt
+to create it automatically. If it does not have permission to do so using its
+configured database user, you may see log output like the following:
+
+```
+2023/03/01 23:43:20 I [server1] pg_stat_statements does not exist, trying to create extension...
+2023/03/01 23:43:20 E [server1] Could not process server: Error collecting pg_stat_statements: pq: permission denied to create extension "pg_stat_statements"
+```
+
+If you believe the extension is already installed, it may be installed in a
+different database than required. Postgres extensions have to be installed in
+each database separately. For the collector, `pg_stat_statements` must be
+installed in the database set as `db_name` in the config file (`DB_NAME` if
+using environment variables for configuration). If you are monitoring multiple
+databases, the collector requires `pg_stat_statements` to be installed in the
+first database listed (the primary monitored database).
+
+If `pg_stat_statements` is already installed in another database, connect to the
+primary monitored database as a superuser (or your service provider's
+equivalent) and run `CREATE EXTENSION pg_stat_statements;`. Having multiple
+copies of the extension in different databases has no performance impact
+(tracking statistics is already server-wide: creating the extension only creates
+a view that allows you to query the statistics from within that database).
+
+If `pg_stat_statements` is not installed at all, you may need to configure the
+`shared_preload_libraries` setting and restart the server first. Please refer to
+the platform-specific documentation in [our installation guides](/docs/install).
