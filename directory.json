@@ -692,6 +692,10 @@
       "title": "Resolving the \"Limited access to table column statistics\" warning",
       "path": "/docs/install/troubleshooting/column_stats_helper"
     },
+    "install/troubleshooting/pg_stat_statements": {
+      "title": "Resolving the 'permission denied to create extension \"pg_stat_statements\"' error",
+      "path": "/docs/install/troubleshooting/pg_stat_statements"
+    },
     "install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries": {
       "title": "Amazon RDS: Resolving the \"pg_stat_statements must be loaded via shared_preload_libraries\" error",
       "path": "/docs/install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries"
