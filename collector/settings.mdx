@@ -141,7 +141,7 @@ helper functions are expected to be defined, and the one we connect to for serve
     <tr>
       <td>db_sslrootcert (<code>DB_SSLROOTCERT</code>)</td>
       <td>system certificate store</td>
-      <td>Path to SSL certificate authority (CA) certificate(s) to use to verify the server's certificate, or one of <code>rds-ca-2015-root</code> or <code>rds-ca-2019-root</code> to use the built-in AWS RDS certificates</td>
+      <td>Path to SSL certificate authority (CA) certificate(s) to use to verify the server's certificate, or <code>rds-ca-global</code> to use the built-in Amazon RDS global CA certificate set</td>
     </tr>
     <tr>
       <td>db_sslrootcert_contents (<code>DB_SSLROOTCERT_CONTENTS</code>)</td>
@@ -304,6 +304,16 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
       <td>[none]</td>
       <td>If specified, and api_system_scope (see below) is not specified, this is prepended to the auto-generated system scope (optional, can be used
       to, e.g., differentiate staging from production)</td>
+    </tr>
+    <tr>
+      <td>db_use_iam_auth (<code>DB_USE_IAM_AUTH</code>)</td>
+      <td>[none]</td>
+      <td>
+        Fetches a short-lived token for logging into the database instance from the AWS API, instead of using a hardcoded password
+        in the collector configuration file. To use this setting, IAM authentication needs to be enabled on the database instance
+        / cluster, the pganalyze IAM policy needs to <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html">cover the "rds-db:connect" privilege</a> for
+        the pganalyze user, and the user needs to be <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.DBAccounts.html#UsingWithRDS.IAMDBAuth.DBAccounts.PostgreSQL">granted the "rds_iam" role</a> in Postgres.
+      </td>
     </tr>
     <tr>
       <td>aws_assume_role (<code>AWS_ASSUME_ROLE</code>)</td>
@@ -536,6 +546,15 @@ talking to pganalyze support.
       <td>[none]</td>
       <td>Experimental: name of docker container to collect logs from using <code>docker logs -t</code>.
       This requires that the collector runs on the Docker host.</td>
+    </tr>
+    <tr>
+      <td>disable_citus_schema_stats (<code>DISABLE_CITUS_SCHEMA_STATS</code>)</td>
+      <td>[none]</td>
+      <td>
+        If using the Citus extension in your database, turn off the collection of statistics for distributed indexes
+        and tables. For very large schemas, this collection can error out due to timeouts or locks. When using this
+        option it's recommended to instead monitor the workers directly for table and index sizes.
+      </td>
     </tr>
     <tr>
       <td>query_stats_interval (<code>QUERY_STATS_INTERVAL</code>)</td>
