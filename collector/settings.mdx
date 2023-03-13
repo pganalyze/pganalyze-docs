@@ -141,7 +141,7 @@ helper functions are expected to be defined, and the one we connect to for serve
     <tr>
       <td>db_sslrootcert (<code>DB_SSLROOTCERT</code>)</td>
       <td>system certificate store</td>
-      <td>Path to SSL certificate authority (CA) certificate(s) to use to verify the server's certificate, or <code>rds-ca-global</code> to use the built-in AWS RDS certificates</td>
+      <td>Path to SSL certificate authority (CA) certificate(s) to use to verify the server's certificate, or <code>rds-ca-global</code> to use the built-in Amazon RDS global CA certificate set</td>
     </tr>
     <tr>
       <td>db_sslrootcert_contents (<code>DB_SSLROOTCERT_CONTENTS</code>)</td>
@@ -311,8 +311,8 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
       <td>
         Fetches a short-lived token for logging into the database instance from the AWS API, instead of using a hardcoded password
         in the collector configuration file. To use this setting, IAM authentication needs to be enabled on the database instance
-        / cluster, and the pganalyze IAM policy needs to <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html">cover the "rds-db:connect" privilege</a> for
-        the pganalyze user.
+        / cluster, the pganalyze IAM policy needs to <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html">cover the "rds-db:connect" privilege</a> for
+        the pganalyze user, and the user needs to be <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.DBAccounts.html#UsingWithRDS.IAMDBAuth.DBAccounts.PostgreSQL">granted the "rds_iam" role</a> in Postgres.
       </td>
     </tr>
     <tr>
@@ -552,8 +552,8 @@ talking to pganalyze support.
       <td>[none]</td>
       <td>
         If using the Citus extension in your database, turn off the collection of statistics for distributed indexes
-        and tables. For very large schemas, this collection can be a performance problem. When using this option it's
-        recommended to instead monitor the workers directly for table and index sizes.
+        and tables. For very large schemas, this collection can error out due to timeouts or locks. When using this
+        option it's recommended to instead monitor the workers directly for table and index sizes.
       </td>
     </tr>
     <tr>
