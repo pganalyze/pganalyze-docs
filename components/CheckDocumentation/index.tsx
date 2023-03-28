@@ -18,6 +18,7 @@ import StorageSpace from "./system/StorageSpace";
 import HighLag from "./replication/HighLag";
 import FollowerMissing from "./replication/FollowerMissing";
 import VacuumInefficientIndexPhase from "./vacuum/InefficientIndexPhase";
+import OptimizeTableBloat from "./vacuum/OptimizeTableBloat";
 
 const Docs: {
   [category: string]: { [check: string]: CheckDocs };
@@ -52,8 +53,9 @@ const Docs: {
     follower_missing: FollowerMissing,
   },
   vacuum: {
-    inefficient_index_phase: VacuumInefficientIndexPhase
-  }
+    inefficient_index_phase: VacuumInefficientIndexPhase,
+    optimize_table_bloat: OptimizeTableBloat,
+  },
 };
 
 export function getCheckDescription(
