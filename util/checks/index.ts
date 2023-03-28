@@ -30,7 +30,8 @@ export const CHECK_TITLES = {
   },
   vacuum: {
     inefficient_index_phase: "VACUUM - Inefficient index phase",
-  }
+    optimize_table_bloat: "Optimize Table Bloat"
+  },
 };
 
 export const CHECK_SEVERITIES = {
@@ -65,7 +66,8 @@ export const CHECK_SEVERITIES = {
   },
   vacuum: {
     inefficient_index_phase: ['warning'],
-  }
+    optimize_table_bloat: ['info'],
+  },
 }
 
 export function checkMaxSeverity(checkGroup: string, checkName: string): string | undefined {
@@ -124,7 +126,8 @@ export const CHECK_FREQUENCY = {
   },
   vacuum: {
     inefficient_index_phase: CHECK_FREQUENCY_DAILY,
-  }
+    optimize_table_bloat: CHECK_FREQUENCY_DAILY,
+  },
 };
 
 type DefaultCheckConfigs = {
@@ -231,6 +234,13 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
       enabled: true,
       settings: {
         threshold_count: 1,
+      }
+    },
+    optimize_table_bloat: {
+      enabled: false,
+      settings: {
+        notify_pct: 10,
+        notify_bytes: 10485760,
       }
     },
   },
