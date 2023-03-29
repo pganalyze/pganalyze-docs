@@ -7,9 +7,9 @@ import {
 } from "../../../util/checks";
 import { formatBytes } from "../../../util/format";
 
-const OptimizeTableBloatTrigger: React.FunctionComponent<CheckTriggerProps> = (
+const OptimizeTableBloatTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config
-) => {
+}) => {
   return (
     <p>
       Detects when a table could use autovacuum setting optimization to reduce
