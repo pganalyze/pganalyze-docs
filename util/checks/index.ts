@@ -307,6 +307,12 @@ export type IssueReferenceIndex = {
   name: string;
 };
 
+export type IssueReferenceTable = {
+  id: string;
+  schemaName: string;
+  tableName: string;
+};
+
 export type IssueType = {
   references?: {
     referent: IssueReferenceBackend | IssueReferenceIndex | unknown;

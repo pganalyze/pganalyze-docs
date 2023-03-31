@@ -5,8 +5,10 @@ import {
   CheckGuidanceProps,
   CheckTriggerProps,
   IssueReferenceIndex,
+  IssueReferenceTable,
 } from "../../../util/checks";
 import { formatBytes, formatSqlObjectName } from "../../../util/format";
+import CodeBlock from "../../CodeBlock";
 import { useSmartAnchor } from "../../SmartAnchor";
 import SQL from "../../SQL";
 
@@ -36,8 +38,8 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
   const current = issueDetails["current"];
   const recommendation = issueDetails["recommendation"];
   const ref = issue?.references?.[0];
-  const schemaIdx = ref.referent as IssueReferenceIndex;
-  const tableName = formatSqlObjectName(schemaIdx.schemaName, schemaIdx.name);
+  const schemaTable = ref.referent as IssueReferenceTable;
+  const tableName = formatSqlObjectName(schemaTable.schemaName, schemaTable.tableName);
   const sql =
     current["autovacuum_vacuum_threshold"] !=
     recommendation["autovacuum_vacuum_threshold"] ? (
@@ -92,7 +94,7 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
       <p>
         Here is some recommendation for a new value. You can run this command to
         change the settings for the table:
-        {sql}
+        <CodeBlock>{sql}</CodeBlock>
       </p>
       <p>
         The value is one recommendation, it is important to pay attention to the
