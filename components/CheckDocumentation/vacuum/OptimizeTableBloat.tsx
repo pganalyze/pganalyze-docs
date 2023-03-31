@@ -4,8 +4,11 @@ import {
   CheckDocs,
   CheckGuidanceProps,
   CheckTriggerProps,
+  IssueReferenceIndex,
 } from "../../../util/checks";
-import { formatBytes } from "../../../util/format";
+import { formatBytes, formatSqlObjectName } from "../../../util/format";
+import { useSmartAnchor } from "../../SmartAnchor";
+import SQL from "../../SQL";
 
 const OptimizeTableBloatTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
@@ -27,7 +30,28 @@ const OptimizeTableBloatTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 
 const OptimizeTableBloatGuidance: React.FunctionComponent<
   CheckGuidanceProps
-> = () => {
+> = ({ urls: { tableVacuumsUrl }, issue }) => {
+  const Link = useSmartAnchor();
+  const issueDetails = issue && JSON.parse(issue.detailsJson);
+  const current = issueDetails["current"];
+  const recommendation = issueDetails["recommendation"];
+  const ref = issue?.references?.[0];
+  const schemaIdx = ref.referent as IssueReferenceIndex;
+  const tableName = formatSqlObjectName(schemaIdx.schemaName, schemaIdx.name);
+  const sql =
+    current["autovacuum_vacuum_threshold"] !=
+    recommendation["autovacuum_vacuum_threshold"] ? (
+      <SQL
+        inline
+        sql={`ALTER TABLE ${tableName} SET (autovacuum_vacuum_threshold = ${recommendation["autovacuum_vacuum_threshold"]});`}
+      />
+    ) : (
+      <SQL
+        inline
+        sql={`ALTER TABLE ${tableName} SET (autovacuum_vacuum_scale_factor = ${recommendation["autovacuum_vacuum_scale_factor"]});`}
+      />
+    );
+
   return (
     <div>
       <h4>Impact</h4>
@@ -61,9 +85,43 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
       <h4>Solution</h4>
       <p>
         You can adjust the timing of autovacuum by changing the config variables
-        related to autovacuum. Use VACUUM simulator to adjust the config
-        variable to find a good spot for the table and the server.
+        related to autovacuum. Lowering <code>autovacuum_vacuum_threshold</code>{" "}
+        or <code>autovacuum_vacuum_scale_factor</code> will increase the
+        frequency of autovacuum in general.
       </p>
+      <p>
+        Here is some recommendation for a new value. You can run this command to
+        change the settings for the table:
+        {sql}
+      </p>
+      <p>
+        The value is one recommendation, it is important to pay attention to the
+        following points after making a change and adjust further if needed:
+      </p>
+      <ul>
+        <li>
+          <h5>VACUUM frequency</h5>
+          <p>
+            Changing the settings will likely increase the frequency of
+            autovacuum. Frequent VACUUM can impact on the performance and
+            stability of your database, if such VACUUM is expensive. You can
+            check out recent autovacuums in{" "}
+            <Link to={tableVacuumsUrl}>VACUUM/ANALYZE Activity</Link> page.
+          </p>
+        </li>
+        <li>
+          <h5>Bloat change</h5>
+          <p>
+            It is possible that tweaking these settings won't remove the
+            existing bloat. Often, already created bloat is not removable even
+            with perfect settings unless there are more inserts than deletes. To
+            confirm the impact of changes, it is also recommended to run
+            pg_repack to reclaim disk space. You can check out estimated bloat
+            over time graph in{" "}
+            <Link to={tableVacuumsUrl}>VACUUM/ANALYZE Activity</Link> page.
+          </p>
+        </li>
+      </ul>
     </div>
   );
 };

@@ -281,6 +281,7 @@ export type IssueGuidanceUrls = {
   indexRecommendationUrl: string;
   serverSystemUrl: string;
   serverVacuumsUrl: string;
+  tableVacuumsUrl: string;
   backendsUrl: string;
   databaseWaitEventsUrl: string;
   databaseTableUrl: string;
