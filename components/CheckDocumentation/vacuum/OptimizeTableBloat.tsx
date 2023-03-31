@@ -39,7 +39,10 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
   const recommendation = issueDetails["recommendation"];
   const ref = issue?.references?.[0];
   const schemaTable = ref.referent as IssueReferenceTable;
-  const tableName = formatSqlObjectName(schemaTable.schemaName, schemaTable.tableName);
+  const tableName = formatSqlObjectName(
+    schemaTable.schemaName,
+    schemaTable.tableName
+  );
   const sql =
     current["autovacuum_vacuum_threshold"] !=
     recommendation["autovacuum_vacuum_threshold"] ? (
@@ -94,8 +97,8 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
       <p>
         Here is some recommendation for a new value. You can run this command to
         change the settings for the table:
-        <CodeBlock>{sql}</CodeBlock>
       </p>
+      <CodeBlock>{sql}</CodeBlock>
       <p>
         The value is one recommendation, it is important to pay attention to the
         following points after making a change and adjust further if needed:
