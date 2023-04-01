@@ -14,3 +14,11 @@
     href: enterprise/integrations
   - name: Container settings
     href: enterprise/settings
+- mount: enterprise/setup/object-storage
+  items:
+  - name: Overview
+    href: enterprise/setup/object-storage
+  - name: Local storage using MinIO
+    href: enterprise/setup/object-storage-local
+  - name: Amazon S3
+    href: enterprise/setup/object-storage-s3

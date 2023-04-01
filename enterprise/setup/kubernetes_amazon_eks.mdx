@@ -388,11 +388,9 @@ Please now log in to the pganalyze interface using the generated credentials you
 
 If authentication does not work, or you see an error message, please check the container's logs using `kubectl logs deploy/pganalyze`.
 
-Choose an organization name of your choice (typically your company name), and then click "Add Server" on the next screen. You should now see this form:
+Choose an organization name of your choice (typically your company name).
 
-![](add_server.png)
-
-### Step 9: Preparing Your PostgreSQL Database for Monitoring
+### Step 9: Preparing your PostgreSQL database for monitoring
 
 Before you can add a database to the pganalyze installation, you'll need to enable the `pg_stat_statements` extension on it. This extension is already enabled on most Amazon RDS database servers by default. You can find details in the [Amazon RDS](/docs/install/amazon_rds) instructions.
 
@@ -400,13 +398,15 @@ In addition you will need to either use the database superuser (usually "postgre
 
 You don't need to run anything else on your database server - the pganalyze container will connect to your database at regular intervals to gather information from PostgreSQL's statistics tables.
 
-### Step 10: Add Your First Database to pganalyze
+### Step 10: Add your first database server to pganalyze
 
-You can now fill out the "New Database" form. Once you click "Add Database" the collector running inside the container will update, and start collecting information within 10 minutes.
+For a monitoring an Amazon RDS instance, or an Amazon Aurora cluster, you can use the bundled container with the pganalyze Enterprise Server container image.
 
-Initially, until sufficient information is available, your screen will look like this:
+To do so, fill out the "Add Postgres Server" form. When monitoring Amazon Aurora you can use the cluster endpoint as the hostname.
 
-![](server_empty.png)
+![](add_server.png)
+
+Once you click "Add Database" the collector running inside the container will update, and start collecting information within 10 minutes.
 
 You can check whether any information has been received by clicking the "Server Settings" link in the left navigation, and scrolling down to the "Debug Info" section:
 
@@ -416,11 +416,15 @@ Once data is coming in successfully, the "Debug Info" looks like this:
 
 ![](debug_info_with_data.png)
 
-Be aware that some graphs need at least a few hours worth of data and might not work properly before. It is therefore recommended that you wait for up to 24 hours before evaluating the system more closely.
+**Important:** Be aware that some graphs need at least a few hours worth of data and might not work properly before.
 
-Once the system has collected sufficient data it should look similar to this:
+### Next steps
 
-![](dashboard_with_data.png)
+To learn more about adding additional team members, see [Account Management](/docs/accounts).
+
+We also recommend changing both the email and password of the admin user initially created (you can do so by clicking on "Admin" in the lower left of the screen).
+
+Additionally, you can review [all configuration settings](/docs/enterprise/settings) for the Enterprise container.
 
 ## Appendix: How to apply config changes
 
