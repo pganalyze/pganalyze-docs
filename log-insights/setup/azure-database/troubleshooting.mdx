@@ -14,22 +14,27 @@ server has not been able to deliver a message yet to the Event Hub. There is a d
 We recommend waiting 5 minutes, and then retrying. You can verify whether the Event Hub
 has received any messages by navigating to it in the Azure Portal.
 
-If this error persists, verify that you've configured the diagnostic setting in Step 3 correctly.
+If this error persists, verify that you've configured [the diagnostic setting in Step 3](/docs/log-insights/setup/azure-database/03_stream_logs_into_event_hub) correctly.
 
 ### Error: "status code 401 and description: Attempted to perform an unauthorized operation."
 
 This occurs when the collector can't access the Azure Event Hub API.
 
-Review whether you have followed Step 1 correctly for Managed Identity, or have setup
-the Azure AD application as documented below.
+Review whether [you have followed Step 2](/docs/log-insights/setup/azure-database/02_set_up_azure_event_hub) fully and assigned the "Azure Event Hubs Data Receiver" permission for the Managed Identity (or Azure AD application) to your Azure Event Hub.
 
 ### Error: "failed to configure Azure AD JWT provider"
 
-This error occurs when there is no authentication configured - when using Managed Identity,
-verify that you have actually assigned the identity to your VM.
+This error occurs when there is no authentication configured.
+
+When using Managed Identity, verify that you have actually assigned the identity to your VM.
+[Read more in the Azure documentation](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-portal-windows-vm#assign-a-user-assigned-managed-identity-to-an-existing-vm).
+
+This may also occur when you have multiple user-assigned managed identities set for your virtual machine.
+Try removing any unrelated managed identities, or explicitly set the `azure_ad_client_id` / `AZURE_AD_CLIENT_ID` setting to
+the Managed Identity's Client ID.
 
 ### Error: "failed to connect to the Event Hub management node"
 
-Double check your Event Hub namespace and Event Hub name that you have configured in Step 4.
+Double check your Event Hub namespace and Event Hub name that [you have configured in Step 5](/docs/log-insights/setup/azure-database/05_configure_collector).
 
 
