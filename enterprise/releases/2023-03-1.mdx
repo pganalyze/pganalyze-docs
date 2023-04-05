@@ -1,0 +1,51 @@
+---
+title: '2023.03.1 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2023.03.1`
+
+## Notes
+
+- This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+## Features
+
+* The bundled collector has been updated to [v0.49.2](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0492------2023-03-30) (from v0.49.0 in prior release)
+  - Increases maximum time allowed for activity snapshots (this may fix occurrences of missing connection tracing data compared to the prior release)
+  - Fixes issues related to locks held during schema statistics collection
+  - Fixes handling of failures of the optional pg_stat_statements_reset() logic (if enabled but the permissions were not set correctly)
+  - See [full collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0492------2023-03-30)
+* The included Amazon RDS and Aurora SSL certificate bundle has been changed to utilize the new global CA set
+  - This supports both the "rds-ca-2019" certificate, as well as more recently announced CAs such as "rds-ca-rsa2048-g1"
+
+
+## Performance
+
+* Index Advisor: Reduce interval for re-checks when queries and schema remain unchanged
+  - Previously such tables were checked every second day, but they are now only checked weekly to reduce overhead for infrequently used tables
+  - If the queries or table changes that kicks off a new Indexing Engine run
+* Query analysis: Speed up handling of queries with foreign key references, by only going one level deep
+  - The generic plan costs are only affected by direct foreign key relationships, so we can save some cycle this way
+* Improve performance of Index Advisor overview page
+
+
+## Bugfixes
+
+* Enterprise Server migrations: Fix bug in migration "20221215023958_drop_replication_stats_and_old_vacuum_run.rb"
+  - If you attempted to upgrade to the Enterprise Server release [v2023.03.0](2023-03-0) you might have run into a failure in this migration - this bugfix resolves that error
+* Enterprise Server setup: Avoid unnecessary "BucketAlreadyOwnedByYou" error when initializing storage buckets
+* Query analysis: Fix handling of AlternateSubPlan nodes in generic query plans
+* Automated EXPLAIN: Prefer storing samples with EXPLAIN plans when too many samples are received within the same timeframe
+  - This resolves some edge cases where a query sample was visible, but no EXPLAIN plan, despite a plan having been collected
+* Type width estimates: Avoid errors for certain variable-length types provided by extentions (geometry, citext)
+* Alert policy configuration: Remove "Coming soon" flag from blocking queries check
+
+
+## Security
+
+* Fix unrelated vulnerabilities that may have been flagged in dependency scanners
+  * Rails: CVE-2023-27539 and CVE-2023-28120
+  * Rack: CVE-2023-27530
+  * Update rust-openssl
