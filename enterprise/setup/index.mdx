@@ -8,7 +8,7 @@ import ToC from '../../components/Toc'
 
 These are the installation instructions for [pganalyze Enterprise Server](/enterprise-postgres-monitoring), which runs fully-contained within your own environment.
 
-The pganalyze Docker image is mostly self-contained, and runs various services inside the Docker container.
+The pganalyze container image is mostly self-contained, and runs various services inside the Docker (or podman) container.
 
 <ToC items={props.toc} />
 
@@ -18,23 +18,26 @@ The pganalyze Docker image is mostly self-contained, and runs various services i
 
 * Provision a virtual machine
   * Assign at least 4GB - 8GB of RAM, 1-2 dedicated CPU cores
-* Install Docker on your virtual machine
-  * pganalyze Enterprise Server is delivered through a Docker image
+* Install Docker or podman on your virtual machine
+  * pganalyze Enterprise Server is delivered as a container image compatible with Docker / podman
+  * When using podman, make sure to replace `docker` with `podman` in the steps below
 * Setup a PostgreSQL database that can be used for storing statistics data
-  * PostgreSQL 10 or newer
+  * PostgreSQL 10 or newer is required
   * 50 GB of dedicated disk space or more
-* Optional: If you use the RDS integration, setup an appropriate IAM role that can be used to download logs and system metrics
+* Optional: If you use the RDS integration, set up an appropriate IAM role that can be used to download logs and system metrics
   * You can also assign the required policy to an existing EC2 instance and its instance role
   * You will need both the [collector IAM policy](/docs/install/amazon_rds/03_setup_iam_policy) as well as the [object storage IAM policy](/docs/enterprise/setup/object-storage-s3)
 
-### Step 1: Download the Docker Image
+### Step 1: Download the container image
 
-The Docker image is made available to you through the container hosting service quay.io. We have provided you with the credentials you can use for access by email.
+The Docker image is made available to you through the container hosting service quay.io.
 
-Enable access to the image like this:
+You will have received credentials (username and license key) by email from our sales team.
 
-```
-docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io
+Use the provided credentials like this to access to the image:
+
+```sh
+docker login -e="." -u="pganalyze+enterprise_customer" -p="REPLACE_ME" quay.io
 ```
 
 Note that this will add the login information to your current user's `.dockercfg` file - you will need this on every host where you'd like to access the image.
@@ -48,29 +51,32 @@ docker pull quay.io/pganalyze/enterprise:[version]
 Please note that `[version]` should be replaced with the version you are using. We recommend using [the latest release](/docs/enterprise/releases).
 
 
-### Step 2: Setting Environment Variables
+### Step 2: Setting environment variables
 
 The Docker image uses environment variables that are passed in to determine how to access outside services, like PostgreSQL, LDAP and mail servers.
 
-Here is an example .env file to get you started:
+We recommend keeping the environment variables in the file `/etc/pganalyze.env`.
+
+Here is an example `/etc/pganalyze.env` file to get you started:
 
 ```
 DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
-MAILER_URL=smtp://myusername:mypassword@example.com:25
-LICENSE_KEY=KEYKEYKEY
+LICENSE_KEY=REPLACE_ME
 ```
 
-If you'd like to use the Log Insights or Automated EXPLAIN features, or want to run the collector separately from the Enterprise Server container, you also need to pass the [object storage configuration](/docs/enterprise/setup/object-storage) here.
+You can find the full explanation of all variables in the [settings documentation](/docs/enterprise/settings), for example the `MAILER_URL` setting which is required to activate email alerts.
 
-You can find the full explanation of all variables in the [settings documentation](/docs/enterprise/settings).
+### Step 3: Set up object storage
 
+If you'd like to use the Log Insights or Automated EXPLAIN features, or want to run the collector separately from the Enterprise Server container, you should **[set up object storage](/docs/enterprise/setup/object-storage)** before continuing with Step 4.
 
-### Step 3: Initialize Database & Verify Installation
+### Step 4: Initialize database & verify installation
 
-First, run the Enterprise self check, to ensure the configuration is correct:
+Run the Enterprise self check, to ensure the configuration is correct:
 
 ```
-docker run --env-file pganalyze.env quay.io/pganalyze/enterprise:[version] rake enterprise:self_check
+docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
+  rake enterprise:self_check
 ```
 
 ```
@@ -86,7 +92,8 @@ In the case of an error this will give you a very verbose error message - please
 Assuming it succeeds, continue by initializing the database schema.
 
 ```
-docker run --env-file pganalyze.env quay.io/pganalyze/enterprise:[version] rake db:structure:load
+docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
+  rake db:structure:load
 ```
 
 If you get permission errors, you may need to create the extensions `btree_gist` and `pgcrypto` beforehand. A successful output looks like this:
@@ -103,10 +110,13 @@ Jul  2 07:15:17 aa84f55aceba cron[180]: (CRON) INFO (Running @reboot jobs)
 Jul  2 07:15:22 aa84f55aceba syslog-ng[160]: syslog-ng shutting down; version='3.13.2'
 ```
 
-Next, create the initial user:
+### Step 5: Create initial admin user
+
+Create the initial user:
 
 ```
-docker run --env-file pganalyze.env quay.io/pganalyze/enterprise:[version] rake db:seed
+docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
+  rake db:seed
 ```
 
 Make sure to note down the default user email and password:
@@ -128,29 +138,28 @@ I, [2020-07-02T07:15:35.006660 #159]  INFO -- : Use these credentials to login a
 Jul  2 07:15:35 8bc5a4c0e6b6 syslog-ng[150]: syslog-ng shutting down; version='3.13.2'
 ```
 
-### Step 4: Start Docker Image & Login to pganalyze
+### Step 6: Start web server and log in to pganalyze
 
 You can now start the Docker image in the background using this command:
 
 ```
-docker run -d --name pganalyze --env-file pganalyze.env -p 8080:5000 quay.io/pganalyze/enterprise:[version]
+docker run -d --name pganalyze --env-file /etc/pganalyze.env -p 8080:5000 \
+  quay.io/pganalyze/enterprise:[version]
 ```
 
 This will make the web interface accessible on the server's address, on port 8080. You should see a site like this when you open your web browser for that address and port:
 
 ![](login.png)
 
-Please now login to the pganalyze interface using the generated credentials you've seen earlier when setting up the database. If successful you should see this screen:
+Now you can log in to the pganalyze interface using the generated credentials you've seen earlier when setting up the database. If successful you should see this screen:
 
 ![](create_organization.png)
 
 If authentication does not work, or you see an error message, please check the container's logs using `docker logs`.
 
-Choose an organization name of your choice (typically your company name), and then click "Add Server" on the next screen. You should now see this form:
+Choose an organization name of your choice (typically your company name), and then click "Add Server" on the next screen.
 
-![](add_server.png)
-
-### Step 5: Preparing Your PostgreSQL Database for Monitoring
+### Step 7: Preparing your PostgreSQL database for monitoring
 
 Before you can add a database to the pganalyze installation, you'll need to enable the `pg_stat_statements` extension on it.
 
@@ -162,11 +171,16 @@ In addition you will need to either use the database superuser (usually "postgre
 
 You don't need to run anything else on your database server - the pganalyze container will connect to your database at regular intervals to gather information from PostgreSQL's statistics tables.
 
-### Step 6: Add Your First Database to pganalyze
+### Step 8: Add your first database to pganalyze
 
-You can now fill out the "New Database" form. Once you click "Add Database" the collector running inside the container will update, and start collecting information within 10 minutes.
+You can now either:
 
-Initially, until sufficient information is available, your screen will look like this:
+1. Use the integrated collector in the Enterprise Server image (works best for Amazon RDS / Aurora)
+2. Use a [separate collector installation](/docs/enterprise/setup/separate-collector-install) (recommended all other environments)
+
+To do so, follow the instructions shown in pganalyze on the "Add Server" page.
+
+After adding a database server through one of these methods, initially, until sufficient information is available, your screen will look like this:
 
 ![](server_empty.png)
 
@@ -178,17 +192,23 @@ Once data is coming in successfully, the "Debug Info" looks like this:
 
 ![](debug_info_with_data.png)
 
-Be aware that some graphs need at least a few hours worth of data and might not work properly before. It is therefore recommended that you wait for up to 24 hours before evaluating the system more closely.
+**Important:** Be aware that some graphs need at least a few hours worth of data and might not work properly before.
 
-Once the system has collected sufficient data it should look similar to this:
+### Next steps
 
-![](dashboard_with_data.png)
+To learn more about adding additional team members, see [Account Management](/docs/accounts).
 
+We also recommend changing both the email and password of the admin user initially created (you can do so by clicking on "Admin" in the lower left of the screen).
 
-### Step 7: Adding Additional Team Members
+Additionally, you can review [all configuration settings](/docs/enterprise/settings) for the Enterprise container.
 
-For regular setups, you can invite additional team members on a per-database basis, through the Settings screen.
+## Appendix: How to apply config changes
 
-With LDAP authentication you can simply direct your colleagues to the root of your pganalyze URL, an account will be created when they first login.
+When you make changes to the pganalyze container configuration in `/etc/pganalye.env`, make sure to fully restart the container afterwards, like this:
 
-Note that only users with the "Manage" permission can add new databases (see [Permissions and Roles](/docs/accounts/permissions)).
+```sh
+docker stop pganalyze
+docker rm pganalyze
+docker run -d --name pganalyze --env-file /etc/pganalyze.env -p 8080:5000 \
+  quay.io/pganalyze/enterprise:[version]
+```

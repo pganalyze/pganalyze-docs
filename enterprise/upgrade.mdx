@@ -31,14 +31,20 @@ to. You can see the latest release on the [Releases](releases) page.
 
 Before starting the database migration task, make sure that the `btree_gist` and `pgcrypto` extensions are installed and available.
 
-`docker run --env-file pganalyze.env quay.io/pganalyze/enterprise:[new version] rake db:migrate`
+```
+docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[new version] \
+  rake db:migrate
+```
 
 This will upgrade the database schema for the new release - at this point you need to use the new version,
 and can't go back to the old version without recovering from backup (as schemas are not compatible across versions).
 
 **5. Run enterprise self check**
 
-`docker run --env-file pganalyze.env quay.io/pganalyze/enterprise:[new version] rake enterprise:self_check`
+```
+docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[new version] \
+  rake enterprise:self_check
+```
 
 If this returns any errors, please review your environment configuration in `pganalyze.env`.
 
@@ -46,7 +52,10 @@ Also see **Special Notes: Upgrading from earlier releases to 2018.08 and newer**
 
 **6. Start container**
 
-`docker run -d --name pganalyze -p 8080:5000 --env-file pganalyze.env quay.io/pganalyze/enterprise:[new version]`
+```
+docker run -d --name pganalyze -p 8080:5000 --env-file /etc/pganalyze.env \
+  quay.io/pganalyze/enterprise:[new version]
+```
 
 At this point you are done and the user interface should load again as expected. Please reach out to us if you run into any issues.
 
@@ -61,7 +70,10 @@ might choose to recover from a snapshot, on other systems you would usually use
 
 After the backup is restored, start up the container with the old version like this:
 
-`docker run -d --name pganalyze -p 8080:5000 --env-file pganalyze.env quay.io/pganalyze/enterprise:[old version]`
+```
+docker run -d --name pganalyze -p 8080:5000 --env-file /etc/pganalyze.env \
+  quay.io/pganalyze/enterprise:[old version]
+```
 
 ## Special Notes: Upgrading from earlier releases to 2018.08 and newer
 

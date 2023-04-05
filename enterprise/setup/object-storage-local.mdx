@@ -4,47 +4,59 @@ backlink_href: /docs/enterprise/log-insights
 backlink_title: 'pganalyze Enterprise Server: Object Storage Setup'
 ---
 
-### 1. Installation of the Minio storage server
+### Prerequisites
 
-Since pganalyze requires an object storage to store log data, we
-support the open-source storage server [Minio](https://www.minio.io/)
-which can be run in a small Docker container, together with a mounted directory.
+* Follow the [initial setup steps](/docs/enterprise/setup) until you have at least have a `/etc/pganalyze.env` file created
+* Provision a local storage directory (e.g. at `/var/pganalyze-data`) with sufficient disk space
+  - Having at least 10 GB per monitored database server is a good starting point
+  - Actual disk usage will be dependent on the amount of Postgres error log text in a 7 day period, plus a small amount of additional space for temporary snapshot data
 
-The easiest way to get started is to simply launch a Minio container like this,
-whilst making sure to choose secure and randomly generated keys:
+### Step 1: Installation of the MinIO storage server
 
-```sh
-# Replace "my_access_key" and "my_secret_key" with two randomly generated strings!
-docker run --name minio -e MINIO_ACCESS_KEY=my_access_key -e MINIO_SECRET_KEY=my_secret_key -d -v /storage:/data -p 9000:9000 minio/minio server /data
+Since pganalyze requires an Amazon S3-compatible object storage to store log data, we
+support the open-source storage server [MinIO](https://www.minio.io/) for installations outside of AWS. The open-source MinIO storage server
+can be run in a simple Docker container, pointing to a local directory for storage.
+
+Start by generating a unique pair of access and secret keys:
+
+```
+export MINIO_ACCESS_KEY=$(xxd -u -l 16 -p /dev/urandom)
+export MINIO_SECRET_KEY=$(xxd -u -l 16 -p /dev/urandom)
 ```
 
-This assumes that you have sufficient storage available on the server where you are
-launching the container, and that this storage is provided under the `/storage` directory.
-
-Note that whilst we do not require the Minio container and storage to be on the
-same server as the pganalyze container, it typically is easiest to get started
-that way.
-
-When you now go to the URL `http://minio.internal:9000` (replace `minio.internal` with the actual hostname of the server) you should see the minio login page.
-
-### 2. Create buckets and configure retention policies
-
-By default, Minio will keep objects forever, which can cause issues with exhausting disk storage after a while. We recommend setting a 35 day expiry policy for Minio using the [mc](https://docs.min.io/minio/baremetal/reference/minio-mc.html#mc-install) client:
+Now start the MinIO container, pointing it to the storage directory (e.g. "/var/pganalyze-data"):
 
 ```sh
-# Replace "my_access_key" and "my_secret_key" with correct values set earlier
-mc alias set pganalyze-minio http://localhost:9000 my_access_key my_secret_key
+# Replace "/var/pganalyze-data" with your preferred location, e.g. "/mnt/mystorage:/data" (the ":/data" suffix indicates the mount point inside the container and should not be changed)
+docker run --name minio -v /var/pganalyze-data:/data -e MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY -e MINIO_SECRET_KEY=$MINIO_SECRET_KEY -d -p 9000:9000 minio/minio server /data
+```
+
+Note that whilst we do not require the MinIO container and storage to be on the
+same server as the pganalyze container, it is typically easiest to get started
+this way.
+
+### Step 2: Create buckets and configure retention policies
+
+By default, MinIO will keep objects forever, which can cause issues with exhausting disk storage after a while. We recommend setting a 35 day expiry policy for MinIO using the [mc](https://docs.min.io/minio/baremetal/reference/minio-mc.html#mc-install) client:
+
+```sh
+# Install minio "mc" client
+curl https://dl.min.io/client/mc/release/linux-amd64/mc --create-dirs -o /usr/local/bin/mc
+chmod +x /usr/local/bin/mc
+
+# Replace "MINIO_ACCESS_KEY" and "MINIO_SECRET_KEY" with correct values set earlier
+mc alias set pganalyze-minio http://localhost:9000 $MINIO_ACCESS_KEY $MINIO_SECRET_KEY
 
 mc mb pganalyze-minio/pganalyze-logs
 mc mb pganalyze-minio/pganalyze-snapshots
 
-mc ilm add pganalyze-minio/pganalyze-logs --expiry-days 35
+mc ilm add pganalyze-minio/pganalyze-logs --expiry-days 7
 mc ilm add pganalyze-minio/pganalyze-snapshots --expiry-days 35
 ```
 
-### 3. Configuration of the pganalyze container
+### Step 3: Configuration of the pganalyze container
 
-With the Minio server working, you can now configure the pganalyze container.
+With the MinIO server working, you can now configure the pganalyze container.
 
 First of all, we also need to generate an encryption key, which will be used to
 encrypt all log data in transit as well as at rest. This way you can be sure
@@ -53,17 +65,21 @@ information.
 
 You can generate a key like this:
 
-`dd if=/dev/urandom bs=32 count=1 2>/dev/null | openssl base64`
-
-And then configure the following environment variables:
-
-```
-LOG_ENCRYPTION_KEY={"1": "base64_encoded_key_here"}
-MINIO_ACCESS_KEY=XXX
-MINIO_SECRET_KEY=XXX
-MINIO_ENDPOINT=http://minio.internal:9000
+```sh
+export LOG_ENCRYPTION_KEY=$(echo '{"1": "'$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | openssl base64)'"}')
 ```
 
-At this point all you need to do is restart the pganalyze container, and then
-[follow the instructions](/docs/enterprise/log-insights) to install the
-collector on your database servers.
+And then add the environment variables to your `pganalyze.env` file:
+
+```
+echo LOG_ENCRYPTION_KEY=$LOG_ENCRYPTION_KEY >> /etc/pganalyze.env
+echo MINIO_ACCESS_KEY=$MINIO_ACCESS_KEY >> /etc/pganalyze.env
+echo MINIO_SECRET_KEY=$MINIO_SECRET_KEY >> /etc/pganalyze.env
+echo MINIO_ENDPOINT=http://172.17.0.1:9000 >> /etc/pganalyze.env
+```
+
+Make sure that the IP address specified in MINIO_ENDPOINT is either that of the Docker bridge (default `172.17.0.1`), or of the MinIO container itself.
+
+If you've set up MinIO as part of the initial setup, you can now [continue with the setup](/docs/enterprise/setup#step-4-initialize-database--verify-installation).
+
+If you have previously completed setup, make sure to [restart the container](/docs/enterprise/setup#appendix-how-to-apply-config-changes). You can now use Log Insights and Automated EXPLAIN, as well as [install the collector separately](/docs/enterprise/setup/separate-collector-install) (if desired).
