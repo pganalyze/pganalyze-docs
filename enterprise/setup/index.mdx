@@ -68,11 +68,11 @@ You can find the full explanation of all variables in the [settings documentatio
 
 ### Step 3: Set up object storage
 
-If you'd like to use the Log Insights or Automated EXPLAIN features, or want to run the collector separately from the Enterprise Server container, we now recommend doing the [object storage configuration](/docs/enterprise/setup/object-storage).
+If you'd like to use the Log Insights or Automated EXPLAIN features, or want to run the collector separately from the Enterprise Server container, you should **[set up object storage](/docs/enterprise/setup/object-storage)** before continuing with Step 4.
 
 ### Step 4: Initialize database & verify installation
 
-Next, run the Enterprise self check, to ensure the configuration is correct:
+Run the Enterprise self check, to ensure the configuration is correct:
 
 ```
 docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
@@ -112,7 +112,7 @@ Jul  2 07:15:22 aa84f55aceba syslog-ng[160]: syslog-ng shutting down; version='3
 
 ### Step 5: Create initial admin user
 
-Next, create the initial user:
+Create the initial user:
 
 ```
 docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
