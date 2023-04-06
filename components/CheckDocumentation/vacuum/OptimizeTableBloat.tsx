@@ -18,14 +18,13 @@ const OptimizeTableBloatTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   return (
     <p>
       Detects when a table could use autovacuum setting optimization to reduce
-      bloat. It checks a table statistic over the last seven days and calculate
-      the row count that could have been avoided the bloat if VACUUM had been
-      happening. Creates an issue when such row count is above{" "}
-      <code>{config.settings["notify_pct"]}%</code> of the current rows, or such
-      row count in bytes estimation is above{" "}
-      <code>{formatBytes(config.settings["notify_bytes"])}</code>. Resolves once
-      such row count decreases because of the autovacuum setting change or the
-      change of table usage.
+      table bloat. It checks a table statistic over the last seven days and
+      calculate the table growth that could have been avoided if VACUUM had been
+      happening more frequently. Creates an issue when such growth is above{" "}
+      <code>{formatBytes(config.settings["notify_bytes"])}</code>, as well as
+      <code>{config.settings["notify_pct"]}%</code> of the current size.
+      Resolves once such growth decreases because of the autovacuum setting
+      change or the change of table usage.
     </p>
   );
 };
@@ -100,8 +99,8 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
       </p>
       <CodeBlock>{sql}</CodeBlock>
       <p>
-        The value is one recommendation, it is important to pay attention to the
-        following points after making a change and adjust further if needed:
+        It is important to pay attention to the following points after making a
+        change and adjust further if needed:
       </p>
       <ul>
         <li>
@@ -117,13 +116,19 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
         <li>
           <h5>Bloat change</h5>
           <p>
-            It is possible that tweaking these settings won't remove the
-            existing bloat. Often, already created bloat is not removable even
-            with perfect settings unless there are more inserts than deletes. To
-            confirm the impact of changes, it is also recommended to run
-            pg_repack to reclaim disk space. You can check out estimated bloat
-            over time graph in{" "}
-            <Link to={tableVacuumsUrl}>VACUUM/ANALYZE Activity</Link> page.
+            Typically, tweaking these settings won't remove the existing bloat.
+            Already created bloat is not removable even with perfect settings
+            unless all the dead rows become reusable and there are more inserts
+            than deletes to reuse that space.
+          </p>
+          <p>
+            To confirm the impact of changes, it is also recommended to{" "}
+            <Link to="https://pganalyze.com/blog/5mins-postgres-pg-repack-VACUUM-FULL">
+              run pg_repack
+            </Link>{" "}
+            to reclaim disk space. You can check out estimated bloat over time
+            graph in <Link to={tableVacuumsUrl}>VACUUM/ANALYZE Activity</Link>{" "}
+            page.
           </p>
         </li>
       </ul>
@@ -133,7 +138,7 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
 
 const documentation: CheckDocs = {
   description:
-    "Detects when a table could use VACUUM setting optimization to reduce bloat.",
+    "Detects when a table could use VACUUM setting optimization to reduce table bloat.",
   Trigger: OptimizeTableBloatTrigger,
   Guidance: OptimizeTableBloatGuidance,
 };
