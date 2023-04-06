@@ -17,14 +17,14 @@ const OptimizeTableBloatTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 }) => {
   return (
     <p>
-      Detects when a table could use autovacuum setting optimization to reduce
-      table bloat. It checks a table statistic over the last seven days and
-      calculate the table growth that could have been avoided if VACUUM had been
-      happening more frequently. Creates an issue when such growth is above{" "}
-      <code>{formatBytes(config.settings["notify_bytes"])}</code>, as well as
-      <code>{config.settings["notify_pct"]}%</code> of the current size.
-      Resolves once such growth decreases because of the autovacuum setting
-      change or the change of table usage.
+      Detects when a table would benefit from autovacuum setting optimization to
+      reduce table bloat. It analyzes the table statistic from the past seven
+      days and calculates the amount of growth that could have been avoided if
+      VACUUM had been performed more frequently. Creates an issue when this
+      growth exceeds <code>{formatBytes(config.settings["notify_bytes"])}</code>
+      , as well as <code>{config.settings["notify_pct"]}%</code> of the current
+      size. Resolves once the growth decreases due to changes in autovacuum
+      settings or table usage.
     </p>
   );
 };
@@ -116,10 +116,11 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
         <li>
           <h5>Bloat change</h5>
           <p>
-            Typically, tweaking these settings won't remove the existing bloat.
-            Already created bloat is not removable even with perfect settings
-            unless all the dead rows become reusable and there are more inserts
-            than deletes to reuse that space.
+            Typically, adjusting these settings won't eliminate existing bloat.
+            Even with optimal settings, bloat that has already been accumulated
+            cannot be eliminated unless the space occupied by dead rows becomes
+            reusable via VACUUM, and there are more INSERTs than DELETEs to
+            reuse that space.
           </p>
           <p>
             To confirm the impact of changes, it is also recommended to{" "}
