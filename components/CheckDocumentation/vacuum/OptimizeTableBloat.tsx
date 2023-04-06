@@ -8,7 +8,7 @@ import {
   IssueReferenceTable,
 } from "../../../util/checks";
 import { formatBytes, formatSqlObjectName } from "../../../util/format";
-import CodeBlock from "../../CodeBlock";
+import { useCodeBlock } from "../../CodeBlock";
 import { useSmartAnchor } from "../../SmartAnchor";
 import SQL from "../../SQL";
 
@@ -33,6 +33,7 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
   CheckGuidanceProps
 > = ({ urls: { tableVacuumsUrl }, issue }) => {
   const Link = useSmartAnchor();
+  const CodeBlock = useCodeBlock();
   const issueDetails = issue && JSON.parse(issue.detailsJson);
   const current = issueDetails["current"];
   const recommendation = issueDetails["recommendation"];
