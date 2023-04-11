@@ -4,71 +4,51 @@ import {
   CheckDocs,
   CheckGuidanceProps,
   CheckTriggerProps,
-  IssueReferenceIndex,
-  IssueReferenceTable,
 } from "../../../util/checks";
-import { formatBytes, formatSqlObjectName } from "../../../util/format";
-import { useCodeBlock } from "../../CodeBlock";
+import { formatBytes } from "../../../util/format";
 import { useSmartAnchor } from "../../SmartAnchor";
-import SQL from "../../SQL";
 
-const OptimizeTableBloatTrigger: React.FunctionComponent<CheckTriggerProps> = ({
-  config,
-}) => {
+const UnnecessaryTableGrowthTrigger: React.FunctionComponent<
+  CheckTriggerProps
+> = ({ config }) => {
   return (
     <p>
-      Detects when a table would benefit from autovacuum setting optimization to
-      reduce table bloat. It analyzes the table statistic from the past seven
+      Detects when a table has experienced unnecessary growth due to
+      insufficient VACUUM. It analyzes the table statistic from the past seven
       days and calculates the amount of growth that could have been avoided if
-      VACUUM had been performed more frequently. Creates an issue when this
-      growth exceeds <code>{formatBytes(config.settings["notify_bytes"])}</code>
-      , as well as <code>{config.settings["notify_pct"]}%</code> of the current
-      size. Resolves once the growth decreases due to changes in autovacuum
-      settings or table usage.
+      VACUUM had been performed more frequently. Creates an issue when the
+      unnecessary growth exceeds{" "}
+      <code>{formatBytes(config.settings["notify_bytes"])}</code>, as well as{" "}
+      <code>{config.settings["notify_pct"]}%</code> of the current size.
+      Resolves once the unnecessary growth decreases due to changes in
+      autovacuum settings or table usage.
     </p>
   );
 };
 
-const OptimizeTableBloatGuidance: React.FunctionComponent<
+const UnnecessaryTableGrowthGuidance: React.FunctionComponent<
   CheckGuidanceProps
-> = ({ urls: { tableVacuumsUrl }, issue }) => {
+> = ({ urls: { tableVacuumsUrl } }) => {
   const Link = useSmartAnchor();
-  const CodeBlock = useCodeBlock();
-  const issueDetails = issue && JSON.parse(issue.detailsJson);
-  const current = issueDetails["current"];
-  const recommendation = issueDetails["recommendation"];
-  const ref = issue?.references?.[0];
-  const schemaTable = ref.referent as IssueReferenceTable;
-  const tableName = formatSqlObjectName(
-    schemaTable.schemaName,
-    schemaTable.tableName
-  );
-  const sql =
-    current["autovacuum_vacuum_threshold"] !=
-    recommendation["autovacuum_vacuum_threshold"] ? (
-      <SQL
-        inline
-        sql={`ALTER TABLE ${tableName} SET (autovacuum_vacuum_threshold = ${recommendation["autovacuum_vacuum_threshold"]});`}
-      />
-    ) : (
-      <SQL
-        inline
-        sql={`ALTER TABLE ${tableName} SET (autovacuum_vacuum_scale_factor = ${recommendation["autovacuum_vacuum_scale_factor"]});`}
-      />
-    );
 
   return (
     <div>
       <h4>Impact</h4>
       <p>
-        Table bloat refers to the phenomenon where a table's physical size on
-        disk is larger than its actual data size. In Postgres, any DELETEs or
-        UPDATEs will create dead rows.
-        <code>VACUUM</code> command and autovacuum removes dead rows and make
-        such space reusable for future INSERTs and UPDATEs. However, if VACUUM
-        is not happening in the right timing, dead rows will be kept as table
-        bloat and table bloat can keep growing. Table bloat is problematic for
-        several reasons:
+        In Postgres, any DELETEs or UPDATEs create dead rows that can be
+        VACUUMed to become reusable space for future INSERTs or UPDATEs.
+        Autovacuum is designed to automatically perform VACUUM regularly to
+        efficiently reclaim reusable space created by removing dead rows. This
+        helps ensure that INSERTs and UPDATEs can use existing space instead of
+        claiming new space. In this way, the table can avoid unnecessary growth.
+      </p>
+      <p>
+        However, if autovacuum is not performed with the appropriate frequency
+        or at the right time, dead rows may not be reclaimed. This can cause
+        unnecessary table growth, which could have been avoided if dead rows
+        were reclaimed. This typically result in table bloat where the physical
+        size of the table on disk is larger than its actual data size. Table
+        bloat is problematic for several reasons:
       </p>
       <ul>
         <li>
@@ -95,13 +75,8 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
         frequency of autovacuum in general.
       </p>
       <p>
-        Here is some recommendation for a new value. You can run this command to
-        change the settings for the table:
-      </p>
-      <CodeBlock>{sql}</CodeBlock>
-      <p>
         It is important to pay attention to the following points after making a
-        change and adjust further if needed:
+        change to these values and adjust further if needed:
       </p>
       <ul>
         <li>
@@ -140,9 +115,9 @@ const OptimizeTableBloatGuidance: React.FunctionComponent<
 
 const documentation: CheckDocs = {
   description:
-    "Detects when a table could use VACUUM setting optimization to reduce table bloat.",
-  Trigger: OptimizeTableBloatTrigger,
-  Guidance: OptimizeTableBloatGuidance,
+    "Detects when a table has experienced unnecessary growth due to insufficient VACUUM.",
+  Trigger: UnnecessaryTableGrowthTrigger,
+  Guidance: UnnecessaryTableGrowthGuidance,
 };
 
 export default documentation;
