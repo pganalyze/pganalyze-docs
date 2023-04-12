@@ -28,9 +28,9 @@ const UnnecessaryTableGrowthTrigger: React.FunctionComponent<
 
 const UnnecessaryTableGrowthGuidance: React.FunctionComponent<
   CheckGuidanceProps
-> = ({ urls: { tableVacuumsUrl } }) => {
-  const Link = useSmartAnchor();
-
+> = () => {
+  // UnnecessaryTableGrowth uses a similar pattern as MissingIndex.
+  // The docs doesn't have the solution section as it's in dynamic guidance generated in app side.
   return (
     <div>
       <h4>Impact</h4>
@@ -64,48 +64,6 @@ const UnnecessaryTableGrowthGuidance: React.FunctionComponent<
             Table bloat can cause the disk space usage to increase
             unnecessarily, which can lead to disk space shortages and degraded
             performance.
-          </p>
-        </li>
-      </ul>
-      <h4>Solution</h4>
-      <p>
-        You can adjust the timing of autovacuum by changing the config variables
-        related to autovacuum. Lowering <code>autovacuum_vacuum_threshold</code>{" "}
-        or <code>autovacuum_vacuum_scale_factor</code> will increase the
-        frequency of autovacuum in general.
-      </p>
-      <p>
-        It is important to pay attention to the following points after making a
-        change to these values and adjust further if needed:
-      </p>
-      <ul>
-        <li>
-          <h5>VACUUM frequency</h5>
-          <p>
-            Changing the settings will likely increase the frequency of
-            autovacuum. Frequent VACUUM can impact on the performance and
-            stability of your database, if such VACUUM is expensive. You can
-            check out recent autovacuums in{" "}
-            <Link to={tableVacuumsUrl}>VACUUM/ANALYZE Activity</Link> page.
-          </p>
-        </li>
-        <li>
-          <h5>Bloat change</h5>
-          <p>
-            Typically, adjusting these settings won't eliminate existing bloat.
-            Even with optimal settings, bloat that has already been accumulated
-            cannot be eliminated unless the space occupied by dead rows becomes
-            reusable via VACUUM, and there are more INSERTs than DELETEs to
-            reuse that space.
-          </p>
-          <p>
-            To confirm the impact of changes, it is also recommended to{" "}
-            <Link to="https://pganalyze.com/blog/5mins-postgres-pg-repack-VACUUM-FULL">
-              run pg_repack
-            </Link>{" "}
-            to reclaim disk space. You can check out estimated bloat over time
-            graph in <Link to={tableVacuumsUrl}>VACUUM/ANALYZE Activity</Link>{" "}
-            page.
           </p>
         </li>
       </ul>
