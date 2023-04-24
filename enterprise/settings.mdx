@@ -38,7 +38,7 @@ MAILER_FROM=pganalyze@example.com
   - `modify_all` - assigns the role named "View & Modify (All Servers)"
   - `view_all` - assigns the role named "View (All Servers)"
 
-**Important:** If you are hosting your pganalyze Enterprise Server installation on a publicly available interface (i.e. without explicit access control at the network level), we recommend setting `DISABLE_DIRECT_SIGNUP` to `1`. 
+**Important:** If you are hosting your pganalyze Enterprise Server installation on a publicly available interface (i.e. without explicit access control at the network level), we recommend setting `DISABLE_DIRECT_SIGNUP` to `1`.
 
 Note that `DISABLE_DIRECT_SIGNUP` is not compatible with the `DEFAULT_ORG_ROLE` setting: If `DISABLE_DIRECT_SIGNUP` is enabled, and `DEFAULT_ORG_ROLE` is not `none`, it will be the same as setting it to `none`, since direct registrations are not possible.
 
@@ -128,3 +128,23 @@ DEFAULT_ORG_ROLE=view_all
 ```
 
 Note you can run an [Enterprise self-check](/docs/enterprise/troubleshooting) to verify the connection and lookup LDAP information, but some configuration errors are only visible once logging in.
+
+## Worker queue monitoring using Prometheus
+
+The metrics HTTP endpoint `/metrics` is available for Prometheus scraping. Currently, it provides worker queue metrics using the [sidekiq-prometheus-exporter gem](https://github.com/Strech/sidekiq-prometheus-exporter).
+
+The endpoint is protected with a bearer auth, the token is specified with the `SIDEKIQ_PROMETHEUS_TOKEN` environment variable. The endpoint is only available when the environment variable is set.
+If you have a Prometheus setup already, you can add the hostname and port of your web server as an additional target to the Prometheus config file to scrape.
+
+Below is an example of a `prometheus.yml` file (with web server `0.0.0.0:5000`):
+
+```
+scrape_configs:
+  - job_name: "sidekiq-prometheus"
+    scrape_interval: 60s
+    scrape_timeout: 10s
+    authorization:
+      credentials: $SIDEKIQ_PROMETHEUS_TOKEN
+    static_configs:
+      - targets: [ '0.0.0.0:5000' ]
+```
