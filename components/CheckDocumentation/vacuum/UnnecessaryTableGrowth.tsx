@@ -6,7 +6,6 @@ import {
   CheckTriggerProps,
 } from "../../../util/checks";
 import { formatBytes } from "../../../util/format";
-import { useSmartAnchor } from "../../SmartAnchor";
 
 const UnnecessaryTableGrowthTrigger: React.FunctionComponent<
   CheckTriggerProps
@@ -18,8 +17,8 @@ const UnnecessaryTableGrowthTrigger: React.FunctionComponent<
       days and calculates the amount of growth that could have been avoided if
       VACUUM had been performed more frequently. Creates an issue when the
       unnecessary growth exceeds{" "}
-      <code>{formatBytes(config.settings["notify_bytes"])}</code>, as well as{" "}
-      <code>{config.settings["notify_pct"]}%</code> of the current size.
+      <code>{formatBytes(Number(config.settings["notify_bytes"]))}</code>, as
+      well as <code>{config.settings["notify_pct"]}%</code> of the current size.
       Resolves once the unnecessary growth decreases due to changes in
       autovacuum settings or table usage.
     </p>
