@@ -30,7 +30,11 @@ export const CHECK_TITLES = {
   },
   vacuum: {
     inefficient_index_phase: "VACUUM - Inefficient index phase",
+<<<<<<< HEAD
     insufficient_vacuum_frequency: "VACUUM: Bloat - Insufficient VACUUM Frequency",
+=======
+    xmin_horizon: "VACUUM - Xmin horizon behind",
+>>>>>>> 28c6c3f (Add initial version)
   },
 };
 
@@ -66,7 +70,11 @@ export const CHECK_SEVERITIES = {
   },
   vacuum: {
     inefficient_index_phase: ['warning'],
+<<<<<<< HEAD
     insufficient_vacuum_frequency: ['info'],
+=======
+    xmin_horizon: ['info'],
+>>>>>>> 28c6c3f (Add initial version)
   },
 }
 
@@ -126,7 +134,11 @@ export const CHECK_FREQUENCY = {
   },
   vacuum: {
     inefficient_index_phase: CHECK_FREQUENCY_DAILY,
+<<<<<<< HEAD
     insufficient_vacuum_frequency: CHECK_FREQUENCY_DAILY,
+=======
+    xmin_horizon: CHECK_FREQUENCY_DAILY,
+>>>>>>> 28c6c3f (Add initial version)
   },
 };
 
@@ -241,6 +253,12 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
       settings: {
         notify_pct: 20,
         notify_bytes: 10 * 1024 * 1024,
+      }
+    },
+    xmin_horizon: {
+      enabled: true,
+      settings: {
+        behind_days: 1,
       }
     },
   },
