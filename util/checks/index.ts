@@ -28,6 +28,9 @@ export const CHECK_TITLES = {
     high_lag: "Replication - High Lag",
     follower_missing: "Replication - Missing HA Follower",
   },
+  vacuum: {
+    inefficient_index_phase: "VACUUM - Inefficient index phase",
+  }
 };
 
 export const CHECK_SEVERITIES = {
@@ -60,6 +63,9 @@ export const CHECK_SEVERITIES = {
     high_lag: ['warning', 'critical'],
     follower_missing: ['critical'],
   },
+  vacuum: {
+    inefficient_index_phase: ['warning'],
+  }
 }
 
 export function checkMaxSeverity(checkGroup: string, checkName: string): string | undefined {
@@ -116,6 +122,9 @@ export const CHECK_FREQUENCY = {
     high_lag: CHECK_FREQUENCY_30MIN,
     follower_missing: CHECK_FREQUENCY_30MIN,
   },
+  vacuum: {
+    inefficient_index_phase: CHECK_FREQUENCY_DAILY,
+  }
 };
 
 export const DEFAULT_CHECK_CONFIGS = {
@@ -210,6 +219,12 @@ export const DEFAULT_CHECK_CONFIGS = {
         expected_count: 0
       }
     }
+  },
+  vacuum: {
+    inefficient_index_phase: {
+      enabled: true,
+      threshold_count: 1,
+    },
   },
 }
 
