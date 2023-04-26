@@ -43,37 +43,39 @@ const XminHorizonBehindGuidance: React.FunctionComponent<
         can result to the transaction wraparound, in the worst case scenario.
       </p>
       <h4>Common Causes</h4>
-      <li>
-        <h5>Long-running transactions</h5>
-        <p>
-          When there is a long running transaction, you can't clean up rows that
-          the transaction can see, even if it already became a dead row.
-        </p>
-      </li>
-      <li>
-        <h5>Unfinished prepared transactions</h5>
-        <p>
-          If the transaction prepared for a two-phase commit is unfinished and
-          kept around, it can become the oldest xmin.
-        </p>
-      </li>
-      <li>
-        <h5>Delayed/bad replication slots</h5>
-        <p>
-          When the replication is delayed or the standby server is down, the
-          oldest transaction that the replication slot needs the database to
-          retain can be "stuck" hence hold back of the xmin horizon can happen.
-          This can also happen to the system catalogs.
-        </p>
-      </li>
-      <li>
-        <h5>Long-running transactions on standbys</h5>
-        <p>
-          When <code>hot_standby_feedback</code> is on, queries on standbys will
-          act the same as primary regarding the xmin horizon, and causes the
-          xmin horizon to be behind.
-        </p>
-      </li>
+      <ul>
+        <li>
+          <h5>Long-running transactions</h5>
+          <p>
+            When there is a long running transaction, you can't clean up rows
+            that the transaction can see, even if it already became a dead row.
+          </p>
+        </li>
+        <li>
+          <h5>Unfinished prepared transactions</h5>
+          <p>
+            If the transaction prepared for a two-phase commit is unfinished and
+            kept around, it can become the oldest xmin.
+          </p>
+        </li>
+        <li>
+          <h5>Delayed/bad replication slots</h5>
+          <p>
+            When the replication is delayed or the standby server is down, the
+            oldest transaction that the replication slot needs the database to
+            retain can be "stuck" hence hold back of the xmin horizon can
+            happen. This can also happen to the system catalogs.
+          </p>
+        </li>
+        <li>
+          <h5>Long-running transactions on standbys</h5>
+          <p>
+            When <code>hot_standby_feedback</code> is on, queries on standbys
+            will act the same as primary regarding the xmin horizon, and causes
+            the xmin horizon to be behind.
+          </p>
+        </li>
+      </ul>
       <h4>Solution</h4>
       {heldBackBy["backend"] && (
         <>
@@ -84,7 +86,6 @@ const XminHorizonBehindGuidance: React.FunctionComponent<
           </p>
           <CodeBlock>
             <SQL
-              inline
               sql={`SELECT pid, datname, usename, state, backend_xmin, backend_xid
                   FROM pg_stat_activity
                   WHERE backend_xmin IS NOT NULL OR backend_xid IS NOT NULL
@@ -127,7 +128,6 @@ const XminHorizonBehindGuidance: React.FunctionComponent<
           </p>
           <CodeBlock>
             <SQL
-              inline
               sql={`SELECT application_name, client_addr, backend_xmin
                   FROM pg_stat_replication
                   ORDER BY age(backend_xmin) DESC;`}
@@ -144,7 +144,6 @@ const XminHorizonBehindGuidance: React.FunctionComponent<
           </p>
           <CodeBlock>
             <SQL
-              inline
               sql={`SELECT gid, prepared, owner, database, transaction AS xmin
                   FROM pg_prepared_xacts
                   ORDER BY age(transaction) DESC;`}
