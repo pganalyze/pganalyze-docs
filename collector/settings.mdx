@@ -6,17 +6,23 @@ backlink_title: 'pganalyze Collector'
 
 import ToC from '../components/Toc'
 
-The collector can be configured either through an `INI` config file (in a package-based install) or environment
-variables (typically for running via its Docker image). Most settings can be configured through either mechanism.
-If both are present, the config file takes precedence. Note that a single collector instance can monitor more than
-one database server, though this is not supported when configuring through environment variables.
+The collector can be configured through one of three mechanisms:
 
-For the `INI`-based setup, the `[pganalyze]` section describes settings that apply to all servers. Other sections
+1. Package-based install: `INI` config file, commonly in `/etc/pganalyze-collector.conf`
+2. Docker-based install: `INI` config passed via the `CONFIG_CONTENTS` environment variable
+3. Docker-based install: Individual environment variables for each setting (e.g. `DB_HOST`)
+
+Most settings can be configured through either `INI` config settings or individual environment variables. When you
+set individual environment variables in addition to the `INI` config, the environment variable settings apply to all
+monitored servers. If both are present, the `INI` config takes precedence.
+
+Note that a single collector instance can monitor more than one database server, by utilizing separate configuration
+sections in the `INI` config. Utilizing individual environment variables only supports configuring a single server.
+
+For the `INI` config, the `[pganalyze]` section describes settings that apply to all servers. Other sections
 describe the servers to monitor, how to connect to them, and server-specific configuration settings. You should
 name the other sections after the servers they correspond to, though note these are not the names that will appear
-in the app. In-app names are based on hostname settings as determined during monitoring. When you set environment
-variables in addition to specifying a configuration file, the environment variable settings apply to all monitored
-servers.
+in the app. In-app names are based on hostname settings as determined during monitoring.
 
 After you make changes, you can run `pganalyze-collector --test --reload` to verify the new configuration and load
 the new configuration in the collector background process if they work correctly. This minimizes monitoring
