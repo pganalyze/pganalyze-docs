@@ -12,8 +12,9 @@ The collector can be configured through one of three mechanisms:
 2. Docker-based install: `INI` config passed via the `CONFIG_CONTENTS` environment variable
 3. Docker-based install: Individual environment variables for each setting (e.g. `DB_HOST`)
 
-Most settings can be configured through either `INI` config settings or individual environment variables. When you set individual environment variables in addition to the `INI` config, the environment variable settings apply to all monitored
-servers. If both are present, the `INI` config takes precedence.
+Most settings can be configured through either `INI` config settings or individual environment variables. When you
+set individual environment variables in addition to the `INI` config, the environment variable settings apply to all
+monitored servers. If both are present, the `INI` config takes precedence.
 
 Note that a single collector instance can monitor more than one database server, by utilizing separate configuration
 sections in the `INI` config. Utilizing individual environment variables only supports configuring a single server.
