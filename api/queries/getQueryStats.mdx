@@ -37,7 +37,9 @@ Note that the data returned reflects the statistics of the previous 24 hours, fr
 
 ## Example
 
-```
+GraphQL query:
+
+```graphql
 query {
   getQueryStats(databaseId: 12345) {
     id
@@ -52,11 +54,15 @@ query {
 }
 ```
 
-```
-curl -XPOST -H 'Authorization: Token XXXXXXX' -F 'query=query { getQueryStats(databaseId: 12345) { id, queryUrl, truncatedQuery, statementType, totalCalls, avgTime, bufferHitRatio, pctOfTotal } }' https://app.pganalyze.com/graphql
+Using `curl`:
+
+```bash
+curl -XPOST -H 'Authorization: Token XXXXXXX' \
+  -F 'query=query { getQueryStats(databaseId: 12345) { id, queryUrl, truncatedQuery, statementType, totalCalls, avgTime, bufferHitRatio, pctOfTotal } }' \
+  https://app.pganalyze.com/graphql
 ```
 
-```
+```json
 {
   "data": {
     "getQueryStats": [
@@ -82,7 +88,7 @@ curl -XPOST -H 'Authorization: Token XXXXXXX' -F 'query=query { getQueryStats(da
 
 In case you are looking for a CSV export instead of the JSON output for this API call, the following Ruby script can be used:
 
-```
+```ruby
 require 'csv'
 require 'json'
 require 'net/http'
