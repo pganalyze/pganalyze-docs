@@ -1,6 +1,7 @@
 import React from "react";
 
 import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/checks";
+import PGDocsLink from "../../PGDocsLink";
 
 const InefficientIndexPhaseTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
@@ -14,8 +15,12 @@ const InefficientIndexPhaseTrigger: React.FunctionComponent<CheckTriggerProps> =
         multiple index scan phases due to limited configured memory, and creates an
         issue with severity "warning". Triggers when at least <code>{threshold}</code>
         autovacuum {runPluralized} in the last 24h have had multiple index scan phases.
+        {/*
+          Special-casing "fewer than 1 run" as "no runs" or similar could sound more
+          natural, but it's important to repeat the threshold number here for clarity.
+        */}{" "}
         Resolves automatically once fewer than <code>{threshold}</code> autovacuum {runPluralized}
-        in the last 24h have had multiple index scan phases.
+        {" "}in the last 24h have had multiple index scan phases.
       </p>
       <p>
         Ignores situations where configured autovacuum mmemory is already set to the
@@ -60,7 +65,10 @@ const InefficientIndexPhaseGuidance: React.FunctionComponent<CheckGuidanceProps>
       <p>
         Increasing <SettingLink setting="autovacuum_work_mem" /> can allow autovacuum
         to proceed more efficiently. It's hard to predict how much memory may be needed,
-        but doubling the value and monitoring the impact is a reasonable approach.
+        but doubling the value (up to the maximum of <code>1GB</code>) and monitoring the
+        impact is a reasonable approach. Update the setting to the recommended value by
+        using <PGDocsLink path="/sql-altersystem.html">ALTER SYSTEM</PGDocsLink> or
+        modifying the parameters in your cloud provider portal.
       </p>
     </div>
   );
