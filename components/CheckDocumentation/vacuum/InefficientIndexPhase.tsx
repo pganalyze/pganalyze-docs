@@ -66,8 +66,10 @@ const InefficientIndexPhaseGuidance: React.FunctionComponent<CheckGuidanceProps>
         Increasing <SettingLink setting="autovacuum_work_mem" /> can allow autovacuum
         to proceed more efficiently. It's hard to predict how much memory may be needed,
         but doubling the value (up to the maximum of <code>1GB</code>) and monitoring the
-        impact is a reasonable approach. Update the setting to the recommended value by
-        using <PGDocsLink path="/sql-altersystem.html">ALTER SYSTEM</PGDocsLink> or
+        impact is a reasonable approach. If <code>autovacuum_work_mem</code> is set to
+        <code>-1</code>, it will fall back to the current value of <SettingLink setting="maintenance_work_mem" />.
+        It is generally preferable to set it separately. Update the setting to the recommended
+        value by using <PGDocsLink path="/sql-altersystem.html">ALTER SYSTEM</PGDocsLink> or
         modifying the parameters in your cloud provider portal.
       </p>
     </div>
