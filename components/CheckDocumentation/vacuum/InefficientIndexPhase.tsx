@@ -23,7 +23,7 @@ const InefficientIndexPhaseTrigger: React.FunctionComponent<CheckTriggerProps> =
         {" "}in the last 24h have had multiple index scan phases.
       </p>
       <p>
-        Ignores situations where configured autovacuum mmemory is already set to the
+        Ignores situations where configured autovacuum memory is already set to the
         maximum possible value of <code>1GB</code>.
       </p>
     </>
