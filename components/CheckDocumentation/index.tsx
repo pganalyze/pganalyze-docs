@@ -17,6 +17,7 @@ import WorkMem from "./settings/WorkMem";
 import StorageSpace from "./system/StorageSpace";
 import HighLag from "./replication/HighLag";
 import FollowerMissing from "./replication/FollowerMissing";
+import VacuumInefficientIndexPhase from "./vacuum/InefficientIndexPhase";
 
 const Docs: {
   [category: string]: { [check: string]: CheckDocs };
@@ -50,6 +51,9 @@ const Docs: {
     high_lag: HighLag,
     follower_missing: FollowerMissing,
   },
+  vacuum: {
+    inefficient_index_phase: VacuumInefficientIndexPhase
+  }
 };
 
 export function getCheckDescription(
