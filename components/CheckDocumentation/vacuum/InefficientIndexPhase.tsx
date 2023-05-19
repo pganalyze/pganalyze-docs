@@ -13,7 +13,7 @@ const InefficientIndexPhaseTrigger: React.FunctionComponent<CheckTriggerProps> =
       <p>
         Detects when autovacuum runs in this server are forced to perform inefficient
         multiple index scan phases due to limited configured memory, and creates an
-        issue with severity "warning". Triggers when at least <code>{threshold}</code>
+        issue with severity "warning". Triggers when at least <code>{threshold}</code>{" "}
         autovacuum {runPluralized} in the last 24h have had multiple index scan phases.
         {/*
           Special-casing "fewer than 1 run" as "no runs" or similar could sound more
@@ -66,7 +66,7 @@ const InefficientIndexPhaseGuidance: React.FunctionComponent<CheckGuidanceProps>
         Increasing <SettingLink setting="autovacuum_work_mem" /> can allow autovacuum
         to proceed more efficiently. It's hard to predict how much memory may be needed,
         but doubling the value (up to the maximum of <code>1GB</code>) and monitoring the
-        impact is a reasonable approach. If <code>autovacuum_work_mem</code> is set to
+        impact is a reasonable approach. If <code>autovacuum_work_mem</code> is set to{" "}
         <code>-1</code>, it will fall back to the current value of <SettingLink setting="maintenance_work_mem" />.
         It is generally preferable to set it separately. Update the setting to the recommended
         value by using <PGDocsLink path="/sql-altersystem.html">ALTER SYSTEM</PGDocsLink> or
