@@ -8,7 +8,7 @@ import {
 } from "../../../util/checks";
 import { useCodeBlock } from "../../CodeBlock";
 
-const XminHorizonBehindTrigger: React.FunctionComponent<CheckTriggerProps> = ({
+const XminHorizonTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
 }) => {
   const threshold = config.settings["behind_days"] as number;
@@ -22,7 +22,7 @@ const XminHorizonBehindTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   );
 };
 
-const XminHorizonBehindGuidance: React.FunctionComponent<
+const XminHorizonGuidance: React.FunctionComponent<
   CheckGuidanceProps
 > = ({ issue }) => {
   const CodeBlock = useCodeBlock();
@@ -162,8 +162,8 @@ const XminHorizonBehindGuidance: React.FunctionComponent<
 const documentation: CheckDocs = {
   description:
     "Monitors the xmin horizon of the server and creates an info issue if the xmin horizon is not making any progress.",
-  Trigger: XminHorizonBehindTrigger,
-  Guidance: XminHorizonBehindGuidance,
+  Trigger: XminHorizonTrigger,
+  Guidance: XminHorizonGuidance,
 };
 
 export default documentation;
