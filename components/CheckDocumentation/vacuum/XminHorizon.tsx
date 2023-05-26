@@ -17,30 +17,32 @@ const XminHorizonTrigger: React.FunctionComponent<CheckTriggerProps> = ({
     <p>
       Detects when the xmin horizon on the server has not progressed for the
       last <code>{threshold}</code> {dayPluralized} and creates an issue with
-      severity "info". Resolves once the xmin horizon makes some progress.
+      severity "info". The issue will be created even if no VACUUM is currently
+      blocked by this, as this will potentially block any future VACUUMs.
+      Resolves once the xmin horizon makes some progress.
     </p>
   );
 };
 
-const XminHorizonGuidance: React.FunctionComponent<
-  CheckGuidanceProps
-> = ({ issue }) => {
+const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
+  issue,
+}) => {
   const CodeBlock = useCodeBlock();
   const issueDetails = issue && JSON.parse(issue.detailsJson);
   const heldBackBy = issueDetails && issueDetails["held_back_by"];
   return (
     <div>
       <h4>Impact</h4>
+      <p>VACUUM is potentially blocked by the xmin horizon.</p>
       <p>
         The xmin horizon tells you until which point the vacuum process can
         clean up dead rows. When this value is behind and not making progress,
-        it's very likely that VACUUM can't clean up dead rows, or process
-        freezing.
+        it's very likely that VACUUM can't clean up dead rows, hence blocking
+        VACUUM.
       </p>
       <p>
-        When dead rows can't be cleaned, it can result to the unnecessary table
-        bloat or slow queries. If freezing is not happening in timely manner, it
-        can result to the transaction wraparound, in the worst case scenario.
+        When VACUUM is blocked and dead rows can't be cleaned, it can result to
+        the unnecessary table bloat or slow queries.
       </p>
       <h4>Common Causes</h4>
       <ul>
@@ -49,13 +51,6 @@ const XminHorizonGuidance: React.FunctionComponent<
           <p>
             When there is a long running transaction, you can't clean up rows
             that the transaction can see, even if it already became a dead row.
-          </p>
-        </li>
-        <li>
-          <h5>Unfinished prepared transactions</h5>
-          <p>
-            If the transaction prepared for a two-phase commit is unfinished and
-            kept around, it can become the oldest xmin.
           </p>
         </li>
         <li>
@@ -73,6 +68,13 @@ const XminHorizonGuidance: React.FunctionComponent<
             When <code>hot_standby_feedback</code> is on, queries on standbys
             will act the same as primary regarding the xmin horizon, and causes
             the xmin horizon to be behind.
+          </p>
+        </li>
+        <li>
+          <h5>Unfinished prepared transactions</h5>
+          <p>
+            If the transaction prepared for a two-phase commit is unfinished and
+            kept around, it can become the oldest xmin.
           </p>
         </li>
       </ul>
@@ -95,7 +97,7 @@ const XminHorizonGuidance: React.FunctionComponent<
           <p>
             You can cancel it with{" "}
             <SQL inline sql={`SELECT pg_cancel_backend('<query_pid>');`} /> or{" "}
-            <SQL inline sql={`SELECT pg_terminate_backend('<query_pid>');`} />
+            <SQL inline sql={`SELECT pg_terminate_backend('<query_pid>');`} />.
           </p>
         </>
       )}
@@ -106,6 +108,7 @@ const XminHorizonGuidance: React.FunctionComponent<
           some physical (streaming) replication slot is likely either delayed or
           down. If the replication slot is no longer used, remove it with{" "}
           <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />
+          .
         </p>
       )}
       {heldBackBy["replication_slot_catalog"] && (
@@ -116,6 +119,7 @@ const XminHorizonGuidance: React.FunctionComponent<
           either delayed, down, or having trouble replicating due to schema
           mismatch. If the replication slot is no longer used, remove it with{" "}
           <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />
+          .
         </p>
       )}
       {heldBackBy["standby"] && (
