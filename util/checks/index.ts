@@ -30,7 +30,7 @@ export const CHECK_TITLES = {
   },
   vacuum: {
     inefficient_index_phase: "VACUUM - Inefficient index phase",
-    unnecessary_table_growth: "Unnecessary Table Growth",
+    unnecessary_table_growth: "VACUUM: Bloat - Unnecessary Table Growth",
   },
 };
 
