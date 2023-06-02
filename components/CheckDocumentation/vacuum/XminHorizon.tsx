@@ -30,6 +30,22 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   const CodeBlock = useCodeBlock();
   const issueDetails = issue && JSON.parse(issue.detailsJson);
   const heldBackBy = issueDetails && issueDetails["held_back_by"];
+  let byBackend = null;
+  let byReplicationSlot = null;
+  let byReplicationSlotCatalog = null;
+  let byStandby = null;
+  let byPreparedXact = null;
+  if (heldBackBy) {
+    byBackend = heldBackBy.find((v) => v["type"] === "backend");
+    byReplicationSlot = heldBackBy.find(
+      (v) => v["type"] === "replication_slot"
+    );
+    byReplicationSlotCatalog = heldBackBy.find(
+      (v) => v["type"] === "replication_slot_catalog"
+    );
+    byStandby = heldBackBy.find((v) => v["type"] === "standby");
+    byPreparedXact = heldBackBy.find((v) => v["type"] === "prepared_xact");
+  }
   return (
     <div>
       <h4>Impact</h4>
@@ -78,85 +94,101 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           </p>
         </li>
       </ul>
-      <h4>Solution</h4>
-      {heldBackBy["backend"] && (
+      {heldBackBy && (
         <>
-          <p>
-            The long running transaction is holding back the xmin horizon at{" "}
-            <code>{heldBackBy["backend"]}</code>. You can find such transaction
-            and its pid by running the following command:
-          </p>
-          <CodeBlock>
-            <SQL
-              sql={`SELECT pid, datname, usename, state, backend_xmin, backend_xid
+          <h4>Solution</h4>
+          {byBackend && (
+            <>
+              <p>
+                The long running transaction is holding back the xmin horizon at{" "}
+                <code>{byBackend["xmin"]}</code>. You can find such transaction
+                and its pid by running the following command:
+              </p>
+              <CodeBlock>
+                <SQL
+                  sql={`SELECT pid, datname, usename, state, backend_xmin, backend_xid
                   FROM pg_stat_activity
                   WHERE backend_xmin IS NOT NULL OR backend_xid IS NOT NULL
                   ORDER BY greatest(age(backend_xmin), age(backend_xid)) DESC;`}
-            />
-          </CodeBlock>
-          <p>
-            You can cancel it with{" "}
-            <SQL inline sql={`SELECT pg_cancel_backend('<query_pid>');`} /> or{" "}
-            <SQL inline sql={`SELECT pg_terminate_backend('<query_pid>');`} />.
-          </p>
-        </>
-      )}
-      {heldBackBy["replication_slot"] && (
-        <p>
-          The replication slot is holding back the xmin horizon at{" "}
-          <code>{heldBackBy["replication_slot"]}</code>. This indicates that
-          some physical (streaming) replication slot is likely either delayed or
-          down. If the replication slot is no longer used, remove it with{" "}
-          <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />
-          .
-        </p>
-      )}
-      {heldBackBy["replication_slot_catalog"] && (
-        <p>
-          The replication slot is holding back the xmin horizon at{" "}
-          <code>{heldBackBy["replication_slot_catalog"]}</code>, specifically
-          with the system catalogs. This indicates that the replication slot is
-          either delayed, down, or having trouble replicating due to schema
-          mismatch. If the replication slot is no longer used, remove it with{" "}
-          <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />
-          .
-        </p>
-      )}
-      {heldBackBy["standby"] && (
-        <>
-          <p>
-            The long running transaction on the standby is holding back the xmin
-            horizon at <code>{heldBackBy["standby"]}</code>. You can find the{" "}
-            <code>xmin</code> of all standby servers by running the following
-            command:
-          </p>
-          <CodeBlock>
-            <SQL
-              sql={`SELECT application_name, client_addr, backend_xmin
+                />
+              </CodeBlock>
+              <p>
+                You can cancel it with{" "}
+                <SQL inline sql={`SELECT pg_cancel_backend('<query_pid>');`} />{" "}
+                or{" "}
+                <SQL
+                  inline
+                  sql={`SELECT pg_terminate_backend('<query_pid>');`}
+                />
+                .
+              </p>
+            </>
+          )}
+          {byReplicationSlot && (
+            <p>
+              The replication slot is holding back the xmin horizon at{" "}
+              <code>{byReplicationSlot["xmin"]}</code>. This indicates that some
+              physical (streaming) replication slot is likely either delayed or
+              down. If the replication slot is no longer used, remove it with{" "}
+              <SQL
+                inline
+                sql={`SELECT pg_drop_replication_slot('<slot_name>');`}
+              />
+              .
+            </p>
+          )}
+          {byReplicationSlotCatalog && (
+            <p>
+              The replication slot is holding back the xmin horizon at{" "}
+              <code>{byReplicationSlotCatalog["xmin"]}</code>, specifically with
+              the system catalogs. This indicates that the replication slot is
+              either delayed, down, or having trouble replicating due to schema
+              mismatch. If the replication slot is no longer used, remove it
+              with{" "}
+              <SQL
+                inline
+                sql={`SELECT pg_drop_replication_slot('<slot_name>');`}
+              />
+              .
+            </p>
+          )}
+          {byStandby && (
+            <>
+              <p>
+                The long running transaction on the standby is holding back the
+                xmin horizon at <code>{byStandby["xmin"]}</code>. You can find
+                the <code>xmin</code> of all standby servers by running the
+                following command:
+              </p>
+              <CodeBlock>
+                <SQL
+                  sql={`SELECT application_name, client_addr, backend_xmin
                   FROM pg_stat_replication
                   ORDER BY age(backend_xmin) DESC;`}
-            />
-          </CodeBlock>
-        </>
-      )}
-      {heldBackBy["prepared_xact"] && (
-        <>
-          <p>
-            The orphaned prepared transaction is holding back the xmin horizon
-            at <code>{heldBackBy["prepared_xact"]}</code>. You can find such
-            prepared transactions by running the following command:
-          </p>
-          <CodeBlock>
-            <SQL
-              sql={`SELECT gid, prepared, owner, database, transaction AS xmin
+                />
+              </CodeBlock>
+            </>
+          )}
+          {byPreparedXact && (
+            <>
+              <p>
+                The orphaned prepared transaction is holding back the xmin
+                horizon at <code>{byPreparedXact["xmin"]}</code>. You can find
+                such prepared transactions by running the following command:
+              </p>
+              <CodeBlock>
+                <SQL
+                  sql={`SELECT gid, prepared, owner, database, transaction AS xmin
                   FROM pg_prepared_xacts
                   ORDER BY age(transaction) DESC;`}
-            />
-          </CodeBlock>
-          <p>
-            Once identified, you can cancel the transaction with{" "}
-            <SQL inline sql={`ROLLBACK PREPARED <gid_from_above>`} />.
-          </p>
+                />
+              </CodeBlock>
+              <p>
+                Once identified, you can cancel the transaction with{" "}
+                <SQL inline sql={`ROLLBACK PREPARED <gid_from_above>`} />.
+              </p>
+            </>
+          )}
         </>
       )}
     </div>
