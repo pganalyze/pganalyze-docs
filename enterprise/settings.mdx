@@ -29,6 +29,10 @@ MAILER_URL=smtp://myusername:mypassword@example.com:25
 MAILER_FROM=pganalyze@example.com
 ```
 
+## Resource settings
+
+* `SIDEKIQ_CONCURRENCY`: Concurrency (number of threads) for background workers, defaults to 1. Set this to 0 to turn off the workers in the combined image (requires [2023.06.0](/docs/enterprise/releases/2023-06-0) or newer).
+
 ## Access control settings
 
 * `DISABLE_DIRECT_SIGNUP`: Whether direct signups to the pganalyze application are permitted (without requiring an invite or going through Single Sign-On)
