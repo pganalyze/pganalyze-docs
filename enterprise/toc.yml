@@ -2,6 +2,8 @@
   items:
   - name: Overview
     href: enterprise
+  - name: Container settings
+    href: enterprise/settings
   - name: Setup instructions
     href: enterprise/setup
   - name: Release changelog
