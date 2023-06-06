@@ -51,10 +51,9 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
       <h4>Impact</h4>
       <p>VACUUM is potentially blocked by the xmin horizon.</p>
       <p>
-        The xmin horizon tells you until which point the vacuum process can
-        clean up dead rows. When this value is behind and not making progress,
-        it's very likely that VACUUM can't clean up dead rows, hence blocking
-        VACUUM.
+        The xmin horizon tells you up to which point the vacuum process can
+        clean up dead rows. When this value is behind and not advancing, VACUUMs
+        will be blocked and will not be able to clean up dead rows.
       </p>
       <p>
         When VACUUM is blocked and dead rows can't be cleaned, it can result to
@@ -65,32 +64,32 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         <li>
           <h5>Long-running transactions</h5>
           <p>
-            When there is a long running transaction, you can't clean up rows
-            that the transaction can see, even if it already became a dead row.
+            Long-running transactions may still need to access rows that could
+            otherwise be considered dead, so they can block cleanup.
           </p>
         </li>
         <li>
-          <h5>Delayed/bad replication slots</h5>
+          <h5>Lagging or stale replication slots</h5>
           <p>
-            When the replication is delayed or the standby server is down, the
-            oldest transaction that the replication slot needs the database to
-            retain can be "stuck" hence hold back of the xmin horizon can
-            happen. This can also happen to the system catalogs.
+            When replication is lagging or a replica server is stale (e.g. down,
+            gone), the oldest transaction that the replication slot needs the
+            database to retain can be "stuck", holding back the xmin horizon.
+            This can also happen to the system catalogs.
           </p>
         </li>
         <li>
           <h5>Long-running transactions on standbys</h5>
           <p>
             When <code>hot_standby_feedback</code> is on, queries on standbys
-            will act the same as primary regarding the xmin horizon, and causes
-            the xmin horizon to be behind.
+            will hold back the xmin horizon just as if they were running on the
+            primary.
           </p>
         </li>
         <li>
-          <h5>Unfinished prepared transactions</h5>
+          <h5>Abandoned prepared transactions</h5>
           <p>
-            If the transaction prepared for a two-phase commit is unfinished and
-            kept around, it can become the oldest xmin.
+            A transaction prepared for a two-phase commit will prevent cleanup
+            until it is either committed or rolled back.
           </p>
         </li>
       </ul>
@@ -100,9 +99,9 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           {byBackend && (
             <>
               <p>
-                The long running transaction is holding back the xmin horizon at{" "}
-                <code>{byBackend["xmin"]}</code>. You can find such transaction
-                and its pid by running the following command:
+                A long running transaction is holding back the xmin horizon at{" "}
+                <code>{byBackend["xmin"]}</code>. You can find this transaction
+                and its connection's pid by running the following command:
               </p>
               <CodeBlock>
                 <SQL
@@ -126,10 +125,11 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           )}
           {byReplicationSlot && (
             <p>
-              The replication slot is holding back the xmin horizon at{" "}
+              A replication slot is holding back the xmin horizon at{" "}
               <code>{byReplicationSlot["xmin"]}</code>. This indicates that some
-              physical (streaming) replication slot is likely either delayed or
-              down. If the replication slot is no longer used, remove it with{" "}
+              physical (streaming) replication slot is likely either lagging or
+              stale (e.g. down, gone). If the replication slot is no longer
+              used, remove it with{" "}
               <SQL
                 inline
                 sql={`SELECT pg_drop_replication_slot('<slot_name>');`}
@@ -141,10 +141,10 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             <p>
               The replication slot is holding back the xmin horizon at{" "}
               <code>{byReplicationSlotCatalog["xmin"]}</code>, specifically with
-              the system catalogs. This indicates that the replication slot is
-              either delayed, down, or having trouble replicating due to schema
-              mismatch. If the replication slot is no longer used, remove it
-              with{" "}
+              system catalogs. This indicates that the replication slot is
+              either lagging, stale (e.g. down, gone), or having trouble
+              replicating due to schema mismatch. If the replication slot is no
+              longer used, remove it with{" "}
               <SQL
                 inline
                 sql={`SELECT pg_drop_replication_slot('<slot_name>');`}
@@ -155,9 +155,9 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           {byStandby && (
             <>
               <p>
-                The long running transaction on the standby is holding back the
-                xmin horizon at <code>{byStandby["xmin"]}</code>. You can find
-                the <code>xmin</code> of all standby servers by running the
+                A long running transaction on a standby is holding back the xmin
+                horizon at <code>{byStandby["xmin"]}</code>. You can find the{" "}
+                <code>xmin</code> of all standby servers by running the
                 following command:
               </p>
               <CodeBlock>
@@ -172,9 +172,9 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           {byPreparedXact && (
             <>
               <p>
-                The orphaned prepared transaction is holding back the xmin
-                horizon at <code>{byPreparedXact["xmin"]}</code>. You can find
-                such prepared transactions by running the following command:
+                A prepared transaction is holding back the xmin horizon at{" "}
+                <code>{byPreparedXact["xmin"]}</code>. You can find this
+                prepared transaction by running the following command:
               </p>
               <CodeBlock>
                 <SQL
@@ -184,7 +184,8 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
                 />
               </CodeBlock>
               <p>
-                Once identified, you can cancel the transaction with{" "}
+                Once identified, you can either commit or cancel the transaction
+                with <SQL inline sql={`COMMIT PREPARED <gid_from_above>`} /> or
                 <SQL inline sql={`ROLLBACK PREPARED <gid_from_above>`} />.
               </p>
             </>
