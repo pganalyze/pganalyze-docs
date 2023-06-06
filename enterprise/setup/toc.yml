@@ -12,8 +12,6 @@
     href: enterprise/google-auth
   - name: PagerDuty and Slack integration setup
     href: enterprise/integrations
-  - name: Container settings
-    href: enterprise/settings
 - mount: enterprise/setup/object-storage
   items:
   - name: Overview
