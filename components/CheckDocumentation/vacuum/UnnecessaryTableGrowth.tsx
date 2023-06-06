@@ -34,7 +34,7 @@ const UnnecessaryTableGrowthGuidance: React.FunctionComponent<
       <h4>Impact</h4>
       <p>
         In Postgres, any DELETEs or UPDATEs create dead rows in the tables they
-        modify. VACUUM allows Postgres to reclaim these rows and reuse that
+        modify. VACUUM allows Postgres to reclaim these dead rows and reuse that
         space for future INSERTs or UPDATEs. Autovacuum is designed to perform
         VACUUM regularly in order to efficiently reuse space. This helps ensure
         that INSERTs and UPDATEs can use existing space instead of claiming new
