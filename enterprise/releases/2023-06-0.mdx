@@ -1,0 +1,77 @@
+---
+title: '2023.06.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2023.06.0`
+
+## Notes
+
+- This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+  - **Important**: The included migration on the queries table (20230410170608_add_tables_to_queries) may take considerable time on the pganalyze database when monitoring many database servers. We recommend doing the upgrade during off-hours.
+  - When upgrading, please note that the application will run the following SQL statement - when permissions are restricted, you may need to run this ahead of the upgrade:
+    ```sql
+    CREATE EXTENSION IF NOT EXISTS btree_gin WITH SCHEMA public;
+    ```
+
+## Features
+
+- This release contains preparations for upcoming autovacuum tuning recommendations, as well as the constraint programming based Index Advisor - more on this soon!
+- Wait event monitoring:
+  - Use higher data resolution when viewing a timeframe that's 1 hour or less
+  - Reduce data resolution when viewing longer timeframes to improve clickability
+  - Allow zooming the graph through click+drag, like other graphs in the application
+- Add additional AWS settings for bundled collector
+  - Adds support for configuring the Cluster ID, the Assume Role, as well as allows enabling IAM authentication when using the bundled collector
+- The bundled collector has been updated to [v0.50.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0500------2023-06-05) (from v0.49.2 in prior release)
+  - This is primarily a bugfix release in the context of an Enterprise Server installation using the bundled collector to monitor a self-managed or
+   Amazon RDS/Aurora database server
+  - In case you have installed the collector separately, we recommend upgrading the collector package/container and reviewing the [full changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0500------2023-06-05)
+- Issue e-mail notifications: Include pganalyze organization name in email body, for easier filtering when using multiple organizations
+- Add additional telemetry data to check pganalyze snapshot health via Prometheus/Grafana
+  - See [instructions](/docs/enterprise/settings#worker-queue-monitoring-using-prometheus) for how to use the Prometheus endpoint
+- Allow setting `SIDEKIQ_CONCURRENCY=0` to turn off workers in combined Enterprise image
+  - You can utilize this setting in order to separate the workers from the container servicing the pganalyze web UI, avoiding slow web requests caused by worker processing
+  - Note such a setup requires having configured object storage as well as an external Redis server (set via `REDIS_URL`)
+  - See [all settings](/docs/enterprise/settings)
+
+
+## Performance
+
+- Query analysis: Speed up analysis by avoiding to process schema dependency tracking
+- Improve performance of the `getIssues` API endpoint by avoiding N+1 queries
+- Disable use of prepared statements for web application
+  - In practice this ends up causing more overhead than benefit for the application, and we've seen better results without prepared statements
+- Cache table names associated to each query directly on `queries` table
+  - This speeds up background tasks working on a per-table basis (e.g. Index Advisor), as well as per-table queries list in the web application
+- Background workers:
+  - Don't run check-up logic for servers that have not received data in the last 24 hours
+  - Speed up truncation of queries (truncated queries are used for display in tables)
+  - Batch check-up logic together for 10 database servers at a time
+
+
+## Bugfixes
+
+- Object storage: Fix DNS lookup errors from Rust-based snapshot workers
+  - This may have shown as an I/O error that caused no snapshot data to be processed, despite the collector successfully sending data to the installation
+  - If we have previously asked you to utilize an IP address for your MinIO endpoint as a workaround, you can now switch back to using a DNS hostname
+- Query analysis:
+  - Don't retry query analysis after "relation does not exist" errors
+  - Avoid "Unexpected rtekind" errors for functions and VALUES
+  - Fix planning for hash indexes (this allows Index Advisor to run on tables that have hash indexes, but does not yet recommend hash indexes)
+- Remove query length limit for parsing
+  - Previously query texts exceeding 20,000 characters were not parsed during the initial intake, causing them to not have referenced tables, or an associated statement type
+- `getIssues` API endpoint: Fix legacy displayName field to actually return the name, not the UUID
+  - Note that the displayName field is deprecated and replaced by `references`.`name` (see the current [getIssues API](/docs/api/queries/getIssues) docs)
+- Fix parsing of EXPLAIN plans using the "Presorted Key" property when using auto_explain.log_format = text"
+- Query sample deduplication: Ensure query sample with parameters is stored if it occurs at the same time as an auto_explain sample without parameters
+- Add critical priority queue to ensure statistics data partitions are created even when queue is heavily backlogged
+
+
+## Security
+
+- Update to Ruby 3.0
+- Update nokogiri to resolve GHSA-pxvg-2qj5-37jq
+- Upgrade svg-react-loader and xml2js to address GHSA-776f-qx25-q3cc
+
