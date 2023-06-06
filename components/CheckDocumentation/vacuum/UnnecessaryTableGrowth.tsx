@@ -19,8 +19,7 @@ const UnnecessaryTableGrowthTrigger: React.FunctionComponent<
       unnecessary growth exceeds{" "}
       <code>{formatBytes(Number(config.settings["notify_bytes"]))}</code>, as
       well as <code>{config.settings["notify_pct"]}%</code> of the current size.
-      Resolves once the unnecessary growth decreases due to changes in
-      autovacuum settings or table usage.
+      Resolves once the unnecessary growth decreases.
     </p>
   );
 };
@@ -34,18 +33,17 @@ const UnnecessaryTableGrowthGuidance: React.FunctionComponent<
     <div>
       <h4>Impact</h4>
       <p>
-        In Postgres, any DELETEs or UPDATEs create dead rows that can be
-        VACUUMed to become reusable space for future INSERTs or UPDATEs.
-        Autovacuum is designed to automatically perform VACUUM regularly to
-        efficiently reclaim reusable space created by removing dead rows. This
-        helps ensure that INSERTs and UPDATEs can use existing space instead of
-        claiming new space. In this way, the table can avoid unnecessary growth.
+        In Postgres, any DELETEs or UPDATEs create dead rows in the tables they
+        modify. VACUUM allows Postgres to reclaim these rows and reuse that
+        space for future INSERTs or UPDATEs. Autovacuum is designed to perform
+        VACUUM regularly in order to efficiently reuse space. This helps ensure
+        that INSERTs and UPDATEs can use existing space instead of claiming new
+        space. In this way, the table can avoid unnecessary growth.
       </p>
       <p>
-        However, if autovacuum is not performed with the appropriate frequency
-        or at the right time, dead rows may not be reclaimed. This can cause
-        unnecessary table growth, which could have been avoided if dead rows
-        were reclaimed. This typically result in table bloat where the physical
+        However, if VACUUM is not performed with the appropriate frequency or at
+        the right time, dead rows may not be reclaimed. This can cause
+        unnecessary table growth and results in table bloat, where the physical
         size of the table on disk is larger than its actual data size. Table
         bloat is problematic for several reasons:
       </p>
@@ -53,16 +51,19 @@ const UnnecessaryTableGrowthGuidance: React.FunctionComponent<
         <li>
           <h5>Slower queries</h5>
           <p>
-            When a table is bloated, it takes more time to read and write data
-            from the disk, which can slow down queries that access the table.
+            Since bloated tables take more physical space for the same amount of
+            actual data, they take longer to read from disk, and take up more
+            room when cached in memory. This makes queries on these tables less
+            efficient, because they have to do more work to scan the same amount
+            of data.
           </p>
         </li>
         <li>
-          <h5>Increased disk usage</h5>
+          <h5>Increased disk space and I/O</h5>
           <p>
-            Table bloat can cause the disk space usage to increase
-            unnecessarily, which can lead to disk space shortages and degraded
-            performance.
+            Table bloat causes disk space usage to increase unnecessarily. It
+            also leads to more I/O to read and write the same amount of actual
+            data.
           </p>
         </li>
       </ul>
