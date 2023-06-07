@@ -47,7 +47,7 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     byStandby = heldBackBy.find((v) => v["type"] === "standby");
     byPreparedXact = heldBackBy.find((v) => v["type"] === "prepared_xact");
   }
-  const inApp = issue !== null;
+  const inApp = issue != null;
   return (
     <div>
       <h4>Impact</h4>
@@ -90,12 +90,6 @@ const GuidanceByBackend: React.FunctionComponent<{
     return null;
   }
 
-  const xminBlock = xmin && (
-    <>
-      A long running transaction is holding back the xmin horizon at{" "}
-      <code>{xmin}</code>.
-    </>
-  );
   const CodeBlock = useCodeBlock();
   return (
     <>
@@ -105,8 +99,13 @@ const GuidanceByBackend: React.FunctionComponent<{
         otherwise be considered dead, so they can block cleanup.
       </p>
       <h6>Solution</h6>
+      {xmin && (
+        <p>
+          A long running transaction is holding back the xmin horizon at{" "}
+          <code>{xmin}</code>.
+        </p>
+      )}
       <p>
-        {xminBlock}
         You can find the transaction holding back the xmin horizon and its
         connection's pid by running the following command:
       </p>
@@ -118,11 +117,13 @@ const GuidanceByBackend: React.FunctionComponent<{
                   ORDER BY greatest(age(backend_xmin), age(backend_xid)) DESC;`}
         />
       </CodeBlock>
-      <p>
-        You can cancel it with{" "}
-        <SQL inline sql={`SELECT pg_cancel_backend('<query_pid>');`} /> or{" "}
-        <SQL inline sql={`SELECT pg_terminate_backend('<query_pid>');`} />.
-      </p>
+      <p>You can cancel it by running either of commands:</p>
+      <CodeBlock>
+        <SQL
+          sql={`SELECT pg_cancel_backend('<query_pid>');
+                SELECT pg_terminate_backend('<query_pid>');`}
+        />
+      </CodeBlock>
     </>
   );
 };
@@ -136,8 +137,8 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
     return null;
   }
 
-  const xminCode = <code>{xmin}</code>;
   const Link = useSmartAnchor();
+  const CodeBlock = useCodeBlock();
   return (
     <>
       <h5>Lagging or stale physical replication slots</h5>
@@ -149,16 +150,23 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
         holding back the xmin horizon.
       </p>
       <h6>Solution</h6>
+      {xmin && (
+        <p>
+          A replication slot is holding back the xmin horizon at{" "}
+          <code>{xmin}</code>.
+        </p>
+      )}
       <p>
-        {xmin &&
-          `A replication slot is holding back the xmin horizon at ${xminCode}.`}
         You can check the replication status on the{" "}
         <Link to={serverReplicationUrl}>Replication</Link> page.
       </p>
       <p>
-        If the replication slot is no longer used, remove it with{" "}
-        <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />.
+        If the replication slot is no longer used, you can remove it by running
+        the following command:
       </p>
+      <CodeBlock>
+        <SQL sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />
+      </CodeBlock>
     </>
   );
 };
