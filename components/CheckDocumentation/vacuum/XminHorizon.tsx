@@ -47,6 +47,7 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     byStandby = heldBackBy.find((v) => v["type"] === "standby");
     byPreparedXact = heldBackBy.find((v) => v["type"] === "prepared_xact");
   }
+  const inApp = heldBackBy === null;
   return (
     <div>
       <h4>Impact</h4>
@@ -61,33 +62,27 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         the unnecessary table bloat or slow queries.
       </p>
       <h4>Common Causes and Solutions</h4>
-      <GuidanceByBackend
-        inApp={!heldBackBy}
-        xmin={byBackend && byBackend["xmin"]}
-      />
+      <GuidanceByBackend inApp={inApp} xmin={byBackend && byBackend["xmin"]} />
       <GuidanceByReplicationSlot
-        inApp={!heldBackBy}
+        inApp={inApp}
         xmin={byReplicationSlot && byReplicationSlot["xmin"]}
         serverReplicationUrl={serverReplicationUrl}
       />
       <GuidanceByReplicationSlotCatalog
-        inApp={!heldBackBy}
+        inApp={inApp}
         xmin={byReplicationSlotCatalog && byReplicationSlotCatalog["xmin"]}
         serverReplicationUrl={serverReplicationUrl}
       />
-      <GuidanceByStandby
-        inApp={!heldBackBy}
-        xmin={byStandby && byStandby["xmin"]}
-      />
+      <GuidanceByStandby inApp={inApp} xmin={byStandby && byStandby["xmin"]} />
       <GuidanceByPreparedXact
-        inApp={!heldBackBy}
+        inApp={inApp}
         xmin={byPreparedXact && byPreparedXact["xmin"]}
       />
     </div>
   );
 };
 
-const GuidanceByPreparedXact: React.FunctionComponent<{
+const GuidanceByBackend: React.FunctionComponent<{
   inApp: boolean;
   xmin: number;
 }> = ({ inApp, xmin }) => {
@@ -98,30 +93,110 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
   const CodeBlock = useCodeBlock();
   return (
     <>
-      <h5>Abandoned prepared transactions</h5>
+      <h5>Long-running transactions</h5>
       <p>
-        A transaction prepared for a two-phase commit will prevent cleanup until
-        it is either committed or rolled back.
+        Long-running transactions may still need to access rows that could
+        otherwise be considered dead, so they can block cleanup.
       </p>
       <h6>Solution</h6>
       <p>
-        {xmin ??
-          `A prepared transaction is holding back the xmin
-          horizon at
-                ${(<code>{xmin}</code>)}.`}
-        You can find the prepared transaction by running the following command:
+        {xmin &&
+          `A long running transaction is holding back the xmin horizon at ${(
+            <code>{xmin}</code>
+          )}.`}
+        You can find the transaction holding back the xmin horizon and its
+        connection's pid by running the following command:
       </p>
       <CodeBlock>
         <SQL
-          sql={`SELECT gid, prepared, owner, database, transaction AS xmin
-                  FROM pg_prepared_xacts
-                  ORDER BY age(transaction) DESC;`}
+          sql={`SELECT pid, datname, usename, state, backend_xmin, backend_xid
+                  FROM pg_stat_activity
+                  WHERE backend_xmin IS NOT NULL OR backend_xid IS NOT NULL
+                  ORDER BY greatest(age(backend_xmin), age(backend_xid)) DESC;`}
         />
       </CodeBlock>
       <p>
-        Once identified, you can either commit or cancel the transaction with{" "}
-        <SQL inline sql={`COMMIT PREPARED <gid_from_above>`} /> or
-        <SQL inline sql={`ROLLBACK PREPARED <gid_from_above>`} />.
+        You can cancel it with{" "}
+        <SQL inline sql={`SELECT pg_cancel_backend('<query_pid>');`} /> or{" "}
+        <SQL inline sql={`SELECT pg_terminate_backend('<query_pid>');`} />.
+      </p>
+    </>
+  );
+};
+
+const GuidanceByReplicationSlot: React.FunctionComponent<{
+  inApp: boolean;
+  xmin: number;
+  serverReplicationUrl: string;
+}> = ({ inApp, xmin, serverReplicationUrl }) => {
+  if (!inApp && xmin === null) {
+    return null;
+  }
+
+  const Link = useSmartAnchor();
+  return (
+    <>
+      <h5>Lagging or stale physical replication slots</h5>
+      <p>
+        With physical streaming replication with{" "}
+        <code>hot_standby_feedback</code> is on, when replication is lagging or
+        a replica server is stale (e.g. down, gone), the oldest transaction that
+        the replication slot needs the database to retain can be "stuck",
+        holding back the xmin horizon.
+      </p>
+      <h6>Solution</h6>
+      <p>
+        {xmin &&
+          `A replication slot is holding back the xmin horizon at ${(
+            <code>{xmin}</code>
+          )}.`}
+        You can check the replication status on the{" "}
+        <Link to={serverReplicationUrl}>Replication</Link> page.
+      </p>
+      <p>
+        If the replication slot is no longer used, remove it with{" "}
+        <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />.
+      </p>
+    </>
+  );
+};
+
+const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
+  inApp: boolean;
+  xmin: number;
+  serverReplicationUrl: string;
+}> = ({ inApp, xmin, serverReplicationUrl }) => {
+  if (!inApp && xmin === null) {
+    return null;
+  }
+
+  const Link = useSmartAnchor();
+  return (
+    <>
+      <h5>Lagging or stale logical replication slots</h5>
+      <p>
+        With logical replication slots, replication can also get stale when DDL
+        changes (database migrations) don't get applied to a replica server
+        (subscriber). When the subscriber was unable to replicate data due to a
+        schema mismatch, replication will error and get stale. This causes the
+        system catalogs xmin of the primary (publisher) to be held back until
+        replication resumes.
+      </p>
+      <h6>Solution</h6>
+      <p>
+        {xmin &&
+          `A replication slot is holding back the xmin horizon at ${(
+            <code>{xmin}</code>
+          )}, specifically with system catalogs.`}
+        You can check the replication status on the{" "}
+        <Link to={serverReplicationUrl}>Replication</Link> page. You may also
+        want to check logs on both the publisher and the subscriber for any
+        error messages regarding logical replication, such as schema
+        differences.
+      </p>
+      <p>
+        If the replication slot is no longer used, remove it with{" "}
+        <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />.
       </p>
     </>
   );
@@ -177,84 +252,7 @@ const GuidanceByStandby: React.FunctionComponent<{
   );
 };
 
-const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
-  inApp: boolean;
-  xmin: number;
-  serverReplicationUrl: string;
-}> = ({ inApp, xmin, serverReplicationUrl }) => {
-  if (!inApp && xmin === null) {
-    return null;
-  }
-
-  const Link = useSmartAnchor();
-  return (
-    <>
-      <h5>Lagging or stale logical replication slots</h5>
-      <p>
-        With logical replication slots, replication can also get stale when DDL
-        changes (database migrations) don't get applied to a replica server
-        (subscriber). When the subscriber was unable to replicate data due to a
-        schema mismatch, replication will error and get stale. This causes the
-        system catalogs xmin of the primary (publisher) to be held back until
-        replication resumes.
-      </p>
-      <h6>Solution</h6>
-      <p>
-        {xmin ??
-          `A replication slot is holding back the xmin horizon at
-                ${(<code>{xmin}</code>)}, specifically with
-                system catalogs.`}
-        You can check the replication status on the{" "}
-        <Link to={serverReplicationUrl}>Replication</Link> page. You may also
-        want to check logs on both the publisher and the subscriber for any
-        error messages regarding logical replication, such as schema
-        differences.
-      </p>
-      <p>
-        If the replication slot is no longer used, remove it with{" "}
-        <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />.
-      </p>
-    </>
-  );
-};
-
-const GuidanceByReplicationSlot: React.FunctionComponent<{
-  inApp: boolean;
-  xmin: number;
-  serverReplicationUrl: string;
-}> = ({ inApp, xmin, serverReplicationUrl }) => {
-  if (!inApp && xmin === null) {
-    return null;
-  }
-
-  const Link = useSmartAnchor();
-  return (
-    <>
-      <h5>Lagging or stale physical replication slots</h5>
-      <p>
-        With physical streaming replication with{" "}
-        <code>hot_standby_feedback</code> is on, when replication is lagging or
-        a replica server is stale (e.g. down, gone), the oldest transaction that
-        the replication slot needs the database to retain can be "stuck",
-        holding back the xmin horizon.
-      </p>
-      <h6>Solution</h6>
-      <p>
-        {xmin ??
-          `A replication slot is holding back the xmin horizon at
-                ${(<code>{xmin}</code>)}.`}
-        You can check the replication status on the{" "}
-        <Link to={serverReplicationUrl}>Replication</Link> page.
-      </p>
-      <p>
-        If the replication slot is no longer used, remove it with{" "}
-        <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />.
-      </p>
-    </>
-  );
-};
-
-const GuidanceByBackend: React.FunctionComponent<{
+const GuidanceByPreparedXact: React.FunctionComponent<{
   inApp: boolean;
   xmin: number;
 }> = ({ inApp, xmin }) => {
@@ -265,31 +263,30 @@ const GuidanceByBackend: React.FunctionComponent<{
   const CodeBlock = useCodeBlock();
   return (
     <>
-      <h5>Long-running transactions</h5>
+      <h5>Abandoned prepared transactions</h5>
       <p>
-        Long-running transactions may still need to access rows that could
-        otherwise be considered dead, so they can block cleanup.
+        A transaction prepared for a two-phase commit will prevent cleanup until
+        it is either committed or rolled back.
       </p>
       <h6>Solution</h6>
       <p>
-        {xmin ??
-          `A long running transaction is holding back the xmin horizon at
-                ${(<code>{xmin}</code>)}.`}
-        You can find the transaction holding back the xmin horizon and its
-        connection's pid by running the following command:
+        {xmin &&
+          `A prepared transaction is holding back the xmin horizon at ${(
+            <code>{xmin}</code>
+          )}.`}
+        You can find the prepared transaction by running the following command:
       </p>
       <CodeBlock>
         <SQL
-          sql={`SELECT pid, datname, usename, state, backend_xmin, backend_xid
-                  FROM pg_stat_activity
-                  WHERE backend_xmin IS NOT NULL OR backend_xid IS NOT NULL
-                  ORDER BY greatest(age(backend_xmin), age(backend_xid)) DESC;`}
+          sql={`SELECT gid, prepared, owner, database, transaction AS xmin
+                  FROM pg_prepared_xacts
+                  ORDER BY age(transaction) DESC;`}
         />
       </CodeBlock>
       <p>
-        You can cancel it with{" "}
-        <SQL inline sql={`SELECT pg_cancel_backend('<query_pid>');`} /> or{" "}
-        <SQL inline sql={`SELECT pg_terminate_backend('<query_pid>');`} />.
+        Once identified, you can either commit or cancel the transaction with{" "}
+        <SQL inline sql={`COMMIT PREPARED <gid_from_above>`} /> or
+        <SQL inline sql={`ROLLBACK PREPARED <gid_from_above>`} />.
       </p>
     </>
   );
