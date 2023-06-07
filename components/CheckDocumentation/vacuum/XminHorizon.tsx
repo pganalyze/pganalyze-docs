@@ -104,7 +104,7 @@ const GuidanceByBackend: React.FunctionComponent<{
   inApp: boolean;
   xmin: number | null;
 }> = ({ inApp, xmin }) => {
-  if (inApp && xmin === null) {
+  if (inApp && !xmin) {
     return null;
   }
 
@@ -151,7 +151,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
   xmin: number | null;
   serverReplicationUrl: string;
 }> = ({ inApp, xmin, serverReplicationUrl }) => {
-  if (inApp && xmin === null) {
+  if (inApp && !xmin) {
     return null;
   }
 
@@ -194,7 +194,7 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
   xmin: number | null;
   serverReplicationUrl: string;
 }> = ({ inApp, xmin, serverReplicationUrl }) => {
-  if (inApp && xmin === null) {
+  if (inApp && !xmin) {
     return null;
   }
 
@@ -240,7 +240,7 @@ const GuidanceByStandby: React.FunctionComponent<{
   inApp: boolean;
   xmin: number | null;
 }> = ({ inApp, xmin }) => {
-  if (inApp && xmin === null) {
+  if (inApp && !xmin) {
     return null;
   }
 
@@ -292,7 +292,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
   inApp: boolean;
   xmin: number | null;
 }> = ({ inApp, xmin }) => {
-  if (inApp && xmin === null) {
+  if (inApp && !xmin) {
     return null;
   }
 
