@@ -127,7 +127,13 @@ export const CHECK_FREQUENCY = {
   }
 };
 
-export const DEFAULT_CHECK_CONFIGS = {
+type DefaultCheckConfigs = {
+  [checkGroup: string]: {
+    [checkName: string]: CheckConfig
+  }
+}
+
+export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
   queries: {
     slowness: {
       enabled: true,
@@ -223,15 +229,17 @@ export const DEFAULT_CHECK_CONFIGS = {
   vacuum: {
     inefficient_index_phase: {
       enabled: true,
-      threshold_count: 1,
+      settings: {
+        threshold_count: 1,
+      }
     },
   },
-}
+} as const;
 
 export function checkDefaultConfig(
   checkGroup: string,
   checkName: string
-): string {
+): CheckConfig {
   return DEFAULT_CHECK_CONFIGS[checkGroup]?.[checkName];
 }
 
@@ -249,7 +257,7 @@ export function checkFrequency(
 
 export type CheckConfig = {
   enabled: boolean;
-  settings: { [key: string]: string | number | boolean };
+  settings?: { [key: string]: string | number | boolean };
 };
 
 export type CheckTriggerProps = {
