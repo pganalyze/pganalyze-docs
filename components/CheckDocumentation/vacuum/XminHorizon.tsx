@@ -90,7 +90,12 @@ const GuidanceByBackend: React.FunctionComponent<{
     return null;
   }
 
-  const xminCode = <code>{xmin}</code>;
+  const xminBlock = xmin && (
+    <>
+      A long running transaction is holding back the xmin horizon at{" "}
+      <code>{xmin}</code>.
+    </>
+  );
   const CodeBlock = useCodeBlock();
   return (
     <>
@@ -101,8 +106,7 @@ const GuidanceByBackend: React.FunctionComponent<{
       </p>
       <h6>Solution</h6>
       <p>
-        {xmin &&
-          `A long running transaction is holding back the xmin horizon at ${xminCode}.`}
+        {xminBlock}
         You can find the transaction holding back the xmin horizon and its
         connection's pid by running the following command:
       </p>
