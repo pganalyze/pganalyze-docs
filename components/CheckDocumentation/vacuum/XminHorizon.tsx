@@ -47,7 +47,7 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     byStandby = heldBackBy.find((v) => v["type"] === "standby");
     byPreparedXact = heldBackBy.find((v) => v["type"] === "prepared_xact");
   }
-  const inApp = heldBackBy === null;
+  const inApp = issue !== null;
   return (
     <div>
       <h4>Impact</h4>
@@ -86,7 +86,7 @@ const GuidanceByBackend: React.FunctionComponent<{
   inApp: boolean;
   xmin: number | null;
 }> = ({ inApp, xmin }) => {
-  if (!inApp && xmin === null) {
+  if (inApp && xmin === null) {
     return null;
   }
 
@@ -128,7 +128,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
   xmin: number | null;
   serverReplicationUrl: string;
 }> = ({ inApp, xmin, serverReplicationUrl }) => {
-  if (!inApp && xmin === null) {
+  if (inApp && xmin === null) {
     return null;
   }
 
@@ -164,7 +164,7 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
   xmin: number | null;
   serverReplicationUrl: string;
 }> = ({ inApp, xmin, serverReplicationUrl }) => {
-  if (!inApp && xmin === null) {
+  if (inApp && xmin === null) {
     return null;
   }
 
@@ -203,7 +203,7 @@ const GuidanceByStandby: React.FunctionComponent<{
   inApp: boolean;
   xmin: number | null;
 }> = ({ inApp, xmin }) => {
-  if (!inApp && xmin === null) {
+  if (inApp && xmin === null) {
     return null;
   }
 
@@ -254,7 +254,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
   inApp: boolean;
   xmin: number | null;
 }> = ({ inApp, xmin }) => {
-  if (!inApp && xmin === null) {
+  if (inApp && xmin === null) {
     return null;
   }
 
