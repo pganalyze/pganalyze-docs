@@ -62,22 +62,40 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         the unnecessary table bloat or slow queries.
       </p>
       <h4>Common Causes and Solutions</h4>
-      <GuidanceByBackend inApp={inApp} xmin={byBackend && byBackend["xmin"]} />
-      <GuidanceByReplicationSlot
-        inApp={inApp}
-        xmin={byReplicationSlot && byReplicationSlot["xmin"]}
-        serverReplicationUrl={serverReplicationUrl}
-      />
-      <GuidanceByReplicationSlotCatalog
-        inApp={inApp}
-        xmin={byReplicationSlotCatalog && byReplicationSlotCatalog["xmin"]}
-        serverReplicationUrl={serverReplicationUrl}
-      />
-      <GuidanceByStandby inApp={inApp} xmin={byStandby && byStandby["xmin"]} />
-      <GuidanceByPreparedXact
-        inApp={inApp}
-        xmin={byPreparedXact && byPreparedXact["xmin"]}
-      />
+      <ul>
+        <li>
+          <GuidanceByBackend
+            inApp={inApp}
+            xmin={byBackend && byBackend["xmin"]}
+          />
+        </li>
+        <li>
+          <GuidanceByReplicationSlot
+            inApp={inApp}
+            xmin={byReplicationSlot && byReplicationSlot["xmin"]}
+            serverReplicationUrl={serverReplicationUrl}
+          />
+        </li>
+        <li>
+          <GuidanceByReplicationSlotCatalog
+            inApp={inApp}
+            xmin={byReplicationSlotCatalog && byReplicationSlotCatalog["xmin"]}
+            serverReplicationUrl={serverReplicationUrl}
+          />
+        </li>
+        <li>
+          <GuidanceByStandby
+            inApp={inApp}
+            xmin={byStandby && byStandby["xmin"]}
+          />
+        </li>
+        <li>
+          <GuidanceByPreparedXact
+            inApp={inApp}
+            xmin={byPreparedXact && byPreparedXact["xmin"]}
+          />
+        </li>
+      </ul>
     </div>
   );
 };
@@ -180,7 +198,7 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
     return null;
   }
 
-  const xminCode = <code>{xmin}</code>;
+  const CodeBlock = useCodeBlock();
   const Link = useSmartAnchor();
   return (
     <>
@@ -194,9 +212,13 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
         replication resumes.
       </p>
       <h6>Solution</h6>
+      {xmin && (
+        <p>
+          A replication slot is holding back the xmin horizon at{" "}
+          <code>{xmin}</code>, specifically with system catalogs.
+        </p>
+      )}
       <p>
-        {xmin &&
-          `A replication slot is holding back the xmin horizon at ${xminCode}, specifically with system catalogs.`}
         You can check the replication status on the{" "}
         <Link to={serverReplicationUrl}>Replication</Link> page. You may also
         want to check logs on both the publisher and the subscriber for any
@@ -204,9 +226,12 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
         differences.
       </p>
       <p>
-        If the replication slot is no longer used, remove it with{" "}
-        <SQL inline sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />.
+        If the replication slot is no longer used, remove it it by running the
+        following command:
       </p>
+      <CodeBlock>
+        <SQL sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />
+      </CodeBlock>
     </>
   );
 };
@@ -219,7 +244,6 @@ const GuidanceByStandby: React.FunctionComponent<{
     return null;
   }
 
-  const xminCode = <code>{xmin}</code>;
   const CodeBlock = useCodeBlock();
   return (
     <>
@@ -230,11 +254,13 @@ const GuidanceByStandby: React.FunctionComponent<{
         if they were running on the primary.
       </p>
       <h6>Solution</h6>
+      {xmin && (
+        <p>
+          A long running query on a standby is holding back the xmin horizon at{" "}
+          <code>{xmin}</code>.
+        </p>
+      )}
       <p>
-        {xmin &&
-          `A long running query on a standby is holding back the xmin
-          horizon at
-                ${xminCode}.`}
         You can find the <code>xmin</code> of all standby servers by running the
         following command:
       </p>
@@ -270,7 +296,6 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
     return null;
   }
 
-  const xminCode = <code>{xmin}</code>;
   const CodeBlock = useCodeBlock();
   return (
     <>
@@ -280,9 +305,13 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
         it is either committed or rolled back.
       </p>
       <h6>Solution</h6>
+      {xmin && (
+        <p>
+          A prepared transaction is holding back the xmin horizon at{" "}
+          <code>{xmin}</code>.
+        </p>
+      )}
       <p>
-        {xmin &&
-          `A prepared transaction is holding back the xmin horizon at ${xminCode}.`}
         You can find the prepared transaction by running the following command:
       </p>
       <CodeBlock>
@@ -293,10 +322,15 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
         />
       </CodeBlock>
       <p>
-        Once identified, you can either commit or cancel the transaction with{" "}
-        <SQL inline sql={`COMMIT PREPARED <gid_from_above>`} /> or{" "}
-        <SQL inline sql={`ROLLBACK PREPARED <gid_from_above>`} />.
+        Once identified, you can either commit or cancel the transaction by
+        running either of commands:
       </p>
+      <CodeBlock>
+        <SQL
+          sql={`COMMIT PREPARED <gid_from_above>;
+                ROLLBACK PREPARED <gid_from_above>;`}
+        />
+      </CodeBlock>
     </>
   );
 };
