@@ -296,6 +296,7 @@ export type IssueGuidanceUrls = {
   databaseTableUrl: string;
   serverLogInsightsUrl: string;
   serverSchemaUrl: string;
+  serverReplicationUrl: string;
   featureUrl: (mainUrl: string | undefined, section: string) => string | undefined;
 };
 
