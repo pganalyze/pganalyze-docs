@@ -63,38 +63,28 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
       </p>
       <h4>Common Causes and Solutions</h4>
       <ul>
-        <li>
-          <GuidanceByBackend
-            inApp={inApp}
-            xmin={byBackend && byBackend["xmin"]}
-          />
-        </li>
-        <li>
-          <GuidanceByReplicationSlot
-            inApp={inApp}
-            xmin={byReplicationSlot && byReplicationSlot["xmin"]}
-            serverReplicationUrl={serverReplicationUrl}
-          />
-        </li>
-        <li>
-          <GuidanceByReplicationSlotCatalog
-            inApp={inApp}
-            xmin={byReplicationSlotCatalog && byReplicationSlotCatalog["xmin"]}
-            serverReplicationUrl={serverReplicationUrl}
-          />
-        </li>
-        <li>
-          <GuidanceByStandby
-            inApp={inApp}
-            xmin={byStandby && byStandby["xmin"]}
-          />
-        </li>
-        <li>
-          <GuidanceByPreparedXact
-            inApp={inApp}
-            xmin={byPreparedXact && byPreparedXact["xmin"]}
-          />
-        </li>
+        <GuidanceByBackend
+          inApp={inApp}
+          xmin={byBackend && byBackend["xmin"]}
+        />
+        <GuidanceByReplicationSlot
+          inApp={inApp}
+          xmin={byReplicationSlot && byReplicationSlot["xmin"]}
+          serverReplicationUrl={serverReplicationUrl}
+        />
+        <GuidanceByReplicationSlotCatalog
+          inApp={inApp}
+          xmin={byReplicationSlotCatalog && byReplicationSlotCatalog["xmin"]}
+          serverReplicationUrl={serverReplicationUrl}
+        />
+        <GuidanceByStandby
+          inApp={inApp}
+          xmin={byStandby && byStandby["xmin"]}
+        />
+        <GuidanceByPreparedXact
+          inApp={inApp}
+          xmin={byPreparedXact && byPreparedXact["xmin"]}
+        />
       </ul>
     </div>
   );
@@ -110,7 +100,7 @@ const GuidanceByBackend: React.FunctionComponent<{
 
   const CodeBlock = useCodeBlock();
   return (
-    <>
+    <li>
       <h5>Long-running transactions</h5>
       <p>
         Long-running transactions may still need to access rows that could
@@ -142,7 +132,7 @@ const GuidanceByBackend: React.FunctionComponent<{
                 SELECT pg_terminate_backend('<query_pid>');`}
         />
       </CodeBlock>
-    </>
+    </li>
   );
 };
 
@@ -158,7 +148,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
   const Link = useSmartAnchor();
   const CodeBlock = useCodeBlock();
   return (
-    <>
+    <li>
       <h5>Lagging or stale physical replication slots</h5>
       <p>
         With physical streaming replication with{" "}
@@ -185,7 +175,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
       <CodeBlock>
         <SQL sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />
       </CodeBlock>
-    </>
+    </li>
   );
 };
 
@@ -201,7 +191,7 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
   const CodeBlock = useCodeBlock();
   const Link = useSmartAnchor();
   return (
-    <>
+    <li>
       <h5>Lagging or stale logical replication slots</h5>
       <p>
         With logical replication slots, replication can also get stale when DDL
@@ -232,7 +222,7 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
       <CodeBlock>
         <SQL sql={`SELECT pg_drop_replication_slot('<slot_name>');`} />
       </CodeBlock>
-    </>
+    </li>
   );
 };
 
@@ -246,7 +236,7 @@ const GuidanceByStandby: React.FunctionComponent<{
 
   const CodeBlock = useCodeBlock();
   return (
-    <>
+    <li>
       <h5>Long-running queries on standbys</h5>
       <p>
         When <code>hot_standby_feedback</code> is on with physical streaming
@@ -284,7 +274,7 @@ const GuidanceByStandby: React.FunctionComponent<{
                   ORDER BY greatest(age(backend_xmin), age(backend_xid)) DESC;`}
         />
       </CodeBlock>
-    </>
+    </li>
   );
 };
 
@@ -298,7 +288,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
 
   const CodeBlock = useCodeBlock();
   return (
-    <>
+    <li>
       <h5>Abandoned prepared transactions</h5>
       <p>
         A transaction prepared for a two-phase commit will prevent cleanup until
@@ -331,7 +321,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
                 ROLLBACK PREPARED <gid_from_above>;`}
         />
       </CodeBlock>
-    </>
+    </li>
   );
 };
 
