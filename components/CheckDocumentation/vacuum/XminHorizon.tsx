@@ -12,15 +12,15 @@ import { useSmartAnchor } from "../../SmartAnchor";
 const XminHorizonTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
 }) => {
-  const threshold = config.settings["behind_days"] as number;
-  const dayPluralized = threshold === 1 ? "day" : "days";
+  const threshold = config.settings["behind_hours"] as number;
+  const hourPluralized = threshold === 1 ? "hour" : "hours";
   return (
     <p>
-      Detects when the xmin horizon on the server has not progressed for the
-      last <code>{threshold}</code> {dayPluralized} and creates an issue with
+      Detects when the xmin horizon on the server was assigned at more than{" "}
+      <code>{threshold}</code> {hourPluralized} ago and creates an issue with
       severity "info". The issue will be created even if no VACUUM is currently
       blocked by this, as this will potentially block any future VACUUMs.
-      Resolves once the xmin horizon makes some progress.
+      Resolves once the xmin horizon is no longer behind.
     </p>
   );
 };
@@ -84,12 +84,13 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 
 const GuidanceByBackend: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number;
+  xmin: number | null;
 }> = ({ inApp, xmin }) => {
   if (!inApp && xmin === null) {
     return null;
   }
 
+  const xminCode = <code>{xmin}</code>;
   const CodeBlock = useCodeBlock();
   return (
     <>
@@ -101,9 +102,7 @@ const GuidanceByBackend: React.FunctionComponent<{
       <h6>Solution</h6>
       <p>
         {xmin &&
-          `A long running transaction is holding back the xmin horizon at ${(
-            <code>{xmin}</code>
-          )}.`}
+          `A long running transaction is holding back the xmin horizon at ${xminCode}.`}
         You can find the transaction holding back the xmin horizon and its
         connection's pid by running the following command:
       </p>
@@ -126,13 +125,14 @@ const GuidanceByBackend: React.FunctionComponent<{
 
 const GuidanceByReplicationSlot: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number;
+  xmin: number | null;
   serverReplicationUrl: string;
 }> = ({ inApp, xmin, serverReplicationUrl }) => {
   if (!inApp && xmin === null) {
     return null;
   }
 
+  const xminCode = <code>{xmin}</code>;
   const Link = useSmartAnchor();
   return (
     <>
@@ -147,9 +147,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
       <h6>Solution</h6>
       <p>
         {xmin &&
-          `A replication slot is holding back the xmin horizon at ${(
-            <code>{xmin}</code>
-          )}.`}
+          `A replication slot is holding back the xmin horizon at ${xminCode}.`}
         You can check the replication status on the{" "}
         <Link to={serverReplicationUrl}>Replication</Link> page.
       </p>
@@ -163,13 +161,14 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
 
 const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number;
+  xmin: number | null;
   serverReplicationUrl: string;
 }> = ({ inApp, xmin, serverReplicationUrl }) => {
   if (!inApp && xmin === null) {
     return null;
   }
 
+  const xminCode = <code>{xmin}</code>;
   const Link = useSmartAnchor();
   return (
     <>
@@ -185,9 +184,7 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
       <h6>Solution</h6>
       <p>
         {xmin &&
-          `A replication slot is holding back the xmin horizon at ${(
-            <code>{xmin}</code>
-          )}, specifically with system catalogs.`}
+          `A replication slot is holding back the xmin horizon at ${xminCode}, specifically with system catalogs.`}
         You can check the replication status on the{" "}
         <Link to={serverReplicationUrl}>Replication</Link> page. You may also
         want to check logs on both the publisher and the subscriber for any
@@ -204,12 +201,13 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
 
 const GuidanceByStandby: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number;
+  xmin: number | null;
 }> = ({ inApp, xmin }) => {
   if (!inApp && xmin === null) {
     return null;
   }
 
+  const xminCode = <code>{xmin}</code>;
   const CodeBlock = useCodeBlock();
   return (
     <>
@@ -221,10 +219,10 @@ const GuidanceByStandby: React.FunctionComponent<{
       </p>
       <h6>Solution</h6>
       <p>
-        {xmin ??
+        {xmin &&
           `A long running query on a standby is holding back the xmin
           horizon at
-                ${(<code>{xmin}</code>)}.`}
+                ${xminCode}.`}
         You can find the <code>xmin</code> of all standby servers by running the
         following command:
       </p>
@@ -254,12 +252,13 @@ const GuidanceByStandby: React.FunctionComponent<{
 
 const GuidanceByPreparedXact: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number;
+  xmin: number | null;
 }> = ({ inApp, xmin }) => {
   if (!inApp && xmin === null) {
     return null;
   }
 
+  const xminCode = <code>{xmin}</code>;
   const CodeBlock = useCodeBlock();
   return (
     <>
@@ -271,9 +270,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
       <h6>Solution</h6>
       <p>
         {xmin &&
-          `A prepared transaction is holding back the xmin horizon at ${(
-            <code>{xmin}</code>
-          )}.`}
+          `A prepared transaction is holding back the xmin horizon at ${xminCode}.`}
         You can find the prepared transaction by running the following command:
       </p>
       <CodeBlock>
@@ -285,7 +282,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
       </CodeBlock>
       <p>
         Once identified, you can either commit or cancel the transaction with{" "}
-        <SQL inline sql={`COMMIT PREPARED <gid_from_above>`} /> or
+        <SQL inline sql={`COMMIT PREPARED <gid_from_above>`} /> or{" "}
         <SQL inline sql={`ROLLBACK PREPARED <gid_from_above>`} />.
       </p>
     </>
@@ -294,7 +291,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
 
 const documentation: CheckDocs = {
   description:
-    "Monitors the xmin horizon of the server and creates an info issue if the xmin horizon is not making any progress.",
+    "Monitors the xmin horizon of the server and creates an info issue if the xmin horizon is behind.",
   Trigger: XminHorizonTrigger,
   Guidance: XminHorizonGuidance,
 };

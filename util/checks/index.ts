@@ -249,7 +249,7 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
     xmin_horizon: {
       enabled: true,
       settings: {
-        behind_days: 1,
+        behind_hours: 24,
       }
     },
   },
