@@ -48,6 +48,11 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     byPreparedXact = heldBackBy.find((v) => v["type"] === "prepared_xact");
   }
   const inApp = issue != null;
+  const causeTitle = inApp
+    ? heldBackBy.length > 1
+      ? "Identified Causes and Solutions"
+      : "Identified Cause and Solution"
+    : "Common Causes and Solutions";
   return (
     <div>
       <h4>Impact</h4>
@@ -61,30 +66,21 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         When VACUUM is blocked and dead rows can't be cleaned, it can result to
         the unnecessary table bloat or slow queries.
       </p>
-      <h4>Common Causes and Solutions</h4>
+      <h4>{causeTitle}</h4>
       <ul>
-        <GuidanceByBackend
-          inApp={inApp}
-          xmin={byBackend && byBackend["xmin"]}
-        />
+        <GuidanceByBackend inApp={inApp} heldBackInfo={byBackend} />
         <GuidanceByReplicationSlot
           inApp={inApp}
-          xmin={byReplicationSlot && byReplicationSlot["xmin"]}
+          heldBackInfo={byReplicationSlot}
           serverReplicationUrl={serverReplicationUrl}
         />
         <GuidanceByReplicationSlotCatalog
           inApp={inApp}
-          xmin={byReplicationSlotCatalog && byReplicationSlotCatalog["xmin"]}
+          heldBackInfo={byReplicationSlotCatalog}
           serverReplicationUrl={serverReplicationUrl}
         />
-        <GuidanceByStandby
-          inApp={inApp}
-          xmin={byStandby && byStandby["xmin"]}
-        />
-        <GuidanceByPreparedXact
-          inApp={inApp}
-          xmin={byPreparedXact && byPreparedXact["xmin"]}
-        />
+        <GuidanceByStandby inApp={inApp} heldBackInfo={byStandby} />
+        <GuidanceByPreparedXact inApp={inApp} heldBackInfo={byPreparedXact} />
       </ul>
     </div>
   );
@@ -92,9 +88,9 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 
 const GuidanceByBackend: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number | null;
-}> = ({ inApp, xmin }) => {
-  if (inApp && !xmin) {
+  heldBackInfo: number | null;
+}> = ({ inApp, heldBackInfo }) => {
+  if (inApp && !heldBackInfo) {
     return null;
   }
 
@@ -107,10 +103,10 @@ const GuidanceByBackend: React.FunctionComponent<{
         otherwise be considered dead, so they can block cleanup.
       </p>
       <h6>Solution</h6>
-      {xmin && (
+      {heldBackInfo && (
         <p>
           A long running transaction is holding back the xmin horizon at{" "}
-          <code>{xmin}</code>.
+          <code>{heldBackInfo["xmin"]}</code>.
         </p>
       )}
       <p>
@@ -138,10 +134,10 @@ const GuidanceByBackend: React.FunctionComponent<{
 
 const GuidanceByReplicationSlot: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number | null;
+  heldBackInfo: number | null;
   serverReplicationUrl: string;
-}> = ({ inApp, xmin, serverReplicationUrl }) => {
-  if (inApp && !xmin) {
+}> = ({ inApp, heldBackInfo, serverReplicationUrl }) => {
+  if (inApp && !heldBackInfo) {
     return null;
   }
 
@@ -158,10 +154,10 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
         holding back the xmin horizon.
       </p>
       <h6>Solution</h6>
-      {xmin && (
+      {heldBackInfo && (
         <p>
           A replication slot is holding back the xmin horizon at{" "}
-          <code>{xmin}</code>.
+          <code>{heldBackInfo["xmin"]}</code>.
         </p>
       )}
       <p>
@@ -181,10 +177,10 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
 
 const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number | null;
+  heldBackInfo: number | null;
   serverReplicationUrl: string;
-}> = ({ inApp, xmin, serverReplicationUrl }) => {
-  if (inApp && !xmin) {
+}> = ({ inApp, heldBackInfo, serverReplicationUrl }) => {
+  if (inApp && !heldBackInfo) {
     return null;
   }
 
@@ -202,10 +198,11 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
         replication resumes.
       </p>
       <h6>Solution</h6>
-      {xmin && (
+      {heldBackInfo && (
         <p>
           A replication slot is holding back the xmin horizon at{" "}
-          <code>{xmin}</code>, specifically with system catalogs.
+          <code>{heldBackInfo["xmin"]}</code>, specifically with system
+          catalogs.
         </p>
       )}
       <p>
@@ -228,9 +225,9 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
 
 const GuidanceByStandby: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number | null;
-}> = ({ inApp, xmin }) => {
-  if (inApp && !xmin) {
+  heldBackInfo: number | null;
+}> = ({ inApp, heldBackInfo }) => {
+  if (inApp && !heldBackInfo) {
     return null;
   }
 
@@ -244,10 +241,10 @@ const GuidanceByStandby: React.FunctionComponent<{
         if they were running on the primary.
       </p>
       <h6>Solution</h6>
-      {xmin && (
+      {heldBackInfo && (
         <p>
           A long running query on a standby is holding back the xmin horizon at{" "}
-          <code>{xmin}</code>.
+          <code>{heldBackInfo["xmin"]}</code>.
         </p>
       )}
       <p>
@@ -280,9 +277,9 @@ const GuidanceByStandby: React.FunctionComponent<{
 
 const GuidanceByPreparedXact: React.FunctionComponent<{
   inApp: boolean;
-  xmin: number | null;
-}> = ({ inApp, xmin }) => {
-  if (inApp && !xmin) {
+  heldBackInfo: number | null;
+}> = ({ inApp, heldBackInfo }) => {
+  if (inApp && !heldBackInfo) {
     return null;
   }
 
@@ -295,10 +292,10 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
         it is either committed or rolled back.
       </p>
       <h6>Solution</h6>
-      {xmin && (
+      {heldBackInfo && (
         <p>
           A prepared transaction is holding back the xmin horizon at{" "}
-          <code>{xmin}</code>.
+          <code>{heldBackInfo["xmin"]}</code>.
         </p>
       )}
       <p>
