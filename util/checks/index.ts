@@ -315,7 +315,7 @@ export type IssueReferenceTable = {
 
 export type IssueType = {
   references?: {
-    referent: IssueReferenceBackend | IssueReferenceIndex | unknown;
+    referent: IssueReferenceBackend | IssueReferenceIndex | IssueReferenceTable | unknown;
   }[],
   detailsJson: string;
 };
