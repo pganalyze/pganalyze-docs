@@ -5,17 +5,21 @@ backlink_title: 'Installation Troubleshooting'
 ---
 
 If you find the collector hanging either periodically or constantly, or even within the test run,
-the most likely cause is pg_stat_statements statistic data being big and taking long time to query the statistic from it.
+the most likely cause is `pg_stat_statements` statistic data being big and taking long time to query the statistic from it.
 This especially happens when there are many queries with long query texts.
 
 You can check out below points using the following query to identify if ps_stat_statements statistic data is big or not.
 
-* How many queries does pg_stat_statements statistic data currently have
-* The maximum number of queries pg_stat_statements keeps track of (default: 5000)
+* How many queries does `pg_stat_statements` statistic data currently have
+* The maximum number of queries `pg_stat_statements` keeps track of (default: 5000)
 * Total size of tracked queries
 
 ```sql
-select count(*), current_setting('pg_stat_statements.max'), pg_size_pretty(sum(length(query))) from pg_stat_statements;
+SELECT
+  count(*),
+  current_setting('pg_stat_statements.max'),
+  pg_size_pretty(sum(length(query)))
+FROM pg_stat_statements;
 ```
 
 To mitigate the issue, you can run `SELECT pg_stat_statements_reset()` to reset the statistic data.
@@ -25,7 +29,7 @@ If the collector still hangs after this, please [contact us](/contact) so that w
 
 Once you confirm that `pg_stat_statements_reset()` is a valid mitigation, you can enable a recurring reset executed by pganalyze.
 
-## Setting up recurring pg_stat_statements_reset()
+## Setting up recurring `pg_stat_statements_reset()`
 
 First, you need to create the following helper method:
 
