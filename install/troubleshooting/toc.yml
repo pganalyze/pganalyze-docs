@@ -2,6 +2,8 @@
   items:
   - name: Collector crashes
     href: install/troubleshooting/collector_crash
+  - name: Collector hangs
+    href: install/troubleshooting/collector_hang
   - name: 'Resolving the "Limited access to table column statistics" warning'
     href: install/troubleshooting/column_stats_helper
   - name: Resolving the 'permission denied to create extension "pg_stat_statements"' error
