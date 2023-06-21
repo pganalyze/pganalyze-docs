@@ -23,6 +23,7 @@ FROM pg_stat_statements;
 ```
 
 To mitigate the issue, you can run `SELECT pg_stat_statements_reset()` to reset the statistics data.
+This will not affect the statistics data tracked within pganalyze, but if you are using other tools that rely on `pg_stat_statements` data, you should review how they will be affected.
 If the collector test run (`pganalyze-collector --test --verbose`) is already hanging, it's good to try this out and see if it resolves the problem.
 
 If the collector still hangs after this, please [contact us](/contact) so that we can help debug further.
