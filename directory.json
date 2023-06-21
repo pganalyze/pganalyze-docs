@@ -696,6 +696,10 @@
       "title": "Collector crashes",
       "path": "/docs/install/troubleshooting/collector_crash"
     },
+    "install/troubleshooting/collector_hang": {
+      "title": "Collector hangs",
+      "path": "/docs/install/troubleshooting/collector_hang"
+    },
     "install/troubleshooting/column_stats_helper": {
       "title": "Resolving the \"Limited access to table column statistics\" warning",
       "path": "/docs/install/troubleshooting/column_stats_helper"
