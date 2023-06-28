@@ -18,7 +18,7 @@ import StorageSpace from "./system/StorageSpace";
 import HighLag from "./replication/HighLag";
 import FollowerMissing from "./replication/FollowerMissing";
 import VacuumInefficientIndexPhase from "./vacuum/InefficientIndexPhase";
-import UnnecessaryTableGrowth from "./vacuum/UnnecessaryTableGrowth";
+import InsufficientVacuumFrequency from "./vacuum/InsufficientVacuumFrequency";
 
 const Docs: {
   [category: string]: { [check: string]: CheckDocs };
@@ -54,7 +54,7 @@ const Docs: {
   },
   vacuum: {
     inefficient_index_phase: VacuumInefficientIndexPhase,
-    unnecessary_table_growth: UnnecessaryTableGrowth,
+    insufficient_vacuum_frequency: InsufficientVacuumFrequency,
   },
 };
 

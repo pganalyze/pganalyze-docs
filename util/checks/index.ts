@@ -30,7 +30,7 @@ export const CHECK_TITLES = {
   },
   vacuum: {
     inefficient_index_phase: "VACUUM - Inefficient index phase",
-    unnecessary_table_growth: "VACUUM: Bloat - Unnecessary Table Growth",
+    insufficient_vacuum_frequency: "VACUUM: Bloat - Insufficient VACUUM Frequency",
   },
 };
 
@@ -66,7 +66,7 @@ export const CHECK_SEVERITIES = {
   },
   vacuum: {
     inefficient_index_phase: ['warning'],
-    unnecessary_table_growth: ['info'],
+    insufficient_vacuum_frequency: ['info'],
   },
 }
 
@@ -126,7 +126,7 @@ export const CHECK_FREQUENCY = {
   },
   vacuum: {
     inefficient_index_phase: CHECK_FREQUENCY_DAILY,
-    unnecessary_table_growth: CHECK_FREQUENCY_DAILY,
+    insufficient_vacuum_frequency: CHECK_FREQUENCY_DAILY,
   },
 };
 
@@ -236,7 +236,7 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
         threshold_count: 1,
       }
     },
-    unnecessary_table_growth: {
+    insufficient_vacuum_frequency: {
       enabled: true,
       settings: {
         notify_pct: 20,
