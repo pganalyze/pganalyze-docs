@@ -28,7 +28,7 @@ const MissingIndexGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     <p>
       You can learn about Index Advisor and missing index opportunities in{" "}
       <a href="https://pganalyze.com/docs/index-advisor/reason-about-opportunities">
-        Index Advisor documentation
+        the Index Advisor documentation
       </a>
       .
     </p>
