@@ -64,7 +64,7 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
       </p>
       <p>
         When VACUUM is blocked and dead rows can't be cleaned, it can result to
-        the unnecessary table bloat or slow queries.
+        table bloat and slow queries.
       </p>
       <h4>{causeTitle}</h4>
       <ul>
@@ -101,6 +101,12 @@ const GuidanceByBackend: React.FunctionComponent<{
       <p>
         Long-running transactions may still need to access rows that could
         otherwise be considered dead, so they can block cleanup.
+      </p>
+      <p>
+        This is the most common cause of the xmin horizon being held back.
+        However, it's also possible to observe this due to other causes. In such
+        cases, it's recommended to investigate the alternative causes first, as
+        they are more likely to be the root cause.
       </p>
       <h6>Solution</h6>
       {heldBackInfo && (
