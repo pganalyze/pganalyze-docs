@@ -37,15 +37,15 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   let byStandby = null;
   let byPreparedXact = null;
   if (heldBackBy) {
-    byBackend = heldBackBy.find((v) => v["type"] === "backend");
+    byBackend = heldBackBy.find((v: any) => v["type"] === "backend");
     byReplicationSlot = heldBackBy.find(
-      (v) => v["type"] === "replication_slot"
+      (v: any) => v["type"] === "replication_slot"
     );
     byReplicationSlotCatalog = heldBackBy.find(
-      (v) => v["type"] === "replication_slot_catalog"
+      (v: any) => v["type"] === "replication_slot_catalog"
     );
-    byStandby = heldBackBy.find((v) => v["type"] === "standby");
-    byPreparedXact = heldBackBy.find((v) => v["type"] === "prepared_xact");
+    byStandby = heldBackBy.find((v: any) => v["type"] === "standby");
+    byPreparedXact = heldBackBy.find((v: any) => v["type"] === "prepared_xact");
   }
   const inApp = issue != null;
   const causeTitle = inApp
