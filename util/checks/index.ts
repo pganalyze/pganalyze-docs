@@ -30,7 +30,8 @@ export const CHECK_TITLES = {
   },
   vacuum: {
     inefficient_index_phase: "VACUUM - Inefficient index phase",
-  }
+    insufficient_vacuum_frequency: "VACUUM: Bloat - Insufficient VACUUM Frequency",
+  },
 };
 
 export const CHECK_SEVERITIES = {
@@ -65,7 +66,8 @@ export const CHECK_SEVERITIES = {
   },
   vacuum: {
     inefficient_index_phase: ['warning'],
-  }
+    insufficient_vacuum_frequency: ['info'],
+  },
 }
 
 export function checkMaxSeverity(checkGroup: string, checkName: string): string | undefined {
@@ -124,7 +126,8 @@ export const CHECK_FREQUENCY = {
   },
   vacuum: {
     inefficient_index_phase: CHECK_FREQUENCY_DAILY,
-  }
+    insufficient_vacuum_frequency: CHECK_FREQUENCY_DAILY,
+  },
 };
 
 type DefaultCheckConfigs = {
@@ -233,6 +236,13 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
         threshold_count: 1,
       }
     },
+    insufficient_vacuum_frequency: {
+      enabled: true,
+      settings: {
+        notify_pct: 20,
+        notify_bytes: 10 * 1024 * 1024,
+      }
+    },
   },
 } as const;
 
@@ -271,6 +281,7 @@ export type IssueGuidanceUrls = {
   indexRecommendationUrl: string;
   serverSystemUrl: string;
   serverVacuumsUrl: string;
+  tableVacuumsUrl: string;
   backendsUrl: string;
   databaseWaitEventsUrl: string;
   databaseTableUrl: string;
@@ -296,9 +307,15 @@ export type IssueReferenceIndex = {
   name: string;
 };
 
+export type IssueReferenceTable = {
+  id: string;
+  schemaName: string;
+  tableName: string;
+};
+
 export type IssueType = {
   references?: {
-    referent: IssueReferenceBackend | IssueReferenceIndex | unknown;
+    referent: IssueReferenceBackend | IssueReferenceIndex | IssueReferenceTable | unknown;
   }[],
   detailsJson: string;
 };
