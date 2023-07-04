@@ -102,13 +102,9 @@ const GuidanceByBackend: React.FunctionComponent<{
         Long-running transactions may still need to access rows that could
         otherwise be considered dead, so they can block cleanup.
       </p>
-      <p>
-        This is the most common cause of the xmin horizon being held back.
-        However, it's also possible to observe this due to other causes. In such
-        cases, it's recommended to investigate the alternative causes first, as
-        they are more likely to be the root cause.
-      </p>
-      <h6>Solution</h6>
+      <h6>
+        <b>Solution</b>
+      </h6>
       {heldBackInfo && (
         <p>
           A long running transaction is holding back the xmin horizon at{" "}
@@ -159,7 +155,9 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
         the replication slot needs the database to retain can be "stuck",
         holding back the xmin horizon.
       </p>
-      <h6>Solution</h6>
+      <h6>
+        <b>Solution</b>
+      </h6>
       {heldBackInfo && (
         <p>
           A replication slot is holding back the xmin horizon at{" "}
@@ -203,7 +201,9 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
         system catalogs xmin of the primary (publisher) to be held back until
         replication resumes.
       </p>
-      <h6>Solution</h6>
+      <h6>
+        <b>Solution</b>
+      </h6>
       {heldBackInfo && (
         <p>
           A replication slot is holding back the xmin horizon at{" "}
@@ -246,7 +246,9 @@ const GuidanceByStandby: React.FunctionComponent<{
         replication, queries on standbys will hold back the xmin horizon just as
         if they were running on the primary.
       </p>
-      <h6>Solution</h6>
+      <h6>
+        <b>Solution</b>
+      </h6>
       {heldBackInfo && (
         <p>
           A long running query on a standby is holding back the xmin horizon at{" "}
@@ -297,7 +299,9 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
         A transaction prepared for a two-phase commit will prevent cleanup until
         it is either committed or rolled back.
       </p>
-      <h6>Solution</h6>
+      <h6>
+        <b>Solution</b>
+      </h6>
       {heldBackInfo && (
         <p>
           A prepared transaction is holding back the xmin horizon at{" "}
