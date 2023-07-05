@@ -12,3 +12,5 @@
     href: vacuum-advisor/performance
   - name: "Activity"
     href: vacuum-advisor/activity
+  - name: "Bloat in Postgres"
+    href: vacuum-advisor/bloat-in-postgres
