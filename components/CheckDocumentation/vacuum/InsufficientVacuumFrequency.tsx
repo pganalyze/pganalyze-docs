@@ -5,7 +5,6 @@ import {
   CheckGuidanceProps,
   CheckTriggerProps,
 } from "../../../util/checks";
-import { formatBytes } from "../../../util/format";
 
 const InsufficientVacuumFrequencyTrigger: React.FunctionComponent<
   CheckTriggerProps
