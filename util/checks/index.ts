@@ -240,7 +240,7 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
       enabled: true,
       settings: {
         notify_pct: 20,
-        notify_bytes: 10 * 1024 * 1024,
+        notify_mb: 10,
       }
     },
   },
