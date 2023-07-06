@@ -5,7 +5,6 @@ import {
   CheckGuidanceProps,
   CheckTriggerProps,
 } from "../../../util/checks";
-import { formatBytes } from "../../../util/format";
 
 const InsufficientVacuumFrequencyTrigger: React.FunctionComponent<
   CheckTriggerProps
@@ -17,9 +16,8 @@ const InsufficientVacuumFrequencyTrigger: React.FunctionComponent<
       calculates the amount of rows that could have been avoided to grow if
       VACUUM had been performed more frequently. Creates an issue when such rows
       exceeds <code>{config.settings["notify_pct"]}%</code> of total new rows,
-      as well as{" "}
-      <code>{formatBytes(Number(config.settings["notify_bytes"]))}</code>{" "}
-      accumulated. Resolves once such growth decreases.
+      as well as <code>{config.settings["notify_mb"]}MB</code> accumulated.
+      Resolves once such growth decreases.
     </p>
   );
 };
