@@ -16,11 +16,11 @@ const XminHorizonTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   const hourPluralized = threshold === 1 ? "hour" : "hours";
   return (
     <p>
-      Detects when the xmin horizon on the server was assigned at more than{" "}
+      Detects when the xmin horizon on the server was assigned more than{" "}
       <code>{threshold}</code> {hourPluralized} ago and creates an issue with
       severity "info". The issue will be created even if no VACUUM is currently
       blocked by this, as this will potentially block any future VACUUMs.
-      Resolves once the xmin horizon is no longer behind.
+      Resolves once the age of the xmin horizon is no longer behind.
     </p>
   );
 };
@@ -63,7 +63,7 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         will be blocked and will not be able to clean up dead rows.
       </p>
       <p>
-        When VACUUM is blocked and dead rows can't be cleaned, it can result to
+        When VACUUM is blocked and dead rows can't be cleaned, it can result in
         table bloat and slow queries.
       </p>
       <h4>{causeTitle}</h4>
@@ -125,10 +125,7 @@ const GuidanceByBackend: React.FunctionComponent<{
       </CodeBlock>
       <p>You can cancel it by running either of commands:</p>
       <CodeBlock>
-        <SQL
-          sql={`SELECT pg_cancel_backend('<query_pid>');
-                SELECT pg_terminate_backend('<query_pid>');`}
-        />
+        <SQL sql={`SELECT pg_cancel_backend('<query_pid>');`} />
       </CodeBlock>
     </li>
   );
@@ -151,9 +148,9 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
       <p>
         With physical streaming replication with{" "}
         <code>hot_standby_feedback</code> is on, when replication is lagging or
-        a replica server is stale (e.g. down, gone), the oldest transaction that
-        the replication slot needs the database to retain can be "stuck",
-        holding back the xmin horizon.
+        a replica server is stale (e.g. down), the oldest transaction that the
+        replication slot needs the database to retain can be "stuck", holding
+        back the xmin horizon.
       </p>
       <h6>
         <b>Solution</b>
@@ -198,8 +195,8 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
         changes (database migrations) don't get applied to a replica server
         (subscriber). When the subscriber was unable to replicate data due to a
         schema mismatch, replication will error and get stale. This causes the
-        system catalogs xmin of the primary (publisher) to be held back until
-        replication resumes.
+        xmin of the system catalogs of the primary (publisher) to be held back
+        until replication resumes.
       </p>
       <h6>
         <b>Solution</b>
@@ -296,8 +293,13 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
     <li>
       <h5>Abandoned prepared transactions</h5>
       <p>
-        A transaction prepared for a two-phase commit will prevent cleanup until
-        it is either committed or rolled back.
+        <a
+          href="https://www.postgresql.org/docs/current/sql-prepare-transaction.html"
+          target="_blank"
+        >
+          A transaction prepared for a two-phase commit
+        </a>{" "}
+        will prevent cleanup until it is either committed or rolled back.
       </p>
       <h6>
         <b>Solution</b>
