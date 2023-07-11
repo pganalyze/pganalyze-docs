@@ -19,6 +19,7 @@ import HighLag from "./replication/HighLag";
 import FollowerMissing from "./replication/FollowerMissing";
 import VacuumInefficientIndexPhase from "./vacuum/InefficientIndexPhase";
 import InsufficientVacuumFrequency from "./vacuum/InsufficientVacuumFrequency";
+import XminHorizon from "./vacuum/XminHorizon";
 
 const Docs: {
   [category: string]: { [check: string]: CheckDocs };
@@ -55,6 +56,7 @@ const Docs: {
   vacuum: {
     inefficient_index_phase: VacuumInefficientIndexPhase,
     insufficient_vacuum_frequency: InsufficientVacuumFrequency,
+    xmin_horizon: XminHorizon,
   },
 };
 

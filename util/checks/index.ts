@@ -29,8 +29,9 @@ export const CHECK_TITLES = {
     follower_missing: "Replication - Missing HA Follower",
   },
   vacuum: {
-    inefficient_index_phase: "VACUUM - Inefficient index phase",
+    inefficient_index_phase: 'VACUUM: Capacity & Overhead - Inefficient index phase',
     insufficient_vacuum_frequency: "VACUUM: Bloat - Insufficient VACUUM Frequency",
+    xmin_horizon: 'VACUUM: Bloat - VACUUM Blocked By Xmin Horizon'
   },
 };
 
@@ -67,6 +68,7 @@ export const CHECK_SEVERITIES = {
   vacuum: {
     inefficient_index_phase: ['warning'],
     insufficient_vacuum_frequency: ['info'],
+    xmin_horizon: ['info'],
   },
 }
 
@@ -127,6 +129,7 @@ export const CHECK_FREQUENCY = {
   vacuum: {
     inefficient_index_phase: CHECK_FREQUENCY_DAILY,
     insufficient_vacuum_frequency: CHECK_FREQUENCY_DAILY,
+    xmin_horizon: CHECK_FREQUENCY_DAILY,
   },
 };
 
@@ -243,6 +246,12 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
         notify_mb: 10,
       }
     },
+    xmin_horizon: {
+      enabled: true,
+      settings: {
+        behind_hours: 24,
+      }
+    },
   },
 } as const;
 
@@ -287,6 +296,7 @@ export type IssueGuidanceUrls = {
   databaseTableUrl: string;
   serverLogInsightsUrl: string;
   serverSchemaUrl: string;
+  serverReplicationUrl: string;
   featureUrl: (mainUrl: string | undefined, section: string) => string | undefined;
 };
 
