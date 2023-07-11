@@ -20,7 +20,8 @@ const XminHorizonTrigger: React.FunctionComponent<CheckTriggerProps> = ({
       <code>{threshold}</code> {hourPluralized} ago and creates an issue with
       severity "info". The issue will be created even if no VACUUM is currently
       blocked by this, as this will potentially block any future VACUUMs.
-      Resolves once the age of the xmin horizon is no longer behind.
+      Resolves once the assignment age of the xmin horizon is under the
+      threshold.
     </p>
   );
 };
