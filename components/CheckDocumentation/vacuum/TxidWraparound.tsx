@@ -45,31 +45,33 @@ const TxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         wraparound, or even failsafe from happening.
       </p>
       <h4>Common Cases</h4>
-      <li>
-        <h5>Ineffectual autovacuum settings</h5>
-        <p>
-          Autovacuums, especially anti-wraparound autovacuums are meant to
-          prevent the wraparound from happening. When autovacuum is turned off,
-          or the setup of anti-wraparound autovacuum is not fitting well for the
-          database usage, it is possible that autovacuum is not working as
-          intended and causing the utilization growth. Make sure that autovacuum
-          is turned on, and revisit the setting to ensure that anti-wraparound
-          autovacuums will run periodically.
-        </p>
-      </li>
-      <li>
-        <h5>Blocked autovacuums</h5>
-        <p>
-          Even though autovacuum settings are adequate, it is possible that
-          autovacuums themselves are blocked by something hence freezing (to
-          reduce the transaction ID utilization) is not happening. The typical
-          blocker is a long running transaction, or a transaction holding some
-          locks that could cancel autovacuums. It is important to make sure that
-          there is no such transactions so that VACUUMs can freeze rows well.
-          Check for any long-running transactions on the{" "}
-          <Link to={backendsUrl}>Connections</Link> page.
-        </p>
-      </li>
+      <ul>
+        <li>
+          <h5>Ineffectual autovacuum settings</h5>
+          <p>
+            Autovacuums, especially anti-wraparound autovacuums are meant to
+            prevent the wraparound from happening. When autovacuum is turned
+            off, or the setup of anti-wraparound autovacuum is not fitting well
+            for the database usage, it is possible that autovacuum is not
+            working as intended and causing the utilization growth. Make sure
+            that autovacuum is turned on, and revisit the setting to ensure that
+            anti-wraparound autovacuums will run periodically.
+          </p>
+        </li>
+        <li>
+          <h5>Blocked autovacuums</h5>
+          <p>
+            Even though autovacuum settings are adequate, it is possible that
+            autovacuums themselves are blocked by something hence freezing (to
+            reduce the transaction ID utilization) is not happening. The typical
+            blocker is a long running transaction, or a transaction holding some
+            locks that could cancel autovacuums. It is important to make sure
+            that there is no such transactions so that VACUUMs can freeze rows
+            well. Check for any long-running transactions on the{" "}
+            <Link to={backendsUrl}>Connections</Link> page.
+          </p>
+        </li>
+      </ul>
     </div>
   );
 };
