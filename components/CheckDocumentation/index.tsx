@@ -20,6 +20,8 @@ import FollowerMissing from "./replication/FollowerMissing";
 import VacuumInefficientIndexPhase from "./vacuum/InefficientIndexPhase";
 import InsufficientVacuumFrequency from "./vacuum/InsufficientVacuumFrequency";
 import XminHorizon from "./vacuum/XminHorizon";
+import TxidWraparound from "./vacuum/TxidWraparound";
+import MxidWraparound from "./vacuum/MxidWraparound";
 
 const Docs: {
   [category: string]: { [check: string]: CheckDocs };
