@@ -25,7 +25,6 @@ const MxidWraparoundTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 
 const MxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   urls: { backendsUrl },
-  issue,
 }) => {
   const Link = useSmartAnchor();
   return (

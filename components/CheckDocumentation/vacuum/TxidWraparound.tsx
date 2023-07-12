@@ -25,7 +25,6 @@ const TxidWraparoundTrigger: React.FunctionComponent<CheckTriggerProps> = ({
 
 const TxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   urls: { backendsUrl },
-  issue,
 }) => {
   const Link = useSmartAnchor();
   return (
