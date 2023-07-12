@@ -18,9 +18,9 @@ const XminHorizonTrigger: React.FunctionComponent<CheckTriggerProps> = ({
     <p>
       Detects when the xmin horizon on the server was assigned more than{" "}
       <code>{threshold}</code> {hourPluralized} ago and creates an issue with
-      severity "info". The issue will be created even if no VACUUM is currently
-      blocked by this, as this will potentially block any future VACUUMs.
-      Resolves once the assignment age of the xmin horizon is under the
+      severity "warning". The issue will be created even if no VACUUM is
+      currently blocked by this, as this will potentially block any future
+      VACUUMs. Resolves once the assignment age of the xmin horizon is under the
       threshold.
     </p>
   );
@@ -337,7 +337,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
 
 const documentation: CheckDocs = {
   description:
-    "Monitors the xmin horizon of the server and creates an info issue if the xmin horizon is behind.",
+    "Monitors the xmin horizon of the server and creates a warning issue if the xmin horizon is behind.",
   Trigger: XminHorizonTrigger,
   Guidance: XminHorizonGuidance,
 };

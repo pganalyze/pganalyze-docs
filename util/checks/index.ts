@@ -68,7 +68,7 @@ export const CHECK_SEVERITIES = {
   vacuum: {
     inefficient_index_phase: ['warning'],
     insufficient_vacuum_frequency: ['info'],
-    xmin_horizon: ['info'],
+    xmin_horizon: ['warning'],
   },
 }
 
@@ -129,7 +129,7 @@ export const CHECK_FREQUENCY = {
   vacuum: {
     inefficient_index_phase: CHECK_FREQUENCY_DAILY,
     insufficient_vacuum_frequency: CHECK_FREQUENCY_DAILY,
-    xmin_horizon: CHECK_FREQUENCY_DAILY,
+    xmin_horizon: CHECK_FREQUENCY_30MIN,
   },
 };
 
