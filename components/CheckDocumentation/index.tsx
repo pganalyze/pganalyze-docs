@@ -57,6 +57,8 @@ const Docs: {
     inefficient_index_phase: VacuumInefficientIndexPhase,
     insufficient_vacuum_frequency: InsufficientVacuumFrequency,
     xmin_horizon: XminHorizon,
+    txid_wraparound: TxidWraparound,
+    mxid_wraparound: MxidWraparound,
   },
 };
 
