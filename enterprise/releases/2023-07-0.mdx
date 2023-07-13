@@ -1,0 +1,80 @@
+---
+title: '2023.07.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2023.07.0`
+
+## Notes
+
+- This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+## Features
+
+* Index Advisor
+  - Support analyzing queries that require the "ltree" extension <!-- PR 2913 -->
+  - Add support for IMMUTABLE functions <!-- PR 2937 -->
+    - This fixes errors like "functions in index expression must be marked IMMUTABLE" or "functions in partition key expression must be marked IMMUTABLE".
+  - Fix query analysis of INSERT INTO SELECT by ensuring correct column order for query analysis <!-- PR 2916 -->
+    - This fixes type coercion errors like "column "X" is of type A but expression is of type B" on specific cases of INSERT INTO SELECT statements that relied on the column positions of the target table.
+  - Support indexes using custom functions in tables referenced via foreign key constraints <!-- PR 2915 -->
+  - Fix some cases of query analysis error "view depth limit (10) exceeded" <!-- PR 2900 -->
+  - Support schemas that require custom functions in check constraints/domain types <!-- PR 2968 -->
+  - Fix support for handling functions that call citext input/output functions <!-- PR 2964 -->
+  - Add support for schemas that include SP-GIST indexes <!-- PR 2989 -->
+* Update bundled collector version to release 0.50.1 <!-- PR 2985 -->
+  - Log Insights: Add autovacuum index statistics information introduced in Postgres 14
+    - Previously, if autovacuum logs included such information, the collector failed to match the log line and the events would not be classified correctly in Log Insights
+  - In case you have installed the collector separately, we recommend upgrading the collector package/container and reviewing the [full changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0501------2023-06-29).
+* Alerts & Check-Up
+  * Run each daily check in a separate background jobs for each server <!-- PR 2907 -->
+    - This improves resiliency against crashes in individual checks
+* Connection Tracing: Increase Connection Traces live refresh timeout from 1 to 5 minutes <!-- PR 2892 -->
+* Check-Up: Show full query text instead of truncated one-line query for issue pages of Active Queries and Blocking Queries checks <!-- PR 2888 -->
+* Query details page: Update query text unavailable error message to explain how to fix the problem queries <!-- PR 2932 -->
+
+## Performance
+
+* Snapshot processing
+  - Improve speed of lock graph analysis for blocking queries alert <!-- PR 2987 -->
+  - Re-introduce limit of length on query parsing for very large queries (more than 200,000 characters) <!-- PR 2956 -->
+    - After the removal of the old 20,000 limit in the prior Enterprise release (v2023.06.0) we've received reports of this causing crashes
+    - In our testing the problem case here is when queries are extremely long (sometimes query texts exceeding 1MB in length) - this release re-introduces a limit of 200,000 (10x the old limit), which allows most cases but avoids the extreme cases that cause the snapshot worker to crash
+    - Queries exceeding this length limit will not be analyzed by Index Advisor, and will show under the "Other" statement type in the Query Performance view
+  - Adjust estimation method used for calculate overview percentile metrics to improve snapshot processing speed <!-- PR 2950 -->
+    - This provides a significant speedup for snapshot processing in some edge cases (which may have previously timed out)
+    - Note that you may see small differences in top-level percentile numbers going forward compared to historic calculations
+
+
+## Bugfixes
+
+* Config Settings
+  - Move autovacuum_vacuum_insert_threshold and autovacuum_vacuum_insert_scale_factor from Other Settings config group to Autovacuum config group <!-- PR 2905 -->
+  - Update and sync Postgres setting config group with Postgres 15 <!-- PR 2917 -->
+* Query and table overview: Fix edge case that accidentally counted the same timeseries data point twice <!-- PR 2962 -->
+  - This edge case only occurred when viewing a very short time frame (2 hours or less), within certain conditions. If the error occurred, you might have seen the "% of Total Runtime" sum up to more than 100%, or other summary statistics to be higher than what you would get when viewing the detail statistics individually.
+* Index Advisor
+  - Fix incorrect method/costs shown for scans on query details <!-- PR 2959 -->
+    - This bug caused the scan list to pull in costs and methods from other queries in the same database on the same table, that had an identical scan (i.e. same set of WHERE/JOIN conditions)
+    - Whilst this information was not utilized for index recommendations, it may have been misleading when reading the scan information on the query details page.
+* Object metadata retention
+  * Fix accidental early deletion of invalidated objects <!-- PR 2970 -->
+    - This fixes a bug that caused invalidated objects to be deleted ahead of retention time, potentially causing an error when visiting a page for an invalidated object. Invalidated objects mean that they are no longer present on the database server, such as deleted tables. This affected only the metadata of these objects, not the statistics.
+  * Mark databases that are no longer visible in a snapshot as "invalidated" <!-- PR 2895 -->
+    - Previously such databases would never be deleted in pganalyze (despite having been removed on the actual database)
+    - Deleted databases will now disappear from lists immediately (e.g. the "All databases" list, and the database dropdown), but direct links will continue to work for the remainder of the retention time
+* Snapshot processing
+    * Require collector API keys for snapshot API, do not accept read or read/write keys <!-- PR 2847 -->
+    * Periodically call malloc_trim to reduce peak memory consumption <!-- PR 2939 -->
+    * Remove automatic restart of snapshot workers every 6 hours <!-- PR 2954 -->
+      - In the past this was necessary due to instability of the workers running over a long time - in our testing these problems are resolved, and turning off the restarts will avoid edge cases where the old behavior caused snapshots to be partially processed
+
+
+## Security
+
+* Update Rails for [CVE-2023-28362](https://discuss.rubyonrails.org/t/cve-2023-28362-possible-xss-via-user-supplied-values-to-redirect-to/83132) <!-- PR 2946 -->
+* Fix medium severity security issues discovered in a recent security pentest <!-- PR 2997 --> <!-- PR 2996 -->
+  - Upgrading is recommended as part of a general practice of keeping your pganalyze installation up to date, but we do not believe an accelerated update is necessary
+  - The issues are limited in scope, and require having access to the pganalyze installation with an existing user account that has elevated privileges, in order to be exploited
+  - Additional details are available upon request
