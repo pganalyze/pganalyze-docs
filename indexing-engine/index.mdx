@@ -8,7 +8,7 @@ The pganalyze Indexing Engine automatically analyzes your Postgres query workloa
 
 The Indexing Engine runs in the background (in the pganalyze app, separate from the database), and presents results using the [Index Advisor](/docs/index-advisor).
 
-## How the Indexing Engine detects missing index opportunities
+## How the Indexing Engine detects missing index insights
 
 When the Postgres query planner decides how to execute a query, it considers a
 number of factors to determine if existing indexes can help the query complete
@@ -92,6 +92,6 @@ As part of its optimization algorithm, the pganalyze Indexing Engine is able to 
 
 ### Is the Indexing Engine fully automating index creation for me?
 
-In the initial release the Indexing Engine results require a human review by a database operator. Specifically, when index recommendations are presented through the pganalyze Index Advisor, we expect you to [perform a benchmark on a production copy](/docs/index-advisor/test-opportunities), and if results are suitable, to deploy the index to production with your existing workflows.
+In the initial release the Indexing Engine results require a human review by a database operator. Specifically, when index recommendations are presented through the pganalyze Index Advisor, we expect you to [perform a benchmark on a production copy](/docs/index-advisor/test-insights), and if results are suitable, to deploy the index to production with your existing workflows.
 
 In future releases we plan to offer more workflow integrations, for example by automatically testing suggested indexes on a database copy, and, if suitable for your use case, applying them to your production database in a (semi-)automated manner.
