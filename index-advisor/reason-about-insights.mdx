@@ -1,12 +1,12 @@
 ---
-title: 'Index Advisor: How to Reason About Missing Index Opportunities'
+title: 'Index Advisor: How to Reason About Missing Index Insights'
 backlink_href: /docs/index-advisor
 backlink_title: 'Index Advisor (in-app in pganalyze)'
 ---
 
 ![With our recommendations we also give you all the context you need to reason about them](/missing-index-detail.png)
 
-Index Advisor creates [issues](/docs/checks) for newly detected opportunities.
+Index Advisor creates [issues](/docs/checks) for newly detected insights.
 They give you details on the opportunity and the context to evaluate the
 suggestion. When reasoning about an index recommendation, you may want to refer
 to existing indexes on the table, queries affected, and table scans.
@@ -28,7 +28,7 @@ the overall weighted cost improvement.
 
 ![](/scans.png)
 
-On specific index opportunities, query detail pages, and schema statistics table
+On specific index insights, query detail pages, and schema statistics table
 detail pages, you will see a section called “Scans”. Each scan has an associated
 estimated cost that is averaged across all queries it is referenced in. For more
 information about how this works, [read our Indexing Engine

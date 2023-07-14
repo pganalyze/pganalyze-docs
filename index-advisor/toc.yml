@@ -2,9 +2,9 @@
   items:
   - name: "Getting Started"
     href: index-advisor/getting-started
-  - name: "How to Reason About Missing Index Opportunities"
-    href: index-advisor/reason-about-opportunities
-  - name: "How to Test Missing Index Opportunities"
-    href: index-advisor/test-opportunities
-  - name: "Track Index Opportunities With Alerts"
+  - name: "How to Reason About Missing Index Insights"
+    href: index-advisor/reason-about-insights
+  - name: "How to Test Missing Index Insights"
+    href: index-advisor/test-insights
+  - name: "Track Index Insights With Alerts"
     href: index-advisor/checks-and-alerts

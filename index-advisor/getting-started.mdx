@@ -10,7 +10,7 @@ those scans more efficient. The Index Advisor uses information pganalyze already
 collects about your schema and queries in order to provide an analysis for any
 table and its query workload.
 
-The Index Advisor considers the whole database when it creates opportunities. We
+The Index Advisor considers the whole database when it creates insights. We
 do not recommend adding indexes to every query, since that impacts database
 performance, especially I/O. Extra indexes compete for space in the Postgres
 buffer cache, affecting reads, and must be updated for inserts and updates to
@@ -28,13 +28,13 @@ to use the Index Advisor effectively.
 
 ## What you get with Index Advisor
 
- - Save time manually tracking down slow queries, and focus on opportunities
+ - Save time manually tracking down slow queries, and focus on insights
    highlighting suboptimal execution plans that will become more of a problem
    as your database grows
- - Review opportunities distilled from hundreds of different potential index
+ - Review insights distilled from hundreds of different potential index
    combinations modeled by our Indexing Engine
  - Check statistics for affected queries and use the included “CREATE INDEX”
-   command to easily reason about and test the index opportunities
+   command to easily reason about and test the index insights
  - Optimize for the smallest amount of total I/O required to execute the queries
    in your database
  - Keep [Index Write Overhead](/docs/indexing-engine/index-write-overhead) low
@@ -43,13 +43,13 @@ to use the Index Advisor effectively.
 
 If you have not yet done so, you will need to [set up monitoring for your
 database server](/docs/install). After you start seeing stats from your database
-in the pganalyze UI, it can still take 24-48h for opportunities to show up due
+in the pganalyze UI, it can still take 24-48h for insights to show up due
 to the extra processing required. Once this is set up, you can navigate to the
 Index Advisor page in the left-hand menu to view missing and unused index
-opportunities.
+insights.
 
 Optionally, you can [set up alerts](/docs/checks) and get automated
-notifications when we find new indexing opportunities.
+notifications when we find new indexing insights.
 
 
 ## Set up the column stats helper for better recommendations
@@ -65,13 +65,13 @@ for warnings in the collector test output (`pganalyze-collector --test
 --verbose`).
 
 
-## How to navigate the opportunities overview
+## How to navigate the insights overview
 
-![Overview of missing index opportunities](/missing-index-list.png)
+![Overview of missing index insights](/missing-index-list.png)
 
-At the top of the overview page you find KPIs that frame our opportunity
+At the top of the overview page you find KPIs that frame our insight
 findings for you. You can reference the same metrics when you look into the
-missing and unused index opportunities below.
+missing and unused index insights below.
 
 <dl>
   <dt>Total Data Size</dt>
@@ -90,10 +90,10 @@ missing and unused index opportunities below.
 </dl>
 
 
-## View all opportunities for your databases
+## View all insights for your databases
 
-Opportunities are listed below and split into two types: Missing indexes and
-unused indexes. By default opportunities are sorted by impact which highlights
+insights are listed below and split into two types: Missing indexes and
+unused indexes. By default insights are sorted by impact which highlights
 the most important items to address.
 
 ### Missing indexes
@@ -104,7 +104,7 @@ can be executed more efficiently if an appropriate index is present. The Index
 Advisor attempts to infer what indexes would be helpful for your query workload.
 See more details in the [Indexing Engine documentation](/docs/indexing-engine).
 
-The impact of a missing index opportunity is measured by cost improvement.
+The impact of a missing index insight is measured by cost improvement.
 
 ### Unused indexes
 
@@ -117,7 +117,7 @@ The unused index check detects indexes that haven't been used in the last 2
 weeks, as determined by Postgres statistics, and notes these indexes as
 potentially being candidates for removal.
 
-The impact of an unused index opportunity is measured by reduced Index Write
+The impact of an unused index insight is measured by reduced Index Write
 Overhead.
 
 In addition to these checks that are performed as part of the Index Advisor,
@@ -125,14 +125,14 @@ pganalyze can also help you alert on [invalid
 indexes](/docs/checks/schema/index_invalid).
 
 From the overview page you can click through to issue pages that explain in
-detail why the Index Advisor created an opportunity.
+detail why the Index Advisor created an insight.
 
 
-## View opportunities on query detail pages
+## View insights on query detail pages
 
 ![You can access the Index Advisor from query pages, too](/query-detail-page.png)
 
 Index Advisor is also available from query detail pages. Any query that may be
-affected by an index opportunity will include a link to the opportunity details.
+affected by an index insight will include a link to the insight details.
 
 
