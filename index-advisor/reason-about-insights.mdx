@@ -6,10 +6,10 @@ backlink_title: 'Index Advisor (in-app in pganalyze)'
 
 ![With our recommendations we also give you all the context you need to reason about them](/missing-index-detail.png)
 
-Index Advisor creates [issues](/docs/checks) for newly detected insights.
-They give you details on the opportunity and the context to evaluate the
-suggestion. When reasoning about an index recommendation, you may want to refer
-to existing indexes on the table, queries affected, and table scans.
+Index Advisor creates [issues](/docs/checks) for newly detected insights. They
+give you details on the insight and the context to evaluate the suggestion. When
+reasoning about an index recommendation, you may want to refer to existing
+indexes on the table, queries affected, and table scans.
 
 Different variants of indexes are tried during the Index Advisor recommendation
 process that produces the lowest cost (and thus the lowest estimated I/O when
@@ -34,7 +34,7 @@ estimated cost that is averaged across all queries it is referenced in. For more
 information about how this works, [read our Indexing Engine
 documentation](/docs/indexing-engine/query-to-scan-breakdown).
 
-On the Index Advisor opportunity page, the scan list includes the following:
+On the Index Advisor insight page, the scan list includes the following:
 
  - the current cost
  - estimated scans per minute
@@ -70,7 +70,7 @@ condition in a WHERE clause, the query may benefit from this index.
 
 ![](/existing-indexes.png)
 
-To reason about recommendations, the Index Advisor opportunity page also shows
+To reason about recommendations, the Index Advisor insight page also shows
 all existing indexes on the table. E.g., you may want to avoid adding a proposed
 index if it's very similar to an existing index, and instead you may want to
 rewrite the affected query so that it can take advantage of the existing index.
