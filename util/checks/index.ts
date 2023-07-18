@@ -29,7 +29,7 @@ export const CHECK_TITLES = {
     follower_missing: "Replication - Missing HA Follower",
   },
   vacuum: {
-    inefficient_index_phase: 'VACUUM: Capacity & Overhead - Inefficient index phase',
+    inefficient_index_phase: 'VACUUM: Performance - Inefficient index phase',
     insufficient_vacuum_frequency: "VACUUM: Bloat - Insufficient VACUUM Frequency",
     xmin_horizon: 'VACUUM: Bloat - VACUUM Blocked By Xmin Horizon'
   },
