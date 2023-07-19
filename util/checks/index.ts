@@ -32,8 +32,8 @@ export const CHECK_TITLES = {
     inefficient_index_phase: 'VACUUM: Capacity & Overhead - Inefficient index phase',
     insufficient_vacuum_frequency: "VACUUM: Bloat - Insufficient VACUUM Frequency",
     xmin_horizon: 'VACUUM: Bloat - VACUUM Blocked By Xmin Horizon',
-    txid_wraparound: 'VACUUM: Freezing - Imminent Transaction ID Wraparound',
-    mxid_wraparound: 'VACUUM: Freezing - Imminent Multixact ID Wraparound',
+    txid_wraparound: 'VACUUM: Freezing - Approaching Transaction ID Wraparound',
+    mxid_wraparound: 'VACUUM: Freezing - Approaching Multixact ID Wraparound',
   },
 };
 
