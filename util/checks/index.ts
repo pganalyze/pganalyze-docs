@@ -261,15 +261,15 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
     txid_wraparound: {
       enabled: true,
       settings: {
-        warning_threshold_pct: 40,
-        critical_threshold_pct: 50,
+        warning_threshold_pct: 50,
+        critical_threshold_pct: 80,
       }
     },
     mxid_wraparound: {
       enabled: true,
       settings: {
-        warning_threshold_pct: 40,
-        critical_threshold_pct: 50,
+        warning_threshold_pct: 50,
+        critical_threshold_pct: 80,
       }
     },
   },
