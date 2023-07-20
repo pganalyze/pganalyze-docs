@@ -31,7 +31,9 @@ export const CHECK_TITLES = {
   vacuum: {
     inefficient_index_phase: 'VACUUM: Performance - Inefficient index phase',
     insufficient_vacuum_frequency: "VACUUM: Bloat - Insufficient VACUUM Frequency",
-    xmin_horizon: 'VACUUM: Bloat - VACUUM Blocked By Xmin Horizon'
+    xmin_horizon: 'VACUUM: Bloat - VACUUM Blocked By Xmin Horizon',
+    txid_wraparound: 'VACUUM: Freezing - Approaching Transaction ID Wraparound',
+    mxid_wraparound: 'VACUUM: Freezing - Approaching Multixact ID Wraparound',
   },
 };
 
@@ -69,6 +71,8 @@ export const CHECK_SEVERITIES = {
     inefficient_index_phase: ['warning'],
     insufficient_vacuum_frequency: ['info'],
     xmin_horizon: ['warning'],
+    txid_wraparound: ['warning', 'critical'],
+    mxid_wraparound: ['warning', 'critical'],
   },
 }
 
@@ -130,6 +134,8 @@ export const CHECK_FREQUENCY = {
     inefficient_index_phase: CHECK_FREQUENCY_DAILY,
     insufficient_vacuum_frequency: CHECK_FREQUENCY_DAILY,
     xmin_horizon: CHECK_FREQUENCY_30MIN,
+    txid_wraparound: CHECK_FREQUENCY_30MIN,
+    mxid_wraparound: CHECK_FREQUENCY_30MIN,
   },
 };
 
@@ -252,6 +258,20 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
         behind_hours: 24,
       }
     },
+    txid_wraparound: {
+      enabled: true,
+      settings: {
+        warning_threshold_pct: 50,
+        critical_threshold_pct: 80,
+      }
+    },
+    mxid_wraparound: {
+      enabled: true,
+      settings: {
+        warning_threshold_pct: 50,
+        critical_threshold_pct: 80,
+      }
+    },
   },
 } as const;
 
@@ -297,6 +317,7 @@ export type IssueGuidanceUrls = {
   serverLogInsightsUrl: string;
   serverSchemaUrl: string;
   serverReplicationUrl: string;
+  serverVacuumFreezingUrl: string;
   featureUrl: (mainUrl: string | undefined, section: string) => string | undefined;
 };
 
