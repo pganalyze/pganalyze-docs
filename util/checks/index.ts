@@ -317,6 +317,7 @@ export type IssueGuidanceUrls = {
   serverLogInsightsUrl: string;
   serverSchemaUrl: string;
   serverReplicationUrl: string;
+  serverVacuumFreezingUrl: string;
   featureUrl: (mainUrl: string | undefined, section: string) => string | undefined;
 };
 
