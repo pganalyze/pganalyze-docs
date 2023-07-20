@@ -30,31 +30,30 @@ const TxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     <div>
       <h4>Impact</h4>
       <p>
-        Transaction ID space utilization is high and approaching to wraparound.
+        Transaction ID space utilization is high and approaching wraparound.
       </p>
       <p>
         Postgres runs autovacuums regularly and this helps keeping transaction
         ID space utilization low by freezing old transaction IDs. There is also
         the anti-wraparound autovacuum specific for freezing, when the regular
-        autovacuums are either not freezing or simply not running. This
-        anti-wraparound autovacuum will be triggered when utilization (age)
-        exceeds the threshold, specified in{" "}
+        autovacuums are either not freezing aggressively enough or simply not
+        running. This anti-wraparound autovacuum will be triggered when
+        utilization (age) exceeds the threshold, specified in{" "}
         <code>autovacuum_freeze_max_age</code>.
       </p>
       <p>
-        In order to avoid wraparound failure, old transaction IDs must be
-        freezed by VACUUMs and this is not avoidable. The more old transaction
-        IDs need to be freezed, the more expensive VACUUM costs, potentially
-        causes the overall performance degradation or simply takes really long
-        time to finish. The anti-wraparound autovacuum holds{" "}
-        <code>SHARE UPDATE EXCLUSIVE</code> lock, which can block DDL
-        statements.
+        In order to avoid wraparound failure, old transaction IDs must be frozen
+        by VACUUMs. The more old transaction IDs need to be frozen, the more
+        expensive VACUUM becomes. It can take a really long time to finish and
+        potentially causes overall performance degradation. The anti-wraparound
+        autovacuum holds a<code>SHARE UPDATE EXCLUSIVE</code> lock, which can
+        block DDL statements.
       </p>
       <p>
-        If transaction ID space utilization reaches to 99.85% (3M transactions
-        left), the system will shut down and refuse to start any new
-        transactions. This is to prevent any data corruption from happening by
-        running out transaction ID. Resolving this requires manual intervention.
+        If transaction ID space utilization reaches to 99.85% (3M transaction
+        IDs left), the system will shut down. This is to prevent any data
+        corruption from happening by running out transaction IDs. Resolving this
+        requires manual intervention.
       </p>
       <p>
         With Postgres 14+, there is a special type of failsafe VACUUM which
@@ -69,11 +68,11 @@ const TxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           <h5>Ineffectual autovacuum settings</h5>
           <p>
             Autovacuums, especially anti-wraparound autovacuums, are meant to
-            freeze old transaction IDs and keep utilization low in order to
-            prevent wraparound from happening. When autovacuum is turned off, or
-            autovacuum settings are not well suited to actual database usage, it
-            is possible that autovacuum is not able to keep up with freezing old
-            transaction IDs and causes utilization to grow. Make sure that
+            freeze old transaction IDs and keep sufficient transaction IDs
+            available in order to prevent wraparound from happening. When
+            autovacuum is turned off, or autovacuum settings are not well suited
+            to actual database usage, it is possible that autovacuum is not able
+            to keep up with freezing old transaction IDs. Make sure that
             autovacuum is turned on, and revisit the configuration settings to
             ensure that autovacuum will keep transaction ID space utilization
             under control. You can check out the configuration settings related
@@ -90,8 +89,8 @@ const TxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             typical blocker is a long running transaction, or a transaction
             holding some locks that could cancel autovacuums. It is important to
             make sure that there is no such transactions so that VACUUMs can
-            make freezing progress. Check for any long-running transactions or
-            its lock state on the <Link to={backendsUrl}>Connections</Link>{" "}
+            make freezing progress. Check for any long-running transactions and
+            their lock state on the <Link to={backendsUrl}>Connections</Link>{" "}
             page.
           </p>
         </li>
