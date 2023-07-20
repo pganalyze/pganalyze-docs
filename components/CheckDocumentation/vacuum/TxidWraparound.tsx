@@ -30,30 +30,38 @@ const TxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     <div>
       <h4>Impact</h4>
       <p>
-        The transaction ID usage is high. Postgres usually runs anti-wraparound
-        autovacuums to keep the usage low by freezing old rows. However, if such
-        VACUUMs are either not running or are running but unable to freeze rows
-        for some reasons, the transaction usage keeps growing.
+        Transaction ID space utilization is high and approaching to wraparound.
       </p>
       <p>
-        The anti-wraparound VACUUM needs to happen at some point and this is not
-        avoidable. If VACUUM is somehow not run in timely manner, the upcoming
-        VACUUM becomes more and more expensive, potentially causes the overall
-        performance degradation or simply takes really long time to finish. The
-        anti-wraparound VACUUM holds <code>SHARE UPDATE EXCLUSIVE</code> lock,
-        which can block DDL statements.
+        Postgres runs autovacuums regularly and this helps keeping transaction
+        ID space utilization low by freezing old transaction IDs. There is also
+        the anti-wraparound autovacuum specific for freezing, when the regular
+        autovacuums are either not freezing or simply not running. This
+        anti-wraparound autovacuum will be triggered when utilization (age)
+        exceeds the threshold, specified in{" "}
+        <code>autovacuum_freeze_max_age</code>.
       </p>
       <p>
-        When the transaction ID usage reaches to 99.85% (3M transactions left),
-        the system will shut down and refuse to start any new transactions. This
-        is to prevent any data corruption from happening by running out
-        transaction ID.
+        In order to avoid wraparound failure, old transaction IDs must be
+        freezed by VACUUMs and this is not avoidable. The more old transaction
+        IDs need to be freezed, the more expensive VACUUM costs, potentially
+        causes the overall performance degradation or simply takes really long
+        time to finish. The anti-wraparound autovacuum holds{" "}
+        <code>SHARE UPDATE EXCLUSIVE</code> lock, which can block DDL
+        statements.
+      </p>
+      <p>
+        If transaction ID space utilization reaches to 99.85% (3M transactions
+        left), the system will shut down and refuse to start any new
+        transactions. This is to prevent any data corruption from happening by
+        running out transaction ID. Resolving this requires manual intervention.
       </p>
       <p>
         With Postgres 14+, there is a special type of failsafe VACUUM which
         takes extraordinary measures to avoid the shutdown. While this is very
-        useful, you still want to avoid even this from happening, to avoid any
-        impact by this VACUUM.
+        useful, you still want to avoid this as a failsafe autovacuum ignores
+        resource utilization constraints and can have significant performance
+        impact.
       </p>
       <h4>Common Causes</h4>
       <ul>
@@ -63,18 +71,14 @@ const TxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             Autovacuums, especially anti-wraparound autovacuums, are meant to
             freeze old transaction IDs and keep utilization low in order to
             prevent wraparound from happening. When autovacuum is turned off, or
-            the setup of anti-wraparound autovacuum is not fitting well for the
-            database usage, it is possible that autovacuum is not working as
-            intended and causing the utilization growth. When autovacuum is
-            turned off, or autovacuum settings are not well suited to actual
-            database usage, it is possible that autovacuum is not able to keep
-            up with freezing old transaction IDs and causes utilization to grow.
-            Make sure that autovacuum is turned on, and revisit the
-            configuration settings to ensure that autovacuum will keep
-            transaction ID space utilization under control. You can check out
-            the configuration settings related to freezing in{" "}
-            <Link to={serverVacuumFreezingUrl}>Freezing</Link> page in VACUUM
-            Advisor.
+            autovacuum settings are not well suited to actual database usage, it
+            is possible that autovacuum is not able to keep up with freezing old
+            transaction IDs and causes utilization to grow. Make sure that
+            autovacuum is turned on, and revisit the configuration settings to
+            ensure that autovacuum will keep transaction ID space utilization
+            under control. You can check out the configuration settings related
+            to freezing in <Link to={serverVacuumFreezingUrl}>Freezing</Link>{" "}
+            page in VACUUM Advisor.
           </p>
         </li>
         <li>
@@ -98,7 +102,7 @@ const TxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 
 const documentation: CheckDocs = {
   description:
-    "Alerts when the transaction ID space utilization on the server exceeds the specified percentage.",
+    "Alerts when transaction ID space utilization on the server exceeds the specified percentage.",
   Trigger: TxidWraparoundTrigger,
   Guidance: TxidWraparoundGuidance,
 };

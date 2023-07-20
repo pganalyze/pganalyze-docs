@@ -30,25 +30,44 @@ const MxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
     <div>
       <h4>Impact</h4>
       <p>
-        The multixact ID is close to wraparound. This is about a multixact ID,
-        not about the normal transaction ID.
+        Multixact ID space utilization is high and approaching to wraparound.
       </p>
       <p>
-        A multixact ID is an internal identifier used support row locking by
-        multiple transactions. Multixact IDs are created when transactions use{" "}
-        <code>SELECT ... FOR UPDATE</code> to lock and update tuples.
+        This is about a multixact ID, not about the normal transaction ID. A
+        multixact ID is an internal identifier used support row locking by
+        multiple transactions. Multixact IDs are commonly used with{" "}
+        <code>SELECT ... FOR UPDATE</code> query.
       </p>
       <p>
-        When the multixact ID wraparound happens, Postgres is unable to start a
-        new multixact and essentially makes the database down. Postgres usually
-        runs anti-wraparound autovacuums to prevent this from happening, but if
-        such VACUUMs are either not running or are running but unable to freeze
-        rows for some reasons, the transaction age (and the utilization) keeps
-        growing and eventually hit the point of wraparound. With Postgres 14+,
-        there is a special type of failsafe VACUUM which takes extraordinary
-        measures to avoid system-wide multixact ID wraparound failure. It is
-        recommended to take any actions to prevent the wraparound, or even
-        failsafe from happening.
+        Postgres runs autovacuums regularly and this helps keeping multixact ID
+        space utilization low by freezing old multixact IDs. There is also the
+        anti-wraparound autovacuum specific for freezing, when the regular
+        autovacuums are either not freezing or simply not running. This
+        anti-wraparound autovacuum will be triggered when utilization (age)
+        exceeds the threshold, specified in{" "}
+        <code>autovacuum_multixact_freeze_max_age</code>.
+      </p>
+      <p>
+        In order to avoid wraparound failure, old multixact IDs must be freezed
+        by VACUUMs and this is not avoidable. The more old multixact IDs need to
+        be freezed, the more expensive VACUUM costs, potentially causes the
+        overall performance degradation or simply takes really long time to
+        finish. The anti-wraparound autovacuum holds{" "}
+        <code>SHARE UPDATE EXCLUSIVE</code> lock, which can block DDL
+        statements.
+      </p>
+      <p>
+        If multixact ID space utilization reaches to 99.85% (3M multixact left),
+        the system will shut down and refuse to start any new multixact. This is
+        to prevent any data corruption from happening by running out multixact
+        ID. Resolving this requires manual intervention.
+      </p>
+      <p>
+        With Postgres 14+, there is a special type of failsafe VACUUM which
+        takes extraordinary measures to avoid the shutdown. While this is very
+        useful, you still want to avoid this as a failsafe autovacuum ignores
+        resource utilization constraints and can have significant performance
+        impact.
       </p>
       <h4>Common Causes</h4>
       <ul>
@@ -58,18 +77,14 @@ const MxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             Autovacuums, especially anti-wraparound autovacuums, are meant to
             freeze old multixact IDs and keep utilization low in order to
             prevent wraparound from happening. When autovacuum is turned off, or
-            the setup of anti-wraparound autovacuum is not fitting well for the
-            database usage, it is possible that autovacuum is not working as
-            intended and causing the utilization growth. When autovacuum is
-            turned off, or autovacuum settings are not well suited to actual
-            database usage, it is possible that autovacuum is not able to keep
-            up with freezing old multixact IDs and causes utilization to grow.
-            Make sure that autovacuum is turned on, and revisit the
-            configuration settings to ensure that autovacuum will keep multixact
-            ID space utilization under control. You can check out the
-            configuration settings related to freezing in{" "}
-            <Link to={serverVacuumFreezingUrl}>Freezing</Link> page in VACUUM
-            Advisor.
+            autovacuum settings are not well suited to actual database usage, it
+            is possible that autovacuum is not able to keep up with freezing old
+            multixact IDs and causes utilization to grow. Make sure that
+            autovacuum is turned on, and revisit the configuration settings to
+            ensure that autovacuum will keep multixact ID space utilization
+            under control. You can check out the configuration settings related
+            to freezing in <Link to={serverVacuumFreezingUrl}>Freezing</Link>{" "}
+            page in VACUUM Advisor.
           </p>
         </li>
         <li>
@@ -81,8 +96,9 @@ const MxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             typical blocker is a long running transaction, or a transaction
             holding some locks that could cancel autovacuums. It is important to
             make sure that there is no such transactions so that VACUUMs can
-            make freezing progress. Check for any long-running transactions on
-            the <Link to={backendsUrl}>Connections</Link> page.
+            make freezing progress. Check for any long-running transactions or
+            its lock state on the <Link to={backendsUrl}>Connections</Link>{" "}
+            page.
           </p>
         </li>
       </ul>
@@ -92,7 +108,7 @@ const MxidWraparoundGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 
 const documentation: CheckDocs = {
   description:
-    "Alerts when the multixact ID space utilization on the server exceeds the specified percentage.",
+    "Alerts when multixact ID space utilization on the server exceeds the specified percentage.",
   Trigger: MxidWraparoundTrigger,
   Guidance: MxidWraparoundGuidance,
 };
