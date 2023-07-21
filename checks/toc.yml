@@ -16,6 +16,8 @@
     href: checks/system
   - name: Replication
     href: checks/replication
+  - name: Vacuum
+    href: checks/vacuum
 # TODO: Should the check TOC items be auto-generated from the list in util/checks?
 - mount: checks/queries
   items:
@@ -53,7 +55,7 @@
     href: checks/settings/work_mem
 - mount: checks/system
   items:
-  - name: Out Of Disk Space
+  - name: Out of Disk Space
     href: checks/system/storage_space
 - mount: checks/replication
   items:
@@ -61,3 +63,15 @@
     href: checks/replication/high_lag
   - name: Replication - Missing HA Follower
     href: checks/replication/follower_missing
+- mount: checks/vacuum
+  items:
+  - name: Performance - Inefficient Index Phase
+    href: checks/vacuum/inefficient_index_phase
+  - name: Bloat - Insufficient VACUUM Frequency
+    href: checks/vacuum/insufficient_vacuum_frequency
+  - name: Bloat - VACUUM Blocked by Xmin Horizon
+    href: checks/vacuum/xmin_horizon
+  - name: Freezing - Approaching Transaction ID Wraparound
+    href: checks/vacuum/txid_wraparound
+  - name: Freezing - Approaching Multixact ID Wraparound
+    href: checks/vacuum/mxid_wraparound
