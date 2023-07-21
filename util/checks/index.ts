@@ -22,16 +22,16 @@ export const CHECK_TITLES = {
     work_mem: "Config - Too small work_mem",
   },
   system: {
-    storage_space: "Out Of Disk Space",
+    storage_space: "Out of Disk Space",
   },
   replication: {
     high_lag: "Replication - High Lag",
     follower_missing: "Replication - Missing HA Follower",
   },
   vacuum: {
-    inefficient_index_phase: 'VACUUM: Performance - Inefficient index phase',
+    inefficient_index_phase: 'VACUUM: Performance - Inefficient Index Phase',
     insufficient_vacuum_frequency: "VACUUM: Bloat - Insufficient VACUUM Frequency",
-    xmin_horizon: 'VACUUM: Bloat - VACUUM Blocked By Xmin Horizon',
+    xmin_horizon: 'VACUUM: Bloat - VACUUM Blocked by Xmin Horizon',
     txid_wraparound: 'VACUUM: Freezing - Approaching Transaction ID Wraparound',
     mxid_wraparound: 'VACUUM: Freezing - Approaching Multixact ID Wraparound',
   },
