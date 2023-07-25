@@ -10,6 +10,8 @@
     href: index-advisor
   - name: Indexing Engine
     href: indexing-engine
+  - name: VACUUM Advisor
+    href: vacuum-advisor
   - name: Alerts & Check-Up
     href: checks
   - name: Connections

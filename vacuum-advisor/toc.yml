@@ -1,0 +1,14 @@
+- mount: vacuum-advisor
+  items:
+  - name: "Overview"
+    href: vacuum-advisor
+  - name: "Getting Started"
+    href: vacuum-advisor/getting-started
+  - name: "Bloat"
+    href: vacuum-advisor/bloat
+  - name: "Freezing"
+    href: vacuum-advisor/freezing
+  - name: "Performance"
+    href: vacuum-advisor/performance
+  - name: "Activity"
+    href: vacuum-advisor/activity

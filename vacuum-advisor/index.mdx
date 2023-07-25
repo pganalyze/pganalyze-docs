@@ -1,0 +1,35 @@
+---
+title: 'pganalyze VACUUM Advisor'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+Start by reading **[Getting Started](/docs/vacuum-advisor/getting-started)**.
+
+VACUUM Advisor is split into four separate categories:
+
+1. **[Bloat](/docs/vacuum-advisor/bloat)** - Reduce unnecessary empty space (bloat) in tables
+2. **[Freezing](/docs/vacuum-advisor/freezing)** - Understand how Postgres prevents transaction ID and multixact ID wraparound
+3. **[Performance](/docs/vacuum-advisor/performance)** - Tune how fast, how efficient, and how often autovacuum is running
+4. **[Activity](/docs/vacuum-advisor/activity)** - Detailed statistics about all autovacuum and manual VACUUM activity
+
+## VACUUM Advisor Insights
+
+The following insights are currently included with pganalyze VACUUM Advisor:
+
+* [Bloat - Insufficient VACUUM Frequency](/docs/checks/vacuum/insufficient_vacuum_frequency)
+* [Bloat - VACUUM Blocked by Xmin Horizon](/docs/checks/vacuum/xmin_horizon)
+* [Freezing - Approaching Transaction ID Wraparound](/docs/checks/vacuum/txid_wraparound)
+* [Freezing - Approaching Multixact ID Wraparound](/docs/checks/vacuum/mxid_wraparound)
+* [Performance - Inefficient Index Phase](/docs/checks/vacuum/inefficient_index_phase)
+
+The insights are enabled by default for all your database servers, but alerts need to be enabled via alert policies. You can also utilize Slack notifications to notify you of newly detected insights. Read more details about the [Alerts & Check-Up system](/docs/checks).
+
+## Limitations of VACUUM Advisor
+
+* Table bloat estimations are based on heuristics and can be incorrect - use [pgstattuple](https://www.postgresql.org/docs/current/pgstattuple.html) to confirm actual bloat for a table
+* Index bloat is not yet tracked/estimated (only table bloat)
+* The "Bloat - Insufficient VACUUM Frequency" insight requires a narrow set of conditions that does not capture all conditions where table bloat can occur (it works best after compacting the table with `pg_repack` or similar)
+* VACUUM Advisor does not distinguish between dead row versions and dead line pointers (LP_DEAD), e.g. as caused by HOT updates and on-access pruning
+* Insights for tuning `autovacuum_cost_delay`, `autovacuum_cost_limit` and `autovacuum_max_workers` are still under development
+* Email alerts are not yet enabled for VACUUM Advisor insights
