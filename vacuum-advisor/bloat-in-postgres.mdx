@@ -1,0 +1,79 @@
+---
+title: 'Bloat in Postgres'
+backlink_href: /docs/vacuum-advisor
+backlink_title: 'VACUUM Advisor'
+---
+
+In Postgres, bloat refers to a situation when the physical size of a table on
+disk is larger than its actual data size.
+
+## Why does bloat happen?
+
+In Postgres, any DELETEs or UPDATEs create dead rows in the tables they modify.
+This is due to [the MVCC mechanism](https://www.postgresql.org/docs/current/mvcc-intro.html)
+that Postgres uses to support concurrent transactions.
+VACUUM allows Postgres to reclaim these dead rows and reuse that space for
+future INSERTs or UPDATEs. Autovacuum is designed to perform VACUUM regularly in
+order to efficiently reuse space. This helps prevent unnecessary table growth.
+
+### Insufficient VACUUMs
+
+If VACUUM is not performed with the appropriate frequency or at the right time,
+dead rows may not be reclaimed, or may not be reclaimed quickly enough. This can
+cause the table to grow, using new disk space even though there is available
+unused space, since that unused space is still occupied by dead rows.
+
+### Inefficient VACUUMs
+
+Even when VACUUM is performed sufficiently, it's possible that dead rows still
+cannot be reclaimed. This can happen when transactions are still accessing those
+dead rows, and the xmin horizon — representing the point up to which VACUUM can
+clean up dead rows — is held back.
+As a result, VACUUM may not reclaim enough dead rows, leading to bloat.
+
+
+## Why is bloat a problem?
+
+Table bloat has several negative implications for the performance of your database.
+
+### Slower queries
+
+Since bloated tables take more physical space for the same amount of actual data,
+they take longer to read from disk, and take up more room when cached in memory.
+This makes queries on these tables less efficient, because they have to do more
+work to scan the same amount of data.
+
+### Increased disk space and I/O
+
+Table bloat unnecessarily consumes additional disk space and requires more I/O
+operations to read and write the same amount of actual data.
+
+
+## How to avoid bloat
+
+It is normal to have some bloat for tables with DELETEs or UPDATEs operations.
+However, you want to pay attention when you see an increasing trend in bloat.
+It is important to tune the VACUUM configuration to ensure VACUUMs are keeping
+up with bloat.
+It is also important to monitor your database and take action when the xmin
+horizon is held back, to avoid inefficient VACUUMs.
+pganalyze automatically performs checks to identify such cases, enabling you to
+easily take appropriate actions.
+
+* [Insufficient VACUUM Frequency](/docs/checks/vacuum/insufficient_vacuum_frequency)
+* [VACUUM Blocked By Xmin Horizon](/docs/checks/vacuum/xmin_horizon)
+
+
+## How to clean up existing bloat
+
+Once bloat has accumulated, adjusting the frequency or efficiency of VACUUM
+alone will not eliminate it. Bloat can only be eliminated when the space
+occupied by dead rows becomes reusable through VACUUM, and there are more
+INSERTs than DELETEs to utilize that space.
+
+To clean up existing bloat, you have two options: `VACUUM FULL` or
+[pg_repack](https://pganalyze.com/blog/5mins-postgres-pg-repack-VACUUM-FULL).
+However, `VACUUM FULL` requires heavyweight locks and must rewrite the entire
+table, which makes it impractical for most workloads. On the other hand,
+pg_repack rewrites the table without taking long locks and it is recommended
+approach over `VACUUM FULL`.

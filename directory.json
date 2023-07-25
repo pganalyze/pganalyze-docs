@@ -875,6 +875,10 @@
     "vacuum-advisor/performance": {
       "title": "pganalyze VACUUM Advisor: Performance",
       "path": "/docs/vacuum-advisor/performance"
+    },
+    "vacuum-advisor/bloat-in-postgres": {
+      "title": "Bloat in Postgres",
+      "path": "/docs/vacuum-advisor/bloat-in-postgres"
     }
   },
   "logClassifications": {
