@@ -864,6 +864,10 @@
       "title": "pganalyze VACUUM Advisor: Bloat",
       "path": "/docs/vacuum-advisor/bloat"
     },
+    "vacuum-advisor/bloat-in-postgres": {
+      "title": "Bloat in Postgres",
+      "path": "/docs/vacuum-advisor/bloat-in-postgres"
+    },
     "vacuum-advisor/freezing": {
       "title": "pganalyze VACUUM Advisor: Freezing",
       "path": "/docs/vacuum-advisor/freezing"
@@ -875,10 +879,6 @@
     "vacuum-advisor/performance": {
       "title": "pganalyze VACUUM Advisor: Performance",
       "path": "/docs/vacuum-advisor/performance"
-    },
-    "vacuum-advisor/bloat-in-postgres": {
-      "title": "Bloat in Postgres",
-      "path": "/docs/vacuum-advisor/bloat-in-postgres"
     }
   },
   "logClassifications": {
