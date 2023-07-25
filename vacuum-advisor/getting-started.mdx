@@ -4,9 +4,9 @@ backlink_href: /docs/vacuum-advisor
 backlink_title: 'VACUUM Advisor'
 ---
 
-The VACUUM process is critical because it removes dead rows or unused data from tables and indexes, freeing up space for new data and improving query performance. Without VACUUM, the database is prone to suffer from database bloat, which can impact query performance and reduce system stability over time. By regularly running VACUUM operations, you can prevent database bloat, optimize query performance, and ensure the long-term stability of your database system.
+VACUUM and autovacuum are crucial features in Postgres that optimize and maintain database performance by removing dead rows and preventing database bloat. Regularly running VACUUM operations also ensures long-term stability, and updates important statistics used during query planning and execution.
 
-The pganalyze VACUUM Advisor is a tool to observe VACUUM activity and efficiency, and suggests insights that tailor your database’s Postgres configuration to your workloads. VACUUM Advisor uses information pganalyze already collects assuming you are using the latest version of the collector.
+The pganalyze VACUUM Advisor is a system that observes VACUUM activity and efficiency, and suggests insights that tailor your database’s Postgres configuration to your workloads. VACUUM Advisor uses information pganalyze already collects assuming you are using the latest version of the collector.
 
 ## What you get with VACUUM Advisor
 

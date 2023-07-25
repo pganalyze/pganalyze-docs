@@ -97,11 +97,20 @@ To continue, select in which environment you are running your Postgres database:
 <div className={styles.overviewFeatureChoice}>
   <Link
     className={styles.overviewFeatureChoiceStep}
+    to="/docs/vacuum-advisor"
+  >
+    <strong>pganalyze VACUUM Advisor</strong>
+    Workload-aware autovacuum tuning and insights for Postgres
+  </Link>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
     to="/docs/checks"
   >
     <strong>Alerts & Check-Up</strong>
     Detects common database problems and notifies via email, Slack and PagerDuty
   </Link>
+</div>
+<div className={styles.overviewFeatureChoice}>
   <Link
     className={styles.overviewFeatureChoiceStep}
     to="/docs/connections"
@@ -109,8 +118,6 @@ To continue, select in which environment you are running your Postgres database:
     <strong>Connections</strong>
     Monitors wait events, lock problems and other activity in near-realtime
   </Link>
-</div>
-<div className={styles.overviewFeatureChoice}>
   <Link
     className={styles.overviewFeatureChoiceStep}
     to="/docs/explain"
@@ -118,6 +125,8 @@ To continue, select in which environment you are running your Postgres database:
     <strong>EXPLAIN</strong>
     Collects query plans for slow Postgres queries and finds insights
   </Link>
+</div>
+<div className={styles.overviewFeatureChoice}>
   <Link
     className={styles.overviewFeatureChoiceStep}
     to="/docs/log-insights"

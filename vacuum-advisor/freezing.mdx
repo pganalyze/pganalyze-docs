@@ -8,7 +8,7 @@ backlink_title: 'VACUUM Advisor'
 
 The Freezing page in VACUUM Advisor gives you detailed insights on the freezing process - a routine operation that has to happen on each and every Postgres database, in order to make transaction IDs (which are a 32-bit sized counter) re-usable. In addition, this page also tracks the consumption and potential wraparound of multixact IDs, which are special identifiers used for row-level locking in Postgres.
 
-You can see the rate of transaction ID and multiXact IDs over time, which is the most important metric to know in terms of freezing. The more IDs you are consuming, the more often autovacuum will have to visit each and every table, to perform freezing. If the freezing operation does not keep up, you will see transaction ID space utilization % increase in the respective graphs, and potentially send alerts.
+You can see the rate of transaction ID and multixact IDs over time, which is the most important metric to know in terms of freezing. The more IDs you are consuming, the more often autovacuum will have to visit each and every table, to perform freezing. If the freezing operation does not keep up, you will see transaction ID space utilization % increase in the respective graphs, and potentially send alerts.
 
 ## Metrics
 
