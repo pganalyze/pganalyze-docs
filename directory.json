@@ -851,6 +851,30 @@
     "open_source_components": {
       "title": "Open-Source Components",
       "path": "/docs/open_source_components"
+    },
+    "vacuum-advisor": {
+      "title": "pganalyze VACUUM Advisor",
+      "path": "/docs/vacuum-advisor"
+    },
+    "vacuum-advisor/activity": {
+      "title": "pganalyze VACUUM Advisor: Activity",
+      "path": "/docs/vacuum-advisor/activity"
+    },
+    "vacuum-advisor/bloat": {
+      "title": "pganalyze VACUUM Advisor: Bloat",
+      "path": "/docs/vacuum-advisor/bloat"
+    },
+    "vacuum-advisor/freezing": {
+      "title": "pganalyze VACUUM Advisor: Freezing",
+      "path": "/docs/vacuum-advisor/freezing"
+    },
+    "vacuum-advisor/getting-started": {
+      "title": "Getting started with pganalyze VACUUM Advisor",
+      "path": "/docs/vacuum-advisor/getting-started"
+    },
+    "vacuum-advisor/performance": {
+      "title": "pganalyze VACUUM Advisor: Performance",
+      "path": "/docs/vacuum-advisor/performance"
     }
   },
   "logClassifications": {
