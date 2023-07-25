@@ -15,7 +15,7 @@ The pganalyze VACUUM Advisor is a tool to observe VACUUM activity and efficiency
 - Review a prioritized list of insights, so you can quickly work through them, and understand when pganalyze has confirmed there is no action needed.
 - Understand how pganalyze arrives at each insight, so you can make the final decision if and how you want to apply it.
 - Share in-depth autovacuum data with the whole team, and give the data platform team, infrastructure engineers, and DBAs quick access to detailed information.
-- See statistics about VACUUM activity and individual table vacuum activities over time
+- See statistics about VACUUM activity and individual table vacuum activities over time.
 
 To get started, you first need to onboard a new database server if you have not yet.
 
@@ -23,7 +23,7 @@ Next, choose VACUUM Advisor in the navigation to view Bloat, Freezing and Perfor
 
 ## Collector requirements
 
-We recommend installing the latest version of the collector, as we now track more information about your workloads, including table bloat, TOAST table name, reltuples and relpages. At the very least collector [version 0.50.1](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0501------2023-06-29) is required.
+We recommend installing the latest version of the collector, as we now track more information about your workloads, including table bloat, TOAST table name, reltuples and relpages. For best results, make sure you are running collector [version 0.50.1](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0501------2023-06-29) or later.
 
 Column statistics are used by pganalyze to improve VACUUM Advisor recommendations, and calculate bloat estimates. [Set up the get_column_stats helper function](/docs/install/troubleshooting/column_stats_helper).
 
@@ -37,7 +37,7 @@ When you navigate to the VACUUM Advisor, you will see key performance indicators
 * **Total Autovacuum Count**: The total number of autovacuums in the last 24 hours - use this to understand how busy a server is (compared to others) in terms of its autovacuum behavior.
 * **Total Anti-Wraparound Autovacuums:** The total number of autovacuums that were scheduled for anti-wraparound (freezing) reasons in the last 24 hours - if this is close to the total its likely most of the freezing work was done by anti-wraparound vacuums, causing potential excess I/O.
 
-Continue by clicking on a category in the overview to learn about the metrics and insights you can see on the **[Bloat](/docs/vacuum-advisor/bloat)**, **[Freezing](/docs/vacuum-advisor/freezing)**, **[Performance](/docs/vacuum-advisor/performance)** or **[Activity](/docs/vacuum-advisor/activity)** pages.
+Continue by clicking on a category in the overview to learn about the metrics and insights you can see on the **[Bloat](/docs/vacuum-advisor/bloat)**, **[Freezing](/docs/vacuum-advisor/freezing)**, **[Performance](/docs/vacuum-advisor/performance)**, or **[Activity](/docs/vacuum-advisor/activity)** pages.
 
 On each of these pages you can see how VACUUM and autovacuum performs on your servers and databases. As pganalyze continues to collect server and workload statistics, metrics and insights will be updated automatically.
 
