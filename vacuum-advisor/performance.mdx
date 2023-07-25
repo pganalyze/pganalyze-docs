@@ -5,3 +5,21 @@ backlink_title: 'VACUUM Advisor'
 ---
 
 ![VACUUM Advisor Performance page](performance.png)
+
+The Performance page in VACUUM Advisor gives you details about the efficiency of autovacuum operations, the utilization of autovacuum workers as well as issues where autovacuum couldn't run as planned.
+
+## Metrics
+
+For the key performance indicators (KPIs), you can see:
+
+* **Avg. Autovacuum Workers**: The utilization of your autovacuum workers - if this is close to the maximum, an autovacuum backlog may occur, causing bloat and potential freezing issues.
+* **Total Autovacuum Count**: The total number of autovacuums in the last 24 hours - use this to understand how busy a server is (compared to others) in terms of its autovacuum behavior.
+* **Skipped Autovacuums**: How many regular autovacuums were skipped because another connection held a conflicting lock. This lock skipping does not apply to anti-wraparound vacuums, and can often times lead to a higher rate of anti-wraparound vacuums that have to do more work, causing higher I/O impact at one time.
+
+Additionally, the Performance page shows:
+
+* A per-table breakdown of how often a particular table was vacuumed in the last 24 hours, how long the vacuums took on average, and whether the vacuum had multiple index phases (an indication that `autovacuum_work_mem` is set too low, or too many dead rows were present at one time)
+
+## Insights
+
+* [Performance - Inefficient Index Phase](/docs/checks/vacuum/inefficient_index_phase)
