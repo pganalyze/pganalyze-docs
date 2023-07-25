@@ -24,9 +24,26 @@ const InsufficientVacuumFrequencyTrigger: React.FunctionComponent<
 
 const InsufficientVacuumFrequencyGuidance: React.FunctionComponent<
   CheckGuidanceProps
-> = () => {
-  // InsufficientVacuumFrequency uses a similar pattern as MissingIndex.
-  return null;
+> = ({ issue }) => {
+  if (issue) {
+    // The InsufficientVacuumFrequency check has dynamic guidance
+    // so this component is not used in-app (aka when `issue` is present)
+    return null;
+  }
+  return (
+    <p>
+      You can learn about VACUUM Advisor and insufficient VACUUM frequency
+      insights in{" "}
+      <a href="https://pganalyze.com/docs/vacuum-advisor/bloat">
+        the VACUUM Advisor documentation
+      </a>
+      . You can also learn more about bloat in general by reading about{" "}
+      <a href="https://pganalyze.com/docs/vacuum-advisor/bloat-in-postgres">
+        Bloat in Postgres
+      </a>
+      .
+    </p>
+  );
 };
 
 const documentation: CheckDocs = {
