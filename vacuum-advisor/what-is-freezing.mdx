@@ -1,0 +1,92 @@
+---
+title: 'What is Freezing?'
+backlink_href: /docs/vacuum-advisor
+backlink_title: 'VACUUM Advisor'
+---
+
+In Postgres, freezing refers to a process of updating transaction metadata
+for older rows in order to allow reusing related transaction ids.
+
+
+## Why is freezing necessary?
+
+In Postgres, every row contains some associated metadata, including information
+about the ID of the transaction that created it. This is due to [the MVCC
+mechanism](https://www.postgresql.org/docs/current/mvcc-intro.html) that
+Postgres uses to support concurrent transactions. Since Postgres uses a 32-bit
+circular transaction ID space, those older IDs must be reused eventually. In
+order to avoid amibguity about which concrete transaction an ID refers to (known
+as "transaction ID wraparound"), the metadata of older rows must be updated to
+reference a special "frozen" transaction ID that is visible to all transactions
+before their transaction IDs are reused. The oldest unfrozen transaction ID for
+each table is maintained in the pg_class catalog table.
+
+VACUUM allows Postgres to reclaim the transaction IDs of these older rows and
+reuse them for future transactions. Autovacuum is designed to perform VACUUM
+regularly in order to efficiently freeze older rows. Note that to avoid excess
+write I/O, freezing is an optional part of vacuuming, controlled by separate
+configuration settings. When freezing does occur, VACUUM writes out new pages
+with the row metadata updated to reference the frozen transaction ID.
+
+Note that the same concepts apply to multixact IDs, a separate set of IDs that
+Postgres uses to implement row-level locking.
+
+
+## Freezing safeguards
+
+Because transaction ID wraparound is catastrophic, Postgres has a number of
+safeguards that ensure a database is extremely unlikely to actually reach
+wraparound. First of all, if the age of the oldest unfrozen transaction ID
+exceeds `autovacuum_freeze_max_age`, Postgres will launch an autovacuum "to
+prevent wraparound". This will not cede locks like regular autovacuum, and is
+not cancellable by unprivileged users, but will obey cost limits and otherwise
+behaves like a standard VACUUM.
+
+If the age exceeds `vacuum_failsafe_age`, Postgres will "upgrade" a running
+VACUUM to a "failsafe" VACUUM. This will ignore cost limits and skip vacuuming
+indexes in order to get freezing under control.
+
+If this still fails and the system has only 3M transaction IDs remaining,
+Postgres will shut down and require manual intervention to recover in "single
+user mode". This almost never happens due to the above safeguards.
+
+
+## Freezing trade-offs
+
+Freezing is controlled by a number of configuration settings, but it's helpful
+to understand the general trade-offs at a high level before diving into details.
+In general, freezing is controlled by the age of the oldest unfrozen transaction
+ID. There are two extremes of when to freeze rows: As early as possible, or as
+late as possible.
+
+Freezing rows as early as possible spreads out the I/O load from writing out
+frozen pages, since it avoids building a backlog of rows to freeze. But it means
+that frequently updated rows may need to be frozen many times. It can also lead
+to having to freeze rows that later end up being deleted.
+
+Conversely, freezing as late as possible avoids repeatedly freezing the same
+rows (and deleted rows), but it accrues "freezing debt" and may mean that large
+portions of the tables being vacuumed may need to be written out as frozen all
+during the same vacuum pass. This can have substantial I/O impact and can slow
+progress of that VACUUM, delaying bloat cleanup and occupying an autovacuum
+worker for an extended period of time, preventing other tables from being
+vacuumed.
+
+
+## Freezing strategy
+
+Considering the above trade-offs, it's often difficult to determine how to
+configure freezing. The best approach usually depends on your workload.
+
+Many applications have a workload of "hot" data that's updated for a while and
+then mostly sits at rest. Consider a system modeling orders placed by customers:
+an order is updated as it is prepared, completed, paid for, shipped, and
+delivered, but after that it is likely to never be updated again. If the order
+rows are frozen too early, while the order is still being processed, they will
+need to be frozen again after the order is next updated. For these tables, it's
+best to delay freezing until most affected orders are expected to be "cold".
+
+Conversely, many applications also have append-only workloads, where new data is
+added to a table (often a partitioned table) and then never updated again. For
+these tables, freezing can be more aggressive, since it will not be "undone" by
+future updates.

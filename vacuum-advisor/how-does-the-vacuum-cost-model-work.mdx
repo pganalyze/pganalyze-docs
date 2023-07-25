@@ -1,0 +1,114 @@
+---
+title: 'How does the VACUUM cost model work?'
+backlink_href: /docs/vacuum-advisor
+backlink_title: 'VACUUM Advisor'
+---
+
+In Postgres, VACUUM can consume significant resources and, in the worst cases,
+significantly impact database performance. To mitigate that, both manual VACUUM
+commands and the autovacuum system are controlled by a simple cost model. The
+cost model is designed to throttle the impact of running vacuum on an active
+database.
+
+
+## Cost model overview
+
+The cost model is based around the idea that each VACUUM run has a certain
+"budget" (`autovacuum_vacuum_cost_limit` or `vacuum_cost_limit`), and once that
+budget is depleted, the run is paused for a short while
+(`autovacuum_vacuum_cost_delay` or `vacuum_cost_delay`). After this, the budget
+is reset and the run can continue.
+
+Certain operations that VACUUM performs in the course of a run are counted
+against this budget:
+
+ - a page that must be read from cache costs: `vacuum_cost_page_hit`
+ - a page that must be read from "disk": `vacuum_cost_page_miss`
+ - a page that must be written out after having been updated by vacuum: `vacuum_cost_page_dirty`
+
+Note that "disk" is in quotes above, because that can include the operating
+system page cache, or, in the case of systems like AWS Aurora, its network-based
+storage system.
+
+Note also that when multiple autovacuum workers are configured, the cost limit
+is split equally among them, so adding more workers does not directly increase
+the I/O impact.
+
+Let's walk through an example. Say we have the following settings:
+ - `vacuum_cost_page_hit`: 2
+ - `vacuum_cost_page_miss`: 3
+ - `vacuum_cost_page_dirty`: 20
+ - `vacuum_cost_limit`: 25
+ - `vacuum_cost_delay`: 20ms
+
+If we vacuum a table consisting of three pages, vacuum will proceed as follows:
+
+<table>
+  <thead>
+    <tr>
+      <th>action</th>
+      <th style={{textAlign: 'right'}}>remaining budget</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>start vacuum</td>
+      <td style={{textAlign: 'right'}}>25</td>
+    </tr>
+    <tr>
+      <td>read page 1 (in cache)</td>
+      <td style={{textAlign: 'right'}}>23</td>
+    </tr>
+    <tr>
+      <td>skip page 1 (nothing to vacuum)</td>
+      <td style={{textAlign: 'right'}}>23</td>
+    </tr>
+    <tr>
+      <td>read page 2 (from disk)</td>
+      <td style={{textAlign: 'right'}}>20</td>
+    </tr>
+    <tr>
+      <td>write out page 2 after vacuum</td>
+      <td style={{textAlign: 'right'}}>0</td>
+    </tr>
+    <tr>
+      <td>sleep for 20ms due to cost limit</td>
+      <td style={{textAlign: 'right'}}>25</td>
+    </tr>
+    <tr>
+      <td>read page 3 (in cache)</td>
+      <td style={{textAlign: 'right'}}>23</td>
+    </tr>
+    <tr>
+      <td>write out page 3 after vacuum</td>
+      <td style={{textAlign: 'right'}}>3</td>
+    </tr>
+    <tr>
+      <td>done</td>
+      <td style={{textAlign: 'right'}}>-</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## Modeling the worst-case impact of VACUUM
+
+Given the cost model, we can calculate the theoretical maximum impact that
+VACUUM can have on your system. If we assume that the actual VACUUM work takes
+no time at all and that I/O is only limited by the cost model, we can determine
+the impact by analyzing the various costs and the delay.
+
+For read I/O, the formula considers the maximum number of pages misses that can
+occur before hitting the cost limit, and calculates that the max impact is that
+many pages per cost delay interval. I.e.,
+
+  ((`autovacuum_vacuum_cost_limit` / `vacuum_cost_page_miss`) * `block_size`) / `autovacuum_vacuum_cost_delay`
+
+Similarly, for write I/O, the formula considers the maximum number of pages that
+can be dirtied before hitting the cost limit, and calculates that the max impact
+is that many pages per cost delay interval. I.e.,
+
+  ((`autovacuum_vacuum_cost_limit` / `vacuum_cost_page_dirty`) * `block_size`) / `autovacuum_vacuum_cost_delay`
+
+Note that this is a theoretical maximum. In reality, the impact will be lower
+since the vacuuming itself will also take time.
