@@ -15,7 +15,7 @@ database.
 
 The cost model is based around the idea that each VACUUM run has a certain
 "budget" (`autovacuum_vacuum_cost_limit` or `vacuum_cost_limit`), and once that
-budget is depleted, the run is paused for a short while
+budget is spent, the run is paused for a short while
 (`autovacuum_vacuum_cost_delay` or `vacuum_cost_delay`). After this, the budget
 is reset and the run can continue.
 
@@ -35,13 +35,14 @@ is split equally among them, so adding more workers does not directly increase
 the I/O impact.
 
 Let's walk through an example. Say we have the following settings:
- - `vacuum_cost_page_hit`: 2
- - `vacuum_cost_page_miss`: 3
- - `vacuum_cost_page_dirty`: 20
+ - `vacuum_cost_page_hit`: 2 (to read a page from cache)
+ - `vacuum_cost_page_miss`: 3 (to read a page from disk)
+ - `vacuum_cost_page_dirty`: 20 (to write out a vacuumed page to disk)
  - `vacuum_cost_limit`: 25
  - `vacuum_cost_delay`: 20ms
 
-If we vacuum a table consisting of three pages, vacuum will proceed as follows:
+If we vacuum a table consisting of three pages (only some needing cleanup),
+vacuum will proceed as follows:
 
 <table>
   <thead>
@@ -72,7 +73,7 @@ If we vacuum a table consisting of three pages, vacuum will proceed as follows:
       <td style={{textAlign: 'right'}}>0</td>
     </tr>
     <tr>
-      <td>sleep for 20ms due to cost limit</td>
+      <td>sleep for 20ms due to cost limit (resets budget)</td>
       <td style={{textAlign: 'right'}}>25</td>
     </tr>
     <tr>
@@ -98,17 +99,72 @@ VACUUM can have on your system. If we assume that the actual VACUUM work takes
 no time at all and that I/O is only limited by the cost model, we can determine
 the impact by analyzing the various costs and the delay.
 
-For read I/O, the formula considers the maximum number of pages misses that can
-occur before hitting the cost limit, and calculates that the max impact is that
-many pages per cost delay interval. I.e.,
+For read I/O, the formula considers the maximum number of pages that can be read
+from disk before hitting the cost limit, and calculates that the max impact is
+that many pages per cost delay interval. If the whole budget is used just reading
+pages from disk, that would be as follows (configuration settings are in green
+below; results of calculations in gray):
 
-  ((`autovacuum_vacuum_cost_limit` / `vacuum_cost_page_miss`) * `block_size`) / `autovacuum_vacuum_cost_delay`
+```
+  max_page_misses = autovacuum_vacuum_cost_limit / vacuum_cost_page_miss
+```
+
+To turn that into bytes, we multiply by block size (almost always 8kB):
+
+```
+  max_bytes_read = max_page_misses * block_size
+```
+
+And to turn that into a rate, we divide by the cost delay:
+
+```
+  max_vacuum_read_rate = max_bytes_read / autovacuum_vacuum_cost_delay
+```
+
+For example, if `autovacuum_vacuum_cost_limit` is 100, `vacuum_cost_page_miss` is 5,
+`block_size` is the standard 8kB, and `autovacuum_vacuum_cost_delay` is `10ms`, this
+becomes
+
+```
+  max_page_misses = 100 / 5
+  max_bytes_read = 20 * 8192 bytes
+  max_vacuum_read_rate = 163840 bytes / 10ms = 16384000 bytes / sec ≈ 16 MB / sec
+```
+
 
 Similarly, for write I/O, the formula considers the maximum number of pages that
 can be dirtied before hitting the cost limit, and calculates that the max impact
-is that many pages per cost delay interval. I.e.,
+is that many pages per cost delay interval. If the whole budget is used just writing
+pages to disk, that would be as follows:
 
-  ((`autovacuum_vacuum_cost_limit` / `vacuum_cost_page_dirty`) * `block_size`) / `autovacuum_vacuum_cost_delay`
+```
+  max_page_writes = autovacuum_vacuum_cost_limit / vacuum_cost_page_dirty
+```
+
+Again, to turn that into bytes, we multiply by block size:
+
+```
+  max_bytes_written = max_page_writes * block_size
+```
+
+And as before, to turn that into a rate, we divide by the cost delay:
+
+```
+  max_vacuum_write_rate = max_bytes_written / autovacuum_vacuum_cost_delay
+```
+
+So for example, if `autovacuum_vacuum_cost_limit` is 100, `vacuum_cost_page_dirty` is 20,
+`block_size` is the standard 8kB, and `autovacuum_vacuum_cost_delay` is `10ms`, this
+becomes
+
+```
+  max_page_writes = 100 / 20
+  max_bytes_written = 5 * 8192 bytes
+  max_vacuum_write_rate = 40960 bytes / 10ms = 4096000 bytes / sec ≈ 4 MB / sec
+```
 
 Note that this is a theoretical maximum. In reality, the impact will be lower
-since the vacuuming itself will also take time.
+since the vacuuming itself will also take time. Furthermore, for writes, some of
+the cost limit budget must be used to read pages before they can be written out.
+Still, this gives a rough approximation of the upper bound of vacuum impact on
+your system.

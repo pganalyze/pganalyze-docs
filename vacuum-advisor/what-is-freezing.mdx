@@ -5,7 +5,7 @@ backlink_title: 'VACUUM Advisor'
 ---
 
 In Postgres, freezing refers to a process of updating transaction metadata
-for older rows in order to allow reusing related transaction ids.
+for older rows to allow reuse of related transaction IDs.
 
 
 ## Why is freezing necessary?
@@ -34,9 +34,9 @@ Postgres uses to implement row-level locking.
 
 ## Freezing safeguards
 
-Because transaction ID wraparound is catastrophic, Postgres has a number of
-safeguards that ensure a database is extremely unlikely to actually reach
-wraparound. First of all, if the age of the oldest unfrozen transaction ID
+Because transaction ID wraparound would lead to data corruption, Postgres has a
+number of safeguards that ensure a database is extremely unlikely to actually
+reach wraparound. First of all, if the age of the oldest unfrozen transaction ID
 exceeds `autovacuum_freeze_max_age`, Postgres will launch an autovacuum "to
 prevent wraparound". This will not cede locks like regular autovacuum, and is
 not cancellable by unprivileged users, but will obey cost limits and otherwise
@@ -65,12 +65,12 @@ that frequently updated rows may need to be frozen many times. It can also lead
 to having to freeze rows that later end up being deleted.
 
 Conversely, freezing as late as possible avoids repeatedly freezing the same
-rows (and deleted rows), but it accrues "freezing debt" and may mean that large
+rows (and deleted rows). But it accrues "freezing debt" and may mean that large
 portions of the tables being vacuumed may need to be written out as frozen all
 during the same vacuum pass. This can have substantial I/O impact and can slow
-progress of that VACUUM, delaying bloat cleanup and occupying an autovacuum
-worker for an extended period of time, preventing other tables from being
-vacuumed.
+progress of that VACUUM, delaying cleanup of bloat. It can also occupy an
+autovacuum worker for an extended period of time, preventing other tables from
+being vacuumed promptly.
 
 
 ## Freezing strategy
@@ -80,7 +80,7 @@ configure freezing. The best approach usually depends on your workload.
 
 Many applications have a workload of "hot" data that's updated for a while and
 then mostly sits at rest. Consider a system modeling orders placed by customers:
-an order is updated as it is prepared, completed, paid for, shipped, and
+An order is updated as it is prepared, completed, paid for, shipped, and
 delivered, but after that it is likely to never be updated again. If the order
 rows are frozen too early, while the order is still being processed, they will
 need to be frozen again after the order is next updated. For these tables, it's
