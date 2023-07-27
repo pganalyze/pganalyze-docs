@@ -876,9 +876,17 @@
       "title": "Getting started with pganalyze VACUUM Advisor",
       "path": "/docs/vacuum-advisor/getting-started"
     },
+    "vacuum-advisor/how-does-the-vacuum-cost-model-work": {
+      "title": "How does the VACUUM cost model work?",
+      "path": "/docs/vacuum-advisor/how-does-the-vacuum-cost-model-work"
+    },
     "vacuum-advisor/performance": {
       "title": "pganalyze VACUUM Advisor: Performance",
       "path": "/docs/vacuum-advisor/performance"
+    },
+    "vacuum-advisor/what-is-freezing": {
+      "title": "What is Freezing?",
+      "path": "/docs/vacuum-advisor/what-is-freezing"
     }
   },
   "logClassifications": {

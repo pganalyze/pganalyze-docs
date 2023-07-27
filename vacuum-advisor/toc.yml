@@ -14,3 +14,7 @@
     href: vacuum-advisor/activity
   - name: "Bloat in Postgres"
     href: vacuum-advisor/bloat-in-postgres
+  - name: "What is Freezing?"
+    href: vacuum-advisor/what-is-freezing
+  - name: "How does the VACUUM cost model work?"
+    href: vacuum-advisor/how-does-the-vacuum-cost-model-work
