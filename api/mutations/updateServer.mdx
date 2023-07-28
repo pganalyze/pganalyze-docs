@@ -1,5 +1,5 @@
 ---
-title: 'addServer - Add a server to pganalyze Enterprise Server'
+title: 'updateServer - Update a server on pganalyze Enterprise Server'
 backlink_href: /docs/api/mutations
 backlink_title: 'pganalyze GraphQL API Mutations'
 ---
@@ -8,21 +8,20 @@ backlink_title: 'pganalyze GraphQL API Mutations'
 
 This API is only supported for pganalyze Enterprise Server when utilizing the collector inside the central installation, and is used to configure the connections to your database servers.
 
-For registering new servers to the hosted service you can simply use an organization-wide collector key and follow the regular installation steps (no API call necessary).
-
 This API requires a read-write API key.
 
 ## API
 
-Arguments for `addServer`:
+Arguments for `updateServer` (only pass arguments for the fields that need to be updated):
 
+* **`serverId` (String)**<br />ID of the server (returned as `humanId` in the [addServer](/docs/api/mutations/addServer) API call)
 * **`name` (String)**<br/>Display name for the server in pganalyze (optional)
-* **`dbHost` (String)**<br/>Hostname of the database server
-* **`dbPort` (Integer)**<br/>Port of the database server (optional, defaults to 5432)
-* **`dbUsername` (String)**<br/>Username for the database server
+* **`dbHost` (String)**<br/>Hostname of the database server (optional)
+* **`dbPort` (Integer)**<br/>Port of the database server (optional)
+* **`dbUsername` (String)**<br/>Username for the database server (optional)
 * **`dbPassword` (String)**<br/>Password for the database server (optional)
-* **`dbName` (String)**<br/>Database name to connect to
-* **`dbSslmode` (String)**<br/>Postgres SSL mode to be used when connecting (optional, defaults to prefer)
+* **`dbName` (String)**<br/>Database name to connect to (optional)
+* **`dbSslmode` (String)**<br/>Postgres SSL mode to be used when connecting (optional)
 * **`dbUseIamAuth` (String)**<br/>For Amazon RDS: Whether to use AWS IAM authentication (optional)
 * **`awsRegion` (String)**<br/>For Amazon RDS: Region the database runs in (optional)
 * **`awsDbInstanceId` (String)**<br/>For Amazon RDS: Instance ID of the database instance (optional)
@@ -30,13 +29,12 @@ Arguments for `addServer`:
 * **`awsAssumeRole` (String)**<br />For Amazon RDS: IAM role to be assumed for AWS API access (optional)
 * **`enableLogs` (Boolean)**<br/>Determines whether log collection is enabled (optional, defaults to false, works with Amazon RDS and [self-managed servers](https://github.com/pganalyze/collector#setting-up-log-pg_read_file-helper))
 * **`enableActivity` (Boolean)**<br/>Determines whether activity snapshots for Connection Tracing and Vacuum Monitoring are enabled (optional, defaults to false)
-* **`collectAllDatabases` (Boolean)**<br/>Determines whether statistics are collected for all databases on the server (optional, defaults to false)
 
 Fields returned:
 
-* **`server` (ServerType)**<br/>Server that was just created using this endpoint (null if an error occurred)
+* **`server` (ServerType)**<br/>Server that was updated using this endpoint (null if an error occurred)
   * **`humanId` (String)**<br/>Public "human" ID that can be used to refer to this server in URLs and API calls
-* **`errors` (Array of String)**<br/>Errors that occurred during creation of the server (if any)
+* **`errors` (Array of String)**<br/>Errors that occurred during updating the server (if any)
 
 ## Example
 
@@ -44,7 +42,7 @@ GraphQL mutation:
 
 ```graphql
 mutation {
-  addServer(dbHost: "my-database.internal", dbUsername: "postgres", dbName: "postgres", enableActivity: true) {
+  updateServer(serverId: "bdp4m73ysjgefke7i2dgkenzi4", dbPassword: "new-password") {
     errors
     server {
       humanId
@@ -57,14 +55,14 @@ Using `curl`, replace `pganalyze.internal` with the hostname or IP of your pgana
 
 ```bash
 curl -XPOST -H 'Authorization: Token XXXXXXX' \
-  -F 'query=mutation { addServer(dbHost: "my-database.internal", dbUsername: "postgres", dbName: "postgres", enableActivity: true) { server { humanId }, errors } }' \
+  -F 'query=mutation { updateServer(serverId: "bdp4m73ysjgefke7i2dgkenzi4", dbPassword: "new-password") { server { humanId }, errors } }' \
   https://pganalyze.internal/graphql
 ```
 
 ```json
 {
   "data": {
-    "addServer": {
+    "updateServer": {
       "server": {
         "humanId": "bdp4m73ysjgefke7i2dgkenzi4"
       },
@@ -72,13 +70,4 @@ curl -XPOST -H 'Authorization: Token XXXXXXX' \
     }
   }
 }
-```
-
-You can view the new server by constructing the URL like this:
-
-```ruby
-pganalyze_base_url = 'https://pganalyze.internal' # Use your internal hostname for pganalyze
-server_human_id = 'bdp4m73ysjgefke7i2dgkenzi4' # Take this from the API response `humanId` field
-url = pganalyze_base_url + '/servers/' + server_human_id
-# => https://pganalyze.internal/servers/bdp4m73ysjgefke7i2dgkenzi4
 ```
