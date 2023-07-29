@@ -12,9 +12,21 @@
     href: vacuum-advisor/performance
   - name: "Activity"
     href: vacuum-advisor/activity
-  - name: "Bloat in Postgres"
+- mount: vacuum-advisor/bloat
+  items:
+  - name: "Bloat in VACUUM Advisor"
+    href: vacuum-advisor/bloat
+  - name: "What is Bloat?"
     href: vacuum-advisor/bloat-in-postgres
+- mount: vacuum-advisor/freezing
+  items:
+  - name: "Freezing in VACUUM Advisor"
+    href: vacuum-advisor/freezing
   - name: "What is Freezing?"
     href: vacuum-advisor/what-is-freezing
+- mount: vacuum-advisor/performance
+  items:
+  - name: "Performance in VACUUM Advisor"
+    href: vacuum-advisor/performance
   - name: "How does the VACUUM cost model work?"
     href: vacuum-advisor/how-does-the-vacuum-cost-model-work
