@@ -857,19 +857,19 @@
       "path": "/docs/vacuum-advisor"
     },
     "vacuum-advisor/activity": {
-      "title": "pganalyze VACUUM Advisor: Activity",
+      "title": "Activity in VACUUM Advisor",
       "path": "/docs/vacuum-advisor/activity"
     },
     "vacuum-advisor/bloat": {
-      "title": "pganalyze VACUUM Advisor: Bloat",
+      "title": "Bloat in VACUUM Advisor",
       "path": "/docs/vacuum-advisor/bloat"
     },
     "vacuum-advisor/bloat-in-postgres": {
-      "title": "Bloat in Postgres",
+      "title": "What is Bloat?",
       "path": "/docs/vacuum-advisor/bloat-in-postgres"
     },
     "vacuum-advisor/freezing": {
-      "title": "pganalyze VACUUM Advisor: Freezing",
+      "title": "Freezing in pganalyze VACUUM Advisor",
       "path": "/docs/vacuum-advisor/freezing"
     },
     "vacuum-advisor/getting-started": {
@@ -881,7 +881,7 @@
       "path": "/docs/vacuum-advisor/how-does-the-vacuum-cost-model-work"
     },
     "vacuum-advisor/performance": {
-      "title": "pganalyze VACUUM Advisor: Performance",
+      "title": "Performance in pganalyze VACUUM Advisor",
       "path": "/docs/vacuum-advisor/performance"
     },
     "vacuum-advisor/what-is-freezing": {
