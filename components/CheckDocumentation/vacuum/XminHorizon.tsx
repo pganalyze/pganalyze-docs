@@ -67,6 +67,15 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         When VACUUM is blocked and dead rows can't be cleaned, it can result in
         table bloat and slow queries.
       </p>
+      <p>
+        This xmin horizon is the oldest xmin of the server. While the xmin
+        horizon could block dead rows to be cleaned, it's not necessary that all
+        tables of the server will be impacted. Postgres can still clean up dead
+        rows of tables that are unrelated to the xmin horizon. For example, if
+        the xmin horizon is held back by the long running transaction of
+        database1, Postgres can still clean up dead rows of tables in database2,
+        as the transaction of database1 will never be able to see database2.
+      </p>
       <h4>{causeTitle}</h4>
       <ul>
         <GuidanceByBackend inApp={inApp} heldBackInfo={byBackend} />
