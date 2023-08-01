@@ -38,7 +38,7 @@ const InsufficientVacuumFrequencyGuidance: React.FunctionComponent<
         the VACUUM Advisor documentation
       </a>
       . You can also learn more about bloat in general by reading about{" "}
-      <a href="https://pganalyze.com/docs/vacuum-advisor/bloat-in-postgres">
+      <a href="https://pganalyze.com/docs/vacuum-advisor/what-is-bloat">
         Bloat in Postgres
       </a>
       .

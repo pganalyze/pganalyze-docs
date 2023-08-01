@@ -17,7 +17,7 @@
   - name: "Bloat in VACUUM Advisor"
     href: vacuum-advisor/bloat
   - name: "What is Bloat?"
-    href: vacuum-advisor/bloat-in-postgres
+    href: vacuum-advisor/what-is-bloat
 - mount: vacuum-advisor/freezing
   items:
   - name: "Freezing in VACUUM Advisor"
