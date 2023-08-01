@@ -40,6 +40,14 @@
       "title": "addServer - Add a server to pganalyze Enterprise Server",
       "path": "/docs/api/mutations/addServer"
     },
+    "api/mutations/deleteServer": {
+      "title": "deleteServer - Delete a server",
+      "path": "/docs/api/mutations/deleteServer"
+    },
+    "api/mutations/updateServer": {
+      "title": "updateServer - Update a server on pganalyze Enterprise Server",
+      "path": "/docs/api/mutations/updateServer"
+    },
     "api/queries": {
       "title": "pganalyze GraphQL API Queries",
       "path": "/docs/api/queries"

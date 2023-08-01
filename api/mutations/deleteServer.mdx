@@ -1,0 +1,56 @@
+---
+title: 'deleteServer - Delete a server'
+backlink_href: /docs/api/mutations
+backlink_title: 'pganalyze GraphQL API Mutations'
+---
+
+## Use case
+
+Delete a server from the system in either pganalyze Enterprise Server, or the cloud-hosted version of pganalyze. When running the collector separately, make sure to first remove the server from the collector and reload the configuration (otherwise it will be recreated automatically after the deletion).
+
+The server will be marked as deleted, and data will be deleted by its retention time (up to 35 days). For an immediate deletion, reach out to pganalyze Support.
+
+This API requires a read-write API key.
+
+## API
+
+Arguments for `deleteServer`:
+
+* **`serverId` (String)**<br />ID of the server (returned as `humanId` in the [addServer](/docs/api/mutations/addServer) API call)
+
+Fields returned:
+
+* **`success` (Boolean)**<br/>Whether the deletion succeeded
+* **`errors` (Array of String)**<br/>Errors that occurred during deleting the server (if any)
+
+## Example
+
+GraphQL mutation:
+
+```graphql
+mutation {
+  deleteServer(serverId: "bdp4m73ysjgefke7i2dgkenzi4") {
+    success
+    errors
+  }
+}
+```
+
+Using `curl`, replace `pganalyze.internal` with the hostname or IP of your pganalyze installation:
+
+```bash
+curl -XPOST -H 'Authorization: Token XXXXXXX' \
+  -F 'query=mutation { deleteServer(serverId: "bdp4m73ysjgefke7i2dgkenzi4") { success, errors } }' \
+  https://pganalyze.internal/graphql
+```
+
+```json
+{
+  "data": {
+    "deleteServer": {
+      "success": true,
+      "errors": []
+    }
+  }
+}
+```
