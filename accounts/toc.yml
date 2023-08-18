@@ -2,6 +2,8 @@
   items:
   - name: Overview
     href: accounts
+  - name: Billing
+    href: accounts/billing
   - name: Permissions and Roles
     href: accounts/permissions
   - name: Single Sign-On
