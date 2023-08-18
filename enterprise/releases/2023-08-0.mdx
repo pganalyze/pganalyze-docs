@@ -1,0 +1,63 @@
+---
+title: '2023.08.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2023.08.0`
+
+## Notes
+
+- This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+- pganalyze Enterprise Server now requires Postgres 11 or newer for the database that is used for storing pganalyze internal data. If you are on Postgres 10 or older, we recommend upgrading before migrating to this release.
+
+## Features
+
+* New: **pganalyze VACUUM Advisor**
+  - This release introduces the pganalyze VACUUM Advisor
+  - Note that if you are using the pganalyze collector running separate from the Enterprise Server container, we recommend upgrading to the latest collector (0.51.1) in order to utilize the new features
+  - Read all about it in the **[launch blog post](/blog/introducing-vacuum-advisor-postgres)**
+* Add inserted rows graph to VACUUM Activity of the Schema Statistics page <!-- PR 3133 -->
+* Index Advisor
+  - Terminology: Rename "Opportunities" to "Insights" for clarity <!-- PR 3015 -->
+  - Improve handling of check constraints <!-- PR 3139 -->
+    - Allow processing schemas containing more CHECK constraints, including constraints marked as NOT VALID.
+  - Support queries containing COALESCE and other expressions in the LIMIT clause <!-- PR 3147 -->
+  - Fix sorting of unused indexes for which an index write overhead could not be calculated <!-- PR 3167 -->
+* Update bundled collector version to release 0.51.1 <!-- PR 3166, PR 3176 -->
+  - Autovacuum:
+    - Add support for updated log format in Postgres 15+
+    - Remember unqualified name for "skipping vacuum" log events
+    - Add more cases for "canceling autovacuum task" log context line
+    - Track n_ins_since_vacuum value to determine when insert-based autovacuum was triggered
+  - AWS Aurora: Correctly detect Aurora reader instances as replicas
+  - Self-managed servers: Use log_timezone setting to determine log timezone if possible
+  - In case you have installed the collector separately, we recommend upgrading the collector package/container and reviewing the [full changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0511------2023-08-15).
+
+
+## Performance
+
+* Query Performance: Fix loading time issue for servers with a lot of roles <!-- PR 3129 -->
+* Alerts & Check-Up: Speed up page load for organizations with many servers <!-- PR 3127 -->
+* Index Advisor: Reduce frequency of background jobs <!-- PR 2992 -->
+
+## Bugfixes
+
+* getIssues API: Allow returning null for issue reference (legacy API) <!-- PR 3084 -->
+  - The new "VACUUM: Bloat - VACUUM Blocked by Xmin Horizon" check may in some cases not have any attached issue references, which will cause the legacy "reference" issue field to be null.
+  - This is an API breaking change, since the field was previously considered non-nullable. Please note that if you are currently using the "reference" and "displayName" fields of the "getIssues" API that they are deprecated, and we require all API users to migrate to the "references" field by May 2024: https://pganalyze.com/docs/api/queries/getIssues
+* Allow trailing slash in AWS_S3_SNAPSHOTS_PREFIX and AWS_S3_LOGS_PREFIX <!-- PR 3136 -->
+  - When configuring these variables a trailing slash will now be accepted (but not required). A trailing slash makes no semantic difference here but may be more natural for some environments.
+* Log Insights: Fix log details rendering error with logs contain index vacuum information <!-- PR 3151 -->
+* Alerts & Check-Up: Fix addition of more matching PIDs after connection-related alerts are triggered <!-- PR 2972 -->
+  - Due to a bug in the handling of connection related alerts (Active Queries, Idle Transactions or Blocking Queries), the list of references for each issue which highlights the specific PIDs that were matched by the alert was not correctly updated if additional PIDs were found that matched the condition after the issue was first detected.
+  - This did not affect the state of the issue overall, just the display of connections and their PIDs on the issue page, which may have sometimes been incomplete, or empty due to this bug.
+* Query stats processing: Skip bad data points for percentile calculation <!-- PR 3011 -->
+* Per-table index list: Correctly show just the index definition (instead of a full CREATE INDEX statement) for partitioned tables <!-- PR 3163 -->
+* Replication statistics: Clarify terminology when monitoring an Aurora reader instance <!-- PR 3173 -->
+
+
+## Security
+
+* Routine security updates to packages in the base image and library dependencies
+
