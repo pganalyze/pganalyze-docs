@@ -44,7 +44,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 ## Bugfixes
 
 * getIssues API: Allow returning null for issue reference (legacy API) <!-- PR 3084 -->
-  - The new "VACUUM: Bloat - VACUUM Blocked by Xmin Horizon" check may in some cases not have any attached issue references, which will cause the legacy "reference" issue field to be null.
+  - The new "VACUUM: Bloat - VACUUM Blocked by Xmin Horizon" check may not have any attached issue references in some cases, which will cause the legacy "reference" issue field to be null.
   - This is an API breaking change, since the field was previously considered non-nullable. Please note that if you are currently using the "reference" and "displayName" fields of the "getIssues" API that they are deprecated, and we require all API users to migrate to the "references" field by May 2024: https://pganalyze.com/docs/api/queries/getIssues
 * Allow trailing slash in AWS_S3_SNAPSHOTS_PREFIX and AWS_S3_LOGS_PREFIX <!-- PR 3136 -->
   - When configuring these variables a trailing slash will now be accepted (but not required). A trailing slash makes no semantic difference here but may be more natural for some environments.
