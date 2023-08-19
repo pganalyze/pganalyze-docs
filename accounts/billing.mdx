@@ -1,0 +1,59 @@
+---
+title: 'Billing'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+## What is a billable server?
+
+In general, each 1 Postgres server that is running (i.e. one parent [postgres](https://www.postgresql.org/docs/current/app-postgres.html) process) is considered 1 billable server. In the case of cloud providers these are often called "instances".
+
+Depending on the subscription plan you are on, you may have a special price for replica servers (also called "readers", or "followers"), which is implemented by multiplying the replica count with a multiplier (e.g. 0.5), with the total rounded up. You can review the number of replicas integrated with your pganalyze account by going to "Settings" and "Other Settings" and viewing the "Usage Statistics" on that page.
+
+For example, a typical Amazon Aurora cluster will contain 1 writer instance, and 2 reader instances. If you are on a plan with a replica multiplier of 0.5 and you intend to monitor the whole cluster, the cluster would count as 2 billable servers: 1 for the writer, and 1 for the 2 readers / replicas (2 * 0.5).
+
+## How can we pay for pganalyze?
+
+All self-serve monthly plans are paid by credit card. We accept Visa, Mastercard and American Express. All payment data is processed through [Stripe](https://stripe.com).
+
+For annual plans we also support paying by US-based ACH credit transfer, or international wire transfer. For Enterprise customers we can additionally accommodate payment by check, if requested. Annual and Enterprise plans can be purchased by [contacting us](/contact).
+
+## How do we adjust the number of billable servers on my plan?
+
+If you are on a self-serve monthly plan, and you need more than the included amount of billable servers, you can adjust your server limit by going to "Settings" and "Billing" in the pganalyze app.
+
+Note that the billable server count is a fixed price subscription for the specified number of billable servers, and unused billable servers are not refunded.
+
+If you make mid-month adjustments to your number of billable servers, you will receive a pro-ration. If the pro-ration results in a credit (e.g. when reducing the number of billable servers), it will be applied to the next renewal invoice.
+
+## Can we change which servers are integrated with pganalyze?
+
+Yes. For billing purposes, servers are considered "active" when statistics data was received within the last 24 hours. pganalyze looks at the high watermark over a 24 hour period to determine how many billable servers were in use.
+
+In order to stop sending statistics data, you need to remove the server from the pganalyze collector, and then reload the collector. You can confirm when pganalyze last received statistics data for a server by going to the "Settings" page for the server, and looking at the "Debug Info" section.
+
+## Do you offer volume discounts?
+
+We offer volume discounts starting at 15 billable servers, when purchasing annually. [Contact us for more details](/contact).
+
+## Can our organization pay by invoice?
+
+Paying by invoice is supported when paying annually. [Contact us to set this up](/contact).
+
+## Can pganalyze help filling out procurement documentation? (vendor setup, security questionnaires, etc)
+
+For customers on the Enterprise plan, we are happy to work with you on filling out necessary procurement documentation, such as vendor setup forms, or vendor security questionnaires.
+
+All other plans are considered self-serve, and we do not provide customized onboarding assistance on those plans.
+
+## Do you work with any resellers?
+
+We generally sell pganalyze direct, without involvement of resellers. If you have specific needs that require the use of a reseller, please [contact us to discuss](/contact).
+
+## Can we purchase pganalyze through cloud marketplaces, e.g. the AWS Marketplace?
+
+We currently do not offer pganalyze through the AWS Marketplace, or other marketplaces, but are planning to do so in the future.
+
+## How can I cancel my pganalyze subscription?
+
+For self-serve monthly plans you can cancel in the pganalyze app by going to "Settings" and "Billing". For annual and Enterprise plans, you can cancel by [contacting us](/contact).

@@ -8,6 +8,10 @@
       "title": "Account Management",
       "path": "/docs/accounts"
     },
+    "accounts/billing": {
+      "title": "Billing",
+      "path": "/docs/accounts/billing"
+    },
     "accounts/permissions": {
       "title": "Permissions and Roles",
       "path": "/docs/accounts/permissions"
