@@ -59,13 +59,19 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
       props.rel = rel.join(' ')
     }
 
-    const { children, className, ...otherProps } = props;
+    const { children, className, target, ...otherProps } = props;
     // Don't show external icon link in some situations
     const skipExternalLinkIcon = destination.startsWith('https://heroku.com/deploy')
       || destination.startsWith('#')
       || destination.startsWith('mailto:')
     return (
-      <a {...otherProps} className={classNames(styles.noWrap, className)}>
+      <a
+        {...otherProps}
+        className={classNames(styles.noWrap, className)}
+        target={
+          target ?? (isAbsolute && !skipExternalLinkIcon) ? "_blank" : "_self"
+        }
+      >
         {children}{!skipExternalLinkIcon && <ExternaLinkIcon className={styles.externalLinkIcon} />}
       </a>
     )
