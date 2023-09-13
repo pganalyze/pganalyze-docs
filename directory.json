@@ -904,6 +904,10 @@
       "title": "Per table VACUUM/ANALYZE Activity in Schema Statistics",
       "path": "/docs/vacuum-advisor/per-table-activity"
     },
+    "vacuum-advisor/vacuum-simulator": {
+      "title": "VACUUM Simulator in Schema Statistics",
+      "path": "/docs/vacuum-advisor/vacuum-simulator"
+    },
     "vacuum-advisor/what-is-bloat": {
       "title": "What is Bloat?",
       "path": "/docs/vacuum-advisor/what-is-bloat"
