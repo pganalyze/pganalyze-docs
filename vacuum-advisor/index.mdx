@@ -33,3 +33,4 @@ The insights are enabled by default for all your database servers, but alerts ne
 * VACUUM Advisor does not distinguish between dead row versions and dead line pointers (LP_DEAD), e.g. as caused by HOT updates and on-access pruning
 * Insights for tuning `autovacuum_cost_delay`, `autovacuum_cost_limit` and `autovacuum_max_workers` are still under development
 * Email alerts are not yet enabled for VACUUM Advisor insights
+* In the "VACUUM Blocked by Xmin Horizon" graph, when the exact assigned time of the xmin horizon wasn't retrievable (e.g. it was assigned before the statistics retention period), it will use the oldest statistics collected time and can be inaccurate. For example, even if the xmin horizon was assigned at 60 days ago, the xmin horizon in the graph may show that it was assigned at 35 days ago
