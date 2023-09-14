@@ -64,6 +64,10 @@
       "title": "getQueryStats - Export query statistics",
       "path": "/docs/api/queries/getQueryStats"
     },
+    "api/queries/getServers": {
+      "title": "getServers - Get a list of servers for an organization",
+      "path": "/docs/api/queries/getServers"
+    },
     "checks": {
       "title": "Alerts & Check-Up",
       "path": "/docs/checks"
