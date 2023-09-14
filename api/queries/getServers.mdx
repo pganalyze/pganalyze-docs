@@ -1,0 +1,64 @@
+---
+title: 'getServers - Get a list of servers for an organization'
+backlink_href: /docs/api/queries
+backlink_title: 'pganalyze GraphQL API Queries'
+---
+
+## Use case
+
+You can utilize `getServers` to get a list of all servers that are integrated with an organization in pganalyze, and to find servers that have not received any data recently due to collector integration issues.
+
+## API
+
+Arguments for `getServers`:
+
+* **`organizationSlug` (string)**<br/>Organization identifier ("slug") for which to retrieve servers for
+* **`withRecentData` (boolean)**<br/>Filters for servers that have received data in the last 24 hours (optional), defaults to no filtering - if set to `false` it will filter for all servers that exist, but don't have recent data
+* **`systemType` (string)**<br/>Filter by API system type set by the collector (optional)
+* **`systemScope` (string)**<br/>Filter by API system scope set by the collector (optional)
+* **`systemId` (string)**<br/>Filter by API system ID set by the collector (optional)
+
+Fields returned:
+
+* **`id` (number)**<br/>Unique identifier for this server in the pganalyze system (Internal UUID style)
+* **`humanId` (string)**<br/>Unique identifier for this server in the pganalyze system ("human" style, which is used in URLs and API calls)
+* **`name` (string)**<br/>Display name of this server, as configured in pganalyze
+* **`systemType` (string)**<br />API system type set by the collector
+* **`systemScope` (string)**<br />API system scope set by the collector
+* **`systemId` (string)**<br />API system ID set by the collector
+* **`lastSnapshotAt` (integer)**<br />Timestamp of last full snapshot processed, as Unix timestamp in seconds
+
+## Example
+
+GraphQL query:
+
+```graphql
+query {
+  getServers(organizationSlug: "example", withRecentData: true) {
+    humanId
+    name
+  }
+}
+```
+
+Using `curl`:
+
+```bash
+curl -XPOST -H 'Authorization: Token XXXXXXX' \
+  -F 'query=query { getServers(organizationSlug: "example", withRecentData: true) { humanId, name } }' \
+  https://app.pganalyze.com/graphql
+```
+
+```json
+{
+  "data": {
+    "getServers": [
+      {
+        "humanId":"bdp4m73ysjgefke7i2dgkenzi4",
+        "name":"pgbench"
+      },
+      [ ... ]
+    }
+  }
+}
+```
