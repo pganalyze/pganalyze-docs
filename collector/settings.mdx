@@ -174,11 +174,6 @@ helper functions are expected to be defined, and the one we connect to for serve
       <td>[none]</td>
       <td>Alternative to above, using actual contents of the key</td>
     </tr>
-    <tr>
-      <td>db_data_directory (<code>DB_DATA_DIRECTORY</code>)</td>
-      <td>[autodetected]</td>
-      <td>The <a href="https://www.postgresql.org/docs/16/runtime-config-file-locations.html#GUC-DATA-DIRECTORY">data_directory</a> for this server</td>
-    </tr>
   </tbody>
 </table>
 
@@ -493,6 +488,11 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
       <td>db_log_location (<code>LOG_LOCATION</code>)</td>
       <td>[none]</td>
       <td>database log file or directory location (must be readable by pganalyze system user)</td>
+    </tr>
+    <tr>
+      <td>db_data_directory (<code>DB_DATA_DIRECTORY</code>)</td>
+      <td>auto-detected</td>
+      <td>The <a href="https://www.postgresql.org/docs/16/runtime-config-file-locations.html#GUC-DATA-DIRECTORY">data_directory</a> for this server</td>
     </tr>
     <tr>
       <td>db_log_syslog_server (<code>LOG_SYSLOG_SERVER</code>)</td>
