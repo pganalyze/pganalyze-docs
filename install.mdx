@@ -6,7 +6,7 @@ import styles from './style.module.scss'
 
 import imgLogoAiven from './images/logo_aiven.png'
 import imgLogoAws from './images/logo_aws.svg'
-import imgLogoAzure from './images/logo_microsoft_azure.png'
+import imgLogoAzure from './images/logo_azure.svg'
 import imgLogoGcp from './images/logo_google_cloud_platform.png'
 import imgLogoPgsql from './images/logo_postgres.svg'
 import imgLogoHeroku from './images/logo_heroku.svg'
@@ -26,7 +26,7 @@ To continue please select in which environment you are running your Postgres dat
     to="install/amazon_rds/01_configure_rds_instance"
   >
     <img src={imgLogoAws} />
-    Amazon RDS &amp; Aurora
+    Amazon RDS and Aurora
   </Link>
   <Link
     className={styles.installChoiceStep}
@@ -83,9 +83,9 @@ To continue please select in which environment you are running your Postgres dat
   >
     <img
       src={imgLogoAzure}
-      style={{ padding: "5px" }}
+      style={{ padding: "4px", marginTop: "-2px" }}
     />
-    Azure Database for PostgreSQL
+    Azure Database for PostgreSQL and CosmosDB
   </Link>
   <Link
     className={styles.installChoiceStep}

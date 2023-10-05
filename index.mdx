@@ -5,7 +5,7 @@ title: 'Welcome to the pganalyze documentation!'
 import styles from './style.module.scss'
 import imgLogoAiven from './images/logo_aiven.png'
 import imgLogoAws from './images/logo_aws.svg'
-import imgLogoAzure from './images/logo_microsoft_azure.png'
+import imgLogoAzure from './images/logo_azure.svg'
 import imgLogoGcp from './images/logo_google_cloud_platform.png'
 import imgLogoPgsql from './images/logo_postgres.svg'
 import imgLogoHeroku from './images/logo_heroku.svg'
@@ -26,21 +26,21 @@ To continue, select in which environment you are running your Postgres database:
     className={styles.overviewInstallChoiceStep}
     to="/docs/install/amazon_rds/01_configure_rds_instance"
   >
-    <img src={imgLogoAws} alt="Logo of Amazon Web Services" />
+    <img src={imgLogoAws} alt="Logo of Amazon Web Services" style="height: 40px; margin-top: 10px" />
     <strong>Amazon Web Services</strong>
   </Link>
   <Link
     className={styles.overviewInstallChoiceStep}
     to="/docs/install/google_cloud_sql/01_create_monitoring_user"
   >
-    <img src={imgLogoGcp} alt="Logo of Google Cloud Platform" />
+    <img src={imgLogoGcp} alt="Logo of Google Cloud Platform" style="height: 55px" />
     <strong>Google Cloud Platform</strong>
   </Link>
   <Link
     className={styles.overviewInstallChoiceStep}
     to="/docs/install/azure_database/01_configure_azure_instance"
   >
-    <img src={imgLogoAzure} alt="Logo of Microsoft Azure" style="height: 55px" />
+    <img src={imgLogoAzure} alt="Logo of Microsoft Azure" style="height: 50px; margin-top: 3px" />
     <strong>Microsoft Azure</strong>
   </Link>
 </div>
