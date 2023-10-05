@@ -505,6 +505,34 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
   </tbody>
 </table>
 
+## OpenTelemetry exporter settings
+
+To integrate with application performance monitoring (APM) tools, the collector can optionally act as an OpenTelemetry tracing exporter.
+
+If enabled, this will send a tracing span for each collected EXPLAIN plan to the configured OpenTelemetry endpoint. Note that this requires queries to have parent span information propagated using the `traceparent` query tag, as defined in the [W3 Trace Context specification](https://www.w3.org/TR/trace-context/#traceparent-header).
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>otel_exporter_otlp_endpoint (<code>OTEL_EXPORTER_OTLP_ENDPOINT</code>)</td>
+      <td>[none]</td>
+      <td>OpenTelemetry endpoint to export tracing data to, for example <code>http://localhost:4318</code>. Both HTTP (secure and insecure) and gRPC (secure) protocols are supported. The endpoint can either be an OpenTelemetry collector, or a third-party service providing an OLTP endpoint such as Honeycomb or New Relic.</td>
+    </tr>
+    <tr>
+      <td>otel_exporter_otlp_headers (<code>OTEL_EXPORTER_OTLP_HEADERS</code>)</td>
+      <td>[none]</td>
+      <td>OpenTelemetry OLTP headers, for example to set API keys for managed services like Honeycomb (<code>x-honeycomb-team=KEY</code>) and New Relic (<code>api-key=KEY</code>).</td>
+    </tr>
+  </tbody>
+</table>
+
 
 ## Additional settings
 
