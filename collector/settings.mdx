@@ -490,6 +490,11 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
       <td>database log file or directory location (must be readable by pganalyze system user)</td>
     </tr>
     <tr>
+      <td>db_data_directory (<code>DB_DATA_DIRECTORY</code>)</td>
+      <td>auto-detected</td>
+      <td>The <a href="https://www.postgresql.org/docs/16/runtime-config-file-locations.html#GUC-DATA-DIRECTORY">data_directory</a> for this server</td>
+    </tr>
+    <tr>
       <td>db_log_syslog_server (<code>LOG_SYSLOG_SERVER</code>)</td>
       <td>[none]</td>
       <td>local address (host:port) to listen on for syslog messages
