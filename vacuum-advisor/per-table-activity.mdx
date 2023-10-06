@@ -40,8 +40,7 @@ cleaning up dead tuples (dead rows). Both processes should occur with each
 VACUUM run; however, it is possible that no progress occurs under the following
 situations:
 
-* Freezing progress: when VACUUM was focusing to clean up dead tuples
-* Freezing progress: there was nothing can be frozen (often true in autovacuums triggered by inserts)
+* Freezing progress: the current oldest unfrozen transaction ID age is under `vacuum_freeze_min_age`
 * Dead tuple progress: more dead tuple created while VACUUM was running
 
 
@@ -51,8 +50,9 @@ situations:
 
 In the Estimated Table Bloat panel, you can check out the current estimated data
 and bloat size, as well as the transition of them over time. Note that this
-doesn't include the index bloat. You can check out the overall bloat information
-of your database in [VACUUM Advisor](/docs/vacuum-advisor/bloat).
+doesn't include the index bloat currently.
+You can check out the overall bloat information of your database in
+[VACUUM Advisor](/docs/vacuum-advisor/bloat).
 
 
 ## ANALYZE Activity
