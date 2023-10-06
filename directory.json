@@ -900,6 +900,10 @@
       "title": "Performance in pganalyze VACUUM Advisor",
       "path": "/docs/vacuum-advisor/performance"
     },
+    "vacuum-advisor/per-table-activity": {
+      "title": "Per table VACUUM/ANALYZE Activity in Schema Statistics",
+      "path": "/docs/vacuum-advisor/per-table-activity"
+    },
     "vacuum-advisor/what-is-bloat": {
       "title": "What is Bloat?",
       "path": "/docs/vacuum-advisor/what-is-bloat"
