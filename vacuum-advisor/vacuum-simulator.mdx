@@ -4,8 +4,8 @@ backlink_href: /docs/vacuum-advisor
 backlink_title: 'VACUUM Advisor'
 ---
 
-VACUUM Simulator lets you tweak autovacuum settings to learn the relation
-between settings and autovacuum patterns.
+VACUUM Simulator lets you tweak autovacuum settings to learn the relationship
+between Postgres configuration settings and autovacuum patterns.
 It also helps you find better autovacuum settings for the table.
 
 ## Overview
@@ -14,18 +14,18 @@ Autovacuum can be triggered by the following 3 causes:
 
 1. Triggered by dead rows
 2. Triggered by freeze age
-3. Triggered by inserts
+3. Triggered by inserts (Postgres 13 or above)
 
 Each cause has related configuration settings. By tweaking these settings, you
 can see changes in the simulation data.
-There is a panel for each cause, and each panel has the actual/current value and
-graph section to show how it was in the selected time range, and simulation
-value and graph section to show how it is based on the collected statistics and
-the adjustable configuration settings.
+There is a panel for each cause, and each panel has the actual value and graph
+section to show how it was in the selected time range, and a simulation value
+and graph section to show how it would be based on the collected statistics and
+the adjusted configuration settings.
 You can also create a permalink of your current simulation and modified settings
 to share with your team members.
 
-### Limitation
+### Limitations
 
 * The current autovacuum count can be much bigger than the simulation count with
   frequently autovacuumed tables, since the simulation can only perform
@@ -43,22 +43,22 @@ When the number of dead rows exceeds the following threshold, dead rows
 autovacuums will be triggered:
 
 ```
-threshold = autovacuum_vacuum_threshold + autovacuum_vacuum_scale_factor * number of tuples (pg_class.reltuples, number of live rows)
+threshold = autovacuum_vacuum_threshold + autovacuum_vacuum_scale_factor * pg_class.reltuples
 ```
+
+where `pg_class.reltuples` is the number of live rows in the table.
 
 With VACUUM Simulator, you can tweak `autovacuum_vacuum_threshold` and
 `autovacuum_vacuum_scale_factor` in this section. Lowering these configuration
 settings usually triggers autovacuums more, as the threshold becomes lower and
-dead rows count will reach to the threshold more often.
+the dead row count will reach the threshold more often.
 You can first try lowering `autovacuum_vacuum_scale_factor` to see how it will
 affect the behavior, before touching `autovacuum_vacuum_threshold`.
 
-On the other hand, if you are observing too many autovacuums with the table,
-it might be creating relatively many dead rows compares to the total live rows.
-In that case, making `autovacuum_vacuum_scale_factor` 0 and adjust
-`autovacuum_vacuum_threshold` to reasonable amount might be a better setting to
-have more control over the autovacuum behavior and lower the total autovacuum
-count.
+On the other hand, if you are observing too many autovacuums on a table, your
+workload might be creating many dead rows compared to total live rows.
+In that case, making `autovacuum_vacuum_scale_factor` 0 and adjusting
+`autovacuum_vacuum_threshold` to a value that lowers the total autovacuum count.
 
 This section also contains the graph of avoidable growth, calculated based on
 the following factors:
@@ -75,59 +75,58 @@ Let's say there are 10 reusable rows and 20 dead rows. With this situation, if
 However, if 20 dead rows were already VACUUMed at this point, the reusable rows
 will be 30 rows and all INSERTs will use these reusable rows without acquiring
 space for new rows. We'll consider these 20 dead rows as avoidable growth.
-When the table is observing this pattern a lot, it indicates that autovacuums
-are not running frequent enough. Try tweaking configuration settings to trigger
-simulation autovacuums more and see if avoidable growth decreases.
+When the table is showing this pattern a lot, it indicates that autovacuums are
+not running frequently enough. Try tweaking configuration settings to trigger
+simulation autovacuums more often and see if avoidable growth decreases.
 
-There is a specific insight for this:
+There is a specific insight for this in the [Alerts & Check-Up](/docs/checks/) system:
 [Bloat - Insufficient VACUUM Frequency](/docs/checks/vacuum/insufficient_vacuum_frequency).
 
-### Limitation
+### Limitations
 
 * The simulation data tends to trigger autovacuum earlier than the actual
   triggered timing, especially with tables with lots of UPDATEs.
   Occasionally, UPDATEs operations don't create dead rows, or even decrease dead
-  rows when "mini autovacuum" happened with these operations.
-  The current simulation can't simulate this situation well, therefore dead rows
-  simply keep increasing with UPDATEs and trigger autovacuum earlier.
-* The avoidable growth graph may over report avoidable growth size due to the
-  limitation of the simulation.
+  rows when ["mini autovacuum"](https://pganalyze.com/blog/5mins-postgres-debug-UPDATE-bloated-tables-auto-explain-pageinspect#hot-pruning-in-postgres)
+  happened with these operations.
+  The current simulation can't represent this situation well, therefore dead
+  rows simply keep increasing with UPDATEs and trigger autovacuum earlier.
+* The avoidable growth graph may over report avoidable growth size.
   You can check the Estimated Table Bloat panel of Schema Statistics
-  VACUUM/ANALYZE Activity page for the current estimated table bloat to access
+  VACUUM/ANALYZE Activity page for the current estimated table bloat to assess
   the actual impact.
 
 
 ## Triggered by freeze age
 
 To prevent transaction ID wraparound, Postgres runs autovacuums periodically to
-freeze older rows. We also say this as "freeze old transaction IDs",
+freeze older rows (sometimes referred to as "freezing old transaction IDs").
 You can learn more about freezing in the
 [What is freezing?](/docs/vacuum-advisor/what-is-freezing) page.
 
 ![Triggered by freeze age](vacuum_simulator_freezing.png)
 
-When either the age of the oldest unfrozen transaction ID or the oldest unfrozen
-multixact ID exceeds `autovacuum_freeze_max_age` or
-`autovacuum_multixact_freeze_max_age` respectively, freeze age autovacuums will
+When the age of the oldest unfrozen transaction ID exceeds
+`autovacuum_freeze_max_age` (or the oldest unfrozen multixact ID exceeds
+`autovacuum_multixact_freeze_max_age`), freeze age autovacuums will
 be triggered. These autovacuums are called anti-wraparound autovacuums.
 
 With VACUUM Simulator, you can tweak `autovacuum_freeze_max_age` and
 `autovacuum_multixact_freeze_max_age` in this section.
-`autovacuum_multixact_freeze_max_age` can be only tweaked if multixact ID is
-used. Lowering these configuration settings triggers autovacuums more, and
-increasing these configuration settings will decrease autovacuums triggered by
-freeze age.
+`autovacuum_multixact_freeze_max_age` can be only tweaked if multixact IDs are
+being used in your database. Lowering these configuration settings triggers
+autovacuums more, and increasing these configuration settings will decrease
+autovacuums triggered by freeze age.
 
-### Limitation
+### Limitations
 
-* The simulation is using the data of average transactions (or multixacts) per
+* The simulation is using data of average transactions (or multixacts) per
   second (tps).
   If the tps varies a lot depending on the time of the day or day of the week,
   the simulation may look a lot different than the actual data.
 * Autovacuums triggered by other causes usually try to freeze old rows.
   The simulation also freezes them, however, there are cases that freezing won't
-  happen when there are nothing can be frozen, or autovacuum is more focused on
-  cleaning up dead rows.
+  happen when there are nothing can be frozen.
   This can cause the transaction age to be reset even when it shouldn't be in
   the simulation, potentially cause the simulation to trigger less autovacuums
   by freeze age.
@@ -135,22 +134,26 @@ freeze age.
 
 ## Triggered by inserts
 
-Inserts autovacuum is introduced on Postgres 13.
-With an inserts only table, because it won't generate any dead rows, autovacuums
-won't be triggered by dead rows. It can still be triggered by freeze age, but
-depending on the database workload, it can be a long time until it's triggered.
-Inserts autovacuum is triggered to freeze old transaction IDs like freeze age
-autovacuum, but more importantly, it is triggered to update a visibility map.
+Since an append-only table won't generate any dead rows, autovacuum won't be
+triggered by dead rows. It can still be triggered by freeze age, but depending
+on the database workload, it can be a long time until it's triggered.
+This can turn normal incremental maintenance into a resource-intensive,
+long-running task that can impact database performance. To counteract this,
+since Postgres 13, autovacuum can be triggered by INSERTs.
+Autovacuum based on inserts is triggered to freeze old transaction IDs like
+freeze age autovacuum, but more importantly, it is triggered to update a
+visibility map.
 Each table has a visibility map to keep track of which pages contain only tuples
-that are known to be visible to all active transactions. For the case like an
-inserts only table, all the pages of the table should be visible here and less
-likely to be not visible moving forward (will be flagged as not visible if there
-is any write operation on that page).
-However, Postgres doesn't know about it until VACUUM runs to set a bit (flag).
-Updating the visibility map will help to spend less time for any subsequent
-VACUUMs as these pages don't need to be VACUUMed and will be skipped. Updating
-the visibility map also helps to use index-only scans, as this information will
-be used to determinate weather to use index-only scans or not.
+that are known to be visible to all active transactions. For a case like an
+append-only table, all pages of the table should be all-visible, and are likely
+to stay all-visible moving forward (they will be flagged as not all-visible if
+there is any write operation on that page).
+However, Postgres doesn't know about this visibility metadata until VACUUM scans
+the table and sets a flag.
+Updating the visibility map will improve performance for any subsequent VACUUMs
+as all-visible pages don't need to be VACUUMed and will be skipped.
+Updating the visibility map also helps index-only scans, as they will be able to
+avoid reading the table data to check visibility, improving performance.
 
 ![Triggered by inserts](vacuum_simulator_inserts.png)
 
@@ -158,25 +161,22 @@ When the number of inserted rows (since the last VACUUM) exceeds the following
 threshold, inserts autovacuums will be triggered:
 
 ```
-threshold = autovacuum_vacuum_insert_threshold + autovacuum_vacuum_insert_scale_factor * number of tuples (pg_class.reltuples, number of live rows)
+threshold = autovacuum_vacuum_insert_threshold + autovacuum_vacuum_insert_scale_factor * pg_class.reltuples
 ```
+
+where `pg_class.reltuples` is the number of live rows in the table.
 
 With VACUUM Simulator, you can tweak `autovacuum_vacuum_insert_threshold` and
 `autovacuum_vacuum_insert_scale_factor` in this section.
-Lowering these configuration settings triggers autovacuums more with some
-inserts only or inserts heavy table, though this rarely triggers autovacuums for
-other types of tables.
+Lowering these configuration settings triggers autovacuums more with append-only
+or append-mostly tables, though this rarely triggers autovacuums for other types
+of tables.
 
 If you are observing too many inserts autovacuums with the table, you can make
 `autovacuum_vacuum_insert_scale_factor` 0 and adjust
 `autovacuum_vacuum_insert_threshold` to find a reasonable threshold for inserts
 autovacuums.
 
-### Limitation
+### Limitations
 
 * This simulation is only available with servers running Postgres 13 or above.
-* With the simulation, inserts autovacuum freezes old transaction IDs as it can
-  do it.
-  However, in reality, it's less likely that inserts autovacuum will freeze old
-  transaction IDs.
-  This may affect the freeze age autovacuum to run less in the simulation.
