@@ -15,7 +15,7 @@ about the ID of the transaction that created it. This is due to [the MVCC
 mechanism](https://www.postgresql.org/docs/current/mvcc-intro.html) that
 Postgres uses to support concurrent transactions. Since Postgres uses a 32-bit
 circular transaction ID space, those older IDs must be reused eventually. In
-order to avoid amibguity about which concrete transaction an ID refers to (known
+order to avoid ambiguity about which concrete transaction an ID refers to (known
 as "transaction ID wraparound"), the metadata of older rows must be updated to
 reference a special "frozen" transaction ID that is visible to all transactions
 before their transaction IDs are reused. The oldest unfrozen transaction ID for

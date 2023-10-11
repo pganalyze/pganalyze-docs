@@ -12,6 +12,8 @@
     href: vacuum-advisor/performance
   - name: "Activity"
     href: vacuum-advisor/activity
+  - name: "Per Table Activity"
+    href: vacuum-advisor/per-table-activity
 - mount: vacuum-advisor/bloat
   items:
   - name: "Bloat in VACUUM Advisor"
