@@ -113,8 +113,8 @@ sometimes indexes are created but never used, or cease to be used. This can
 happen either because a better index is available, the current index cannot be
 used even though it looked applicable, or the query workload changed.
 
-The unused index check detects indexes that haven't been used in the last 2
-weeks, as determined by Postgres statistics, and notes these indexes as
+The unused index check detects indexes that haven't been used in the last 35
+days, as determined by Postgres statistics, and notes these indexes as
 potentially being candidates for removal.
 
 The impact of an unused index insight is measured by reduced Index Write
