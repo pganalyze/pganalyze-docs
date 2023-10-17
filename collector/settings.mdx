@@ -84,7 +84,7 @@ Common settings for configuring collector behavior, independent of the platform.
     <tr>
       <td>enable_log_explain (<code>PGA_ENABLE_LOG_EXPLAIN</code>)</td>
       <td>false</td>
-      <td>Enable log-based EXPLAIN. See <a href="/docs/explain/setup/log_explain">setup instructions</a>, but note 
+      <td>Enable log-based EXPLAIN. See <a href="/docs/explain/setup/log_explain">setup instructions</a>, but note
       we recommend using <a href="/docs/explain/setup/auto_explain">auto_explain</a> instead if possible.
       </td>
     </tr>
@@ -536,6 +536,11 @@ Note that this requires queries to have parent span information propagated using
       <td>otel_exporter_otlp_headers (<code>OTEL_EXPORTER_OTLP_HEADERS</code>)</td>
       <td>[none]</td>
       <td>OpenTelemetry OTLP headers, for example to set API keys for managed services like Honeycomb (<code>x-honeycomb-team=KEY</code>) and New Relic (<code>api-key=KEY</code>).</td>
+    </tr>
+    <tr>
+      <td>otel_service_name (<code>OTEL_SERVICE_NAME</code>)</td>
+      <td>Postgres (pganalyze)</td>
+      <td>The logical name of the service. The tracing span sent by the collector will use this name.</td>
     </tr>
   </tbody>
 </table>
