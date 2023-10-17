@@ -1,0 +1,72 @@
+---
+title: 'Set up OpenTelemetry exporter with the pganalyze Collector'
+backlink_href: /docs/collector
+backlink_title: 'pganalyze Collector'
+---
+
+To integrate with application performance monitoring (APM) tools, the collector
+can optionally act as an [OpenTelemetry tracing](https://opentelemetry.io/docs/concepts/signals/traces/)
+exporter.
+This adds data from pganalyze into existing application traces, and allows
+application engineers to have a quick way to find out why SQL queries are slow.
+
+The exporter will send a tracing span for each [collected EXPLAIN plan](/docs/explain/setup)
+to the configured OpenTelemetry endpoint, with a link back to the full plan in
+pganalyze via the `db.postgresql.plan` span attribute.
+The span will be recorded with a service name "Postgres (pganalyze)" and a span
+name "EXPLAIN Plan" by default.
+
+## Setup traceparent query tag within your application
+
+In order for a tracing span created by the pganalyze collector to correctly
+attach to the existing tracing on the application side, the query needs to have
+a `traceparent` query tag, as defined in the [W3 Trace Context specification](https://www.w3.org/TR/trace-context/#traceparent-header).
+
+Query tags are key-value pairs appended to the SQL statements as query comments.
+The pganalyze collector currently supports the following three formats to read
+a `traceparent` tag:
+
+* [SQLCommenter](https://google.github.io/sqlcommenter/) format: `key='value'`
+* SQLCommenter format without single quotes: `key=value`
+* [marginalia](https://github.com/basecamp/marginalia) format: `key:value`
+
+### Add traceparent with Ruby
+
+### Add traceparent with Go
+
+### Add traceparent with Python
+
+### Add traceparent with Node.js
+
+## Setup the collector with third-party services
+
+Once you make sure that the query is containing the `traceparent` query tag, you
+can start creating a tracing span in the pganalyze collector by setting up the
+OpenTelemetry endpoint.
+
+By setting up `otel_exporter_otlp_endpoint` (or `OTEL_EXPORTER_OTLP_ENDPOINT`),
+the collector will start sending out tracing spans to the specified endpoint.
+
+You can test this by pointing this endpoint to an OpenTelemetry collector
+instance running locally too. For example, you can use the [collector Docker image](https://hub.docker.com/r/otel/opentelemetry-collector-contrib)
+and having it output all tracing data that the collector is sending out.
+
+If you're setting up an OpenTelemetry collector with third-party services such
+as Honeycomb or New Relic, please make sure to specify the `otel_exporter_otlp_headers`
+(or `OTEL_EXPORTER_OTLP_HEADERS`) as well for the API key. It is important that
+you report these tracing spans to the same destination (environment) as your
+application.
+For example, if you have an environment "staging" in Honeycomb and already
+reporting the application tracing to Honeycomb using the API key of "staging"
+environment, please use the same API key in the pganalyze collector so that the
+tracing created in the application side will be associated with the tracing span
+created in the pganalyze collector.
+
+## Limitations
+
+* Tracing spans are only created with queries with EXPLAIN plans
+  * [The automatic EXPLAIN plan collection](/docs/explain/setup) setup is needed
+    to allow the pganalyze collector to collect EXPLAIN plans
+  * If a query doesn't have an EXPLAIN plan, such as a query is running shorter
+    than `auto_explain.log_min_duration`, a tracing span will not be created
+* Queries to contain the `traceparent` query tag
