@@ -1,0 +1,35 @@
+---
+title: 'Set up the pganalyze collector with New Relic'
+backlink_href: /docs/collector/otel-setup
+backlink_title: 'OpenTelemetry Setup'
+---
+
+You can set up the pganalyze collector OpenTelemetry exporter with New Relic so
+that you can have a span for the EXPLAIN plan inside of the trace of your
+application, such as a web request trace.
+The span contains the link to the EXPLAIN plan in the pganalyze app, so that you
+can easily visit the pganalyze page to find out why the query is slow.
+
+New Relic has a guided install to have you install a New Relic APM agent to your
+application. This agent is not compatible to the native OpenTelemetry Protocol
+(OTLP), so if you want to set up the pganalyze collector with New Relic, you
+will need to set up [your application with OpenTelemetry first](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/get-started/opentelemetry-set-up-your-app/).
+
+Once your application start sending the data to New Relic using OpenTelemetry,
+you can start sending EXPLAIN plan spans using the pganalyze collector:
+
+1. Start sending data of your application with the OpenTelemetry Protocol to New Relic
+2. Add traceparent query tag to the query (see [Setup traceparent query tag within your application](/docs/collector/otel-setup) section for the detail)
+3. Create a New Relic API key (license key)
+4. Setup a New Relic API key and an endpoint in the pganalyze collector
+
+You can create a new API key with a ["License" key type](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/).
+
+Once you obtain an API key, update the following collector settings to start
+sending out tracing spans to Honeycomb:
+
+* `otel_exporter_otlp_endpoint` (`OTEL_EXPORTER_OTLP_ENDPOINT`): `https://otlp.nr-data.net`
+  * other endpoints and ports are available, see [New Relic documentation](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/get-started/opentelemetry-set-up-your-app/) for the detail to pick the best one for your application
+* `otel_exporter_otlp_headers` (`OTEL_EXPORTER_OTLP_HEADERS`): `api-key=<API key from step 3>`
+
+Make sure to restart the collector after updating the settings.

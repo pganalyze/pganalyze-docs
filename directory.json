@@ -92,6 +92,18 @@
       "title": "Upgrading the pganalyze Collector",
       "path": "/docs/collector/upgrading"
     },
+    "collector/otel-setup": {
+      "title": "Set up OpenTelemetry exporter with the pganalyze Collector",
+      "path": "/docs/collector/otel-setup"
+    },
+    "collector/otel-setup/honeycomb": {
+      "title": "Set up the pganalyze collector with Honeycomb",
+      "path": "/docs/collector/otel-setup/honeycomb"
+    },
+    "collector/otel-setup/newrelic": {
+      "title": "Set up the pganalyze collector with New Relic",
+      "path": "/docs/collector/otel-setup/newrelic"
+    },
     "connections": {
       "title": "Monitoring Postgres connections",
       "path": "/docs/connections"

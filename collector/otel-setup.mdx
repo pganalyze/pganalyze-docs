@@ -51,16 +51,11 @@ You can test this by pointing this endpoint to an OpenTelemetry collector
 instance running locally too. For example, you can use the [collector Docker image](https://hub.docker.com/r/otel/opentelemetry-collector-contrib)
 and having it output all tracing data that the collector is sending out.
 
-If you're setting up an OpenTelemetry collector with third-party services such
-as Honeycomb or New Relic, please make sure to specify the `otel_exporter_otlp_headers`
-(or `OTEL_EXPORTER_OTLP_HEADERS`) as well for the API key. It is important that
-you report these tracing spans to the same destination (environment) as your
-application.
-For example, if you have an environment "staging" in Honeycomb and already
-reporting the application tracing to Honeycomb using the API key of "staging"
-environment, please use the same API key in the pganalyze collector so that the
-tracing created in the application side will be associated with the tracing span
-created in the pganalyze collector.
+To setup OpenTelemetry collectors with third party services, see the following
+instructions.
+
+* [Setting up with Honeycomb](/docs/collector/otel-setup/honeycomb)
+* [Setting up with New Relic](/docs/collector/otel-setup/newrelic)
 
 ## Limitations
 

@@ -8,5 +8,11 @@
     href: collector/settings
   - name: Upgrading
     href: collector/upgrading
-  - name: OpenTelemetry Setup
-    href: collector/otel-setup
+  - mount: collector/otel-setup
+    items:
+    - name: OpenTelemetry Setup
+      href: collector/otel-setup
+    - name: OpenTelemetry Setup with Honeycomb
+      href: collector/otel-setup/honeycomb
+    - name: OpenTelemetry Setup with New Relic
+      href: collector/otel-setup/newrelic
