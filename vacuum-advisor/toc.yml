@@ -14,6 +14,8 @@
     href: vacuum-advisor/activity
   - name: "Per Table Activity"
     href: vacuum-advisor/per-table-activity
+  - name: "VACUUM Simulator"
+    href: vacuum-advisor/vacuum-simulator
 - mount: vacuum-advisor/bloat
   items:
   - name: "Bloat in VACUUM Advisor"
