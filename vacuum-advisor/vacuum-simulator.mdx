@@ -29,7 +29,9 @@ to share with your team members.
 
 * The current autovacuum count can be much bigger than the simulation count with
   frequently autovacuumed tables, since the simulation can only perform
-  autovacuum every 10 minutes.
+  autovacuum every 10 minutes. The simulation can still be useful to understand
+  why so many vacuums are performed, and to explore ways to reduce autovacuum
+  frequency.
 
 ## Triggered by dead rows
 
@@ -150,8 +152,13 @@ to stay all-visible moving forward (they will be flagged as not all-visible if
 there is any write operation on that page).
 However, Postgres doesn't know about this visibility metadata until VACUUM scans
 the table and sets a flag.
-Updating the visibility map will improve performance for any subsequent VACUUMs
-as all-visible pages don't need to be VACUUMed and will be skipped.
+Updating the visibility map helps index-only scans, as they will be able to
+avoid reading table data to check visibility, improving performance.
+During VACUUM of an append-only table, it is often able to mark pages as
+all-frozen, in addition to all-visible, and it will stay that way (since these
+rows will never be modified). This will improve performance for any subsequent
+VACUUMs as pages that are both all-visible and all-frozen don't need to be
+VACUUMed and will be skipped.
 Updating the visibility map also helps index-only scans, as they will be able to
 avoid reading the table data to check visibility, improving performance.
 
