@@ -30,7 +30,12 @@ environment, you can create it with a ["Send Events" permission](https://docs.ho
 Once you obtain an API key, update the following collector settings to start
 sending out tracing spans to Honeycomb:
 
-* `otel_exporter_otlp_endpoint` (`OTEL_EXPORTER_OTLP_ENDPOINT`): `https://api.honeycomb.io`
-* `otel_exporter_otlp_headers` (`OTEL_EXPORTER_OTLP_HEADERS`): `x-honeycomb-team=<API key from step 3>`
+* `otel_exporter_otlp_endpoint` (`OTEL_EXPORTER_OTLP_ENDPOINT`):
+  * `https://api.honeycomb.io`
+* `otel_exporter_otlp_headers` (`OTEL_EXPORTER_OTLP_HEADERS`):
+  * `x-honeycomb-team=<API key from step 3>`
+
+Optionally, you can also set `otel_service_name` (`OTEL_SERVICE_NAME`) to update
+the service name reported to New Relic from the pganalyze collector.
 
 Make sure to restart the collector after updating the settings.

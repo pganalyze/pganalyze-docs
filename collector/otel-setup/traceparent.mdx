@@ -16,7 +16,7 @@ a `traceparent` tag:
 * sqlcommenter format without single quotes: `key=value`
 * [marginalia](https://github.com/basecamp/marginalia) format: `key:value`
 
-### Add traceparent with Go
+## Add traceparent with Go
 
 The easiest way to add a query tag with Go is to use a drop-in replacement for
 go's `database/sql` library, provided by [sqlcommenter](https://google.github.io/sqlcommenter/go/database_sql/).
@@ -27,7 +27,98 @@ available when you're using OpenTelemetry for your application's tracing too, as
 it is going to refer the context and the trace context should be filled by the
 application side already.
 
-### Add traceparent with Ruby
+## Add traceparent with Ruby
 
-### Add traceparent with Python
+### Prerequisite
 
+Setup OpenTelemetry SDK with your application. Read the
+[OpenTelemetry documentation](https://opentelemetry.io/docs/instrumentation/ruby/getting-started/)
+for details.
+
+### Rails 7+
+
+Rails 7 introduced [Active Record Query Logs](https://api.rubyonrails.org/classes/ActiveRecord/QueryLogs.html)
+which automatically appends comments (query tags) to SQL queries.
+You can enable this via Rails configuration in `config/application.rb` or an
+initializer:
+
+```ruby
+config.active_record.query_log_tags_enabled = true
+```
+
+By default, this doesn't have a traceparent query tag, so you'll need to add it
+manually. New comment tags can be defined by adding them in a `Hash` to the tags
+`Array`.
+You can append the traceparent tag like the following:
+
+```ruby
+config.active_record.query_log_tags = [
+  :application,
+  :controller,
+  :action,
+  :job,
+  {
+    traceparent: -> () {
+      current_span = ::OpenTelemetry::Trace.current_span
+      return if current_span == ::OpenTelemetry::Trace::Span::INVALID
+
+      span_context = current_span.context
+      trace_flag   = span_context.trace_flags.sampled? ? '01' : '00'
+      format(
+        '00-%<trace_id>s-%<span_id>s-%<trace_flags>.2d',
+        trace_id: span_context.hex_trace_id,
+        span_id: span_context.hex_span_id,
+        trace_flags: trace_flag
+      )
+    }
+  }
+]
+```
+
+With above configuration, the query will have the comment like the following:
+
+```sql
+SELECT "articles".* FROM "articles" /*application='myblog',action='index',controller='articles',traceparent='00-953c157ad37a81d94fe83bb95cfc8add-3cf784b99bd43910-01'*/
+```
+
+### Marginalia
+
+If you are using Rails 6 and below, you can attach SQL comments using a
+[marginalia](https://github.com/basecamp/marginalia) gem.
+
+You can define a transparent tag in the initializer
+(e.g. `config/initializers/marginalia.rb`):
+
+```ruby
+module Marginalia
+  module Comment
+    def self.traceparent
+      current_span = ::OpenTelemetry::Trace.current_span
+      return if current_span == ::OpenTelemetry::Trace::Span::INVALID
+
+      span_context = current_span.context
+      trace_flag   = span_context.trace_flags.sampled? ? '01' : '00'
+      format(
+        '00-%<trace_id>s-%<span_id>s-%<trace_flags>.2d',
+        trace_id: span_context.hex_trace_id,
+        span_id: span_context.hex_span_id,
+        trace_flags: trace_flag
+      )
+    end
+  end
+end
+
+Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent]
+```
+
+### Limitations
+
+If you're using the OpenTelemetry SDK, this is best to be used with `OpenTelemetry::Instrumentation::ActiveRecord`
+and `OpenTelemetry::Instrumentation::PG` instrumentation. Currently, the query
+comment is attached by either Rails or marginalia after the ActiveRecord
+instrumentation, but before the pg instrumentation.
+This makes the span created by the pganalyze collector to have a span from the
+ActiveRecord instrumentation as a parent, not the pg one.
+This will cause the database/query span (from pg) and EXPLAIN Plan (from the
+pganalyze collector) to be a "parallel" relation, which may make it harder to
+identify which database span is associated with which EXPLAIN Plan.
