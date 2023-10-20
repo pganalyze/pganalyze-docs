@@ -1,0 +1,33 @@
+---
+title: 'Setup traceparent query tag within your application'
+backlink_href: /docs/collector/otel-setup
+backlink_title: 'OpenTelemetry Setup'
+---
+
+In order for a tracing span created by the pganalyze collector to correctly
+attach to the existing tracing on the application side, the query needs to have
+a `traceparent` query tag, as defined in the [W3 Trace Context specification](https://www.w3.org/TR/trace-context/#traceparent-header).
+
+Query tags are key-value pairs appended to the SQL statements as query comments.
+The pganalyze collector currently supports the following three formats to read
+a `traceparent` tag:
+
+* [sqlcommenter](https://google.github.io/sqlcommenter/) format: `key='value'`
+* sqlcommenter format without single quotes: `key=value`
+* [marginalia](https://github.com/basecamp/marginalia) format: `key:value`
+
+### Add traceparent with Go
+
+The easiest way to add a query tag with Go is to use a drop-in replacement for
+go's `database/sql` library, provided by [sqlcommenter](https://google.github.io/sqlcommenter/go/database_sql/).
+
+That library provides an option `EnableTraceparent`, you can enable it to append
+a traceparent query tag as a query comment. Please note that this is only
+available when you're using OpenTelemetry for your application's tracing too, as
+it is going to refer the context and the trace context should be filled by the
+application side already.
+
+### Add traceparent with Ruby
+
+### Add traceparent with Python
+

@@ -10,26 +10,91 @@ application, such as a web request trace.
 The span contains the link to the EXPLAIN plan in the pganalyze app, so that you
 can easily visit the pganalyze page to find out why the query is slow.
 
-New Relic has a guided install to have you install a New Relic APM agent to your
-application. This agent is not compatible to the native OpenTelemetry Protocol
-(OTLP), so if you want to set up the pganalyze collector with New Relic, you
-will need to set up [your application with OpenTelemetry first](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/get-started/opentelemetry-set-up-your-app/).
+New Relic provides OTLP endpoints that you can use to export tracing spans from
+the pganalyze collector. In your application side, you can either use the
+New Relic agent or OpenTelemetry APIs and SDKs.
 
-Once your application start sending the data to New Relic using OpenTelemetry,
-you can start sending EXPLAIN plan spans using the pganalyze collector:
+## Setup steps
 
-1. Start sending data of your application with the OpenTelemetry Protocol to New Relic
-2. Add traceparent query tag to the query (see [Setup traceparent query tag within your application](/docs/collector/otel-setup) section for the detail)
-3. Create a New Relic API key (license key)
-4. Setup a New Relic API key and an endpoint in the pganalyze collector
+1. [Start sending data of your application to New Relic](#start-sending-data-of-your-application-to-new-relic)
+2. [Add traceparent query tag to the query](#add-traceparent-query-tag-to-the-query)
+3. [Create a New Relic API key](#create-a-new-relic-api-key)
+4. [Setup an API key and an endpoint in the pganalyze collector](#setup-an-api-key-and-an-endpoint-in-the-pganalyze-collector)
+
+### Start sending data of your application to New Relic
+
+To start sending data of your application to New Relic, you can either use the
+guided install and install the New Relic agent, or use OpenTelemetry APIs and
+SDKs. You can read how to setup OpenTelemetry integration in [their documentation](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/get-started/opentelemetry-set-up-your-app/).
+
+Using New Relic agents If you choose to use the New Relic agent, make sure to use the version that
+supports [Distributed Tracing](https://docs.newrelic.com/docs/distributed-tracing/concepts/introduction-distributed-tracing/).
+Latest version of agents in each language support it and also it's enabled by
+default.
+
+### Add traceparent query tag to the query
+
+When you use OpenTelemetry APIs and SDKs to send data to New Relic, you can
+follow the [traceparent documentation](/docs/collector/otel-setup/traceparent)
+to add a traceparent query tag to the query.
+
+When you are using the New Relic agent, you'll need to modify how to generate a
+traceparent value. You can still follow the traceparent documentation for how to
+add it as a query tag, then you can generate a traceparent tag like the
+following ways.
+
+#### Ruby
+
+```ruby
+# make sure NewRelic::Agent::Transaction.tl_current is present
+# before generating a traceparent
+current_trace = NewRelic::Agent::Transaction.tl_current
+
+format(
+  '00-%<trace_id>s-%<parent_id>s-%<trace_flags>.2d',
+  trace_id: current_trace.trace_id.rjust(32, '0').downcase,
+  parent_id: current_trace.current_segment.guid,
+  trace_flags: current_trace.sampled? ? '01' : '00'
+)
+```
+
+#### Python
+
+```python
+import newrelic.agent
+
+
+dummy_headers = []
+newrelic.agent.insert_distributed_trace_headers(dummy_headers)
+traceparent = None
+
+for key, value in dummy_headers:
+    if key == 'traceparent':
+        traceparent = value
+        break
+
+# only add traceparent as a query tag when it's not None
+```
+
+For Go, it is the best to use OpenTelemetry APIs and SDKs as it will integrate
+well with sqlcommenter and the traceparent query tag will be added without any
+extra setups.
+
+### Create a New Relic API key
 
 You can create a new API key with a ["License" key type](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/).
+You can optionally use the same key as the one used by your application.
+
+### Setup an API key and an endpoint in the pganalyze collector
 
 Once you obtain an API key, update the following collector settings to start
-sending out tracing spans to Honeycomb:
+sending out tracing spans to New Relic:
 
 * `otel_exporter_otlp_endpoint` (`OTEL_EXPORTER_OTLP_ENDPOINT`): `https://otlp.nr-data.net`
   * other endpoints and ports are available, see [New Relic documentation](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/get-started/opentelemetry-set-up-your-app/) for the detail to pick the best one for your application
-* `otel_exporter_otlp_headers` (`OTEL_EXPORTER_OTLP_HEADERS`): `api-key=<API key from step 3>`
+* `otel_exporter_otlp_headers` (`OTEL_EXPORTER_OTLP_HEADERS`): `api-key=<API key from the previous step>`
+
+Optionally, you can also set `otel_service_name` (`OTEL_SERVICE_NAME`) to update
+the service name reported to New Relic from the pganalyze collector.
 
 Make sure to restart the collector after updating the settings.

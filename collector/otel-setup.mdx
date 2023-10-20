@@ -16,33 +16,9 @@ pganalyze via the `db.postgresql.plan` span attribute.
 The span will be recorded with a service name "Postgres (pganalyze)" and a span
 name "EXPLAIN Plan" by default.
 
-## Setup traceparent query tag within your application
+![Overview of OpenTelemetry setup with the pganalyze collector](otel-overview.svg)
 
-In order for a tracing span created by the pganalyze collector to correctly
-attach to the existing tracing on the application side, the query needs to have
-a `traceparent` query tag, as defined in the [W3 Trace Context specification](https://www.w3.org/TR/trace-context/#traceparent-header).
-
-Query tags are key-value pairs appended to the SQL statements as query comments.
-The pganalyze collector currently supports the following three formats to read
-a `traceparent` tag:
-
-* [SQLCommenter](https://google.github.io/sqlcommenter/) format: `key='value'`
-* SQLCommenter format without single quotes: `key=value`
-* [marginalia](https://github.com/basecamp/marginalia) format: `key:value`
-
-### Add traceparent with Ruby
-
-### Add traceparent with Go
-
-### Add traceparent with Python
-
-### Add traceparent with Node.js
-
-## Setup the collector with third-party services
-
-Once you make sure that the query is containing the `traceparent` query tag, you
-can start creating a tracing span in the pganalyze collector by setting up the
-OpenTelemetry endpoint.
+## Setup the pganalyze collector with third-party services
 
 By setting up `otel_exporter_otlp_endpoint` (or `OTEL_EXPORTER_OTLP_ENDPOINT`),
 the collector will start sending out tracing spans to the specified endpoint.
@@ -50,6 +26,8 @@ the collector will start sending out tracing spans to the specified endpoint.
 You can test this by pointing this endpoint to an OpenTelemetry collector
 instance running locally too. For example, you can use the [collector Docker image](https://hub.docker.com/r/otel/opentelemetry-collector-contrib)
 and having it output all tracing data that the collector is sending out.
+In this case, use `http://localhost:4318` for the `otel_exporter_otlp_endpoint`
+(`OTEL_EXPORTER_OTLP_ENDPOINT`).
 
 To setup OpenTelemetry collectors with third party services, see the following
 instructions.
@@ -64,4 +42,15 @@ instructions.
     to allow the pganalyze collector to collect EXPLAIN plans
   * If a query doesn't have an EXPLAIN plan, such as a query is running shorter
     than `auto_explain.log_min_duration`, a tracing span will not be created
-* Queries to contain the `traceparent` query tag
+* Queries must contain the `traceparent` query tag. Queries without the tag will
+  not create nor send a tracing span
+
+## Troubleshooting
+
+You can check if the collector is successfully reading the OTLP endpoint by
+running the collector with a verbose option (`pganalyze-collector --test -v`).
+You should be able to see the following log and no error after that.
+
+```bash
+2023/10/20 14:42:18 V Initializing OpenTelemetry tracing provider with endpoint: http://localhost:4318
+```
