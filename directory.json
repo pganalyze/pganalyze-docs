@@ -96,6 +96,10 @@
       "title": "Set up OpenTelemetry exporter with the pganalyze Collector",
       "path": "/docs/collector/otel-setup"
     },
+    "collector/otel-setup/traceparent": {
+      "title": "Setup traceparent query tag within your application",
+      "path": "/docs/collector/otel-setup/traceparent"
+    },
     "collector/otel-setup/honeycomb": {
       "title": "Set up the pganalyze collector with Honeycomb",
       "path": "/docs/collector/otel-setup/honeycomb"
