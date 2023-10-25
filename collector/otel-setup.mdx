@@ -22,19 +22,32 @@ span name "EXPLAIN Plan" by default.
 ## Set up the pganalyze collector with third-party services
 
 By setting up `otel_exporter_otlp_endpoint` (or `OTEL_EXPORTER_OTLP_ENDPOINT`),
-the collector will start sending out tracing spans to the specified endpoint.
+the pganalyze collector will start sending out tracing spans to the specified
+endpoint.
 
-You can test this by pointing this endpoint to an OpenTelemetry collector
-instance running locally too. For example, you can use the [collector Docker image](https://hub.docker.com/r/otel/opentelemetry-collector-contrib)
-and having it output all tracing data that the collector is sending out.
-In this case, use `http://localhost:4318` for the `otel_exporter_otlp_endpoint`
-(`OTEL_EXPORTER_OTLP_ENDPOINT`).
-
-To set up OpenTelemetry collectors with third party services, see the following
+To set up pganalyze collectors with third party services, see the following
 instructions.
 
 * [Setting up with Honeycomb](/docs/collector/otel-setup/honeycomb)
 * [Setting up with New Relic](/docs/collector/otel-setup/newrelic)
+
+### Test setting up locally with the OpenTelemetry collector
+
+You can test the setup by pointing this endpoint to an [OpenTelemetry collector](https://opentelemetry.io/docs/collector/)
+instance running locally too. The OpenTelemetry collector provides a receiver,
+which can be an OTLP endpoint to receive tracing data.
+For example, you can use the [OpenTelemetry collector Docker image](https://hub.docker.com/r/otel/opentelemetry-collector-contrib)
+to run a container of the OpenTelemetry collector. By default, you can use
+`http://localhost:4318` for the `otel_exporter_otlp_endpoint`
+(`OTEL_EXPORTER_OTLP_ENDPOINT`).
+
+You can use the OpenTelemetry collector as an [agent pattern](https://opentelemetry.io/docs/collector/deployment/agent/),
+receiving the tracing data from your application and the pganalyze collector,
+using `receivers: [otlp]`.
+For the exporter, you can use `exporters: [logging]` to simply output whatever
+received as a logging. In this way, you can test if the OTLP endpoint is
+successfully specified, as well as if the endpoint is properly receiving tracing
+data.
 
 ## Limitations
 
