@@ -14,7 +14,7 @@
   items:
   - name: Overview
     href: collector/otel-setup
-  - name: Setup traceparent query tag
+  - name: Set up traceparent query tag
     href: collector/otel-setup/traceparent
   - name: OpenTelemetry Setup with Honeycomb
     href: collector/otel-setup/honeycomb

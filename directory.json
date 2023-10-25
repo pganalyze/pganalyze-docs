@@ -97,7 +97,7 @@
       "path": "/docs/collector/otel-setup"
     },
     "collector/otel-setup/traceparent": {
-      "title": "Setup traceparent query tag within your application",
+      "title": "Set up traceparent query tag within your application",
       "path": "/docs/collector/otel-setup/traceparent"
     },
     "collector/otel-setup/honeycomb": {

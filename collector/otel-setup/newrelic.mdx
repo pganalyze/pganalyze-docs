@@ -4,9 +4,8 @@ backlink_href: /docs/collector/otel-setup
 backlink_title: 'OpenTelemetry Setup'
 ---
 
-You can set up the pganalyze collector OpenTelemetry exporter with New Relic so
-that you can have a span for the EXPLAIN plan inside of the trace of your
-application, such as a web request trace.
+You can set up the pganalyze collector OpenTelemetry exporter with New Relic to
+capture spans for query EXPLAIN plans inside your traces.
 The span contains the link to the EXPLAIN plan in the pganalyze app, so that you
 can easily visit the pganalyze page to find out why the query is slow.
 
@@ -16,20 +15,21 @@ New Relic agent or OpenTelemetry SDKs.
 
 ## Setup steps
 
-1. [Start sending data of your application to New Relic](#start-sending-data-of-your-application-to-new-relic)
+1. [Start sending tracing data from your application to New Relic](#start-sending-data-of-your-application-to-new-relic)
 2. [Add traceparent query tag to the query](#add-traceparent-query-tag-to-the-query)
 3. [Create a New Relic API key](#create-a-new-relic-api-key)
-4. [Setup an API key and an endpoint in the pganalyze collector](#setup-an-api-key-and-an-endpoint-in-the-pganalyze-collector)
+4. [Set up an API key and an endpoint in the pganalyze collector](#setup-an-api-key-and-an-endpoint-in-the-pganalyze-collector)
 
-### Start sending data of your application to New Relic
+### Start sending tracing data from your application to New Relic
 
-To start sending data of your application to New Relic, you can either use the
-guided install and install the New Relic agent, or use OpenTelemetry SDKs.
-You can read how to setup OpenTelemetry integration in [their documentation](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/get-started/opentelemetry-set-up-your-app/).
+To start sending tracing data from your application to New Relic, you can either
+use the guided install and install the New Relic agent, or use OpenTelemetry
+SDKs. You can read how to setup OpenTelemetry integration in
+[New Relic documentation](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/get-started/opentelemetry-set-up-your-app/).
 
-Using New Relic agents If you choose to use the New Relic agent, make sure to use the version that
+If you choose to use the New Relic agent, make sure to use the version that
 supports [Distributed Tracing](https://docs.newrelic.com/docs/distributed-tracing/concepts/introduction-distributed-tracing/).
-Latest version of agents in each language support it and also it's enabled by
+The latest versions of agents in each language support it and it's enabled by
 default.
 
 ### Add traceparent query tag to the query
@@ -40,8 +40,7 @@ traceparent query tag to the query.
 
 When you are using the New Relic agent, you'll need to modify how to generate a
 traceparent value. You can still follow the traceparent documentation for how to
-add it as a query tag, then you can generate a traceparent tag like the
-following ways.
+add it as a query tag, then you can generate a traceparent tag as follows.
 
 #### Ruby
 
@@ -76,9 +75,9 @@ for key, value in dummy_headers:
 # only add traceparent as a query tag when it's not None
 ```
 
-For Go, it is the best to use the OpenTelemetry SDK as it will integrate well
-with sqlcommenter and the traceparent query tag will be added without any extra
-setups.
+For Go, it is best to use the OpenTelemetry SDK as it will integrate well with
+sqlcommenter and the traceparent query tag will be added without any extra
+setup.
 
 ### Create a New Relic API key
 
