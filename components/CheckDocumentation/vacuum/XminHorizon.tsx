@@ -98,9 +98,48 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   );
 };
 
+type HeldBackInfoType = {
+  xmin: number;
+  assigned_at: number;
+}
+
+function epochFromFullTransactionId(value: number): number {
+  return Number(BigInt(value) >> BigInt(32));
+}
+
+function xidFromFullTransactionId(value: number | null): number | null {
+  if (value == null) {
+    return null;
+  }
+  const epoch = epochFromFullTransactionId(value);
+  return fullTransactionIdMinusEpoch(value, epoch);
+}
+
+function fullTransactionIdMinusEpoch(
+  value: number,
+  epoch: number,
+): number {
+  return Number(BigInt(value) - (BigInt(epoch) << BigInt(32)));
+}
+
+const XminHeldBackInfo: React.FunctionComponent<{
+  type: string;
+  info: HeldBackInfoType;
+}> = ({ type, info }) => {
+  const epoch = epochFromFullTransactionId(info["xmin"]);
+  const xid = xidFromFullTransactionId(info["xmin"]) as number;
+
+  return (
+    <>
+      A {type} is holding back the xmin horizon at{" "}
+      <code>{`${epoch}:${xid}`}</code> (assigned at {new Date(info["assigned_at"] * 1000).toISOString()})
+    </>
+  );
+}
+
 const GuidanceByBackend: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
 }> = ({ inApp, heldBackInfo }) => {
   if (inApp && !heldBackInfo) {
     return null;
@@ -119,8 +158,7 @@ const GuidanceByBackend: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          A long running transaction is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>.
+          <XminHeldBackInfo type="long-running transaction" info={heldBackInfo} />.
         </p>
       )}
       <p>
@@ -145,7 +183,7 @@ const GuidanceByBackend: React.FunctionComponent<{
 
 const GuidanceByReplicationSlot: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
   serverReplicationUrl: string;
 }> = ({ inApp, heldBackInfo, serverReplicationUrl }) => {
   if (inApp && !heldBackInfo) {
@@ -169,8 +207,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          A replication slot is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>.
+          <XminHeldBackInfo type="replication slot" info={heldBackInfo} />.
         </p>
       )}
       <p>
@@ -190,7 +227,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
 
 const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
   serverReplicationUrl: string;
 }> = ({ inApp, heldBackInfo, serverReplicationUrl }) => {
   if (inApp && !heldBackInfo) {
@@ -215,9 +252,8 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          A replication slot is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>, specifically with system
-          catalogs.
+          <XminHeldBackInfo type="replication slot" info={heldBackInfo} />,
+          specifically with system catalogs.
         </p>
       )}
       <p>
@@ -240,7 +276,7 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
 
 const GuidanceByStandby: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
 }> = ({ inApp, heldBackInfo }) => {
   if (inApp && !heldBackInfo) {
     return null;
@@ -260,8 +296,7 @@ const GuidanceByStandby: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          A long running query on a standby is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>.
+          <XminHeldBackInfo type="long running query on a standby" info={heldBackInfo} />.
         </p>
       )}
       <p>
@@ -294,7 +329,7 @@ const GuidanceByStandby: React.FunctionComponent<{
 
 const GuidanceByPreparedXact: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
 }> = ({ inApp, heldBackInfo }) => {
   if (inApp && !heldBackInfo) {
     return null;
@@ -318,8 +353,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          A prepared transaction is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>.
+          <XminHeldBackInfo type="prepared transaction" info={heldBackInfo} />.
         </p>
       )}
       <p>
