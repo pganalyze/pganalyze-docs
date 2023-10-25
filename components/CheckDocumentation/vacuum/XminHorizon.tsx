@@ -173,10 +173,15 @@ const GuidanceByBackend: React.FunctionComponent<{
                   ORDER BY greatest(age(backend_xmin), age(backend_xid)) DESC;`}
         />
       </CodeBlock>
-      <p>You can cancel it by running either of commands:</p>
+      <p>You can cancel it by running either <a href="https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL" target="_blank">pg_cancel_backend</a> if the transaction is running an active query:</p>
       <CodeBlock>
         <SQL sql={`SELECT pg_cancel_backend('<query_pid>');`} />
       </CodeBlock>
+      <p>or <a href="https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL" target="_blank">pg_terminate_backend</a> if the connection state is "idle in transaction".</p>
+      <CodeBlock>
+        <SQL sql={`SELECT pg_terminate_backend('<query_pid>');`} />
+      </CodeBlock>
+      <p>Note this will roll back the transaction, and <strong>discard all data written to the database earlier within that transaction</strong>.</p>
     </li>
   );
 };
