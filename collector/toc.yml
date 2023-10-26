@@ -8,15 +8,3 @@
     href: collector/settings
   - name: Upgrading
     href: collector/upgrading
-  - name: OpenTelemetry Integration
-    href: collector/otel-setup
-- mount: collector/otel-setup
-  items:
-  - name: Overview
-    href: collector/otel-setup
-  - name: Set up traceparent query tag
-    href: collector/otel-setup/traceparent
-  - name: Integrating with Honeycomb
-    href: collector/otel-setup/honeycomb
-  - name: Integrating with New Relic
-    href: collector/otel-setup/newrelic

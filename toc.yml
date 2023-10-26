@@ -22,6 +22,8 @@
     href: log-insights
   - name: EXPLAIN
     href: explain
+  - name: OpenTelemetry Integration
+    href: opentelemetry
   - name: pganalyze Enterprise Server
     href: enterprise
   - name: pganalyze GraphQL API

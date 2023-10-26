@@ -1,7 +1,7 @@
 ---
-title: 'OpenTelemetry tracing integration'
-backlink_href: /docs/collector
-backlink_title: 'pganalyze Collector'
+title: 'OpenTelemetry Tracing Integration'
+backlink_href: /docs
+backlink_title: 'Documentation'
 ---
 
 To integrate with application performance monitoring (APM) tools, the pganalyze
@@ -28,8 +28,8 @@ out tracing spans to the specified endpoint.
 To set up pganalyze collectors with third party services, see the following
 instructions.
 
-* [Integrating pganalyze with Honeycomb](/docs/collector/otel-setup/honeycomb)
-* [Integrating pganalyze with New Relic](/docs/collector/otel-setup/newrelic)
+* [Integrating pganalyze with Honeycomb](/docs/opentelemetry/honeycomb)
+* [Integrating pganalyze with New Relic](/docs/opentelemetry/newrelic)
 
 ### Test setting up locally with the OpenTelemetry collector
 
@@ -58,7 +58,7 @@ data.
     less time than `auto_explain.log_min_duration`, a tracing span will not be
     created
 * Queries must contain the `traceparent` query tag, by
-  [configuring the application to add it as a SQL comment](/docs/collector/otel-setup/traceparent).
+  [configuring the application to add it as a SQL comment](/docs/opentelemetry/traceparent).
   Queries without the tag will not create nor send a tracing span
 * Timing data of spans exported by pganalyze may not line up with other spans
   exported by the application when the Postgres database has limited precision

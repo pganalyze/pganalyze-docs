@@ -92,22 +92,6 @@
       "title": "Upgrading the pganalyze Collector",
       "path": "/docs/collector/upgrading"
     },
-    "collector/otel-setup": {
-      "title": "OpenTelemetry tracing integration",
-      "path": "/docs/collector/otel-setup"
-    },
-    "collector/otel-setup/traceparent": {
-      "title": "Set up traceparent query tag within your application",
-      "path": "/docs/collector/otel-setup/traceparent"
-    },
-    "collector/otel-setup/honeycomb": {
-      "title": "Integrating pganalyze with Honeycomb",
-      "path": "/docs/collector/otel-setup/honeycomb"
-    },
-    "collector/otel-setup/newrelic": {
-      "title": "Integrating pganalyze with New Relic",
-      "path": "/docs/collector/otel-setup/newrelic"
-    },
     "connections": {
       "title": "Monitoring Postgres connections",
       "path": "/docs/connections"
@@ -927,6 +911,22 @@
     "vacuum-advisor/what-is-freezing": {
       "title": "What is Freezing?",
       "path": "/docs/vacuum-advisor/what-is-freezing"
+    },
+    "opentelemetry": {
+      "title": "OpenTelemetry Tracing Integration",
+      "path": "/docs/opentelemetry"
+    },
+    "opentelemetry/traceparent": {
+      "title": "Set up traceparent query tag within your application",
+      "path": "/docs/opentelemetry/traceparent"
+    },
+    "opentelemetry/honeycomb": {
+      "title": "Integrating pganalyze with Honeycomb",
+      "path": "/docs/opentelemetry/honeycomb"
+    },
+    "opentelemetry/newrelic": {
+      "title": "Integrating pganalyze with New Relic",
+      "path": "/docs/opentelemetry/newrelic"
     }
   },
   "logClassifications": {
