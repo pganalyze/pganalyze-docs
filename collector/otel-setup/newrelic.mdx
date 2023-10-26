@@ -1,7 +1,7 @@
 ---
-title: 'Set up the pganalyze collector with New Relic'
+title: 'Integrating pganalyze with New Relic'
 backlink_href: /docs/collector/otel-setup
-backlink_title: 'OpenTelemetry Setup'
+backlink_title: 'OpenTelemetry Integration'
 ---
 
 You can set up the pganalyze collector OpenTelemetry exporter with New Relic to
@@ -10,7 +10,7 @@ The span contains the link to the EXPLAIN plan in the pganalyze app, so that you
 can easily visit the pganalyze page to find out why the query is slow.
 
 New Relic provides OTLP endpoints that you can use to export tracing spans from
-the pganalyze collector. In your application side, you can either use the
+the pganalyze collector. On the application side, you can either use the
 New Relic agent or OpenTelemetry SDKs.
 
 ## Setup steps
@@ -24,7 +24,7 @@ New Relic agent or OpenTelemetry SDKs.
 
 To start sending tracing data from your application to New Relic, you can either
 use the guided install and install the New Relic agent, or use OpenTelemetry
-SDKs. You can read how to setup OpenTelemetry integration in
+SDKs. You can read how to set up the OpenTelemetry integration in
 [New Relic documentation](https://docs.newrelic.com/docs/more-integrations/open-source-telemetry-integrations/opentelemetry/get-started/opentelemetry-set-up-your-app/).
 
 If you choose to use the New Relic agent, make sure to use the version that
@@ -76,15 +76,15 @@ for key, value in dummy_headers:
 ```
 
 For Go, it is best to use the OpenTelemetry SDK as it will integrate well with
-sqlcommenter and the traceparent query tag will be added without any extra
-setup.
+[sqlcommenter](https://google.github.io/sqlcommenter/) and the traceparent query
+tag will be added without any extra setup.
 
 ### Create a New Relic API key
 
 You can create a new API key with a ["License" key type](https://docs.newrelic.com/docs/apis/intro-apis/new-relic-api-keys/).
 You can optionally use the same key as the one used by your application.
 
-### Setup an API key and an endpoint in the pganalyze collector
+### Set up an API key and an endpoint in the pganalyze collector
 
 Once you obtain an API key, update the following collector settings to start
 sending out tracing spans to New Relic:
@@ -96,6 +96,7 @@ sending out tracing spans to New Relic:
   * `api-key=<API key from the previous step>`
 
 Optionally, you can also set `otel_service_name` (`OTEL_SERVICE_NAME`) to update
-the service name reported to New Relic from the pganalyze collector.
+the service name reported to New Relic from the pganalyze collector. It defaults
+to `Postgres (pganalyze)`.
 
 Make sure to restart the collector after updating the settings.

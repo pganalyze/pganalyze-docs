@@ -1,7 +1,7 @@
 ---
 title: 'Set up traceparent query tag within your application'
 backlink_href: /docs/collector/otel-setup
-backlink_title: 'OpenTelemetry Setup'
+backlink_title: 'OpenTelemetry Integration'
 ---
 
 In order for a tracing span created by the pganalyze collector to correctly
@@ -18,6 +18,14 @@ a `traceparent` tag:
 
 ## Add traceparent with Go
 
+### Prerequisite
+
+Set up OpenTelemetry SDK with your application. Read the
+[OpenTelemetry documentation](https://opentelemetry.io/docs/instrumentation/go/getting-started/)
+for details.
+
+### `database/sql`
+
 The easiest way to add a query tag with Go is to use a drop-in replacement for
 go's `database/sql` library, provided by [sqlcommenter](https://google.github.io/sqlcommenter/go/database_sql/).
 
@@ -31,7 +39,7 @@ the application side already.
 
 ### Prerequisite
 
-Setup OpenTelemetry SDK with your application. Read the
+Set up OpenTelemetry SDK with your application. Read the
 [OpenTelemetry documentation](https://opentelemetry.io/docs/instrumentation/ruby/getting-started/)
 for details.
 
@@ -110,17 +118,3 @@ end
 
 Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent]
 ```
-
-### Limitations
-
-If you're using the OpenTelemetry SDK with Ruby, the pganalyze collector
-integration is best used with `OpenTelemetry::Instrumentation::ActiveRecord` and
-`OpenTelemetry::Instrumentation::PG` instrumentation.
-With this setup, the EXPLAIN Plan span from the pganalyze collector will be
-created as a child trace of the ActiveRecord span, making it easy to relate the
-EXPLAIN Plan span to the ActiveRecord code.
-However, the span from the pg instrumentation will be created as a sibling span
-of the pganalyze collector, which may make it harder to relate them together.
-This is due to the limitation of when we can generate a query comment, which is
-currently only possible after the ActiveRecord instrumentation, but before the
-pg instrumentation.

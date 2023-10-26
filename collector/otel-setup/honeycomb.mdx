@@ -1,7 +1,7 @@
 ---
-title: 'Set up the pganalyze collector with Honeycomb'
+title: 'Integrating pganalyze with Honeycomb'
 backlink_href: /docs/collector/otel-setup
-backlink_title: 'OpenTelemetry Setup'
+backlink_title: 'OpenTelemetry Integration'
 ---
 
 You can set up the pganalyze collector OpenTelemetry exporter with Honeycomb to
@@ -35,6 +35,7 @@ sending out tracing spans to Honeycomb:
   * `x-honeycomb-team=<API key from step 3>`
 
 Optionally, you can also set `otel_service_name` (`OTEL_SERVICE_NAME`) to update
-the service name reported to Honeycomb from the pganalyze collector.
+the service name reported to Honeycomb from the pganalyze collector. It defaults
+to `Postgres (pganalyze)`.
 
 Make sure to restart the collector after updating the settings.

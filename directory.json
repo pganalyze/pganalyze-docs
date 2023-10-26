@@ -93,7 +93,7 @@
       "path": "/docs/collector/upgrading"
     },
     "collector/otel-setup": {
-      "title": "Set up OpenTelemetry exporter with the pganalyze Collector",
+      "title": "OpenTelemetry tracing integration",
       "path": "/docs/collector/otel-setup"
     },
     "collector/otel-setup/traceparent": {
@@ -101,11 +101,11 @@
       "path": "/docs/collector/otel-setup/traceparent"
     },
     "collector/otel-setup/honeycomb": {
-      "title": "Set up the pganalyze collector with Honeycomb",
+      "title": "Integrating pganalyze with Honeycomb",
       "path": "/docs/collector/otel-setup/honeycomb"
     },
     "collector/otel-setup/newrelic": {
-      "title": "Set up the pganalyze collector with New Relic",
+      "title": "Integrating pganalyze with New Relic",
       "path": "/docs/collector/otel-setup/newrelic"
     },
     "connections": {

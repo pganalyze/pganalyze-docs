@@ -1,11 +1,11 @@
 ---
-title: 'Set up OpenTelemetry exporter with the pganalyze Collector'
+title: 'OpenTelemetry tracing integration'
 backlink_href: /docs/collector
 backlink_title: 'pganalyze Collector'
 ---
 
-To integrate with application performance monitoring (APM) tools, the collector
-can optionally act as an [OpenTelemetry tracing](https://opentelemetry.io/docs/concepts/signals/traces/)
+To integrate with application performance monitoring (APM) tools, the pganalyze
+collector can optionally act as an [OpenTelemetry tracing](https://opentelemetry.io/docs/concepts/signals/traces/)
 exporter.
 This adds data from pganalyze into existing application traces, and allows
 application engineers to have a quick way to find out if slow database queries
@@ -21,15 +21,15 @@ span name "EXPLAIN Plan" by default.
 
 ## Set up the pganalyze collector with third-party services
 
-By setting up `otel_exporter_otlp_endpoint` (or `OTEL_EXPORTER_OTLP_ENDPOINT`),
-the pganalyze collector will start sending out tracing spans to the specified
-endpoint.
+By configuring [`otel_exporter_otlp_endpoint`](/docs/collector/settings#opentelemetry-exporter-settings)
+(or `OTEL_EXPORTER_OTLP_ENDPOINT`), the pganalyze collector will start sending
+out tracing spans to the specified endpoint.
 
 To set up pganalyze collectors with third party services, see the following
 instructions.
 
-* [Setting up with Honeycomb](/docs/collector/otel-setup/honeycomb)
-* [Setting up with New Relic](/docs/collector/otel-setup/newrelic)
+* [Integrating pganalyze with Honeycomb](/docs/collector/otel-setup/honeycomb)
+* [Integrating pganalyze with New Relic](/docs/collector/otel-setup/newrelic)
 
 ### Test setting up locally with the OpenTelemetry collector
 
@@ -41,7 +41,7 @@ to run a container of the OpenTelemetry collector. By default, you can use
 `http://localhost:4318` for the `otel_exporter_otlp_endpoint`
 (`OTEL_EXPORTER_OTLP_ENDPOINT`).
 
-You can use the OpenTelemetry collector as an [agent pattern](https://opentelemetry.io/docs/collector/deployment/agent/),
+You can use the OpenTelemetry collector in an [agent pattern](https://opentelemetry.io/docs/collector/deployment/agent/),
 receiving the tracing data from your application and the pganalyze collector,
 using `receivers: [otlp]`.
 For the exporter, you can use `exporters: [logging]` to simply output whatever
@@ -51,14 +51,22 @@ data.
 
 ## Limitations
 
-* Tracing spans are only created for queries with EXPLAIN plans
+* Tracing spans are only created when EXPLAIN plans are collected for queries
   * [Automatic EXPLAIN plan collection](/docs/explain/setup) must be set up to
     allow the pganalyze collector to collect EXPLAIN plans
   * If a query doesn't have an EXPLAIN plan, such as a query that completes in
     less time than `auto_explain.log_min_duration`, a tracing span will not be
     created
-* Queries must contain the `traceparent` query tag. Queries without the tag will
-  not create nor send a tracing span
+* Queries must contain the `traceparent` query tag, by
+  [configuring the application to add it as a SQL comment](/docs/collector/otel-setup/traceparent).
+  Queries without the tag will not create nor send a tracing span
+* Timing data of spans exported by pganalyze may not line up with other spans
+  exported by the application when the Postgres database has limited precision
+  in its `log_line_prefix` timestamp
+    * Using `%m` in the `log_line_prefix` instead of `%t` is recommended
+    * This issue will typically occur with Amazon RDS and Amazon Aurora, which
+      currently do not allow changing the timestamp precision of the
+      `log_line_prefix` (it's always set to`%t:%r:%u@%d:[%p]:t`)
 
 ## Troubleshooting
 
