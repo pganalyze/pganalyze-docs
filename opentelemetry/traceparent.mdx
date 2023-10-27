@@ -118,3 +118,49 @@ end
 
 Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent]
 ```
+
+## Add traceparent with Python
+
+### Prerequisite
+
+Set up OpenTelemetry SDK with your application. Read the
+[OpenTelemetry documentation](https://opentelemetry.io/docs/instrumentation/python/getting-started/)
+for details.
+
+In Python, you can use an [automatic instrumentation](https://opentelemetry.io/docs/instrumentation/python/automatic/)
+using a Python agent. This approach offers less control over what to instrument,
+including the option to enable [sqlcommenter](https://google.github.io/sqlcommenter/)
+at the moment.
+To enable sqlcommenter, you will need to use a manual instrumentation. This will
+also attach the appropriate traceparent as a query comment automatically.
+
+### Django
+
+You can enable sqlcommenter in Django by passing `is_sql_commentor_enabled=True`:
+
+```python
+DjangoInstrumentor().instrument(is_sql_commentor_enabled=True)
+```
+
+### Flask
+
+For Flask application, you can enable sqlcommenter by passing `enable_commenter=True`:
+
+```python
+FlaskInstrumentor().instrument(enable_commenter=True, commenter_options={})
+```
+
+### SQLAlchemy, Psycopg
+
+In addition to framework-level settings, you can also enable sqlcommenter at the
+ORM level (SQLAlchemy) or the database driver level (Psycopg).
+
+```python
+SQLAlchemyInstrumentor().instrument(enable_commenter=True, commenter_options={})
+
+Psycopg2Instrumentor().instrument(enable_commenter=True, commenter_options={})
+```
+
+When performing manual instrumentation, these instrumentations won't be enabled
+automatically. To have better tracing spans around the queries, it is
+recommended to enable instrumentations related to ORMs and/or database drivers.
