@@ -512,7 +512,10 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
 
 ## OpenTelemetry exporter settings
 
-To integrate with application performance monitoring (APM) tools, the collector can optionally act as an [OpenTelemetry tracing](https://opentelemetry.io/docs/concepts/signals/traces/) exporter. This adds data from pganalyze into existing application traces, and allows application engineers to have a quick way to find out why SQL queries are slow.
+To integrate with application performance monitoring (APM) tools, the collector
+can optionally act as an [OpenTelemetry tracing](https://opentelemetry.io/docs/concepts/signals/traces/) exporter.
+This adds data from pganalyze into existing application traces, and allows
+application engineers to have a quick way to find out if slow database queries are causing performance problems in the app.
 
 The exporter, if enabled, will send a tracing span for each [collected EXPLAIN plan](/docs/explain/setup) to the configured OpenTelemetry endpoint, with a link back to the full plan in pganalyze via the `db.postgresql.plan` span attribute.
 

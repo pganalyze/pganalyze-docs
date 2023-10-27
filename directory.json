@@ -915,6 +915,22 @@
     "vacuum-advisor/what-is-freezing": {
       "title": "What is Freezing?",
       "path": "/docs/vacuum-advisor/what-is-freezing"
+    },
+    "opentelemetry": {
+      "title": "OpenTelemetry Tracing Integration",
+      "path": "/docs/opentelemetry"
+    },
+    "opentelemetry/traceparent": {
+      "title": "Set up traceparent query tag within your application",
+      "path": "/docs/opentelemetry/traceparent"
+    },
+    "opentelemetry/honeycomb": {
+      "title": "Integrating pganalyze with Honeycomb",
+      "path": "/docs/opentelemetry/honeycomb"
+    },
+    "opentelemetry/newrelic": {
+      "title": "Integrating pganalyze with New Relic",
+      "path": "/docs/opentelemetry/newrelic"
     }
   },
   "logClassifications": {
