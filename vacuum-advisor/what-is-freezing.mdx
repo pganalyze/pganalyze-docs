@@ -17,7 +17,7 @@ Postgres uses to support concurrent transactions. Since Postgres uses a 32-bit
 circular transaction ID space, those older IDs must be reused eventually. In
 order to avoid ambiguity about which concrete transaction an ID refers to (known
 as "transaction ID wraparound"), the metadata of older rows must be updated to
-reference a special "frozen" transaction ID that is visible to all transactions
+note that they have been frozen (and are therefore visible to all transactions)
 before their transaction IDs are reused. The oldest unfrozen transaction ID for
 each table is maintained in the pg_class catalog table.
 
@@ -25,8 +25,8 @@ VACUUM allows Postgres to reclaim the transaction IDs of these older rows and
 reuse them for future transactions. Autovacuum is designed to perform VACUUM
 regularly in order to efficiently freeze older rows. Note that to avoid excess
 write I/O, freezing is an optional part of vacuuming, controlled by separate
-configuration settings. When freezing does occur, VACUUM writes out new pages
-with the row metadata updated to reference the frozen transaction ID.
+configuration settings. When freezing does occur, VACUUM writes out pages
+with the row metadata updated to note that the row has been frozen.
 
 Note that the same concepts apply to multixact IDs, a separate set of IDs that
 Postgres uses to implement row-level locking.
