@@ -452,10 +452,6 @@
       "title": "pganalyze Indexing Engine for Postgres",
       "path": "/docs/indexing-engine"
     },
-    "indexing-engine/changelog": {
-      "title": "Indexing Engine: Changelog",
-      "path": "/docs/indexing-engine/changelog"
-    },
     "indexing-engine/good-enough-index-selection": {
       "title": "Indexing Engine: \"Good Enough\" Index Selection Algorithm",
       "path": "/docs/indexing-engine/good-enough-index-selection"

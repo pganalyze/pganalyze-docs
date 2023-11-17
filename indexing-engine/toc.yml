@@ -8,8 +8,6 @@
     href: indexing-engine-phase-2 # Not an actual link (only used below)
   - name: Index Write Overhead
     href: indexing-engine/index-write-overhead
-  - name: Changelog
-    href: indexing-engine/changelog
   - name: Limitations
     href: indexing-engine/limitations
 - mount: indexing-engine-phase-1
