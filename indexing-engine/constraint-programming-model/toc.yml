@@ -1,0 +1,14 @@
+- mount: indexing-engine/constraint-programming-model
+  items:
+  - name: Overview
+    href: indexing-engine/constraint-programming-model
+  - name: Goals
+    href: indexing-engine/constraint-programming-model/goals
+  - name: Rules
+    href: indexing-engine/constraint-programming-model/rules
+  - name: Other Concepts
+    href: indexing-engine/constraint-programming-model/other-concepts
+  - name: Optimizer Input
+    href: indexing-engine/constraint-programming-model/optimizer-input
+  - name: Miscellaneous
+    href: indexing-engine/constraint-programming-model/miscellaneous

@@ -1,0 +1,35 @@
+---
+title: 'Constraint Programming Model: Miscellaneous'
+backlink_href: /docs/indexing-engine/constraint-programming-model
+backlink_title: 'Constraint Programming Model'
+---
+
+### CP Algorithm
+
+Roughly, the CP algorithm works as follows:
+
+1. Validate the data and the settings
+2. Create a basic model
+3. Add all the rules to the model
+4. For each goal:
+   - Optimize the goal
+   - Transform the goal into a rule (taking tolerance into account)
+5. Return the selection of indexes
+
+
+### Greedy Algorithm
+
+The greedy algorithm is the legacy method of solving the problem. Essentially, this algorithm considers index selection as a set covering problem, and seeks to cover all scans on the table with an index that is within 50% of the best possible index. This 50% value is customizable with the `Good Enough Threshold` option. The greedy algorithm is explained in more detail [here](../good-enough-index-selection).
+
+
+### General Tips and Common Pitfalls
+
+- The order of the goals always matters.
+
+- Some goals should not be selected as the first goals to optimize.
+
+  For example, suppose that the first goal is [Minimize Number of Indexes](#minimize-number-of-indexes). The optimizer is essentially told that "use the fewest indexes" is the most important goal. Obviously, 0 indexes is the fewest indexes it can use. Subsequent goals will not be able to make use of any indexes because of this.
+
+  Goals that should be avoided as the first goal are [Minimize Number of Indexes](#minimize-number-of-indexes), [Minimize Index Write Overhead](#minimize-index-write-overhead), and [Minimize Update Overhead](#minimize-update-overhead)
+
+- A scan is considered to be covered only if at least one of the selected indexes provides that scan with a cost improvement over its sequential read cost.

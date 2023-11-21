@@ -1,0 +1,39 @@
+---
+title: 'Constraint Programming Model: Other Concepts'
+backlink_href: /docs/indexing-engine/constraint-programming-model
+backlink_title: 'Constraint Programming Model'
+---
+
+We discuss in more detail various concepts related to goals and rules.
+
+
+### Goal Ordering
+
+It is possible to optimize for multiple goals, but when doing so these goals must be ordered by preference. This is required in order to clear up any ambiguity between conflicting goals.
+
+> #### Explanation: Conflicting Goals
+>
+> Consider the case of minimizing the costs (Minimize Total Cost) and minimizing the number of indexes (Minimize Number of Indexes). On the one hand, Minimize Total Cost will tend toward an index suggestion that uses *many* indexes, since this naturally allows small costs for the scans. On the other hand, Minimize Number of Indexes will tend toward an index suggestion that obviously uses *few* indexes. These two goals are conflicting, and it is ambiguous to determine, without additional user input, if low costs are preferrable to few indexes, or vice-versa. This is why goal ordering is necessary.
+
+The ordering of goals by preference is not necessarily absolute. A [tolerance](#tolerance) parameter allows some flexibility in the preferences.
+
+
+### Impact
+
+The impact of a scan is a measure of its influence on performance, and is equal to its cost multiplied by the frequency in which it appears in queries. Common scans with high costs will tend to have a higher impact on performance than uncommon scans with lower costs.
+
+
+### Tolerance
+
+The tolerance parameter is a measure of how strict the ordering of the goals is. It allows some amount of flexibility in the ordering of the goals. Each goal has an associated tolerance value in the range [0.0, ∞] (defaulted to 0). When a goal is optimized, the resulting value indicates how well that goal has met its stated objective. The tolerance of that goal, in turn, indicates how close subsequent goals should stick to the value found for the original goal.
+
+> #### Example
+>
+> There are two goals:
+>
+> 1. Minimize Total Cost (with a tolerance of 0.1)
+> 2. Minimize Index Write Overhead
+>
+> Suppose that the total cost found by the first goal is 200. Normally (with a tolerance of 0) the second goal should determine the lowest index write overhead required to achieve costs no higher than 200. However, with a tolerance of 0.1, the second goal will instead determine the lowest index write overhead required to achieve costs no higher than 220 (because 200 + 10% = 220).
+
+
