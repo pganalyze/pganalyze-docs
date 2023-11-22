@@ -9,7 +9,7 @@
   - name: Index Write Overhead
     href: indexing-engine/index-write-overhead
   - name: Constraint Programming Model (Early Access)
-    href: indexing-engine/constraint-programming-model
+    href: indexing-engine/cp-model
   - name: Limitations
     href: indexing-engine/limitations
 - mount: indexing-engine-phase-1

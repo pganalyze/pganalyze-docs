@@ -1,0 +1,10 @@
+- mount: indexing-engine/cp-model
+  items:
+  - name: Overview
+    href: indexing-engine/cp-model
+  - name: Settings
+    href: indexing-engine/cp-model/settings
+  - name: Goals
+    href: indexing-engine/cp-model/goals
+  - name: Rules
+    href: indexing-engine/cp-model/rules

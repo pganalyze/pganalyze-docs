@@ -452,29 +452,21 @@
       "title": "pganalyze Indexing Engine for Postgres",
       "path": "/docs/indexing-engine"
     },
-    "indexing-engine/constraint-programming-model": {
+    "indexing-engine/cp-model": {
       "title": "Constraint Programming Model for Index Selection (Early Access)",
-      "path": "/docs/indexing-engine/constraint-programming-model"
+      "path": "/docs/indexing-engine/cp-model"
     },
-    "indexing-engine/constraint-programming-model/goals": {
+    "indexing-engine/cp-model/goals": {
       "title": "Constraint Programming Model: Goals",
-      "path": "/docs/indexing-engine/constraint-programming-model/goals"
+      "path": "/docs/indexing-engine/cp-model/goals"
     },
-    "indexing-engine/constraint-programming-model/miscellaneous": {
-      "title": "Constraint Programming Model: Miscellaneous",
-      "path": "/docs/indexing-engine/constraint-programming-model/miscellaneous"
-    },
-    "indexing-engine/constraint-programming-model/optimizer-input": {
-      "title": "Constraint Programming Model: Optimizer Input",
-      "path": "/docs/indexing-engine/constraint-programming-model/optimizer-input"
-    },
-    "indexing-engine/constraint-programming-model/other-concepts": {
-      "title": "Constraint Programming Model: Other Concepts",
-      "path": "/docs/indexing-engine/constraint-programming-model/other-concepts"
-    },
-    "indexing-engine/constraint-programming-model/rules": {
+    "indexing-engine/cp-model/rules": {
       "title": "Constraint Programming Model: Rules",
-      "path": "/docs/indexing-engine/constraint-programming-model/rules"
+      "path": "/docs/indexing-engine/cp-model/rules"
+    },
+    "indexing-engine/cp-model/settings": {
+      "title": "Constraint Programming Model: Settings",
+      "path": "/docs/indexing-engine/cp-model/settings"
     },
     "indexing-engine/good-enough-index-selection": {
       "title": "Indexing Engine: \"Good Enough\" Index Selection Algorithm",
