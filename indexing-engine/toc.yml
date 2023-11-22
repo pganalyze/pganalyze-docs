@@ -8,6 +8,8 @@
     href: indexing-engine-phase-2 # Not an actual link (only used below)
   - name: Index Write Overhead
     href: indexing-engine/index-write-overhead
+  - name: Constraint Programming Model (Early Access)
+    href: indexing-engine/cp-model
   - name: Limitations
     href: indexing-engine/limitations
 - mount: indexing-engine-phase-1

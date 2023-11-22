@@ -1,0 +1,48 @@
+---
+title: 'Constraint Programming Model: Goals'
+backlink_href: /docs/indexing-engine/constraint-programming-model
+backlink_title: 'Constraint Programming Model'
+---
+
+Goals are the main components that guide the model toward the solution that best meets the requirements of the user. These requirements can be defined using any combination of goals.
+
+Its important to note that the order of the goals always matters. Consider the case of minimizing the costs (Minimize Total Cost) and minimizing the number of indexes (Minimize Number of Indexes).
+
+On the one hand, Minimize Total Cost will tend toward an index suggestion that uses *many* indexes, since this naturally allows small costs for the scans. On the other hand, Minimize Number of Indexes will tend toward an index suggestion that obviously uses *few* indexes. These two goals are conflicting, and it is ambiguous to determine, without additional user input, if low costs are preferrable to few indexes, or vice-versa. This is why goal ordering is necessary.
+
+Further, some goals should not be selected as the first goals to optimize.
+
+For example, suppose that the first goal is [Minimize Number of Indexes](#minimize-number-of-indexes). The model is essentially told that "use the fewest indexes" is the most important goal. Obviously, 0 indexes is the fewest indexes it can use. Subsequent goals will not be able to make use of any indexes because of this.
+
+Goals that should be avoided as the first goal are [Minimize Number of Indexes](#minimize-number-of-indexes), [Minimize Index Write Overhead](#minimize-index-write-overhead), and [Minimize Update Overhead](#minimize-update-overhead), unless there is a [rule](rules) that is focused on the scan cost, like [Minimum Per-Scan Cost (Normal)](rules#minimum-per-scan-cost-normal).
+
+
+### Minimize Index Write Overhead
+
+The *Minimize Index Write Overhead* goal strives to minimize the index write overhead associated with the selected indexes.
+
+### Minimize Number of Indexes
+
+The *Minimize Number of Indexes* goal strives to minimize the number of existing and possible indexes selected.
+
+### Minimize Total Cost
+
+The *Minimize Total Cost* goal strives to minimize the combined costs of the scans.
+
+### Minimize Maximum Cost
+
+The *Minimize Maximum Cost* goal strives to minimize the largest cost found among the scans.
+
+### Minimize Total Impact
+
+The *Minimize Total Impact* goal strives to minimize the combined impacts of the scans.
+
+The impact of a scan is a measure of its influence on performance, and is equal to its cost multiplied by the frequency in which it appears in queries. Common scans with high costs will tend to have a higher impact on performance than uncommon scans with lower costs.
+
+### Minimize Maximum Impact
+
+The *Minimize Maximum Impact* goal strives to minimize the largest impact found among the scans.
+
+### Minimize Update Overhead
+
+The *Minimize Update Overhead* goal strives to minimize the update overhead of the selected indexes.

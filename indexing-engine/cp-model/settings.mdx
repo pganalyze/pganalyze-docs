@@ -1,0 +1,92 @@
+---
+title: 'Constraint Programming Model: Settings'
+backlink_href: /docs/indexing-engine/constraint-programming-model
+backlink_title: 'Constraint Programming Model'
+---
+
+The model takes as input a settings JSON object. All settings are optional, and will be assigned their default value if omitted. The settings must follow this structure:
+
+```json
+{
+  "Method": "CP",
+  "Options": {
+    "Goals": [
+      {
+        "Name": "Minimize Total Cost",
+        "Tolerance": 0.1
+      },
+      {
+        "Name": "Minimize Index Write Overhead",
+        "Tolerance": 0.0
+      }
+    ],
+    "Rules": {
+      "Maximum Number of Indexes": 10
+    }
+  }
+}
+```
+
+The two main fields are `Method` and `Options`. `Method` defines the method used for performing index selection, and can be one of [CP](#cp-method) or [Greedy](#greedy-method). The current default is `Greedy` for backwards compatibility purposes. The `Options` can customize the behavior of the chosen method.
+
+## CP Method
+
+Roughly, the `CP` method works as follows:
+
+1. Validate the data and the settings
+2. Create a basic model
+3. Add all the rules to the model
+4. For each goal:
+   - Optimize the goal
+   - Transform the goal into a rule (taking tolerance into account)
+5. Return the selection of indexes
+
+It has multiple options to allow customization:
+
+| Name       | Type          | Min | Max | Default | Description                             |
+|------------|---------------|-----|-----|---------|-----------------------------------------|
+| Goals      | `array[Goal]` | n/a | n/a | `[]`    | Ordered list of goals                   |
+| Rules      | `array[Rule]` | n/a | n/a | `[]`    | Set of rules                            |
+| Time Limit | `float`       | 0.0 | ∞   | ∞       | Time allotted to the model              |
+
+Each goal is defined by its name and tolerance (0.0 to ∞). The available goals are:
+
+* [Minimize Index Write Overhead](goals#minimize-index-write-overhead)
+* [Minimize Number of Indexes](goals#minimize-number-of-indexes)
+* [Minimize Total Cost](goals#minimize-total-cost)
+* [Minimize Maximum Cost](goals#minimize-maximum-cost)
+* [Minimize Total Impact](goals#minimize-total-impact)
+* [Minimize Maximum Impact](goals#minimize-maximum-impact)
+* [Minimize Update Overhead](goals#minimize-update-overhead)
+
+The rules are defined by their name and an associated value. If a rule is not defined in the settings, it will be automatically created and it will be assigned its default value:
+
+| Rule Name                                                                | Type      | Min | Max | Default | Description                                   |
+|--------------------------------------------------------------------------|-----------|-----|-----|---------|-----------------------------------------------|
+| [Minimum Per-Scan Cost (Normal)](rules#minimum-per-scan-cost-normal)     | `float`   | 1.0 | ∞   | ∞       | Normal scan cost threshold w.r.t. best cost   |
+| [Minimum Per-Scan Cost (Priority)](rules#minimum-per-scan-cost-priority) | `float`   | 1.0 | ∞   | ∞       | Priority scan cost threshold w.r.t. best cost |
+| [Maximum Number of Indexes](rules#maximum-number-of-indexes)             | `integer` | 0   | ∞   | ∞       | Maximum number of indexes suggested           |
+| [Maximum Index Write Overhead](rules#maximum-index-write-overhead)       | `float`   | 0.0 | ∞   | ∞       | Maximum index write overhead allowed          |
+| [Minimum Coverage](rules#minimum-coverage)                               | `float`   | 0.0 | 1.0 | 0.0     | Portion of coverable scans covered            |
+
+
+### Tolerance
+
+The tolerance parameter is a measure of how strict the ordering of the goals is. It allows some amount of flexibility in the ordering of the goals. Each goal has an associated tolerance value in the range [0.0, ∞] (defaulted to 0). When a goal is optimized, the resulting value indicates how well that goal has met its stated objective. The tolerance of that goal, in turn, indicates how close subsequent goals should stick to the value found for the original goal.
+
+#### Example
+
+There are two goals:
+
+1. Minimize Total Cost (with a tolerance of 0.1)
+2. Minimize Index Write Overhead
+
+Suppose that the total cost found by the first goal is 200. Normally (with a tolerance of 0) the second goal should determine the lowest index write overhead required to achieve costs no higher than 200.
+
+However, with a tolerance of 0.1, the second goal will instead determine the lowest index write overhead required to achieve costs no higher than 220 (because 200 + 10% = 220).
+
+## Greedy Method
+
+If the method is `Greedy`, the [greedy algorithm](/docs/indexing-engine/good-enough-index-selection#set-covering-algorithm) will be used. It is kept for backwards compatibility purposes, and we do not recommend using it otherwise.
+
+The `Greedy` method has only one option: `Good Enough Threshold` (a `float` in range [0.0, 1.0], default 0.5) that defines the "[Good Enough](../good-enough-index-selection)" threshold.

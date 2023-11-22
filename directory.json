@@ -452,6 +452,22 @@
       "title": "pganalyze Indexing Engine for Postgres",
       "path": "/docs/indexing-engine"
     },
+    "indexing-engine/cp-model": {
+      "title": "Constraint Programming Model for Index Selection (Early Access)",
+      "path": "/docs/indexing-engine/cp-model"
+    },
+    "indexing-engine/cp-model/goals": {
+      "title": "Constraint Programming Model: Goals",
+      "path": "/docs/indexing-engine/cp-model/goals"
+    },
+    "indexing-engine/cp-model/rules": {
+      "title": "Constraint Programming Model: Rules",
+      "path": "/docs/indexing-engine/cp-model/rules"
+    },
+    "indexing-engine/cp-model/settings": {
+      "title": "Constraint Programming Model: Settings",
+      "path": "/docs/indexing-engine/cp-model/settings"
+    },
     "indexing-engine/good-enough-index-selection": {
       "title": "Indexing Engine: \"Good Enough\" Index Selection Algorithm",
       "path": "/docs/indexing-engine/good-enough-index-selection"
@@ -868,6 +884,22 @@
       "title": "Open-Source Components",
       "path": "/docs/open_source_components"
     },
+    "opentelemetry": {
+      "title": "OpenTelemetry Tracing Integration",
+      "path": "/docs/opentelemetry"
+    },
+    "opentelemetry/honeycomb": {
+      "title": "Integrating pganalyze with Honeycomb",
+      "path": "/docs/opentelemetry/honeycomb"
+    },
+    "opentelemetry/newrelic": {
+      "title": "Integrating pganalyze with New Relic",
+      "path": "/docs/opentelemetry/newrelic"
+    },
+    "opentelemetry/traceparent": {
+      "title": "Set up traceparent query tag within your application",
+      "path": "/docs/opentelemetry/traceparent"
+    },
     "vacuum-advisor": {
       "title": "pganalyze VACUUM Advisor",
       "path": "/docs/vacuum-advisor"
@@ -892,13 +924,13 @@
       "title": "How does the VACUUM cost model work?",
       "path": "/docs/vacuum-advisor/how-does-the-vacuum-cost-model-work"
     },
-    "vacuum-advisor/performance": {
-      "title": "Performance in pganalyze VACUUM Advisor",
-      "path": "/docs/vacuum-advisor/performance"
-    },
     "vacuum-advisor/per-table-activity": {
       "title": "Per table VACUUM/ANALYZE Activity in Schema Statistics",
       "path": "/docs/vacuum-advisor/per-table-activity"
+    },
+    "vacuum-advisor/performance": {
+      "title": "Performance in pganalyze VACUUM Advisor",
+      "path": "/docs/vacuum-advisor/performance"
     },
     "vacuum-advisor/vacuum-simulator": {
       "title": "VACUUM Simulator in Schema Statistics",
@@ -911,22 +943,6 @@
     "vacuum-advisor/what-is-freezing": {
       "title": "What is Freezing?",
       "path": "/docs/vacuum-advisor/what-is-freezing"
-    },
-    "opentelemetry": {
-      "title": "OpenTelemetry Tracing Integration",
-      "path": "/docs/opentelemetry"
-    },
-    "opentelemetry/traceparent": {
-      "title": "Set up traceparent query tag within your application",
-      "path": "/docs/opentelemetry/traceparent"
-    },
-    "opentelemetry/honeycomb": {
-      "title": "Integrating pganalyze with Honeycomb",
-      "path": "/docs/opentelemetry/honeycomb"
-    },
-    "opentelemetry/newrelic": {
-      "title": "Integrating pganalyze with New Relic",
-      "path": "/docs/opentelemetry/newrelic"
     }
   },
   "logClassifications": {
