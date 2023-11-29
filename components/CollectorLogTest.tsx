@@ -26,7 +26,7 @@ I Successfully reloaded pganalyze collector (PID 123)`
       <p>
         To apply the configuration, restart the container for the pganalyze
         collector. You can confirm whether the configuration is correct by
-        watching for a "Submitted compact log snapshot successfully" message
+        watching for a "Submitted compact snapshots successfully" message
         in the container log output.
       </p>
     )
