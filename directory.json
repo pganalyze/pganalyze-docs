@@ -336,17 +336,21 @@
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/explain/setup/auto_explain"
     },
-    "explain/setup/crunchy_bridge/01_create_helper_functions": {
-      "title": "Step 1: Create helper functions",
-      "path": "/docs/explain/setup/crunchy_bridge/01_create_helper_functions"
+    "explain/setup/crunchy_bridge/01_auto_explain_check": {
+      "title": "Step 1: Check for auto_explain",
+      "path": "/docs/explain/setup/crunchy_bridge/01_auto_explain_check"
     },
-    "explain/setup/crunchy_bridge/02_enable_log_explain": {
-      "title": "Step 1: Enable log-based EXPLAIN",
-      "path": "/docs/explain/setup/crunchy_bridge/02_enable_log_explain"
+    "explain/setup/crunchy_bridge/02_enable_auto_explain": {
+      "title": "Step 2: Enable auto_explain",
+      "path": "/docs/explain/setup/crunchy_bridge/02_enable_auto_explain"
     },
-    "explain/setup/crunchy_bridge/03_test_and_verify": {
-      "title": "Step 3: Test and verify",
-      "path": "/docs/explain/setup/crunchy_bridge/03_test_and_verify"
+    "explain/setup/crunchy_bridge/03_review_settings": {
+      "title": "Step 3: Review auto_explain settings",
+      "path": "/docs/explain/setup/crunchy_bridge/03_review_settings"
+    },
+    "explain/setup/crunchy_bridge/04_test_and_verify": {
+      "title": "Step 4: Test and Verify",
+      "path": "/docs/explain/setup/crunchy_bridge/04_test_and_verify"
     },
     "explain/setup/google_cloud_sql/01_auto_explain_check": {
       "title": "Step 1: Check for auto_explain",

@@ -1,5 +1,5 @@
 ---
-title: 'Step 3: Test and verify'
+title: 'Step 4: Test and Verify'
 install_track_title: 'Automated EXPLAIN: Setup (Crunchy Bridge)'
 backlink_href: /docs/explain/setup
 backlink_title: 'Automated EXPLAIN: Setup'
@@ -14,16 +14,7 @@ you may not have any slow queries in your system right now, we can generate a
 synthetic slow query that we can use to confirm everything is working.
 
 The collector includes a flag to do this for you automatically, based on your
-`log_min_duration_statement` value.
-
-First, make sure you have configured `log_min_duration_statement`, if you have not already:
-
-```
-ALTER SYSTEM SET log_min_duration_statement = '1s';
-SELECT pg_reload_conf();
-```
-
-Then run the test explain command:
+`auto_explain.log_min_duration`:
 
 <CollectorStartCommand apiKey={props.apiKey} logExplain={true} cmd="test-explain" />
 
@@ -33,7 +24,7 @@ will produce output similar to the following:
 ```
                       run_container
 ----------------------------------------------------------
- I Running collector test with pganalyze-collector 0.42.2
+ I Running collector test with pganalyze-collector 0.52.2
 (1 row)
 ```
 
