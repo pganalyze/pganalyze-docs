@@ -1,5 +1,3 @@
-import AutoExplainNotice from '../_auto_explain_notice.mdx'
-
 export const AutoExplainEnabled = () => {
   return (
     <React.Fragment>
@@ -19,7 +17,6 @@ export const AutoExplainNotEnabled = () => {
       <p>
         It looks like <code>auto_explain</code> is not enabled on this server.
       </p>
-      <AutoExplainNotice />
       <Link className="btn btn-success" to="02_enable_auto_explain">
         Proceed to Step 2: Enable auto_explain
       </Link>
