@@ -6,7 +6,7 @@ backlink_title: 'Automated EXPLAIN: Setup'
 ---
 
 import { getSPLEnableAutoExplainRecommendation } from '../../../components/PgSettingsRecommendations';
-import ActuallyEnableAutoExplain from './_02_actually_enable.mdx';
+import ActuallyEnableAutoExplainCB from './_02_actually_enable.mdx';
 
 export const MaybeRecommendEnable = ({settings}) => {
    const recommendation = getSPLEnableAutoExplainRecommendation(settings);
@@ -18,7 +18,7 @@ export const MaybeRecommendEnable = ({settings}) => {
          </p>
       )
    }
-   return <ActuallyEnableAutoExplain splRecommendation={recommendation} />
+   return <ActuallyEnableAutoExplainCB splRecommendation={recommendation} />
 }
 
 <MaybeRecommendEnable settings={props.settings} />
