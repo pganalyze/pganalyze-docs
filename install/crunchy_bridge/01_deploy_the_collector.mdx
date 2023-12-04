@@ -11,7 +11,7 @@ import { MonitoringUserColumnStats, MonitoringUserLogRead } from "../../componen
 export const CollectorStartCommand = ({ apiKey, cmd, logExplain }) => {
   return (
     <CodeBlock>
-      {`SELECT run_container('` + (cmd ? '' : '-d ') + `-t -e DB_URL="REPLACE_ME" -e PGA_API_KEY="` + (apiKey ? apiKey : 'API_KEY') + '"' + (logExplain ? ' -e PGA_ENABLE_LOG_EXPLAIN=true' : '') + ` -e DB_ALL_NAMES=1 quay.io/pganalyze/collector:stable` + (cmd ? ` ${cmd}` : '') + `');`}
+      {`SELECT run_container('` + (cmd ? '' : '-d ') + `-t -e DB_URL="REPLACE_ME" -e PGA_API_KEY="` + (apiKey ? apiKey : 'API_KEY') + '"' + (logExplain ? ' -e PGA_ENABLE_LOG_EXPLAIN=true' : '') + ` -e CRUNCHY_BRIDGE_API_KEY="REPLACE_ME" -e DB_ALL_NAMES=1 quay.io/pganalyze/collector:stable` + (cmd ? ` ${cmd}` : '') + `');`}
     </CodeBlock>
   );
 };
@@ -45,16 +45,23 @@ If you have not yet enabled Postgres Container Apps, connect to your Crunchy Bri
 CREATE EXTENSION IF NOT EXISTS pgpodman;
 ```
 
+## Create Crunchy Bridge API key
+
+Providing the Crunchy Bridge API key to the collector will allow the collector to obtain accurate Storage Space information, as well as cluster information.
+It is recommended to create a new API key for the collector and passing it as an environment value.
+See the [Crunchy Bridge documentation](https://docs.crunchybridge.com/api-concepts/getting-started) for how to create API keys.
+
 ## Run collector test
 
-Run the following command to verify the configuration. For the `DB_URL` specify the application user credentials.
+Run the following command to verify the configuration. For the `DB_URL`, specify the application user credentials.
+For the `CRUNCHY_BRIDGE_API_KEY`, specify the API key created above.
 
 <CollectorStartCommand apiKey={props.apiKey} cmd="test" />
 
 This should return output like this:
 
 ```
-                                run_container                                   
+                                run_container
 --------------------------------------------------------------------------------
  I Running collector test with pganalyze-collector X.XX.X
  I [default] Testing statistics collection...
