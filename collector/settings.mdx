@@ -478,6 +478,36 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
   </tbody>
 </table>
 
+## Crunchy Bridge settings
+
+Only relevant if you are running your database in Crunchy Bridge.
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>crunchy_bridge_api_key (<code>CRUNCHY_BRIDGE_API_KEY</code>)</td>
+      <td>n/a, required for accurate Storage Space information</td>
+      <td>
+        The API key of Crunchy Bridge. When specified, the collector uses the
+        Crunchy Bridge API to obtain accurate Storage Space information, as well
+        as cluster information.
+      </td>
+    </tr>
+    <tr>
+      <td>crunchy_bridge_cluster_id (<code>CRUNCHY_BRIDGE_CLUSTER_ID</code>)</td>
+      <td>auto-detected from hostname</td>
+      <td>ID of your cluster; may need to be set manually when using IP addresses or custom DNS records</td>
+    </tr>
+  </tbody>
+</table>
+
 ## Self-managed servers
 
 If running on your own infrastructure, a platform other than the cloud providers listed above, or in
