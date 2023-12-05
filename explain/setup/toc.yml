@@ -14,6 +14,8 @@
     href: explain/setup/amazon_rds
   - name: Google Cloud SQL
     href: explain/setup/google_cloud_sql
+  - name: Crunchy Bridge
+    href: explain/setup/crunchy_bridge
   - name: Self-Managed Server
     href: explain/setup/self_managed
 - mount: explain/setup/log_explain
@@ -22,7 +24,5 @@
     href: explain/setup/log_explain
   - name: Heroku Postgres
     href: explain/setup/heroku
-  - name: Crunchy Bridge
-    href: explain/setup/crunchy_bridge
   - name: Other platforms
     href: explain/setup/log_explain/
