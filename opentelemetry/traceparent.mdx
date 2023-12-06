@@ -165,7 +165,7 @@ When performing manual instrumentation, these instrumentations won't be enabled
 automatically. To have better tracing spans around the queries, it is
 recommended to enable instrumentations related to ORMs and/or database drivers.
 
-## Add pganalyze tracestate
+## Add pganalyze tracestate (optional)
 
 When the Postgres database has limited precision in its `log_line_prefix`
 timestamp, timing data of spans exported by pganalyze may not line up with other
@@ -178,7 +178,7 @@ To workaround this, you can use the `pganalyze` tracestate and pass the query
 start time with it. You can learn more about the tracestate in OpenTelemetry
 document [TraceState](https://opentelemetry.io/docs/specs/otel/trace/api/#tracestate) section.
 
-The pganalyze tracestate should use the `pganalyze` key, and the value being a
+The pganalyze tracestate should use the `pganalyze` key, with the value being a
 semicolon separated list of key-value pairs such as:
 
 ```
@@ -195,7 +195,7 @@ time.
 
 ### Rails 7+
 
-Assuming that you already have the traceparent setup with Rails 7+, you can
+Assuming that you already have the traceparent set up with Rails 7+, you can
 append the tracestate tag like the following:
 
 ```ruby
@@ -231,7 +231,7 @@ config.active_record.query_log_tags = [
 
 ### Marginalia
 
-Assuming that you already have the traceparent setup with Marginalia, you can
+Assuming that you already have the traceparent set up with Marginalia, you can
 append the tracestate tag like the following:
 
 
