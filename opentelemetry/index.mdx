@@ -67,6 +67,9 @@ data.
     * This issue will typically occur with Amazon RDS and Amazon Aurora, which
       currently do not allow changing the timestamp precision of the
       `log_line_prefix` (it's always set to`%t:%r:%u@%d:[%p]:t`)
+    * You can workaround this by passing the query start time with the pganalyze
+      tracestate. See [Add pganalyze tracestate](/docs/opentelemetry/traceparent#add-pganalyze-tracestate)
+      for examples of how to add it
 
 ## Troubleshooting
 
