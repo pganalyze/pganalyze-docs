@@ -410,7 +410,11 @@ Only relevant if you are running your database in Azure using Azure Database for
     <tr>
       <td>azure_ad_client_id (<code>AZURE_AD_CLIENT_ID</code>)</td>
       <td>[none]</td>
-      <td>The "Application (client) ID" on your application. Alternatively, when using a Managed Identity, this can also be used to define which identity to use, when a VM has multiple identities assigned.</td>
+      <td>
+        The "Application (client) ID" on your application.
+        For Managed Identity, particularly with multiple VM identities, avoid using this parameter.
+        Instead, set the <code>AZURE_CLIENT_ID</code> environment variable to specify the identity
+      </td>
     </tr>
     <tr>
       <td>azure_ad_client_secret (<code>AZURE_AD_CLIENT_SECRET</code>)</td>
