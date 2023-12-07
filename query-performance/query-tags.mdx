@@ -1,0 +1,48 @@
+---
+title: 'Query Tags'
+backlink_href: /docs/query-performance
+backlink_title: 'Query Performance'
+---
+
+Query tags are key-value pairs of runtime information of a query that you can
+add to the SQL statements as a query comment. The runtime information can be a
+name of the background job that is running the query, or a trace ID.
+
+Query tags help to find out where the query is coming from, or also help to find
+the corresponding query of the specific background job or a slow query.
+
+There are several tools to help you add query tags to your query. For instance,
+you can use the [sqlcommenter](https://google.github.io/sqlcommenter/) to
+augment SQL statements before execution, with comments containing information
+about the code that caused its execution. Rails 7+ has a built-in feature called
+[Query Logs](https://api.rubyonrails.org/classes/ActiveRecord/QueryLogs.html)
+that allows you to add tags like `controller` and `action` to the query so that
+you can identify which controller and action the query was called from.
+
+In pganalyze, you can see tags of a query in the "Query Tags" tab in the
+individual query page.
+
+This query tag is also used in the OpenTelemetry integration to specify the
+traceparent and tracestate, you can learn more in the
+[traceparent section of the OpenTelemetry integration docs](/docs/opentelemetry/traceparent).
+
+## Supported formats
+
+Currently, the pganalyze collector supports the following Query Tags formats:
+
+* [sqlcommenter](https://google.github.io/sqlcommenter/) format: `key='value'`
+  * `SELECT 1 /* key1='value1',key2='value2' */`
+* [sqlcommenter](https://google.github.io/sqlcommenter/) format without single quotes: `key=value`
+  * `SELECT 1 /* key1=value1, key2=value2 */`
+* [marginalia](https://github.com/basecamp/marginalia) format: `key:value`
+  * `SELECT 1 /* key1:value1, key2:value2 */`
+
+The query comments can be appended either before or after the query.
+
+
+## Query Tags tab
+
+In the individual query detail page, you can find query tags in the header of
+the page, as well as in the "Query Tags" tab.
+
+TODO: write about query samples and how the stats are created

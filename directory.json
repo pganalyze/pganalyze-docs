@@ -96,6 +96,14 @@
       "title": "Monitoring Postgres connections",
       "path": "/docs/connections"
     },
+    "query-performance": {
+      "title": "Query Performance",
+      "path": "/docs/query-performance"
+    },
+    "query-performance/query-tags": {
+      "title": "Query Tags",
+      "path": "/docs/query-performance/query-tags"
+    },
     "enterprise": {
       "title": "pganalyze Enterprise Server",
       "path": "/docs/enterprise"

@@ -1,0 +1,6 @@
+- mount: query-performance
+  items:
+  - name: Overview
+    href: query-performance
+  - name: Query Tags
+    href: query-performance/query-tags

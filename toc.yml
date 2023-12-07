@@ -18,6 +18,8 @@
     href: connections
   - name: Schema Statistics
     href: schema-statistics
+  - name: Query Performance
+    href: query-performance
   - name: Account Management
     href: accounts
   - name: Log Insights
