@@ -12,6 +12,8 @@
     href: explain/setup/auto_explain
   - name: Amazon RDS & Amazon Aurora
     href: explain/setup/amazon_rds
+  - name: Azure Database for PostgreSQL
+    href: explain/setup/azure_database
   - name: Google Cloud SQL
     href: explain/setup/google_cloud_sql
   - name: Crunchy Bridge
