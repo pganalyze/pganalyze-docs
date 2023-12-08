@@ -1,0 +1,39 @@
+export const SPLRecommendation = ({recommendation}) => {
+   if (recommendation.current == null) {
+      return (
+         <p>
+            For example, if the current value is <code>pg_stat_statements</code>,
+            you can set the new value to <code>pg_stat_statements, auto_explain</code>.
+         </p>
+      )
+   }
+   return (
+      <React.Fragment>
+         <p>
+            The current value appears to be <code>{recommendation.current}</code>.
+            You can confirm this in the parameter group and set the new value to
+            <code>{recommendation.recommended}</code>.
+         </p>
+      </React.Fragment>
+   )
+}
+
+In your [Azure Portal](https://portal.azure.com/), find your DB instance, and open the Server Parameters
+page. Filter parameters by `shared_preload_libraries`, and enable `AUTO_EXPLAIN`, making sure to save settings.
+
+![](azure_server_params_auto_explain.png)
+
+Saving will show the following prompt. You can choose to either restart now or restart later.
+Either way, you will need to restart before proceeding the next step.
+
+![](azure_save_server_parameter.png)
+
+After the reboot completes, verify that `shared_preload_libraries` now includes `auto_explain`
+and that the setting change does not require a restart (`pending_restart` should be `f`):
+
+```sql
+SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
+```
+
+If `auto_explain` is enabled and no longer requires a restart, you can proceed to
+review our recommended `auto_explain` configuration settings:

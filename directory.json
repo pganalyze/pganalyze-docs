@@ -336,6 +336,22 @@
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/explain/setup/auto_explain"
     },
+    "explain/setup/azure_database/01_auto_explain_check": {
+      "title": "Step 1: Check for auto_explain",
+      "path": "/docs/explain/setup/azure_database/01_auto_explain_check"
+    },
+    "explain/setup/azure_database/02_enable_auto_explain": {
+      "title": "Step 2: Enable auto_explain",
+      "path": "/docs/explain/setup/azure_database/02_enable_auto_explain"
+    },
+    "explain/setup/azure_database/03_review_settings": {
+      "title": "Step 3: Review auto_explain settings",
+      "path": "/docs/explain/setup/azure_database/03_review_settings"
+    },
+    "explain/setup/azure_database/04_test_and_verify": {
+      "title": "Step 4: Test and Verify",
+      "path": "/docs/explain/setup/azure_database/04_test_and_verify"
+    },
     "explain/setup/crunchy_bridge/01_auto_explain_check": {
       "title": "Step 1: Check for auto_explain",
       "path": "/docs/explain/setup/crunchy_bridge/01_auto_explain_check"

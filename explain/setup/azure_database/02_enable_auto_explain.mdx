@@ -1,0 +1,28 @@
+---
+title: 'Step 2: Enable auto_explain'
+install_track_title: 'Automated EXPLAIN: Setup (Azure Database for PostgreSQL)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import { getSPLEnableAutoExplainRecommendation } from '../../../components/PgSettingsRecommendations';
+import ActuallyEnableAutoExplainAzure from './_02_actually_enable.mdx';
+
+export const MaybeRecommendEnable = ({settings}) => {
+   const recommendation = getSPLEnableAutoExplainRecommendation(settings);
+   if (!recommendation.recommendChange) {
+      return (
+         <p>
+            It looks like your <code>shared_preload_libraries</code> already includes <code>auto_explain</code>.
+            No changes are required.
+         </p>
+      )
+   }
+   return <ActuallyEnableAutoExplainAzure splRecommendation={recommendation} />
+}
+
+<MaybeRecommendEnable settings={props.settings} />
+
+<Link className="btn btn-success" to="03_review_settings">
+   Proceed to Step 3: Review auto_explain settings
+</Link>

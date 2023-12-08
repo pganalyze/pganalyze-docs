@@ -1,0 +1,21 @@
+---
+title: 'Step 1: Check for auto_explain'
+install_track_title: 'Automated EXPLAIN: Setup (Azure Database for PostgreSQL)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import Step01InApp from './_01_in_app.mdx'
+import Step01Public from './_01_public.mdx'
+
+The recommended Automated EXPLAIN configuration for Azure Database for PostgreSQL is to use
+the Postgres `auto_explain` contrib module. This ensures accurate and detailed
+plan information, including runtime information (as gathered by EXPLAIN ANALYZE). With our
+recommended configuration (presented in a later step), performance overhead is minimal.
+
+<PublicOnly>
+   <Step01Public />
+</PublicOnly>
+<InAppOnly>
+   <Step01InApp autoExplainEnabled={props.autoExplainEnabled} />
+</InAppOnly>
