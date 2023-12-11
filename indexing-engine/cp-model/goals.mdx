@@ -4,6 +4,8 @@ backlink_href: /docs/indexing-engine/constraint-programming-model
 backlink_title: 'Constraint Programming Model'
 ---
 
+import CopyCodeBlock from '../../components/CopyCodeBlock'
+
 Goals are the main components that guide the model toward the solution that best meets the requirements of the user. These requirements can be defined using any combination of goals.
 
 Its important to note that the order of the goals always matters. Consider the case of minimizing the costs (Minimize Total Cost) and minimizing the number of indexes (Minimize Number of Indexes).
@@ -14,24 +16,38 @@ Further, some goals should not be selected as the first goals to optimize.
 
 For example, suppose that the first goal is [Minimize Number of Indexes](#minimize-number-of-indexes). The model is essentially told that "use the fewest indexes" is the most important goal. Obviously, 0 indexes is the fewest indexes it can use. Subsequent goals will not be able to make use of any indexes because of this.
 
-Goals that should be avoided as the first goal are [Minimize Number of Indexes](#minimize-number-of-indexes), [Minimize Index Write Overhead](#minimize-index-write-overhead), and [Minimize Update Overhead](#minimize-update-overhead), unless there is a [rule](rules) that is focused on the scan cost, like [Minimum Per-Scan Cost (Normal)](rules#minimum-per-scan-cost-normal).
+Goals that should be avoided as the first goal are [Minimize Number of Indexes](#minimize-number-of-indexes), [Minimize Index Write Overhead](#minimize-index-write-overhead), and [Minimize Update Overhead](#minimize-update-overhead), unless there is a [rule](rules) that is focused on the scan cost, like [Maximum Per-Scan Cost Tolerance](rules#maximum-per-scan-cost-tolerance).
 
 
 ### Minimize Index Write Overhead
 
 The *Minimize Index Write Overhead* goal strives to minimize the index write overhead associated with the selected indexes.
 
+<CopyCodeBlock content={`{ "Name": "Minimize Index Write Overhead", "Tolerance": 0.0 }`} language="json" />
+
 ### Minimize Number of Indexes
 
 The *Minimize Number of Indexes* goal strives to minimize the number of existing and possible indexes selected.
+
+<CopyCodeBlock content={`{ "Name": "Minimize Number of Indexes", "Tolerance": 0.0 }`} language="json" />
 
 ### Minimize Total Cost
 
 The *Minimize Total Cost* goal strives to minimize the combined costs of the scans.
 
+<CopyCodeBlock content={`{ "Name": "Minimize Total Cost", "Tolerance": 0.1 }`} language="json" />
+
 ### Minimize Maximum Cost
 
 The *Minimize Maximum Cost* goal strives to minimize the largest cost found among the scans.
+
+<CopyCodeBlock content={`{ "Name": "Minimize Maximum Cost", "Tolerance": 1.0 }`} language="json" />
+
+### Minimize Maximum Relative Cost
+
+The *Minimize Maximum Relative Cost* goal strives to minimize the largest relative cost found among the scans. The *relative cost* of a scan is equal to its actual value divided by the best possible value it could get in theory.
+
+<CopyCodeBlock content={`{ "Name": "Minimize Maximum Relative Cost", "Tolerance": 10.0 }`} language="json" />
 
 ### Minimize Total Impact
 
@@ -39,10 +55,22 @@ The *Minimize Total Impact* goal strives to minimize the combined impacts of the
 
 The impact of a scan is a measure of its influence on performance, and is equal to its cost multiplied by the frequency in which it appears in queries. Common scans with high costs will tend to have a higher impact on performance than uncommon scans with lower costs.
 
+<CopyCodeBlock content={`{ "Name": "Minimize Total Impact", "Tolerance": 0.1 }`} language="json" />
+
 ### Minimize Maximum Impact
 
 The *Minimize Maximum Impact* goal strives to minimize the largest impact found among the scans.
 
+<CopyCodeBlock content={`{ "Name": "Minimize Maximum Impact", "Tolerance": 1.0 }`} language="json" />
+
+### Minimize Maximum Relative Impact
+
+The *Minimize Maximum Relative Impact* goal strives to minimize the largest relative impact found among the scans. The *relative impact* of a scan is equal to its actual value divided by the best possible value it could get in theory.
+
+<CopyCodeBlock content={`{ "Name": "Minimize Maximum Relative Impact", "Tolerance": 10.0 }`} language="json" />
+
 ### Minimize Update Overhead
 
 The *Minimize Update Overhead* goal strives to minimize the update overhead of the selected indexes.
+
+<CopyCodeBlock content={`{ "Name": "Minimize Update Overhead", "Tolerance": 0 }`} language="json" />

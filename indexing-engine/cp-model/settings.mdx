@@ -55,19 +55,21 @@ Each goal is defined by its name and tolerance (0.0 to ∞). The available goals
 * [Minimize Number of Indexes](goals#minimize-number-of-indexes)
 * [Minimize Total Cost](goals#minimize-total-cost)
 * [Minimize Maximum Cost](goals#minimize-maximum-cost)
+* [Minimize Maximum Relative Cost](goals#minimize-maximum-relative-cost)
 * [Minimize Total Impact](goals#minimize-total-impact)
 * [Minimize Maximum Impact](goals#minimize-maximum-impact)
+* [Minimize Maximum Relative Impact](goals#minimize-maximum-relative-impact)
 * [Minimize Update Overhead](goals#minimize-update-overhead)
 
 The rules are defined by their name and an associated value. If a rule is not defined in the settings, it will be automatically created and it will be assigned its default value:
 
-| Rule Name                                                                | Type      | Min | Max | Default | Description                                   |
-|--------------------------------------------------------------------------|-----------|-----|-----|---------|-----------------------------------------------|
-| [Minimum Per-Scan Cost (Normal)](rules#minimum-per-scan-cost-normal)     | `float`   | 1.0 | ∞   | ∞       | Normal scan cost threshold w.r.t. best cost   |
-| [Minimum Per-Scan Cost (Priority)](rules#minimum-per-scan-cost-priority) | `float`   | 1.0 | ∞   | ∞       | Priority scan cost threshold w.r.t. best cost |
-| [Maximum Number of Indexes](rules#maximum-number-of-indexes)             | `integer` | 0   | ∞   | ∞       | Maximum number of indexes suggested           |
-| [Maximum Index Write Overhead](rules#maximum-index-write-overhead)       | `float`   | 0.0 | ∞   | ∞       | Maximum index write overhead allowed          |
-| [Minimum Coverage](rules#minimum-coverage)                               | `float`   | 0.0 | 1.0 | 0.0     | Portion of coverable scans covered            |
+| Rule Name                                                                    | Type      | Min | Max | Default | Description                              |
+|------------------------------------------------------------------------------|-----------|-----|-----|---------|------------------------------------------|
+| [Maximum Per-Scan Cost Tolerance](rules#maximum-per-scan-cost-tolerance)     | `float`   | 0.0 | ∞   | ∞       | Scan cost tolerance w.r.t. best cost     |
+| [Maximum Per-Scan Impact Tolerance](rules#maximum-per-scan-impact-tolerance) | `float`   | 0.0 | ∞   | ∞       | Scan impact tolerance w.r.t. best impact |
+| [Maximum Number of Indexes](rules#maximum-number-of-indexes)                 | `integer` | 0   | ∞   | ∞       | Maximum number of indexes suggested      |
+| [Maximum Index Write Overhead](rules#maximum-index-write-overhead)           | `float`   | 0.0 | ∞   | ∞       | Maximum index write overhead allowed     |
+| [Minimum Coverage](rules#minimum-coverage)                                   | `float`   | 0.0 | 1.0 | 0.0     | Portion of coverable scans covered       |
 
 
 ### Tolerance
