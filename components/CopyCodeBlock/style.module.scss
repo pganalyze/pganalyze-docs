@@ -1,0 +1,15 @@
+.copyBlock {
+  position: relative;
+
+  .copyIcon {
+    position: absolute;
+    right: 8px;
+    top: 4px;
+    font-size: 12px;
+    color: #999999;
+
+    &:hover {
+      color: #409bb8;
+    }
+  }
+}
