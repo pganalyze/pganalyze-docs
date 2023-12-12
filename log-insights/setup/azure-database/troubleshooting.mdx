@@ -32,6 +32,7 @@ When using Managed Identity, verify that you have actually assigned the identity
 This may also occur when you have multiple user-assigned managed identities set for your virtual machine.
 Try removing any unrelated managed identities, or explicitly set the `azure_ad_client_id` / `AZURE_AD_CLIENT_ID` setting to
 the Managed Identity's Client ID.
+You may also observe the error message like "ManagedIdentityCredential: no default identity is assigned to this resource" in this case.
 
 ### Error: "failed to connect to the Event Hub management node"
 

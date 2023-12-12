@@ -18,7 +18,8 @@ Next, update the collector configuration for this server. Note the **values need
 ]} configFromEnv={props.configFromEnv} />
 
 Thanks to the Managed Identity that's assigned to the VM, we don't need to specify any credentials here.
-If the VM has multiple Managed Identities assigned, specify the client ID of the specific Managed Identity created in Step 1 using `AZURE_CLIENT_ID` environment variable.
+If the VM has multiple Managed Identities assigned, specify the client ID of the specific Managed Identity created in Step 1
+using the `azure_ad_client_id` / `AZURE_AD_CLIENT_ID` setting.
 
 <CollectorLogTest provider="Azure Database" configFromEnv={props.configFromEnv} />
 
