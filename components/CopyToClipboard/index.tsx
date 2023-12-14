@@ -32,7 +32,7 @@ const CopyToClipboard: React.FunctionComponent<Props> = ({
   const [copied, setCopied] = useState(false);
   const [waitingForContent, setWaitingForContent] = useState(false);
   const [copyError, setCopyError] = useState(null);
-  const { clipboard } = navigator;
+  const { clipboard } = typeof navigator === 'object' && navigator;
   if (!clipboard) {
     return null;
   }
