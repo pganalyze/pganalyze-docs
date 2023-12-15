@@ -1,3 +1,10 @@
+import imgAzureServerParamsAutoExplain from './azure_server_params_auto_explain.png'
+import imgAzureSaveServerParameter from './azure_save_server_parameter.png'
+
+export const ImgAzureServerParamsAutoExplain = () => <img alt="Server parameters: auto_explain" src={imgAzureServerParamsAutoExplain} />
+
+export const ImgAzureSaveServerParameter = () => <img alt="Save server parameters" src={imgAzureSaveServerParameter} />
+
 export const SPLRecommendation = ({recommendation}) => {
    if (recommendation.current == null) {
       return (
@@ -21,12 +28,12 @@ export const SPLRecommendation = ({recommendation}) => {
 In your [Azure Portal](https://portal.azure.com/), find your DB instance, and open the Server Parameters
 page. Filter parameters by `shared_preload_libraries`, and enable `AUTO_EXPLAIN`, making sure to save settings.
 
-![](azure_server_params_auto_explain.png)
+<ImgAzureServerParamsAutoExplain />
 
 Saving will show the following prompt. You can choose to either restart now or restart later.
 Either way, you will need to restart before proceeding the next step.
 
-![](azure_save_server_parameter.png)
+<ImgAzureSaveServerParameter />
 
 After the reboot completes, verify that `shared_preload_libraries` now includes `auto_explain`
 and that the setting change does not require a restart (`pending_restart` should be `f`):
