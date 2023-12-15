@@ -25,13 +25,23 @@ The last step is setting up the Aiven Service Integration. Go to the
 Service Integration page in your Aiven console, select Syslog from the
 list of options, and click "Add new endpoint".
 
+<strong>Setup using VPC</strong>
+
 Fill in the Endpoint form with the internal IP of your collector instance and
-the port you selected in the previous step. Disable TLS (the collector does not
-support receiving logs over TLS, and since you're sending logs over the peered
-VPC connection, the traffic is already private). Leave the format as rfc5424,
-and the other fields blank:
+the port you selected in the previous step. Disable TLS (since you're sending
+logs over the peered VPC connection, the traffic is already private). Leave the
+format as rfc5424, and the other fields blank:
 
 <ImgAddSyslogIntegration />
+
+<strong>Setup using TLS</strong>
+
+Fill in the Endpoint form with the hostname or IP of your collector instance and
+the port that you specified during the collector syslog server setup. Please
+make sure that the collector is accessible from the Aiven instance.
+Enable TLS and leave the format as rfc5424. If you are using the certificate
+issued by an internal CA or a self-signed certificate on the collector syslog
+server side, make sure to provide it as a "PEM encoded CA certificate".
 
 Once this is done, return to the service details page for your database, and
 click Manage Integrations:
