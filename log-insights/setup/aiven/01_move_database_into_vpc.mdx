@@ -12,17 +12,21 @@ export const ImgAivenCreateVpc = () => <div style={{display: 'flex', justifyCont
 
 export const ImgAivenMigrateVpc = () => <img alt="Migrate database to a VPC" src={imgAivenMigrateVpc} />
 
-In order to securely deliver logs to the collector without enabling TLS, your
-database must run in an Aiven VPC peered to the VPC of the EC2 instance or
-container the collector is running in.
-Alternatively, you can send logs over TLS by setting up certificates for the
-collector syslog server. See [Receiving syslog over TLS](https://pganalyze.com/docs/log-insights/setup/syslog-server#receiving-syslog-over-tls)
-for how to set up certificates. Once it's done, go to <Link to="04_configure_service_integration">Step 4</Link>
-to configure Service Integration.
+In order to securely deliver logs to the collector, there are two possible
+approaches: either configure syslog to work over TLS by setting up certificates
+for the collector syslog server, or use VPC peering between your database and
+the collector.
 
-In later steps we refer to this VPC as the "collector VPC". If you have not done
-so yet, go to the Aiven console and create a VPC for the project in the same
-region where your database is running:
+In order to set up syslog over TLS, see
+[Receiving syslog over TLS](https://pganalyze.com/docs/log-insights/setup/syslog-server#receiving-syslog-over-tls)
+for how to set up certificates, then continue to <Link to="04_configure_service_integration">Step 4</Link>.
+To set up VPC peering, continue below.
+
+To use VPC peering, your database must run in an Aiven VPC peered to the VPC of
+the EC2 instance or container the collector is running in. In later steps we
+refer to this VPC as the "collector VPC". If you have not done so yet, go to the
+Aiven console and create a VPC for the project in the same region where your
+database is running:
 
 <ImgAivenCreateVpc />
 
