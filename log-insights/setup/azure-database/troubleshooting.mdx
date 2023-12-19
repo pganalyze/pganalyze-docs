@@ -22,7 +22,7 @@ This occurs when the collector can't access the Azure Event Hub API.
 
 Review whether [you have followed Step 2](/docs/log-insights/setup/azure-database/02_set_up_azure_event_hub) fully and assigned the "Azure Event Hubs Data Receiver" permission for the Managed Identity (or Azure AD application) to your Azure Event Hub.
 
-### Error: "failed to configure Azure AD JWT provider"
+### Error: "ManagedIdentityCredential: no default identity is assigned to this resource"
 
 This error occurs when there is no authentication configured.
 
@@ -32,7 +32,10 @@ When using Managed Identity, verify that you have actually assigned the identity
 This may also occur when you have multiple user-assigned managed identities set for your virtual machine.
 Try removing any unrelated managed identities, or explicitly set the `azure_ad_client_id` / `AZURE_AD_CLIENT_ID` setting to
 the Managed Identity's Client ID.
-You may also observe the error message like "ManagedIdentityCredential: no default identity is assigned to this resource" in this case.
+
+### Error: "failed to configure Azure AD JWT provider"
+
+See the above section titled Error: "ManagedIdentityCredential: no default identity is assigned to this resource"
 
 ### Error: "failed to connect to the Event Hub management node"
 
