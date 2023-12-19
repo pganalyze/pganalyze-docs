@@ -27,8 +27,8 @@ and a secret key [`db_log_syslog_server_key_file`](/docs/collector/settings#self
 Alternatively, you can also set the actual contents of a certificate with [`db_log_syslog_server_cert_contents`](/docs/collector/settings#self-managed-servers),
 or a secret key with [`db_log_syslog_server_key_contents`](/docs/collector/settings#self-managed-servers).
 Please note that if the `db_log_syslog_server_cert_file` setting is provided,
-the connection needs to be made as TLS and the connection attempt without TLS
-will be rejected.
+the connection needs to be made as TLS and connection attempts without TLS will
+be rejected.
 
 This certificate is for the syslog server running as part of the collector. You
 have the option to use an existing certificate or generate a new self-signed
