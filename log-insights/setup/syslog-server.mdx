@@ -5,9 +5,47 @@ backlink_title: 'Log Insights: Setup'
 ---
 
 If your database logs are available via syslog, you can use the [`db_log_syslog_server`](/docs/collector/settings#self-managed-servers)
-setting to have the collector listen for syslog messages from a remote server. This should be a local address like
-"0.0.0.0:32514" and it's recommended to use an unprivileged port number (1024 and up) to avoid running
-the collector as root.
+setting to have the collector listen for syslog messages from a remote server.
+When this is specified, the collector will run the syslog server behind the
+scenes on the specified port to receive syslog messages.
+This should be a local address like "0.0.0.0:32514" and it's recommended to use
+an unprivileged port number (1024 and up) to avoid running the syslog server as
+root.
 
-Note that you need to use protocol RFC5424, with an unencrypted TCP connection. Due to syslog not being
-an authenticated protocol it is recommended to only use this integration over private networks.
+Note that you need to use protocol RFC5424, with a TCP connection. To secure the
+connection between the client (i.e., the server that sends logs) and the
+collector syslog server, it is recommended to either use this integration over
+private networks, or send logs over TLS.
+While using TLS, if there is a need to ensure that logs are sent exclusively by
+a trusted client, you might want to consider enabling mutual TLS, as described
+in the following section.
+
+### Receiving syslog over TLS
+
+You can also receive logs over TLS by specifying the path of a certificate [`db_log_syslog_server_cert_file`](/docs/collector/settings#self-managed-servers)
+and a secret key [`db_log_syslog_server_key_file`](/docs/collector/settings#self-managed-servers).
+Alternatively, you can also set the actual contents of a certificate with [`db_log_syslog_server_cert_contents`](/docs/collector/settings#self-managed-servers),
+or a secret key with [`db_log_syslog_server_key_contents`](/docs/collector/settings#self-managed-servers).
+Please note that if the `db_log_syslog_server_cert_file` setting is provided,
+the connection needs to be made as TLS and connection attempts without TLS will
+be rejected.
+
+This certificate is for the syslog server running as part of the collector. You
+have the option to use an existing certificate or generate a new self-signed
+certificate specifically for this purpose. In cases where a self-signed
+certificate or a certificate from an untrusted authority is used, it is also
+essential to specify the path to the TLS Certificate Authority (CA) certificate(s)
+with the [`db_log_syslog_server_ca_file`](/docs/collector/settings#self-managed-servers)
+setting. This CA certificate must also be provided to the client that is sending
+out logs to the syslog server, such as rsyslog.
+
+With these settings, logs from the client (like rsyslog) to the collector syslog
+server will be sent over TLS.
+
+You can also enable mutual TLS to ensure that the client side is also verified.
+The client side can provide a certificate for this, and if this certificate is
+a self-signed certificate or a certificate from an untrusted authority, the
+collector syslog server needs to know about the CA certificate for it. You can
+specify the CA certificate of the client side using the [`db_log_syslog_server_client_ca_file`](/docs/collector/settings#self-managed-servers)
+or [`db_log_syslog_server_client_ca_contents`](/docs/collector/settings#self-managed-servers)
+setting.

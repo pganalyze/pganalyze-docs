@@ -539,6 +539,57 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
         (see <a href="/docs/log-insights/setup/syslog-server">syslog server instructions</a>)</td>
     </tr>
     <tr>
+      <td>db_log_syslog_server_ca_file (<code>LOG_SYSLOG_SERVER_CA_FILE</code>)</td>
+      <td>[none]</td>
+      <td>
+        Path to TLS certificate authority (CA) certificate(s) to use to verify the certificate of the collector syslog server
+        (optional, not required if a certificate is signed by a trusted CA)
+      </td>
+    </tr>
+    <tr>
+      <td>db_log_syslog_server_ca_contents (<code>LOG_SYSLOG_SERVER_CA_CONTENTS</code>)</td>
+      <td>n/a, see above</td>
+      <td>Alternative to above, using actual contents of the CA certificate(s) instead</td>
+    </tr>
+    <tr>
+      <td>db_log_syslog_server_cert_file (<code>LOG_SYSLOG_SERVER_CERT_FILE</code>)</td>
+      <td>[none]</td>
+      <td>
+        Path to the collector syslog server's TLS certificate (required for receiving logs over TLS)
+      </td>
+    </tr>
+    <tr>
+      <td>db_log_syslog_server_cert_contents (<code>LOG_SYSLOG_SERVER_CERT_CONTENTS</code>)</td>
+      <td>n/a, see above</td>
+      <td>Alternative to above, using actual contents of the certificate instead</td>
+    </tr>
+    <tr>
+      <td>db_log_syslog_server_key_file (<code>LOG_SYSLOG_SERVER_KEY_FILE</code>)</td>
+      <td>[none]</td>
+      <td>
+        Path to the secret key used for the collector syslog server's certificate (required for receiving logs over TLS)
+      </td>
+    </tr>
+    <tr>
+      <td>db_log_syslog_server_key_contents (<code>LOG_SYSLOG_SERVER_KEY_CONTENTS</code>)</td>
+      <td>n/a, see above</td>
+      <td>Alternative to above, using actual contents of the secret key instead</td>
+    </tr>
+    <tr>
+      <td>db_log_syslog_server_client_ca_file (<code>LOG_SYSLOG_SERVER_CLIENT_CA_FILE</code>)</td>
+      <td>[none]</td>
+      <td>
+        Path to TLS certificate authority (CA) certificate(s) to use to verify the certificate of the client
+        that is sending logs to the collector syslog server, such as rsyslog
+        (optional, not required if a client doesn't provide a certificate or a client certificate is signed by a trusted CA)
+      </td>
+    </tr>
+    <tr>
+      <td>db_log_syslog_server_client_ca_contents (<code>LOG_SYSLOG_SERVER_CLIENT_CA_CONTENTS</code>)</td>
+      <td>n/a, see above</td>
+      <td>Alternative to above, using actual contents of the CA certificate(s) instead</td>
+    </tr>
+    <tr>
       <td>always_collect_system_data (<code>PGA_ALWAYS_COLLECT_SYSTEM_DATA</code>)</td>
       <td>false</td>
       <td>Always gather local system metrics, regardless of whether the database address is local or
