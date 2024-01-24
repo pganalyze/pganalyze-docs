@@ -9,7 +9,7 @@ export const CHECK_TITLES = {
   },
   index_advisor: {
     missing_index: "Missing Index",
-    index_insights: "Index Insights",
+    index_insights: "Missing Indexes",
   },
   schema: {
     index_invalid: "Invalid Indexes",
