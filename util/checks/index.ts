@@ -9,6 +9,7 @@ export const CHECK_TITLES = {
   },
   index_advisor: {
     missing_index: "Missing Index",
+    indexing_engine: "Missing Indexes",
   },
   schema: {
     index_invalid: "Invalid Indexes",
@@ -48,6 +49,7 @@ export const CHECK_SEVERITIES = {
   },
   index_advisor: {
     missing_index: ['info'],
+    indexing_engine: ['info'],
   },
   schema: {
     index_invalid: ['info'],
@@ -111,6 +113,7 @@ export const CHECK_FREQUENCY = {
   },
   index_advisor: {
     missing_index: CHECK_FREQUENCY_DAILY,
+    indexing_engine: CHECK_FREQUENCY_DAILY,
   },
   schema: {
     index_invalid: CHECK_FREQUENCY_30MIN,
@@ -181,6 +184,9 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
   },
   index_advisor: {
     missing_index: {
+      enabled: true
+    },
+    indexing_engine: {
       enabled: true
     }
   },
