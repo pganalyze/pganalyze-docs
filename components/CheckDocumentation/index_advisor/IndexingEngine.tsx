@@ -6,7 +6,7 @@ import {
   CheckTriggerProps,
 } from "../../../util/checks";
 
-const IndexInsightsTrigger: React.FunctionComponent<CheckTriggerProps> = () => {
+const IndexingEngineTrigger: React.FunctionComponent<CheckTriggerProps> = () => {
   return (
     <p>
       Detects when a table might be missing indexes based on the query workload
@@ -17,7 +17,7 @@ const IndexInsightsTrigger: React.FunctionComponent<CheckTriggerProps> = () => {
   );
 };
 
-const IndexInsightsGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
+const IndexingEngineGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   issue,
 }) => {
   if (issue) {
@@ -38,8 +38,8 @@ const IndexInsightsGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 const documentation: CheckDocs = {
   description:
     "Detects when a table might be missing indexes based on the query workload.",
-  Trigger: IndexInsightsTrigger,
-  Guidance: IndexInsightsGuidance,
+  Trigger: IndexingEngineTrigger,
+  Guidance: IndexingEngineGuidance,
 };
 
 export default documentation;

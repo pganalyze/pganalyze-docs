@@ -7,7 +7,7 @@ import ActiveQuery from "./connections/ActiveQuery";
 import IdleTransaction from "./connections/IdleTransaction";
 import BlockingQuery from "./connections/BlockingQuery";
 import MissingIndex from "./index_advisor/MissingIndex";
-import IndexInsights from "./index_advisor/IndexInsights";
+import IndexingEngine from "./index_advisor/IndexingEngine";
 import IndexInvalid from "./schema/IndexInvalid";
 import IndexUnused from "./schema/IndexUnused";
 import EnableFeatures from "./settings/EnableFeatures";
@@ -37,7 +37,7 @@ const Docs: {
   },
   index_advisor: {
     missing_index: MissingIndex,
-    index_insights: IndexInsights,
+    indexing_engine: IndexingEngine,
   },
   schema: {
     index_invalid: IndexInvalid,
