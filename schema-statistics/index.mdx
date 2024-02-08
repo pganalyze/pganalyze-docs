@@ -10,13 +10,13 @@ As part of the "Schema Statistics" functionality, pganalyze allows tracking work
 
 ![](table-treemap.png)
 
-In the schema statistics overview you can find two treemaps, as well as full lists of all the tables and indexes on a given database. The treemap is useful to identify how a specific index or table size relates to the total.
+In the schema statistics "Tables" and "Indexes" tabs you can find a treemap that breaks down the total size into individual objects, as well as full lists of all the tables and indexes on a given database.
 
 ## Table growth over time
 
 ![](table-growth.png)
 
-For each table you can track growth over time, understand how a table utilizes TOAST (The Oversized Attribute Storage Technique) for storing large values, and see the aggregate size for all indexes on the table.
+For each table you can track growth over time, understand how a table utilizes TOAST ([The Oversized-Attribute Storage Technique](https://www.postgresql.org/docs/current/storage-toast.html)) for storing large values, and see the aggregate size for all indexes on the table.
 
 ## Indexes
 

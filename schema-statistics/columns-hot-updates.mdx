@@ -18,17 +18,17 @@ Note that planner statistics are only available when the [get_column_stats](/doc
 
 ## Heap-Only Tuples (HOT) optimization
 
-On the "Columns" tab you can also see pganalyze's assessment whether UPDATEs on a given column can use the [Heap-Only Tuples (HOT)](https://www.postgresql.org/docs/current/storage-hot.html) optimization:
+On the "Columns" tab you can also see pganalyze's assessment whether updates on a given column can use the [Heap-Only Tuples (HOT)](https://www.postgresql.org/docs/current/storage-hot.html) optimization:
 
-* **Updates / Min**: How often this column is updated per minute on average, based on UPDATE statements and CTEs containing UPDATEs on this table. If multiple statements update this column, this is the sum of the average number of calls. Excludes any queries for which query analysis failed (see Index Advisor status).
+* **Updates / Min**: How often this column is updated per minute on average (over the selected time period), based on UPDATE statements and CTEs containing updates on this table. If multiple statements update this column, this is the sum of the average number of calls. Excludes any queries for which query analysis failed (see "Status" tab in the Index Advisor).
 * **Indexed?**: Indicates whether there are any indexes that include this column. This also considers indexes that have expressions referencing the column, as well as partial and covering indexes.
 * **HOT?**: Indicates whether updates on this column (if any) can create Heap-Only Tuples (HOT). Generally, updates are not HOT capable when the column is indexed. For best performance and to reduce VACUUM overhead, avoid creating indexes on columns that are updated frequently.
 
-HOT Updates generally have a significantly lower overhead, since they do not require any index updates. They also enable on-access HOT pruning, which reduces the effort that a future autovacuum will have to do to clean up dead rows.
+HOT updates generally have a significantly lower overhead, since they do not require any index updates. They also enable on-access HOT pruning, which reduces the effort that a future autovacuum will have to do to clean up dead rows.
 
-The HOT information is also utilized for calculating "Update Overhead" in the [constraint-programming model](/docs/indexing-engine/cp-model) for pganalyze Index Advisor (currently in early access), to avoid indexing columns that are being updated.
+The HOT information is also utilized for calculating "Update Overhead" in the [constraint-programming model](/docs/indexing-engine/cp-model) for pganalyze Index Advisor, to avoid indexing columns that are being updated.
 
-To see how UPDATEs on a table are utilizing HOT, you can check the table's overall statistics:
+To see how updates on a table are utilizing HOT, you can check the table's overall statistics:
 
 <div style="max-width: 500px">
 
@@ -36,4 +36,4 @@ To see how UPDATEs on a table are utilizing HOT, you can check the table's overa
 
 </div>
 
-Note that "Updated" includes all HOT updates. In this specific example, about half the updates were HOT Updates and had less overhead.
+Note that "Updated" includes all HOT updates. In this specific example, about half the updates were HOT updates and had less overhead.
