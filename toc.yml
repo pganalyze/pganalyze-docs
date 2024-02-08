@@ -16,6 +16,8 @@
     href: checks
   - name: Connections
     href: connections
+  - name: Schema Statistics
+    href: schema-statistics
   - name: Account Management
     href: accounts
   - name: Log Insights
