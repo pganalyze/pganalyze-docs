@@ -920,6 +920,14 @@
       "title": "Set up traceparent query tag within your application",
       "path": "/docs/opentelemetry/traceparent"
     },
+    "schema-statistics": {
+      "title": "Tracking Postgres schema statistics in pganalyze",
+      "path": "/docs/schema-statistics"
+    },
+    "schema-statistics/columns-hot-updates": {
+      "title": "Column statistics and HOT updates",
+      "path": "/docs/schema-statistics/columns-hot-updates"
+    },
     "vacuum-advisor": {
       "title": "pganalyze VACUUM Advisor",
       "path": "/docs/vacuum-advisor"
