@@ -10,7 +10,7 @@ On the "Columns" tab of each table you can find all columns that are defined on 
 
 * **Null %**: Fraction of the rows in this table that have a NULL value in this column.
 * **Avg. Size**: Average size, in bytes, of the values in this column across all the rows in this table (excluding NULLs).
-* **Num. Distinct**: Estimated number of distinct values in this column. If followed by an asterisk (*), the number of values is expected to grow as the table grows (e.g., for a unique value like a primary key).
+* **Num. Distinct**: Estimated number of distinct values in this column. If followed by an asterisk (*), the number of distinct values is expected to grow as the table grows (e.g., for a unique value like a primary key).
 
 In case of partitioned tables you will additionally see "Full NULL %", "Full Avg Size" and a second "Num. Distinct" data point. This represents the data that Postgres collects as an aggregate information across all partitions, as compared to just the partitioned table itself (in case of inheritance-based partitioning).
 
@@ -22,7 +22,7 @@ On the "Columns" tab you can also see pganalyze's assessment whether UPDATEs on 
 
 * **Updates / Min**: How often this column is updated per minute on average, based on UPDATE statements and CTEs containing UPDATEs on this table. If multiple statements update this column, this is the sum of the average number of calls. Excludes any queries for which query analysis failed (see Index Advisor status).
 * **Indexed?**: Indicates whether there are any indexes that include this column. This also considers indexes that have expressions referencing the column, as well as partial and covering indexes.
-* **HOT?**: Indicates whether updates on this column (if any) can create Heap Only Tuples (HOT). Generally, updates are not HOT capable when the column is indexed. For best performance and to reduce VACUUM overhead, avoid creating indexes on columns that are updated frequently.
+* **HOT?**: Indicates whether updates on this column (if any) can create Heap-Only Tuples (HOT). Generally, updates are not HOT capable when the column is indexed. For best performance and to reduce VACUUM overhead, avoid creating indexes on columns that are updated frequently.
 
 HOT Updates generally have a significantly lower overhead, since they do not require any index updates. They also enable on-access HOT pruning, which reduces the effort that a future autovacuum will have to do to clean up dead rows.
 
