@@ -6,13 +6,13 @@ backlink_title: 'Tracking Postgres schema statistics in pganalyze'
 
 ![](table-columns.png)
 
-On the "Columns" tab of each table you can find all columns that are defined on the table, as well as the planner statistics associated with the column (collected by ANALYZE):
+On the "Columns" tab of each table, you can find all columns that are defined on the table, as well as the planner statistics associated with the column (collected by ANALYZE):
 
 * **Null %**: Fraction of the rows in this table that have a NULL value in this column.
 * **Avg. Size**: Average size, in bytes, of the values in this column across all the rows in this table (excluding NULLs).
 * **Num. Distinct**: Estimated number of distinct values in this column. If followed by an asterisk (*), the number of distinct values is expected to grow as the table grows (e.g., for a unique value like a primary key).
 
-In case of partitioned tables you will additionally see "Full NULL %", "Full Avg Size" and a second "Num. Distinct" data point. This represents the data that Postgres collects as an aggregate information across all partitions, as compared to just the partitioned table itself (in case of inheritance-based partitioning).
+In case of partitioned tables, you will additionally see "Full NULL %", "Full Avg Size" and a second "Num. Distinct" data point. This represents the data that Postgres collects as an aggregate information across all partitions, as compared to just the partitioned table itself (in case of inheritance-based partitioning).
 
 Note that planner statistics are only available when the [get_column_stats](/docs/install/troubleshooting/column_stats_helper) helper is set up on your database.
 
