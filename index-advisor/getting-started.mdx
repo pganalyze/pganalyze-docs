@@ -65,6 +65,20 @@ for warnings in the collector test output (`pganalyze-collector --test
 --verbose`).
 
 
+## Set up the extended stats helper for better recommendations
+
+Extended statistics are used by pganalyze to improve Index Advisor
+recommendations. If you are using the extended statistics (created via
+`CREATE STATISTICS`), for best results, make sure you are running collector
+0.53.0 or later, and [set up the get_relation_stats_ext helper
+function](/docs/install/troubleshooting/ext_stats_helper).
+
+You can check which collector version you are running on the Settings page for
+your server, and can check if the column stats helpers are installed by looking
+for warnings in the collector test output (`pganalyze-collector --test
+--verbose`).
+
+
 ## How to navigate the insights overview
 
 ![Overview of missing index insights](/missing-index-list.png)
