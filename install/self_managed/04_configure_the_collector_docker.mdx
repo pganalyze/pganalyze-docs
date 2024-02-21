@@ -48,10 +48,20 @@ Fill in the values step-by-step:
 
 ## Test snapshot
 
-Then run the following:
+Then run the following to test the configuration:
 
 ```
 docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test
 ```
+
+<PublicOnly>
+
+After a successful test you can now start the collector in the background:
+
+```
+docker run -d --name pganalyze-collector --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable
+```
+
+</PublicOnly>
 
 <PublicLastStepLogInsightsLink />
