@@ -17,6 +17,7 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
     <>
       <MonitoringUserBase password={password} noPgMonitor={noPgMonitor} />
       <MonitoringUserColumnStats username="pganalyze" adminUsername={adminUsername} />
+      <MonitoringUserExtStats username="pganalyze" adminUsername={adminUsername} />
     </>
   );
 };
