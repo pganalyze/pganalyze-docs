@@ -9,7 +9,7 @@ First you can verify whether the log drain data is coming by looking at the rout
 logs of the collector app:
 
 ```bash
-heroku logs -d router -a [your-collector-app-name]
+heroku logs -d router -t -a [your-collector-app-name]
 ```
 
 If this shows no output, wait a few minutes and try again; sometimes it can take a
