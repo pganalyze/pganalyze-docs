@@ -83,7 +83,7 @@ $$
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
       <p>
-        <strong>Note:</strong> We never collect actual table data through this method (from the <code>pg_stats_ext</code> view, we are not collecting things like <code>most_common_vals</code> as you can see in the function definition), but we do collect statistics about the distribution of values in your tables.
+        <strong>Note:</strong> We never collect actual table data through this method (we omit fetching fields like <code>most_common_vals</code> from the <code>pg_stats_ext</code> view, as you can see in the function definition), but we do collect statistics about the distribution of values in your tables.
         You can skip creating the <code>get_relation_stats_ext</code> helper function if the database
         contains highly sensitive information and statistics about it should not be collected.
         This will impact the accuracy of Index Advisor recommendations.
