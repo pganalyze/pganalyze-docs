@@ -6,7 +6,7 @@ backlink_title: 'Installation Guide'
 ---
 
 import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx';
-import { MonitoringUserColumnStats, MonitoringUserLogRead } from "../../components/MonitoringUserSetupInstructions";
+import { MonitoringUserColumnStats, MonitoringUserLogRead, MonitoringUserExtStats } from "../../components/MonitoringUserSetupInstructions";
 
 export const CollectorStartCommand = ({ apiKey, cmd, logExplain }) => {
   return (
@@ -34,6 +34,8 @@ Additionally, run the following to allow the application user to read the Postgr
 <MonitoringUserLogRead username="application" />
 
 <MonitoringUserColumnStats username="application" />
+
+<MonitoringUserExtStats username="application" />
 
 In later steps you can now specify the application user credentials as the `DB_URL`.
 

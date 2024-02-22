@@ -1,0 +1,35 @@
+---
+title: 'Resolving the "missing extended stats monitoring helper functions" warning'
+backlink_href: /docs/install/troubleshooting
+backlink_title: 'Installation Troubleshooting'
+---
+
+import { MonitoringUserExtStats } from "../../components/MonitoringUserSetupInstructions";
+
+You may see the following warning in the pganalyze app:
+
+```
+Your database appears to be missing extended stats monitoring helper functions,
+so the data of extended statistics are not available. Please review the relevant
+troubleshooting documentation.
+```
+
+This warning indicates that extended statistics for the specific database are
+not being reported by the collector. Extended statistics are used by pganalyze
+to improve Index Advisor recommendations. Index Advisor will still work without
+the helper functions, but index recommendations may be less accurate.
+
+To resolve this, first, make sure you are running at least collector version
+0.53.0 (and ideally the latest version). You can see which version you are
+currently running by checking the Debug Info panel on the Server Settings tab of
+the Settings page for your server. Then, find the name for the database role
+that's configured as the monitoring user in your collector installation (we'll
+assume "pganalyze" here).
+
+<MonitoringUserExtStats username="pganalyze" />
+
+Note that unlike other pganalyze helper functions, this function must be
+installed in *every database* that you intend to monitor separately.
+
+After creating the helper function in all monitored databases, re-run the
+collector test to confirm the warning is no longer displayed.

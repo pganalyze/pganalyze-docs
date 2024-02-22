@@ -6,6 +6,8 @@
     href: install/troubleshooting/collector_times_out
   - name: 'Resolving the "Limited access to table column statistics" warning'
     href: install/troubleshooting/column_stats_helper
+  - name: 'Resolving the "missing extended stats monitoring helper functions" warning'
+    href: install/troubleshooting/ext_stats_helper
   - name: Resolving the 'permission denied to create extension "pg_stat_statements"' error
     href: install/troubleshooting/pg_stat_statements
   - name: 'Amazon RDS: Resolving the "pg_stat_statements must be loaded via shared_preload_libraries" error'
