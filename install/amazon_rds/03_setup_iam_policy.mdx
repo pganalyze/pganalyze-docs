@@ -5,10 +5,6 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
-import imgRdsSetUpIamPolicy from "../../images/rds_iam_role.png"
-
-export const ImgRdsSetUpIamPolicy = () => <img src={imgRdsSetUpIamPolicy} width="520" style={{ border: "1px solid grey" }} />
-
 Almost done! 🎉
 
 We now need to set up an IAM policy and user that the collector can use to access RDS information.
@@ -73,7 +69,13 @@ We recommend naming the policy "pganalyze" or similar, so you can easily identif
 To complete this step, [create an IAM role](https://console.aws.amazon.com/iam/home?#/roles$new?step=type)
 for pganalyze, and assign the policy to this new role.
 
-<ImgRdsSetUpIamPolicy />
+For the trusted entity, pick the following:
+
+- Trusted entity type: AWS service
+- Use case: EC2
+
+For the permission, choose the policy you just created in above.
+We recommend naming the role also "pganalyze" or similar.
 
 ---
 
