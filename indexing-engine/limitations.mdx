@@ -21,14 +21,18 @@ of queries and schemas are supported.
    requests is treated the same as a query in a background job)
  - Scans are extracted from the last 7 days of queries (this time period may be
    adjusted in the future)
- - The Indexing Engine is based on the Postgres 13.4 planner and may not give
-   accurate results for older or newer Postgres versions
+ - The Indexing Engine is based on the Postgres 13 or Postgres 14 planner and may
+   not give accurate results for older or newer Postgres versions
  - Support for custom search_path settings is best-effort: if you have multiple
    tables with the same name in different schemas and rely on search_path to
    disambiguate these, this may not be handled correctly
  - Postgres parameter markers ($1, $2, etc.) are supported, but sometimes there
    is not enough information to infer parameter types, leading to errors in
    analysis
+ - Existing partial indexes that directly reference a parameter value
+   (e.g. `CREATE INDEX ON table (record_id) WHERE state = 'active'`) are ignored
+   since the Indexing Engine cannot know for certain whether normalized queries
+   match the partial index condition
  - Temporary tables are not supported--you can work around this by creating a
    dummy schema with dummy table definitions matching the temp table structure:
    pganalyze should pick these up and substitute them when analyzing the query

@@ -4,12 +4,12 @@
     href: indexing-engine
   - name: "Phase 1: Query Analysis"
     href: indexing-engine-phase-1 # Not an actual link (only used below)
-  - name: "Phase 2: Index Selection"
+  - name: "Phase 2: Scan Cost Estimation through Hypothetical Indexes"
     href: indexing-engine-phase-2 # Not an actual link (only used below)
+  - name: "Phase 3: Index Selection using the Constraint Programming Model"
+    href: indexing-engine/cp-model
   - name: Index Write Overhead
     href: indexing-engine/index-write-overhead
-  - name: Constraint Programming Model (Early Access)
-    href: indexing-engine/cp-model
   - name: Limitations
     href: indexing-engine/limitations
 - mount: indexing-engine-phase-1
@@ -24,5 +24,3 @@
     href: indexing-engine/multi-column-indexes
   - name: What If? Analysis
     href: indexing-engine/what-if-analysis
-  - name: '"Good Enough" Index Selection'
-    href: indexing-engine/good-enough-index-selection

@@ -473,12 +473,16 @@
       "path": "/docs/indexing-engine"
     },
     "indexing-engine/cp-model": {
-      "title": "Constraint Programming Model for Index Selection (Early Access)",
+      "title": "Constraint Programming Model for Index Selection",
       "path": "/docs/indexing-engine/cp-model"
     },
     "indexing-engine/cp-model/goals": {
       "title": "Constraint Programming Model: Goals",
       "path": "/docs/indexing-engine/cp-model/goals"
+    },
+    "indexing-engine/cp-model/presets": {
+      "title": "Constraint Programming Model: Predefined Configurations",
+      "path": "/docs/indexing-engine/cp-model/presets"
     },
     "indexing-engine/cp-model/rules": {
       "title": "Constraint Programming Model: Rules",
@@ -487,10 +491,6 @@
     "indexing-engine/cp-model/settings": {
       "title": "Constraint Programming Model: Settings",
       "path": "/docs/indexing-engine/cp-model/settings"
-    },
-    "indexing-engine/good-enough-index-selection": {
-      "title": "Indexing Engine: \"Good Enough\" Index Selection Algorithm",
-      "path": "/docs/indexing-engine/good-enough-index-selection"
     },
     "indexing-engine/index-element-extraction": {
       "title": "Indexing Engine: Index Parameter Extraction",

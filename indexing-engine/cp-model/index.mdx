@@ -1,11 +1,7 @@
 ---
-title: 'Constraint Programming Model for Index Selection (Early Access)'
+title: 'Constraint Programming Model for Index Selection'
 backlink_href: /docs
 backlink_title: 'Documentation'
----
-
-**Important:** The new constraint programming (CP) model for the pganalyze Indexing Engine and pganalyze Index Advisor is currently in early access. We are working with a small set of customers to refine the experience. You can [contact us](/contact) to inquire about joining the preview.
-
 ---
 
 In the CP model, indexes are suggested based on user-defined goals and rules. You may want to cover as many scans as possible with the available indexes, or to make the costs of the scans as small as possible, or to stay within a given index budget, and so on.
@@ -17,3 +13,5 @@ The difference between a goal and a rule may appear subtle, but it is an importa
 - A rule *sets a limit on something*: "Make sure not to use more than 3 indexes".
 
 Learn more about the available [goals](/docs/indexing-engine/cp-model/goals) and [rules](/docs/indexing-engine/cp-model/rules), or see an example of the [settings](/docs/indexing-engine/cp-model/settings).
+
+<!-- TODO: Reword this page so it talks a bit more about the Index Write Overhead / Read Performance competing objectives (possibly with diagram), and also clarify predefined configs vs custom config -->

@@ -20,9 +20,12 @@ The model takes as input a settings JSON object. All settings are optional, and 
         "Tolerance": 0.0
       }
     ],
-    "Rules": {
-      "Maximum Number of Indexes": 10
-    }
+    "Rules": [
+      {
+        "Name": "Maximum Number of Indexes",
+        "Value": 10
+      }
+    ]
   }
 }
 ```
@@ -46,7 +49,7 @@ It has multiple options to allow customization:
 | Name       | Type          | Min | Max | Default | Description                             |
 |------------|---------------|-----|-----|---------|-----------------------------------------|
 | Goals      | `array[Goal]` | n/a | n/a | `[]`    | Ordered list of goals                   |
-| Rules      | `array[Rule]` | n/a | n/a | `[]`    | Set of rules                            |
+| Rules      | `array[Rule]` | n/a | n/a | `[]`    | List of rules                            |
 | Time Limit | `float`       | 0.0 | ∞   | ∞       | Time allotted to the model              |
 
 Each goal is defined by its name and tolerance (0.0 to ∞). The available goals are:
@@ -56,9 +59,9 @@ Each goal is defined by its name and tolerance (0.0 to ∞). The available goals
 * [Minimize Total Cost](goals#minimize-total-cost)
 * [Minimize Maximum Cost](goals#minimize-maximum-cost)
 * [Minimize Maximum Relative Cost](goals#minimize-maximum-relative-cost)
-* [Minimize Total Impact](goals#minimize-total-impact)
-* [Minimize Maximum Impact](goals#minimize-maximum-impact)
-* [Minimize Maximum Relative Impact](goals#minimize-maximum-relative-impact)
+* [Minimize Total Weighted Cost](goals#minimize-total-weighted-cost)
+* [Minimize Maximum Weighted Cost](goals#minimize-maximum-weighted-cost)
+* [Minimize Maximum Relative Weighted Cost](goals#minimize-maximum-relative-weighted-cost)
 * [Minimize Update Overhead](goals#minimize-update-overhead)
 
 The rules are defined by their name and an associated value. If a rule is not defined in the settings, it will be automatically created and it will be assigned its default value:
@@ -66,7 +69,7 @@ The rules are defined by their name and an associated value. If a rule is not de
 | Rule Name                                                                    | Type      | Min | Max | Default | Description                              |
 |------------------------------------------------------------------------------|-----------|-----|-----|---------|------------------------------------------|
 | [Maximum Per-Scan Cost Tolerance](rules#maximum-per-scan-cost-tolerance)     | `float`   | 0.0 | ∞   | ∞       | Scan cost tolerance w.r.t. best cost     |
-| [Maximum Per-Scan Impact Tolerance](rules#maximum-per-scan-impact-tolerance) | `float`   | 0.0 | ∞   | ∞       | Scan impact tolerance w.r.t. best impact |
+| [Maximum Per-Scan Weighted Cost Tolerance](rules#maximum-per-scan-weighted-cost-tolerance) | `float`   | 0.0 | ∞   | ∞       | Scan weighted cost tolerance w.r.t. best weighted cost |
 | [Maximum Number of Indexes](rules#maximum-number-of-indexes)                 | `integer` | 0   | ∞   | ∞       | Maximum number of indexes suggested      |
 | [Maximum Index Write Overhead](rules#maximum-index-write-overhead)           | `float`   | 0.0 | ∞   | ∞       | Maximum index write overhead allowed     |
 | [Minimum Coverage](rules#minimum-coverage)                                   | `float`   | 0.0 | 1.0 | 0.0     | Portion of coverable scans covered       |
@@ -86,9 +89,3 @@ There are two goals:
 Suppose that the total cost found by the first goal is 200. Normally (with a tolerance of 0) the second goal should determine the lowest index write overhead required to achieve costs no higher than 200.
 
 However, with a tolerance of 0.1, the second goal will instead determine the lowest index write overhead required to achieve costs no higher than 220 (because 200 + 10% = 220).
-
-## Greedy Method
-
-If the method is `Greedy`, the [greedy algorithm](/docs/indexing-engine/good-enough-index-selection#set-covering-algorithm) will be used. It is kept for backwards compatibility purposes, and we do not recommend using it otherwise.
-
-The `Greedy` method has only one option: `Good Enough Threshold` (a `float` in range [0.0, 1.0], default 0.5) that defines the "[Good Enough](../good-enough-index-selection)" threshold.

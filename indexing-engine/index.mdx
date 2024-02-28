@@ -36,16 +36,24 @@ The Indexing Engine model used for recommendations is built on:
 
 ![](./architecture.png)
 
+<!-- TODO: This diagram should be updated to list Phase 3 separately -->
+
 The Indexing Engine consists of multiple components, and runs in two phases:
 
 * Phase 1: Query Analysis
   - [Query To Scan Breakdown](/docs/indexing-engine/query-to-scan-breakdown)
 
-* Phase 2: Index Selection
+* Phase 2: Scan Cost Estimation through Hypothetical Indexes
   - [Extracting Index Element Candidates](/docs/indexing-engine/index-element-extraction)
   - [Multi-Column Index Combinations](/docs/indexing-engine/multi-column-indexes)
   - [What If? Analysis](/docs/indexing-engine/what-if-analysis)
-  - ["Good Enough" Index Selection](/docs/indexing-engine/good-enough-index-selection)
+
+* Phase 3: Index Selection with the Constraint Programming Model
+  - [How The Model Works](/docs/indexing-engine/cp-model)
+  - [Predefined Configurations](/docs/indexing-engine/cp-model/presets)
+  - [Custom Configuration](/docs/indexing-engine/cp-model/settings)
+  - [Custom Configuration - Goals](/docs/indexing-engine/cp-model/goals)
+  - [Custom Configuration - Rules](/docs/indexing-engine/cp-model/rules)
 
 In addition you may find it useful to understand how we calculate [Index Write Overhead](/docs/indexing-engine/index-write-overhead).
 
@@ -68,7 +76,7 @@ We plan to add support for more index types (such as GIN, Hash, BRIN and multi-c
 
 In the initial release the Indexing Engine provides missing index recommendations, as well as unused index recommendations.
 
-We are also working on index consolidation recommendations in a future release, by using the ["Good Enough Index" Selection](/docs/indexing-engine/good-enough-index-selection) algorithm to help you reduce [Index Write Overhead](/docs/indexing-engine/index-write-overhead).
+**Early access:** We are also inviting customers to test out index consolidation recommendations (in preview), which use the [Constraing Programming Model](/docs/indexing-engine/cp-model) to recommend changes to reduce [Index Write Overhead](/docs/indexing-engine/index-write-overhead). If you're interested in joining the preview, [contact us](/contact).
 
 ### Does the Indexing Engine require special extensions?
 
@@ -88,7 +96,7 @@ No. The Indexing Engine is powered by a purpose-built optimization algorithm bas
 
 Whilst there have been attempts to use machine learning for index selection algorithms, in practice it has been shown (see e.g. ["An Experimental Evaluation of Index Selection Algorithms"](http://www.vldb.org/pvldb/vol13/p2382-kossmann.pdf)) that they take significantly longer to run, without providing better recommendations.
 
-As part of its optimization algorithm, the pganalyze Indexing Engine is able to test possible indexes a lot quicker, due to its unique [What If? analysis](/docs/indexing-engine/what-if-analysis) logic.
+As part of its optimization algorithm, the pganalyze Indexing Engine is able to test possible indexes a lot quicker, due to its unique [What If? analysis](/docs/indexing-engine/what-if-analysis) logic, as well as it's [Constraint Programming Model](/docs/indexing-engine/cp-model).
 
 ### Is the Indexing Engine fully automating index creation for me?
 
