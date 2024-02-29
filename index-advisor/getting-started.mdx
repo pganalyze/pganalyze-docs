@@ -87,7 +87,7 @@ your server.
 
 ![Overview of missing index insights](/ia-overview-missing-indexes.png)
 
-At the top of the overview page you find KPIs that frame the insight
+At the top of the overview page you find relevant metrics that frame the insight
 findings for you. You can reference the same metrics when you look into the
 missing and unused index insights below.
 
@@ -122,7 +122,9 @@ can be executed more efficiently if appropriate indexes are present. The Index
 Advisor attempts to infer what indexes would be helpful for your query workload.
 See more details in the [Indexing Engine documentation](/docs/indexing-engine).
 
-The impact of a missing index insight is measured by weighted cost improvement.
+The impact of a missing index insight is measured by weighted cost improvement,
+which represents the estimated cost reduction for all scans that are expected to use
+the index, weighted by the frequency (calls / minute) of the scan.
 
 ### Unused indexes
 
