@@ -448,6 +448,10 @@
       "title": "Index Advisor: Track Index Insights With Alerts",
       "path": "/docs/index-advisor/checks-and-alerts"
     },
+    "index-advisor/configuration": {
+      "title": "Index Advisor: Experimenting with different configurations",
+      "path": "/docs/index-advisor/configuration"
+    },
     "index-advisor/getting-started": {
       "title": "Index Advisor: Getting Started",
       "path": "/docs/index-advisor/getting-started"

@@ -1,0 +1,77 @@
+---
+title: 'Index Advisor: Experimenting with different configurations'
+backlink_href: /docs/index-advisor
+backlink_title: 'Index Advisor (in-app in pganalyze)'
+---
+
+Index Advisor will apply one of the three configuration presets depending
+on the workload pattern on a table:
+
+- Read-optimized
+- Balanced
+- Write-optimized
+
+**Write-optimized**
+
+Any table with writes per minute greater than the threshold of 60 will use
+the Write-optimized configuration. The Write-optimized configuration prioritizes
+fewer indexes by allowing more suboptimal scan costs.
+
+**Read-optimized**
+
+Any table that is not write-heavy and has scans per minute greater than the
+threshold of 1000 will use the Read-optimized configuration. The Read-optimized
+configuration prioritizes more indexes for achieving better scan costs.
+
+**Balanced**
+
+Any table that does not fit into the Write-optimized or Read-optimized
+configuration will use the Balanced Configuration. Typically this configuration will
+include more indexes than Write-optimized, but not as many as a Read-optimized
+configuration.
+
+An exception to these configurations are tables that are smaller than
+10 MB in table size (by default), those will be ignored by the Index Advisor.
+
+You can adjust the thresholds that control which configuration gets picked depending
+on each table's workload by clicking on "Configure thresholds" on the Index Advisor
+"Configure" tab. You can also override the configuration for specific tables, or use
+a completely customized configuration for the underlying [Constraint Programming Model](/docs/indexing-engine/cp-model).
+
+## Exploring alternate configurations
+
+![](/table-ia-detail.png)
+
+You can explore how different configurations will impact the recommendations
+for any table. Navigate to the Index Advisor tab on a table, experiment with
+different configurations, and compare the different results.
+
+![](/table-ia-read-optimized.png)
+
+If you do not agree with the automatically applied configuration for a table,
+you can overwrite the configuration, and it will be used on the next Index
+Advisor run.
+
+![](/table-ia-custom-configuration.png)
+
+If you’d like to dig in deeper, the underlying model is fully documented and
+customizable. You have the freedom to experiment and adjust the recommendations
+to perfectly align with your unique requirements, such as only allowing a
+specific maximum number of indexes to be created on a table.
+
+In the custom configuration settings, you can also set a table to be ignored
+by Index Advisor if you do not want to receive any missing index insights
+for this table.
+
+## Saving configuration overrides
+
+When you save a configuration to a table it will be applied with the next Indexing
+Engine run. Expect Index Advisor to pick up the new configuration within 24 hours at
+the latest. Whilst anyone in the organization can explore different configurations,
+only members with the Modify permission can save them.
+
+![](/ia-overview-configure.png)
+
+To get an overview what configurations are currently applied across a database, you
+can navigate to the Configure tab in Index Advisor.
+
