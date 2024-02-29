@@ -74,9 +74,9 @@ We plan to add support for more index types (such as GIN, Hash, BRIN and multi-c
 
 ### What type of recommendations does the Indexing Engine provide?
 
-In the initial release the Indexing Engine provides missing index recommendations, as well as unused index recommendations.
+In the current release the Indexing Engine provides missing index recommendations, as well as unused index recommendations.
 
-**Early access:** We are also inviting customers to test out index consolidation recommendations (in preview), which use the [Constraing Programming Model](/docs/indexing-engine/cp-model) to recommend changes to reduce [Index Write Overhead](/docs/indexing-engine/index-write-overhead). If you're interested in joining the preview, [contact us](/contact).
+**Early access:** We are also inviting customers to test out index consolidation recommendations (in preview), which use the [Constraint Programming Model](/docs/indexing-engine/cp-model) to recommend changes to reduce [Index Write Overhead](/docs/indexing-engine/index-write-overhead). If you're interested in joining the preview, [contact us](/contact).
 
 ### Does the Indexing Engine require special extensions?
 
@@ -100,6 +100,6 @@ As part of its optimization algorithm, the pganalyze Indexing Engine is able to 
 
 ### Is the Indexing Engine fully automating index creation for me?
 
-In the initial release the Indexing Engine results require a human review by a database operator. Specifically, when index recommendations are presented through the pganalyze Index Advisor, we expect you to [perform a benchmark on a production copy](/docs/index-advisor/test-insights), and if results are suitable, to deploy the index to production with your existing workflows.
+In the current release the Indexing Engine results require a human review by a database operator. Specifically, when index recommendations are presented through the pganalyze Index Advisor, we expect you to [perform a benchmark on a production copy](/docs/index-advisor/test-insights), and if results are suitable, to deploy the index to production with your existing workflows.
 
 In future releases we plan to offer more workflow integrations, for example by automatically testing suggested indexes on a database copy, and, if suitable for your use case, applying them to your production database in a (semi-)automated manner.
