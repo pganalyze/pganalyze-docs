@@ -1,0 +1,93 @@
+---
+title: 'Indexing Engine CP Model: Built-in Configurations'
+backlink_href: /docs/indexing-engine/cp-model
+backlink_title: 'Constraint Programming Model'
+---
+
+By default, one of the following built-in configurations is applied, depending
+on the workload pattern on the table. You can learn more about the high-level
+perspective on this in the [Index Advisor configuration documentation](/docs/index-advisor/configuration).
+
+Read the [rules](rules) and [goals](goals) documentation to understand the difference between configurations.
+
+## Write-optimized
+
+```json
+{
+  "Method": "CP",
+  "Options": {
+    "Goals": [
+      {
+        "Name": "Minimize Maximum Weighted Cost",
+        "Tolerance": 10
+      },
+      {
+        "Name": "Minimize Update Overhead",
+        "Tolerance": 0
+      },
+      {
+        "Name": "Minimize Index Write Overhead",
+        "Tolerance": 0
+      }
+    ],
+    "Rules": [
+      {
+        "Name": "Maximum Per-Scan Cost Tolerance",
+        "Value": 100
+      }
+    ]
+  }
+}
+```
+
+## Balanced
+
+```json
+{
+  "Method": "CP",
+  "Options": {
+    "Goals": [
+      {
+        "Name": "Minimize Update Overhead",
+        "Tolerance": 0
+      },
+      {
+        "Name": "Minimize Index Write Overhead",
+        "Tolerance": 0
+      }
+    ],
+    "Rules": [
+      {
+        "Name": "Maximum Per-Scan Cost Tolerance",
+        "Value": 10
+      }
+    ]
+  }
+}
+```
+
+## Read-optimized
+
+```json
+{
+  "Method": "CP",
+  "Options": {
+    "Goals": [
+      {
+        "Name": "Minimize Update Overhead",
+        "Tolerance": 0
+      },
+      {
+        "Name": "Minimize Index Write Overhead",
+        "Tolerance": 0
+      }
+    ],
+    "Rules": [
+      {
+        "Name": "Maximum Per-Scan Cost Tolerance",
+        "Value": 5
+      }
+    ]
+  }
+}
+```

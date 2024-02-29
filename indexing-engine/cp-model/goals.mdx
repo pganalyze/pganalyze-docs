@@ -1,6 +1,6 @@
 ---
-title: 'Constraint Programming Model: Goals'
-backlink_href: /docs/indexing-engine/constraint-programming-model
+title: 'Indexing Engine CP Model: Custom Configuration - Goals'
+backlink_href: /docs/indexing-engine/cp-model
 backlink_title: 'Constraint Programming Model'
 ---
 
@@ -49,25 +49,25 @@ The *Minimize Maximum Relative Cost* goal strives to minimize the largest relati
 
 <CopyCodeBlock content={`{ "Name": "Minimize Maximum Relative Cost", "Tolerance": 10.0 }`} language="json" />
 
-### Minimize Total Impact
+### Minimize Total Weighted Cost
 
-The *Minimize Total Impact* goal strives to minimize the combined impacts of the scans.
+The *Minimize Total Weighted Cost* goal strives to minimize the combined weighted costs of the scans.
 
-The impact of a scan is a measure of its influence on performance, and is equal to its cost multiplied by the frequency in which it appears in queries. Common scans with high costs will tend to have a higher impact on performance than uncommon scans with lower costs.
+The weighted cost of a scan is a measure of its influence on performance, and is equal to its cost multiplied by the frequency in which it appears in queries. Common scans with high costs will tend to have a higher weighted cost than uncommon scans with lower costs.
 
-<CopyCodeBlock content={`{ "Name": "Minimize Total Impact", "Tolerance": 0.1 }`} language="json" />
+<CopyCodeBlock content={`{ "Name": "Minimize Total Weighted Cost", "Tolerance": 0.1 }`} language="json" />
 
-### Minimize Maximum Impact
+### Minimize Maximum Weighted Cost
 
-The *Minimize Maximum Impact* goal strives to minimize the largest impact found among the scans.
+The *Minimize Maximum Weighted Cost* goal strives to minimize the largest weighted cost found among the scans.
 
-<CopyCodeBlock content={`{ "Name": "Minimize Maximum Impact", "Tolerance": 1.0 }`} language="json" />
+<CopyCodeBlock content={`{ "Name": "Minimize Maximum Weighted Cost", "Tolerance": 1.0 }`} language="json" />
 
-### Minimize Maximum Relative Impact
+### Minimize Maximum Relative Weighted Cost
 
-The *Minimize Maximum Relative Impact* goal strives to minimize the largest relative impact found among the scans. The *relative impact* of a scan is equal to its actual value divided by the best possible value it could get in theory.
+The *Minimize Maximum Relative Weighted Cost* goal strives to minimize the largest relative weighted cost found among the scans. The *relative weighted cost* of a scan is equal to its actual value divided by the best possible value it could get in theory.
 
-<CopyCodeBlock content={`{ "Name": "Minimize Maximum Relative Impact", "Tolerance": 10.0 }`} language="json" />
+<CopyCodeBlock content={`{ "Name": "Minimize Maximum Relative Weighted Cost", "Tolerance": 10.0 }`} language="json" />
 
 ### Minimize Update Overhead
 

@@ -4,74 +4,128 @@ backlink_href: /docs/index-advisor
 backlink_title: 'Index Advisor (in-app in pganalyze)'
 ---
 
-![With our recommendations we also give you all the context you need to reason about them](/missing-index-detail.png)
+![With our recommendations we also give you all the context you need to reason about them](/issue-missing-indexes.png)
 
 Index Advisor creates [issues](/docs/checks) for newly detected insights. They
-give you details on the insight and the context to evaluate the suggestion. When
+give you details and the context to evaluate the recommendations. When
 reasoning about an index recommendation, you may want to refer to existing
-indexes on the table, queries affected, and table scans.
+indexes on the table, queries affected, and scans on the table.
 
 Different variants of indexes are tried during the Index Advisor recommendation
 process that produces the lowest cost (and thus the lowest estimated I/O when
-executing the query). When Index Advisor finds a recommendation, it will show an
-expected cost improvement.
+executing the query). When the Index Advisor finds a recommendation, it will show
+an expected cost improvement.
 
-The cost improvement is based on the [Postgres query execution cost
-model](https://www.postgresql.org/docs/current/using-explain.html). It is an
-average across the individual cost improvements for each scan that can benefit
-from the query, weighted by the frequency of the scan (based on the queries that
+## Estimated outcome
+
+<div style="max-width: 300px">
+
+![](/estimated-outcome.png)
+
+</div>
+
+**Scan Cost**
+
+The total and maximum of estimated scan costs across all scans. This is an estimate of I/O effort to
+read data, but does not directly translate to query runtime. Lower is better.
+
+**Weighted Cost**
+
+Expected effect of the execution of a scan on the database, based on its cost
+and frequency. Like with cost, the absolute value is not meaningful, but can
+use relative differences between weighted cost to compare different scans.
+
+**Impact and Weighted Cost Improvement**
+
+This is a weighted average of the estimated cost improvement across all scans
+on the table, weighting by average scans / minute. Higher weighted cost
+improvements are shown as higher impact.
+
+**Scan Coverage**
+
+The number of scans that are covered by an index out of the total number of scans. Higher is better.
+
+**Indexes Used**
+
+The overall number of indexes on the table, before and after the proposed indexes.
+
+**Index Write Overhead**
+
+The cost of writes to this table by this many bytes for every byte written to the table. Lower is better.
+
+**Update Overhead**
+
+The overhead of each UPDATE statement that is not eligible for the Heap-Only Tuples (HOT) performance
+optimization in Postgres due to indexes being present. If possible, this should be kept at 0.
+
+## Index details
+
+![](/issue-missing-indexes-index-detail.png)
+
+If you want to understand what scans and queries are affected by one of the index recommendations,
+you can view them on the index detail view. Compare the current costs with the estimated new costs.
+
+## Scan details
+
+![](/issue-missing-indexes-scan-detail.png)
+
+On the scan detail view, you can learn what indexes were considered for any given scan by the
+Index Advisor to allow you to debug the costs and selections and understand better why
+Index Advisor prefers certain indexes.
+
+The cost for each index is based on the [Postgres query execution cost model](https://www.postgresql.org/docs/current/using-explain.html).
+
+The weighted cost is weighted by the frequency of the scan (based on the queries that
 contain the scan). More frequent queries will have a more significant impact on
 the overall weighted cost improvement.
 
+## Scans
 
-## Table scans
+![](/scans-list.png)
 
-![](/scans.png)
-
-On specific index insights, query detail pages, and schema statistics table
+For recommended indexes, on query detail pages, and schema statistics table
 detail pages, you will see a section called “Scans”. Each scan has an associated
 estimated cost that is averaged across all queries it is referenced in. For more
 information about how this works, [read our Indexing Engine
 documentation](/docs/indexing-engine/query-to-scan-breakdown).
 
 On the Index Advisor insight page, the scan list includes the following:
+ - Estimated scans per minute
+ - The current cost
+ - Estimated new cost if you were to apply the recommendation
 
- - the current cost
- - estimated scans per minute
- - estimated cost improvement if you were to apply the recommendation
+On the schema statistics table detail pages, the list includes:
+ - The scan method
+ - The current cost
+ - Estimated scans per minute
 
-Cost improvements are expressed as a multiplier, for example, 1.2× faster than
-the old estimated cost. The table sorts by cost improvement.
-
-On schema statistics table detail pages, the list includes:
-
- - the scan method
- - the current cost
- - estimated scans per minute
-
-On query detail pages, the list includes:
-
- - the scan method (with a check icon if using an index and a warning icon for sequential scans)
- - the current cost
- - the size of the table being scanned (scans are okay for small tables)
-
+On the query detail pages, the list includes:
+ - The WHERE and JOIN clauses
+ - The scan method
+ - Index Advisor insight if available
+ - The current cost
+ - The size of the table being scanned (sequential scans are okay for small tables)
 
 ## Affected queries
 
-![](/affected-queries.png)
+![](/affected-queries-list.png)
 
 Affected queries include all queries on a particular table that contain at least
 one condition in their WHERE or JOIN clause that would be affected by the index
 recommendation. E.g., if a column in a proposed index is used as a filter
 condition in a WHERE clause, the query may benefit from this index.
 
+By default only queries are shown that will see a cost reduction through the
+selected index. You can show all queries that could possibly use the index by
+marking the “Show all queries” checkbox.
+
+The scan cost change shows how the estimated cost of the query's scan on the
+current table would change when the index is added.
 
 ## Existing indexes
 
-![](/existing-indexes.png)
-
-To reason about recommendations, the Index Advisor insight page also shows
-all existing indexes on the table. E.g., you may want to avoid adding a proposed
-index if it's very similar to an existing index, and instead you may want to
-rewrite the affected query so that it can take advantage of the existing index.
-
+Existing indexes on a table are honored by the Index Advisor. To reason about
+recommendations, the insight page also shows all existing indexes on the table.
+E.g., you may want to avoid adding a proposed index if it's very similar to
+an existing index, and instead you may want to rewrite the affected query
+so that it can take advantage of the existing index.

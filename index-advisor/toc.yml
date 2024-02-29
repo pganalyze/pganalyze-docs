@@ -4,6 +4,8 @@
     href: index-advisor/getting-started
   - name: "How to Reason About Missing Index Insights"
     href: index-advisor/reason-about-insights
+  - name: "Experimenting With Different Configurations"
+    href: index-advisor/configuration
   - name: "How to Test Missing Index Insights"
     href: index-advisor/test-insights
   - name: "Track Index Insights With Alerts"

@@ -448,6 +448,10 @@
       "title": "Index Advisor: Track Index Insights With Alerts",
       "path": "/docs/index-advisor/checks-and-alerts"
     },
+    "index-advisor/configuration": {
+      "title": "Index Advisor: Experimenting With Different Configurations",
+      "path": "/docs/index-advisor/configuration"
+    },
     "index-advisor/getting-started": {
       "title": "Index Advisor: Getting Started",
       "path": "/docs/index-advisor/getting-started"
@@ -473,24 +477,24 @@
       "path": "/docs/indexing-engine"
     },
     "indexing-engine/cp-model": {
-      "title": "Constraint Programming Model for Index Selection (Early Access)",
+      "title": "Indexing Engine: Index Selection using the Constraint Programming Model",
       "path": "/docs/indexing-engine/cp-model"
     },
+    "indexing-engine/cp-model/built-in-configs": {
+      "title": "Indexing Engine CP Model: Built-in Configurations",
+      "path": "/docs/indexing-engine/cp-model/built-in-configs"
+    },
     "indexing-engine/cp-model/goals": {
-      "title": "Constraint Programming Model: Goals",
+      "title": "Indexing Engine CP Model: Custom Configuration - Goals",
       "path": "/docs/indexing-engine/cp-model/goals"
     },
     "indexing-engine/cp-model/rules": {
-      "title": "Constraint Programming Model: Rules",
+      "title": "Indexing Engine CP Model: Custom Configuration - Rules",
       "path": "/docs/indexing-engine/cp-model/rules"
     },
     "indexing-engine/cp-model/settings": {
-      "title": "Constraint Programming Model: Settings",
+      "title": "Indexing Engine CP Model: Custom Configuration",
       "path": "/docs/indexing-engine/cp-model/settings"
-    },
-    "indexing-engine/good-enough-index-selection": {
-      "title": "Indexing Engine: \"Good Enough\" Index Selection Algorithm",
-      "path": "/docs/indexing-engine/good-enough-index-selection"
     },
     "indexing-engine/index-element-extraction": {
       "title": "Indexing Engine: Index Parameter Extraction",

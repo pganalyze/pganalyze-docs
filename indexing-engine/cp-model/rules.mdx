@@ -1,6 +1,6 @@
 ---
-title: 'Constraint Programming Model: Rules'
-backlink_href: /docs/indexing-engine/constraint-programming-model
+title: 'Indexing Engine CP Model: Custom Configuration - Rules'
+backlink_href: /docs/indexing-engine/cp-model
 backlink_title: 'Constraint Programming Model'
 ---
 
@@ -19,16 +19,16 @@ The *Maximum Per-Scan Cost Tolerance* rule ensures that the cost of each scan is
 
 If the tolerance were set to 0.5 (i.e., 50%), the cost of each scan would be assured to be no worse than 150% of their best possible cost. Suppose that the best cost of a certain scan is 20. With the tolerance set to 0.5, the cost of that scan in the solution could not be worse than 150% of 20, which is 30.
 
-<CopyCodeBlock content={`"Maximum Per-Scan Cost Tolerance": 10.0`} language="json" />
+<CopyCodeBlock content={`{ "Name": "Maximum Per-Scan Cost Tolerance", "Value": 10.0 }`} language="json" />
 
 
-###  Maximum Per-Scan Impact Tolerance
+###  Maximum Per-Scan Weighted Cost Tolerance
 
 **Default value: Unlimited**
 
-The *Maximum Per-Scan Impact Tolerance* rule ensures that the impact of each scan is not worse than their best possible impact (taking into account a tolerance parameter). See [Maximum Per-Scan Cost Tolerance](#maximum-per-scan-cost-tolerance) for an example.
+The *Maximum Per-Scan Weighted Cost Tolerance* rule ensures that the weighted cost of each scan is not worse than their best possible weighted cost (taking into account a tolerance parameter). See [Maximum Per-Scan Cost Tolerance](#maximum-per-scan-cost-tolerance) for an example.
 
-<CopyCodeBlock content={`"Maximum Per-Scan Impact Tolerance": 10.0`} language="json" />
+<CopyCodeBlock content={`{ "Name": "Maximum Per-Scan Weighted Cost Tolerance", "Value": 10.0 }`} language="json" />
 
 
 ### Maximum Number of Indexes
@@ -37,7 +37,7 @@ The *Maximum Per-Scan Impact Tolerance* rule ensures that the impact of each sca
 
 The *Maximum Number of Indexes* rule specifies a maximum number of indexes that can be selected by the model. This rule can be used in conjunction with the [Minimize Number of Indexes](goals#minimize-number-of-indexes) goal.
 
-<CopyCodeBlock content={`"Maximum Number of Indexes": 16`} language="json" />
+<CopyCodeBlock content={`{ "Name": "Maximum Number of Indexes", "Value": 16 }`} language="json" />
 
 
 ### Maximum Index Write Overhead
@@ -46,7 +46,7 @@ The *Maximum Number of Indexes* rule specifies a maximum number of indexes that 
 
 The *Maximum Index Write Overhead* rule specifies a maximum value for the total index write overhead of the indexes suggested by the model. This rule can be used in conjunction with the [Minimize Index Write Overhead](goals#minimize-index-write-overhead) goal.
 
-<CopyCodeBlock content={`"Maximum Index Write Overhead": 1.0`} language="json" />
+<CopyCodeBlock content={`{ "Name": "Maximum Index Write Overhead", "Value": 1.0 }`} language="json" />
 
 
 ### Minimum Coverage
@@ -57,4 +57,4 @@ The *Minimum Coverage* rule ensures that a portion of the coverable scans (at le
 
 A scan is considered to be covered only if at least one of the selected indexes provides that scan with a cost improvement over its sequential read cost.
 
-<CopyCodeBlock content={`"Minimum Coverage": 0.95`} language="json" />
+<CopyCodeBlock content={`{ "Name": "Minimum Coverage", "Value": 0.95 }`} language="json" />

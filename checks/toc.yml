@@ -34,7 +34,7 @@
 - mount: checks/index_advisor
   items:
   - name: Missing Index
-    href: checks/index_advisor/missing_index
+    href: checks/index_advisor/indexing_engine
 - mount: checks/schema
   items:
   - name: Invalid Indexes
