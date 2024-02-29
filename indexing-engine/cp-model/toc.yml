@@ -2,8 +2,8 @@
   items:
   - name: How The Model Works
     href: indexing-engine/cp-model
-  - name: Predefined Configurations
-    href: indexing-engine/cp-model/presets
+  - name: Built-in Configurations
+    href: indexing-engine/cp-model/built-in-configs
   - name: Custom Configuration
     href: indexing-engine/cp-model/settings
   - name: Custom Configuration - Goals

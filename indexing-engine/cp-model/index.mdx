@@ -1,17 +1,58 @@
 ---
-title: 'Constraint Programming Model for Index Selection'
+title: 'Indexing Engine: Index Selection using the Constraint Programming Model'
 backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
-In the CP model, indexes are suggested based on user-defined goals and rules. You may want to cover as many scans as possible with the available indexes, or to make the costs of the scans as small as possible, or to stay within a given index budget, and so on.
+The Constraint Programming (CP) model for index selection helps deal with the fundamental
+challenge of balancing the goals of reducing write overhead (less indexes = lower write overhead),
+whilst increasing query performance (more indexes = better query performance / lower scan costs).
 
-These goals and rules can also be combined—for example, covering as many scans as possible while satisfying a budget of X indexes. Once the model is given a set of goals and rules, it then suggests the indexes that best fit with these requirements based on the available data.
+The model is configurable, and prioritizes different types and amount of indexes based on the
+configuration. Behind the scenes the model is solved using the [CP-SAT solver](https://developers.google.com/optimization/cp/cp_solver),
+to find the optimum choice of indexes based on the selected goals.
+
+## Learn more about the model
+
+To learn all the details about the Constraint Programming Model, we recommend watching the webinar recording (56min)
+that goes into details on how it works:
+
+<iframe
+    width="750"
+    height="421"
+    src="https://www.youtube-nocookie.com/embed/SlNQTtfjlnI"
+    frameborder="0"
+    modestbranding="1" controls="0" allownetworking="internal"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+>
+</iframe>
+<br /><br />
+
+## Built-in configurations
+
+[Depending on the workload](/docs/index-advisor/configurations), the Indexing Engine will automatically
+default to one of the available built-in model configurations:
+
+- [Write-optimized](cp-model/built-in-configs#write-optimized) (less indexes, higher scan costs)
+- [Read-optimized](cp-model/built-in-configs#read-optimized) (more indexes, lower scan costs)
+- [Balanced](cp-model/built-in-configs#balanced) (balance between the two goals)
+
+## Custom configurations
+
+Optionally, you can fully customize the configuration, to prioritize what makes sense for your unique workloads.
+
+At a high level, indexes are suggested based on user-defined goals and rules. You may want to cover as many scans
+as possible with the available indexes, or to make the costs of the scans as small as possible, or to stay within
+a given index budget, and so on.
+
+These goals and rules can also be combined—for example, covering as many scans as possible
+while satisfying a budget of a specific number of indexes. Once the model is given a set of goals and rules,
+it then suggests the indexes that best fit with these requirements based on the available data.
 
 The difference between a goal and a rule may appear subtle, but it is an important one:
 - A goal *strives towards something*: "Make the costs of the scans as small as possible".
 - A rule *sets a limit on something*: "Make sure not to use more than 3 indexes".
 
-Learn more about the available [goals](/docs/indexing-engine/cp-model/goals) and [rules](/docs/indexing-engine/cp-model/rules), or see an example of the [settings](/docs/indexing-engine/cp-model/settings).
-
-<!-- TODO: Reword this page so it talks a bit more about the Index Write Overhead / Read Performance competing objectives (possibly with diagram), and also clarify predefined configs vs custom config -->
+Continue by reviewing the available [goals](/docs/indexing-engine/cp-model/goals) and
+[rules](/docs/indexing-engine/cp-model/rules), or see an example of the [settings](/docs/indexing-engine/cp-model/settings).

@@ -477,23 +477,23 @@
       "path": "/docs/indexing-engine"
     },
     "indexing-engine/cp-model": {
-      "title": "Constraint Programming Model for Index Selection",
+      "title": "Indexing Engine: Index Selection using the Constraint Programming Model",
       "path": "/docs/indexing-engine/cp-model"
     },
+    "indexing-engine/cp-model/built-in-configs": {
+      "title": "Indexing Engine CP Model: Built-in Configurations",
+      "path": "/docs/indexing-engine/cp-model/built-in-configs"
+    },
     "indexing-engine/cp-model/goals": {
-      "title": "Constraint Programming Model: Goals",
+      "title": "Indexing Engine CP Model: Custom Configuration - Goals",
       "path": "/docs/indexing-engine/cp-model/goals"
     },
-    "indexing-engine/cp-model/presets": {
-      "title": "Constraint Programming Model: Predefined Configurations",
-      "path": "/docs/indexing-engine/cp-model/presets"
-    },
     "indexing-engine/cp-model/rules": {
-      "title": "Constraint Programming Model: Rules",
+      "title": "Indexing Engine CP Model: Custom Configuration - Rules",
       "path": "/docs/indexing-engine/cp-model/rules"
     },
     "indexing-engine/cp-model/settings": {
-      "title": "Constraint Programming Model: Settings",
+      "title": "Indexing Engine CP Model: Custom Configuration",
       "path": "/docs/indexing-engine/cp-model/settings"
     },
     "indexing-engine/index-element-extraction": {
