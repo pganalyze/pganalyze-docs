@@ -129,17 +129,26 @@ To continue, select in which environment you are running your Postgres database:
 <div className={styles.overviewFeatureChoice}>
   <Link
     className={styles.overviewFeatureChoiceStep}
-    to="/docs/log-insights"
+    to="/docs/schema-statistics"
   >
-    <strong>Log Insights</strong>
-    Continuously monitors your Postgres error log for unexpected events
+    <strong>Schema Statistics</strong>
+    Tracks workload patterns, schema and data model design, as well as changes over time
   </Link>
   <Link
     className={styles.overviewFeatureChoiceStep}
     to="/docs/query-performance"
   >
     <strong>Query Performance</strong>
-    TODO
+    Identify slowdowns for specific queries over time
+  </Link>
+</div>
+<div className={styles.overviewFeatureChoice}>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/log-insights"
+  >
+    <strong>Log Insights</strong>
+    Continuously monitors your Postgres error log for unexpected events
   </Link>
 </div>
 
