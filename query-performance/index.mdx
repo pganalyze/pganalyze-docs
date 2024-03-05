@@ -7,7 +7,7 @@ backlink_title: 'Documentation'
 The Query Performance page in pganalyze contains information about query
 statistics, using the data from the `pg_stat_statements` view.
 
-The query statistic data is collected every one minute, and send to pganalyze
+The query statistic data is collected every one minute and is sent to pganalyze
 every 10 minutes.
 
 ## Database Queries
@@ -20,6 +20,50 @@ database queries. The chart helps you to find out the overall query latency.
 TODO: clarify how we calculate percentile
 
 In the table below the chart, you can find the list of all queries of the
-database, default sorted by the percent of all runtime.
+database, default sorted by the percent of all runtime. You can search this by
+a part of (or the full text of) the query in a normalized shape, or a name of
+Postgres roles.
 
-TODO: add more things
+## Query details
+
+### Overview
+
+The SQL Statement you can see here is a normalized query and all values are
+replaced by placeholders, such as `$1`.
+
+#### Query can be truncated
+
+When the query is exceeding the current size limit set by `track_activity_query_size`,
+it will be shown as `<truncated query>`. If you encounter this frequently,
+consider increasing this limit. Be aware that increasing the limit may result in
+Postgres consuming more memory.
+
+### Index Advisor
+
+You can see the list of scans happened within this query here. Within the each
+scan, it'll show if there is any recommended changes or not.
+
+### Query Samples
+
+Show the list of query samples collected in the last 24 hours, regardless of the
+selected time range. This is only available when Log Insights is integrated, as
+well as when the query execution time exceeds either `log_min_duration_statement`
+or `auto_explain.log_min_duration`.
+
+### EXPLAIN Plans
+
+Show the list of EXPLAIN plans collected in the last 7 days, regardless of the
+selected time range, up to 30 plans. This is only available when Automatic
+Explain is integrated (prerequisites: Log Insights has to be integrated), as
+well as when the query execution time exceeds `auto_explain.log_min_duration`.
+
+### Query Tags
+
+Show the list of query tags collected in the last 7 days, regardless of the
+selected time range. See [Query Tags](/docs/query-performance/query-tags)
+section for more detail.
+
+### Log Entries
+
+Show the up to 100 log entries, up to the selected time range's "to" time (or
+the current time if the selected time range is something like Last 24 hours).
