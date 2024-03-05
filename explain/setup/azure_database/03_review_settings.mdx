@@ -7,8 +7,6 @@ backlink_title: 'Automated EXPLAIN: Setup'
 
 import PgSettingsRecommendations, { getAutoExplainSettingRecommendations } from "../../../components/PgSettingsRecommendations";
 
-import imgRdsParamGroup2 from '../../../images/rds_parameter_group2.gif'
-
 export const AutoExplainLink = ({version, children}) => {
   return (
     <a href={`https://www.postgresql.org/docs/${version ?? 'current'}/auto-explain.html`} target='_blank'>
