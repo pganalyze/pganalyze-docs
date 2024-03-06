@@ -17,12 +17,28 @@ every 10 minutes.
 Once you specify the database of the server, you can see the statistic of
 database queries. The chart helps you to find out the overall query latency.
 
-TODO: clarify how we calculate percentile
-
 In the table below the chart, you can find the list of all queries of the
 database, default sorted by the percent of all runtime. You can search this by
 a part of (or the full text of) the query in a normalized shape, or a name of
 Postgres roles.
+
+### How percentiles are calculated
+
+Our percentile calculations use weighted averages of execution times, derived
+from total times and call frequencies, rather than direct raw execution times.
+This streamlined approach, however, might not highlight outliers as effectively.
+
+For example, with query statistics over 10 minutes:
+
+* query1: total time 8,000ms for 10 calls, averaging 800ms
+* query2: total time 8,000ms for 20 calls, averaging 400ms
+* query3: total time 9,000ms for 30 calls, averaging 300ms
+* query4: total time 8,000ms for 40 calls, averaging 200ms
+
+This process generates a dataset like `[200ms (40 times), 300ms (30 times), 400ms (20 times), 800ms (10 times)]`.
+he median is 300ms, but this method might not fully represent outliers. For
+instance, if query1 had two exceptionally slow runs (2,000ms each), the true
+99th percentile might be 2,000ms, not 800ms as our averaged data would suggest.
 
 ## Query details
 
