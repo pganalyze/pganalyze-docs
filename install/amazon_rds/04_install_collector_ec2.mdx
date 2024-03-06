@@ -17,11 +17,13 @@ For this step, you first need to choose whether you want to install the collecto
 
 The [pganalyze collector](https://github.com/pganalyze/collector) is a daemon process that continuously collects database statistics, and submits them to the pganalyze dashboard in recurring intervals.
 
-You can either run it on a small instance (a `t3.small` suffices), or add it to an existing EC2 instance in your environment.
+You can either run it on a small instance, or add it to an existing EC2 instance in your environment.
+
+When monitoring a single medium-sized database `t3.micro` is usually large enough, though you may need `t3.small` to monitor multiple large databases.
 
 ## Starting a new EC2 instance
 
-Start a new `t3.small` instance, Amazon Linux 2 based, that has the IAM role applied:
+Start a new Amazon Linux 2 based instance that has the IAM role applied:
 
 <p>
   <ImgRdsNewInstanceRole />
