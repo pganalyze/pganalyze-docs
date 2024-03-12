@@ -20,7 +20,7 @@ that allows you to add tags like `controller` and `action` to the query so that
 you can identify which controller and action the query was called from.
 
 In pganalyze, you can see tags of a query in the "Query Tags" tab in the
-individual query page.
+individual query details page.
 
 This query tag is also used in the OpenTelemetry integration to specify the
 traceparent and tracestate, you can learn more in the
@@ -42,7 +42,27 @@ The query comments can be appended either before or after the query.
 
 ## Query Tags tab
 
-In the individual query detail page, you can find query tags in the header of
-the page, as well as in the "Query Tags" tab.
+In the query detail page, you can find query tags in the header of the page, as
+well as in the "Query Tags" tab.
+Query tags are parsed from queries either of the following places:
 
-TODO: write about query samples and how the stats are created
+* Query samples
+  * When Log Insights is enabled and integrated, for queries with the execution
+    time exceeding either the following condition will appear in the logs and
+    query tags of these queries will be parsed
+    * `log_min_duration_statement`
+    * `auto_explain.log_min_duration`, if using `auto_explain`
+* Queries appearing in the Connections page
+  * The pganalyze collector collects the currently running queries using
+    `pg_stat_activity`, every 10 seconds
+  * These queries will be shown in the Connection page, also query tags of them
+    will be parsed
+
+Even if all queries contain the query tags using application-side libraries, it
+is possible that it's not shown in the query detail page if there is no query
+samples for that query, or that query is not running frequent or long enough to
+be appearing in the Connections page.
+
+All the query matching the above condition are counted as a "sample", and you
+can see the details, such as the ratio of values of each tag key, in the Query
+Tags tab.
