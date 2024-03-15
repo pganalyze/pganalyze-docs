@@ -38,12 +38,12 @@ const CollectorPkgInstallInstructions = () => {
 
 type YumProps = {
   kind: 'yum'
-  distro: 'el/8' | 'el/7' | 'fedora/35'
+  distro: 'el/9' | 'el/8' | 'el/7' | 'fedora/37' | 'fedora/36'
 }
 
 type DebProps = {
   kind: 'deb'
-  distro: "ubuntu/jammy" | "ubuntu/focal" | "ubuntu/bionic" | "debian/buster" | "debian/stretch"
+  distro: "ubuntu/jammy" | "ubuntu/focal" | "debian/bookworm" | "debian/bullseye"
 }
 
 type Props = YumProps | DebProps
@@ -54,19 +54,21 @@ const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'k
   switch (kind) {
     case 'yum':
       installOpts = [
+        [ 'el9', 'el/9', 'RHEL / Rocky / OL 9' ],
         [ 'el8', 'el/8', 'RHEL / Rocky / OL 8' ],
         [ 'el7', 'el/7', 'RHEL / CentOS 7' ],
+        [ 'al2023', 'el/9', 'Amazon Linux 2023' ],
         [ 'al2', 'el/7', 'Amazon Linux 2' ],
-        [ 'fedora35', 'fedora/35', 'Fedora 35' ],
+        [ 'fedora37', 'fedora/37', 'Fedora 37' ],
+        [ 'fedora36', 'fedora/36', 'Fedora 36' ],
       ]
       break
     case 'deb':
       installOpts = [
         ["jammy", "ubuntu/jammy", "Ubuntu 22.04"],
         ["focal", "ubuntu/focal", "Ubuntu 20.04"],
-        ["bionic", "ubuntu/bionic", "Ubuntu 18.04"],
-        ["buster", "debian/buster", "Debian 10"],
-        ["stretch","debian/stretch",  "Debian 9"],
+        ["bookworm", "debian/bookworm", "Debian 12"],
+        ["bullseye", "debian/bullseye", "Debian 11"],
       ]
       break
   }
@@ -88,7 +90,7 @@ const CollectorDistroPkgInstallInstructions: React.FunctionComponent<{
   kind: string,
   distro: string
 }> = ({ kind, distro }) => {
-  let instructions: string;
+  let instructions = "";
   const CodeBlock = useCodeBlock();
   switch (kind) {
     case 'yum':
