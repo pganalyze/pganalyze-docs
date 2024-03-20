@@ -18,9 +18,10 @@ Once you specify a database, you can see statistics for queries in that
 database. The chart displays the overall query latency.
 
 In the table below the chart, you can find a list of all queries in the
-database (subject to [pg_stat_statements.max](https://www.postgresql.org/docs/current/pgstatstatements.html#PGSTATSTATEMENTS-CONFIG-PARAMS)). The list is
-sorted by the percentage of all runtime by default. You can search this list by
-part of the query text, or the name of the Postgres roles executing the query.
+database (subject to [pg_stat_statements.max](https://www.postgresql.org/docs/current/pgstatstatements.html#PGSTATSTATEMENTS-CONFIG-PARAMS)).
+The list is sorted by the percentage of all runtime by default. You can search
+this list by part of the query text, or the name of the Postgres roles executing
+the query.
 
 ### How percentiles are calculated
 
@@ -57,22 +58,21 @@ Postgres consuming more memory.
 ### Index Advisor
 
 You can see the list of scans executed by this query here. A scan is how a query
-reads data from a table (either through an index or as a sequential scan). For each
-scan, the Index Advisor will show if there are any recommended changes.
+reads data from a table (either through an index or as a sequential scan). For
+each scan, the Index Advisor will show if there are any recommended changes.
 
 ### Query Samples
 
-Shows the list of query samples collected in the last 24 hours, regardless of the
-selected time range. This is only available when Log Insights is integrated and
-the query execution time exceeds either `log_min_duration_statement`
+Shows the list of query samples collected in the last 24 hours, regardless of
+the selected time range. This is only available when Log Insights is integrated
+and the query execution time exceeds either `log_min_duration_statement`
 or `auto_explain.log_min_duration`.
 
 ### EXPLAIN Plans
 
 Shows the list of EXPLAIN plans collected in the last 7 days, regardless of the
-selected time range, up to 30 plans. This is only available when Automated
-EXPLAIN is integrated and
-the query execution time exceeds `auto_explain.log_min_duration`.
+selected time range, up to 30 plans. This is only available when [Automated EXPLAIN](/docs/explain/setup)
+is integrated and the query execution time exceeds `auto_explain.log_min_duration`.
 
 ### Query Tags
 
