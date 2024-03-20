@@ -7,20 +7,20 @@ backlink_title: 'Documentation'
 The Query Performance page in pganalyze contains information about query
 statistics, using the data from the `pg_stat_statements` view.
 
-The query statistic data is collected every one minute and is sent to pganalyze
+The query statistic data is collected every minute and is sent to pganalyze
 every 10 minutes.
 
 ## Database Queries
 
 ![Database query performance](query_performance.png)
 
-Once you specify the database of the server, you can see the statistic of
-database queries. The chart helps you to find out the overall query latency.
+Once you specify a database, you can see statistics for queries in that
+database. The chart displays the overall query latency.
 
-In the table below the chart, you can find the list of all queries of the
-database, default sorted by the percent of all runtime. You can search this by
-a part of (or the full text of) the query in a normalized shape, or a name of
-Postgres roles.
+In the table below the chart, you can find a list of all queries in the
+database (subject to [pg_stat_statements.max](https://www.postgresql.org/docs/current/pgstatstatements.html#PGSTATSTATEMENTS-CONFIG-PARAMS)). The list is
+sorted by the percentage of all runtime by default. You can search this list by
+part of the query text, or the name of the Postgres roles executing the query.
 
 ### How percentiles are calculated
 
@@ -36,7 +36,7 @@ For example, with query statistics over 10 minutes:
 * query4: total time 8,000ms for 40 calls, averaging 200ms
 
 This process generates a dataset like `[200ms (40 times), 300ms (30 times), 400ms (20 times), 800ms (10 times)]`.
-he median is 300ms, but this method might not fully represent outliers. For
+The median is 300ms, but this method might not fully represent outliers. For
 instance, if query1 had two exceptionally slow runs (2,000ms each), the true
 99th percentile might be 2,000ms, not 800ms as our averaged data would suggest.
 
@@ -49,37 +49,38 @@ replaced by placeholders, such as `$1`.
 
 #### Query can be truncated
 
-When the query is exceeding the current size limit set by `track_activity_query_size`,
+When the query exceeds the current size limit set by `track_activity_query_size`,
 it will be shown as `<truncated query>`. If you encounter this frequently,
 consider increasing this limit. Be aware that increasing the limit may result in
 Postgres consuming more memory.
 
 ### Index Advisor
 
-You can see the list of scans happened within this query here. Within the each
-scan, it'll show if there is any recommended changes or not.
+You can see the list of scans executed by this query here. A scan is how a query
+reads data from a table (either through an index or as a sequential scan). For each
+scan, the Index Advisor will show if there are any recommended changes.
 
 ### Query Samples
 
-Show the list of query samples collected in the last 24 hours, regardless of the
-selected time range. This is only available when Log Insights is integrated, as
-well as when the query execution time exceeds either `log_min_duration_statement`
+Shows the list of query samples collected in the last 24 hours, regardless of the
+selected time range. This is only available when Log Insights is integrated and
+the query execution time exceeds either `log_min_duration_statement`
 or `auto_explain.log_min_duration`.
 
 ### EXPLAIN Plans
 
-Show the list of EXPLAIN plans collected in the last 7 days, regardless of the
-selected time range, up to 30 plans. This is only available when Automatic
-Explain is integrated (prerequisites: Log Insights has to be integrated), as
-well as when the query execution time exceeds `auto_explain.log_min_duration`.
+Shows the list of EXPLAIN plans collected in the last 7 days, regardless of the
+selected time range, up to 30 plans. This is only available when Automated
+EXPLAIN is integrated and
+the query execution time exceeds `auto_explain.log_min_duration`.
 
 ### Query Tags
 
-Show the list of query tags collected in the last 7 days, regardless of the
+Shows the list of query tags collected in the last 7 days, regardless of the
 selected time range. See [Query Tags](/docs/query-performance/query-tags)
 section for more detail.
 
 ### Log Entries
 
-Show the up to 100 log entries, up to the selected time range's "to" time (or
+Shows up to 100 log entries, up to the selected time range's "to" time (or
 the current time if the selected time range is something like Last 24 hours).

@@ -4,12 +4,11 @@ backlink_href: /docs/query-performance
 backlink_title: 'Query Performance'
 ---
 
-Query tags are key-value pairs of runtime information of a query that you can
-add to the SQL statements as a query comment. The runtime information can be a
-name of the background job that is running the query, or a trace ID.
+Query tags are key-value pairs of runtime context for a query.
+You can add them to SQL statements as a query comment. The runtime context can be a
+name of the background job that is running the query, the id of a user the query is associated with, or a trace ID.
 
-Query tags help to find out where the query is coming from, or also help to find
-the corresponding query of the specific background job or a slow query.
+Query tags can help determine where a query is coming from, support [tracing](https://pganalyze.com/docs/opentelemetry), or help track down the specific background job corresponding to a slow query.
 
 There are several tools to help you add query tags to your query. For instance,
 you can use the [sqlcommenter](https://google.github.io/sqlcommenter/) to
@@ -19,11 +18,11 @@ about the code that caused its execution. Rails 7+ has a built-in feature called
 that allows you to add tags like `controller` and `action` to the query so that
 you can identify which controller and action the query was called from.
 
-In pganalyze, you can see tags of a query in the "Query Tags" tab in the
+In pganalyze, you can see a query's tags in the "Query Tags" tab in the
 individual query details page.
 
-This query tag is also used in the OpenTelemetry integration to specify the
-traceparent and tracestate, you can learn more in the
+Query tags are also used in the OpenTelemetry integration to specify the
+traceparent and tracestate. You can learn more in the
 [traceparent section of the OpenTelemetry integration docs](/docs/opentelemetry/traceparent).
 
 ## Supported formats
@@ -47,25 +46,25 @@ well as in the "Query Tags" tab.
 
 ![Query Tags tab](query_tags.png)
 
-Query tags are parsed from queries either of the following places:
+Query tags are parsed from queries from the following sources:
 
 * Query samples
-  * When Log Insights is enabled and integrated, for queries with the execution
-    time exceeding either the following condition will appear in the logs and
-    query tags of these queries will be parsed
+  * When Log Insights is integrated, queries with execution
+    time exceeding either of the following settings will appear in the logs and
+    their query tags will be parsed
     * `log_min_duration_statement`
     * `auto_explain.log_min_duration`, if using `auto_explain`
 * Queries appearing in the Connections page
   * The pganalyze collector collects the currently running queries using
     `pg_stat_activity`, every 10 seconds
-  * These queries will be shown in the Connection page, also query tags of them
+  * These queries will be shown in the Connections page and their query tags will be parsed
     will be parsed
 
-Even if all queries contain the query tags using application-side libraries, it
-is possible that it's not shown in the query detail page if there is no query
-samples for that query, or that query is not running frequent or long enough to
-be appearing in the Connections page.
+Even if all queries contain query tags, it
+is possible that it's not shown in the query detail page if there are no query
+samples for that query, or that query is not running frequently enough or long enough to
+appear in the Connections page.
 
-All the query matching the above condition are counted as a "sample", and you
-can see the details, such as the ratio of values of each tag key, in the Query
+All queries matching the above condition are counted as "samples", and you
+can see their details, including the frequency of different values for each tag key, in the Query
 Tags tab.
