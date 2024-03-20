@@ -1,11 +1,3 @@
-import imgRdsParamGroup from '../../images/rds_parameter_group.png'
-import imgRdsEnableParamGroup from '../../images/rds_enable_parameter_group.png'
-
-export const ImgRdsParamGroup = () => <img src={imgRdsParamGroup} />
-
-export const ImgRdsEnableParamGroup = () => <img src={imgRdsEnableParamGroup} />
-
-
 In order to set up pganalyze monitoring for [Amazon RDS](https://aws.amazon.com/rds/postgresql/) you'll need
 to first follow these steps to enable the [pg\_stat\_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html)
 extension for collecting query statistics.
@@ -16,25 +8,35 @@ This guide assumes you have an already running Amazon RDS PostgreSQL server you 
 
 ## Enabling pg\_stat\_statements
 
-In your [AWS Console](https://console.aws.amazon.com/rds/), modify your existing custom DB Parameter Group, or create a new custom DB Parameter Group:
+Connect to your database as an RDS superuser (usually the credentials you created the database with), e.g. using `psql`.
 
-<ImgRdsParamGroup />
+Run the following SQL commands to enable the extension, and make sure it was installed correctly:
 
----
+```
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+SELECT * FROM pg_stat_statements LIMIT 1;
+```
 
-Then set the following configuration parameters:
+This should return one row of query statistics information.
+
+**Important:** If you get the error `pg_stat_statements must be loaded via shared_preload_libraries`, follow [the troubleshooting document](/docs/install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries).
+
+## Review pg\_stat\_statements configuration parameters
+
+There are a number of settings that define how pg\_stat\_statements will collect statistics.
+The right configuration will depend on your server, workload, and preferences,
+but the following is the example of what to modify.
 
  Name | New Value | &nbsp;
  ---- | ------ | -------
- [pg\_stat\_statements.track](https://www.postgresql.org/docs/current/pgstatstatements.html#id-1.11.7.39.9) | ALL | Optional, enables tracking of queries inside stored procedures
-[shared\_preload\_libraries](https://www.postgresql.org/docs/current/runtime-config-client.html#RUNTIME-CONFIG-CLIENT-PRELOAD) | pg\_stat\_statements
- [track\_io\_timing](https://www.postgresql.org/docs/current/runtime-config-statistics.html#RUNTIME-CONFIG-STATISTICS-COLLECTOR) | 1 | Optional, enables tracking of per-query I/O statistics
+ [pg\_stat\_statements.track](https://www.postgresql.org/docs/current/pgstatstatements.html#PGSTATSTATEMENTS-CONFIG-PARAMS) | ALL | Optional, enables tracking of queries inside stored procedures
+ [track\_io\_timing](https://www.postgresql.org/docs/current/runtime-config-statistics.html) | 1 | Optional, enables tracking of per-query I/O statistics
+ [track\_activity\_query\_size](https://www.postgresql.org/docs/current/runtime-config-statistics.html) | 2048 | Optional, increases the max size of the query strings Postgres records
 
----
+Find the [parameter group](https://console.aws.amazon.com/rds/home#parameter-groups:id=)
+for your database and apply the settings above.
 
-In case you created a new parameter group you'll have to modify your database to use the Parameter Group you created earlier:<br />
-
-<ImgRdsEnableParamGroup />
+In case you created a new parameter group you'll have to modify your database to use the Parameter Group you created earlier.
 
 ## Enable Enhanced Monitoring
 
@@ -42,27 +44,6 @@ We also highly recommend turning on Enhanced Monitoring, if you haven't already 
 more detailed system-level statistics that can be helpful, e.g. to debug I/O issues.<br />
 
 If Enhanced Monitoring is enabled, pganalyze will automatically collect and show this additional information in the dashboard as well.
-
-## Reboot your database
-
-To enable the extension you need to reboot your database.
-
-Note that this only needs to be done if you haven't enabled pg\_stat\_statements on this database before.
-
----
-
-## Verify that pg\_stat\_statements is enabled
-
-Connect to your database as an RDS superuser (usually the credentials you created the database with), e.g. using `psql`.
-
-Run the following SQL commands to enable the extension, and make sure it was installed correctly:
-
-```
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-SELECT * FROM pg_stat_statements LIMIT 1;
-```
-
-This should return one row of query statistics information - if it gives an error you might not have restarted your database or changed the configuration correctly.
 
 ---
 
