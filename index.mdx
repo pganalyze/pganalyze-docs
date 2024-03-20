@@ -129,6 +129,22 @@ To continue, select in which environment you are running your Postgres database:
 <div className={styles.overviewFeatureChoice}>
   <Link
     className={styles.overviewFeatureChoiceStep}
+    to="/docs/schema-statistics"
+  >
+    <strong>Schema Statistics</strong>
+    Tracks workload patterns, schema and data model design, as well as changes over time
+  </Link>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
+    to="/docs/query-performance"
+  >
+    <strong>Query Performance</strong>
+    Identify slowdowns for specific queries over time
+  </Link>
+</div>
+<div className={styles.overviewFeatureChoice}>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
     to="/docs/log-insights"
   >
     <strong>Log Insights</strong>

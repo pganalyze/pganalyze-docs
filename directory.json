@@ -928,6 +928,14 @@
       "title": "Set up traceparent query tag within your application",
       "path": "/docs/opentelemetry/traceparent"
     },
+    "query-performance": {
+      "title": "Query Performance",
+      "path": "/docs/query-performance"
+    },
+    "query-performance/query-tags": {
+      "title": "Query Tags",
+      "path": "/docs/query-performance/query-tags"
+    },
     "schema-statistics": {
       "title": "Tracking Postgres schema statistics in pganalyze",
       "path": "/docs/schema-statistics"
