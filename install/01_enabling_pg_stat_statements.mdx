@@ -21,12 +21,10 @@ On your database server, make sure that the extensions package is installed.
 
 Debian/Ubuntu:
 
-```
-# Replace 9.X with your installed Postgres version:
-sudo apt-get install postgresql-contrib-9.X
-```
+Debian/Ubuntu includes modules like `pg_stat_statements` in the main package,
+therefore no additional install is required.
 
-RedHat/CentOS/SLES:
+RedHat/CentOS:
 
 ```
 sudo yum install postgresql-contrib
@@ -46,15 +44,10 @@ track_activity_query_size = 2048
 pg_stat_statements.track = all
 ```
 
-If you're running PostgreSQL 9.2 you may need to increase your OS shared memory
-limits when using pg\_stat\_statements.<br />
-See the Postgres [shared memory documentation](https://www.postgresql.org/docs/9.2/static/kernel-resources.html#SYSVIPC)
-for details on how to do this.
-
 ## Restart the PostgreSQL daemon
 
 ```
-sudo service postgresql restart
+sudo systemctl restart postgresql
 ```
 
 (Yeah, we don't like that reboot either, but PostgreSQL requires it for the time being)
