@@ -14,9 +14,9 @@ import imgLogoCrunchyBridge from './images/logo_crunchy_bridge.svg'
 export const InstallChoiceStep = () => {
   const items = [
     { link: "install/amazon_rds/01_configure_rds_instance", img: imgLogoAws, providerName: "Amazon Web Services", text: "RDS and Aurora" },
-  ]
+  ];
 
-  return <InstallChoice docsRoot={true} items={items} />
+  return (<InstallChoice docsRoot={true} items={items} />);
 }
 
 export const InstallChoiceList = ({root}) => {
