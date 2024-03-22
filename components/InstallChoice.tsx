@@ -1,14 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "gatsby";
 
 import styles from "../style.module.scss";
 
-export type InstallChoiceItem = [
-  link: string,
-  img: string,
-  providerName: string,
-  text: string,
-];
+type InstallChoiceItem = {
+  link: string;
+  img: string;
+  providerName: string;
+  text: string;
+};
 
 type Props = {
   docsRoot: boolean;
@@ -23,7 +23,7 @@ const InstallChoice: React.FunctionComponent<Props> = ({ docsRoot, items }) => {
           const linkTo = `${docsRoot && "/docs/"}${item.link}`;
           const imgAlt = `Logo of ${item.providerName}`;
           return (
-            <Link className={styles.overviewInstallChoiceStep} to={linkTo}>
+            <Link className={styles.overviewInstallChoiceStep} to={linkTo} key={item.providerName}>
               <div className={styles.overviewInstallChoiceProvider}>
                 <img src={item.img} alt={imgAlt} />
                 {item.providerName}
