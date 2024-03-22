@@ -1,4 +1,15 @@
-.overviewInstallChoice, .overviewFeatureChoice {
+.overviewInstallChoice {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 0px;
+  color: #333333;
+  a {
+    color: #333333;
+  }
+}
+
+.overviewFeatureChoice {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
@@ -10,7 +21,44 @@
 .overviewInstallChoice + h2, .overviewFeatureChoice + h2 {
   margin-top: 32px;
 }
-.overviewInstallChoiceStep, .overviewFeatureChoiceStep {
+
+.overviewInstallChoiceStep {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px;
+  gap: 12px;
+  background: #F8F8F8;
+  border: 1px solid #E8E8E8;
+  border-radius: 6px;
+  font-size: 14px;
+
+  &:hover {
+    color: inherit;
+    background: #F0F0F0;
+    border: 1px solid #E0E0E0;
+  }
+
+  .overviewInstallChoiceProvider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 12px;
+    font-weight: 600;
+    line-height: 19px;
+
+    img {
+      width: 44px;
+      height: 44px;
+      margin: 0px;
+      padding: 0px;
+      border: none;
+    }
+  }
+}
+
+.overviewFeatureChoiceStep {
   display: flex;
   justify-content: space-between;
   border: 1px solid black;
@@ -36,44 +84,28 @@
   }
 }
 
-.overviewInstallChoiceStep {
-  img {
-    max-width: 100px;
-    height: 60px;
-    margin: 0;
-    padding: 5px 0 5px 0;
-    border: none;
-    order: 1;
-  }
-
-  img, strong {
-    align-self: center;
-    text-align: center;
-  }
-}
-
 .overviewFeatureChoiceStep {
   flex-direction: column;
 }
 
 @media (min-width: 620px) {
-  .overviewInstallChoiceStep img {
-    order: 0;
-  }
   .overviewInstallChoice, .overviewFeatureChoice {
     margin-bottom: 10px;
   }
   .overviewInstallChoice {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-  .overviewInstallChoiceThree {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   .overviewFeatureChoice {
     grid-template-columns: 1fr 1fr;
   }
   .overviewInstallChoiceStep, .overviewFeatureChoiceStep {
     flex-direction: column;
+  }
+}
+
+@media (min-width: 980px) {
+  .overviewInstallChoice {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
