@@ -4,6 +4,9 @@
   gap: 12px;
   padding: 0px;
   color: #333333;
+  a {
+    color: #333333;
+  }
 }
 
 .installChoiceStep {
@@ -15,6 +18,7 @@
   background: #F8F8F8;
   border: 1px solid #E8E8E8;
   border-radius: 6px;
+  font-size: 14px;
 
   &:hover {
     color: inherit;
@@ -30,12 +34,12 @@
   padding: 0px;
   gap: 12px;
   font-weight: 600;
-  font-size: 14px;
   line-height: 19px;
 
   img {
     width: 44px;
     height: 44px;
+    margin: 0px;
   }
 }
 
