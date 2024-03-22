@@ -1,3 +1,43 @@
+.installChoice {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 0px;
+}
+
+.installChoiceStep {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px;
+  gap: 12px;
+  background: #F8F8F8;
+  border: 1px solid #E8E8E8;
+  border-radius: 6px;
+
+  &:hover {
+    color: inherit;
+    background: #F0F0F0;
+    border: #E0E0E0;
+  }
+}
+
+.installChoiceProvider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+
+  img {
+    width: 44px;
+    height: 44px;
+  }
+}
+
 .overviewInstallChoice, .overviewFeatureChoice {
   display: grid;
   grid-template-columns: 1fr;
@@ -63,10 +103,7 @@
   .overviewInstallChoice, .overviewFeatureChoice {
     margin-bottom: 10px;
   }
-  .overviewInstallChoice {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-  .overviewInstallChoiceThree {
+  .installChoice {
     grid-template-columns: 1fr 1fr 1fr;
   }
   .overviewFeatureChoice {
@@ -74,48 +111,6 @@
   }
   .overviewInstallChoiceStep, .overviewFeatureChoiceStep {
     flex-direction: column;
-  }
-}
-
-.installChoice {
-  display: flex;
-  margin-top: 20px;
-
-  .installChoiceStep {
-    flex-grow: 1;
-    width: 33%;
-    height: 110px;
-    border: 1px solid black;
-    border-radius: 5px;
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
-    padding: 24px 10px 16px;
-    background-color: #f8f8f8;
-    border-color: #e8e8e8;
-    font-weight: bold;
-    margin-right: 30px;
-    color: inherit;
-
-    &:hover {
-      color: inherit;
-      border-color: #e0e0e0;
-      background-color: #f0f0f0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-
-    img {
-      max-width: 70%;
-      height: 55%;
-      margin: 0;
-      padding: 0 0 5px 0;
-      border: none;
-    }
   }
 }
 

@@ -1,0 +1,82 @@
+import styles from './style.module.scss'
+
+import imgLogoAiven from './images/logo_aiven.png'
+import imgLogoAws from './images/logo_aws.svg'
+import imgLogoAzure from './images/logo_azure.svg'
+import imgLogoGcp from './images/logo_google_cloud_platform.png'
+import imgLogoPgsql from './images/logo_postgres.svg'
+import imgLogoHeroku from './images/logo_heroku.svg'
+import imgLogoCrunchyBridge from './images/logo_crunchy_bridge.svg'
+
+<div className={styles.installChoice}>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/amazon_rds/01_configure_rds_instance"
+  >
+    <div className={styles.installChoiceProvider}>
+      <img src={imgLogoAws} alt="Logo of Amazon Web Services" />
+      Amazon Web Services
+    </div>
+    <div>RDS and Aurora</div>
+  </Link>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/azure_database/01_configure_azure_instance"
+  >
+    <div className={styles.installChoiceProvider}>
+      <img src={imgLogoAzure} alt="Logo of Microsoft Azure" />
+      Microsoft Azure
+    </div>
+    <div>Flexible Server and Cosmos DB for Postgres</div>
+  </Link>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/google_cloud_sql/01_create_monitoring_user"
+  >
+    <div className={styles.installChoiceProvider}>
+      <img src={imgLogoGcp} alt="Logo of Google Cloud Platform" />
+      Google Cloud Platform
+    </div>
+    <div>Cloud SQL and AlloyDB</div>
+  </Link>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/self_managed/00_choose_setup_method"
+  >
+    <div className={styles.installChoiceProvider}>
+      <img src={imgLogoPgsql} alt="Logo of the PostgreSQL project" />
+      Self-Managed
+    </div>
+    <div>VM, Container, On-Premise, and many other environments</div>
+  </Link>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/heroku_postgres/01_deploy_the_collector"
+  >
+    <div className={styles.installChoiceProvider}>
+      <img src={imgLogoHeroku} alt="Logo of Heroku" />
+      Heroku
+    </div>
+    <div>Heroku Postgres</div>
+  </Link>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/crunchy_bridge/01_deploy_the_collector"
+  >
+    <div className={styles.installChoiceProvider}>
+      <img src={imgLogoCrunchyBridge} alt="Logo of Crunchy Bridge" />
+      Crunchy Data
+    </div>
+    <div>Crunchy Bridge</div>
+  </Link>
+  <Link
+    className={styles.installChoiceStep}
+    to="install/aiven/01_create_monitoring_user"
+  >
+    <div className={styles.installChoiceProvider}>
+      <img src={imgLogoAiven} alt="Logo of Aiven" />
+      Aiven
+    </div>
+    <div>Managed PostgreSQL</div>
+  </Link>
+</div>
