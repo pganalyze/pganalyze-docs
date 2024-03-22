@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "gatsby";
 
 import styles from "../style.module.scss";
 
@@ -23,13 +22,13 @@ const InstallChoice: React.FunctionComponent<Props> = ({ docsRoot, items }) => {
           const linkTo = `${docsRoot && "/docs/"}${item.link}`;
           const imgAlt = `Logo of ${item.providerName}`;
           return (
-            <Link className={styles.overviewInstallChoiceStep} to={linkTo} key={item.providerName}>
+            <a className={styles.overviewInstallChoiceStep} href={linkTo} key={item.providerName}>
               <div className={styles.overviewInstallChoiceProvider}>
                 <img src={item.img} alt={imgAlt} />
                 {item.providerName}
               </div>
               <div>{item.text}</div>
-            </Link>
+            </a>
           );
         })}
       </div>
