@@ -89,20 +89,23 @@
 }
 
 @media (min-width: 620px) {
-  .overviewInstallChoiceStep img {
-    order: 0;
-  }
   .overviewInstallChoice, .overviewFeatureChoice {
     margin-bottom: 10px;
   }
   .overviewInstallChoice {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
   .overviewFeatureChoice {
     grid-template-columns: 1fr 1fr;
   }
   .overviewInstallChoiceStep, .overviewFeatureChoiceStep {
     flex-direction: column;
+  }
+}
+
+@media (min-width: 980px) {
+  .overviewInstallChoice {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
