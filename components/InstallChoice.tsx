@@ -22,12 +22,18 @@ const InstallChoice: React.FunctionComponent<Props> = ({ docsRoot, items }) => {
           const linkTo = `${docsRoot ? "/docs/" : ""}${item.link}`;
           const imgAlt = `Logo of ${item.providerName}`;
           return (
-            <a className={styles.overviewInstallChoiceStep} href={linkTo} key={item.providerName}>
+            <a
+              className={styles.overviewInstallChoiceStep}
+              href={linkTo}
+              key={item.providerName}
+            >
               <div className={styles.overviewInstallChoiceProvider}>
                 <img src={item.img} alt={imgAlt} />
                 {item.providerName}
               </div>
-              <div>{item.text}</div>
+              <div className={styles.overviewInstallChoiceProviderText}>
+                {item.text}
+              </div>
             </a>
           );
         })}

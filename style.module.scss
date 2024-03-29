@@ -56,6 +56,14 @@
       border: none;
     }
   }
+
+  .overviewInstallChoiceProviderText {
+    display: flex;
+    min-height: 38px;
+    line-height: 19px;
+    vertical-align: middle;
+    align-items: center;
+  }
 }
 
 .overviewFeatureChoiceStep {
