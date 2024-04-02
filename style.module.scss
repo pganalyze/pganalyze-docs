@@ -59,7 +59,6 @@
 
   .overviewInstallChoiceProviderText {
     display: flex;
-    min-height: 38px;
     line-height: 19px;
     vertical-align: middle;
     align-items: center;
@@ -96,7 +95,7 @@
   flex-direction: column;
 }
 
-@media (min-width: 620px) {
+@media (min-width: 640px) {
   .overviewInstallChoice, .overviewFeatureChoice {
     margin-bottom: 10px;
   }
@@ -109,9 +108,12 @@
   .overviewInstallChoiceStep, .overviewFeatureChoiceStep {
     flex-direction: column;
   }
+  .overviewInstallChoiceProviderText {
+    min-height: 38px;
+  }
 }
 
-@media (min-width: 980px) {
+@media (min-width: 768px) {
   .overviewInstallChoice {
     grid-template-columns: 1fr 1fr 1fr;
   }
