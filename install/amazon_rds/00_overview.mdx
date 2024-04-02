@@ -1,0 +1,71 @@
+---
+title: 'Step 0: Overview'
+install_track_title: Installation Guide (Amazon RDS and Amazon Aurora)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import styles from '../../style.module.scss'
+
+import imgAwsEc2 from '../../images/aws-ec2.svg'
+import imgAwsEcs from '../../images/aws-ecs.png'
+import imgDocker from '../../images/docker.png'
+import imgAwsOverview from './aws_overview.png'
+
+export const ImgAwsOverview = () => <img src={imgAwsOverview} style="margin-top: 30px" />
+
+export const SelectCollectorPlatform = () => {
+  return (
+    <div className={styles.ovInstallChoice}>
+      <Link className={styles.ovInstallChoiceStep} to="04_install_collector_ec2">
+        <div className={styles.ovInstallChoiceProvider}>
+        <img src={imgAwsEc2} />
+        Amazon EC2 Instance
+        </div>
+      </Link>
+      <Link className={styles.ovInstallChoiceStep} to="04_install_collector_ecs">
+        <div className={styles.ovInstallChoiceProvider}>
+        <img src={imgAwsEcs} />
+        Amazon ECS
+        </div>
+      </Link>
+      <Link className={styles.ovInstallChoiceStep} to="04_install_collector_docker">
+        <div className={styles.ovInstallChoiceProvider}>
+        <img src={imgDocker} />
+        Docker on EC2
+        </div>
+      </Link>
+    </div>
+  )
+}
+
+To monitor your Amazon RDS for PostgreSQL or Amazon Aurora PostgreSQL servers
+with pganalyze, you need to install the pganalyze collector on an Amazon EC2
+instance, with Amazon ECS, or with Docker.
+The collector running in your environment sends query data and other statistics
+on a continuous basis to pganalyze.
+
+## Prerequisites
+
+**Database Server**
+* Amazon RDS for PostgreSQL or Amazon Aurora PostgreSQL server to monitor
+* PostgreSQL version is 10 and above
+* Access with an RDS superuser (master user)
+  * Required to create a monitoring user, extensions, and helper functions
+
+**Collector Setup**
+* Capability to create an instance for running the collector
+  * The collector instance needs be able to connect to RDS or Aurora instances
+* Capability to create an IAM policy/role for the collector
+  * A new policy/role is required to access to the RDS metadata, Cloudwatch
+    metrics, etc.
+* A direct connection to the PostgreSQL server
+  * The collector instance needs to be able to connect to the server directly,
+    bypass any connection poolers like PgBouncer
+
+To continue, we need to know where you'd like to install the pganalyze collector.
+
+
+<SelectCollectorPlatform />
+
+<ImgAwsOverview />

@@ -564,6 +564,10 @@
       "title": "Step 5: Configure the Collector",
       "path": "/docs/install/aiven/05_configure_the_collector_package"
     },
+    "install/amazon_rds/00_overview": {
+      "title": "Step 0: Overview",
+      "path": "/docs/install/amazon_rds/00_overview"
+    },
     "install/amazon_rds/01_configure_rds_instance": {
       "title": "Step 1: Configure RDS Instance",
       "path": "/docs/install/amazon_rds/01_configure_rds_instance"

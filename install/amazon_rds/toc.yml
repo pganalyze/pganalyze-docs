@@ -1,5 +1,7 @@
 - mount: install/amazon_rds
   items:
+  - name: "Step 0: Overview"
+    href: install/amazon_rds/00_overview
   - name: "Step 1: Configure RDS Instance"
     href: install/amazon_rds/01_configure_rds_instance
   - name: "Step 2: Create Monitoring User"
