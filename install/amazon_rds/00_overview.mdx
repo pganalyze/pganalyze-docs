@@ -1,0 +1,38 @@
+---
+title: 'Step 0: Overview'
+install_track_title: Installation Guide (Amazon RDS and Amazon Aurora)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+To monitor your Amazon RDS for PostgreSQL or Amazon Aurora PostgreSQL servers
+with pganalyze, you need to run the pganalyze collector to connect to your
+database and send query metadata and other statistics on a continuous basis to
+pganalyze.
+The collector can be installed directly on an Amazon EC2 instance, with Amazon
+ECS, or with Docker.
+
+## Prerequisites
+
+**Database Server**
+* Amazon RDS for PostgreSQL or Amazon Aurora PostgreSQL server to monitor
+* PostgreSQL version 10 or above
+* Access with an RDS superuser (master user)
+  * Required to create a monitoring user, extensions, and helper functions
+  * _This is only required during setup_
+
+**Collector Setup**
+* Capability to create an instance for running the collector
+  * The collector instance needs be able to connect to RDS or Aurora instances
+* Capability to create an IAM policy/role for the collector
+  * A new policy/role is required to access to the RDS metadata, Cloudwatch
+    metrics, etc.
+* A direct connection to the PostgreSQL server
+  * The collector instance needs to be able to connect to the server directly,
+    bypass any connection poolers like PgBouncer
+
+Continue by configuring RDS instance:
+
+<Link className="btn btn-success" to="01_configure_rds_instance">
+  Proceed to Step 1: Configure RDS Instance
+</Link>
