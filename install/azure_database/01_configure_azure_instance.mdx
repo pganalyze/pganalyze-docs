@@ -11,25 +11,29 @@ export const ImgAzureServerParams = () => <img src={imgAzureServerParams} />
 
 
 In order to set up pganalyze monitoring for [Azure Database for PostgreSQL](https://azure.microsoft.com/en-us/products/postgresql/) you'll need
-to first follow these steps to enable the [pg\_stat\_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html)
+to first follow these steps to enable the [pg_stat_statements](http://www.postgresql.org/docs/current/static/pgstatstatements.html)
 extension for collecting query statistics.
 
 This guide assumes you have an already running Azure Database for PostgreSQL server you want to monitor.
 
 ---
 
-## Enabling pg\_stat\_statements
+## Enabling pg_stat_statements
 
 In your [Azure Portal](https://portal.azure.com/), find your DB instance, and open the Server Parameters
 page. Filter parameters by `azure.extensions`, and enable `PG_STAT_STATEMENTS`, making sure to save settings.
 
 <ImgAzureServerParams />
 
-Note that this will reboot your database, if you haven't enabled pg\_stat\_statements before.
+You can also review pg_stat_statements configuration parameters with the Server
+Parameters page. See [Configure PostgreSQL section of Enabling pg_stat_statements](https://pganalyze.com/docs/install/01_enabling_pg_stat_statements#configure-postgresql)
+for some change recommendations of the pg_stat_statements settings.
+
+Note that this will reboot your database, if you haven't enabled pg_stat_statements before.
 
 ---
 
-## Verify that pg\_stat\_statements is enabled
+## Verify that pg_stat_statements is enabled
 
 Connect to your database as a user with **azure_pg_admin** privileges (usually the credentials you created the database with), e.g. using `psql`.
 
