@@ -10,7 +10,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 - This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
 - pganalyze Enterprise Server now requires Postgres 12 or newer for the database that is used for storing pganalyze internal data
-  - If you are on an older Postgres, we recommend upgrading Postgres before deploying this release
+  - If you are on an older Postgres, you need to upgrade Postgres before deploying this release
 
 ## Features
 
@@ -23,8 +23,21 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 - Update bundled collector from 0.51.1 to 0.55.0 <!-- 3176, 3344, 3920 and others -->
   - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0550------2024-03-27) for the full details
 - Schema Statistics: Add index scans per minute stats in the Indexes tab in Schema Statistics page <!-- 3174 -->
-  - This scans per minute stats is calculated using last 24 hours data.
+  - These scans per minute stats are calculated using last 24 hours data
   - You can view the data for index scans per minute over time on the index details page.
+- Add n_distinct values from pg_stats to Schema Statistics page <!-- 3490 and 3518 -->
+  - This is now available on the Columns tab of the table detail page when viewing
+    a specific table. It shows how many distinct values are estimated to be in a given column
+- Update query parsing logic to Postgres 16 parser <!-- 3596 -->
+  - This adds compatibility for queries that use new syntax added in Postgres 16
+    (for example the new SQL/JSON syntax), when parsed for table references,
+    or syntax highlighting purposes
+- EXPLAIN Plans: Improve visualization <!-- 3692 -->
+  - Padding between nodes is reduced so more content fits on screen
+  - Table and index references now link to their respective pages
+  - CTE scans now link to their parent node, making it easier to navigate large plans
+- Alerts: Show 30 days of history for resolved alerts, up from 7 days <!-- 3741 -->
+- Schema Statistics: Add extended statistics information in the Columns tab <!-- 3779 -->
 - Support setting a default role for new members onboarded via SAML <!-- 3190 -->
   - Previously, "View & Modify (All Servers)" role was assigned to any new members onboarded
     via SAML and there was no way to change this behavior. With this change, the default role
@@ -38,39 +51,6 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
     - systemId (string, API system ID set by the collector)
   - These can be used to either locate a specific server based on the API type/scope/id, or to
     check which servers may have integration issues, by virtue of not having recent data.
-- Query Performance: Include query tags in header of query detail page <!-- 3219 -->
-- Add n_distinct values from pg_stats to Schema Statistics page <!-- 3490 and 3518 -->
-  - This is now available on the Columns tab of the table detail page when viewing
-    a specific table. It shows how many distinct values are estimated to be in a given column
- - System: Show cluster information in the Server Info panel for Crunchy Bridge servers <!-- 3485 -->
-  - When the cluster information of Crunchy Bridge servers is passed from the
-    collector, show them in the Server Info panel in the System Overview page
-- Enterprise Server: Add optional support for AWS_ASSUME_ROLE to access AWS S3 and KMS <!-- 3506 -->
-  - When deploying pganalyze Enterprise Server on AWS, it can sometimes be
-    necessary to run the container in a different AWS account than the S3 buckets
-    and KMS key provisioned for it
-  - In such situations an explicit `sts:AssumeRole` call is needed to allow successful
-    access. To enable this, set the new `AWS_ASSUME_ROLE` setting, pointing to the ARN
-    of the IAM role to be assumed
-  - Note that this setting will also be used as the default by the bundled collector
-    that runs in the Enterprise image (see https://pganalyze.com/docs/collector/settings#aws-settings),
-    but can be overwritten on a per-server basis by changing the AWS-specific
-    server settings in the pganalyze UI
-- Index Advisor: Keep additional type information in query analysis, to reduce data type related errors <!-- 2995 -->
-  - Previously we would often extract "col1 = $1" in the scan as part of query analysis
-    (which looks at the complete query), and then later fail with a type related error
-    when working with the scan. Improve some cases by instead keeping additional type
-    information, so the scan is instead represented as "col1 = $1::type" (or similar)
-- Update query parsing logic to Postgres 16 parser <!-- 3596 -->
-  - This adds compatibility for queries that use new syntax added in Postgres 16
-    (for example the new SQL/JSON syntax), when parsed for table references,
-    or syntax highlighting purposes
-- EXPLAIN Plans: Improve visualization <!-- 3692 -->
-  - Padding between nodes is reduced so more content fits on screen
-  - Table and index references now link to their respective pages
-  - CTE scans now link to their parent node, making it easier to navigate large plans
-- Alerts: Show 30 days of history for resolved alerts, up from 7 days <!-- 3741 -->
-- Schema Statistics: Add extended statistics information in the Columns tab <!-- 3779 -->
 
 ## Performance
 
@@ -83,7 +63,19 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 ## Other improvements
 
-- This releases changes the internal mechanism for storing timeseries data, to more efficiently compress data
+- Query Performance: Include query tags in header of query detail page <!-- 3219 -->
+- Add optional support for AWS_ASSUME_ROLE to access AWS S3 and KMS <!-- 3506 -->
+  - When deploying pganalyze Enterprise Server on AWS, it can sometimes be
+    necessary to run the container in a different AWS account than the S3 buckets
+    and KMS key provisioned for it
+  - In such situations an explicit `sts:AssumeRole` call is needed to allow successful
+    access. To enable this, set the new `AWS_ASSUME_ROLE` setting, pointing to the ARN
+    of the IAM role to be assumed
+  - Note that this setting will also be used as the default by the bundled collector
+    that runs in the Enterprise image (see [settings](https://pganalyze.com/docs/collector/settings#aws-settings)),
+    but can be overwritten on a per-server basis by changing the AWS-specific
+    server settings in the pganalyze UI
+- This release changes the internal mechanism for storing timeseries data, to more efficiently compress data
   - No changes are needed during upgrading, but you will see a storage space reduction
     for the internal statistics database after the old data has expired (35 days)
 - Schema Statistics: Improve formatting of scans on table detail page <!-- 3535 -->
@@ -105,6 +97,14 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - This setting disables pg_stat_statements from tracking query stats, and so
     effectively disables the Query Performance feature. Showing a warning makes
     this situation easier to discover
+- Index Advisor: Keep additional type information in query analysis, to reduce data type related errors <!-- 2995 -->
+  - Previously we would often extract "col1 = $1" in the scan as part of query analysis
+    (which looks at the complete query), and then later fail with a type related error
+    when working with the scan. Improve some cases by instead keeping additional type
+    information, so the scan is instead represented as "col1 = $1::type" (or similar)
+- System: Show cluster information in the Server Info panel for Crunchy Bridge servers <!-- 3485 -->
+  - When the cluster information of Crunchy Bridge servers is passed from the
+    collector, show it in the Server Info panel in the System Overview page
 
 ## Bugfixes
 
@@ -213,7 +213,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
     Postgres does a lookup based on the given internal tuple (row version) location
 - Schema Statistics: Show correct scan method for queries with set returning functions in the SELECT targetlist <!-- 3519 -->
   - Previously queries that contained a set returning function (SRF) in the
-    target list did not get processed correctly, and\ncaused the Scans list on
+    target list did not get processed correctly, and caused the Scans list on
     the Queries tab of the individual per-table Schema Statistics pages to error out
 - Index Advisor: Correctly handle scans involving OR conditions <!-- 3547 -->
   - In some cases Index Advisor incorrectly assumed an expression like "a AND (b OR c)"
