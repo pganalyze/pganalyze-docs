@@ -5,6 +5,7 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import InstallChoice from '../../components/InstallChoice'
 import styles from '../../style.module.scss'
 
 import imgLogoUbuntu from '../../images/logo_ubuntu.png'
@@ -13,24 +14,26 @@ import imgLogoDocker from '../../images/logo_docker.svg'
 
 export const SelectCollectorPlatform = () => {
   return (
-    <div className={styles.installChoice}>
-      <Link className={styles.installChoiceStep} to="03_install_the_collector_deb">
-        <img src={imgLogoUbuntu} />
-        Ubuntu &amp; Debian
-      </Link>
-      <Link className={styles.installChoiceStep} to="03_install_the_collector_yum">
-        <img src={imgLogoRedhat} />
-        RHEL, CentOS &amp; Fedora
-      </Link>
-      <Link className={styles.installChoiceStep} to="03_install_the_collector_docker">
-        <img src={imgLogoDocker} />
-        Docker
-      </Link>
-      {/*<Link className={styles.installChoiceStep} to="03_enable_pg_stat_statements_kubernetes">
-        <img src="/images/docs/logo_kubernetes.png" />
-        Kubernetes
-      </Link>*/}
-    </div>
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "03_install_the_collector_deb",
+          img: imgLogoUbuntu,
+          providerName: "Ubuntu & Debian",
+        },
+        {
+          link: "03_install_the_collector_yum",
+          img: imgLogoRedhat,
+          providerName: "RHEL, CentOS & Fedora",
+        },
+        {
+          link: "03_install_the_collector_docker",
+          img: imgLogoDocker,
+          providerName: "Docker",
+        },
+      ]}
+    />
   )
 }
 
