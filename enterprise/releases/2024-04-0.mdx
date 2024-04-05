@@ -10,17 +10,229 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 - This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
 - pganalyze Enterprise Server now requires Postgres 12 or newer for the database that is used for storing pganalyze internal data
-  - If you are on Postgres 11, we recommend upgrading Postgres before deploying this release
+  - If you are on an older Postgres, we recommend upgrading Postgres before deploying this release
 
 ## Features
 
-* New: **pganalyze Index Advisor 3.0**
+- New: **pganalyze Index Advisor 3.0**
+  - Read the full details in the [announcement blog post](/blog/index-advisor-v3)
+- New: **pganalyze VACUUM Simulator** <!-- 3497 -->
+  - Read about it in the [blog post](/blog/exploring-postgres-vacuum-with-vacuum-simulator)
+- New: **OpenTelemetry tracing integration** <!-- 3333 -->
+  - Learn how to set it up in [the documentation](/docs/opentelemetry)
+- Update bundled collector from 0.51.1 to 0.55.0 <!-- 3176, 3344, 3920 and others -->
+  - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0550------2024-03-27) for the full details
+- Schema Statistics: Add index scans per minute stats in the Indexes tab in Schema Statistics page <!-- 3174 -->
+  - This scans per minute stats is calculated using last 24 hours data.
+  - You can view the data for index scans per minute over time on the index details page.
+- Support setting a default role for new members onboarded via SAML <!-- 3190 -->
+  - Previously, "View & Modify (All Servers)" role was assigned to any new members onboarded
+    via SAML and there was no way to change this behavior. With this change, the default role
+    can be set during the integration setup. It also can be updated to any member roles of the
+    organization from the Integrations tab in the Settings page.
+- GraphQL API: Add additional filter options for getServers <!-- 3261 -->
+  - This adds the following optional arguments:
+    - withRecentData (boolean, filters for servers that have received data in the last 24 hours)
+    - systemType (string, API system type set by the collector)
+    - systemScope (string, API system scope set by the collector)
+    - systemId (string, API system ID set by the collector)
+  - These can be used to either locate a specific server based on the API type/scope/id, or to
+    check which servers may have integration issues, by virtue of not having recent data.
+- Query Performance: Include query tags in header of query detail page <!-- 3219 -->
+- Add n_distinct values from pg_stats to Schema Statistics page <!-- 3490 and 3518 -->
+  - This is now available on the Columns tab of the table detail page when viewing
+    a specific table. It shows how many distinct values are estimated to be in a given column
+ - System: Show cluster information in the Server Info panel for Crunchy Bridge servers <!-- 3485 -->
+  - When the cluster information of Crunchy Bridge servers is passed from the
+    collector, show them in the Server Info panel in the System Overview page
+- Enterprise Server: Add optional support for AWS_ASSUME_ROLE to access AWS S3 and KMS <!-- 3506 -->
+  - When deploying pganalyze Enterprise Server on AWS, it can sometimes be
+    necessary to run the container in a different AWS account than the S3 buckets
+    and KMS key provisioned for it
+  - In such situations an explicit `sts:AssumeRole` call is needed to allow successful
+    access. To enable this, set the new `AWS_ASSUME_ROLE` setting, pointing to the ARN
+    of the IAM role to be assumed
+  - Note that this setting will also be used as the default by the bundled collector
+    that runs in the Enterprise image (see https://pganalyze.com/docs/collector/settings#aws-settings),
+    but can be overwritten on a per-server basis by changing the AWS-specific
+    server settings in the pganalyze UI
+- Index Advisor: Keep additional type information in query analysis, to reduce data type related errors <!-- 2995 -->
+  - Previously we would often extract "col1 = $1" in the scan as part of query analysis
+    (which looks at the complete query), and then later fail with a type related error
+    when working with the scan. Improve some cases by instead keeping additional type
+    information, so the scan is instead represented as "col1 = $1::type" (or similar)
+- Update query parsing logic to Postgres 16 parser <!-- 3596 -->
+  - This adds compatibility for queries that use new syntax added in Postgres 16
+    (for example the new SQL/JSON syntax), when parsed for table references,
+    or syntax highlighting purposes
+- EXPLAIN Plans: Improve visualization <!-- 3692 -->
+  - Padding between nodes is reduced so more content fits on screen
+  - Table and index references now link to their respective pages
+  - CTE scans now link to their parent node, making it easier to navigate large plans
+- Alerts: Show 30 days of history for resolved alerts, up from 7 days <!-- 3741 -->
+- Schema Statistics: Add extended statistics information in the Columns tab <!-- 3779 -->
 
 ## Performance
 
+- Schema statistics: Improve performance of loading scans list <!-- 3521 -->
+- Schema statistics: Speed up loading of per-table list of scans when many scans are present <!-- 3706 -->
+- Server-wide query performance overview: Group timeseries data if needed <!-- 3882 -->
+  - This avoids performance issues that prevented the page from loading when a server
+    has a lot of databases. For anything beyond the 5th database (as sorted by queries
+    per second, descending) the timeseries graph on top will now group the data as "Other databases"
+
+## Other improvements
+
+- This releases changes the internal mechanism for storing timeseries data, to more efficiently compress data
+  - No changes are needed during upgrading, but you will see a storage space reduction
+    for the internal statistics database after the old data has expired (35 days)
+- Schema Statistics: Improve formatting of scans on table detail page <!-- 3535 -->
+  - Right-align the values in the Cost and Est. Scans / Min columns, and use a fixed-width
+    font to make them easier to compare
+- Resolved issues list: Sort list by resolved at timestamp descending by default <!-- 3800 -->
+  - The previous sort order was ascending. With descending sort order the most recently
+    resolved events correctly show at the top of the list
+- EXPLAIN Plans: Add support for parsing Memoize nodes in text-format auto_explain output <!-- 3888 -->
+- Add support for Postgres 16 in in-app documentation <!-- 3925 -->
+  - When the server is using Postgres 16, PostgreSQL Documentation accessible via the
+    Config Setting page will display the Postgres 16 documentation, instead of devel (Development) version
+- Warn when a server is over the table limit <!-- 3917 -->
+  - When a server goes over its plan table limit, schema processing is disabled, which
+    breaks many pganalyze features. A warning is emitted in the collector, but this
+    situation was not obvious in the app before. See [the documentation](https://pganalyze.com/docs/collector/settings#schema-filter-settings)
+    on how to filter monitored tables to stay within the limit
+- Query Performance: Warn when pg_stat_statements.track is set to "none" <!-- 3916 -->
+  - This setting disables pg_stat_statements from tracking query stats, and so
+    effectively disables the Query Performance feature. Showing a warning makes
+    this situation easier to discover
 
 ## Bugfixes
 
+- Increase density of events shown on Vacuum Timeline for multi-day time selections <!-- 3216 -->
+- Improve time range selection handling on charts <!-- 3218 -->
+  - If selecting a time range right up against the edge of a chart, it was easy to lose the selection previously,
+    since it would be cleared immediately when the mouse left the chart area.
+  - Now we give a small grace period before clearing the selection, making it
+    easier to select right up to the available data.
+- Index Advisor: Fix column finding problem due to the table referenced wrongly <!-- 2976 -->
+    - This fixes errors like `column "column_1" does not exist`, when there are several tables with
+      the same name and one table does not have "column_1"
+- VACUUM Advisor: Use the oldest available transaction ID assigned at time when the corresponding assigned at time of the xmin horizon is not found <!-- 3253 -->
+  - Previously, when the assigned at time of the xmin horizon was not found within the
+    stored statistics, we didn't try to calculate the xmin horizon assigned at time and
+    treated it as data not available. With this fix, we use the oldest available transaction
+    ID assigned at time whenever there is the xmin horizon but the corresponding assigned
+    at time is not found
+  - This will help to trigger [the VACUUM Blocked by Xmin Horizon check](https://pganalyze.com/docs/checks/vacuum/xmin_horizon)
+    properly moving forward with such cases
+- Fix loading of query stats when a query cannot be tied to a Postgres role <!-- 3273 -->
+- Alerts & Check-Up: Make email notification available for High Replication Lag alert <!-- 3283 -->
+- Query details page: Show IN/VALUES lists with multiple parameters as ($0) instead of (?) <!-- 3336 -->
+- Timeseries graphs: Fix client-side cache keys to avoid stale data when switching objects <!-- 3329 -->
+  - In certain circumstances, a bug with the client-side caching key caused stale data to be shown
+    on a subsequent request that was getting the same type of time series data with the same start/end
+    timestamps. For example, this might have caused the query overview statistics graph on the
+    Query Performance page to show the data from a previous database or server that was already
+    visited in the same browser session of the same user, when navigating to a different database.
+  - The correct data would have shown when doing a full page refresh in the browser.
+  - This bug was limited to showing stale data on the client side, and did not permit any access
+    to data the user did not already have access to.
+- Query overview statistics: Show summary entry with runtime as 0.0 if no queries have run <!-- 3327 -->
+  - Previously, in cases where no queries occurred within a given 1 minute time window, the
+    pganalyze UI would indicate that data was missing (with a grey dashed background) in the
+    Query Performance overview. Whilst unlikely to occur on production databases, this situation
+    can easily happen in staging/dev/QA environments.
+  - In order to avoid confusion, this changes the overview graph to show 0.0 as the median/95th/...
+    runtime in such situations. If there is indeed a data problem (i.e. collector not sending statistics
+    snapshots due to an error) the missing data indicator will be shown.
+- Fix test snapshot server URL when DOMAIN_NAME is not set <!-- 3362 -->
+  - Previously, despite pointing the collector to a pganalyze Enterprise Server
+    installation, one might have seen server URLs returned that start with "app.pganalyze.com"
+  - This occurred only when the DOMAIN_NAME setting was not set. Going forward, this will instead
+    return the hostname used in the request to the test snapshot endpoint as a fallback.
+- Exclude Google Cloud SQL setting from "Config - Disabled features" check <!-- 3361 -->
+  - The Alerts & Check-Up system's [Config - Disabled features](https://pganalyze.com/docs/checks/settings/enable_features)
+    check warns about disabled planner features. However, for Postgres servers on Google Cloud SQL,
+    it could also spuriously warn about the `enable_google_stats_collection` setting, since it
+    follows the planner setting naming convention.
+  - The setting has now been excluded from the check and will be ignored.
+- Workers: Allow snapshots up to 500MB size to be processed <!-- 3345 -->
+  - This raises the maximum size limit for snapshots from 200MB to 500MB, which can be necessary for certain use cases involving a lot of tables.
+- Improve guidance when a query has no query samples <!-- 3340 -->
+- Xmin horizon check: Correctly handle servers with stale statistics data <!-- 3390 -->
+  - Previously we may have triggered the Xmin horizon alert incorrectly when a server stopped
+    sending data to pganalyze, since the reference time used for comparison was the time the
+    check was run, not the time data was last received.
+- Query analysis: Remove scan information when invalidated due to schema changes <!-- 3385 -->
+  - Previously, the query analysis process that finds the scans in a given query, would only
+    add new information into the system (such as an index that got added), but never remove it.
+    This would cause incorrect data to show, for example when indexes get removed, or other schema
+    information changed that caused a scan method to no longer apply. Additionally, in situations
+    where the query analysis logic itself changed, this may have cause duplicate scans to show on
+    the same query.
+  - This fix will be applied when each query is re-analyzed. To accelerate re-analysis, for example
+    when seeing incorrect data, please reach out to support to request a given set of queries to be
+    re-analyzed right away.
+- Query Analysis: Include outdated index scan information in output, and flag as `Index Scan using <unknown index>` <!-- 3384 -->
+  - Sometimes, due to bugs in the processing logic, or other problems, the scan data on a given table or query
+    can become stale. In such situations the lookup of which index a particular scan refers to may fail.
+    Previously such scans were ignored in parts of the system, but not in others. For consistency, and to
+    flag such problems more clearly, always show such scans, but use the special scan method
+    `Index Scan using <unknown index>` to make it apparent the data is stale.
+  - To fix, query analysis needs to be re-run on affected queries, which will re-analyze the indexes that
+    are available for use by a given query, using current schema information. This will usually
+    resolve itself, but if it doesn't, please reach out to us for instructions on how to resolve.
+- Improve fetching log lines associated with a backend <!-- 3383 -->
+  - The Backend Details view (available from the Connections page) can sometimes include associated
+    log lines in the log line count, but inadvertently exclude them when fetching the actual
+    log lines. This fixes these discrepancies
+- Improve handling of unique index constraints in UI <!-- 3468 -->
+  - In some situations, unique indexes in Postgres do not get entries in the
+    [pg_constraint](https://www.postgresql.org/docs/current/catalog-pg-constraint.html)
+    catalog table that normally tracks constraints. Since `pg_constraint` information
+    was used to display information about constraints in pganalyze, this could lead to
+    some indexes not being flagged as unique in the per-table index listing (they would
+    still appear correctly on the individual index detail page) and their constraints
+    being omitted in the per-table constraint listing
+  - Update the logic to always treat unique indexes as constraints
+- Query Details: Add a hint when a query is truncated <!-- 3469 -->
+- Index Advisor: Correctly use scans from tables with camelCase names or special characters <!-- 3484 -->
+  - Previously Index Advisor was not able to correctly load scans if the
+    table name contained uppercase letters, special characters or other
+    cases where additional quoting of the table name was required. This
+    may have resulted in no index recommendations showing, even if there
+    were missing indexes
+- Update expandable panels to open when clicking on the title <!-- 3501 -->
+  - Some panels within pganalyze are collapsed by default, and include a caret
+    in the title bar to expand them. These panels can now also be
+    expanded by clicking on their title
+- Query analysis: Fix errors loading system functions like "make_interval" on PG 14+ <!-- 3522 -->
+- Query analysis: Add support for "Tid Scan" node types <!-- 3520 -->
+  - When a query queries the internal "ctid" column, query analysis would previously fail,
+    since we did not correctly recognize the special "Tid Scan", which indicates that
+    Postgres does a lookup based on the given internal tuple (row version) location
+- Schema Statistics: Show correct scan method for queries with set returning functions in the SELECT targetlist <!-- 3519 -->
+  - Previously queries that contained a set returning function (SRF) in the
+    target list did not get processed correctly, and\ncaused the Scans list on
+    the Queries tab of the individual per-table Schema Statistics pages to error out
+- Index Advisor: Correctly handle scans involving OR conditions <!-- 3547 -->
+  - In some cases Index Advisor incorrectly assumed an expression like "a AND (b OR c)"
+    was not able to use a simple Index Scan that supports "a", even though "a"
+    could be indexed in such cases
+- Alerts & Check-Up: Fix layout bug in organization-wide check config listing <!-- 3702 -->
+- Index Advisor: Fix handling of JOIN conditions when a parameterized index scan is unlikely <!-- 3503 -->
+  - Previously Index Advisor would treat a JOIN condition as being able to use an index,
+    even if a parameterized index scan was unlikely. With this bug fix in place, it's
+    less likely that indexes will be recommended on JOIN conditions, as they will only
+    be considered when the generic query plan (that the pganalyze Indexing Engine calculates)
+    contains a Nested Loop with the relevant table on the inner side, allowing a parameterized index scan
+- System page: Fix missing CPU Utilization data for Amazon RDS when enhanced monitoring is off <!-- 3092 -->
+- Onboarding: Fix error when initially loading new server from end of setup instructions <!-- 3922 -->
+
 ## Security
 
-* Routine security updates to packages in the base image and library dependencies
+- Update Ruby version for Enterprise Server to 3.2.3 <!-- 3842 and 3889 -->
+- Updated to Ubuntu 22.04 base image for Enterprise Server <!-- 3841 -->
+- Require Postgres 12+ for the internal statistics database used by pganalyze Enterprise Server <!-- 3908 -->
+- Require Redis 6.0+ when using an external Redis server specified via `REDIS_URL` <!-- 3924 -->
+- Routine security updates to packages in the base image and library dependencies
