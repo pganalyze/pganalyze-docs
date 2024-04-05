@@ -6,7 +6,7 @@ type InstallChoiceItem = {
   link: string;
   img: string;
   providerName: string;
-  text: string;
+  text?: string;
 };
 
 type Props = {
@@ -31,9 +31,11 @@ const InstallChoice: React.FunctionComponent<Props> = ({ docsRoot, items }) => {
                 <img src={item.img} alt={imgAlt} />
                 {item.providerName}
               </div>
-              <div className={styles.overviewInstallChoiceProviderText}>
-                {item.text}
-              </div>
+              {item.text && (
+                <div className={styles.overviewInstallChoiceProviderText}>
+                  {item.text}
+                </div>
+              )}
             </a>
           );
         })}
