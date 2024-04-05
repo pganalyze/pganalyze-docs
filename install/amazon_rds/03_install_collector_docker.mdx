@@ -5,10 +5,21 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import SetupIAMPolicy from './_03_setup_iam_policy.mdx';
+import CreateIAMRole from './_03_create_iam_role.mdx';
+
 ## Installing the collector with Docker
 
 This guide assumes that you already have the Docker daemon running on your EC2
 instance.
+
+<SetupIAMPolicy />
+
+<CreateIAMRole />
+
+Attach the created IAM role to the EC2 instance.
+
+### Pull the Docker image
 
 You can then pull the Docker image like this:
 

@@ -5,6 +5,8 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import SetupIAMPolicy from './_03_setup_iam_policy.mdx';
+import CreateIAMRole from './_03_create_iam_role.mdx';
 import CollectorInstallInstructions from "../../components/CollectorInstallInstructions"
 
 import imgRdsNewInstanceRole from "../../images/rds_new_instance_role.png"
@@ -19,9 +21,15 @@ The [pganalyze collector](https://github.com/pganalyze/collector) is a daemon pr
 
 You can either run it on a small instance (a `t3.small` suffices), or add it to an existing EC2 instance in your environment.
 
-## Starting a new EC2 instance
+<SetupIAMPolicy />
 
-Start a new `t3.small` instance, Amazon Linux 2 based, that has the IAM role applied:
+<CreateIAMRole />
+
+If you are going to use the existing EC2 instance, attach the created IAM role to the EC2 instance.
+
+### Start a new EC2 instance
+
+Start a new `t3.small` instance, Amazon Linux 2 based, that has the created IAM role applied:
 
 <p>
   <ImgRdsNewInstanceRole />
@@ -30,7 +38,7 @@ Start a new `t3.small` instance, Amazon Linux 2 based, that has the IAM role app
 Then follow the step to install the collector on Amazon Linux 2 based instances.
 
 
-## Installing the collector on the instance
+### Install the collector on the instance
 
 <CollectorInstallInstructions apiKey={props.apiKey} />
 

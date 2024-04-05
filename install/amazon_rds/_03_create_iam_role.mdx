@@ -1,0 +1,31 @@
+import TabPanel, {TabTextContent} from '../../components/TabPanel'
+import CreateIAMRoleCLI from './_03_create_iam_role_cli.mdx'
+import CreateIAMRoleConsole from './_03_create_iam_role_console.mdx'
+
+export const IAMRoleCreation = () => {
+  const tabs = [
+    [ 'cli', 'CLI' ],
+    [ 'console', 'console'],
+  ];
+  return (
+    <TabPanel items={tabs}>
+      {(idx) => {
+        const tab = tabs[idx][0];
+        switch (tab) {
+          case 'cli':
+            return <TabTextContent><CreateIAMRoleCLI /></TabTextContent>;
+          case 'console':
+            return <TabTextContent><CreateIAMRoleConsole /></TabTextContent>;
+          default:
+            return null;
+        }
+      }}
+    </TabPanel>
+  )
+}
+
+### Create IAM role
+
+Next, you need to create an IAM role using the policy just created.
+
+<IAMRoleCreation />
