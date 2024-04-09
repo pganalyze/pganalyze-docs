@@ -5,10 +5,31 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
-import Step01CreateMonitoringUserSelfManaged from "./_01_create_monitoring_user.mdx"
+import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
+import VerifyConnection from "../../components/VerifyConnection";
 
-import GeneratePassword from "../../components/GeneratePassword"
+We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
 
-<GeneratePassword>
-  {password => <Step01CreateMonitoringUserSelfManaged password={password} />}
-</GeneratePassword>
+Connect to the database you will be monitoring as a **PostgreSQL superuser**.
+Then run the following to create a new user (we've generated a random password for you, but you
+can replace it with one of your choosing):
+
+<MonitoringUserSetupInstructions />
+
+Note that it is important you run these as the Postgres superuser in order to pass down the full access to statistics tables.
+
+## Verify connection
+
+Let's make sure we can connect to the database with the new user:
+
+<VerifyConnection host="localhost" />
+
+Write down the username and password of the monitoring user, we will use it in the last step of this tutorial.
+
+---
+
+Next we continue by enabling pg_stat_statements:
+
+<Link className="btn btn-success" to="02_enable_pg_stat_statements">
+  Proceed to Step 2: Enabling pg_stat_statements
+</Link>

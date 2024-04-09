@@ -1,18 +1,18 @@
 import React from "react";
 
 import { useCodeBlock } from "./CodeBlock";
+import { useGeneratedPassword } from "./WithGeneratedPassword";
 
 type Props = {
-  password: string;
   adminUsername?: string;
   noPgMonitor?: boolean;
 };
 
 const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
-  password = 'mypassword',
   adminUsername,
   noPgMonitor
 }) => {
+  const password = useGeneratedPassword();
   return (
     <>
       <MonitoringUserBase password={password} noPgMonitor={noPgMonitor} />
