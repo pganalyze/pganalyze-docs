@@ -1,12 +1,55 @@
-The following command creates a new IAM policy named pganalyze:
+Save the following policy JSON to a file named pganalyze_collector_policy.json:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "cloudwatch:GetMetricStatistics"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "logs:GetLogEvents"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:logs:*:*:log-group:RDSOSMetrics:log-stream:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBParameters"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:pg:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBInstances",
+                "rds:DownloadDBLogFilePortion",
+                "rds:DescribeDBLogFiles"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:db:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBClusters"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:cluster:*"
+        }
+    ]
+}
+```
+
+Now, create a new IAM policy named pganalyze using the saved JSON file:
 
 ```bash
-# First, download the policy JSON file
-curl -O https://pganalyze.com/docs/install/amazon_rds/pganalyze-collector-policy.json
-
-# Update file://pganalyze-collector-policy.json to point to the downloaded file
 aws iam create-policy \
     --policy-name pganalyze \
-    --policy-document file://pganalyze-collector-policy.json
+    --policy-document file://pganalyze_collector_policy.json
     --description "Allow the pganalyze collector to access RDS information"
 ```
