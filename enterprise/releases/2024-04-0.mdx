@@ -51,6 +51,12 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
     - systemId (string, API system ID set by the collector)
   - These can be used to either locate a specific server based on the API type/scope/id, or to
     check which servers may have integration issues, by virtue of not having recent data.
+- The `web` container command now uses a NGINX reverse proxy, which:
+  - Will always run on port `5000` for regular HTTP connections, and will proxy to either the Ruby or Rust-based backend services
+  - Additionally offers SSL support on port `5001`, either through an auto-generated self-signed certificate or one provided via the new `SSL_CERT` and `SSL_KEY` environment variables
+- The Snapshot API will now process snapshots directly instead of uploading them to S3/MinIO and queuing them in Redis
+  - A typical "combined" image installation does not require any change, however you may need to adjust container configurations when running components separately
+  - The `snapshot_worker` and `worker_all` commands have been removed, since all snapshot processing now happens in the `web` command
 
 ## Performance
 
@@ -76,8 +82,10 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
     but can be overwritten on a per-server basis by changing the AWS-specific
     server settings in the pganalyze UI
 - This release changes the internal mechanism for storing timeseries data, to more efficiently compress data
-  - No changes are needed during upgrading, but you will see a storage space reduction
-    for the internal statistics database after the old data has expired (35 days)
+  - This will result in a slight temporary increase in storage used by the pganalyze statistics database,
+    since pganalyze will dual-write in both the old and the new format
+  - This dual write mechanism will be removed in a subsequent Enterprise release,
+    effectively causing a reduction in storage used once that future release is deployed
 - Schema Statistics: Improve formatting of scans on table detail page <!-- 3535 -->
   - Right-align the values in the Cost and Est. Scans / Min columns, and use a fixed-width
     font to make them easier to compare
