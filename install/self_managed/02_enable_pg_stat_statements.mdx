@@ -5,43 +5,41 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import InstallChoice from '../../components/InstallChoice'
 import styles from '../../style.module.scss'
 
 import imgLogoUbuntu from '../../images/logo_ubuntu.png'
-import imgLogoRedhat from '../../images/logo_redhat.png'
-import imgLogoDocker from '../../images/docker.png'
+import imgLogoRedhat from '../../images/logo_redhat.svg'
+import imgLogoDocker from '../../images/logo_docker.svg'
 import imgLogoAL2 from '../../images/aws-ec2.svg'
 
 export const SelectCollectorPlatform = () => {
   return (
-    <React.Fragment>
-      <div className={styles.installChoice}>
-        <Link className={styles.installChoiceStep} to="02_enable_pg_stat_statements_deb">
-          <img src={imgLogoUbuntu} />
-          Ubuntu &amp; Debian
-        </Link>
-        <Link className={styles.installChoiceStep} to="02_enable_pg_stat_statements_yum">
-          <img src={imgLogoRedhat} />
-          RHEL, CentOS &amp; Fedora
-        </Link>
-      </div>
-      <div className={styles.installChoice}>
-        <Link
-          className={styles.installChoiceStep}
-          to="02_enable_pg_stat_statements_yum"
-        >
-          <img src={imgLogoAL2} />
-          Amazon Linux 2
-        </Link>
-        <Link
-          className={styles.installChoiceStep}
-          to="02_enable_pg_stat_statements_docker"
-        >
-          <img src={imgLogoDocker} />
-          Docker
-        </Link>
-      </div>
-    </React.Fragment>
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "02_enable_pg_stat_statements_deb",
+          img: imgLogoUbuntu,
+          providerName: "Ubuntu & Debian",
+        },
+        {
+          link: "02_enable_pg_stat_statements_yum",
+          img: imgLogoRedhat,
+          providerName: "RHEL, CentOS & Fedora",
+        },
+        {
+          link: "02_enable_pg_stat_statements_yum",
+          img: imgLogoAL2,
+          providerName: "Amazon Linux 2",
+        },
+        {
+          link: "02_enable_pg_stat_statements_docker",
+          img: imgLogoDocker,
+          providerName: "Docker",
+        },
+      ]}
+    />
   )
 }
 

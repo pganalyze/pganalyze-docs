@@ -5,28 +5,35 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import InstallChoice from '../../components/InstallChoice'
 import styles from '../../style.module.scss'
 
 import imgLogoUbuntu from '../../images/logo_ubuntu.png'
-import imgLogoRedhat from '../../images/logo_redhat.png'
-import imgLogoDocker from '../../images/docker.png'
+import imgLogoRedhat from '../../images/logo_redhat.svg'
+import imgLogoDocker from '../../images/logo_docker.svg'
 
 export const SelectCollectorPlatform = () => {
   return (
-    <div className={styles.installChoice}>
-      <Link className={styles.installChoiceStep} to="03_install_the_collector_deb">
-        <img src={imgLogoUbuntu} />
-        Ubuntu &amp; Debian VM
-      </Link>
-      <Link className={styles.installChoiceStep} to="03_install_the_collector_yum">
-        <img src={imgLogoRedhat} />
-        RHEL, CentOS &amp; Fedora VM
-      </Link>
-      <Link className={styles.installChoiceStep} to="03_install_the_collector_docker">
-        <img src={imgLogoDocker} />
-        Docker
-      </Link>
-    </div>
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "03_install_the_collector_deb",
+          img: imgLogoUbuntu,
+          providerName: "Ubuntu & Debian VM",
+        },
+        {
+          link: "03_install_the_collector_yum",
+          img: imgLogoRedhat,
+          providerName: "RHEL, CentOS & Fedora VM",
+        },
+        {
+          link: "03_install_the_collector_docker",
+          img: imgLogoDocker,
+          providerName: "Docker",
+        },
+      ]}
+    />
   )
 }
 

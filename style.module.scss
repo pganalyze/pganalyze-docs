@@ -37,10 +37,11 @@
     font-size: 16px;
     font-weight: 600;
     line-height: 19px;
+    height: 44px;
 
     img {
       width: 44px;
-      height: 44px;
+      height: auto;
       margin: 0px;
       padding: 0px;
       border: none;
@@ -86,47 +87,6 @@
 @media (min-width: 768px) {
   .overviewInstallChoice {
     grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-.installChoice {
-  display: flex;
-  margin-top: 20px;
-
-  .installChoiceStep {
-    flex-grow: 1;
-    width: 33%;
-    height: 110px;
-    border: 1px solid #e8e8e8;
-    border-radius: 5px;
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
-    padding: 24px 10px 16px;
-    background-color: #f8f8f8;
-    font-weight: bold;
-    margin-right: 30px;
-    color: inherit;
-
-    &:hover {
-      color: inherit;
-      border-color: #e0e0e0;
-      background-color: #f0f0f0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-
-    img {
-      max-width: 70%;
-      height: 55%;
-      margin: 0;
-      padding: 0 0 5px 0;
-      border: none;
-    }
   }
 }
 

@@ -5,42 +5,40 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import InstallChoice from '../../components/InstallChoice'
 import styles from '../../style.module.scss'
 
 import imgLogoUbuntu from '../../images/logo_ubuntu.png'
-import imgLogoRedhat from '../../images/logo_redhat.png'
-import imgLogoDocker from '../../images/docker.png'
+import imgLogoRedhat from '../../images/logo_redhat.svg'
+import imgLogoDocker from '../../images/logo_docker.svg'
 
 export const SelectCollectorPlatform = () => {
   return (
-    <React.Fragment>
-      <div className={styles.installChoice}>
-        <Link className={styles.installChoiceStep} to="05_configure_the_collector_package">
-          <img src={imgLogoUbuntu} />
-          Ubuntu &amp; Debian
-        </Link>
-        <Link className={styles.installChoiceStep} to="05_configure_the_collector_package">
-          <img src={imgLogoRedhat} />
-          RHEL, CentOS &amp; Fedora
-        </Link>
-      </div>
-      <div className={styles.installChoice}>
-        <Link
-          className={styles.installChoiceStep}
-          to="05_configure_the_collector_package"
-        >
-          <img src={imgLogoAL2} />
-          Amazon Linux 2
-        </Link>
-        <Link
-          className={styles.installChoiceStep}
-          to="05_configure_the_collector_docker"
-        >
-          <img src={imgLogoDocker} />
-          Docker
-        </Link>
-      </div>
-    </React.Fragment>
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "05_configure_the_collector_package",
+          img: imgLogoUbuntu,
+          providerName: "Ubuntu & Debian",
+        },
+        {
+          link: "05_configure_the_collector_package",
+          img: imgLogoRedhat,
+          providerName: "RHEL, CentOS & Fedora",
+        },
+        {
+          link: "05_configure_the_collector_package",
+          img: imgLogoAL2,
+          providerName: "Amazon Linux 2",
+        },
+        {
+          link: "05_configure_the_collector_docker",
+          img: imgLogoDocker,
+          providerName: "Docker",
+        },
+      ]}
+    />
   )
 }
 

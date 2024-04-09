@@ -5,28 +5,35 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import InstallChoice from '../../components/InstallChoice'
 import styles from '../../style.module.scss'
 
 import imgAwsEc2 from '../../images/aws-ec2.svg'
-import imgAwsEcs from '../../images/aws-ecs.png'
-import imgDocker from '../../images/docker.png'
+import imgAwsEcs from '../../images/aws-ecs.svg'
+import imgDocker from '../../images/logo_docker.svg'
 
 export const SelectCollectorPlatform = () => {
   return (
-    <div className={styles.installChoice}>
-      <Link className={styles.installChoiceStep} to="05_configure_the_collector_ec2">
-        <img src={imgAwsEc2} />
-        Amazon EC2 Instance
-      </Link>
-      <Link className={styles.installChoiceStep} to="05_configure_the_collector_ecs">
-        <img src={imgAwsEcs} />
-        Amazon ECS
-      </Link>
-      <Link className={styles.installChoiceStep} to="05_configure_the_collector_docker">
-        <img src={imgDocker} />
-        Docker on EC2
-      </Link>
-    </div>
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "05_configure_the_collector_ec2",
+          img: imgAwsEc2,
+          providerName: "Amazon EC2 Instance",
+        },
+        {
+          link: "05_configure_the_collector_ecs",
+          img: imgAwsEcs,
+          providerName: "Amazon ECS",
+        },
+        {
+          link: "05_configure_the_collector_docker",
+          img: imgDocker,
+          providerName: "Docker on EC2",
+        },
+      ]}
+    />
   )
 }
 
