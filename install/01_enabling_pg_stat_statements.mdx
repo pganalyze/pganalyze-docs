@@ -90,6 +90,20 @@ track_io_timing = on
   </tbody>
 </table>
 
+### The `pg_stat_statements_info` view
+
+Queries that have not been seen recently will be pruned from pg_stat_statements
+once `pg_stat_statements.max` is hit. The pruning happens in batches, so you may
+see the count lower than the max, even if the max has been reached.
+The `dealloc` column of the `pg_stat_statements_info` view tracks the number of
+pruned queries. This is useful to check if the `pg_stat_statements.max` should
+be increased.
+
+The `pg_stat_statements_info` view, introduced in PostgreSQL 14, tracks the
+statistics of pg_stat_statements. In addition to deallocation information, this
+view also tracks when the `pg_stat_statements_reset()` function was last called
+to reset the statistics.
+
 ## Restart the PostgreSQL daemon
 
 If you change `shared_preload_libraries` or `pg_stat_statements.max` above, a restart is required:
