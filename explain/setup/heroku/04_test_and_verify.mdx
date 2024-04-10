@@ -15,7 +15,7 @@ The collector includes a flag to do this for you automatically, based on your
 `auto_explain.log_min_duration`:
 
 ```
-$ heroku run collector --test-explain --app [your-collector-app-name]
+heroku run collector --test-explain --app [your-collector-app-name]
 ```
 
 This will run an artificially slow query using the Postgres `pg_sleep` function. It
