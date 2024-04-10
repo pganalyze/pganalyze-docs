@@ -12,3 +12,5 @@
     href: install/troubleshooting/pg_stat_statements
   - name: 'Amazon RDS: Resolving the "pg_stat_statements must be loaded via shared_preload_libraries" error'
     href: install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries
+  - name: 'Adding the pg_read_file helper'
+    href: install/troubleshooting/pg_read_file_helper

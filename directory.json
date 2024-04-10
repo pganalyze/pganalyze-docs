@@ -776,6 +776,10 @@
       "title": "Resolving the \"missing extended stats monitoring helper functions\" warning",
       "path": "/docs/install/troubleshooting/ext_stats_helper"
     },
+    "install/troubleshooting/pg_read_file_helper": {
+      "title": "Reading logs directly from Postgres",
+      "path": "/docs/install/troubleshooting/pg_read_file_helper"
+    },
     "install/troubleshooting/pg_stat_statements": {
       "title": "Resolving the 'permission denied to create extension \"pg_stat_statements\"' error",
       "path": "/docs/install/troubleshooting/pg_stat_statements"

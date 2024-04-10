@@ -1,0 +1,21 @@
+---
+title: 'Reading logs directly from Postgres'
+backlink_href: /docs/install/troubleshooting
+backlink_title: 'Installation Troubleshooting'
+---
+
+import { MonitoringUserLogRead } from "../../components/MonitoringUserSetupInstructions";
+
+In some environments, it's possible to access Postgres logs by reading them
+directly through the Postgres `pg_read_file` function. However, this function is
+restricted to Postgres superusers, and since we recommend connecting to your
+database from the collector with a restricted monitoring user, it's not directly
+available. To work around this, we recommend creating the following helper
+function as a superuser (note this needs to be an actual superuser, i.e. not
+available on systems like Amazon RDS) and granting access to the monitoring user
+(here we assume that user is called "pganalyze"):
+
+<MonitoringUserLogRead username="pganalyze" />
+
+After creating the helper function, re-run the collector test to confirm logs
+can be accessed.
