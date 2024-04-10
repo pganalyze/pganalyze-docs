@@ -6,10 +6,3 @@ heroku pg:settings:auto-explain on -a [your-app-name]
 
 Subsequent Postgres sessions will then be configured with those settings and
 will automatically log the EXPLAIN plan for any qualifying statements to your Postgres logs.
-
-Before proceeding to the next step, start a new Postgres session to load the
-`auto_explain` module.
-
-```sh
-heroku pg:psql -a [your-app-name]
-```
