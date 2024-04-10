@@ -1,21 +1,21 @@
 ---
 title: 'Step 1: Check for auto_explain'
-install_track_title: 'Automated EXPLAIN: Setup (Crunchy Bridge)'
+install_track_title: 'Automated EXPLAIN: Setup (Heroku Postgres)'
 backlink_href: /docs/explain/setup
 backlink_title: 'Automated EXPLAIN: Setup'
 ---
 
-import Step01InAppCB from './_01_in_app.mdx'
-import Step01PublicCB from './_01_public.mdx'
+import Step01InAppHeroku from './_01_in_app.mdx'
+import Step01PublicHeroku from './_01_public.mdx'
 
-The recommended Automated EXPLAIN configuration for Crunchy Bridge is to use
+The recommended Automated EXPLAIN configuration for Heroku Postgres is to use
 the Postgres `auto_explain` contrib module. This ensures accurate and detailed
 plan information, including runtime information (as gathered by EXPLAIN ANALYZE). With our
 recommended configuration (presented in a later step), performance overhead is minimal.
 
 <PublicOnly>
-   <Step01PublicCB />
+   <Step01PublicHeroku />
 </PublicOnly>
 <InAppOnly>
-   <Step01InAppCB autoExplainEnabled={props.autoExplainEnabled} />
+   <Step01InAppHeroku autoExplainEnabled={props.autoExplainEnabled} />
 </InAppOnly>

@@ -1,0 +1,42 @@
+---
+title: 'Step 3: Review auto_explain settings'
+install_track_title: 'Automated EXPLAIN: Setup (Heroku Postgres)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import PgSettingsRecommendations, { getAutoExplainSettingRecommendations } from "../../../components/PgSettingsRecommendations";
+
+export const AutoExplainLink = ({version, children}) => {
+  return (
+    <a href={`https://www.postgresql.org/docs/${version ?? 'current'}/auto-explain.html`} target='_blank'>
+      {children}
+    </a>
+  )
+}
+
+There are a number of `auto_explain` settings that allow you to configure which queries
+will generate EXPLAIN plans. You can read the full Postgres documentation about
+these <AutoExplainLink version={props.pgMajorVersion}>here</AutoExplainLink>.
+The right configuration will depend on your server and workload,
+but we've found the following is a good starting point:
+
+<PgSettingsRecommendations recommendations={getAutoExplainSettingRecommendations(props.settings)} />
+
+Heroku offers to modify several of these settings, but not all of them. Notably,
+you cannot update the `auto_explain.log_format` setting with Heroku Postgres
+currently. Only JSON format is supported by pganalyze and as text format support
+is limited, you may see the errors on some EXPLAIN plans.
+
+
+You can check out [Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgres-settings#auto-explain)
+for how to update these settings.
+The following is an example of updating `log_min_duration`:
+
+```sh
+$ heroku pg:settings:auto-explain:log-min-duration 1000 -a [your-app-name]
+```
+
+<Link className="btn btn-success" to="04_test_and_verify">
+  Continue to Step 4: Test and verify
+</Link>
