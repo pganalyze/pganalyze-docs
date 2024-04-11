@@ -28,7 +28,7 @@ PGA_API_KEY: ...`}
 export const TestCommand = ({ organizationSlug }) => {
   return (
     <CodeBlock>
-      $ heroku run -a {collectorAppName(organizationSlug)} collector --test
+      heroku run -a {collectorAppName(organizationSlug)} collector --test
     </CodeBlock>
   );
 };

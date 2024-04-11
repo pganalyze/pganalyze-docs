@@ -18,13 +18,13 @@
     href: explain/setup/google_cloud_sql
   - name: Crunchy Bridge
     href: explain/setup/crunchy_bridge
+  - name: Heroku Postgres
+    href: explain/setup/heroku
   - name: Self-Managed Server
     href: explain/setup/self_managed
 - mount: explain/setup/log_explain
   items:
   - name: Overview
     href: explain/setup/log_explain
-  - name: Heroku Postgres
-    href: explain/setup/heroku
   - name: Other platforms
     href: explain/setup/log_explain/

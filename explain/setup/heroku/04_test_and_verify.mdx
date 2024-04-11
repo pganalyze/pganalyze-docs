@@ -1,6 +1,6 @@
 ---
-title: 'Step 2: Test and verify'
-install_track_title: 'Automated EXPLAIN: Setup (Heroku)'
+title: 'Step 4: Test and Verify'
+install_track_title: 'Automated EXPLAIN: Setup (Heroku Postgres)'
 backlink_href: /docs/explain/setup
 backlink_title: 'Automated EXPLAIN: Setup'
 ---
@@ -12,10 +12,10 @@ you may not have any slow queries in your system right now, we can generate a
 synthetic slow query that we can use to confirm everything is working.
 
 The collector includes a flag to do this for you automatically, based on your
-`log_min_duration_statement`:
+`auto_explain.log_min_duration`:
 
 ```
-$ heroku run collector --test-explain --app [your-collector-app-name]
+heroku run collector --test-explain --app [your-collector-app-name]
 ```
 
 This will run an artificially slow query using the Postgres `pg_sleep` function. It

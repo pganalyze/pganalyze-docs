@@ -27,8 +27,14 @@ The collector receives log drains at the following URL:
 https://[your-collector-app-domain-name].herokuapp.com/logs/[ALIAS]
 ```
 
-For the `[your-collector-app-domain-name]` value we call `heroku domains -a [your-collector-app-name]`.
-It should look like 'your-collector-app-name-[unique identifier].herokuapp.com'
+To check the `[your-collector-app-domain-name]` value of your collector app, run
+the following Heroku command:
+
+```bash
+heroku domains -a [your-collector-app-name]
+```
+
+It should look like 'your-collector-app-name-[unique identifier].herokuapp.com'.
 
 For the `[ALIAS]` value we recommend you use the add-on attachment name you've chosen
 in the initial setup, which you can determine by viewing the current Heroku

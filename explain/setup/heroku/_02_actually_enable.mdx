@@ -1,0 +1,8 @@
+You can enable `auto_explain` for your Heroku Postgres by running the following:
+
+```sh
+heroku pg:settings:auto-explain on -a [your-app-name]
+```
+
+Subsequent Postgres sessions will then be configured with those settings and
+will automatically log the EXPLAIN plan for any qualifying statements to your Postgres logs.
