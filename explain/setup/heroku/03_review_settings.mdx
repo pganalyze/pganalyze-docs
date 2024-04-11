@@ -23,13 +23,13 @@ but we've found the following is a good starting point:
 
 <PgSettingsRecommendations recommendations={getAutoExplainSettingRecommendations(props.settings)} />
 
-Heroku offers to modify several of these settings, but not all of them. Notably,
-you cannot update the `auto_explain.log_format` setting with Heroku Postgres
-currently. Only JSON format is supported by pganalyze and as text format support
-is limited, you may see the errors on some EXPLAIN plans.
+Heroku allows users to modify several of these settings, but not all of them.
+Notably, you cannot update the `auto_explain.log_format` setting with Heroku
+Postgres currently.
+Text-format auto_explain output is supported on a best-effort basis, so you may
+see errors for some EXPLAIN plans.
 
-
-You can check out [Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgres-settings#auto-explain)
+You can check out the [Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgres-settings#auto-explain)
 for how to update these settings.
 The following is an example of updating `log_min_duration`:
 
