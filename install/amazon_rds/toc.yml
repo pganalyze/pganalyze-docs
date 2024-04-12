@@ -6,29 +6,27 @@
     href: install/amazon_rds/01_configure_rds_instance
   - name: "Step 2: Create Monitoring User"
     href: install/amazon_rds/02_create_monitoring_user
-  - name: "Step 3: Set Up IAM Policy"
-    href: install/amazon_rds/03_setup_iam_policy
-  - name: "Step 4: Install the Collector"
-    href: install/amazon_rds/04_install_collector
-  - name: "Step 5: Configure the Collector"
-    href: install/amazon_rds/05_configure_the_collector
-- mount: install/amazon_rds/04_install_collector
+  - name: "Step 3: Install the Collector"
+    href: install/amazon_rds/03_install_collector
+  - name: "Step 4: Configure the Collector"
+    href: install/amazon_rds/04_configure_the_collector
+- mount: install/amazon_rds/03_install_collector
   items:
   - name: Choose deployment
-    href: install/amazon_rds/04_install_collector
+    href: install/amazon_rds/03_install_collector
   - name: Amazon EC2
-    href: install/amazon_rds/04_install_collector_ec2
+    href: install/amazon_rds/03_install_collector_ec2
   - name: Amazon ECS
-    href: install/amazon_rds/04_install_collector_ecs
+    href: install/amazon_rds/03_install_collector_ecs
   - name: Docker
-    href: install/amazon_rds/04_install_collector_docker
-- mount: install/amazon_rds/05_configure_the_collector
+    href: install/amazon_rds/03_install_collector_docker
+- mount: install/amazon_rds/04_configure_the_collector
   items:
   - name: Choose deployment
-    href: install/amazon_rds/05_configure_the_collector
+    href: install/amazon_rds/04_configure_the_collector
   - name: Amazon EC2
-    href: install/amazon_rds/05_configure_the_collector_ec2
+    href: install/amazon_rds/04_configure_the_collector_ec2
   - name: Amazon ECS
-    href: install/amazon_rds/05_configure_the_collector_ecs
+    href: install/amazon_rds/04_configure_the_collector_ecs
   - name: Docker
-    href: install/amazon_rds/05_configure_the_collector_docker
+    href: install/amazon_rds/04_configure_the_collector_docker

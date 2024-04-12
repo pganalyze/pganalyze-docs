@@ -1,0 +1,49 @@
+Go to **[Create IAM policy](https://console.aws.amazon.com/iam/home#/policies$new?step=edit)**,
+select JSON and then paste the following policy:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "cloudwatch:GetMetricStatistics"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "logs:GetLogEvents"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:logs:*:*:log-group:RDSOSMetrics:log-stream:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBParameters"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:pg:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBInstances",
+                "rds:DownloadDBLogFilePortion",
+                "rds:DescribeDBLogFiles"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:db:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBClusters"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:cluster:*"
+        }
+    ]
+}
+```
+
+We recommend naming the policy "pganalyze" or similar, so you can easily identify it again.

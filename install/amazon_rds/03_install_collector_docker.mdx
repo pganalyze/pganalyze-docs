@@ -1,14 +1,25 @@
 ---
-title: 'Step 4: Install the Collector'
+title: 'Step 3: Install the Collector'
 install_track_title: Installation Guide (Amazon RDS and Amazon Aurora)
 backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import SetupIAMPolicy from './_03_setup_iam_policy.mdx';
+import CreateIAMRole from './_03_create_iam_role.mdx';
+
 ## Installing the collector with Docker
 
 This guide assumes that you already have the Docker daemon running on your EC2
 instance.
+
+<SetupIAMPolicy />
+
+<CreateIAMRole />
+
+Attach the created IAM role to the EC2 instance.
+
+### Pull the Docker image
 
 You can then pull the Docker image like this:
 
@@ -16,6 +27,6 @@ You can then pull the Docker image like this:
 docker pull quay.io/pganalyze/collector:stable
 ```
 
-<Link className="btn btn-success" to="05_configure_the_collector_docker">
-  Proceed to Step 5: Configure the Collector
+<Link className="btn btn-success" to="04_configure_the_collector_docker">
+  Proceed to Step 4: Configure the Collector
 </Link>
