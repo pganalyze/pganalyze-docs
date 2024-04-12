@@ -99,21 +99,20 @@ Make sure to modify the values for `DB_HOST`, `DB_USERNAME`, `DB_NAME`, `AWS_REG
 
 ## Handling Amazon Aurora clusters vs instances
 
-In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance, and `cluster-ro` to the underlying reader instance:
+In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance.
 
 ```json
 {"name": "DB_HOST", "value": "mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com"},
 ```
 
-or
+This will only monitor the writer instance. If you also want to monitor a reader instance, you'll need to run another Docker container,
+then use the following as the environment variables:
 
 ```json
 {"name": "DB_HOST", "value": "mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com"},
 ```
 
-For writer instances this is supported for any size of cluster, but for reader instances this is only supported in two-node clusters (i.e. single reader instance).
-
-If you have multiple readers you want to monitor you instead need to specify each instance endpoint separately, running one pganalyze collector Docker container for each instance:
+If you have multiple readers you want to monitor, you need to specify each instance endpoint separately, running one pganalyze collector Docker container for each instance:
 
 ```json
 {"name": "DB_HOST", "value": "mydbinstance1.123456789012.us-east-1.rds.amazonaws.com"},
