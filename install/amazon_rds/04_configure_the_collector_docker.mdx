@@ -51,7 +51,7 @@ DB_HOST=mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
 ```
 
 This will only monitor the writer instance. If you also want to monitor a reader instance, you'll need to run another Docker container.
-Create a new configuration file (e.g. named `pganalyze_collector.replica.env`) and specify the `DB_HOST` like the following:
+Create a new configuration file (e.g. named `pganalyze_collector.replica.env`) and use the `cluster-ro` endpoint as the `DB_HOST`:
 
 ```
 DB_HOST=mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
