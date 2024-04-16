@@ -26,7 +26,7 @@ The pganalyze container image is mostly self-contained, and runs various service
   * 50 GB of dedicated disk space or more
 * Optional: If you use the RDS integration, set up an appropriate IAM role that can be used to download logs and system metrics
   * You can also assign the required policy to an existing EC2 instance and its instance role
-  * You will need both the [collector IAM policy](/docs/install/amazon_rds/03_setup_iam_policy) as well as the [object storage IAM policy](/docs/enterprise/setup/object-storage-s3)
+  * You will need both the [collector IAM policy](/docs/install/amazon_rds/iam_policy) as well as the [object storage IAM policy](/docs/enterprise/setup/object-storage-s3)
 
 ### Step 1: Download the container image
 
@@ -102,9 +102,9 @@ If you get permission errors, you may need to create the extensions `btree_gist`
 Jul  2 07:15:16 aa84f55aceba syslog-ng[160]: syslog-ng starting up; version='3.13.2'
 Jul  2 07:15:17 aa84f55aceba cron[180]: (CRON) INFO (pidfile fd = 3)
 Jul  2 07:15:17 aa84f55aceba cron[180]: (CRON) INFO (Running @reboot jobs)
- set_config 
+ set_config
 ------------
- 
+
 (1 row)
 
 Jul  2 07:15:22 aa84f55aceba syslog-ng[160]: syslog-ng shutting down; version='3.13.2'
@@ -128,12 +128,12 @@ Jul  2 07:15:30 8bc5a4c0e6b6 cron[167]: (CRON) INFO (Running @reboot jobs)
 I, [2020-07-02T07:15:35.006455 #159]  INFO -- : *****************************
 I, [2020-07-02T07:15:35.006520 #159]  INFO -- : *** INITIAL ADMIN CREATED ***
 I, [2020-07-02T07:15:35.006538 #159]  INFO -- : *****************************
-I, [2020-07-02T07:15:35.006551 #159]  INFO -- : 
+I, [2020-07-02T07:15:35.006551 #159]  INFO -- :
 I, [2020-07-02T07:15:35.006563 #159]  INFO -- : *****************************
 I, [2020-07-02T07:15:35.006599 #159]  INFO -- : Email:    admin@example.com
 I, [2020-07-02T07:15:35.006619 #159]  INFO -- : Password: abcdefabcdef
 I, [2020-07-02T07:15:35.006636 #159]  INFO -- : *****************************
-I, [2020-07-02T07:15:35.006648 #159]  INFO -- : 
+I, [2020-07-02T07:15:35.006648 #159]  INFO -- :
 I, [2020-07-02T07:15:35.006660 #159]  INFO -- : Use these credentials to login and then change email address and password.
 Jul  2 07:15:35 8bc5a4c0e6b6 syslog-ng[150]: syslog-ng shutting down; version='3.13.2'
 ```

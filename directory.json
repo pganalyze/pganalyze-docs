@@ -620,6 +620,10 @@
       "title": "Step 4: Configure the Collector",
       "path": "/docs/install/amazon_rds/04_configure_the_collector_ecs"
     },
+    "install/amazon_rds/iam_policy": {
+      "title": "Amazon RDS and Aurora: IAM Policy",
+      "path": "/docs/install/amazon_rds/iam_policy"
+    },
     "install/azure_database/01_configure_azure_instance": {
       "title": "Step 1: Configure Azure Database for PostgreSQL Instance",
       "path": "/docs/install/azure_database/01_configure_azure_instance"

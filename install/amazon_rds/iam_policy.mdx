@@ -1,0 +1,99 @@
+---
+title: 'Amazon RDS and Aurora: IAM Policy'
+install_track_title: Installation Guide (Amazon RDS and Amazon Aurora)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+The pganalyze collector requires an appropriate IAM policy and role to collect
+the following data of the Amazon RDS or Aurora instances using the AWS API.
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>cloudwatch:GetMetricStatistics</code>, <code>logs:GetLogEvents</code></td>
+      <td>
+        For system metrics data shown in System page in pganalyze, such as I/O
+        utilization. When Enhanced Monitoring is turned on, <code>logs:GetLogEvents</code>
+        will be used to obtain CPU, Memory, Storage and Network information
+        through the <code>RDSOSMetrics</code> log group.
+      </td>
+    </tr>
+    <tr>
+      <td><code>rds:DownloadDBLogFilePortion</code>, <code>rds:DescribeDBLogFiles</code></td>
+      <td>
+        This allows the collector to download the RDS log file, which will be
+        used for the <a href="https://pganalyze.com/log-insights">Log Insights</a>
+        and various other features based on it, such as Automated EXPLAIN.
+      </td>
+    </tr>
+    <tr>
+      <td><code>rds:DescribeDBParameters</code></td>
+      <td>
+        For config parameter data shown in Config Settings page in pganalyze.
+        Knowing the current database config parameters helps pganalyze to give
+        better insights and recommendations.
+      </td>
+    </tr>
+    <tr>
+      <td><code>rds:DescribeDBInstances</code>, <code>rds:DescribeDBClusters</code></td>
+      <td>
+        For RDS or Aurora metadata to discover general instance information.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+Below is a typical IAM policy for the collector. Adjust the actions and/or
+resources as necessary to tailor the permissions to your needs.
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "cloudwatch:GetMetricStatistics"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Action": [
+                "logs:GetLogEvents"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:logs:*:*:log-group:RDSOSMetrics:log-stream:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBParameters"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:pg:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBInstances",
+                "rds:DownloadDBLogFilePortion",
+                "rds:DescribeDBLogFiles"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:db:*"
+        },
+        {
+            "Action": [
+                "rds:DescribeDBClusters"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:rds:*:*:cluster:*"
+        }
+    ]
+}
+```
