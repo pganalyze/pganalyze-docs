@@ -65,7 +65,7 @@ You can also configure the following object storage settings:
 * `AWS_S3_SNAPSHOTS_PREFIX`: Prefix for all objects stored in snapshots bucket (optional, empty by default)
 * `AWS_S3_LOGS_PREFIX`: Prefix for all objects stored in logs bucket (optional, empty by default)
 
-Note that when using the collector inside the Enterprise Server container to monitor Amazon RDS or Aurora, the actual fetching of log data from RDS will also use these same credentials. Ensure to also set the [collector IAM policy](/docs/install/amazon_rds/03_setup_iam_policy) in that case.
+Note that when using the collector inside the Enterprise Server container to monitor Amazon RDS or Aurora, the actual fetching of log data from RDS will also use these same credentials. Ensure to also set the [collector IAM policy](/docs/install/amazon_rds/iam_policy) in that case.
 
 In addition, you can also set these other general settings:
 
