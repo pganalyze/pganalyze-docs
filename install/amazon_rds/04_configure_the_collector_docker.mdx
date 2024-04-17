@@ -6,41 +6,13 @@ backlink_title: 'Installation Guide'
 ---
 
 import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
-
-export const CollectorDotEnv = ({ apiKey }) => {
-  return (
-    <React.Fragment>
-      <CodeBlock>
-        {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
-DB_HOST=your_database_host
-DB_NAME=your_database_name
-DB_USERNAME=your_monitoring_user
-DB_PASSWORD=your_monitoring_user_password`}
-      </CodeBlock>
-      <p>
-        Replace the configuration values after the <code>=</code> with the
-        correct settings for your RDS instance or Amazon Aurora cluster.
-        <br />
-        {apiKey ? (
-          <React.Fragment>
-            <code>{apiKey}</code> is your pganalyze API key.
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            You can find your <code>PGA_API_KEY</code> on your
-            organization&apos;s Settings page under the API keys tab.
-          </React.Fragment>
-        )}
-      </p>
-    </React.Fragment>
-  );
-};
+import SettingEnvVarsDockerAWS from './_04_setting_env_vars.mdx';
 
 ## Configuring the collector with Docker
 
 Create your configuration file (e.g. named `pganalyze_collector.env`) with environment variables like this:
 
-<CollectorDotEnv apiKey={props.apiKey} />
+<SettingEnvVarsDockerAWS />
 
 ## Handling Amazon Aurora clusters vs instances
 
@@ -50,18 +22,32 @@ In the case of Amazon Aurora, the collector automatically resolves `cluster` end
 DB_HOST=mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
 ```
 
-This will only monitor the writer instance. If you also want to monitor a reader instance, you'll need to run another Docker container.
+This will only monitor the writer instance. If you also want to monitor a reader instance, you'll need to use the Multiple Servers method above.
+
+```
+CONFIG_CONTENTS="[pganalyze]
+api_key = 'your_pga_organization_api_key'
+
+[server_writer]
+db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
+...
+
+[server_reader]
+db_host = mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
+...
+"
+```
+
+Alternatively, you can also run another Docker container for a reader instance.
 Create a new configuration file (e.g. named `pganalyze_collector.replica.env`) and use the `cluster-ro` endpoint as the `DB_HOST`:
 
 ```
 DB_HOST=mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
 ```
 
-If you have multiple readers you want to monitor, you need to specify each instance endpoint separately, running one pganalyze collector Docker container for each instance:
-
-```
-DB_HOST=mydbinstance1.123456789012.us-east-1.rds.amazonaws.com
-```
+If you have multiple readers you want to monitor, you either need to add it to
+the content of `CONFIG_CONTENTS`, or run one pganalyze collector Docker
+container for each instance.
 
 ## Test snapshot
 

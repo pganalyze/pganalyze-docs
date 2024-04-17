@@ -1,0 +1,41 @@
+import TabPanel, {TabTextContent} from '../../components/TabPanel'
+import { APIKeyInstructions } from './04_configure_the_collector_ec2.mdx'
+
+export const CollectorDotEnv = ({ apiKey }) => {
+  return (
+    <CodeBlock>
+      {`CONFIG_CONTENTS="[pganalyze]
+api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
+[server1]
+db_host = instance-id1.account-id.us-east-1.rds.amazonaws.com
+db_name = your_database_name
+db_username = your_monitoring_user
+db_password = your_monitoring_user_password
+db_sslrootcert = rds-ca-global
+db_sslmode = verify-full\n
+[server2]
+db_host = instance-id2.account-id.us-east-1.rds.amazonaws.com
+db_name = your_database_name
+db_username = your_monitoring_user
+db_password = your_monitoring_user_password
+db_sslrootcert = rds-ca-global
+db_sslmode = verify-full"`}
+    </CodeBlock>
+  )
+}
+
+<CollectorDotEnv />
+
+This multiline variable definition is **only supported by Docker Compose and not by the Docker CLI**.
+If you're using the Docker CLI (e.g. `docker run --env-file pganalyze_collector.env`),
+please replace new lines with `\n`, like `CONFIG_CONTENTS="[pganalyze]\napi_key = ..."`.
+Alternatively, run one pganalyze collector Docker container for each server
+using the Single Server method.
+
+**Fill in the values step-by-step:**
+
+1. <APIKeyInstructions apiKey={props.apiKey} />
+2. The `db_host` is the hostname / endpoint of your RDS instance (for Amazon Aurora you can use the cluster endpoint in many cases, see for details below)
+3. The `db_name` is the database name on the Postgres server you want to monitor
+4. The `db_username` and `db_password` should be the monitoring user we created in <Link to='02_create_monitoring_user'>Step 2</Link>
+5. The `db_sslrootcert` and `db_sslmode` is the recommended SSL connection configuration that you can usually keep as specified above
