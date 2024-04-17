@@ -2,6 +2,8 @@ import TabPanel, {TabTextContent} from '../../components/TabPanel'
 
 import CollectorDotEnvSingle from './_04_setting_env_vars_single.mdx';
 import CollectorDotEnvMulti from './_04_setting_env_vars_multi.mdx';
+import CollectorDotEnvSingleECS from './_04_setting_env_vars_single_ecs.mdx';
+import CollectorDotEnvMultiECS from './_04_setting_env_vars_multi_ecs.mdx';
 
 export const SettingEnvVarsDocker = () => {
   const tabs = [
@@ -25,6 +27,24 @@ export const SettingEnvVarsDocker = () => {
   )
 }
 
-<SettingEnvVarsDocker />
-
-**Note:** The pganalyze collector allows for more [optional settings](https://pganalyze.com/docs/collector/settings) (e.g. AWS access keys, multiple database names)
+export const SettingEnvVarsECS = () => {
+  const tabs = [
+    [ 'single', 'Single Server' ],
+    [ 'multiple', 'Multiple Servers'],
+  ];
+  return (
+    <TabPanel items={tabs}>
+      {(idx) => {
+        const tab = tabs[idx][0];
+        switch (tab) {
+          case 'single':
+            return <TabTextContent><CollectorDotEnvSingleECS /></TabTextContent>;
+          case 'multiple':
+            return <TabTextContent><CollectorDotEnvMultiECS /></TabTextContent>;
+          default:
+            return null;
+        }
+      }}
+    </TabPanel>
+  )
+}

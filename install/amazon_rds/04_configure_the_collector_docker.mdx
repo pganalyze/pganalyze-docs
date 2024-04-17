@@ -6,13 +6,15 @@ backlink_title: 'Installation Guide'
 ---
 
 import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
-import SettingEnvVarsDockerAWS from './_04_setting_env_vars.mdx';
+import { SettingEnvVarsDocker } from './_04_setting_env_vars.mdx';
 
 ## Configuring the collector with Docker
 
 Create your configuration file (e.g. named `pganalyze_collector.env`) with environment variables like this:
 
-<SettingEnvVarsDockerAWS />
+<SettingEnvVarsDocker />
+
+**Note:** The pganalyze collector allows for more [optional settings](https://pganalyze.com/docs/collector/settings) (e.g. AWS access keys, multiple database names)
 
 ## Handling Amazon Aurora clusters vs instances
 
