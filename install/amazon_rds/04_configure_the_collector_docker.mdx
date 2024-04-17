@@ -12,7 +12,7 @@ import { SettingEnvVarsDocker } from './_04_setting_env_vars.mdx';
 
 Create your configuration file (e.g. named `pganalyze_collector.env`) with environment variables like this:
 
-<SettingEnvVarsDocker />
+<SettingEnvVarsDocker apiKey={props.apiKey} />
 
 **Note:** The pganalyze collector allows for more [optional settings](https://pganalyze.com/docs/collector/settings) (e.g. AWS access keys, multiple database names)
 

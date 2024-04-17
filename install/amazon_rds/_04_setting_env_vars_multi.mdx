@@ -23,7 +23,7 @@ db_sslmode = verify-full"`}
   )
 }
 
-<CollectorDotEnv />
+<CollectorDotEnv apiKey={props.apiKey} />
 
 This multiline variable definition is **only supported by Docker Compose and not by the Docker CLI**.
 If you're using the Docker CLI (e.g. `docker run --env-file pganalyze_collector.env`),
