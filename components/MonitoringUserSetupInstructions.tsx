@@ -16,8 +16,55 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
   return (
     <>
       <MonitoringUserBase password={password} noPgMonitor={noPgMonitor} />
-      <MonitoringUserColumnStats username="pganalyze" adminUsername={adminUsername} />
-      <MonitoringUserExtStats username="pganalyze" adminUsername={adminUsername} />
+      <MonitoringUserPerDatabaseHelpers username="pganalyze" adminUsername={adminUsername} />
+    </>
+  );
+};
+
+export const MonitoringUserPerDatabaseHelpers: React.FunctionComponent<{ username: string, adminUsername: string }> = ({
+  username,
+  adminUsername
+}) => {
+  const adminUserStr = !!adminUsername ? <strong>{adminUsername}</strong> : 'a superuser (or equivalent)'
+  const CodeBlock = useCodeBlock();
+  return (
+    <>
+      <p>
+        Then, connect to each database that you plan to monitor on this server as {adminUserStr} and
+        run the following to enable the collection of additional column statistics and extended statistics:
+      </p>
+      <CodeBlock>
+        {`CREATE SCHEMA IF NOT EXISTS pganalyze;
+GRANT USAGE ON SCHEMA pganalyze TO ${username};
+
+CREATE OR REPLACE FUNCTION pganalyze.get_column_stats() RETURNS SETOF pg_stats AS
+$$
+  /* pganalyze-collector */ SELECT schemaname, tablename, attname, inherited, null_frac, avg_width,
+    n_distinct, NULL::anyarray, most_common_freqs, NULL::anyarray, correlation, NULL::anyarray,
+    most_common_elem_freqs, elem_count_histogram
+  FROM pg_catalog.pg_stats;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;
+
+CREATE OR REPLACE FUNCTION pganalyze.get_relation_stats_ext() RETURNS TABLE(
+  statistics_schemaname text, statistics_name text,
+  inherited boolean, n_distinct pg_ndistinct, dependencies pg_dependencies,
+  most_common_val_nulls boolean[], most_common_freqs float8[], most_common_base_freqs float8[]
+) AS
+$$
+  /* pganalyze-collector */ SELECT statistics_schemaname::text, statistics_name::text,
+  (row_to_json(se.*)::jsonb ->> 'inherited')::boolean AS inherited, n_distinct, dependencies,
+  most_common_val_nulls, most_common_freqs, most_common_base_freqs
+  FROM pg_catalog.pg_stats_ext se;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+      <p>
+        <strong>Note:</strong> We never collect actual table data through this method (see the <code>NULL</code> values
+        in the <code>get_column_stats</code> function and omitted fields like <code>most_common_vals</code> in
+        the <code>get_relation_stats_ext</code> function), but we do collect statistics about the distribution of
+        values in your tables. You can skip creating the <code>get_column_stats</code> and <code>get_relation_stats_ext</code> helper
+        functions if the database contains highly sensitive information and statistics about it should not be collected.
+        This will impact the accuracy of Index Advisor recommendations.
+      </p>
     </>
   );
 };
