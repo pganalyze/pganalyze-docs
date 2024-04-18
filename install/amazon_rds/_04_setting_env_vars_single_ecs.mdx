@@ -1,0 +1,76 @@
+export const SSMConfig = ({ apiKey }) => {
+  return (
+    <React.Fragment>
+      <CodeBlock>
+        {`aws ssm put-parameter --name /pganalyze/DB_PASSWORD --type SecureString --value "YOUR_MONITORING_USER_PASSWORD"
+aws ssm put-parameter --name /pganalyze/PGA_API_KEY --type SecureString --value "${
+            apiKey || "YOUR_PGANALYZE_API_KEY"
+          }"`}
+      </CodeBlock>
+      <p>
+        {apiKey ? (
+          <React.Fragment>
+            Replace <code>YOUR_DB_PASSWORD</code> with the monitoring user
+            password for your database. <code>{apiKey}</code> is your
+            organization's API key.
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            Replace <code>YOUR_PGANALYZE_API_KEY</code> with the API key from
+            your organization&apos;s Settings page (under the API Keys tab),
+            and <code>YOUR_DB_PASSWORD</code> with the monitoring user password
+            for your database.
+          </React.Fragment>
+        )}
+      </p>
+    </React.Fragment>
+  );
+};
+
+To start, create SSM secrets for storing the pganalyze API key and database password:
+
+<SSMConfig apiKey={props.apiKey} />
+
+Now, save the following ECS task definition to a file, for example `pganalyze_task.json`:
+
+```json
+{
+  "family": "pganalyze-fargate",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "executionRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/pganalyzeTaskRole",
+  "taskRoleArn": "arn:aws:iam::YOUR_ACCOUNT_ID:role/pganalyzeTaskRole",
+  "networkMode": "awsvpc",
+  "memory": "512",
+  "cpu": "256",
+  "containerDefinitions": [
+    {
+      "name": "pganalyze",
+      "image": "quay.io/pganalyze/collector:stable",
+      "essential": true,
+      "environment": [
+        {"name": "DB_HOST", "value": "your_database_host"},
+        {"name": "DB_USERNAME", "value": "your_monitoring_user"},
+        {"name": "DB_NAME", "value": "your_database_name"},
+      ],
+      "secrets": [
+        {"name": "PGA_API_KEY", "valueFrom": "/pganalyze/PGA_API_KEY"},
+        {"name": "DB_PASSWORD", "valueFrom": "/pganalyze/DB_PASSWORD"}
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/pganalyze",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "pganalyze"
+        }
+      },
+      "readonlyRootFilesystem": false,
+      "mountPoints": []
+    }
+  ]
+}
+```
+
+Make sure to modify the values for `DB_HOST`, `DB_USERNAME`, `DB_NAME`, `AWS_REGION`, `AWS_INSTANCE_ID` to be correct for your RDS instance or Aurora cluster. Also adjust `YOUR_ACCOUNT_ID` to be your AWS account ID (in the `executionRoleArn` field).

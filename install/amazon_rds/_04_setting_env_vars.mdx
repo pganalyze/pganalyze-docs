@@ -1,0 +1,50 @@
+import TabPanel, {TabTextContent} from '../../components/TabPanel'
+
+import CollectorDotEnvSingle from './_04_setting_env_vars_single.mdx';
+import CollectorDotEnvMulti from './_04_setting_env_vars_multi.mdx';
+import CollectorDotEnvSingleECS from './_04_setting_env_vars_single_ecs.mdx';
+import CollectorDotEnvMultiECS from './_04_setting_env_vars_multi_ecs.mdx';
+
+export const SettingEnvVarsDocker = ({ apiKey }) => {
+  const tabs = [
+    [ 'single', 'Single Server' ],
+    [ 'multiple', 'Multiple Servers'],
+  ];
+  return (
+    <TabPanel items={tabs}>
+      {(idx) => {
+        const tab = tabs[idx][0];
+        switch (tab) {
+          case 'single':
+            return <TabTextContent><CollectorDotEnvSingle apiKey={apiKey} /></TabTextContent>;
+          case 'multiple':
+            return <TabTextContent><CollectorDotEnvMulti apiKey={apiKey} /></TabTextContent>;
+          default:
+            return null;
+        }
+      }}
+    </TabPanel>
+  )
+}
+
+export const SettingEnvVarsECS = ({ apiKey }) => {
+  const tabs = [
+    [ 'single', 'Single Server' ],
+    [ 'multiple', 'Multiple Servers'],
+  ];
+  return (
+    <TabPanel items={tabs}>
+      {(idx) => {
+        const tab = tabs[idx][0];
+        switch (tab) {
+          case 'single':
+            return <TabTextContent><CollectorDotEnvSingleECS apiKey={apiKey} /></TabTextContent>;
+          case 'multiple':
+            return <TabTextContent><CollectorDotEnvMultiECS apiKey={apiKey} /></TabTextContent>;
+          default:
+            return null;
+        }
+      }}
+    </TabPanel>
+  )
+}
