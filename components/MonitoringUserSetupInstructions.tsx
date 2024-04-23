@@ -42,7 +42,8 @@ $$
   /* pganalyze-collector */ SELECT schemaname, tablename, attname, inherited, null_frac, avg_width,
     n_distinct, NULL::anyarray, most_common_freqs, NULL::anyarray, correlation, NULL::anyarray,
     most_common_elem_freqs, elem_count_histogram
-  FROM pg_catalog.pg_stats;
+  FROM pg_catalog.pg_stats
+  WHERE schemaname NOT IN ('pg_catalog', 'information_schema');
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;
 
 CREATE OR REPLACE FUNCTION pganalyze.get_relation_stats_ext() RETURNS TABLE(
@@ -54,7 +55,8 @@ $$
   /* pganalyze-collector */ SELECT statistics_schemaname::text, statistics_name::text,
   (row_to_json(se.*)::jsonb ->> 'inherited')::boolean AS inherited, n_distinct, dependencies,
   most_common_val_nulls, most_common_freqs, most_common_base_freqs
-  FROM pg_catalog.pg_stats_ext se;
+  FROM pg_catalog.pg_stats_ext se
+  WHERE schemaname NOT IN ('pg_catalog', 'information_schema');
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
       <p>
@@ -89,7 +91,8 @@ $$
   /* pganalyze-collector */ SELECT schemaname, tablename, attname, inherited, null_frac, avg_width,
     n_distinct, NULL::anyarray, most_common_freqs, NULL::anyarray, correlation, NULL::anyarray,
     most_common_elem_freqs, elem_count_histogram
-  FROM pg_catalog.pg_stats;
+  FROM pg_catalog.pg_stats
+  WHERE schemaname NOT IN ('pg_catalog', 'information_schema');
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
       <p>
@@ -126,7 +129,8 @@ $$
   /* pganalyze-collector */ SELECT statistics_schemaname::text, statistics_name::text,
   (row_to_json(se.*)::jsonb ->> 'inherited')::boolean AS inherited, n_distinct, dependencies,
   most_common_val_nulls, most_common_freqs, most_common_base_freqs
-  FROM pg_catalog.pg_stats_ext se;
+  FROM pg_catalog.pg_stats_ext se
+  WHERE schemaname NOT IN ('pg_catalog', 'information_schema');
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       </CodeBlock>
       <p>
