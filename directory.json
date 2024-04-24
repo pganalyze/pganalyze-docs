@@ -608,6 +608,10 @@
       "title": "Step 3: Install the Collector",
       "path": "/docs/install/amazon_rds/03_install_collector_ecs"
     },
+    "install/amazon_rds/03_install_collector_eks": {
+      "title": "Step 3: Install the Collector",
+      "path": "/docs/install/amazon_rds/03_install_collector_eks"
+    },
     "install/amazon_rds/04_configure_the_collector": {
       "title": "Step 4: Configure the Collector",
       "path": "/docs/install/amazon_rds/04_configure_the_collector"
@@ -623,6 +627,10 @@
     "install/amazon_rds/04_configure_the_collector_ecs": {
       "title": "Step 4: Configure the Collector",
       "path": "/docs/install/amazon_rds/04_configure_the_collector_ecs"
+    },
+    "install/amazon_rds/04_configure_the_collector_eks": {
+      "title": "Step 4: Configure the Collector",
+      "path": "/docs/install/amazon_rds/04_configure_the_collector_eks"
     },
     "install/amazon_rds/iam_policy": {
       "title": "Amazon RDS and Aurora: IAM Policy",

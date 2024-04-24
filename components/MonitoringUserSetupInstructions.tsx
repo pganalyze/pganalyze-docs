@@ -237,8 +237,8 @@ ${noPgMonitor ? '' : 'GRANT pg_monitor TO pganalyze;\n'}
 CREATE SCHEMA pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
 GRANT USAGE ON SCHEMA public TO pganalyze;
-
-${noPgMonitor ? `CREATE OR REPLACE FUNCTION pganalyze.get_stat_replication() RETURNS SETOF pg_stat_replication AS
+${noPgMonitor ? `
+CREATE OR REPLACE FUNCTION pganalyze.get_stat_replication() RETURNS SETOF pg_stat_replication AS
 $$
   /* pganalyze-collector */ SELECT * FROM pg_catalog.pg_stat_replication;
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;` : ''}`}

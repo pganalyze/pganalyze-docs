@@ -18,6 +18,8 @@
     href: install/amazon_rds/03_install_collector_ec2
   - name: Amazon ECS
     href: install/amazon_rds/03_install_collector_ecs
+  - name: Amazon EKS
+    href: install/amazon_rds/03_install_collector_eks
   - name: Docker
     href: install/amazon_rds/03_install_collector_docker
 - mount: install/amazon_rds/04_configure_the_collector
@@ -28,5 +30,7 @@
     href: install/amazon_rds/04_configure_the_collector_ec2
   - name: Amazon ECS
     href: install/amazon_rds/04_configure_the_collector_ecs
+  - name: Amazon EKS
+    href: install/amazon_rds/04_configure_the_collector_eks
   - name: Docker
     href: install/amazon_rds/04_configure_the_collector_docker

@@ -1,0 +1,31 @@
+import { APIKeyInstructionsEnvVar } from './_04_setting_env_vars_single.mdx'
+
+export const ExtraEnvSingle = ({ apiKey }) => {
+  return (
+    <React.Fragment>
+      <CodeBlock language="yaml">
+        {`extraEnv:
+  PGA_API_KEY: ${apiKey || "your-organization-api-key"}
+  DB_HOST: your_database_host
+  DB_NAME: your_database_name
+  DB_USERNAME: your_monitoring_user
+  DB_PASSWORD: your_monitoring_user_password
+  DB_SSLROOTCERT: rds-ca-global
+  DB_SSLMODE: verify-full
+`}
+      </CodeBlock>
+    </React.Fragment>
+  )
+};
+
+Next, update the `extraEnv` section in the values.yaml file with the following:
+
+<ExtraEnvSingle apiKey={props.apiKey} />
+
+**Fill in the values step-by-step:**
+
+1. <APIKeyInstructionsEnvVar apiKey={props.apiKey} />
+2. The `DB_HOST` is the hostname / endpoint of your RDS instance (for Amazon Aurora you can use the cluster endpoint in many cases, see for details below)
+3. The `DB_NAME` is the database name on the Postgres server you want to monitor
+4. The `DB_USERNAME` and `DB_PASSWORD` should be the monitoring user we created in <Link to='02_create_monitoring_user'>Step 2</Link>
+5. The `DB_SSLROOTCERT` and `DB_SSLMODE` is the recommended SSL connection configuration that you can usually keep as specified above

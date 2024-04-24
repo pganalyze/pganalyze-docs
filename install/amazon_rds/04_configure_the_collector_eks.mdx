@@ -1,0 +1,141 @@
+---
+title: 'Step 4: Configure the Collector'
+install_track_title: Installation Guide (Amazon RDS and Amazon Aurora)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
+import { SettingEnvVarsEKS } from './_04_setting_env_vars.mdx';
+
+export const FinishSetup = ({ inviteLink }) => {
+  return (
+    <div>
+      In the meantime you can invite your colleagues:
+      <Link className="btn btn-success" to={inviteLink}>
+        Finish setup and invite team members
+      </Link>
+    </div>
+  )
+}
+
+## Configuring the collector on Amazon EKS
+
+To start, download the example values.yaml file for the Helm chart:
+
+```
+helm show values pganalyze/pganalyze-collector > values.yaml
+```
+
+Update the serviceAccount section in the values.yaml file to use the role just
+created in the previous step. For the name, use "pganalyze-service-account" as
+specified in the assume role policy:
+
+```yaml
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::<aws-account-id>:role/pganalyzeServiceAccountRole"
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "pganalyze-service-account"
+```
+
+<SettingEnvVarsEKS apiKey={props.apiKey} />
+
+**Note:** The pganalyze collector allows for more [optional settings](https://pganalyze.com/docs/collector/settings) (e.g. AWS access keys, multiple database names)
+
+While the `extraEnv` field is convenient for configuration, it is **not suitable
+for sensitive data** such as passwords, API keys, or secret tokens. Storing such
+information in the values.yaml file can expose sensitive data to unauthorized
+access, especially if the values files are checked into version control systems.
+
+This example uses `extraEnv` field for a temporary demonstration. For production
+environments or any sensitive data handling, follow your organization's security
+best practices and use Kubernetes secrets.
+
+## Handling Amazon Aurora clusters vs instances
+
+In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance.
+
+```yaml
+DB_HOST: mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
+```
+
+This will only monitor the writer instance. If you also want to monitor a reader instance,
+you'll need to use the Multiple Servers method above and specify the reader instance as a
+second server within the `CONFIG_CONTENTS` environment variable.
+
+```
+[pganalyze]
+api_key = 'your_pga_organization_api_key'
+
+[server_writer]
+db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
+...
+
+[server_reader]
+db_host = mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
+...
+```
+
+Alternatively, you can install a Helm chart with the separate release name to
+monitor a reader instance.
+Use the `cluster-ro` endpoint as the `DB_HOST` of the environment variables:
+
+```yaml
+DB_HOST: mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
+```
+
+If you have multiple readers you want to monitor, you either need to specify
+using `CONFIG_CONTENTS` environment variable, or install one pganalyze collector
+Helm chart for each instance.
+
+## Install a Helm chart
+
+We can now install a Helm chart to your EKS cluster. First, add a pganalyze repo:
+
+```
+helm repo add pganalyze https://charts.pganalyze.com/
+```
+
+Then, install a chart, using the values.yaml file created earlier:
+
+```
+helm upgrade --install my-collector pganalyze/pganalyze-collector --values=values.yml
+```
+
+Adjust the namespace if needed. You can run the same command when you make a
+change to the values.yaml file.
+
+To verify that the install went well, check the deployment:
+
+```
+$ kubectl get deployment
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+my-collector-pganalyze-collector   1/1     1            1           1m10s
+```
+
+The deployment will create one pod for the collector. Check the pod name and
+obtain the logs to make sure that the collector is running successfully:
+
+```
+$ kubectl get pods
+NAME                                                READY   STATUS    RESTARTS   AGE
+my-collector-pganalyze-collector-7d599b49c8-dgxzk   1/1     Running   0          1m10s
+$ kubectl logs my-collector-pganalyze-collector-7d599b49c8-dgxzk
+I [default] Submitted compact snapshots successfully: 6 activity, 2 logs
+```
+
+The `Submitted compact snapshots successfully` message indicates that you have
+configured the collector correctly.
+
+**Your setup is complete. The dashboard will start showing data within 15 minutes.**
+
+<InAppOnly>
+  <FinishSetup inviteLink={props.inviteLink} />
+</InAppOnly>
+
+<PublicLastStepLogInsightsLink />
