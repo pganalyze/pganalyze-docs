@@ -5,6 +5,9 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import imgCollectorAwsArchitecture from '../../images/collector_aws_architecture.svg'
+export const ImgCollectorAwsArchitecture = () => <img src={imgCollectorAwsArchitecture} />
+
 To monitor your Amazon RDS for PostgreSQL or Amazon Aurora PostgreSQL servers
 with pganalyze, you need to run the pganalyze collector. The pganalyze collector
 connects to your database to capture query metadata and various statistics, then
@@ -30,6 +33,20 @@ ECS, or with Docker.
 * A direct connection to the PostgreSQL server
   * The collector instance needs to be able to connect to the server directly,
     bypass any connection poolers like PgBouncer
+
+Here is an overview diagram for how the pganalyze collector will be placed
+within your existing setup.
+
+<ImgCollectorAwsArchitecture />
+
+Collector can be installed in a different AWS account from the one hosting the
+RDS/Aurora instance, provided that the collector can establish a connection to
+the RDS/Aurora instance (e.g., using VPC Peering).
+Additionally, the collector must be set up to assume an IAM role from the RDS
+side, which should have the appropriate policies for accessing RDS logs and
+system metrics. This role must include a trusted policy that permits the
+collector's account to assume it.
+
 
 Continue by configuring RDS instance:
 
