@@ -5,7 +5,32 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import TabPanel, {TabTextContent} from '../../components/TabPanel'
 import SetupIAMPolicy from './_03_setup_iam_policy.mdx';
+import CreateIAMRoleEKSIRSA from './_03_create_iam_role_eks_irsa.mdx'
+import CreateIAMRoleEKSPodIdentity from './_03_create_iam_role_eks_pod_identity.mdx'
+
+export const IAMRoleCreationEKS = () => {
+  const tabs = [
+    [ 'irsa', 'IAM roles for service accounts (IRSA)' ],
+    [ 'pod_identity', 'Pod Identity'],
+  ];
+  return (
+    <TabPanel items={tabs}>
+      {(idx) => {
+        const tab = tabs[idx][0];
+        switch (tab) {
+          case 'irsa':
+            return <TabTextContent><CreateIAMRoleEKSIRSA /></TabTextContent>;
+          case 'pod_identity':
+            return <TabTextContent><CreateIAMRoleEKSPodIdentity /></TabTextContent>;
+          default:
+            return null;
+        }
+      }}
+    </TabPanel>
+  )
+}
 
 ## Installing the collector with Amazon EKS
 
@@ -14,60 +39,15 @@ You can install the Helm chart for the pganalyze collector on your [Amazon EKS c
 ### Prerequisites
 
 * You already have an Amazon EKS cluster
-  * OIDC identity provider is enabled (usually via Amazon EKS Pod Identity Agent add-on)
-* Both `kubectl` and [`eksctl`](https://eksctl.io/installation/) are installed and [a kubeconfig file for an Amazon EKS cluster is created](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
+* [`kubectl`](https://kubernetes.io/docs/tasks/tools/) is installed
+* [`eksctl`](https://eksctl.io/installation/) is installed and [a kubeconfig file for an Amazon EKS cluster is created](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
 * [`The Helm CLI`](https://helm.sh/) v3 or above is installed
 
 <SetupIAMPolicy />
 
 ### Create IAM role
 
-If you haven't set up an OIDC identity provider for your EKS cluster, set up:
-
-```bash
-eksctl utils associate-iam-oidc-provider --region <region> --cluster mycluster --approve
-```
-
-Create an IAM role that will be assumed by the Kubernetes service account. The
-following command will create a role named `pganalyzeServiceAccountRole`.
-
-
-```bash
-aws iam create-role --role-name pganalyzeServiceAccountRole \
-  --description "For pganalyze collector service account" \
-  --assume-role-policy-document '{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Federated": "arn:aws:iam::<aws-account-id>:oidc-provider/oidc.eks.<region>.amazonaws.com/id/<OIDC_PROVIDER_ID>"
-      },
-      "Action": "sts:AssumeRoleWithWebIdentity",
-      "Condition": {
-        "StringEquals": {
-          "oidc.eks.<region>.amazonaws.com/id/<OIDC_PROVIDER_ID>:sub": "system:serviceaccount:<namespace>:pganalyze-service-account"
-        }
-      }
-    }
-  ]
-}'
-```
-
-Replace `OIDC_PROVIDER_ID` with the one created above. You can find it using the
-following command:
-
-```
-aws eks describe-cluster --name mycluster --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5
-```
-
-Attach the policy you created earlier to the created account. Below assumes that
-the policy name is `pganalyze`:
-
-```
-aws iam attach-role-policy --role-name pganalyzeServiceAccountRole \
-  --policy-arn arn:aws:iam::<aws-account-id>:policy/pganalyze
-```
+<IAMRoleCreationEKS />
 
 <Link className="btn btn-success" to="04_configure_the_collector_eks">
   Proceed to Step 4: Configure the Collector

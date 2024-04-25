@@ -50,6 +50,6 @@ Now, create a new IAM policy named pganalyze using the saved JSON file:
 ```bash
 aws iam create-policy \
     --policy-name pganalyze \
-    --policy-document file://pganalyze_collector_policy.json
+    --policy-document file://pganalyze_collector_policy.json \
     --description "Allow the pganalyze collector to access RDS information"
 ```

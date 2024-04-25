@@ -1,0 +1,52 @@
+With this step, you are going to create a new IAM role and associate that role
+with the service account using
+[IAM roles for service accounts (IRSA)](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
+
+If you haven't set up an OIDC identity provider for your EKS cluster, set up:
+
+```bash
+eksctl utils associate-iam-oidc-provider \
+  --region <region> --cluster mycluster --approve
+```
+
+Create an IAM role that will be assumed by the Kubernetes service account. The
+following command will create a role named `pganalyzeServiceAccountRole`.
+
+
+```bash
+aws iam create-role --role-name pganalyzeServiceAccountRole \
+  --description "For pganalyze collector service account" \
+  --assume-role-policy-document '{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::<aws-account-id>:oidc-provider/oidc.eks.<region>.amazonaws.com/id/<OIDC_PROVIDER_ID>"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.<region>.amazonaws.com/id/<OIDC_PROVIDER_ID>:sub": "system:serviceaccount:<namespace>:pganalyze-service-account"
+        }
+      }
+    }
+  ]
+}'
+```
+
+Replace `OIDC_PROVIDER_ID` with the one created above. You can find it using the
+following command:
+
+```
+aws eks describe-cluster \
+  --name mycluster --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5
+```
+
+Attach the policy you created earlier to the created account. Below assumes that
+the policy name is `pganalyze`:
+
+```
+aws iam attach-role-policy --role-name pganalyzeServiceAccountRole \
+  --policy-arn arn:aws:iam::<aws-account-id>:policy/pganalyze
+```
