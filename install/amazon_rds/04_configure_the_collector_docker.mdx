@@ -24,17 +24,17 @@ In the case of Amazon Aurora, the collector automatically resolves `cluster` end
 DB_HOST=mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
 ```
 
-This will only monitor the writer instance. If you also want to monitor a reader instance, you'll need to use the Multiple Servers method above.
+This will only monitor the writer instance. If you also want to monitor a reader instance, you'll need to use the Multiple Instances method above.
 
 ```
 CONFIG_CONTENTS="[pganalyze]
 api_key = 'your_pga_organization_api_key'
 
-[server_writer]
+[writer_instance]
 db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
 ...
 
-[server_reader]
+[reader_instance]
 db_host = mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
 ...
 "
