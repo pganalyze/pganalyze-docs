@@ -8,7 +8,6 @@ export const CHECK_TITLES = {
     blocking_query: "Blocking Queries",
   },
   index_advisor: {
-    missing_index: "Missing Index",
     indexing_engine: "Missing Indexes",
   },
   schema: {
@@ -48,7 +47,6 @@ export const CHECK_SEVERITIES = {
     blocking_query: ['warning', 'critical'],
   },
   index_advisor: {
-    missing_index: ['info'],
     indexing_engine: ['info'],
   },
   schema: {
@@ -112,7 +110,6 @@ export const CHECK_FREQUENCY = {
     blocking_query: CHECK_FREQUENCY_REALTIME,
   },
   index_advisor: {
-    missing_index: CHECK_FREQUENCY_DAILY,
     indexing_engine: CHECK_FREQUENCY_DAILY,
   },
   schema: {
@@ -183,9 +180,6 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
     }
   },
   index_advisor: {
-    missing_index: {
-      enabled: true
-    },
     indexing_engine: {
       enabled: true
     }

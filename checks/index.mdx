@@ -16,7 +16,6 @@ export const CheckLinks = () => {
             <strong>{checkGroup}</strong>
             <ul>
               {Object.entries(items).map(([checkName, checkTitle]) => {
-                if (checkGroup == "index_advisor" && checkName == "missing_index") return null;
                 return (
                   <li key={checkName}>
                     <Link to={`/docs/checks/${checkGroup}/${checkName}`}>
