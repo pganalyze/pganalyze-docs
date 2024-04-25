@@ -1,0 +1,71 @@
+---
+title: '2024.04.1 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2024.04.1`
+
+## Notes
+
+- This is a patch release on top of **[2024.04.0](2024-04-0)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2024.04.0](2024-04-0), be sure to read those release notes, and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+## Features
+
+* Index Advisor
+  - Add support for "pg_bigm", "cube", "earthdistance" and "ltree" extensions <!-- 3953 and 3957 -->
+  - Add ability to filter out acknowledged state insights <!-- 3943 -->
+
+## Other improvements
+
+* Improve support of read-only filesystems by writing license response file to temporary folder <!-- 3935 -->
+  - This avoids having to make the `/home/app` folder writeable for the `license_response.json` file, and
+    instead only requires the `$TMPDIR` folder (typically `/tmp`) to be writeable.
+* Add option to source `$INIT_SCRIPT` at startup <!-- 3974 -->
+  - This enables easier use of external secret management tools in a Kubernetes environment,
+    since you can now directly have the container source a file previously written in an init
+    container, instead of having to manually use "bash -c" to source that file first. To use,
+    first have an init container write a file to a volume mount, and then mount that same volume
+    to the main pganalyze container and set `INIT_SCRIPT` to the file location. The file should
+    contain `export VARIABLE=value` statements, e.g. to set the `LICENSE_KEY` or `DATABASE_URL`
+* Allow configuring ports used inside Enterprise Server container <!-- 3969 -->
+  - This allows overriding the following port settings:
+    - `PORT` (default to 5000), where the reverse proxy listens for HTTP requests
+    - `SSL_PORT` (default to 5001), where the reverse proxy listens for HTTPS requests
+    - `APP_PORT` (default to 5002), where the main app listens for the reverse proxy
+    - `SNAPSHOT_PORT` (default to 5003), where the snapshot API listens for the reverse proxy
+  - We only recommend changing these when needed and recommend not changing `APP_PORT` and `SNAPSHOT_PORT`
+    as they should be considered internal details that are subject to change
+* Add support for built-in nginx to Enterprise slim images <!-- 3966 -->
+  - This was added in the last Enterprise release ([2024.04.0](2024-04-0)) to support reverse proxying to either the
+    regular application or the snapshot API on the same port (5000), depending on path.
+  - However we omitted to properly support this for the slim Enterprise images at the time. This adds
+    the package, allowing to run "web" for starting up a web server that handles both regular app
+    requests and the snapshot API
+* Allow directly running Enterprise Server "slim" image as non-root user <!-- 3936 -->
+  - Generically the Enterprise Server image will drop privileges to the "app" user as soon as it can, but
+    container boot-up was historically still done as the "root" user inside the container.
+  - With this change, when using the Enterprise Server "slim" images (that is, the images which do not run an init system,
+    requiring separate containers/pods to be deployed for different functions, such as web/worker/collector),
+    you can now specify the app user (`app`, UID 1000) directly on the container host, guaranteeing the
+    container guest OS never runs as root
+* Automated EXPLAIN
+  - View EXPLAIN Source: Hide "Async Capable" field when converting from JSON to text format <!-- 3946 -->
+  - Add a better support for handling new lines with the text log format <!-- 3937 -->
+  - Correctly convert I/O timing output for Postgres 15+ to JSON format if needed <!-- 3948 -->
+
+
+## Bugfixes
+
+* Bundled nginx configuration: Correctly handle `X-Forwarded-Proto` set by upstream load balancers / proxies <!-- 3934 -->
+  - This avoids SSL related redirect problems, or SAML single-sign on issues caused by the recent addition
+    of nginx as a reverse proxy inside the Enterprise Server container image.
+* Index Advisor:
+  - Avoid Internal Error for tables that had no scans/query activity in the last 7 days <!-- 3956 -->
+  - Avoid errors when unsupported index types/data types are referenced by a table <!-- 3954 -->
+
+## Security
+
+- Routine security updates to packages in the base image and library dependencies
