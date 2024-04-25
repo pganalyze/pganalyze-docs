@@ -23,7 +23,12 @@ export const IAMRoleCreationEKS = () => {
           case 'irsa':
             return <TabTextContent><CreateIAMRoleEKSIRSA /></TabTextContent>;
           case 'pod_identity':
-            return <TabTextContent><CreateIAMRoleEKSPodIdentity /></TabTextContent>;
+            return (
+              <TabTextContent>
+                Creating an IAM role with Amazon EKS Pod Identity is not
+                supported yet. Please use IAM roles for service accounts (IRSA).
+              </TabTextContent>
+            );
           default:
             return null;
         }
