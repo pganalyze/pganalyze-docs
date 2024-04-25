@@ -36,13 +36,13 @@ docker run -e CONFIG_CONTENTS="
 api_key = ..." quay.io/pganalyze/collector:stable test
 ```
 
-Alternatively, run one pganalyze collector Docker container for each server
+Alternatively, run one pganalyze collector Docker container for each instance
 using the Single Instance method.
 
 **Fill in the values step-by-step:**
 
 1. <APIKeyInstructions apiKey={props.apiKey} />
 2. The `db_host` is the hostname / endpoint of your RDS instance (for Amazon Aurora you can use the cluster endpoint in many cases, see for details below)
-3. The `db_name` is the database name on the Postgres server you want to monitor
+3. The `db_name` is the database name on the Postgres instance you want to monitor
 4. The `db_username` and `db_password` should be the monitoring user we created in <Link to='02_create_monitoring_user'>Step 2</Link>
 5. The `db_sslrootcert` and `db_sslmode` is the recommended SSL connection configuration that you can usually keep as specified above
