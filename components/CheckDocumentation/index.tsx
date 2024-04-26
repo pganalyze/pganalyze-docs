@@ -6,7 +6,6 @@ import QuerySlowness from "./queries/Slowness";
 import ActiveQuery from "./connections/ActiveQuery";
 import IdleTransaction from "./connections/IdleTransaction";
 import BlockingQuery from "./connections/BlockingQuery";
-import MissingIndex from "./index_advisor/MissingIndex";
 import IndexingEngine from "./index_advisor/IndexingEngine";
 import IndexInvalid from "./schema/IndexInvalid";
 import IndexUnused from "./schema/IndexUnused";
@@ -36,7 +35,6 @@ const Docs: {
     blocking_query: BlockingQuery,
   },
   index_advisor: {
-    missing_index: MissingIndex,
     indexing_engine: IndexingEngine,
   },
   schema: {
