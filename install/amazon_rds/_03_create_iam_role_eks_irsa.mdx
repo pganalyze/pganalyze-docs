@@ -2,7 +2,8 @@ With this step, you are going to create a new IAM role and associate that role
 with the service account using
 [IAM roles for service accounts (IRSA)](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
 
-If you haven't set up an OIDC identity provider for your EKS cluster, set up:
+If you haven't set up an OIDC identity provider for your EKS cluster, set it up
+as follows:
 
 ```bash
 eksctl utils associate-iam-oidc-provider \

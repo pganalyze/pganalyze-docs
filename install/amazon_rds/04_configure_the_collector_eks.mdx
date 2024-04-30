@@ -43,18 +43,14 @@ serviceAccount:
   name: "pganalyze-service-account"
 ```
 
-<SettingEnvVarsEKS apiKey={props.apiKey} />
-
-**Note:** The pganalyze collector allows for more [optional settings](https://pganalyze.com/docs/collector/settings) (e.g. AWS access keys, multiple database names)
-
-While the `extraEnv` field is convenient for configuration, it is **not suitable
-for sensitive data** such as passwords, API keys, or secret tokens. Storing such
-information in the values.yaml file can expose sensitive data to unauthorized
-access, especially if the values files are checked into version control systems.
-
+Next, update the `extraEnv` section in the values.yaml file with the following.
 This example uses `extraEnv` field for a temporary demonstration. For production
 environments or any sensitive data handling, follow your organization's security
 best practices and use Kubernetes secrets.
+
+<SettingEnvVarsEKS apiKey={props.apiKey} />
+
+**Note:** The pganalyze collector allows for more [optional settings](https://pganalyze.com/docs/collector/settings) (e.g. AWS access keys, multiple database names)
 
 ## Handling Amazon Aurora clusters vs instances
 

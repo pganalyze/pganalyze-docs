@@ -2,7 +2,8 @@ With this step, you are going to create a new IAM role and associate that role
 with the service account using
 [Amazon EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html).
 
-If you haven't installed Amazon EKS Pod Identity Agent add-on, install:
+If you haven't installed Amazon EKS Pod Identity Agent add-on, install it with
+this command:
 
 ```bash
 aws eks create-addon --cluster-name mycluster \
@@ -33,8 +34,8 @@ aws iam create-role --role-name pganalyzeServiceAccountRole \
 }'
 ```
 
-Attach the policy you created earlier to the created account. Below assumes that
-the policy name is `pganalyze`:
+Attach the policy you created earlier to the created account. The command below
+assumes that the policy name is `pganalyze`:
 
 ```
 aws iam attach-role-policy --role-name pganalyzeServiceAccountRole \
