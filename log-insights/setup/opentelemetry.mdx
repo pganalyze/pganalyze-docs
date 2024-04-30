@@ -1,0 +1,49 @@
+---
+title: 'Log Insights: Kubernetes with OpenTelemetry'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+If you are running the database in the Kubernetes cluster, you can use the
+[`db_log_otel_server`](/docs/collector/settings#self-managed-servers) setting to
+have the collector listen for OpenTelemetry log data model messages.
+When this is specified, the collector will run the HTTP server behind the scenes
+on the specified port to receive logs at the `/v1/logs` endpoint.
+This should be a local address like `0.0.0.0:4318` and it's recommended to use
+an unprivileged port number (1024 and up) to avoid running the HTTP server as
+root.
+
+**Note:** This is still beta and currently only supporting CloudNativePG logs,
+with the jsonlog format (available with Postgres 15 or above).
+
+### Using with a pganalyze collector Helm chart
+
+If you are deploying the pganalyze collector using a Helm chart, you can update
+the values.yaml file to create a service for this HTTP server.
+In values.yaml file, update the section of `service`:
+
+```yaml
+service:
+  create: true
+  name: pganalyze-collector-otel-service
+  type: ClusterIP
+  port: 4318
+  targetPort: 4318
+```
+
+This will create a service with the name `pganalyze-collector-otel-service`.
+Assuming you use [Fluent Bit](https://fluentbit.io/) as a telemetry agent,
+you can specify the created service as an OpenTelemetry HTTP endpoint, using the
+[OpenTelemetry output plugin](https://docs.fluentbit.io/manual/pipeline/outputs/opentelemetry):
+
+```
+  [OUTPUT]
+    name  opentelemetry
+    match kube.*postgres*
+    host  pganalyze-collector-otel-service
+    port  4318
+```
+
+With this flow, Fluent Bit tails logs of Postgres pods, sends out logs to the
+pganalyze collector's OpenTelemetry HTTP endpoint (via `pganalyze-collector-otel-service`),
+then the collector will process logs.
