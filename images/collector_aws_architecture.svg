@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-161 -265 1199 562" width="1199" height="562">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_3" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="#336792">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_4" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="#a5a5a5">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Canvas_1" stroke-dasharray="none" fill-opacity="1" stroke-opacity="1" stroke="none" fill="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Line_10">
+        <path d="M 659.0313 -23.538333 L 675.9532 -23.538333 L 675.9532 1.7950002 L 663.098 1.7950002" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_9">
+        <text transform="translate(701.0756 -20.095666)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">Other connections (HTTP, etc.)</tspan>
+        </text>
+      </g>
+      <g id="Graphic_87">
+        <path d="M -160 -264 L 597.5313 -264 L 597.5313 275.46167 L -160 275.46167 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(-150 -254)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Application AWS Account</tspan>
+        </text>
+      </g>
+      <g id="Graphic_81">
+        <rect x="83.04561" y="-219.53833" width="228.66315" height="456" fill="white"/>
+        <rect x="83.04561" y="-219.53833" width="228.66315" height="456" stroke="#a5a5a5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(93.04561 -209.53833)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">EC2, ECS, or EKS</tspan>
+        </text>
+      </g>
+      <g id="Graphic_74">
+        <rect x="102.04561" y="106.46167" width="181" height="108" fill="#afabbe"/>
+        <rect x="102.04561" y="106.46167" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(107.04561 138.46167)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="16" xml:space="preserve">pganalyze</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="53.7" y="38" xml:space="preserve">collector</tspan>
+        </text>
+      </g>
+      <g id="Graphic_73">
+        <rect x="-140" y="-219.53833" width="181" height="108" fill="#acdfdf"/>
+        <rect x="-140" y="-219.53833" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-135 -198.53833)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="42.252" y="16" xml:space="preserve">RDS/Aurora</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="22.228" y="38" xml:space="preserve">Postgres Instance</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="26.676" y="60" xml:space="preserve">(for Application)</tspan>
+        </text>
+      </g>
+      <g id="Line_72">
+        <line x1="283.0456" y1="160.46167" x2="738.1077" y2="160.46167" marker-end="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_68"/>
+      <g id="Graphic_67"/>
+      <g id="Graphic_65">
+        <rect x="491.4649" y="144.46167" width="91.792" height="32" fill="white"/>
+        <text transform="translate(496.4649 149.46167)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16" xml:space="preserve">HTTPS/443</tspan>
+        </text>
+      </g>
+      <g id="Graphic_63">
+        <rect x="-141" y="29.330865" width="181" height="108" fill="#acdedd"/>
+        <rect x="-141" y="29.330865" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(-136 61.330865)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="53.532" y="16" xml:space="preserve">AWS API</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="16.212" y="38" xml:space="preserve">(RDS, CloudWatch)</tspan>
+        </text>
+      </g>
+      <g id="Line_62">
+        <path d="M 147.29561 106.46167 L 147.29561 9.314304 L 8.378945 9.314304 L 8.378945 -77.87167 L -4.25 -77.87167 L -4.25 -101.63833" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_61">
+        <rect x="-49.101055" y="-90.74318" width="114.96" height="32" fill="white"/>
+        <text transform="translate(-44.101055 -85.74318)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Postgres/5432</tspan>
+        </text>
+      </g>
+      <g id="Line_60">
+        <path d="M 102.04561 160.46167 L -50.5 160.46167 L -50.5 147.23087" marker-end="url(#FilledArrow_Marker_2)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_59">
+        <rect x="-41.09499" y="144.46167" width="91.792" height="32" fill="white"/>
+        <text transform="translate(-36.09499 149.46167)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16" xml:space="preserve">HTTPS/443</tspan>
+        </text>
+      </g>
+      <g id="Graphic_40">
+        <text transform="translate(162 21.461667)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Each collector can monitor</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">one or more RDS or Aurora</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">instances</tspan>
+        </text>
+      </g>
+      <g id="Graphic_39">
+        <text transform="translate(-135 -97.7616)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Postgres is </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">accessed</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">using restricted </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82" xml:space="preserve">monitoring user</tspan>
+        </text>
+      </g>
+      <g id="Graphic_38">
+        <text transform="translate(-127.51429 176.42333)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Instance role with</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">IAM policy that allows </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">RDS log download</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82" xml:space="preserve">and system metrics</tspan>
+        </text>
+      </g>
+      <g id="Graphic_36">
+        <rect x="102.04561" y="-147.33601" width="181" height="108" fill="white"/>
+        <rect x="102.04561" y="-147.33601" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(107.04561 -115.33601)" fill="#a5a5a5">
+          <tspan font-family="Avenir Next" font-size="16" fill="#a5a5a5" x="57.1" y="16" xml:space="preserve">Existing</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="#a5a5a5" x="43.46" y="38" xml:space="preserve">Application</tspan>
+        </text>
+      </g>
+      <g id="Line_35">
+        <path d="M 102.04561 -93.33601 L 71.52281 -93.33601 L 71.52281 -165.53833 L 50.9 -165.53833" marker-end="url(#FilledArrow_Marker_4)" stroke="#a5a5a5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_27">
+        <rect x="650.5313" y="-192.33601" width="30" height="30" fill="#b1acbf"/>
+        <rect x="650.5313" y="-192.33601" width="30" height="30" stroke="#797979" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_26">
+        <text transform="translate(655.5313 -244.53833)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="20" fill="black" x="0" y="20" xml:space="preserve">Legend</tspan>
+        </text>
+      </g>
+      <g id="Graphic_25">
+        <text transform="translate(698.0313 -187.33601)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">New component</tspan>
+        </text>
+      </g>
+      <g id="Graphic_22">
+        <rect x="650.5313" y="-142.1337" width="30" height="30" fill="#acdfdf"/>
+        <rect x="650.5313" y="-142.1337" width="30" height="30" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_21">
+        <text transform="translate(698.0313 -137.1337)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">Existing application / infrastructure component</tspan>
+        </text>
+      </g>
+      <g id="Line_13">
+        <path d="M 659.0313 -81.56315 L 675.9532 -81.56315 L 675.9532 -56.22981 L 663.098 -56.22981" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_12">
+        <text transform="translate(701.0756 -78.12048)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">Postgres protocol connection</tspan>
+        </text>
+      </g>
+      <g id="Graphic_88">
+        <path d="M 640 54 L 1037.0153 54 L 1037.0153 275.46167 L 640 275.46167 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(650 64)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">pganalyze</tspan>
+        </text>
+      </g>
+      <g id="Graphic_89">
+        <rect x="748.0077" y="106.46167" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(753.0077 149.46167)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="33.964" y="16" xml:space="preserve">pganalyze API</tspan>
+        </text>
+      </g>
+      <g id="Graphic_90">
+        <text transform="translate(333.89543 -214.53833)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Collector can be installed directly </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">on an EC2 instance, or you can </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">also deploy as a part of your </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82" xml:space="preserve">existing ECS/EKS</tspan>
+        </text>
+      </g>
+      <g id="Graphic_91">
+        <text transform="translate(333.89543 176.42333)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Collector sends query metadata </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">and various statistics (snapshots)  </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">to pganalyze on a continuous </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82" xml:space="preserve">basis</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>
