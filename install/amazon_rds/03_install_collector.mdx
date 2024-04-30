@@ -10,6 +10,7 @@ import styles from '../../style.module.scss'
 
 import imgAwsEc2 from '../../images/aws-ec2.svg'
 import imgAwsEcs from '../../images/aws-ecs.svg'
+import imgAwsEks from '../../images/aws-eks.svg'
 import imgDocker from '../../images/logo_docker.svg'
 
 export const SelectCollectorPlatform = () => {
@@ -26,6 +27,11 @@ export const SelectCollectorPlatform = () => {
           link: "03_install_collector_ecs",
           img: imgAwsEcs,
           providerName: "Amazon ECS",
+        },
+        {
+          link: "03_install_collector_eks",
+          img: imgAwsEks,
+          providerName: "Amazon EKS",
         },
         {
           link: "03_install_collector_docker",

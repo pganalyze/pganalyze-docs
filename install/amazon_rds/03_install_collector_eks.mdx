@@ -1,0 +1,34 @@
+---
+title: 'Step 3: Install the Collector'
+install_track_title: Installation Guide (Amazon RDS and Amazon Aurora)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import SetupIAMPolicy from './_03_setup_iam_policy.mdx';
+import CreateIAMRoleEKSIRSA from './_03_create_iam_role_eks_irsa.mdx'
+
+## Installing the collector with Amazon EKS
+
+You can install the Helm chart for the pganalyze collector on your [Amazon EKS cluster](https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html).
+
+### Prerequisites
+
+* You already have an Amazon EKS cluster
+* [`kubectl`](https://kubernetes.io/docs/tasks/tools/) is installed
+* [`eksctl`](https://eksctl.io/installation/) is installed and [a kubeconfig file for an Amazon EKS cluster is created](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
+* [`The Helm CLI`](https://helm.sh/) v3 or above is installed
+
+<SetupIAMPolicy />
+
+### Create IAM role
+
+**Note:** Creating an IAM role currently requires using IAM roles for service
+accounts (IRSA). Creating an IAM role with Amazon EKS Pod Identity is not
+supported yet.
+
+<CreateIAMRoleEKSIRSA />
+
+<Link className="btn btn-success" to="04_configure_the_collector_eks">
+  Proceed to Step 4: Configure the Collector
+</Link>

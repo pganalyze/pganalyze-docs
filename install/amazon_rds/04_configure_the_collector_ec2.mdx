@@ -26,7 +26,7 @@ export const ConfigSample = ({ apiKey }) => {
     <CodeBlock>
       {`[pganalyze]
 api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
-[server1]
+[instance1]
 db_host = instance-id.account-id.us-east-1.rds.amazonaws.com
 db_name = your_database_name
 db_username = your_monitoring_user
@@ -47,7 +47,7 @@ The collector configuration file lives in `/etc/pganalyze-collector.conf`, and l
 
 1. <APIKeyInstructions apiKey={props.apiKey} />
 2. The `db_host` is the hostname / endpoint of your RDS instance (for Amazon Aurora you can use the cluster endpoint in many cases, see for details below)
-3. The `db_name` is the database name on the Postgres server you want to monitor
+3. The `db_name` is the database name on the Postgres instance you want to monitor
 4. The `db_username` and `db_password` should be the monitoring user we created in <Link to='02_create_monitoring_user'>Step 2</Link>
 5. The `db_sslrootcert` and `db_sslmode` is the recommended SSL connection configuration that you can usually keep as specified above
 
@@ -58,11 +58,11 @@ The collector configuration file lives in `/etc/pganalyze-collector.conf`, and l
 In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance, and `cluster-ro` to the underlying reader instance:
 
 ```
-[server_writer]
+[writer_instance]
 db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
 ...
 
-[server_reader]
+[reader_instance]
 db_host = mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
 ...
 ```
@@ -73,15 +73,15 @@ reader instances this is only supported in two-node clusters (i.e. single reader
 If you have multiple readers you want to monitor you instead need to specify each instance endpoint separately:
 
 ```
-[server_instance1]
+[instance1]
 db_host = mydbinstance1.123456789012.us-east-1.rds.amazonaws.com
 ...
 
-[server_instance2]
+[instance2]
 db_host = mydbinstance2.123456789012.us-east-1.rds.amazonaws.com
 ...
 
-[server_instance3]
+[instance3]
 db_host = mydbinstance3.123456789012.us-east-1.rds.amazonaws.com
 ...
 ```
