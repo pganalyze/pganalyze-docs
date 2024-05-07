@@ -1,0 +1,26 @@
+---
+title: '2024.04.2 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2024.04.2`
+
+## Notes
+
+- This is a patch release on top of **[2024.04.0](2024-04-0)** and **[2024.04.1](2024-04-1)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2024.04.0](2024-04-0), be sure to read those release notes, and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+## Bugfixes
+
+* Bundled nginx configuration: Increase max file upload size from 1MB to 500MB <!-- 3986 -->
+  - This caused larger snapshots (i.e. with lots of statistics data) to fail being processed
+* Snapshot API: Correctly respect `X-Forwarded-Proto` header for snapshot upload URL <!-- 4026 -->
+  - The `X-Forwarded-Proto` header is typically set by load balancers that do SSL/TLS termination in front of the pganalyze installation
+  - Previously the snapshot API server was incorrectly generating `http://` URLs for snapshot upload in such scenarios, despite the API request coming in to an `https://` URL
+  - This fixes support for load balancers that do not have an HTTP port listener, on installations that do not have `FORCE_SSL` set to `1` (which avoided this bug, by always requiring SSL/TLS)
+
+## Security
+
+- Routine security updates to packages in the base image
