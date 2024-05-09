@@ -613,7 +613,8 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
       <td>db_log_otel_k8s_labels (<code>LOG_OTEL_K8S_LABELS</code>)</td>
       <td>[none]</td>
       <td>
-        Comma-separated <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors">Kubernetes label selectors</a> to filter matching logs
+        Comma-separated <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors">Kubernetes label selectors</a> to filter matching logs.
+        Only support equality-based selectors.
       </td>
     </tr>
   </tbody>
