@@ -178,9 +178,9 @@ helper functions are expected to be defined, and the one we connect to for serve
     </tr>
     <tr>
       <td><code>DB_ALL_NAMES</code></td>
-      <td>false</td>
+      <td>0</td>
       <td>Alternative to setting <code>*</code> as the last entry of db_name (<code>DB_NAME</code>) to
-      monitor all databases on the server. Can only be set using an environment variable.<br />
+      monitor all databases on the server. Can only be set using an environment variable (<code>DB_ALL_NAMES = 1</code>).<br />
       This is helpful when db_url (<code>DB_URL</code>) is used to specify a monitoring server (db_name is unused)
       and you want to monitor all databases on that server.</td>
     </tr>
