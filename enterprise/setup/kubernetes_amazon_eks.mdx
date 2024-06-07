@@ -318,7 +318,7 @@ pganalyze   1/1     1            1           1m
 Run the following command to perform the Enterprise self-check:
 
 ```
-kubectl exec -i -t deploy/pganalyze -- /sbin/setuser app /bin/bash -c "source /etc/profile.d/rvm.sh && SECRET_KEY_BASE=1 bundle exec rake enterprise:self_check"
+kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake enterprise:self_check
 ```
 
 This should return the following:
@@ -341,18 +341,25 @@ In case you get an error for the license verification, please reach out to the p
 Run the following to initialize the pganalyze statistics database:
 
 ```
-kubectl exec -i -t deploy/pganalyze -- /sbin/setuser app /bin/bash -c "source /etc/profile.d/rvm.sh && SECRET_KEY_BASE=1 bundle exec rake db:setup"
+kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:structure:load
 ```
-
-This will also output the admin credentials like this:
-
 ```
 Database 'postgres' already exists
  set_config 
 ------------
  
 (1 row)
+```
 
+Then run the following to create the initial admin user:
+
+```
+kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:seed
+```
+
+And note down the credentials that are returned:
+
+```
 INFO -- : *****************************
 INFO -- : *** INITIAL ADMIN CREATED ***
 INFO -- : *****************************
