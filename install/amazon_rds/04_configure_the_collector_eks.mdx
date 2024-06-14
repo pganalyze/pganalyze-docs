@@ -50,6 +50,39 @@ best practices and use Kubernetes secrets.
 
 <SettingEnvVarsEKS apiKey={props.apiKey} />
 
+When using Kubernetes secrets, it's easier to use the `INI` file style for the
+config. You can find the example of this in the Multiple DB Instances example
+above, where it is used as the value of the `CONFIG_CONTENTS` environment variable.
+
+For instance, you can create a secret called `pganalyze-secrets` and add a key
+`pganalyze-collector.conf`, setting the `INI` collector config as its value.
+Then, create a secret volume `config-volume` and mount it to the `/config` path
+so that the config file will be created in the default config file location:
+
+```yaml
+# -- List of volumes to attach to the pod
+volumes:
+  - name: scratch
+    emptyDir: {}
+  - name: config-volume
+    secret:
+      secretName: pganalyze-secrets
+
+# -- List of volume mounts to attach to the container
+volumeMounts:
+  - mountPath: /tmp
+    name: scratch
+    subPath: tmp
+  - mountPath: /state
+    name: scratch
+    subPath: state
+  - mountPath: /config
+    name: config-volume
+```
+
+With this, the `config-volume` volume will contain a `pganalyze-collector.conf`
+file, with its content being the value of the secret, mounted at `/config/pganalyze-collector.conf`.
+
 **Note:** The pganalyze collector allows for more [optional settings](https://pganalyze.com/docs/collector/settings) (e.g. AWS access keys, multiple database names)
 
 ## Handling Amazon Aurora clusters vs instances
