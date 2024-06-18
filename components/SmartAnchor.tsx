@@ -84,10 +84,11 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
 
 const SmartAnchorContext = React.createContext<React.ComponentType<BaseProps> | undefined>(undefined);
 
-export const WithSmartAnchor: React.FunctionComponent<{
+export const WithSmartAnchor = ({linkComponent, linkRelative, children}: {
   linkComponent: React.ComponentType<LinkProps>;
   linkRelative: boolean;
-}> = ({linkComponent, linkRelative, children}) => {
+  children: React.ReactNode;
+}) => {
   return (
     <SmartAnchorContext.Provider value={makeSmartAnchor(linkComponent, linkRelative)}>
       {children}

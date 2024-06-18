@@ -8,7 +8,7 @@ export type DescriptionPopupProps = {
 
 const DescriptionPopupContext = React.createContext<React.ComponentType<DescriptionPopupProps>>(Null);
 
-const WithDescriptionPopup: React.FunctionComponent<{popup: React.ComponentType<DescriptionPopupProps>}> = ({popup, children}) => {
+const WithDescriptionPopup = ({popup, children}: {popup: React.ComponentType<DescriptionPopupProps>, children: React.ReactNode}) => {
   return (
     <DescriptionPopupContext.Provider value={popup}>
       {children}

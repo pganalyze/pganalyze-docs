@@ -21,7 +21,7 @@ const IconContext = React.createContext<Icons>({
   secure: Null,
 });
 
-const WithIcons: React.FunctionComponent<{icons: Icons}> = ({icons, children}) => {
+const WithIcons = ({icons, children}: {icons: Icons, children: React.ReactNode}) => {
   return (
     <IconContext.Provider value={icons}>
       {children}

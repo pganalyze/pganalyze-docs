@@ -3,9 +3,10 @@ import React from 'react';
 type Props = {
    language: string;
    style?: React.CSSProperties;
+   children: React.ReactNode;
 }
 
-const CodeBlock: React.FunctionComponent<Props> = ({children, language = 'text', style}) => {
+const CodeBlock = ({children, language = 'text', style}: Props) => {
   return (
     <div className='gatsby-highlight' data-language={language}>
       <pre className={`language-${language}`} style={style}>
