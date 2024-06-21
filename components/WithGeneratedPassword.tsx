@@ -11,7 +11,7 @@ function generatePassword () {
 
 const GeneratedPasswordContext = React.createContext("mypassword");
 
-const WithGeneratedPassword: React.FunctionComponent = ({children}) => {
+const WithGeneratedPassword = ({children}: { children: React.ReactNode }) => {
   const [ password, setPassword ] = useState('[could not generate password]');
   useLayoutEffect(() => {
     // ensure the password is generated during client-side rendering, to avoid

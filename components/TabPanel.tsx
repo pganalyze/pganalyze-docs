@@ -40,7 +40,7 @@ const TabPanel: React.FunctionComponent<Props> = ({items, children}) => {
   )
 }
 
-export const TabTextContent: React.FunctionComponent = ({children}) => {
+export const TabTextContent = ({children}: { children: React.ReactNode }) => {
   return (
     <div className={styles.tabPanelTextContent}>{children}</div>
   )

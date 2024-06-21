@@ -4,13 +4,14 @@ import { useIcon } from "../WithIcons";
 type Props = {
   path: string;
   version?: string;
+  children: React.ReactNode;
 };
 
-const PGDocsLink: React.FunctionComponent<Props> = ({
+const PGDocsLink = ({
   path,
   version,
   children,
-}) => {
+}: Props) => {
   const ExternaLinkIcon = useIcon('externalLink')
   return (
     <a
