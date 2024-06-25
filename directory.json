@@ -88,6 +88,10 @@
       "title": "pganalyze Collector settings",
       "path": "/docs/collector/settings"
     },
+    "collector/uninstalling": {
+      "title": "Uninstalling the pganalyze Collector",
+      "path": "/docs/collector/uninstalling"
+    },
     "collector/upgrading": {
       "title": "Upgrading the pganalyze Collector",
       "path": "/docs/collector/upgrading"

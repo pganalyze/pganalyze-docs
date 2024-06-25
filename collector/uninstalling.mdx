@@ -1,0 +1,84 @@
+---
+title: 'Uninstalling the pganalyze Collector'
+backlink_href: /docs/collector
+backlink_title: 'pganalyze Collector'
+---
+
+To uninstall pganalyze from your system, follow these two steps:
+
+1. [Cleaning up a monitoring user and helper functions](#cleaning-up-a-monitoring-user-and-helper-functions)
+2. [Uninstalling the collector](#uninstalling-the-collector)
+
+## Cleaning up a monitoring user and helper functions
+
+To uninstall the pganalyze collector, first you'll need to clean up a pganalyze
+monitoring user and helper functions that you created during the setup.
+
+* Run `DROP SCHEMA pganalyze CASCADE` in each database that you monitor to
+  remove helper functions
+* Run `DROP USER pganalyze` in any database to remove a monitoring user
+
+
+## Uninstalling the collector
+
+Since there are many different ways to run the collector, the uninstall process
+will depend on how you originally set up the collector:
+
+ - [RPM package deployment](#rpm-package-deployment) (for Amazon Linux 2, RHEL, CentOS, Fedora VMs)
+ - [Debian and Ubuntu package deployment](#debian-and-ubuntu-package-deployment) (for Debian and Ubuntu VMs)
+ - [Container deployment](#container-deployment) (for Docker, ECS and other container runtimes)
+ - [Heroku deployment](#heroku-deployment)
+
+### RPM package deployment
+
+On Amazon Linux 2, RHEL, CentOS, Fedora, and other systems using RPM packages,
+you can uninstall the collector through the standard uninstall mechanism.
+
+First, remove the collector package from your system (this includes disabling
+and stopping the service):
+```
+sudo yum remove pganalyze-collector
+```
+
+Then, clean up a state file and its directory:
+```
+sudo rm -r /var/lib/pganalyze-collector
+```
+
+Finally, clean up the user and group:
+```
+sudo userdel pganalyze # this will delete the group too
+```
+
+### Debian and Ubuntu package deployment
+
+On systems using Debian-based packages, you can uninstall the collector through
+the standard uninstall mechanism.
+
+First, remove the collector package from your system (this includes disabling
+and stopping the service):
+```
+sudo apt remove pganalyze-collector
+```
+
+Then, clean up a state file and its directory:
+```
+sudo rm -r /var/lib/pganalyze-collector
+```
+
+Finally, clean up the user and group:
+```
+sudo userdel pganalyze # this will delete the group too
+```
+
+### Container deployment
+
+On Amazon ECS, Google Cloud Run, or other Docker environments, you simply need
+to tear down the container.
+If you created any additional things for monitoring, such as an IAM policy and
+role for Amazon RDS and Aurora instances, delete them too.
+
+### Heroku deployment
+
+To uninstall the pganalyze collector on Heroku, you simply need to delete the
+collector application.
