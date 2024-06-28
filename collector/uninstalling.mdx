@@ -6,17 +6,17 @@ backlink_title: 'pganalyze Collector'
 
 To uninstall pganalyze from your system, follow these two steps:
 
-1. [Cleaning up a monitoring user and helper functions](#cleaning-up-a-monitoring-user-and-helper-functions)
+1. [Dropping the monitoring user and helper functions](#dropping-the-monitoring-user-and-helper-functions)
 2. [Uninstalling the collector](#uninstalling-the-collector)
 
-## Cleaning up a monitoring user and helper functions
+## Dropping the monitoring user and helper functions
 
 To uninstall the pganalyze collector, first you'll need to clean up a pganalyze
 monitoring user and helper functions that you created during the setup.
 
 * Run `DROP SCHEMA pganalyze CASCADE` in each database that you monitor to
   remove helper functions
-* Run `DROP USER pganalyze` in any database to remove a monitoring user
+* Run `DROP USER pganalyze` in any database to remove the monitoring user
 
 
 ## Uninstalling the collector
@@ -40,12 +40,12 @@ and stopping the service):
 sudo yum remove pganalyze-collector
 ```
 
-Then, clean up a state file and its directory:
+Then, remove files used to track working collection state:
 ```
 sudo rm -r /var/lib/pganalyze-collector
 ```
 
-Finally, clean up the user and group:
+Finally, clean up the collector system user and group:
 ```
 sudo userdel pganalyze # this will delete the group too
 ```
@@ -61,12 +61,12 @@ and stopping the service):
 sudo apt remove pganalyze-collector
 ```
 
-Then, clean up a state file and its directory:
+Then, remove files used to track working collection state:
 ```
 sudo rm -r /var/lib/pganalyze-collector
 ```
 
-Finally, clean up the user and group:
+Finally, clean up the collector system user and group:
 ```
 sudo userdel pganalyze # this will delete the group too
 ```
