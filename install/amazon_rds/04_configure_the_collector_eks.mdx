@@ -56,6 +56,22 @@ above, where it is used as the value of the `CONFIG_CONTENTS` environment variab
 
 For instance, you can create a secret called `pganalyze-secrets` and add a key
 `pganalyze-collector.conf`, setting the `INI` collector config as its value.
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pganalyze-secrets
+data:
+  pganalyze-collector.conf: |
+    [pganalyze]
+    api_key = your_api_key
+    [instance1]
+    db_host = your_database_host
+    db_name = your_database_name
+    ...
+```
+
 Then, create a secret volume `config-volume` and mount it to the `/config` path
 so that the config file will be created in the default config file location:
 
