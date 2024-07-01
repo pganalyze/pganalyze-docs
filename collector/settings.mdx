@@ -205,7 +205,7 @@ settings to filter these before we collect them.
   <tbody>
     <tr>
       <td>filter_log_secret (<code>FILTER_LOG_SECRET</code>)</td>
-      <td>none</td>
+      <td><code>credential</code>, <code>parsing_error</code>, <code>unidentified</code></td>
       <td>One or more of <code>none</code>/<code>all</code>/<code>credential</code>/<code>parsing_error</code>/<code>statement_text</code>/<code>statement_parameter</code>/<code>table_data</code>/<code>ops</code>/<code>unidentified</code> (comma separated)</td>
     </tr>
     <tr>
@@ -221,7 +221,13 @@ settings to filter these before we collect them.
   </tbody>
 </table>
 
-By default the pganalyze collector does not filter data. Our recommended configuration for servers containing sensitive data is as follows:
+By default the pganalyze collector only filters logs that may contain database secrets:
+
+```
+filter_log_secret: credential,parsing_error,unidentified
+```
+
+For maximum security (at the cost of less useful data in pganalyze) we recommend setting:
 
 ```
 filter_log_secret: all
