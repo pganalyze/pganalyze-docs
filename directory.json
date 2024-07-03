@@ -928,6 +928,10 @@
       "title": "Step 3: Restart Collector",
       "path": "/docs/log-insights/setup/heroku-postgres/03_restart_collector"
     },
+    "log-insights/setup/opentelemetry": {
+      "title": "Log Insights: Kubernetes with OpenTelemetry",
+      "path": "/docs/log-insights/setup/opentelemetry"
+    },
     "log-insights/setup/self-managed": {
       "title": "Log Insights: Setup (Self-Managed)",
       "path": "/docs/log-insights/setup/self-managed"

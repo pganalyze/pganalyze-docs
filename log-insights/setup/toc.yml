@@ -18,6 +18,8 @@
     href: log-insights/setup/self-managed
   - name: Receive logs using Syslog
     href: log-insights/setup/syslog-server
+  - name: Receive logs using OpenTelemetry
+    href: log-insights/setup/opentelemetry
   - name: Troubleshooting
     href: log-insights/setup/troubleshooting # Not an actual link (mounted below)
 - mount: log-insights/setup/troubleshooting
