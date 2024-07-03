@@ -227,7 +227,7 @@ By default the pganalyze collector only filters logs that contain syntax errors 
 filter_log_secret: credential,parsing_error,unidentified
 ```
 
-For maximum security (at the cost of less useful data in pganalyze) we recommend setting:
+For servers containing sensitive information in the logs and to maximize data privacy (at the cost of less useful data in pganalyze) we recommend setting:
 
 ```
 filter_log_secret: all
