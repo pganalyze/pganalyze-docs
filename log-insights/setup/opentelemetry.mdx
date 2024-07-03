@@ -4,10 +4,10 @@ backlink_href: /docs/log-insights/setup
 backlink_title: 'Log Insights: Setup'
 ---
 
-If you are running the database in the Kubernetes cluster, you can use the
+If you are running the database in a Kubernetes cluster, you can use the
 [`db_log_otel_server`](/docs/collector/settings#self-managed-servers) setting to
 have the collector listen for OpenTelemetry log data model messages.
-When this is specified, the collector will run the HTTP server behind the scenes
+When this is specified, the collector will run an HTTP server behind the scenes
 on the specified port to receive logs at the `/v1/logs` endpoint.
 This should be a local address like `0.0.0.0:4318` and it's recommended to use
 an unprivileged port number (1024 and up) to avoid running the HTTP server as
@@ -44,6 +44,6 @@ you can specify the created service as an OpenTelemetry HTTP endpoint, using the
     port  4318
 ```
 
-With this flow, Fluent Bit tails logs of Postgres pods, sends out logs to the
+With this flow, Fluent Bit tails the logs of Postgres pods, sends the logs to the
 pganalyze collector's OpenTelemetry HTTP endpoint (via `pganalyze-collector-otel-service`),
-then the collector will process logs.
+and the collector processes the logs.
