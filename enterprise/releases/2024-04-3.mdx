@@ -1,0 +1,46 @@
+---
+title: '2024.04.3 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2024.04.3`
+
+## Notes
+
+- This is a patch release on top of **[2024.04.0](2024-04-0)**, **[2024.04.1](2024-04-1)** and **[2024.04.2](2024-04-2)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2024.04.0](2024-04-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+## Features
+
+- Add object storage test to Enterprise self-check <!-- 4110 -->
+  - This validates that object storage is configured correctly when
+    running the self-check, making it easier to diagnose setup problems
+- Update bundled collector from 0.55.0 to 0.57.0 <!-- 4084 -->
+  - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0570------2024-06-19) for the full details
+- Update bundled Postgres client tools to version 16 <!-- 4084 -->
+
+## Bugfixes
+
+* Query details page: Correctly show index insights under "Index Advisor" tab <!-- 4035 -->
+  - Due to a bug in how index insights were linked to queries, pganalyze was not showing
+    Index Advisor insights on the query details page (only in the Index Advisor itself)
+* Retry daily partition creation if background task fails <!-- 4043 -->
+  - This avoids edge cases where the internal statistics partition creation fails, causing missing data on the next day
+* Server: Skip activity check when removing a server that uses bundled collector <!-- 4075 -->
+  - This resolves the issue that prevented servers using the bundled collector from being
+    removed from the system using the "Remove server and associated databases" link
+* Avoid internal load balancer errors related to IPv6 loopback address <!-- 4123 -->
+  - This avoids potentially confusing errors that are caused by the internal nginx load balancer
+    attempting IPv6 connections to the internal backend services
+* Blocking queries issue page: Ensure link to Connections page is correctly shown <!-- 4081 -->
+
+## Security
+
+- Avoid false positives in dependency scanners by removing dependency files not actually in use <!-- 4120 -->
+- Routine security updates to packages in the base image
+  - This will resolve [CVE-2024-6387](https://nvd.nist.gov/vuln/detail/CVE-2024-6387) if flagged by
+    a dependency scanner, but note that the container is not actually affected in practice, since
+    the installed OpenSSH server is not actually running
