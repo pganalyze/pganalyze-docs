@@ -221,7 +221,7 @@ settings to filter these before we collect them.
   </tbody>
 </table>
 
-By default the pganalyze collector only filters logs that may contain database secrets:
+By default the pganalyze collector only filters logs that contain syntax errors (which may contain accidental copy and paste of passwords, etc), or could not be identified.
 
 ```
 filter_log_secret: credential,parsing_error,unidentified
