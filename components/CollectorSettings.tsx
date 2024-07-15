@@ -8,7 +8,7 @@ const CollectorSettings: React.FunctionComponent<{settings: CollectorSetting[], 
     return (
       <div>
         <p>
-          If using the config file, make the following changes, typically in <code>/etc/pganalyze-collector.conf</code>:
+          If using the config file, make the following changes, typically in <code>/etc/pganalyze-collector.conf</code>, under the server section:
         </p>
         <CollectorConfigFileSettings settings={settings} />
         <p>
@@ -27,7 +27,7 @@ const CollectorSettings: React.FunctionComponent<{settings: CollectorSetting[], 
   } else if (!configFromEnv) {
     return (
       <div>
-        <p>Make the following changes to your <code>pganalyze-collector.conf</code>:</p>
+        <p>Make the following changes to your <code>pganalyze-collector.conf</code>, under the server section:</p>
         <CollectorConfigFileSettings settings={settings} />
       </div>
     )
@@ -83,7 +83,7 @@ function toEnvSetting(configFileSetting: string):string {
       return 'PGA_' + configFileSetting.toUpperCase();
     default:
       return configFileSetting.toUpperCase();
-  }  
+  }
 }
 
 export default CollectorSettings
