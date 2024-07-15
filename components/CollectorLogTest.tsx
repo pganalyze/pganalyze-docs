@@ -17,7 +17,7 @@ I Successfully reloaded pganalyze collector (PID 123)`
           and apply the collector configuration (for container environments, simply
           restart the collector):
         </p>
-        <CodeBlock>sudo pganalyze-collector --test --reload</CodeBlock>
+        <CodeBlock>sudo pganalyze-collector --test</CodeBlock>
         <CodeBlock>{sampleOutput}</CodeBlock>
       </>
     )
@@ -34,7 +34,7 @@ I Successfully reloaded pganalyze collector (PID 123)`
     return (
       <>
         <p>You can now test and apply the collector configuration:</p>
-        <CodeBlock>sudo pganalyze-collector --test --reload</CodeBlock>
+        <CodeBlock>sudo pganalyze-collector --test</CodeBlock>
         <CodeBlock>{sampleOutput}</CodeBlock>
         <p>
           If you are getting an error, it sometimes helps to run the
