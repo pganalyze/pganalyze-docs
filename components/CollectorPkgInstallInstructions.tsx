@@ -56,7 +56,6 @@ const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'k
       installOpts = [
         [ 'el9', 'el/9', 'RHEL / Rocky / OL 9' ],
         [ 'el8', 'el/8', 'RHEL / Rocky / OL 8' ],
-        [ 'el7', 'el/7', 'RHEL / CentOS 7' ],
         [ 'al2023', 'el/9', 'Amazon Linux 2023' ],
         [ 'al2', 'el/7', 'Amazon Linux 2' ],
         [ 'fedora37', 'fedora/37', 'Fedora 37' ],
@@ -108,8 +107,8 @@ sudo yum makecache
 sudo yum install pganalyze-collector`
       break
     case 'deb':
-      instructions = `curl -L https://packages.pganalyze.com/pganalyze_signing_key.asc | sudo apt-key add -
-echo "deb [arch=amd64] https://packages.pganalyze.com/${distro}/ stable main" | sudo tee /etc/apt/sources.list.d/pganalyze_collector.list
+      instructions = `curl -L https://packages.pganalyze.com/pganalyze_signing_key.asc -o /etc/apt/keyrings/pganalyze_signing_key.asc
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/pganalyze_signing_key.asc] https://packages.pganalyze.com/${distro}/ stable main" | sudo tee /etc/apt/sources.list.d/pganalyze_collector.list
 sudo apt-get update
 sudo apt-get install pganalyze-collector`
       break
