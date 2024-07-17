@@ -56,7 +56,6 @@ const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'k
       installOpts = [
         [ 'el9', 'el/9', 'RHEL / Rocky / OL 9' ],
         [ 'el8', 'el/8', 'RHEL / Rocky / OL 8' ],
-        [ 'el7', 'el/7', 'RHEL / CentOS 7' ],
         [ 'al2023', 'el/9', 'Amazon Linux 2023' ],
         [ 'al2', 'el/7', 'Amazon Linux 2' ],
         [ 'fedora37', 'fedora/37', 'Fedora 37' ],
