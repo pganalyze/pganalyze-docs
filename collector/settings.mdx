@@ -24,9 +24,9 @@ describe the servers to monitor, how to connect to them, and server-specific con
 name the other sections after the servers they correspond to, though note these are not the names that will appear
 in the app. In-app names are based on hostname settings as determined during monitoring.
 
-After you make changes, you can run `pganalyze-collector --test --reload` to verify the new configuration and load
-the new configuration in the collector background process if they work correctly. This minimizes monitoring
-interruptions and simplifies config file updates.
+After you make changes, you can run `pganalyze-collector --test` to verify the new configuration.
+If the test succeeds, this will automatically load the new configuration in the collector background process
+(equivalent to using the `--reload` flag). This minimizes monitoring interruptions and simplifies config file updates.
 
 The tables below list configuration settings, their defaults if not set, and their descriptions. If a setting is
 configurable through environment variables, the environment variable name follows the setting in parentheses.

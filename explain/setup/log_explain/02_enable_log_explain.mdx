@@ -16,9 +16,10 @@ You will need to update the collector configuration to enable log-based EXPLAIN.
 Afterwards make sure to reload the pganalyze collector, so the setting takes effect:
 
 ```
-sudo pganalyze-collector --test --reload
+sudo pganalyze-collector --test
 ```
 
+Successful test run will reload the collector.
 If this test succeeds, continue to the next step to test plan collection:
 
 <Link className='btn btn-success' to='03_test_and_verify'>
