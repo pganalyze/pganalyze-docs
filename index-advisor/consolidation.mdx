@@ -28,8 +28,9 @@ existing indexes, it may lead to over-indexing. Consolidation insights can help.
    Index Advisor insights before implementing them, but this is especially true
    of consolidation insights.
  - Index Advisor currently has a limited model of partial indexes (indexes with
-   a `WHERE` clause), and will likely recommend dropping them: these insights
-   should be ignored, or at least reviewed very critically.
+   a `WHERE` clause) due to technical limitations, and will recommend dropping
+   them all when consolidation is turned on. These insights should be
+   disregarded.
  - Index Advisor generates insights that are intended to be taken as a group:
    e.g., a `DROP INDEX` recommendation may exist because it's supplanted by a
    separate `CREATE INDEX` recommendation. We do not recommend applying `DROP
