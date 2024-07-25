@@ -1,0 +1,67 @@
+---
+title: 'Index Advisor: Index Consolidation'
+backlink_href: /docs/index-advisor
+backlink_title: 'Index Advisor (in-app in pganalyze)'
+---
+
+The pganalyze Index Advisor includes an **experimental, early access** feature
+to include index consolidation insights (i.e., insights that use `DROP INDEX`
+recommendations in addition to `CREATE INDEX`).
+
+
+## Overview
+
+While indexes can dramatically speed up many queries, they do have some
+performance impact on your database: [write
+overhead](/docs/indexing-engine/index-write-overhead), additional memory needed
+for the index data structure while in use, and disk space. To optimize the
+number of indexes recommended, the Index Advisor considers the full query
+workload on a table rather than recommending indexes specifically for each query
+or each scan. This works well when starting from scratch, but when starting with
+existing indexes, it may lead to over-indexing. Consolidation insights can help.
+
+
+## Limitations
+
+ - Dropping the wrong index can have a catastrophic impact on database
+   performance. We recommend [testing](/docs/index-advisor/test-insights) all
+   Index Advisor insights before implementing them, but this is especially true
+   of consolidation insights.
+ - Index Advisor currently has a limited model of partial indexes (indexes with
+   a `WHERE` clause), and will likely recommend dropping them: these insights
+   should be ignored, or at least reviewed very critically.
+ - Index Advisor generates insights that are intended to be taken as a group:
+   e.g., a `DROP INDEX` recommendation may exist because it's supplanted by a
+   separate `CREATE INDEX` recommendation. We do not recommend applying `DROP
+   INDEX` recommendations independently unless they are carefully reviewed and
+   tested.
+
+
+## Usage
+
+In order to use consolidation insights, first your pganalyze organization must
+be flagged into early access (see below).
+
+Once flagged in, go to the Schema Statistics page in the menu, click on the
+table you are interested in, and click on the Index Advisor tab. Then, select
+"Custom Configuration" and check the "Allow consolidation/removal of
+indexes" checkbox:
+
+![](/consolidation.png)
+
+Click "Try configuration" to see Index Advisor insights with consolidation
+enabled. You can then save this
+[configuration](/docs/index-advisor/configuration) like any other. Consolidation
+is currently only available on a table-by-table basis, only using custom
+configurations (though note you can load any of our default configurations as
+the starting point).
+
+
+## Early access
+
+If you are interested in exploring this experimental feature, please [contact
+us](/contact). The feature will be enabled for your entire organization, so any
+organization member with access to a particular server and database in pganalyze
+will be able to use it. Please ensure your colleagues understand the limitations
+listed above and do not apply the recommendations without adequate review and
+testing.

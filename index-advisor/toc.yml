@@ -10,3 +10,5 @@
     href: index-advisor/test-insights
   - name: "Track Index Insights With Alerts"
     href: index-advisor/checks-and-alerts
+  - name: "Consolidation Insights"
+    href: index-advisor/consolidation
