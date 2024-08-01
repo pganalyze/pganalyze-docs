@@ -2285,13 +2285,8 @@
       "path": "/docs/explain/scan-nodes/index-scan"
     },
     "Limit": {
-      "shortDescription": "Sorts the output of a child node.",
-      "importantFields": [
-        "Sort Key",
-        "Sort Method",
-        "Sort Space Type",
-        "Sort Space Used"
-      ],
+      "shortDescription": "Return only some of the rows produced by a child.",
+      "importantFields": [],
       "path": "/docs/explain/other-nodes/limit"
     },
     "Lock Rows": {
