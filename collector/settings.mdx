@@ -714,11 +714,13 @@ talking to pganalyze support.
     </tr>
     <tr>
       <td>disable_citus_schema_stats (<code>DISABLE_CITUS_SCHEMA_STATS</code>)</td>
-      <td>[none]</td>
+      <td>none</td>
       <td>
-        If using the Citus extension in your database, turn off the collection of statistics for distributed indexes
-        and tables. For very large schemas, this collection can error out due to timeouts or locks. When using this
-        option it's recommended to instead monitor the workers directly for table and index sizes.
+        Either <code>none</code>, <code>index</code>, or <code>all</code>.<br /><br />
+        If using the Citus extension in your database, turn off the collection of statistics for distributed indexes,
+        or both distributed indexes and distributed tables. For very large schemas, this collection can error out due to
+        timeouts or locks. When using this option it's recommended to instead monitor the workers directly for table and
+        index sizes.
       </td>
     </tr>
     <tr>
