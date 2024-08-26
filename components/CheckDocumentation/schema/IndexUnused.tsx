@@ -27,9 +27,8 @@ const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({
         periods.
       </p>
       <p>
-        Ignores small indexes (less than 32kB), as well as primary keys, unique
-        indexes, and expression indexes since they are necessary to enforce
-        constraints or useful as query planning hints.
+        Ignores small indexes (less than 32kB), primary keys, and unique indexes
+        since they are necessary to enforce constraints.
       </p>
     </>
   );
@@ -68,6 +67,11 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             <SQL inline sql={`DROP INDEX CONCURRENTLY "<index_name>";`} />.
           </>
         )}
+      </p>
+      <p>
+        Note: when deleting expresssion indexes, you may want to run
+        {" "}<code>CREATE STATISTICS</code> to have better query plans that are
+        aware of the expression results.
       </p>
       {indexes && (
         <>
