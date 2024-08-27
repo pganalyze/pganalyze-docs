@@ -11,6 +11,7 @@ import { formatSqlObjectName } from "../../../util/format";
 import SQL from "../../SQL";
 import { useSmartAnchor } from "../../SmartAnchor";
 import { useCodeBlock } from "../../CodeBlock";
+import PGDocsLink from "../../PGDocsLink";
 
 const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
@@ -69,9 +70,10 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
         )}
       </p>
       <p>
-        Note: when deleting expresssion indexes, you may want to run
-        {" "}<code>CREATE STATISTICS</code> to have better query plans that are
-        aware of the expression results.
+        Note: expression indexes can influence the query planner even if the index is unused.
+        When dropping an expression index, if you notice some queries are slower you may want to
+        {" "}<PGDocsLink path="/sql-createstatistics.html">CREATE STATISTICS</PGDocsLink>
+        for the expression the index previously covered.
       </p>
       {indexes && (
         <>
