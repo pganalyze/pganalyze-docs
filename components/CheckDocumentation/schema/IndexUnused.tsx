@@ -11,6 +11,7 @@ import { formatSqlObjectName } from "../../../util/format";
 import SQL from "../../SQL";
 import { useSmartAnchor } from "../../SmartAnchor";
 import { useCodeBlock } from "../../CodeBlock";
+import PGDocsLink from "../../PGDocsLink";
 
 const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
@@ -27,9 +28,8 @@ const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({
         periods.
       </p>
       <p>
-        Ignores small indexes (less than 32kB), as well as primary keys, unique
-        indexes, and expression indexes since they are necessary to enforce
-        constraints or useful as query planning hints.
+        Ignores small indexes (less than 32kB), primary keys, and unique indexes
+        since they are necessary to enforce constraints.
       </p>
     </>
   );
@@ -68,6 +68,12 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
             <SQL inline sql={`DROP INDEX CONCURRENTLY "<index_name>";`} />.
           </>
         )}
+      </p>
+      <p>
+        Note: expression indexes can influence the query planner even if the index is unused.
+        When dropping an expression index, if you notice some queries are slower you may want to
+        {" "}<PGDocsLink path="/sql-createstatistics.html">CREATE STATISTICS</PGDocsLink>
+        for the expression the index previously covered.
       </p>
       {indexes && (
         <>
