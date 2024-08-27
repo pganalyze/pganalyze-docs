@@ -61,7 +61,7 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
 
     const { children, className, target, ...otherProps } = props;
     // Don't show external icon link in some situations
-    const skipExternalLinkIcon = destination.startsWith('https://heroku.com/deploy')
+    const skipExternalLinkIcon = destination.startsWith('https://dashboard.heroku.com/new-app')
       || destination.startsWith('#')
       || destination.startsWith('mailto:')
     return (

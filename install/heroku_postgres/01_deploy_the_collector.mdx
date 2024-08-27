@@ -11,7 +11,7 @@ import { collectorAppName } from "./util";
 export const APIKey = ({ apiKey }) => !!apiKey ? <React.Fragment> <code>{apiKey}</code></React.Fragment> : null;
 
 export const HerokuButton = ({ apiKey }) => {
-  let href = 'https://heroku.com/deploy?template=https://github.com/pganalyze/collector'
+  let href = 'https://dashboard.heroku.com/new-app?template=https://github.com/pganalyze/collector'
   if (apiKey) {
     href += `&env[PGA_API_KEY]=${apiKey}`
   }
