@@ -50,12 +50,41 @@ that can be adjusted to help you stay under this threshold:
 ## Unsupported log settings
 
 Certain Postgres log settings tend to cause excessive log volume and are not supported for
-Log Insights. If an unsupported configuration is found, the collector will not process
-log data and Log Insights will not be available for that server. A warning will be
-logged. Other pganalyze features will continue to work normally.
+Log Insights. Depending on the setting, the collector will either discard log lines related
+to that setting, or the collector will not process logs at all, and Log Insights will not be
+available for that server. A warning will be logged in these situations. Other pganalyze
+features will continue to work normally.
 
 The following settings are not supported:
- - `log_min_duration_statement` set to less than 10ms
- - `log_duration` set to 'on'
- - `log_statement` set to 'all'
- - `log_error_verbosity` set to 'verbose'
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Unsupported value</th>
+      <th>Effect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>log_min_duration_statement</code></td>
+      <td>less than 10ms</td>
+      <td>statement log lines are ignored</td>
+    </tr>
+    <tr>
+      <td><code>log_statement</code></td>
+      <td>all</td>
+      <td>statement log lines are ignored</td>
+    </tr>
+    <tr>
+      <td><code>log_duration</code></td>
+      <td>on</td>
+      <td>duration log lines are ignored</td>
+    </tr>
+    <tr>
+      <td><code>log_error_verbosity</code></td>
+      <td>verbose</td>
+      <td>Log Insights is disabled; no log lines are processed</td>
+    </tr>
+  </tbody>
+</table>
