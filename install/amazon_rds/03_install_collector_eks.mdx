@@ -6,7 +6,31 @@ backlink_title: 'Installation Guide'
 ---
 
 import SetupIAMPolicy from './_03_setup_iam_policy.mdx';
+import TabPanel, {TabTextContent} from '../../components/TabPanel'
 import CreateIAMRoleEKSIRSA from './_03_create_iam_role_eks_irsa.mdx'
+import CreateIAMRoleEKSPodIdentity from './_03_create_iam_role_eks_pod_identity.mdx'
+
+export const EKSIAMRoleCreation = () => {
+  const tabs = [
+    [ 'podidentity', 'Pod Identity' ],
+    [ 'irsa', 'IAM roles for service accounts (IRSA)'],
+  ];
+  return (
+    <TabPanel items={tabs}>
+      {(idx) => {
+        const tab = tabs[idx][0];
+        switch (tab) {
+          case 'podidentity':
+            return <TabTextContent><CreateIAMRoleEKSPodIdentity /></TabTextContent>;
+          case 'irsa':
+            return <TabTextContent><CreateIAMRoleEKSIRSA /></TabTextContent>;
+          default:
+            return null;
+        }
+      }}
+    </TabPanel>
+  )
+}
 
 ## Installing the collector with Amazon EKS
 
@@ -23,11 +47,7 @@ You can install the Helm chart for the pganalyze collector on your [Amazon EKS c
 
 ### Create IAM role
 
-**Note:** Creating an IAM role currently requires using IAM roles for service
-accounts (IRSA). Creating an IAM role with Amazon EKS Pod Identity is not
-supported yet.
-
-<CreateIAMRoleEKSIRSA />
+<EKSIAMRoleCreation />
 
 <Link className="btn btn-success" to="04_configure_the_collector_eks">
   Proceed to Step 4: Configure the Collector

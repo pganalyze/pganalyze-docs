@@ -2,6 +2,8 @@ With this step, you are going to create a new IAM role and associate that role
 with the service account using
 [Amazon EKS Pod Identity](https://docs.aws.amazon.com/eks/latest/userguide/pod-identities.html).
 
+**Note:** This requires the pganalyze collector version 0.58.0 and above.
+
 If you haven't installed Amazon EKS Pod Identity Agent add-on, install it with
 this command:
 
@@ -49,5 +51,5 @@ aws eks create-pod-identity-association \
   --cluster-name mycluster \
   --namespace default \
   --service-account pganalyze-service-account \
-  --role-arn arn:aws:iam::012345678901:role/pganalyzeServiceAccountRole
+  --role-arn arn:aws:iam::<aws-account-id>:role/pganalyzeServiceAccountRole
 ```
