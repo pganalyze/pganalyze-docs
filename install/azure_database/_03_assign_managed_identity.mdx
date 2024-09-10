@@ -1,0 +1,18 @@
+import imgAzureDBAccessControl from '../../images/azure_db_access_control.png'
+
+export const ImgAzureDBAccessControl = () => <img src={imgAzureDBAccessControl} alt="Screenshot of adding role assignment to the DB instance in Azure Portal 1" />
+
+import imgAddRoleAssignment from '../../images/azure_db_add_role_assignment.png'
+
+export const ImgAddRoleAssignment = () => <img src={imgAddRoleAssignment} alt="Screenshot of adding role assignment to the DB instance in Azure Portal 2" />
+
+### Grant Access to Database
+
+Next, grant access to the DB instance by assigning the role with the created Managed Identity.
+Go to the DB instance's page in the [Azure Portal](https://portal.azure.com/) and select Access Control (IAM).
+Click "Add role assignment", then choose the "Monitoring Reader" role. Next, assign access to the created Managed Identity.
+
+<ImgAzureDBAccessControl />
+<ImgAddRoleAssignment />
+
+This allows the collector to view the DB instance information, as well as obtain the metrics like CPU usage.
