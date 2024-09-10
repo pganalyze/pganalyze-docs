@@ -5,6 +5,14 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
+import SetupManagedIdentity from './_03_setup_managed_identity.mdx'
+import AssignManagedIdentity from './_03_assign_managed_identity.mdx'
+
+In this step we'll install the collector which sends statistics information to pganalyze.
+
+<SetupManagedIdentity />
+<AssignManagedIdentity />
+
 ## Downloading the collector container
 
 On a VM of your choice, download the Docker image:
@@ -13,7 +21,7 @@ On a VM of your choice, download the Docker image:
 docker pull quay.io/pganalyze/collector:stable
 ```
 
-Note that you can't use Google Cloud Run for this, as the collector needs to always be running in the background.
+As the collector needs to always be running in the background, avoid using Azure Container Instances.
 
 <Link className="btn btn-success" to="04_configure_the_collector_docker">
   Continue to Step 4: Configure the Collector
