@@ -51,6 +51,9 @@ Fill in the values step-by-step:
 6. (optional) The `AZURE_DB_SERVER_NAME` sets your Azure Database server name - this is automatically inferred from `DB_HOST` and typically not needed.
 If you're using Azure Cosmos DB for PostgreSQL Cluster, this is required and set the cluster name.
 
+If the VM has multiple Managed Identities assigned, specify the client ID of the specific Managed Identity created in Step 3
+using the `AZURE_AD_CLIENT_ID` setting.
+
 ## Test snapshot
 
 Then run the following:
