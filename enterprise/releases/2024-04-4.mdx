@@ -1,0 +1,28 @@
+---
+title: '2024.04.4 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2024.04.4`
+
+## Notes
+
+- This is a security patch release on top of **[2024.04.0](2024-04-0)**, **[2024.04.1](2024-04-1)**, **[2024.04.2](2024-04-2)** and **[2024.04.3](2024-04-3)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2024.04.0](2024-04-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+- We recommend upgrading as soon as possible if you are utilizing SAML authentication in pganalyze
+  - **Security impact:** The resolved [CVE-2024-45409](https://www.cve.org/CVERecord?id=CVE-2024-45409) in ruby-saml would have allowed
+    impersonating any member within your pganalyze organization by an internal threat actor with
+    existing access to your SAML application or SAML identity provider (for example escalating from a view-only role to one that allows modifying server configuration in pganalyze)
+  - Contact our [security team](mailto:security@pganalyze.com) for questions on the security content of this release
+
+## Security
+
+- Update ruby-saml for [CVE-2024-45409](https://www.cve.org/CVERecord?id=CVE-2024-45409)
+- Update bundled collector from 0.57.0 to [0.58.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0580------2024-08-30) <!-- 4297 -->
+  - Log Insights: Redact parameters from utility statements by default
+  - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0580------2024-08-30) for the full details
+- Other package security upgrades (Rails [CVE-2024-26144](https://www.cve.org/CVERecord?id=CVE-2024-26144), rexml [CVE-2024-43398](https://www.cve.org/CVERecord?id=CVE-2024-43398), ws [CVE-2024-37890](https://www.cve.org/CVERecord?id=CVE-2024-37890), braces [CVE-2024-4068](https://www.cve.org/CVERecord?id=CVE-2024-4068), bootstrap [CVE-2024-6531](https://www.cve.org/CVERecord?id=CVE-2024-6531), fugit [CVE-2024-43380](https://www.cve.org/CVERecord?id=CVE-2024-43380))
+- Routine security updates to packages in the base image
