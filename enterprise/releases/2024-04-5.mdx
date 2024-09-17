@@ -1,0 +1,20 @@
+---
+title: '2024.04.5 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2024.04.5`
+
+## Notes
+
+- This is a patch release on top of **[2024.04.0](2024-04-0)**, **[2024.04.1](2024-04-1)**, **[2024.04.2](2024-04-2)**, **[2024.04.3](2024-04-3)** and **[2024.04.4](2024-04-4)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2024.04.0](2024-04-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+## Security
+
+- Update `omniauth` and `omniauth-saml`, to avoid dependency scanners flagging [CVE-2015-9284](https://nvd.nist.gov/vuln/detail/CVE-2015-9284) and [CVE-2024-45409](https://nvd.nist.gov/vuln/detail/CVE-2024-45409)
+  - This was previously mitigated, the upgrade ensures this is not flagged incorrectly
+- Remove `setuptools` and `rexml` system wide packages, to avoid dependency scanner false positives
