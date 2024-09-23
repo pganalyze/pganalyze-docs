@@ -28,7 +28,7 @@ PGA_API_KEY: ...`}
 export const TestCommand = ({ organizationSlug }) => {
   return (
     <CodeBlock>
-      heroku run -a {collectorAppName(organizationSlug)} collector --test
+      heroku run -a {collectorAppName(organizationSlug)} -- collector --test
     </CodeBlock>
   );
 };
@@ -39,11 +39,14 @@ export const TestOutput = ({ organizationSlug }) => {
     <CodeBlock>
       {`Running collector --test on ⬢ ${collectorAppName(
         organizationSlug
-      )}... up, run.6337 (Hobby)
-2019/12/18 10:41:10 I [${attUrl}] Testing statistics collection...
-2019/12/18 10:41:12 I [${attUrl}]   Test submission successful (362 KB received, server ...)
-2019/12/18 10:41:12 I [${attUrl}] Testing activity snapshots...
-2019/12/18 10:41:13 I [${attUrl}]   Test submission successful (20.7 KB received, server ...)`}
+      )}... up, run.7708
+2024/09/23 08:58:49 I Running collector test with pganalyze-collector 0.58.0
+2024/09/23 08:58:49 I [DATABASE_URL] Testing statistics collection...
+2024/09/23 08:58:50 I [DATABASE_URL]   Test collection successful for PostgreSQL 16.2 on aarch64-unknown-linux-gnu, compiled by aarch64-unknown-linux-gnu-gcc (GCC) 9.5.0, 64-bit
+2024/09/23 08:58:50 I [DATABASE_URL]   Test snapshot successful
+2024/09/23 08:58:50 I [DATABASE_URL] Testing activity snapshots...
+2024/09/23 08:58:50 I [DATABASE_URL]   Test snapshot successful
+...`}
     </CodeBlock>
   );
 };

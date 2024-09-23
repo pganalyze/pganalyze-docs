@@ -15,7 +15,7 @@ PGA_API_KEY: ${apiKey ?? '...'}`}
   )
 }
 
-Log output support is only available on Heroku Postgres Standard, Premium and higher plans.
+Log output support is only available on Standard-tier or higher databases. It's not available on Essential-tier databases.
 
 Log output for Heroku Postgres databases is sent to the application that the
 database is attached to, so we need to add a log drain to that application that

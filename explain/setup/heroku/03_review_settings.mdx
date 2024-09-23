@@ -34,7 +34,7 @@ for how to update these settings.
 The following is an example of updating `log_min_duration`:
 
 ```sh
-heroku pg:settings:auto-explain:log-min-duration 1000 -a [your-app-name]
+heroku pg:settings:auto-explain:log-min-duration [database-addon-name] 1000 -a [your-app-name]
 ```
 
 <Link className="btn btn-success" to="04_test_and_verify">
