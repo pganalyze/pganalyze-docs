@@ -29,15 +29,18 @@ helm show values pganalyze/pganalyze-collector > values.yaml
 
 Update the serviceAccount section in the values.yaml file to use the role just
 created in the previous step. For the name, use "pganalyze-service-account" as
-specified in the assume role policy:
+specified in the Pod Identity association (for Pod Identity) or the assume role
+policy (for IRSA):
 
 ```yaml
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true
   # -- Annotations to add to the service account
-  annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::<aws-account-id>:role/pganalyzeServiceAccountRole"
+  annotations: {}
+  # Update above annotation if you're using IRSA
+  # annotations:
+  #   eks.amazonaws.com/role-arn: "arn:aws:iam::<aws-account-id>:role/pganalyzeServiceAccountRole"
   # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: "pganalyze-service-account"
@@ -149,7 +152,7 @@ helm repo add pganalyze https://charts.pganalyze.com/
 Then, install a chart, using the values.yaml file created earlier:
 
 ```
-helm upgrade --install my-collector pganalyze/pganalyze-collector --values=values.yml
+helm upgrade --install my-collector pganalyze/pganalyze-collector --values=values.yaml
 ```
 
 Adjust the namespace if needed. You can run the same command when you make a
