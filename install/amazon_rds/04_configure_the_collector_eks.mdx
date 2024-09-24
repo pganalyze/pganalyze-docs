@@ -37,9 +37,10 @@ serviceAccount:
   # -- Specifies whether a service account should be created
   create: true
   # -- Annotations to add to the service account
-  annotations:
-    # Add this annotation only if you're using IRSA (not required for Pod Identity)
-    eks.amazonaws.com/role-arn: "arn:aws:iam::<aws-account-id>:role/pganalyzeServiceAccountRole"
+  annotations: {}
+  # Update above annotation if you're using IRSA
+  # annotations:
+  #   eks.amazonaws.com/role-arn: "arn:aws:iam::<aws-account-id>:role/pganalyzeServiceAccountRole"
   # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: "pganalyze-service-account"
