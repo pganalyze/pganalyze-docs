@@ -15,15 +15,16 @@ The collector includes a flag to do this for you automatically, based on your
 `auto_explain.log_min_duration`:
 
 ```
-heroku run collector --test-explain --app [your-collector-app-name]
+heroku run -a [your-collector-app-name] -- collector --test-explain
 ```
 
 This will run an artificially slow query using the Postgres `pg_sleep` function. It
 will produce output similar to the following:
 
 ```
-Running collector --test-explain on ⬢ [your-collector-app-name]... up, run.3163 (Hobby)
-2021/12/03 18:57:32 I Running collector test with pganalyze-collector 0.41.2
+Running collector --test-explain on ⬢ [your-collector-app-name]... up, run.3163
+2024/09/23 09:30:19 I Running collector test with pganalyze-collector 0.58.0
+2024/09/23 09:30:19 I [DATABASE_URL] Emitted test explain; check pganalyze EXPLAIN Plans page for result
 ```
 
 <PublicOnly>

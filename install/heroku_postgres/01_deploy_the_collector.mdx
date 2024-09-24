@@ -5,7 +5,7 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
-import imgHerokuPaidDyno from "../../images/heroku_paid_dyno.png"
+import imgHerokuDeploy from "../../images/deploy_to_heroku.png"
 import { collectorAppName } from "./util";
 
 export const APIKey = ({ apiKey }) => !!apiKey ? <React.Fragment> <code>{apiKey}</code></React.Fragment> : null;
@@ -30,7 +30,7 @@ export const HerokuButton = ({ apiKey }) => {
 
 export const ImgPaidDyno = () => {
   return (
-    <img style={{ border: "1px solid grey", width: 400 }} src={imgHerokuPaidDyno} />
+    <img style={{ border: "1px solid grey", width: 400 }} src={imgHerokuDeploy} />
   )
 }
 
@@ -49,9 +49,7 @@ First, deploy the collector to your own Heroku account with your pganalyze API k
 
 Remember the name of the collector app. We assume you called it <CollectorApp organizationSlug={props.organizationSlug} /> for the next step.
 
-## Configure collector to use paid dyno
-
-After the app was created, configure it to use the **paid Hobby dyno** instead of the Free dyno, otherwise the tracking will stop working once the dyno goes idle:
+During the creation, make sure to use the Basic dyno to deploy, **not the Eco dynos**, otherwise the tracking will stop working once the dyno goes idle:
 
 <ImgPaidDyno />
 
