@@ -6,8 +6,15 @@ backlink_title: 'Installation Guide'
 ---
 
 import CollectorInstallInstructions from "../../components/CollectorInstallInstructions"
+import SetupManagedIdentity from './_03_setup_managed_identity.mdx'
+import AssignManagedIdentity from './_03_assign_managed_identity.mdx'
 
 In this step we'll install the collector which sends statistics information to pganalyze.
+
+<SetupManagedIdentity />
+<AssignManagedIdentity />
+
+### Install the collector
 
 <CollectorInstallInstructions apiKey={props.apiKey} />
 
