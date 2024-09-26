@@ -56,9 +56,10 @@ Use the `cluster-ro` endpoint as the `DB_HOST` of the environment variables:
 {"name": "DB_HOST", "value": "mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com"},
 ```
 
-If you have multiple readers you want to monitor, you either need to add it to
-the content of the `pganalyze_collector.conf` file, then update the `/pganalyze/CONFIG_CONTENTS`
-SSM secret, or run one pganalyze collector Docker container for each instance.
+If you have multiple readers with a cluster, you either need to add each instance
+endpoint to the content of the `pganalyze_collector.conf` file (e.g. add each section like `[reader_instance1]`, `[reader_instance2]`),
+then update the `/pganalyze/CONFIG_CONTENTS` SSM secret, or run one pganalyze
+collector Docker container for each instance.
 
 ## Registering the task and launching it
 

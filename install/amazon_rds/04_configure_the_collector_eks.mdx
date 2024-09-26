@@ -137,9 +137,9 @@ Use the `cluster-ro` endpoint as the `DB_HOST` of the environment variables:
 DB_HOST: mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
 ```
 
-If you have multiple readers you want to monitor, you either need to specify
-using `CONFIG_CONTENTS` environment variable, or install one pganalyze collector
-Helm chart for each instance.
+If you have multiple readers with a cluster, you either need to add each instance
+endpoint to the content of `CONFIG_CONTENTS` (e.g. add each sections like `[reader_instance1]`, `[reader_instance2]`),
+or install one pganalyze collector Helm chart for each instance.
 
 ## Install a Helm chart
 
