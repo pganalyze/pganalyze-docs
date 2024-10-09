@@ -41,7 +41,7 @@ CREATE OR REPLACE FUNCTION pganalyze.get_column_stats() RETURNS SETOF pg_stats A
 $$
   /* pganalyze-collector */ SELECT schemaname, tablename, attname, inherited, null_frac, avg_width,
     n_distinct, NULL::anyarray, most_common_freqs, NULL::anyarray, correlation, NULL::anyarray,
-    most_common_elem_freqs, elem_count_histogram
+    most_common_elem_freqs, elem_count_histogram, range_length_histogram, range_empty_frac, NULL::anyarray
   FROM pg_catalog.pg_stats
   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;
@@ -90,7 +90,7 @@ CREATE OR REPLACE FUNCTION pganalyze.get_column_stats() RETURNS SETOF pg_stats A
 $$
   /* pganalyze-collector */ SELECT schemaname, tablename, attname, inherited, null_frac, avg_width,
     n_distinct, NULL::anyarray, most_common_freqs, NULL::anyarray, correlation, NULL::anyarray,
-    most_common_elem_freqs, elem_count_histogram
+    most_common_elem_freqs, elem_count_histogram, range_length_histogram, range_empty_frac, NULL::anyarray
   FROM pg_catalog.pg_stats
   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
