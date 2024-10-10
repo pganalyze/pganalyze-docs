@@ -4,19 +4,9 @@
     href: enterprise/setup
   - name: Initial setup on Kubernetes (Amazon EKS)
     href: enterprise/setup/kubernetes_amazon_eks
-  - name: Object storage setup
-    href: enterprise/setup/object-storage
   - name: Separate collector installation
     href: enterprise/setup/separate-collector-install
   - name: Google Auth setup
     href: enterprise/google-auth
   - name: PagerDuty and Slack integration setup
     href: enterprise/integrations
-- mount: enterprise/setup/object-storage
-  items:
-  - name: Overview
-    href: enterprise/setup/object-storage
-  - name: Local storage using MinIO
-    href: enterprise/setup/object-storage-local
-  - name: Amazon S3
-    href: enterprise/setup/object-storage-s3

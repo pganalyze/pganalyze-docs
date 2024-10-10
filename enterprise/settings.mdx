@@ -46,48 +46,19 @@ MAILER_FROM=pganalyze@example.com
 
 Note that `DISABLE_DIRECT_SIGNUP` is not compatible with the `DEFAULT_ORG_ROLE` setting: If `DISABLE_DIRECT_SIGNUP` is enabled, and `DEFAULT_ORG_ROLE` is not `none`, it will be the same as setting it to `none`, since direct registrations are not possible.
 
-## Object storage
-
-For using Log Insights and Automated EXPLAIN, additional settings must be configured for [object storage](/docs/enterprise/setup/object-storage).
-
 ## AWS-specific settings
 
-When using the [object storage on AWS](/docs/enterprise/setup/object-storage-s3), the required IAM credentials can either be set using an instance role (recommended), or by explicitly setting these environment variables:
+When using the collector to monitor Amazon RDS or Aurora, the required IAM credentials can either be set [using an IAM policy](/docs/install/amazon_rds/iam_policy) (recommended), or by explicitly setting these environment variables:
 
 * `AWS_ACCESS_KEY_ID`: AWS Access Key ID (optional)
 * `AWS_SECRET_ACCESS_KEY`: AWS Secret Access Key (optional)
-
-You can also configure the following object storage settings:
-
-* `AWS_S3_SNAPSHOTS_BUCKET`: Name of the snapshots S3 bucket (required for object storage)
-* `AWS_S3_LOGS_BUCKET`: Name of the logs S3 bucket (required for object storage)
-* `AWS_KMS_LOGS_CMK`: Identifier for the KMS key used for client-side log text encryption (required for object storage)
-* `AWS_S3_SNAPSHOTS_PREFIX`: Prefix for all objects stored in snapshots bucket (optional, empty by default)
-* `AWS_S3_LOGS_PREFIX`: Prefix for all objects stored in logs bucket (optional, empty by default)
-
-Note that when using the collector inside the Enterprise Server container to monitor Amazon RDS or Aurora, the actual fetching of log data from RDS will also use these same credentials. Ensure to also set the [collector IAM policy](/docs/install/amazon_rds/iam_policy) in that case.
-
-In addition, you can also set these other general settings:
-
 * `AWS_REGION`: Default AWS region (optional)
-* `AWS_ENDPOINT_S3_URL`: VPC endpoint to use for Amazon S3 API access (optional)
-* `AWS_ENDPOINT_KMS_URL`: VPC endpoint to use for Amazon KMS API access (optional)
-* `AWS_ENDPOINT_STS_URL`: VPC endpoint to use for Amazon STS API access (optional)
 
 When using Amazon EKS with [IAM roles associated to a service account](https://docs.aws.amazon.com/eks/latest/userguide/specify-service-account-role.html), the following additional settings can be used:
 
 * `AWS_ROLE_ARN`: Role to assume for AWS API access (automatically set by EKS)
 * `AWS_WEB_IDENTITY_TOKEN_FILE`: Location of Web Identity token file (automatically set by EKS)
 * `AWS_ROLE_SESSION_NAME`: Session name to use when assuming roles (optional, defaults to "pganalyze")
-
-## Local object storage with Minio
-
-See [Object Storage Setup (Local Storage)](/docs/enterprise/setup/object-storage-local).
-
-Additionally the following optional settings are available:
-
-* `MINIO_SNAPSHOTS_BUCKET`: Name of the snapshots bucket in Minio (optional, defaults to `pganalyze-snapshots`)
-* `MINIO_LOGS_BUCKET`: Name of the logs bucket in Minio (optional, defaults to `pganalyze-logs`)
 
 ## Google Auth integration
 

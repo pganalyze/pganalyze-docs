@@ -292,18 +292,6 @@
       "title": "Enterprise Server: Initial Setup (Kubernetes on Amazon EKS)",
       "path": "/docs/enterprise/setup/kubernetes_amazon_eks"
     },
-    "enterprise/setup/object-storage": {
-      "title": "Enterprise Server: Object Storage Setup",
-      "path": "/docs/enterprise/setup/object-storage"
-    },
-    "enterprise/setup/object-storage-local": {
-      "title": "Enterprise Server: Object Storage Setup (Local Storage)",
-      "path": "/docs/enterprise/setup/object-storage-local"
-    },
-    "enterprise/setup/object-storage-s3": {
-      "title": "Enterprise Server: Object Storage Setup (Amazon S3)",
-      "path": "/docs/enterprise/setup/object-storage-s3"
-    },
     "enterprise/setup/separate-collector-install": {
       "title": "Enterprise Server: Separate collector installation",
       "path": "/docs/enterprise/setup/separate-collector-install"
