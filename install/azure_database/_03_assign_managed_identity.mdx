@@ -16,3 +16,6 @@ Click "Add role assignment", then choose the "Monitoring Reader" role. Next, ass
 <ImgAddRoleAssignment />
 
 This allows the collector to view the DB instance information, as well as obtain the metrics like CPU usage.
+
+If you are using Azure Cosmos DB for PostgreSQL Cluster, note that cluster-level access control is not supported.
+As a workaround, grant access at the resource group level instead.
