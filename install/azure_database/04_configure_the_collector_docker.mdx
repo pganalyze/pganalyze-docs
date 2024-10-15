@@ -29,6 +29,7 @@ DB_HOST=your_db.postgres.database.azure.com
 DB_NAME=your_database_name
 DB_USERNAME=your_monitoring_user
 DB_PASSWORD=your_monitoring_user_password
+AZURE_SUBSCRIPTION_ID=your_subscription_id
 AZURE_DB_SERVER_NAME=your_db`}
     </CodeBlock>
   );
@@ -46,7 +47,12 @@ Fill in the values step-by-step:
 2. The `DB_HOST` is the IP address of your Azure Database for PostgreSQL instance
 3. The `DB_NAME` is the database on the Azure Database for PostgreSQL instance you want to monitor
 4. The `DB_USERNAME` and `DB_PASSWORD` should be the credentials of the monitoring user we created in Step 1
-5. (optional) The `AZURE_DB_SERVER_NAME` sets your Azure Database server name - this is automatically inferred from `DB_HOST` and typically not needed
+5. The `AZURE_SUBSCRIPTION_ID` is the subscription ID of your Azure Database server
+6. (optional) The `AZURE_DB_SERVER_NAME` sets your Azure Database server name - this is automatically inferred from `DB_HOST` and typically not needed.
+If you're using Azure Cosmos DB for PostgreSQL Cluster, this is required and set the cluster name.
+
+If the VM has multiple Managed Identities assigned, specify the client ID of the specific Managed Identity created in Step 3
+using the `AZURE_AD_CLIENT_ID` setting.
 
 ## Test snapshot
 
