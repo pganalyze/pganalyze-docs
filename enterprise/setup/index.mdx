@@ -26,7 +26,7 @@ The pganalyze container image is mostly self-contained, and runs various service
   * 50 GB of dedicated disk space or more
 * Optional: If you use the RDS integration, set up an appropriate IAM role that can be used to download logs and system metrics
   * You can also assign the required policy to an existing EC2 instance and its instance role
-  * You will need both the [collector IAM policy](/docs/install/amazon_rds/iam_policy) as well as the [object storage IAM policy](/docs/enterprise/setup/object-storage-s3)
+  * You will need the [collector IAM policy](/docs/install/amazon_rds/iam_policy)
 
 ### Step 1: Download the container image
 
@@ -66,11 +66,7 @@ LICENSE_KEY=REPLACE_ME
 
 You can find the full explanation of all variables in the [settings documentation](/docs/enterprise/settings), for example the `MAILER_URL` setting which is required to activate email alerts.
 
-### Step 3: Set up object storage
-
-If you'd like to use the Log Insights or Automated EXPLAIN features, or want to run the collector separately from the Enterprise Server container, you should **[set up object storage](/docs/enterprise/setup/object-storage)** before continuing with Step 4.
-
-### Step 4: Initialize database & verify installation
+### Step 3: Initialize database & verify installation
 
 Run the Enterprise self check, to ensure the configuration is correct:
 
@@ -110,7 +106,7 @@ Jul  2 07:15:17 aa84f55aceba cron[180]: (CRON) INFO (Running @reboot jobs)
 Jul  2 07:15:22 aa84f55aceba syslog-ng[160]: syslog-ng shutting down; version='3.13.2'
 ```
 
-### Step 5: Create initial admin user
+### Step 4: Create initial admin user
 
 Create the initial user:
 
@@ -138,7 +134,7 @@ I, [2020-07-02T07:15:35.006660 #159]  INFO -- : Use these credentials to login a
 Jul  2 07:15:35 8bc5a4c0e6b6 syslog-ng[150]: syslog-ng shutting down; version='3.13.2'
 ```
 
-### Step 6: Start web server and log in to pganalyze
+### Step 5: Start web server and log in to pganalyze
 
 You can now start the Docker image in the background using this command:
 
@@ -159,7 +155,7 @@ If authentication does not work, or you see an error message, please check the c
 
 Choose an organization name of your choice (typically your company name), and then click "Add Server" on the next screen.
 
-### Step 7: Preparing your PostgreSQL database for monitoring
+### Step 6: Preparing your PostgreSQL database for monitoring
 
 Before you can add a database to the pganalyze installation, you'll need to enable the `pg_stat_statements` extension on it.
 
@@ -171,7 +167,7 @@ In addition you will need to either use the database superuser (usually "postgre
 
 You don't need to run anything else on your database server - the pganalyze container will connect to your database at regular intervals to gather information from PostgreSQL's statistics tables.
 
-### Step 8: Add your first database to pganalyze
+### Step 7: Add your first database to pganalyze
 
 You can now either:
 

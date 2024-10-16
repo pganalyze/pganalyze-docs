@@ -62,73 +62,9 @@ And now push the tag to the registry:
 docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION
 ```
 
-### Step 2: Create an Amazon S3 bucket and KMS key for Log Insights
+### Step 2: Create an IAM policy that has sufficient access to the Amazon RDS APIs
 
-First, create the S3 buckets, replacing `BUCKETNAME` with a name of your choice, and `REGION` with the AWS region:
-
-```
-aws s3api create-bucket --bucket BUCKETNAME-logs --region REGION --create-bucket-configuration LocationConstraint=REGION
-aws s3api create-bucket --bucket BUCKETNAME-snapshots --region REGION --create-bucket-configuration LocationConstraint=REGION
-```
-
-Second, create a KMS key and remember the `Arn` from the result:
-
-```
-aws kms create-key
-```
-
-```json
-{
-    "KeyMetadata": {
-        ...
-        "Arn": "arn:aws:kms:REGION:ACCOUNTID:key/KEYID",
-        ...
-    }
-}
-```
-
-### Step 3: Create an IAM policy that has sufficient access to S3, KMS and the Amazon RDS APIs
-
-We need to create two separate policies. First, one for pganalyze storing data in S3/KMS, save this to a file named `pganalyze_s3_kms_policy.json`:
-
-```json
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "s3:*"
-            ],
-            "Resource": [
-                "arn:aws:s3:::BUCKETNAME-logs/*",
-                "arn:aws:s3:::BUCKETNAME-logs",
-                "arn:aws:s3:::BUCKETNAME-snapshots/*",
-                "arn:aws:s3:::BUCKETNAME-snapshots"
-            ]
-        },
-        {
-            "Effect": "Allow",
-            "Action": [
-                "kms:Encrypt",
-                "kms:Decrypt",
-                "kms:GenerateDataKey"
-            ],
-            "Resource": [
-                "arn:aws:kms:REGION:ACCOUNTID:key/KEYID"
-            ]
-        }
-    ]
-}
-```
-
-Modify the S3 bucket names (`BUCKETNAME`) to match your setup, and adjust the KMS key details by updating `REGION`/`ACCOUNTID`/`KEYID` to match the key's ARN. And then create the policy:
-
-```
-aws iam create-policy --policy-name pganalyze_s3_kms_policy --policy-document file://pganalyze_s3_kms_policy.json
-```
-
-And second, create the policy that permits access to Amazon RDS instances you want monitored. Save this to a file named `pganalyze_rds_policy.json`:
+Create the policy that permits access to Amazon RDS instances you want monitored. Save this to a file named `pganalyze_rds_policy.json`:
 
 ```json
 {
@@ -181,14 +117,13 @@ This policy allows accessing the metrics and log data for all RDS databases in y
 aws iam create-policy --policy-name pganalyze_rds_policy --policy-document file://pganalyze_rds_policy.json
 ```
 
-Assign both of these policies to the Amazon EKS node IAM role (replace `eksctl-CLUSTER-NodeInstanceRole` with your EKS node instance role name):
+Assign the policy to the Amazon EKS node IAM role (replace `eksctl-CLUSTER-NodeInstanceRole` with your EKS node instance role name):
 
 ```
-aws iam attach-role-policy --policy-arn arn:aws:iam::ACCOUNTID:policy/pganalyze_s3_kms_policy --role-name eksctl-CLUSTER-NodeInstanceRole
 aws iam attach-role-policy --policy-arn arn:aws:iam::ACCOUNTID:policy/pganalyze_rds_policy --role-name eksctl-CLUSTER-NodeInstanceRole
 ```
 
-### Step 4: Set up a Kubernetes secret for configuration settings
+### Step 3: Set up a Kubernetes secret for configuration settings
 
 You can manage Kubernetes secrets using [kubectl](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)
 
@@ -202,7 +137,7 @@ The `LICENSE_KEY` has been provided to you by the pganalyze Team - replace `KEYK
 kubectl create secret generic pganalyze-secret --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE --from-literal=LICENSE_KEY=KEYKEYKEY --dry-run=client -o yaml | kubectl apply -f -
 ```
 
-### Step 5: Create the pganalyze Enterprise deployment
+### Step 4: Create the pganalyze Enterprise deployment
 
 Save the following text into a file `pganalyze-enterprise.yml`:
 
@@ -236,15 +171,6 @@ spec:
           envFrom:
           - secretRef:
               name: pganalyze-secret
-          env:
-            - name: AWS_S3_SNAPSHOTS_BUCKET
-              value: BUCKETNAME-snapshots
-            - name: AWS_S3_LOGS_BUCKET
-              value: BUCKETNAME-logs
-            - name: AWS_KMS_LOGS_CMK
-              value: arn:aws:kms:REGION:ACCOUNTID:key/KEYID
-            - name: AWS_REGION
-              value: REGION
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -286,14 +212,6 @@ You will need to adjust the following settings:
 
 * **image:** `ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION`<br />
   This needs to match the Docker image tag we created earlier
-* **AWS_S3_SNAPSHOTS_BUCKET:** `BUCKETNAME-snapshots`<br />
-  This needs to match the bucket name you used for the snapshots bucket
-* **AWS_S3_LOGS_BUCKET:** `BUCKETNAME-logs`<br />
-  This needs to match the bucket name you used for the logs bucket
-* **AWS_KMS_LOGS_CMK**: `arn:aws:kms:REGION:ACCOUNTID:key/KEYID`<br />
-  This needs to match the `Arn` value of the Amazon KMS Key
-* **AWS_REGION**: `REGION`<br />
-  Replace this with the AWS region you have deployed to (e.g. `us-west-1`)
 * **alb.ingress.kubernetes.io/inbound-cidrs**: `0.0.0.0/0`<br />
   Adjust this to restrict the allowed source IPs that can access the load balancer
 * **alb.ingress.kubernetes.io/scheme**:<br />
@@ -313,7 +231,7 @@ NAME        READY   UP-TO-DATE   AVAILABLE   AGE
 pganalyze   1/1     1            1           1m
 ```
 
-### Step 6: Run the Enterprise self check to verify the configuration and license
+### Step 5: Run the Enterprise self check to verify the configuration and license
 
 Run the following command to perform the Enterprise self-check:
 
@@ -336,7 +254,7 @@ If you see an error, double check your configuration settings, and especially th
 
 In case you get an error for the license verification, please reach out to the pganalyze team.
 
-### Step 7: Initialize the database
+### Step 6: Initialize the database
 
 Run the following to initialize the pganalyze statistics database:
 
@@ -387,7 +305,7 @@ When you go to the hostname in your browser you should see the login page. You c
 
 ![](login.png)
 
-### Step 8: Log in to pganalyze
+### Step 7: Log in to pganalyze
 
 Please now log in to the pganalyze interface using the generated credentials you've seen earlier when setting up the database. If successful you should see this screen:
 
@@ -397,7 +315,7 @@ If authentication does not work, or you see an error message, please check the c
 
 Choose an organization name of your choice (typically your company name).
 
-### Step 9: Preparing your PostgreSQL database for monitoring
+### Step 8: Preparing your PostgreSQL database for monitoring
 
 Before you can add a database to the pganalyze installation, you'll need to enable the `pg_stat_statements` extension on it. This extension is already enabled on most Amazon RDS database servers by default. You can find details in the [Amazon RDS](/docs/install/amazon_rds) instructions.
 
@@ -405,7 +323,7 @@ In addition you will need to either use the database superuser (usually "postgre
 
 You don't need to run anything else on your database server - the pganalyze container will connect to your database at regular intervals to gather information from PostgreSQL's statistics tables.
 
-### Step 10: Add your first database server to pganalyze
+### Step 9: Add your first database server to pganalyze
 
 For a monitoring an Amazon RDS instance, or an Amazon Aurora cluster, you can use the bundled container with the pganalyze Enterprise Server container image.
 
