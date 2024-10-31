@@ -40,14 +40,18 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - Revise EXPLAIN details layout <!-- 4174 -->
 - Update bundled collector from 0.58.0 to 0.61.0 <!-- XXX -->
   - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0610------2024-10-23) for the full details
-- Raise connection tracing retention time from 24 hours to 7 days with new packed stats format
+- Raise connection tracing retention time from 24 hours to 7 days
 - Alert Policy: Enhanced Email notifications <!-- 4082 -->
   - Email notifications are now sent by default for all critical severity issues. Previously, some critical issues did not trigger email notifications due to an oversight. This has been corrected. Several checks were missing from the Alert Policy page, which prevented email notifications for those checks. This update includes all checks on the Alert Policy page, making it possible to enable email notifications for every critical severity issue.
-- Add more time predefined time periods to date picker <!-- 4125 -->
+- Add more predefined time periods to date picker <!-- 4125 -->
 - Allow filtering Server and Database drop-down menus <!-- 4235 -->
   - This can be useful when working with a large number of servers or databases.
 - System: Support showing system info and metrics for Azure databases <!-- 4241 -->
   - To enable this, set up the `AZURE_SUBSCRIPTION_ID` with the collector version 0.59.0 and above.
+- Schema Statistics: Show matching query scans on index detail page <!-- 4404 -->
+  - Now when viewing a specific index, you can see the matching table scans and associated queries.
+  - Note this is not yet supported for indexes on partitioned tables.
+- Add support for Azure, Google Cloud, and PII filtering settings for integrated collector <!-- 4419 -->
 
 ## Other improvements and bugfixes
 
@@ -78,8 +82,6 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - This will result in the same fingerprint for substantially identical query plans that were previously fingerprinted distinctly.
 - VACUUM Advisor: Fix loading vacuum run details when table information is not available <!-- 4360 -->
 - Server: Fix link to AWS Console for RDS databases <!-- 4361 -->
-- Schema Statistics: Show matching query scans on index detail page <!-- 4404 -->
-  - Now when viewing a specific index, you can see the matching table scans and associated queries.
 - Don't include IPv6 listen directives in nginx.conf <!-- 4417 -->
   - Most container environments today don't use IPv6 in practice for internal networking, and the listen directives cause issues when a host explicitly has IPv6 disabled.
 - Fix Enterprise Server container crash when LDAP authentication is enabled <!-- 4416 -->
