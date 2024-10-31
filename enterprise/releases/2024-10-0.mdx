@@ -58,7 +58,6 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - In addition to this, introduce pagination and the ability to search by the plan fingerprint to the list.
 - Remove compatibility layer for packed stats rollout <!-- 4050 -->
   - Release 2024.04.0 contained dual-write logic for internal stats tables to migrate to a new packed structure without requiring an expensive database migration or otherwise dropping historical data. This release drops the old table structure. As long as you have been running release 2024.04.x for 30 days, no data will be lost with this release.
-- Install Docs: Keep same generated password when moving install between steps <!-- 3933 -->
 - Fix handling of single-line SQL comments in formatted queries <!-- 3979 -->
 - Fix snapshot upload failures caused by file size limit <!-- 3986 -->
 - Rename memory stats that belong to the OS to avoid confusion with Postgres `shared_buffers` <!-- 3988 -->
@@ -78,7 +77,6 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - When the statistics in pg_stats were out of sync with the current table structure, such as when columns have been added or removed since the last statistics collection, they were simply not shown previously. With this change, show notification so that ANALYZE can be run to solve the issue.
 - EXPLAIN: Tweak plan fingerprinting to improve detection of partition indexes <!-- 4304 -->
   - This will result in the same fingerprint for substantially identical query plans that were previously fingerprinted distinctly.
-- Update Heroku setup documentation <!-- 4333 -->
 - VACUUM Advisor: Fix loading vacuum run details when table information is not available <!-- 4360 -->
 - Server: Fix link to AWS Console for RDS databases <!-- 4361 -->
 - Schema Statistics: Show matching query scans on index detail page <!-- 4404 -->
