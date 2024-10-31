@@ -33,16 +33,16 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - Recommend removing unused expression indexes in Unused Index alert <!-- 4185 -->
     - Previously expression indexes were excluded because they produce column statistics that the query planner can benefit from. But this was confusing for users who knew some indexes weren't being queried, and yet we didn't recommend deleting them. You may want to additionally `CREATE STATISTICS` for the expression when dropping an expression index if you notice worse query plans.
 - Automated EXPLAIN and EXPLAIN Plans
-  - Automated EXPLAIN: Add a better support for handling new lines with the text log format <!-- 3937 -->
+  - Automated EXPLAIN: Add better support for handling newlines with the text log format <!-- 3937 -->
   - View EXPLAIN Source: Hide "Async Capable" field when converting from JSON to text format <!-- 3946 -->
   - Support all Aggregate nodes with text format explain <!-- 4020 -->
     - Previously, only the plain Aggregate with text format explain was supported. With this change, we support GroupAggregate, HashAggregate, and MixedAggregate better.
   - Revise EXPLAIN details layout <!-- 4174 -->
 - Update bundled collector from 0.58.0 to 0.61.0 <!-- XXX -->
-  - See the [collector changelog](XXX) for the full details
+  - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0610------2024-10-23) for the full details
 - Raise connection tracing retention time from 24 hours to 7 days with new packed stats format
 - Alert Policy: Enhanced Email notifications <!-- 4082 -->
-  - Email notifications are now sent by default for all critical severity issues. Previously, some critical issues did not trigger email notifications due to an oversight. This has been corrected.\nSeveral checks were missing from the Alert Policy page, which prevented email notifications for those checks. This update includes all checks on the Alert Policy page, making it possible to enable email notifications for every critical severity issue.
+  - Email notifications are now sent by default for all critical severity issues. Previously, some critical issues did not trigger email notifications due to an oversight. This has been corrected. Several checks were missing from the Alert Policy page, which prevented email notifications for those checks. This update includes all checks on the Alert Policy page, making it possible to enable email notifications for every critical severity issue.
 - Add more time predefined time periods to date picker <!-- 4125 -->
 - Display a notice when a server is using an older collector <!-- 4162 -->
 - Allow filtering Server and Database drop-down menus <!-- 4235 -->
@@ -55,7 +55,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 - Query Details: EXPLAIN Plans tab now respects the date picker selection <!-- 4405 -->
   - Previously, EXPLAIN Plans tab in the query details page was showing only up to the most recent 50 EXPLAIN Plans, regardless of the time specified in the date picker.
   - With this change, it'll now respect the time selected in the date picker.
-  - In addition to this, introduce the pagination and also ability to search by the plan fingerprint to the list.
+  - In addition to this, introduce pagination and the ability to search by the plan fingerprint to the list.
 - Remove compatibility layer for packed stats rollout <!-- 4050 -->
   - Release 2024.04.0 contained dual-write logic for internal stats tables to migrate to a new packed structure without requiring an expensive database migration or otherwise dropping historical data. This release drops the old table structure. As long as you have been running release 2024.04.x for 30 days, no data will be lost with this release.
 - Install Docs: Keep same generated password when moving install between steps <!-- 3933 -->
@@ -69,15 +69,15 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - In some situations, bloat can be estimated as negative due to limitations of the bloat estimation heuristics. Hide estimates from these cases to avoid confusion.
 - Improve date range selection on small screens <!-- 4229 -->
 - EXPLAIN: Fix date range selector menu layout issue on smaller screens <!-- 4239 -->
-- Update a duplicate snapshot warning logic in Server Settings page <!-- 4240 -->
-  - Previously, this was wrongly providing a warning when the test snapshot is executed recently. This is now fixed.
+- Update duplicate snapshot warning logic in Server Settings page <!-- 4240 -->
+  - Previously, this was wrongly providing a warning when a test snapshot was executed recently. This is now fixed.
 - System Stats: Fix CPU core count calculation <!-- 4244 -->
-  - We previously multiplied the CPU logical core count by the number of\nsockets to determine this number, but that's not the commonly expected\nway of calculating this. Also rename the field to "Logical Cores" to\nclarify the meaning.
+  - We previously multiplied the CPU logical core count by the number of sockets to determine this number, but that's not the commonly expected way of calculating this. Also rename the field to "Logical Cores" to clarify the meaning.
  LDAP Authentication: Require valid SSL certificate for LDAP server if secure connection is specified <!-- 4300 -->
 - Schema Statistics: Show notice when the column stats are not available for the table due to outdated stats <!-- 4311 -->
   - When the statistics in pg_stats were out of sync with the current table structure, such as when columns have been added or removed since the last statistics collection, they were simply not shown previously. With this change, show notification so that ANALYZE can be run to solve the issue.
 - EXPLAIN: Tweak plan fingerprinting to improve detection of partition indexes <!-- 4304 -->
-  - This will result in the same fingerprint for substantially identical\nquery plans that were previously fingerprinted distinctly.
+  - This will result in the same fingerprint for substantially identical query plans that were previously fingerprinted distinctly.
 - Update Heroku setup documentation <!-- 4333 -->
 - VACUUM Advisor: Fix loading vacuum run details when table information is not available <!-- 4360 -->
 - Server: Fix link to AWS Console for RDS databases <!-- 4361 -->
