@@ -9,7 +9,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 ## Notes
 
 - This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
-- **Important:** If you were previously running a version older than v2024.04.X we highly recommend first upgrading to v2024.04.5 and staying there for 7 to 35 days
+- **Important:** If you are currently running v2023.08.0 or older, we highly recommend first upgrading to v2024.04.5 and staying there for 7 to 35 days
   - The v2024.04.0 release introduced a backend change for how query statistics are stored. Starting that release the old format was still supported in a dual write mode.
   - Starting with this release the new packed format is required and the only one supported.
   - If you have not been on v2024.04.X for sufficient time the migrations will fail with an error to prevent accidental loss of query statistics.
