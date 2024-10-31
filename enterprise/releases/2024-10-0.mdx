@@ -1,0 +1,91 @@
+---
+title: '2024.10.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2024.10.0`
+
+## Notes
+
+- This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+- **Important:** If you are currently running v2023.08.0 or older, we highly recommend first upgrading to v2024.04.5 and staying there for 7 to 35 days
+  - The v2024.04.0 release introduced a backend change for how query statistics are stored. Starting that release the old format was still supported in a dual write mode.
+  - Starting with this release the new packed format is required and the only one supported.
+  - If you have not been on v2024.04.X for sufficient time the migrations will fail with an error to prevent accidental loss of query statistics.
+- This release removes the use of the **Object storage**
+  - With the new packed storage format, pganalyze Enterprise Server now stores all data within the main database, including log texts
+  - This potentially affects database storage size, although the pganalyze team has actually observed storage reductions due to the packed format on our cloud-based environment, despite the extra data being stored
+  - Additionally we recommend reviewing your encryption configuration for your database server, since pganalyze now relies on the database storage to be encrypted for security of log texts (instead of a separate log encryption key)
+  - After upgrading the installation will still be able to read from the object storage for old logs, but no longer write to it. After 7 days have passed (the log retention time) you can remove all object storage related configuration.
+
+## Features
+
+- Index Advisor
+  - Add support for "pg_bigm", "cube" and "earthdistance" extensions <!-- 3953 -->
+  - Avoid Internal Error for tables that had no scans/query activity in the last 7 days <!-- 3956 -->
+  - Avoid errors when unsupported index types/data types are referenced by a table <!-- 3954 -->
+  - Add support for "ltree" extension <!-- 3957 -->
+  - Add ability to filter out acknowledged state insights <!--3943  -->
+  - Fix the count in "QUERIES" column in insights list <!-- 4288 -->
+    - In the Missing Indexes tab in the Index Advisor page, the column "QUERIES" was showing the number of missing indexes in that insight (table) previously. Now this column shows the number of unique affected queries due to these missing indexes as intended.
+  - Show affected index count of each table in insights list <!-- 4289 -->
+  - Recommend removing unused expression indexes in Unused Index alert <!-- 4185 -->
+    - Previously expression indexes were excluded because they produce column statistics that the query planner can benefit from. But this was confusing for users who knew some indexes weren't being queried, and yet we didn't recommend deleting them. You may want to additionally `CREATE STATISTICS` for the expression when dropping an expression index if you notice worse query plans.
+- Automated EXPLAIN and EXPLAIN Plans
+  - Automated EXPLAIN: Add better support for handling newlines with the text log format <!-- 3937 -->
+  - View EXPLAIN Source: Hide "Async Capable" field when converting from JSON to text format <!-- 3946 -->
+  - Support all Aggregate nodes with text format explain <!-- 4020 -->
+    - Previously, only the plain Aggregate with text format explain was supported. With this change, we support GroupAggregate, HashAggregate, and MixedAggregate better.
+  - Revise EXPLAIN details layout <!-- 4174 -->
+- Update bundled collector from 0.58.0 to 0.61.0 <!-- XXX -->
+  - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0610------2024-10-23) for the full details
+- Raise connection tracing retention time from 24 hours to 7 days
+- Alert Policy: Enhanced Email notifications <!-- 4082 -->
+  - Email notifications are now sent by default for all critical severity issues. Previously, some critical issues did not trigger email notifications due to an oversight. This has been corrected. Several checks were missing from the Alert Policy page, which prevented email notifications for those checks. This update includes all checks on the Alert Policy page, making it possible to enable email notifications for every critical severity issue.
+- Add more predefined time periods to date picker <!-- 4125 -->
+- Allow filtering Server and Database drop-down menus <!-- 4235 -->
+  - This can be useful when working with a large number of servers or databases.
+- System: Support showing system info and metrics for Azure databases <!-- 4241 -->
+  - To enable this, set up the `AZURE_SUBSCRIPTION_ID` with the collector version 0.59.0 and above.
+- Schema Statistics: Show matching query scans on index detail page <!-- 4404 -->
+  - Now when viewing a specific index, you can see the matching table scans and associated queries.
+  - Note this is not yet supported for indexes on partitioned tables.
+- Add support for Azure, Google Cloud, and PII filtering settings for integrated collector <!-- 4419 -->
+
+## Other improvements and bugfixes
+
+- Query Details: EXPLAIN Plans tab now respects the date picker selection <!-- 4405 -->
+  - Previously, EXPLAIN Plans tab in the query details page was showing only up to the most recent 50 EXPLAIN Plans, regardless of the time specified in the date picker.
+  - With this change, it'll now respect the time selected in the date picker.
+  - In addition to this, introduce pagination and the ability to search by the plan fingerprint to the list.
+- Remove compatibility layer for packed stats rollout <!-- 4050 -->
+  - Release 2024.04.0 contained dual-write logic for internal stats tables to migrate to a new packed structure without requiring an expensive database migration or otherwise dropping historical data. This release drops the old table structure. As long as you have been running release 2024.04.x for 30 days, no data will be lost with this release.
+- Fix handling of single-line SQL comments in formatted queries <!-- 3979 -->
+- Fix snapshot upload failures caused by file size limit <!-- 3986 -->
+- Rename memory stats that belong to the OS to avoid confusion with Postgres `shared_buffers` <!-- 3988 -->
+- Per-table VACUUM information: Fix rendering bug when autovacuum_vacuum_insert_threshold is 0 <!-- 4087 -->
+- Schema Statistics: Increase width of schema name column in table listing <!-- 4183 -->
+- Remove support for collector versions below 0.40.0 <!-- 4160 -->
+- VACUUM Advisor: Hide negative bloat estimates <!-- 4219 -->
+  - In some situations, bloat can be estimated as negative due to limitations of the bloat estimation heuristics. Hide estimates from these cases to avoid confusion.
+- Improve date range selection on small screens <!-- 4229 -->
+- EXPLAIN: Fix date range selector menu layout issue on smaller screens <!-- 4239 -->
+- Update duplicate snapshot warning logic in Server Settings page <!-- 4240 -->
+  - Previously, this was wrongly providing a warning when a test snapshot was executed recently. This is now fixed.
+- System Stats: Fix CPU core count calculation <!-- 4244 -->
+  - We previously multiplied the CPU logical core count by the number of sockets to determine this number, but that's not the commonly expected way of calculating this. Also rename the field to "Logical Cores" to clarify the meaning.
+ LDAP Authentication: Require valid SSL certificate for LDAP server if secure connection is specified <!-- 4300 -->
+- Schema Statistics: Show notice when the column stats are not available for the table due to outdated stats <!-- 4311 -->
+  - When the statistics in pg_stats were out of sync with the current table structure, such as when columns have been added or removed since the last statistics collection, they were simply not shown previously. With this change, show notification so that ANALYZE can be run to solve the issue.
+- EXPLAIN: Tweak plan fingerprinting to improve detection of partition indexes <!-- 4304 -->
+  - This will result in the same fingerprint for substantially identical query plans that were previously fingerprinted distinctly.
+- VACUUM Advisor: Fix loading vacuum run details when table information is not available <!-- 4360 -->
+- Server: Fix link to AWS Console for RDS databases <!-- 4361 -->
+- Don't include IPv6 listen directives in nginx.conf <!-- 4417 -->
+  - Most container environments today don't use IPv6 in practice for internal networking, and the listen directives cause issues when a host explicitly has IPv6 disabled.
+- Fix Enterprise Server container crash when LDAP authentication is enabled <!-- 4416 -->
+
+## Security
+
+- Routine security updates to packages in the base image and library dependencies
