@@ -21,8 +21,8 @@ of queries and schemas are supported.
    requests is treated the same as a query in a background job)
  - Scans are extracted from the last 7 days of queries (this time period may be
    adjusted in the future)
- - The Indexing Engine is based on the Postgres 13 or Postgres 14 planner and may
-   not give accurate results for older or newer Postgres versions
+ - The Indexing Engine is based on the Postgres planner (versions 13 through 16)
+   and may not give accurate results for older or newer Postgres versions
  - Support for custom search_path settings is best-effort: if you have multiple
    tables with the same name in different schemas and rely on search_path to
    disambiguate these, this may not be handled correctly
