@@ -47,7 +47,7 @@ Create a new configuration file (e.g. named `pganalyze_collector.replica.env`) a
 DB_HOST=mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
 ```
 
-If you have multiple readers with a cluster, you either need to add each instance
+If you have a cluster with multiple readers, you either need to add each instance
 endpoint to the content of `CONFIG_CONTENTS` (e.g. add each sections like `[reader_instance1]`, `[reader_instance2]`),
 or run one pganalyze collector Docker container for each instance.
 
