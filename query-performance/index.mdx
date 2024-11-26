@@ -64,15 +64,19 @@ each scan, the Index Advisor will show if there are any recommended changes.
 ### Query Samples
 
 Shows the list of query samples collected in the last 24 hours, regardless of
-the selected time range. This is only available when Log Insights is integrated
-and the query execution time exceeds either `log_min_duration_statement`
-or `auto_explain.log_min_duration`.
+the selected time range, up to 5 samples. This is only available when Log
+Insights is integrated and the query execution time exceeds either
+`log_min_duration_statement` or `auto_explain.log_min_duration`.
 
 ### EXPLAIN Plans
 
-Shows the list of EXPLAIN plans collected in the last 7 days, regardless of the
-selected time range, up to 30 plans. This is only available when [Automated EXPLAIN](/docs/explain/setup)
-is integrated and the query execution time exceeds `auto_explain.log_min_duration`.
+Shows the list of EXPLAIN plans samples collected in the selected time range.
+This is only available when [Automated EXPLAIN](/docs/explain/setup) is
+integrated and the query execution time exceeds `auto_explain.log_min_duration`.
+With Amazon Aurora versions 14.10, 15.5, and higher, this page also displays
+query plan statistics, including a list of query plans with their statistics,
+and graphs showing the average runtime and calls per minute over time for each
+plan.
 
 ### Query Tags
 
