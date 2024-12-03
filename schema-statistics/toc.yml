@@ -4,3 +4,5 @@
     href: schema-statistics
   - name: "Column statistics / HOT updates"
     href: schema-statistics/columns-hot-updates
+  - name: Postgres buffer cache
+    href: schema-statistics/buffer-cache

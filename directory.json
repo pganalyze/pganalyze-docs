@@ -992,6 +992,10 @@
       "title": "Tracking Postgres schema statistics in pganalyze",
       "path": "/docs/schema-statistics"
     },
+    "schema-statistics/buffer-cache": {
+      "title": "Tracking Postgres buffer cache usage in pganalyze",
+      "path": "/docs/schema-statistics/buffer-cache"
+    },
     "schema-statistics/columns-hot-updates": {
       "title": "Column statistics and HOT updates",
       "path": "/docs/schema-statistics/columns-hot-updates"
