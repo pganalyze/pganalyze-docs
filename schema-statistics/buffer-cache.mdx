@@ -8,7 +8,7 @@ Postgres caches recently-used table and index data in its buffer cache, whose si
 
 ## Setup
 
-Using collector version 0.63.0 or later, enable the extension:
+Using collector version [0.63.0 or later](/docs/collector/upgrading), enable the extension:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS pg_buffercache WITH SCHEMA public;
@@ -16,7 +16,13 @@ CREATE EXTENSION IF NOT EXISTS pg_buffercache WITH SCHEMA public;
 
 If you don't see stats after 20 minutes, check the collector logs for error messages.
 
-If the collector runs into permissions issues when querying pg_buffercache, run:
+If the collector runs into permissions issues when querying pg_buffercache, you may need to upgrade the extension:
+
+```sql
+ALTER EXTENSION pg_buffercache UPDATE;
+```
+
+Or on older Postgres versions, you can grant the permissions manually:
 
 ```sql
 GRANT USAGE ON SCHEMA public TO pganalyze;
@@ -24,7 +30,13 @@ GRANT SELECT ON pg_buffercache TO pganalyze;
 GRANT EXECUTE ON FUNCTION pg_buffercache_pages TO pganalyze;
 ```
 
-Note that by default this is not monitored for servers with a buffer cache larger than 200 GB. To change this, set `max_buffer_cache_monitoring_gb = 300` in the collector config.
+## Performance implications of collecting shared buffer statistics
+
+Since Postgres 10, the pg_buffercache view uses reduced locking and as such is generally safe to query on production systems without impacting the regular workload. pganalyze queries the buffer cache data every 10 minutes.
+
+By default this feature is only turned on for servers with `shared_buffers` configured for 200 GB of RAM or less. You can change the threshold by setting the `max_buffer_cache_monitoring_gb` setting, e.g. to `300` in the collector config.
+
+This threshold exists because pg_buffercache incurs a fixed CPU cost for each buffer page (more buffer pages = more CPU used by querying it), as well as the fact that it temporarily writes its data to a temporary file, which has a size of roughly 0.5% of the `shared_buffers` value, or about 1GB at 200 GB `shared_buffers`.
 
 ## Table Statistics
 
