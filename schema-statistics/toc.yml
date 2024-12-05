@@ -2,7 +2,7 @@
   items:
   - name: Overview
     href: schema-statistics
-  - name: "Column statistics / HOT updates"
+  - name: "Column Statistics / HOT Updates"
     href: schema-statistics/columns-hot-updates
-  - name: Postgres buffer cache
+  - name: Buffer Cache Statistics
     href: schema-statistics/buffer-cache
