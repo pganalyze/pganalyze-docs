@@ -90,6 +90,12 @@ Common settings for configuring collector behavior, independent of the platform.
       we recommend using <a href="/docs/explain/setup/auto_explain">auto_explain</a> instead if possible.
       </td>
     </tr>
+    <tr>
+      <td>max_buffer_cache_monitoring_gb (<code>MAX_BUFFER_CACHE_MONITORING_GB</code>)</td>
+      <td>200</td>
+      <td>Threshold in GB for enabling the <a href="/docs/schema-statistics/buffer-cache">Buffer Cache Statistics</a> feature. If the Postgres <code>shared_buffers</code> setting exceeds the threshold it is disabled.
+      </td>
+    </tr>
   </tbody>
 </table>
 
