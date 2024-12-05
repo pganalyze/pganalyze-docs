@@ -993,7 +993,7 @@
       "path": "/docs/schema-statistics"
     },
     "schema-statistics/buffer-cache": {
-      "title": "Tracking Postgres buffer cache usage in pganalyze",
+      "title": "Buffer Cache Statistics",
       "path": "/docs/schema-statistics/buffer-cache"
     },
     "schema-statistics/columns-hot-updates": {

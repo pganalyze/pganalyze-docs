@@ -1,12 +1,36 @@
 ---
-title: 'Tracking Postgres buffer cache usage in pganalyze'
+title: 'Buffer Cache Statistics'
 backlink_href: /docs/schema-statistics
 backlink_title: 'Tracking Postgres schema statistics in pganalyze'
 ---
 
-Postgres caches recently-used table and index data in its buffer cache, whose size is configured by the `shared_buffers` setting. pganalyze can track buffer cache usage with the [pg_buffercache](https://www.postgresql.org/docs/current/pgbuffercache.html) extension, helping you to understand database access patterns over time and identify tables that may need to be optimized.
+Postgres caches recently-used table and index data in its buffer cache, whose size is configured by the `shared_buffers` setting. pganalyze can track buffer cache usage with the [pg_buffercache](https://www.postgresql.org/docs/current/pgbuffercache.html) extension, helping you to understand database access patterns over time and identify tables that may need to be optimized. You can find [details on setting up this feature](#setting-up-the-buffer-cache-feature) later on this page.
 
-## Setup
+## Table Statistics
+
+When viewing a specific table, you can see a breakdown of buffer cache usage for the table, TOAST, and index data over time. Here you can see an example of one table that's always in memory:
+
+![](buffer-cache-table-constant.png)
+
+While this other table is only in memory while its query workload requires it:
+
+![](buffer-cache-table-variable.png)
+
+## Index Statistics
+
+You can similarly see the buffer cache usage of a specific index:
+
+![](buffer-cache-index.png)
+
+## System Memory
+
+The System Memory page has two graphs showing buffer cache usage across your Postgres server. Top 10 Tables shows the tables that usually take the most memory, while Top 10 Outliers shows the tables that use the most memory for a shorter period of time.
+
+![](buffer-cache-system.png)
+
+Note that if a table is considered a Top 10 table it will be excluded from the Top 10 outliers. Further note that this data gets aggregated across all databases in a server, so is most useful when you have a few large tables that influence caching behaviour.
+
+## Setting up the Buffer Cache feature
 
 Using collector version [0.63.0 or later](/docs/collector/upgrading), enable the extension:
 
@@ -37,22 +61,3 @@ Since Postgres 10, the pg_buffercache view uses reduced locking and as such is g
 By default this feature is only turned on for servers with `shared_buffers` configured for 200 GB of RAM or less. You can change the threshold by setting the `max_buffer_cache_monitoring_gb` setting, e.g. to `300` in the collector config.
 
 This threshold exists because pg_buffercache incurs a fixed CPU cost for each buffer page (more buffer pages = more CPU used by querying it), as well as the fact that it temporarily writes its data to a temporary file, which has a size of roughly 0.5% of the `shared_buffers` value, or about 1GB at 200 GB `shared_buffers`.
-
-## Table Statistics
-
-When viewing a specific table, you can see a breakdown of buffer cache usage for the table, TOAST, and index data over time. Here you can see an example of one table that's always in memory, while the other table is only in memory while its query workload requires it.
-
-![](buffer-cache-table-constant.png)
-![](buffer-cache-table-variable.png)
-
-## Index Statistics
-
-You can similarly see the buffer cache usage of a specific index:
-
-![](buffer-cache-index.png)
-
-## System Memory
-
-The System Memory page has two graphs showing buffer cache usage across your Postgres server. Top 10 Tables shows the tables that usually take the most memory, while Top 10 Outliers shows the tables that use the most memory for a shorter period of time.
-
-![](buffer-cache-system.png)
