@@ -21,9 +21,12 @@ export const FinishSetup = ({ inviteLink }) => {
 
 ## Configuring the collector on Amazon EKS
 
-To start, download the example values.yaml file for the Helm chart:
+To start, download an example values.yaml file for the Helm chart:
 
 ```
+# Add a pganalyze repo:
+helm repo add pganalyze https://charts.pganalyze.com/
+# Download an example values.yaml file:
 helm show values pganalyze/pganalyze-collector > values.yaml
 ```
 
@@ -143,7 +146,8 @@ or install one pganalyze collector Helm chart for each instance.
 
 ## Install a Helm chart
 
-We can now install a Helm chart to your EKS cluster. First, add a pganalyze repo:
+We can now install a Helm chart to your EKS cluster. First, add a pganalyze repo
+if you already haven't added in the previous step:
 
 ```
 helm repo add pganalyze https://charts.pganalyze.com/
