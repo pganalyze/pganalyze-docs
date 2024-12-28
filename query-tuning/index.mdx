@@ -1,0 +1,79 @@
+---
+title: 'Query Tuning'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+import DocsBetaFeature from '../components/DocsBetaFeature'
+
+<DocsBetaFeature feature="Query Tuning" />
+
+## Getting Started
+
+Query Tuning provides a unified interface and workflow for optimizing slow Postgres queries.
+
+The Query Tuning Workbooks feature lets you streamline recording of related `EXPLAIN ANALYZE`
+outputs and enables easy, secure sharing them with your team. Each workbook contains a
+baseline query and one or more variants.
+
+Variants are a modification to the original query that aims to optimize it by changing planner
+settings, adding a `pg_hint_plan` hint, or rewriting the query. You can compare and analyze
+variants with clear visibility into changes and their effects on performance.
+
+The parameter sets feature makes it easy to test performance for different bind parameter values
+across the baseline and variants, making sure that optimizing for one user's experience does not
+slow down other cases.
+
+Query Tuning workbooks automatically convert positional parameters to named parameters, e.g. turning
+`user_id = $1` into `user_id = $user_id`. This makes it easy to test rewrites of a query, or test
+individual portions of a query.
+
+### Query Tuning Features
+
+* Upload EXPLAIN Plans on Demand: Upload plans to analyze and compare queries
+  in real-time and dive deeper into query performance.
+* Organize Query Plans: Creating a workbook allows you to manage your baseline query and
+  its query variants in one place. This is especially useful when you’re testing different
+  query rewrites, index configurations, or join strategies.
+* Manage and run parameter sets across many query variants, either sourced from query
+  samples or by creating parameter sets manually.
+* Highlight performance differences across variants and parameter sets, allowing you to
+  see at a glance whether a query rewrite or other changes are making things better or worse.
+* View key metrics such as cost estimates, runtime, I/O read time, row estimates, and index scans
+  in a clear overview, helping you form a hypothesis about what to try.
+* Compare Plans: You can run a diff between two query plans, helping you visualize and compare
+  execution plans side-by-side. This feature helps debug whether differences in performance
+  are due to plan shape or environmental factors like I/O time or row estimates. 
+
+## How to enable Query Tuning
+
+### New role and permissions
+
+We added a new user permission “Tune Queries”. Only users with Admin roles will get this
+permission assigned automatically. This permission allows users to create workbooks and
+to use all associated Query Tuning features.
+
+Users without the permission are able to view existing workbooks.
+
+### Set up the collector to run EXPLAIN ANALYZE for you
+
+Query Tuning streamlines the process of gathering query plans through both automatic and
+manual workflows. While you can always upload EXPLAIN ANALYZE plans manually, the collector
+can now run EXPLAIN queries automatically for you, saving time and effort. To use this
+automated feature, ensure you're running collector version x or later and follow our
+documentation for setting up the collector and its helper functions securely.
+
+If you prefer not to use the automatic collection, you can continue using the manual workflow.
+
+Both automatic and manual workflows are available to all users with the Tune Queries permission.
+
+## Limitations
+
+* Workbooks are currently not suited for optimizing queries invoked inside of functions
+* Workbooks are currently not suited for testing different index choices by doing CREATE INDEX
+* Data modification (DML) queries are not supported
+* All query executions are limited to 60 seconds (this limit will be configurable in the future)
+* The Collector Workflow requires the use of a function not owned by superuser
+  * If your database provider does not allow creating separate roles, you cannot use the Collector Workflow
+
+[Learn how to navigate and use workbooks next](how-to-use-workbooks)

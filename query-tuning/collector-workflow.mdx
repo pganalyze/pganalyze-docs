@@ -1,0 +1,183 @@
+---
+title: 'Setting up the Collector Workflow'
+backlink_href: /docs/query-tuning
+backlink_title: 'Query Tuning'
+---
+
+import DocsBetaFeature from '../components/DocsBetaFeature'
+
+<DocsBetaFeature feature="Query Tuning" />
+
+The Collector Workflow in Query Tuning workbooks optionally allows users with the [Tune Queries permission]()
+to execute arbitrary EXPLAIN ANALYZE commands directly from the pganalyze user interface, avoiding tedious
+copy and pasting of command outputs. These EXPLAIN ANALYZE commands are executed
+through the pganalyze Collector.
+
+In order to set up the Collector Workflow you must create the special `pganalyze_explain`
+role on your database server, as well as the `pganalyze.explain_analyze` helper function
+in each database where this feature should be active.
+
+We recommend reading about [Security & Privacy](security-privacy) before setting up the Collector Workflow.
+
+## Creating the pganalyze_explain role
+
+As an additional layer of security, we require creating a separate role in Postgres
+that is used to execute `EXPLAIN ANALYZE` statements from pganalyze. This role should
+not have any password assigned (and not allow login), instead it is only utilized
+by calling a special helper function owned by the role.
+
+First, start by creating the new role:
+
+```sql
+CREATE ROLE pganalyze_explain;
+```
+
+Then, either use GRANT statements for individual tables ([described separately](#individual-grant-statements-instead-of-pg_read_all_data)), or assign the
+`pg_read_all_data` role to the `pganalyze_explain` role:
+
+```sql
+GRANT pg_read_all_data TO pganalyze_explain;
+```
+
+The special `pg_read_all_data` role lets the `pganalyze_explain` user read the data of
+all tables on the database server.
+
+Note that access to the role is restricted through use of a helper
+function, which only returns the results of the EXPLAIN ANALYZE command, not the original
+table data, with [some exceptions](security-privacy#data-privacy-considerations).
+
+## Setting up the pganalyze.explain_analyze helper
+
+In each database where you would like to enable the Collector Workflow, you need to create
+the following helper function. This needs to be executed as the `pganalyze_explain` user,
+to ensure the `SECURITY DEFINER` privilege is correctly assigned.
+
+First, ensure the `pganalyze` schema exists, temporarily allow the `pganalyze_explain`
+user to create functions in it, and switch roles:
+
+```sql
+CREATE SCHEMA IF NOT EXISTS pganalyze;
+GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
+GRANT CREATE ON SCHEMA pganalyze TO pganalyze_explain;
+SET ROLE pganalyze_explain;
+```
+
+Then, create the function:
+
+```sql
+CREATE OR REPLACE FUNCTION pganalyze.explain_analyze(query text, params text[], param_types text[], analyze_flags text[]) RETURNS text AS $$
+DECLARE
+  prepared_query text;
+  params_str text;
+  param_types_str text;
+  explain_prefix text;
+  explain_flag text;
+  result text;
+BEGIN
+  SET TRANSACTION READ ONLY;
+
+  PERFORM 1 FROM pg_roles WHERE (rolname = current_user AND rolsuper) OR (pg_has_role(oid, 'MEMBER') AND rolname IN ('rds_superuser', 'azure_pg_admin', 'cloudsqlsuperuser'));
+  IF FOUND THEN
+    RAISE EXCEPTION 'cannot run: helper is owned by superuser - recreate function with lesser privileged user';
+  END IF;
+
+  SELECT pg_catalog.regexp_replace(query, ';+\s*\Z', '') INTO prepared_query;
+  IF prepared_query LIKE '%;%' THEN
+    RAISE EXCEPTION 'cannot run helper with a multi-statement query';
+  END IF;
+
+  explain_prefix := 'EXPLAIN (VERBOSE, FORMAT JSON';
+  FOR explain_flag IN SELECT * FROM unnest(analyze_flags)
+  LOOP
+    IF explain_flag NOT SIMILAR TO '[A-z_ ]+' THEN
+      RAISE EXCEPTION 'cannot run helper with invalid flag';
+    END IF;
+    explain_prefix := explain_prefix || ', ' || explain_flag;
+  END LOOP;
+  explain_prefix := explain_prefix || ') ';
+
+  SELECT COALESCE('(' || pg_catalog.string_agg(pg_catalog.quote_literal(p), ',') || ')', '') FROM pg_catalog.unnest(params) _(p) INTO params_str;
+  SELECT COALESCE('(' || pg_catalog.string_agg(pg_catalog.quote_ident(p), ',') || ')', '') FROM pg_catalog.unnest(param_types) _(p) INTO param_types_str;
+
+  EXECUTE 'PREPARE pganalyze_explain_analyze ' || param_types_str || ' AS ' || prepared_query;
+  BEGIN
+    EXECUTE explain_prefix || 'EXECUTE pganalyze_explain_analyze' || params_str INTO STRICT result;
+  EXCEPTION WHEN OTHERS THEN
+    DEALLOCATE pganalyze_explain_analyze;
+    RAISE;
+  END;
+  DEALLOCATE pganalyze_explain_analyze;
+
+  RETURN result;
+END
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;
+```
+
+To complete the setup, reset the role, and revoke the creation privilege again:
+
+```sql
+RESET ROLE;
+REVOKE CREATE ON SCHEMA pganalyze FROM pganalyze_explain;
+```
+
+## Revoking access for dblink & other problematic functions
+
+Certain functions in Postgres can be problematic if permitted to be called. It is your
+responsibility to block use of these functions from the `pganalyze_explain` user.
+
+An example of this is [dblink](https://www.postgresql.org/docs/current/dblink.html), which,
+if set up on a given database, can allow copying data to a remote Postgres server, potentially
+letting someone with access to the `pganalyze_explain` user exfiltrate data.
+
+By default `dblink` can be used by any user in the system, whether they are superuser or not.
+
+As a general best practice, and to avoid granting access to the `pganalyze_explain` user,
+we recommend explicitly revoking the use of `dblink` from `PUBLIC`:
+
+```sql
+REVOKE ALL ON FUNCTION dblink(text, text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION dblink(text, text, bool) FROM PUBLIC;
+REVOKE ALL ON FUNCTION dblink_connect(text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION dblink_connect(text, text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION dblink_exec(text, text) FROM PUBLIC;
+REVOKE ALL ON FUNCTION dblink_exec(text, text, bool) FROM PUBLIC;
+```
+
+Note that if you have any non-superuser users utilizing `dblink`, you will need to explicitly
+grant them access to these functions instead.
+
+## Individual GRANT statements instead of pg_read_all_data
+
+Whilst requiring more setup effort, you can also utilize `GRANT` to allow access to individual tables (or even individual columns),
+instead of using `pg_read_all_data` as described earlier.
+
+For example, to grant access to all columns in table `test`, and only some columns in table `restricted`, you can run the following `GRANT` statements:
+
+```sql
+GRANT SELECT ON test TO pganalyze_explain;
+GRANT SELECT (col1, col2) ON restricted TO pganalyze_explain;
+```
+
+Or alternatively you can grant access to all tables in a schema:
+
+```sql
+GRANT SELECT ON ALL TABLES IN SCHEMA myschema TO pganalyze_explain;
+```
+
+Note this will not grant privileges to tables in the schema that are newly created after the `GRANT` statement was executed.
+
+For most systems we recommend utilizing the `pg_read_all_data` role to avoid having to managing individual `GRANT` statements.
+
+## Deactivating the Collector Workflow
+
+In order to deactivate the collector workflow, you will first need to drop the helper function on each database:
+
+```sql
+DROP FUNCTION pganalyze.explain_analyze(query text, params text[], param_types text[], analyze_flags text[]);
+```
+
+And then you can optionally drop the role as well:
+
+```sql
+DROP ROLE pganalyze_explain;
+```
