@@ -49,19 +49,20 @@ individual portions of a query.
 
 ### New role and permissions
 
-We added a new user permission “Tune Queries”. Only users with Admin roles will get this
-permission assigned automatically. This permission allows users to create workbooks and
-to use all associated Query Tuning features.
+Query Tuning utilizes a separate user permission, called “Tune Queries”. Only users with
+Admin roles will get this permission assigned automatically. This permission allows
+users to create workbooks and to use all associated Query Tuning features.
 
-Users without the permission are able to view existing workbooks.
+Users without the permission are able to view existing workbooks, including parameter
+information, but cannot create new workbooks, variants, or record new plans.
 
 ### Set up the collector to run EXPLAIN ANALYZE for you
 
 Query Tuning streamlines the process of gathering query plans through both automatic and
 manual workflows. While you can always upload EXPLAIN ANALYZE plans manually, the collector
 can now run EXPLAIN queries automatically for you, saving time and effort. To use this
-automated feature, ensure you're running collector version x or later and follow our
-documentation for setting up the collector and its helper functions securely.
+automated feature, ensure you're running collector version 0.64.0 or later and follow our
+[documentation for setting up the collector workflow](collector-workflow).
 
 If you prefer not to use the automatic collection, you can continue using the manual workflow.
 
