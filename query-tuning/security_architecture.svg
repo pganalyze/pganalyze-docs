@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="317.94264 -1384.0255 1023.2657 696.52555" width="1023.2657" height="696.52555">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Canvas_1" stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+    <title>Canvas 1</title>
+    <rect fill="white" x="317.94264" y="-1384.0255" width="1023.2657" height="696.52555"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_167">
+        <rect x="916" y="-1358.4118" width="404.70833" height="85" fill="white"/>
+        <rect x="916" y="-1358.4118" width="404.70833" height="85" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_136">
+        <path d="M 1010.6822 -1258.0919 L 1320.7083 -1258.0919 L 1320.7083 -708 L 1010.6822 -708 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(1020.6822 -1248.0919)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Database (pganalyze_explain user)</tspan>
+        </text>
+      </g>
+      <g id="Graphic_133">
+        <path d="M 674.5624 -1037.0459 L 984.5885 -1037.0459 L 984.5885 -708 L 674.5624 -708 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(684.5624 -1027.0459)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">pganalyze Collector</tspan>
+        </text>
+      </g>
+      <g id="Graphic_132">
+        <rect x="721.1033" y="-797.2" width="227.616" height="61.40318" fill="#acdfdf"/>
+        <rect x="721.1033" y="-797.2" width="227.616" height="61.40318" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(726.1033 -788.4984)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="25.184" y="16" xml:space="preserve">Websocket Listener for</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="70.064" y="38" xml:space="preserve">Query Run</tspan>
+        </text>
+      </g>
+      <g id="Graphic_134">
+        <path d="M 674.5624 -1258.0919 L 984.5885 -1258.0919 L 984.5885 -1052 L 674.5624 -1052 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(684.5624 -1248.0919)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Database (pganalyze user)</tspan>
+        </text>
+      </g>
+      <g id="Graphic_135">
+        <rect x="1051.3637" y="-1208.755" width="228.66315" height="124.1224" fill="#bfd989"/>
+        <rect x="1051.3637" y="-1208.755" width="228.66315" height="124.1224" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1056.3637 -1190.6937)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">pganalyze.explain_analyze</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="38" xml:space="preserve">- Checks multi-statement</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="60" xml:space="preserve">- Sets READ ONLY transaction</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="82" xml:space="preserve">- Blocks super user owner</tspan>
+        </text>
+      </g>
+      <g id="Graphic_137">
+        <rect x="1051.3637" y="-1042.8845" width="228.66315" height="108" fill="#acdfdf"/>
+        <rect x="1051.3637" y="-1042.8845" width="228.66315" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1056.3637 -1021.8845)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="76.89157" y="16" xml:space="preserve">EXPLAIN</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="32.091573" y="38" xml:space="preserve">(ANALYZE, BUFFERS)</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="33.963573" y="60" xml:space="preserve">SELECT * FROM </tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" y="60" xml:space="preserve">test</tspan>
+        </text>
+      </g>
+      <g id="Graphic_138">
+        <rect x="1051.3637" y="-870.2552" width="228.66315" height="108" fill="#b1abbf"/>
+        <rect x="1051.3637" y="-870.2552" width="228.66315" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1056.3637 -827.2552)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="73.08357" y="16" xml:space="preserve">Table </tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" y="16" xml:space="preserve">test</tspan>
+        </text>
+      </g>
+      <g id="Line_139">
+        <line x1="1165.6953" y1="-934.8845" x2="1165.6953" y2="-880.1552" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_140">
+        <rect x="1089.5753" y="-921.2493" width="152.24" height="28.447998" fill="white"/>
+        <text transform="translate(1094.5753 -916.2493)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="7958079e-19" y="15" xml:space="preserve">SELECT permission</tspan>
+        </text>
+      </g>
+      <g id="Graphic_141">
+        <rect x="1024.6873" y="-752.93865" width="282.016" height="28.447998" fill="white"/>
+        <text transform="translate(1029.6873 -747.93865)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">Individual GRANT or pg_read_all_data</tspan>
+        </text>
+      </g>
+      <g id="Line_142">
+        <line x1="1165.6953" y1="-1084.6325" x2="1165.6953" y2="-1052.7845" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_143">
+        <rect x="721.1395" y="-990.22" width="228.66315" height="154.48698" fill="#beda89"/>
+        <rect x="721.1395" y="-990.22" width="228.66315" height="154.48698" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(726.1395 -978.9765)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Validates &amp; executes query</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="38" xml:space="preserve">- Checks multi-statement</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="60" xml:space="preserve">- Sets READ ONLY transaction</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="82" xml:space="preserve">- Blocks known bad functions </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="104" xml:space="preserve">(e.g. dblink)</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="126" xml:space="preserve">- Sets statement timeout</tspan>
+        </text>
+      </g>
+      <g id="Line_146">
+        <line x1="834.9113" y1="-797.2" x2="835.3272" y2="-825.8341" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_147">
+        <line x1="835.471" y1="-990.22" x2="835.471" y2="-1074.7325" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_148">
+        <path d="M 338.44264 -1258.0919 L 648.46875 -1258.0919 L 648.46875 -708 L 338.44264 -708 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(348.44264 -1248.0919)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">pganalyze Application</tspan>
+        </text>
+      </g>
+      <g id="Graphic_149">
+        <rect x="382.5143" y="-855.7968" width="228.66315" height="120" fill="#bfd989"/>
+        <rect x="382.5143" y="-855.7968" width="228.66315" height="120" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(387.5143 -850.7968)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Validates &amp; submits query</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="38" xml:space="preserve">- Checks multi-statement</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="60" xml:space="preserve">- Blocks DML statements</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="82" xml:space="preserve">- Blocks known bad functions </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="104" xml:space="preserve">(e.g. dblink)</tspan>
+        </text>
+      </g>
+      <g id="Line_150">
+        <path d="M 611.17744 -768.2039 L 611.17744 -766.4984 L 711.2033 -766.4984" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_151">
+        <rect x="382.5143" y="-1196.0612" width="228.66315" height="108" fill="#bfda89"/>
+        <rect x="382.5143" y="-1196.0612" width="228.66315" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(387.5143 -1186.0612)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">User with</tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="38" xml:space="preserve">“Tune Queries” permission </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="60" xml:space="preserve">creates a workbook for a </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="82" xml:space="preserve">query of their choice</tspan>
+        </text>
+      </g>
+      <g id="Graphic_152">
+        <rect x="382.5143" y="-1065.2557" width="228.66315" height="108" fill="#acdfdf"/>
+        <rect x="382.5143" y="-1065.2557" width="228.66315" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(387.5143 -1055.2557)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">User picks existing </tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="38" xml:space="preserve">parameters</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" y="38" xml:space="preserve"> from query </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="60" xml:space="preserve">samples, or adds new </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="82" xml:space="preserve">parameters</tspan>
+        </text>
+      </g>
+      <g id="Graphic_153">
+        <rect x="382.5143" y="-934.4502" width="228.66315" height="57.4502" fill="#acdfdf"/>
+        <rect x="382.5143" y="-934.4502" width="228.66315" height="57.4502" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(387.5143 -927.7251)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">User chooses</tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="38" xml:space="preserve">Collector Workflow</tspan>
+        </text>
+      </g>
+      <g id="Line_154">
+        <line x1="496.84587" y1="-1088.0612" x2="496.84587" y2="-1075.1557" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_155">
+        <line x1="496.84587" y1="-957.2557" x2="496.84587" y2="-944.3502" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_156">
+        <line x1="496.84587" y1="-877" x2="496.84587" y2="-865.6968" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_158">
+        <rect x="928.4224" y="-1312.5108" width="30" height="30" fill="#bfd989"/>
+        <rect x="928.4224" y="-1312.5108" width="30" height="30" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_157">
+        <text transform="translate(969.9224 -1307.5108)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">Validation step</tspan>
+        </text>
+      </g>
+      <g id="Graphic_160">
+        <rect x="1092.285" y="-1348.4961" width="30" height="30" fill="#b1acbf"/>
+        <rect x="1092.285" y="-1348.4961" width="30" height="30" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_159">
+        <text transform="translate(1133.785 -1343.4961)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">Database object</tspan>
+        </text>
+      </g>
+      <g id="Graphic_162">
+        <rect x="1092.0967" y="-1312.5108" width="30" height="30" fill="#acdfe0"/>
+        <rect x="1092.0967" y="-1312.5108" width="30" height="30" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_161">
+        <text transform="translate(1133.5967 -1307.5108)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">Other action/component</tspan>
+        </text>
+      </g>
+      <g id="Graphic_163">
+        <text transform="translate(927.6084 -1348.8265)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="9947598e-19" y="16" xml:space="preserve">Legend</tspan>
+        </text>
+      </g>
+      <g id="Graphic_164">
+        <rect x="721.1395" y="-1208.755" width="228.66315" height="124.1224" fill="#acdfdf"/>
+        <rect x="721.1395" y="-1208.755" width="228.66315" height="124.1224" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(726.1395 -1190.6937)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">SELECT </tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="38" xml:space="preserve">pganalyze.explain_analyze</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="60" xml:space="preserve">Switches execution context </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="82" xml:space="preserve">using SECURITY DEFINER</tspan>
+        </text>
+      </g>
+      <g id="Line_165">
+        <line x1="949.8026" y1="-1146.6937" x2="1041.4637" y2="-1146.6937" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_166">
+        <text transform="translate(343.44264 -1359.0255)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="20" fill="black" x="0" y="20" xml:space="preserve">pganalyze Query Tuning</tspan>
+          <tspan font-family="Avenir Next" font-size="20" fill="black" x="0" y="47" xml:space="preserve">Collector Workflow Security Architecture</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

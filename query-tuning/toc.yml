@@ -1,0 +1,12 @@
+- mount: query-tuning
+  items:
+  - name: Overview
+    href: query-tuning
+  - name: How to Optimize Slow Queries with Workbooks
+    href: query-tuning/how-to-use-workbooks
+  - name: Query Optimization Examples
+    href: query-tuning/query-optimization-examples
+  - name: Setting up the Collector Workflow
+    href: query-tuning/collector-workflow
+  - name: Security & Privacy Considerations
+    href: query-tuning/security-privacy
