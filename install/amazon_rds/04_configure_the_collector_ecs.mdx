@@ -113,3 +113,14 @@ configured the collector correctly.
 </InAppOnly>
 
 <PublicLastStepLogInsightsLink />
+
+## (Optional) Running tests
+
+You can run the test on Amazon ECS using the `docker-entrypoint.sh` script
+located in the home directory of the container.
+Interactively access a container in an ECS task (using `/bin/sh`), then use the
+following command:
+
+```
+/home/pganalyze/docker-entrypoint.sh test
+```
