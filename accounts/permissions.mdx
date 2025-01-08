@@ -23,6 +23,8 @@ query details as well as complete log information when using Log Insights.
 Allows the member to acknowledge check-ups and change configuration settings in pganalyze
 for the databases and servers they have the modify permission on.
 
+Note that the modify permission does not grant any access to the actual database server.
+
 ## Billing
 
 Allows the member to input billing details, change the subscription an organization
@@ -50,9 +52,5 @@ You cannot restrict the manage permission to a specific database or server.
 ## Tune Queries
 
 Allows the member to create a workbook to tune queries. This also allows the
-member to run EXPLAIN ANALYZE query using the collector, to collect EXPLAIN
+member to run EXPLAIN ANALYZE queries using the collector, to collect EXPLAIN
 plans for tuning queries.
-
----
-
-**Hint:** No roles grant access to your database server, as pganalyze operates in a push model - the open-source [pganalyze-collector](https://github.com/pganalyze/collector) is the only component able to access your database directly.
