@@ -12,14 +12,15 @@ import DocsBetaFeature from '../components/DocsBetaFeature'
 
 Query Tuning provides a unified interface and workflow for optimizing slow Postgres queries.
 
-The Query Tuning Workbooks feature lets you streamline recording of related `EXPLAIN ANALYZE`
-outputs and enables easy, secure sharing them with your team. Each workbook contains a
-baseline query and one or more variants.
+The Query Tuning Workbooks feature lets you organize related `EXPLAIN ANALYZE`
+outputs and share them easily and securely with your team. Each workbook contains a
+baseline query documenting a query's current performance, and one or more variants.
 
-Variants are a modification to the original query that aims to optimize it by changing planner
+Variants are modifications to the original query that aim to optimize it by changing planner
 settings, adding a `pg_hint_plan` hint, or rewriting the query. You can compare and analyze
 variants with clear visibility into changes and their effects on performance.
 
+Different parameter values (or different constant values) can lead to varying performance or even a different plan for a specific query.
 The parameter sets feature makes it easy to test performance for different bind parameter values
 across the baseline and variants, making sure that optimizing for one user's experience does not
 slow down other cases.
