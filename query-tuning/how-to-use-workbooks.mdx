@@ -1,0 +1,79 @@
+---
+title: 'How to Optimize Slow Queries with Workbooks'
+backlink_href: /docs/query-tuning
+backlink_title: 'Query Tuning'
+---
+
+import DocsBetaFeature from '../components/DocsBetaFeature'
+
+<DocsBetaFeature feature="Query Tuning" />
+
+### Creating Your First Workbook
+
+To begin optimizing your query, navigate to the query detail page where you'll
+find a new action "Tune query in workbook". This creates your first workbook
+for the selected query.
+
+![Screenshot of Tune Query action on Query Details page](howto_query_details_page.png)
+
+### Review Your Query
+
+Start by reviewing your query and parameter names.
+
+![Screenshot of Step 1 "Review Query" in new workbook](howto_setup_1_review_query.png)
+
+### Choose Parameter Sets
+
+Next, you'll set up parameter sets for testing - these could be values you commonly
+use in production or specific edge cases you want to evaluate.
+
+![Screenshot of Step 2 "Choose Parameters" in new workbook](howto_setup_2_choose_parameters.png)
+
+## Running Analysis
+
+With your parameter sets defined, you can now run EXPLAIN ANALYZE using our collector,
+or running it manually on your own and pasting the output.
+
+![Screenshot of Step 3 "Run EXPLAIN" in new workbook](howto_setup_3_run_explain.png)
+
+## Understanding Performance
+
+The workbook provides a comprehensive view of your query's performance:
+
+* Examine key metrics including cost estimates, runtime, and I/O read time
+* Review automated EXPLAIN analysis that highlights EXPLAIN insights
+* Compare query performance across different parameter sets to understand behavior under various conditions
+
+![Screenshot of Workbook overview](howto_overview.png)
+
+Next, dig into an EXPLAIN plan to find potential for optimization. We will highlight EXPLAIN insights for you.
+
+![Screenshot of EXPLAIN detail view](howto_view_explain_plan.png)
+
+## Optimizing Your Query
+
+![Screenshot of New Variant flow](howto_variant.png)
+
+As you discover potential optimizations, create variants to test different approaches:
+
+* Adjust Postgres planner settings
+* Try query rewrites to improve performance
+* Use the Compare Plans feature to visualize execution plan changes side by side
+
+### Plan Comparison
+
+![Screenshot of Plan Comparison view](howto_compare.png)
+
+The Compare Plans feature helps you understand exactly how execution strategies differ:
+
+* View plans side by side to spot structural changes
+* Identify whether performance variations come from plan shape or environmental factors like I/O time
+* Track changes in join strategies, scan methods, and row estimates
+* Visualize how different parameter sets affect plan choices
+
+## Next Steps
+
+Check out our guide on common optimization patterns to learn about specific scenarios you
+might encounter and how to address them effectively.
+
+[Continue with Query Optimization Examples](/docs/query-tuning/query-optimization-examples)

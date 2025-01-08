@@ -1,0 +1,79 @@
+---
+title: 'Query Tuning'
+backlink_href: /docs
+backlink_title: 'Documentation'
+---
+
+import DocsBetaFeature from '../components/DocsBetaFeature'
+
+<DocsBetaFeature feature="Query Tuning" />
+
+## Getting Started
+
+Query Tuning provides a unified interface and workflow for optimizing slow Postgres queries.
+
+The Query Tuning Workbooks feature lets you organize related `EXPLAIN ANALYZE`
+outputs and share them easily and securely with your team. Each workbook contains a
+baseline query documenting a query's current performance, and one or more variants.
+
+Variants are modifications to the original query that aim to optimize it by changing planner
+settings, adding a `pg_hint_plan` hint, or rewriting the query. You can analyze variants
+with clear visibility into changes and their effects on performance, using key metrics
+such as cost estimates, runtime, I/O read time, estimated vs actual rows.
+
+You can also run a diff between two query plans using the Compare Plans feature, helping
+you visualize and compare execution plans side-by-side. This feature helps debug whether
+differences in performance are due to plan shape or other factors like high I/O or rows processed. 
+
+Different parameter values (or different constant values) can lead to varying performance or even
+a different plan for a specific query. The parameter sets feature makes it easy to test performance
+for different bind parameter values across the baseline and variants, making sure that optimizing
+for one user's experience does not slow down other cases.
+
+Query Tuning workbooks automatically convert positional parameters to named parameters, e.g. turning
+`user_id = $1` into `user_id = $user_id`. This makes it easy to test rewrites of a query, or test
+individual portions of a query.
+
+[Learn how to navigate and use workbooks](/docs/query-tuning/how-to-use-workbooks)
+
+## How to enable Query Tuning
+
+### New role and permissions
+
+Query Tuning utilizes a separate user permission, [Tune Queries](/docs/accounts/permissions#tune-queries).
+This permission allows users to create workbooks and to use all associated
+Query Tuning features.
+
+Only users with the `Admin (All Servers)` role (assigned to the initial organization owner by default)
+or the `View & Tune Queries (All Servers)` role (not assigned to anyone by default),
+get this permission assigned automatically.
+
+Users without the permission are able to view existing workbooks, including parameter
+information, but cannot create new workbooks, variants, or use the collector workflow.
+
+### Set up the collector to run EXPLAIN ANALYZE for you
+
+Query Tuning streamlines the process of gathering query plans through either automatic collector-based
+or manual workflows.
+
+If set up, the collector can run `EXPLAIN ANALYZE` queries automatically for you, saving time and effort. To use this
+functionality, ensure you're running collector [version 0.64.0](/docs/collector/upgrading) or later and follow the
+[documentation for setting up the collector workflow](collector-workflow).
+
+We also recommend reviewing the [Security & Privacy Considerations](/docs/query-tuning/security-privacy)
+to assess whether the collector workflow is a good fit for a given production server.
+
+If you prefer not to use the automatic collection, you can alternatively use the manual workflow that
+requires copy and pasting the results of `EXPLAIN ANALYZE` commands from an active database
+connection.
+
+Both automatic and manual workflows are available to all users with the Tune Queries permission.
+
+## Limitations
+
+* Workbooks are currently not suited for optimizing queries invoked inside of functions
+* Workbooks are currently not suited for testing different index choices by doing CREATE INDEX
+* Data modification (DML) queries are not supported
+* All query executions are limited to 60 seconds (this limit will be configurable in the future)
+* The Collector Workflow requires the use of a function not owned by superuser
+  * If your database provider does not allow creating separate roles, you cannot use the Collector Workflow
