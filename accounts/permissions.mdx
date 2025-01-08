@@ -47,6 +47,12 @@ as removing existing servers and their statistics.
 
 You cannot restrict the manage permission to a specific database or server.
 
+## Tune Queries
+
+Allows the member to create a workbook to tune queries. This also allows the
+member to run EXPLAIN ANALYZE query using the collector, to collect EXPLAIN
+plans for tuning queries.
+
 ---
 
 **Hint:** No roles grant access to your database server, as pganalyze operates in a push model - the open-source [pganalyze-collector](https://github.com/pganalyze/collector) is the only component able to access your database directly.
