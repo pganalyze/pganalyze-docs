@@ -17,55 +17,55 @@ outputs and share them easily and securely with your team. Each workbook contain
 baseline query documenting a query's current performance, and one or more variants.
 
 Variants are modifications to the original query that aim to optimize it by changing planner
-settings, adding a `pg_hint_plan` hint, or rewriting the query. You can compare and analyze
-variants with clear visibility into changes and their effects on performance.
+settings, adding a `pg_hint_plan` hint, or rewriting the query. You can analyze variants
+with clear visibility into changes and their effects on performance, using key metrics
+such as cost estimates, runtime, I/O read time, estimated vs actual rows.
 
-Different parameter values (or different constant values) can lead to varying performance or even a different plan for a specific query.
-The parameter sets feature makes it easy to test performance for different bind parameter values
-across the baseline and variants, making sure that optimizing for one user's experience does not
-slow down other cases.
+You can also run a diff between two query plans using the Compare Plans feature, helping
+you visualize and compare execution plans side-by-side. This feature helps debug whether
+differences in performance are due to plan shape or other factors like high I/O or rows processed. 
+
+Different parameter values (or different constant values) can lead to varying performance or even
+a different plan for a specific query. The parameter sets feature makes it easy to test performance
+for different bind parameter values across the baseline and variants, making sure that optimizing
+for one user's experience does not slow down other cases.
 
 Query Tuning workbooks automatically convert positional parameters to named parameters, e.g. turning
 `user_id = $1` into `user_id = $user_id`. This makes it easy to test rewrites of a query, or test
 individual portions of a query.
 
-### Query Tuning Features
-
-* Upload EXPLAIN Plans on Demand: Upload plans to analyze and compare queries
-  in real-time and dive deeper into query performance.
-* Organize Query Plans: Creating a workbook allows you to manage your baseline query and
-  its query variants in one place. This is especially useful when you’re testing different
-  query rewrites, index configurations, or join strategies.
-* Manage and run parameter sets across many query variants, either sourced from query
-  samples or by creating parameter sets manually.
-* Highlight performance differences across variants and parameter sets, allowing you to
-  see at a glance whether a query rewrite or other changes are making things better or worse.
-* View key metrics such as cost estimates, runtime, I/O read time, row estimates, and index scans
-  in a clear overview, helping you form a hypothesis about what to try.
-* Compare Plans: You can run a diff between two query plans, helping you visualize and compare
-  execution plans side-by-side. This feature helps debug whether differences in performance
-  are due to plan shape or environmental factors like I/O time or row estimates. 
+[Learn how to navigate and use workbooks](/docs/query-tuning/how-to-use-workbooks)
 
 ## How to enable Query Tuning
 
 ### New role and permissions
 
-Query Tuning utilizes a separate user permission, called “Tune Queries”. Only users with
-Admin roles will get this permission assigned automatically. This permission allows
-users to create workbooks and to use all associated Query Tuning features.
+Query Tuning utilizes a separate user permission, [Tune Queries](/docs/accounts/permissions#tune-queries).
+This permission allows users to create workbooks and to use all associated
+Query Tuning features.
+
+Only users with the `Admin (All Servers)` role (assigned to the initial organization owner by default)
+or the `View & Tune Queries (All Servers)` role (not assigned to anyone by default),
+get this permission assigned automatically.
 
 Users without the permission are able to view existing workbooks, including parameter
-information, but cannot create new workbooks, variants, or record new plans.
+information, but cannot create new workbooks, variants, or use the collector workflow.
 
 ### Set up the collector to run EXPLAIN ANALYZE for you
 
-Query Tuning streamlines the process of gathering query plans through both automatic and
-manual workflows. While you can always upload EXPLAIN ANALYZE plans manually, the collector
-can now run EXPLAIN queries automatically for you, saving time and effort. To use this
-automated feature, ensure you're running collector version 0.64.0 or later and follow our
+Query Tuning streamlines the process of gathering query plans through either automatic collector-based
+or manual workflows.
+
+If set up, the collector can run `EXPLAIN ANALYZE` queries automatically for you, saving time and effort. To use this
+functionality, ensure you're running collector [version 0.64.0](/docs/collector/upgrading) or later and follow the
 [documentation for setting up the collector workflow](collector-workflow).
 
-If you prefer not to use the automatic collection, you can continue using the manual workflow.
+We also recommend reviewing the [Security & Privacy Considerations](/docs/query-tuning/security-privacy)
+to assess whether the collector workflow is a good fit for a given production server.
+
+If you prefer not to use the automatic collection, you can alternatively use the manual workflow that
+requires copy and pasting the results of `EXPLAIN ANALYZE` commands from an active database
+connection.
 
 Both automatic and manual workflows are available to all users with the Tune Queries permission.
 
@@ -77,5 +77,3 @@ Both automatic and manual workflows are available to all users with the Tune Que
 * All query executions are limited to 60 seconds (this limit will be configurable in the future)
 * The Collector Workflow requires the use of a function not owned by superuser
   * If your database provider does not allow creating separate roles, you cannot use the Collector Workflow
-
-[Learn how to navigate and use workbooks next](how-to-use-workbooks)

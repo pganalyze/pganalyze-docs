@@ -10,30 +10,33 @@ import DocsBetaFeature from '../components/DocsBetaFeature'
 
 Query optimization often involves recognizing and addressing common patterns that lead
 to suboptimal performance. While seasoned database engineers may spot these patterns
-through experience, Query Tuning helps identify and solve them systematically. Each
-pattern has specific indicators that suggest its presence, methods to validate the
-issue, and proven approaches to resolve it.
+through experience, Query Tuning helps identify and solve them systematically.
 
-We'll explore three common patterns that often impact query performance.
+We'll explore three common patterns that often impact query performance:
 
-## Inefficient Nested Loops Pattern
+* [Inefficient Nested Loops](#inefficient-nested-loops-pattern)
+* [ORDER BY + LIMIT causing wrong Index Selection](#order-by--limit-pattern)
+* [GROUP BY causing wrong Index Selection](#group-by-index-selection-pattern)
+
+## Inefficient Nested Loops
 
 When the query planner chooses nested loops for joins where other strategies might be
 more efficient, Query Tuning can help identify and resolve the issue.
 
 ### Detection
 
-Query Tuning automatically flags cases where:
+Query Tuning automatically flags cases where Nested Loop joins show actual rows
+significantly higher than estimated, using EXPLAIN Insights.
 
-* Nested Loop joins show actual rows significantly higher than estimated
-* Inner side operations consume substantial time
+You can also identify cases where Inner side operations consume substantial time
+by viewing the individual plans.
 
 ### Investigation
 
-1. Create a new workbook and run EXPLAIN ANALYZE using the collector or upload your query's EXPLAIN ANALYZE plan manually
+1. Create a new workbook and run `EXPLAIN ANALYZE` using the collector or upload your query's `EXPLAIN ANALYZE` plan manually
 2. Review the automated analysis that highlights potential nested loop inefficiencies
 3. Create variants to test alternative approaches:
-   * Create a variant with enable_nestloop = off
+   * Create a variant with `enable_nestloop = off`
    * If available, use pg_hint_plan to force Hash or Merge Join in another variant
 4. Use Compare Plans to compare the execution plans side-by-side
 
@@ -43,42 +46,13 @@ Query Tuning automatically flags cases where:
 2. Compare the execution metrics between variants
 3. Validate performance across different parameter sets
 
-## GROUP BY Index Selection Pattern
-
-This pattern occurs when GROUP BY operations lead to suboptimal index choices.
-
-### Detection
-
-Query Tuning flags:
-
-* Index Scans lacking Index Conditions (using Filter only)
-* Merge Joins where index sort order appears to take precedence over filtering
-* Cases where parameterized index scans might be beneficial
-
-### Investigation Process
-
-1. Start with baseline plan analysis:
-   * Upload your current EXPLAIN plan
-   * Review highlighted index usage patterns
-2. Check scan efficiency metrics
-   * Create test variants:
-   * Disable merge joins to test nested loop performance
-3. Use pg_hint_plan if available to test specific join orders
-   * Compare variant performance
-
-### Benchmarking Solutions
-
-1. Test MATERIALIZED query variants
-2. Verify performance across different parameter sets
-3. Use Compare Plans to understand execution strategy changes
-
-## ORDER BY + LIMIT Pattern
+## ORDER BY + LIMIT causing wrong Index Selection
 
 This pattern involves cases where ORDER BY combined with LIMIT leads to suboptimal index usage.
 
 ### Detection
 
-The workbook identifies:
+View individual plans in a Query Tuning Workbook to identify:
 
 * Index Scans with high filter removal rates
 * Indexes being used primarily for sort ordering
@@ -91,14 +65,42 @@ The workbook identifies:
    * Check available indexes against WHERE conditions
 2. Create variants to test:
    * Different index hints (using pg_hint_plan if available)
-   * ORDER BY col+0 modification
-   * enable_incremental_sort = off setting
+   * ORDER BY col+0 modification ([learn more](/blog/5mins-postgres-planner-order-by-limit))
+   * `enable_incremental_sort = off` setting ([learn more](/blog/5mins-postgres-incremental-sort))
 3. Compare performance across variants
 
 ### Benchmarking Solutions
 
 1. Test different statistics target values
 2. Compare plans with and without incremental sort
-3. Verify performance across different LIMIT values
+3. Verify performance across different `LIMIT` values
 4. Document the most effective approach
 
+## GROUP BY causing wrong Index Selection
+
+This pattern occurs when GROUP BY operations lead to suboptimal index choices.
+
+### Detection
+
+View individual plans in a Query Tuning Workbook to identify:
+
+* Index Scans lacking Index Conditions (using Filter only)
+* Merge Joins where index sort order appears to take precedence over filtering
+* Cases where parameterized index scans might be beneficial
+
+### Investigation Process
+
+1. Start with baseline plan analysis:
+   * Upload your current EXPLAIN plan
+   * Review highlighted index usage patterns
+2. Check scan efficiency metrics
+   * Create test variants
+   * Disable merge joins to test nested loop performance
+3. Use [pg_hint_plan](https://github.com/ossc-db/pg_hint_plan) if available to test specific join orders
+   * Compare variant performance
+
+### Benchmarking Solutions
+
+1. Test `MATERIALIZED` query variants
+2. Verify performance across different parameter sets
+3. Use Compare Plans to understand execution strategy changes
