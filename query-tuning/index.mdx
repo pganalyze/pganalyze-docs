@@ -23,7 +23,7 @@ such as cost estimates, runtime, I/O read time, estimated vs actual rows.
 
 You can also run a diff between two query plans using the Compare Plans feature, helping
 you visualize and compare execution plans side-by-side. This feature helps debug whether
-differences in performance are due to plan shape or other factors like high I/O or rows processed. 
+differences in performance are due to plan shape or other factors like high I/O or rows processed.
 
 Different parameter values (or different constant values) can lead to varying performance or even
 a different plan for a specific query. The parameter sets feature makes it easy to test performance
@@ -58,7 +58,7 @@ or manual workflows.
 
 If set up, the collector can run `EXPLAIN ANALYZE` queries automatically for you, saving time and effort. To use this
 functionality, ensure you're running collector [version 0.64.0](/docs/collector/upgrading) or later and follow the
-[documentation for setting up the collector workflow](collector-workflow).
+[documentation for setting up the collector workflow](/docs/query-tuning/collector-workflow).
 
 We also recommend reviewing the [Security & Privacy Considerations](/docs/query-tuning/security-privacy)
 to assess whether the collector workflow is a good fit for a given production server.
