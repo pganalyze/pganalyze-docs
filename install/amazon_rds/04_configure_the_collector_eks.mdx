@@ -191,3 +191,13 @@ configured the collector correctly.
 </InAppOnly>
 
 <PublicLastStepLogInsightsLink />
+
+## (Optional) Running tests
+
+You can run the test in a Kubernetes environment using the `docker-entrypoint.sh`
+script located in the home directory of the container.
+Use the following command, replacing the pod name with the actual name of your pod:
+
+```
+kubectl exec my-collector-pganalyze-collector-7d599b49c8-dgxzk -- /home/pganalyze/docker-entrypoint.sh test
+```
