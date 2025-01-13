@@ -25,10 +25,9 @@ const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
         Resolves automatically once these queries stop running.
       </p>
       <p>
-        Ignores queries from backup programs (<code>pg_dump</code>,{" "}
-        <code>Heroku Postgres Backups</code>), as well as any queries that
-        contain the <code>/* pganalyze:no-alert */</code> or{" "}
-        <code>/* pganalyze=no-alert */</code> magic comment.
+        Ignores queries from backup and maintenance programs (<code>pg_dump</code>,
+        <code>pg_repack</code>, etc), as well as any queries that contain the
+        <code>/* pganalyze:no-alert */</code> magic comment.
       </p>
     </>
   );
@@ -118,7 +117,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 
 const documentation: CheckDocs = {
   description:
-    "<p>Alerts on connections currently in the <code>active</code> state, that have had a query running longer than the specified threshold. This check only triggers on queries that are currently running and auto-resolves once the queries stop running.</p><p>Queries from backup programs (<code>pg_dump</code>, <code>Heroku Postgres Backups</code>) are ignored, as well as any queries that contain the <code>/* pganalyze:no-alert */</code> or <code>/* pganalyze=no-alert */</code> magic comment.</p>",
+    "<p>Alerts on connections currently in the <code>active</code> state, that have had a query running longer than the specified threshold. This check only triggers on queries that are currently running and auto-resolves once the queries stop running.</p><p>Ignores queries from backup and maintenance programs (<code>pg_dump</code>, <code>pg_repack</code>, etc), as well as any queries that contain the <code>/* pganalyze:no-alert */</code> magic comment.</p>",
   Trigger: ActiveQueryTrigger,
   Guidance: ActiveQueryGuidance,
 };
