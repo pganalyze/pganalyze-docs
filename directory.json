@@ -328,6 +328,10 @@
       "title": "EXPLAIN - Other Nodes",
       "path": "/docs/explain/other-nodes"
     },
+    "explain/plan-comparison": {
+      "title": "EXPLAIN plan comparison",
+      "path": "/docs/explain/plan-comparison"
+    },
     "explain/scan-nodes": {
       "title": "EXPLAIN - Scan Nodes",
       "path": "/docs/explain/scan-nodes"

@@ -5,6 +5,8 @@
   - name: The Basics of Postgres Query Planning
     href: explain/basics-of-postgres-query-planning
   # Note we don't mount "Setup" here, since thats linked in the Installation Guide ToC instead
+  - name: Comparing EXPLAIN plans
+    href: explain/plan-comparison
   - name: Insights
     href: explain/insights
   - name: Scan nodes
