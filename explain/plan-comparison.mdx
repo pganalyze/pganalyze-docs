@@ -17,7 +17,7 @@ nodes in two different plans.
 ## Comparison basics
 
 Generally speaking, there are no "good plans" and "bad plans" in Postgres. There
-are only plans that may be more or less appropriate to a given query. A
+are only plans that may be more or less appropriate for a given query. A
 sequential scan is more efficient and faster than an index scan when most of the
 data in a table is required to answer a query.
 
@@ -37,7 +37,7 @@ between plans, it's best to start with those nodes.
 
 ## Plan metrics
 
-EXPLAIN plans, especially ones gathered with BUFFERS, offer can be compared on
+EXPLAIN plans, especially ones gathered with the `BUFFERS` option, can be compared on
 a number of different metrics. Different metrics give different insights into
 the plans being compared:
 
@@ -45,7 +45,7 @@ the plans being compared:
  - Runtime: the total time it took to execute this node
  - I/O Time: the total time this node spent performing I/O (requires `track_io_timing` on)
  - Rows: the total rows returned by this node
- - Buffers: the total number of pages read from either disk or the OS page cache (read) or found in [`shared_buffers`](https://www.postgresql.org/docs/current/runtime-config-resource.html#GUC-SHARED-BUFFERS) (requires the BUFFERS option)
+ - Buffers: the total number of pages read from either disk or the OS page cache (read) or found in [`shared_buffers`](https://www.postgresql.org/docs/current/runtime-config-resource.html#GUC-SHARED-BUFFERS) (requires the `BUFFERS` option)
 
 All these metrics include the cumulative values from child nodes (except row
 counts) in standard EXPLAIN output.
@@ -55,7 +55,7 @@ counts) in standard EXPLAIN output.
 
 This is a useful metric to understand the planner's "reasoning" for choosing
 what may be an inefficient plan. The planner determines cost based on statistics
-about the table, its data, and its indexes gathered by
+about the selectivity of query filters, information about the table, its data, and its indexes gathered by
 [ANALYZE](https://www.postgresql.org/docs/17/sql-analyze.html) (both manual and
 through autovacuum); [extended
 statistics](https://www.postgresql.org/docs/current/sql-createstatistics.html);
@@ -66,7 +66,7 @@ and derived estimates and heuristics.
 
 ### Runtime
 
-This is usually the most relevant metric overall: this determines query latency,
+The execution time of the plan node, or the overall query. Note this excludes planning time, as well as time spent waiting for locks. This is usually the most relevant metric overall: this determines query latency,
 and is ultimately what you will be trying to optimize.
 
 
@@ -103,13 +103,13 @@ Unfortunately, the EXPLAIN
 not count unique buffer accesses: it counts the total number of accesses.
 Queries that read the same pages of data over and over (e.g., ones involving
 [nested loop joins](join-nodes/nested-loop)) can end up over-counting buffer
-usage. However, this can still be a useful metric if you account for that.
+usage.
 
 
-## In pganalyze
+## Plan Comparison in pganalyze
 
-In our EXPLAIN comparison view, we simplify plan comparison by showing a diff-like
-view of two different EXPLAIN plans:
+In the pganalyze Plan Comparison view, we simplify comparing EXPLAIN plans by showing a diff-like
+view of the two different plan shapes, as well as comparing metrics for each plan node:
 
 <ImgExplainComparison />
 <br />
