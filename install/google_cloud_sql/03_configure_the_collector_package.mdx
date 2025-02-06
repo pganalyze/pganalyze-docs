@@ -54,15 +54,24 @@ Fill in the values step-by-step:
 
 ### Using IAM Authentication
 
-If you're using IAM Authentication, you can skip `DB_PASSWORD` above, as there is no password for a monitoring user.
-In addition to the above variables, add the following:
+If you're using IAM Authentication, the configuration file looks like the following instead:
 
 <CodeBlock>
-{`db_use_iam_auth=true
+  {`[pganalyze]
+api_key = ${props.apiKey ?? 'your_pga_organization_api_key'}\n
+[server1]
+db_name = your_database_name
+db_username = your_monitoring_user
+gcp_project_id = your_gcp_project_id
+gcp_cloudsql_instance_id = your_gcp_cloudsql_instance_id
+db_use_iam_auth=true
 gcp_region=your_gcp_region`}
 </CodeBlock>
 
-Instead of specifying `gcp_region` like above, you can also update `gcp_cloudsql_instance_id` with the shape of `project_id:region:instance_id`.
+Note that you don't need `db_password` and `db_host` with IAM Authentication, as there is no password for a monitoring user,
+and the host name will be specified using the project ID, the region, and the instance ID.
+
+Instead of specifying `gcp_region`, you can also update `gcp_cloudsql_instance_id` with the shape of `project_id:region:instance_id`.
 In that case, you only need to specify `gcp_cloudsql_instance_id`, and you can skip `gcp_project_id` and `gcp_region`.
 
 ### Instructions for Google AlloyDB
