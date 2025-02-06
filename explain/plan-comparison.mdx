@@ -58,7 +58,7 @@ the plans being compared:
  - Rows: the total rows returned by this node
  - Buffers: the total number of pages read from either disk or the OS page cache
    (read) or found in [`shared_buffers`](https://www.postgresql.org/docs/current/runtime-config-resource.html#GUC-SHARED-BUFFERS)
-   (requires the `BUFFERS` option to `EXPLAIN ANALYZE`, or )
+   (requires the `BUFFERS` option for `EXPLAIN ANALYZE`, or the [`auto_explain.log_buffers`](https://www.postgresql.org/docs/current/auto-explain.html#AUTO-EXPLAIN-CONFIGURATION-PARAMETERS-LOG-BUFFERS) option for `auto_explain`)
 
 All these metrics except row counts include the cumulative values from child
 nodes in standard EXPLAIN output.
@@ -96,8 +96,8 @@ buffers read.
 Note that this metric will vary depending on how much of the data needed by the
 query is already cached: if you are looking at `auto_explain` output, that will
 record how long the I/O took for that particular execution. But if you re-run
-the query with EXPLAIN ANALYZE, a different portion of the table data may now be
-in cache, so the I/O timing may not be comparable. You may want to review the
+the query with `EXPLAIN ANALYZE`, a different portion of the table data may now
+be in cache, so the I/O timing may not be comparable. You may want to review the
 [buffer cache statistics](/docs/schema-statistics/buffer-cache) for the tables
 involved to have a better understanding of differences in timing.
 
