@@ -46,11 +46,24 @@ Fill in the values step-by-step:
 1. <APIKeyInstructions apiKey={props.apiKey} />
 2. The `DB_HOST` is the IP address of your Google Cloud SQL / AlloyDB instance
 3. The `DB_NAME` is the database on the Google Cloud SQL / AlloyDB instance you want to monitor
-4. The `DB_USERNAME` and `DB_PASSWORD` should be the credentials of the monitoring user we created in Step 1
+4. The `DB_USERNAME` and `DB_PASSWORD` should be the credentials of the monitoring user we created in Step 1 - if using IAM Authentication see below
 5. The `GCP_PROJECT_ID` should match the name of the GCP project that contains your Cloud SQL / AlloyDB instance
 6. The `GCP_CLOUDSQL_INSTANCE_ID` should match the name of the Cloud SQL instance - if using AlloyDB see below
 
-## Instructions for Google AlloyDB
+### Using IAM Authentication
+
+If you're using IAM Authentication, you can skip `DB_PASSWORD` above, as there is no password for a monitoring user.
+In addition to the above variables, add the following:
+
+<CodeBlock>
+{`DB_USE_IAM_AUTH=true
+GCP_REGION=your_gcp_region`}
+</CodeBlock>
+
+Instead of specifying `GCP_REGION` like above, you can also update `GCP_CLOUDSQL_INSTANCE_ID` with the shape of `project_id:region:instance_id`.
+In that case, you only need to specify `GCP_CLOUDSQL_INSTANCE_ID`, and you can skip `GCP_PROJECT_ID` and `GCP_REGION`.
+
+### Instructions for Google AlloyDB
 
 If you are using Google AlloyDB, do not specify `GCP_CLOUDSQL_INSTANCE_ID`, but instead specify `GCP_ALLOYDB_CLUSTER_ID` (set to the name of the cluster) and `GCP_ALLOYDB_INSTANCE_ID` (set to the instance name within the cluster).
 
