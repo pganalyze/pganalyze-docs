@@ -32,11 +32,13 @@ and then enter
 
 ```
 [Service]
-MemoryLimit=2048M
+MemoryMax=2048M
 ```
 
 (or whatever limit you feel is appropriate) in that file. Then restart the collector with `sudo systemctl restart pganalyze-collector`.
 
+Note that if you previously configured the collector memory limit based on the pganalyze documentation you may have added an override for `MemoryLimit`, which is now deprecated.
+Since [pganalyze-collector 0.62.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0620------2024-11-13) (released November 2024) you need to use `MemoryMax` instead.
 
 ## Instance limits
 
