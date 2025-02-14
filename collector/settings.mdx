@@ -335,7 +335,7 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
     </tr>
     <tr>
       <td>db_use_iam_auth (<code>DB_USE_IAM_AUTH</code>)</td>
-      <td>[none]</td>
+      <td>false</td>
       <td>
         Fetches a short-lived token for logging into the database instance from the AWS API, instead of using a hardcoded password
         in the collector configuration file. To use this setting, IAM authentication needs to be enabled on the database instance
@@ -493,6 +493,19 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
       <td>gcp_credentials_file (<code>GCP_CREDENTIALS_FILE</code>)</td>
       <td>[none]</td>
       <td>Only necessary if not using the recommended method of assigning the Service Account to the VM directly; see <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql#step-3-setup-service-account">these setup instructions</a> for details</td>
+    </tr>
+    <tr>
+      <td>db_use_iam_auth (<code>DB_USE_IAM_AUTH</code>)</td>
+      <td>false</td>
+      <td>
+        Fetches a short-lived token for logging into the database instance from the Google Cloud API, instead of using a hardcoded password
+        in the collector configuration file.
+      </td>
+    </tr>
+    <tr>
+      <td>gcp_region (<code>GCP_REGION</code>)</td>
+      <td>n/a, required for IAM Authentication</td>
+      <td>GCP region of the Cloud SQL instance</td>
     </tr>
   </tbody>
 </table>

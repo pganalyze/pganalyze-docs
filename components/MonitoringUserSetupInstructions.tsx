@@ -260,6 +260,32 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
   )
 }
 
+export const MonitoringUserBaseForGCP: React.FunctionComponent<{
+  username: string;
+}> = ({username}) => {
+  const CodeBlock = useCodeBlock();
+  return (
+    <>
+      <CodeBlock>
+        {`ALTER ROLE "${username}" CONNECTION LIMIT 5;
+GRANT pg_monitor TO "${username}";
+CREATE SCHEMA pganalyze;
+GRANT USAGE ON SCHEMA pganalyze TO "${username}";
+GRANT USAGE ON SCHEMA public TO "${username}";`}
+      </CodeBlock>
+      <p>
+        If you enable the optional reset mode (usually not required), you will also need this helper method:
+      </p>
+      <CodeBlock>
+      {`CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
+$$
+  /* pganalyze-collector */ SELECT * FROM public.pg_stat_statements_reset();
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+      </CodeBlock>
+    </>
+  )
+}
+
 export const NoPgMonitorPgStatStatementsHelpers: React.FunctionComponent<{
   adminUsername: string;
   systemType: string;

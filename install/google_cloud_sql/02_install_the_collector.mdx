@@ -7,6 +7,7 @@ backlink_title: 'Installation Guide'
 
 import InstallChoice from '../../components/InstallChoice'
 import styles from '../../style.module.scss'
+import GCPConfigureAccess from '../../components/GCPConfigureAccess'
 
 import imgLogoUbuntu from '../../images/logo_ubuntu.png'
 import imgLogoRedhat from '../../images/logo_redhat.svg'
@@ -39,6 +40,26 @@ export const SelectCollectorPlatform = () => {
 
 To continue, we need to know where you'd like to install the pganalyze collector.
 
-The collector needs to run on a virtual machine or container and be able to reach your Google Cloud SQL or AlloyDB database:
+The collector needs to run on a virtual machine or container and be able to reach your Google Cloud SQL or AlloyDB database.
+
+If you used IAM Authentication to create a monitoring user using a service account,
+see the section below before installing the collector.
 
 <SelectCollectorPlatform />
+
+----
+
+### Set up VM for IAM Authentication
+
+If you used IAM Authentication to create a monitoring user using a service account,
+you'll need to associate the service account to the VM first.
+
+<GCPConfigureAccess />
+
+If you choose "Use credential file", note the path to the key file so that it
+can be used in the later step of configuring the collector.
+
+Once you associate the service account to the VM, it is important to check access scopes on the VM instance.
+Check if it's properly set to `cloud-platform` (or "Allow full access to all Cloud APIs" in the Google Cloud Console, in the API and identity management section).
+
+If not, [follow the documentation](https://cloud.google.com/compute/docs/instances/change-service-account#changeserviceaccountandscopes) to update the access scope to be `cloud-platform`.

@@ -48,11 +48,42 @@ Fill in the values step-by-step:
 1. <APIKeyInstructions apiKey={props.apiKey} />
 2. The `db_host` is the IP address of your Google Cloud SQL / AlloyDB instance
 3. The `db_name` is the database on the Google Cloud SQL / AlloyDB instance you want to monitor
-4. The `db_username` and `db_password` should be the credentials of the monitoring user we created in Step 1
+4. The `db_username` and `db_password` should be the credentials of the monitoring user we created in Step 1 - if using IAM Authentication see below
 5. The `gcp_project_id` should match the name of the GCP project that contains your Cloud SQL / AlloyDB instance
 6. The `gcp_cloudsql_instance_id` should match the name of the Cloud SQL instance - if using AlloyDB see below
 
-## Instructions for Google AlloyDB
+### Using IAM Authentication
+
+If you're using IAM Authentication, the configuration file looks like the following instead:
+
+<CodeBlock>
+  {`[pganalyze]
+api_key = ${props.apiKey ?? 'your_pga_organization_api_key'}\n
+[server1]
+db_name = your_database_name
+db_username = your_monitoring_user
+gcp_project_id = your_gcp_project_id
+gcp_cloudsql_instance_id = your_gcp_cloudsql_instance_id
+db_use_iam_auth=true
+gcp_region=your_gcp_region`}
+</CodeBlock>
+
+Note that you don't need `db_password` and `db_host` with IAM Authentication, as there is no password for a monitoring user,
+and the host name will be specified using the project ID, the region, and the instance ID.
+
+Instead of specifying `gcp_region`, you can also update `gcp_cloudsql_instance_id` with the shape of `project_id:region:instance_id`.
+
+<CodeBlock>
+  {`[pganalyze]
+api_key = ${props.apiKey ?? 'your_pga_organization_api_key'}\n
+[server1]
+db_name = your_database_name
+db_username = your_monitoring_user
+gcp_cloudsql_instance_id = your_gcp_project_id:your_gcp_region:your_gcp_cloudsql_instance_id
+db_use_iam_auth=true`}
+</CodeBlock>
+
+### Instructions for Google AlloyDB
 
 If you are using Google AlloyDB, do not specify `gcp_cloudsql_instance_id`, but instead specify `gcp_alloydb_cluster_id` (set to the name of the cluster) and `gcp_alloydb_instance_id` (set to the instance name within the cluster).
 

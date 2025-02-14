@@ -5,8 +5,31 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
-import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
-import VerifyConnection from "../../components/VerifyConnection";
+import TabPanel, {TabTextContent} from '../../components/TabPanel'
+import CreateMonitoringUserPsql from './_01_create_monitoring_user_psql.mdx'
+import CreateMonitoringUserIam from './_01_create_monitoring_user_iam.mdx'
+
+export const MonitoringUserCreation = () => {
+  const tabs = [
+    [ 'psql', 'Manually with psql' ],
+    [ 'iam', 'IAM Authentication'],
+  ];
+  return (
+    <TabPanel items={tabs}>
+      {(idx) => {
+        const tab = tabs[idx][0];
+        switch (tab) {
+          case 'psql':
+            return <TabTextContent><CreateMonitoringUserPsql /></TabTextContent>;
+          case 'iam':
+            return <TabTextContent><CreateMonitoringUserIam /></TabTextContent>;
+          default:
+            return null;
+        }
+      }}
+    </TabPanel>
+  )
+}
 
 We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
 
@@ -23,21 +46,9 @@ SELECT * FROM pg_stat_statements LIMIT 1;
 
 ## Create monitoring user
 
-Connect to the database you will be monitoring, again as a user with **cloudsqlsuperuser / alloydbsuperuser** privileges.
-Then run the following to create a monitoring user (we've generated a random password for you, but you
-can replace it with one of your choosing):
+You can either create a monitoring user manually using psql, or create a service account and use IAM authentication.
 
-<MonitoringUserSetupInstructions />
-
-Note that it is important you run these as a user with **cloudsqlsuperuser / alloydbsuperuser** privileges in order to pass down the full access to statistics tables.
-
-## Verify connection
-
-Let's make sure we can connect to the database with the new user:
-
-<VerifyConnection host="1.2.3.4" />
-
-Write down the username and password of the monitoring user, we will use it in the last step of this tutorial.
+<MonitoringUserCreation />
 
 ---
 
