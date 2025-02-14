@@ -13,9 +13,9 @@ First, create a new service account with the ID "pganalyze", and set the followi
   * Role allowing access to a Cloud SQL instance
 
 The email address `pganalyze@your-project-id.iam.gserviceaccount.com` will be given to this service account.
-For the database username, Cloud SQL for PostgreSQL truncates the `.gserviceaccount.com` suffix in the email,
+For the database username, Cloud SQL for PostgreSQL removes the `.gserviceaccount.com` suffix in the email,
 therefore the username for this service account becomes `pganalyze@your-project-id.iam`.
-This username will be used in the later step, as well as in the last step of this tutorial.
+This username will be used in later steps.
 
 ### Configure new and existing instances for IAM database authentication
 
@@ -26,10 +26,10 @@ You can skip this part if your database is already configured for IAM database a
 
 ### Add a service account to a Cloud SQL instance
 
-Next, add a service account to a Cloud SQL instance to monitor. This is a step to create an actual Postgres user using this service account.
-Following is the steps to add using the Google Cloud console. Please refer the
+Next, add a service account to a Cloud SQL instance to monitor. This creates an actual Postgres user for this service account.
+The following steps add the service account using the Google Cloud console. Please refer to the
 [Cloud SQL documentation](https://cloud.google.com/sql/docs/postgres/add-manage-iam-users#creating-a-database-user)
-for the other ways to add it.
+for other ways to add it.
 
 1. In the Google Cloud console, open the **Overview** page of an instance to monitor.
 2. Select **Users** from the SQL navigation menu.

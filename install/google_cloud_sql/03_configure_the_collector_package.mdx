@@ -72,7 +72,16 @@ Note that you don't need `db_password` and `db_host` with IAM Authentication, as
 and the host name will be specified using the project ID, the region, and the instance ID.
 
 Instead of specifying `gcp_region`, you can also update `gcp_cloudsql_instance_id` with the shape of `project_id:region:instance_id`.
-In that case, you only need to specify `gcp_cloudsql_instance_id`, and you can skip `gcp_project_id` and `gcp_region`.
+
+<CodeBlock>
+  {`[pganalyze]
+api_key = ${props.apiKey ?? 'your_pga_organization_api_key'}\n
+[server1]
+db_name = your_database_name
+db_username = your_monitoring_user
+gcp_cloudsql_instance_id = your_gcp_project_id:your_gcp_region:your_gcp_cloudsql_instance_id
+db_use_iam_auth=true`}
+</CodeBlock>
 
 ### Instructions for Google AlloyDB
 
