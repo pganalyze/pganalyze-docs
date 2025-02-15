@@ -213,7 +213,7 @@ settings to filter these before we collect them.
     <tr>
       <td>filter_log_secret (<code>FILTER_LOG_SECRET</code>)</td>
       <td><code>credential</code>, <code>parsing_error</code>, <code>unidentified</code></td>
-      <td>One or more of <code>none</code>/<code>all</code>/<code>credential</code>/<code>parsing_error</code>/<code>statement_text</code>/<code>statement_parameter</code>/<code>table_data</code>/<code>ops</code>/<code>unidentified</code> (comma separated)</td>
+      <td>Either <code>none</code>, <code>all</code>, or one or more of <code>credential</code>/<code>parsing_error</code>/<code>statement_text</code>/<code>statement_parameter</code>/<code>table_data</code>/<code>ops</code>/<code>unidentified</code> (comma separated)</td>
     </tr>
     <tr>
       <td>filter_query_sample (<code>FILTER_QUERY_SAMPLE</code>)</td>
@@ -227,6 +227,29 @@ settings to filter these before we collect them.
     </tr>
   </tbody>
 </table>
+
+
+The `filter_log_secret` setting determines how content coming from logs is filtered:
+ - `credential`: Passwords and other credentials, like private keys
+ - `parsing_error`: Text logged by Postgres for parsing errors (could contain anything, including credentials)
+ - `statement_text`: All statement texts (which may contain table data if not using bind parameters)
+ - `statement_parameter`: Bind parameters for a statement (which may contain table data for INSERT statements)
+ - `table_data`: Table data from constraint violations and COPY errors
+ - `ops`: System errors, network errors, file locations, pg_hba.conf contents, and configured commands (e.g. archive command)
+ - `unidentified`: Text that could not be identified and might contain secrets
+
+And of course, `all` and `none` apply all and none of the above filters, respectively.
+
+The `filter_query_sample` setting determines how content in query samples
+(individual executions of a query collected from logs) is filtered:
+ - `all`: do not collect any query samples
+ - `normalize`: filter query samples to normalize any literal constants used in the query
+ - `none`: do not filter query samples at all
+
+The `filter_query_text` setting determines how query text from pg_stat_statements is filtered:
+ - `none`: do not filter query text at all
+ - `unparsable`: filter out queries that could not be parsed by the collector
+Note that these queries are already normalized by pg_stat_statements, so sensitive constants are not a concern here
 
 By default the pganalyze collector only filters logs that contain syntax errors (which may contain accidental copy and paste of passwords, etc), or could not be identified.
 
