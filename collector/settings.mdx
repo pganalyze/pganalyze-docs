@@ -196,10 +196,12 @@ helper functions are expected to be defined, and the one we connect to for serve
 
 ## PII Filtering settings
 
-We take the responsibility of access to your database very seriously. As discussed above, we already
-limit the direct access we have to your data, but some personally-identifiable information or other
-sensitive values can still come up in query text or logs. To address this, the collector has several
-settings to filter these before we collect them.
+We take the responsibility of access to your database very seriously. As
+discussed above, we already limit the direct access we have to your data, but
+some personally-identifiable information or other sensitive values can still
+come up in query text or logs. To address this, the collector has several
+settings to filter these before we collect them. See [additional
+documentation](/docs/pii-filtering) for details.
 
 <table>
   <thead>
@@ -228,46 +230,6 @@ settings to filter these before we collect them.
   </tbody>
 </table>
 
-
-The `filter_log_secret` setting determines how content coming from logs is filtered:
- - `credential`: Passwords and other credentials, like private keys
- - `parsing_error`: Text logged by Postgres for parsing errors (could contain anything, including credentials)
- - `statement_text`: All statement texts (which may contain table data if not using bind parameters)
- - `statement_parameter`: Bind parameters for a statement (which may contain table data for INSERT statements)
- - `table_data`: Table data from constraint violations and COPY errors
- - `ops`: System errors, network errors, file locations, pg_hba.conf contents, and configured commands (e.g. archive command)
- - `unidentified`: Text that could not be identified and might contain secrets
-
-And of course, `all` and `none` apply all and none of the above filters, respectively.
-
-The `filter_query_sample` setting determines how content in query samples
-(individual executions of a query collected from logs) is filtered:
- - `all`: do not collect any query samples
- - `normalize`: filter query samples to normalize any literal constants used in the query
- - `none`: do not filter query samples at all
-
-The `filter_query_text` setting determines how query text from pg_stat_statements is filtered:
- - `none`: do not filter query text at all
- - `unparsable`: filter out queries that could not be parsed by the collector
-Note that these queries are already normalized by pg_stat_statements, so sensitive constants are not a concern here
-
-By default the pganalyze collector only filters logs that contain syntax errors (which may contain accidental copy and paste of passwords, etc), or could not be identified.
-
-```
-filter_log_secret: credential,parsing_error,unidentified
-```
-
-For servers containing sensitive information in the logs and to maximize data privacy (at the cost of less useful data in pganalyze) we recommend setting:
-
-```
-filter_log_secret: all
-filter_query_sample: normalize
-filter_query_text: unparsable
-```
-
-Note the `normalize` setting for `filter_query_sample`, which will remove all query parameter values from query samples, including those contained within automatically collected EXPLAIN plans.
-
-In order to utilize `auto_explain` with this configuration, make sure to set `auto_explain.log_format` to `json` (other formats are currently not supported by the EXPLAIN normalization).
 
 ## Schema filter settings
 

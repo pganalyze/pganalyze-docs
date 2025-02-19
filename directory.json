@@ -1000,6 +1000,10 @@
       "title": "Set up traceparent query tag within your application",
       "path": "/docs/opentelemetry/traceparent"
     },
+    "pii-filtering": {
+      "title": "PII Filtering",
+      "path": "/docs/pii-filtering"
+    },
     "query-performance": {
       "title": "Query Performance",
       "path": "/docs/query-performance"
