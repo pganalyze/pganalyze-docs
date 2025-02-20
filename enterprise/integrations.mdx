@@ -32,19 +32,29 @@ this is done, go through the following:
 
 ## PagerDuty
 
-You will need to [create a new integration in
-PagerDuty](https://developer.pagerduty.com/docs/ZG9jOjExMDI5NTgw-events-api-v2-overview#getting-started).
-You should be able to follow the PagerDuty instructions. Once this is done, go
-through the following:
+You will need to create a new "application" in PagerDuty:
 
- 1. Under **Event Integration** in PagerDuty, the Simple Install Flow should
-    include the address where you're hosting pganalyze&mdash;e.g.,
-    https://app.pganalyze.com for the public pganalyze app (make sure to
-    save your changes when done)
- 2. Copy the `app_id` from Integration Setup URL in that same section section
-    (note that this is *not* the same id you see in the URL bar),
-    and add that as the `PAGERDUTY_APP_ID` environment variable to your pganalyze configuration
- 3. Restart the pganalyze Enterprise Server container to apply the new configuration
- 4. In pganalyze, go to the Integrations tab in the Settings page and enable
-    PagerDuty integration
+ 1. Go to `https://[your-pagerduty-subdomain].pagerduty.com/developer/applications/new`
+ 2. Enter a name and description
+ 3. Under "Functionality", check both "OAuth 2.0" and "Events Integration"
+ 4. Click "Next" to configure the OAuth portion
+ 5. Under "Authorization", select "Classic User OAuth"
+ 6. Under "Redirect URL", add `https://[your-pganalyze-domain]/users/auth/pagerduty/callback`
+ 7. Under "Permission Scope", select "Read & Write"
+ 8. Click "Next" to configure the Events Integration
+ 9. Under "Redirect URLs", add `https://[your-pganalyze-domain]`
+ 10. Copy the app_id from the Integration Setup URL (the URL will look like `app.pagerduty.com/install/integration?app_id=PN0FNF1&redirect_url=https://[your-pganalyze-domain]&version=2` ­— in this case, the app_id is `PN0FNF1`)
+ 11. Save the app_id as PAGERDUTY_APP_ID in your pganalyze .env file (e.g., for the above id, that would be `PAGERDUTY_APP_ID=PN0FNF1`)
+ 12. Click "Register App"
+ 13. Copy the OAuth client ID and secret and save these for the future (we currently do not use them, but we may extend the integration and require them in the future)
 
+Once these steps are done on the PagerDuty side, you'll need to complete the
+integration setup on the pganalyze side:
+
+ 1. Restart the pganalyze container to ensure the new `PAGERDUTY_APP_ID` setting is picked up
+ 2. Log in and go to the Integrations tab on the Settings page
+ 3. Click "Connect to PagerDuty"
+ 4. Log in to PagerDuty and select the services you'd like to be able to send pages to, the click Connect. You should be redirected back to pganalyze.
+ 5. Next to the "Test Integration" button, select a service to send a test alert to and click Test Integration
+
+You should now receive a test page from pganalyze through PagerDuty and the integration will be complete.
