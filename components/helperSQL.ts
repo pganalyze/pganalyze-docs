@@ -14,7 +14,7 @@ BEGIN
     RAISE EXCEPTION 'cannot run: pganalyze.explain_analyze helper is owned by superuser - recreate function with lesser privileged user';
   END IF;
 
-  SELECT pg_catalog.regexp_replace(query, ';+\s*\Z', '') INTO prepared_query;
+  SELECT pg_catalog.regexp_replace(query, ';+\\s*\\Z', '') INTO prepared_query;
   IF prepared_query LIKE '%;%' THEN
     RAISE EXCEPTION 'cannot run pganalyze.explain_analyze helper with a multi-statement query';
   END IF;
