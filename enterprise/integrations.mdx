@@ -36,17 +36,12 @@ You will need to create a new "application" in PagerDuty:
 
  1. Go to `https://[your-pagerduty-subdomain].pagerduty.com/developer/applications/new`
  2. Enter a name and description
- 3. Under "Functionality", check both "OAuth 2.0" and "Events Integration"
- 4. Click "Next" to configure the OAuth portion
- 5. Under "Authorization", select "Classic User OAuth"
- 6. Under "Redirect URL", add `https://[your-pganalyze-domain]/users/auth/pagerduty/callback`
- 7. Under "Permission Scope", select "Read & Write"
- 8. Click "Next" to configure the Events Integration
- 9. Under "Redirect URLs", add `https://[your-pganalyze-domain]`
- 10. Copy the app_id from the Integration Setup URL (the URL will look like `app.pagerduty.com/install/integration?app_id=PN0FNF1&redirect_url=https://[your-pganalyze-domain]&version=2` ­— in this case, the app_id is `PN0FNF1`)
- 11. Save the app_id as PAGERDUTY_APP_ID in your pganalyze .env file (e.g., for the above id, that would be `PAGERDUTY_APP_ID=PN0FNF1`)
- 12. Click "Register App"
- 13. Copy the OAuth client ID and secret and save these for the future (we currently do not use them, but we may extend the integration and require them in the future)
+ 3. Under "Functionality", check "Events Integration"
+ 4. Click "Next" to configure the Events Integration
+ 5. Under "Redirect URLs", add `https://[your-pganalyze-domain]`
+ 6. Click "Register App"; you should be taken back to the app list (`https://[your-pagerduty-subdomain].pagerduty.com/developer/applications`)
+ 7. Copy the app id from the App Id column for the application you just created
+ 8. Save the app id as PAGERDUTY_APP_ID in your pganalyze .env file
 
 Once these steps are done on the PagerDuty side, you'll need to complete the
 integration setup on the pganalyze side:
