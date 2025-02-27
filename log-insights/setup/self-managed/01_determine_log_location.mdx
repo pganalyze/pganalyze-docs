@@ -41,8 +41,8 @@ and submitting log data and statistics to pganalyze. The self-managed configurat
 your collector to run on the same instance as your Postgres server.
 
 **Note:** You can optionally have a syslog client sending logs to [the collector
-syslog server](/docs/log-insights/setup/syslog-server). When using Kubernetes,
-you can also send logs to [the collector's OpenTelemetry HTTP endpoint](/docs/log-insights/setup/opentelemetry).
+syslog server](https://pganalyze.com/docs/log-insights/setup/syslog-server). When using Kubernetes,
+you can also send logs to [the collector's OpenTelemetry HTTP endpoint](https://pganalyze.com/docs/log-insights/setup/opentelemetry).
 
 You will need to configure the `db_log_location` in the `pganalyze-collector.conf` file, and set
 it to either the filename of the Postgres log file, or the directory in which log files are located.
