@@ -1,0 +1,84 @@
+---
+title: '2025.03.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2025.03.0`
+
+## Notes
+
+- This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+- **Important:** If you are currently running v2024.04.X or older, we highly recommend first upgrading to v2024.10.0 and staying there for 7 days
+  - The v2024.10.0 release introduced a backend change for how Log Insights data is stored. Starting that release the old format was still supported in a dual write mode.
+  - Starting with this release the new format is required and the only one supported.
+  - If you have not been on v2024.10.0 for sufficient time the migrations will fail with an error to prevent accidental loss of Log Insights data.
+- **Important:** If you are currently running v2023.08.0 or older, we highly recommend first upgrading to [v2024.04.5](/docs/enterprise/releases/2024-04-5) and staying there for 7 to 35 days
+  - The v2024.04.0 release introduced a backend change for how query statistics are stored. Starting that release the old format was still supported in a dual write mode.
+  - Starting with the `v2024.10.0` release (and including this `v2025.03.0` release) the new packed format is required and the only one supported.
+  - If you have not been on v2024.04.X for sufficient time the migrations will fail with an error to prevent accidental loss of query statistics.
+
+## Features
+
+- **New Feature:** Query Tuning Workbooks (Beta)
+  - [Read the announcement for all the details](/blog/introducing-postgres-query-tuning-workbooks)
+  - Add a new permission "Tune Queries" and a new default role "Tune Queries (All Servers)" <!-- 4482 -->
+    - This is a permission for the Query Tuning feature. With this permission, the user is allowed
+      to run EXPLAIN ANALYZE using the collector.
+    - This permission will be turned on with the default role "Admin (All Servers)", and a new
+      default role "Tune Queries (All Servers)". Other roles such as "View & Modify (All Servers)"
+      will not have this permission by default.
+- **New Feature:** [Plan Comparison](/blog/understanding-how-to-compare-postgres-explain-plans)
+- **New Feature:** Track Postgres buffer cache usage <!-- 4456 -->
+  - [Read the announcement for all the details](/blog/tracking-postgres-buffer-cache-statistics)
+  - After upgrading to collector version 0.63.0 and enabling the `pg_buffercache` extension, pganalyze will track buffer cache usage on a per-server basis so you can see which tables use the most memory and how the workload changes over time.
+- **New Feature:** [Plan Statistics for Amazon Aurora](/blog/introducing-postgres-plan-statistics-for-amazon-aurora)
+- Index Advisor
+  - Add support for Postgres 17
+  - Support custom extension schemas <!-- 4532 -->
+    - This ensures query analysis can complete when extension data types are utilized where the
+      extension is installed in a custom (i.e. non "public") schema.
+  - Fix handling of queries that reference tables that use domain columns with invalid constraints <!-- 4683 -->
+  - Add support for queries using simple expressions involving CURRENT_DATE that may need to be evaluated at plan time <!-- 4433 -->
+  - pg_plan: Support additional built-in functions <!-- 4533 -->
+- Automated EXPLAIN and EXPLAIN Plans
+  - Link to plan comparison from EXPLAIN sample list <!-- 4660 -->
+  - Improve "no plans found" message <!-- 4492 -->
+  - Clean up rendering of node details for sorts that do not spill to disk <!-- 4520 -->
+  - Support parsing WindowAgg node with Run Condition with text format EXPLAIN result <!-- 4649 -->
+- Update bundled collector from 0.61.0 to 0.65.0 <!-- 4684 and 4721 -->
+  - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0650------2025-02-20) for the full details
+
+
+## Other improvements and bugfixes
+
+- Add `SSL_CERT_PATH` and `SSL_KEY_PATH` config settings <!-- 4591 -->
+  - These settings allow specifying a custom SSL certificate
+    and key for the built-in nginx reverse proxy as a path inside the container (e.g. to a
+    volume mount), instead of passing in the whole certificate/key with the existing
+    `SSL_CERT` / `SSL_KEY` settings.
+- Increase nginx worker_connections to 10000 <!-- 4680 -->
+  - This avoids errors when sending snapshots of hundreds of servers concurrently to the same pganalyze Enterprise Server container.
+- Active query alert: Ignore connections from pg_repack <!-- 4579 -->
+- Improve main menu layout for users who belong to many organizations <!-- 4651 -->
+- Organization Dashboard: Show inactive servers if no active servers present <!-- 4586 -->
+  - The Organization Dashboard includes a list of servers, with a toggle for showing servers
+    with no recent snapshots recorded. This sets the toggle to on by default if no servers
+    have recent snapshots.
+- Index Advisor:
+  - Fix highlight of menu item when some tabs are selected <!-- 4643 -->
+  - Fix segmentation faults when `AtEOXact_GUC` fails to run on Postgres 16/17
+- Server Settings: Show pg_stat_statements info data in Debug Info panel when available <!-- 4664 -->
+- Postgres Settings: Add Postgres 17 in-app documentation, and include updates from minor versions for older releases <!-- 4675 -->
+- Enterprise Server: Include primary/replica counts in license server information <!-- 4718 -->
+  - For installations that use regular license keys, include a count of primary and replica servers
+    with recent data in the counts reported to the pganalyze license server. This information is
+    used to confirm whether your Enterprise Server installation is within the licensed server limit.
+- Enterprise Server: Show warning when exceeding the licensed server limit <!-- 4717 -->
+  - This will show a warning in the pganalyze app when an installation exceeds the licensed server count.
+- Send keepalive request to websocket connections every 20 seconds
+- Speed up Index Unused check <!-- 4542 -->
+
+## Security
+
+- Routine security updates to packages in the base image and library dependencies
