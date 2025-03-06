@@ -9,7 +9,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 ## Notes
 
 - This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
-- **Important:** If you are currently running v2024.04.X or older, we highly recommend first upgrading to v2024.10.0 and staying there for 7 days
+- **Important:** If you are currently running v2024.04.X or older, we highly recommend first upgrading to [v2024.10.0](/docs/enterprise/releases/2024-10-0) and staying there for 7 days
   - The v2024.10.0 release introduced a backend change for how Log Insights data is stored. Starting that release the old format was still supported in a dual write mode.
   - Starting with this release the new format is required and the only one supported.
   - If you have not been on v2024.10.0 for sufficient time the migrations will fail with an error to prevent accidental loss of Log Insights data.
@@ -40,7 +40,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
       extension is installed in a custom (i.e. non "public") schema.
   - Fix handling of queries that reference tables that use domain columns with invalid constraints <!-- 4683 -->
   - Add support for queries using simple expressions involving CURRENT_DATE that may need to be evaluated at plan time <!-- 4433 -->
-  - pg_plan: Support additional built-in functions <!-- 4533 -->
+  - pg_plan: Support additional built-in functions <!-- 4533 and 4433 -->
 - Automated EXPLAIN and EXPLAIN Plans
   - Link to plan comparison from EXPLAIN sample list <!-- 4660 -->
   - Improve "no plans found" message <!-- 4492 -->
@@ -78,6 +78,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - This will show a warning in the pganalyze app when an installation exceeds the licensed server count.
 - Send keepalive request to websocket connections every 20 seconds
 - Speed up Index Unused check <!-- 4542 -->
+- Update query parser to support Postgres 17 syntax <!-- 4475 -->
 
 ## Security
 
