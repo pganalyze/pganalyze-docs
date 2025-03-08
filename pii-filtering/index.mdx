@@ -77,3 +77,16 @@ automatically collected EXPLAIN plans.
 In order to utilize `auto_explain` with this configuration, make sure to set
 `auto_explain.log_format` to `json` (other formats are currently not supported
 by the EXPLAIN normalization).
+
+
+## Impact on pganalyze user experience
+
+The values for these settings will affect some parts of pganalyze:
+
+- `filter_log_secret`: log lines visible in [Log Insights](/docs/log-insights)
+  are redacted
+- `filter_query_sample`: query samples (shown in [Query
+   Performance](/docs/query-performance)) and used for [Index
+   Advisor](/docs/index-advisor) recommendations
+- `filter_query_text`: unparseable queries are omitted from [Query
+   Performance](/docs/query-performance)
