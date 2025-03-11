@@ -1,0 +1,19 @@
+---
+title: '2025.03.1 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2025.03.1`
+
+## Notes
+
+- This is a patch release on top of **[2025.03.0](2025-03-0)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2025.03.0](2025-03-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+## Improvements and bugfixes
+
+* Bugfix: Fix errors that prevented LDAP authentication from succeeding
+* Query Tuning Workbooks: Improve highlighting of parameters in query editor
