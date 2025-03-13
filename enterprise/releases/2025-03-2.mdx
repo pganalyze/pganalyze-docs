@@ -1,0 +1,26 @@
+---
+title: '2025.03.2 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2025.03.2`
+
+## Notes
+
+- This is a security patch release on top of **[2025.03.0](2025-03-0)** and **[2025.03.1](2025-03-1)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2025.03.0](2025-03-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+- We recommend upgrading as soon as possible if you are utilizing SAML authentication in pganalyze
+  - **Security impact:** The resolved [CVE-2025-25291](https://nvd.nist.gov/vuln/detail/CVE-2025-25291) and [CVE-2025-25292](https://nvd.nist.gov/vuln/detail/CVE-2025-25292) in ruby-saml would have allowed
+    impersonating any member within your pganalyze organization by an internal threat actor with
+    existing access to your SAML application or SAML identity provider (for example escalating from a view-only role to one that allows modifying server configuration in pganalyze)
+  - Contact our [security team](mailto:security@pganalyze.com) for questions on the security content of this release
+
+## Security
+
+- Update ruby-saml for [CVE-2025-25291](https://nvd.nist.gov/vuln/detail/CVE-2025-25291) and [CVE-2025-25292](https://nvd.nist.gov/vuln/detail/CVE-2025-25292)
+- Other package security upgrades (graphql-ruby [CVE-2025-27407](https://nvd.nist.gov/vuln/detail/CVE-2025-27407), rack [CVE-2025-27610](https://nvd.nist.gov/vuln/detail/CVE-2025-27610), ruby-saml [CVE-2025-25293](https://nvd.nist.gov/vuln/detail/CVE-2025-25293))
+  - These vulnerabilities are not exploitable in our assessment, but may show up in dependency scanners
+- Routine security updates to packages in the base image
