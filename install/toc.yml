@@ -16,7 +16,7 @@
     href: install/amazon_rds
   - name: Google Cloud SQL and AlloyDB
     href: install/google_cloud_sql
-  - name: Azure Database for PostgreSQL and CosmosDB
+  - name: Azure Database for PostgreSQL
     href: install/azure_database
   - name: Crunchy Bridge
     href: install/crunchy_bridge
