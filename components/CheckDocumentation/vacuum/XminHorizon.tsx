@@ -129,18 +129,11 @@ function formatFullTransactionID(value: number): string {
   return `${epoch}:${xid}`;
 }
 
-const XminHeldBackInfo: React.FunctionComponent<{
-  type: string;
+const XminHeldBackPoint: React.FunctionComponent<{
   info: HeldBackInfoType;
-}> = ({ type, info }) => {
+}> = ({ info }) => {
   const fullTxid = formatFullTransactionID(info["xmin"]);
-
-  return (
-    <>
-      A {type} is holding back the xmin horizon at{" "}
-      <code>{`${fullTxid}`}</code> (assigned at {new Date(info["assigned_at"] * 1000).toISOString()})
-    </>
-  );
+  return <code>{`${fullTxid}`}</code>;
 }
 
 const GuidanceByBackend: React.FunctionComponent<{
@@ -164,7 +157,8 @@ const GuidanceByBackend: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          <XminHeldBackInfo type="long-running transaction" info={heldBackInfo} />.
+          A long-running transaction is holding back the xmin horizon at{" "}
+          <XminHeldBackPoint info={heldBackInfo} />.
         </p>
       )}
       <p>
@@ -187,7 +181,7 @@ const GuidanceByBackend: React.FunctionComponent<{
       <CodeBlock>
         <SQL sql={`SELECT pg_terminate_backend('<query_pid>');`} />
       </CodeBlock>
-      <p>Note this will roll back the transaction, and <strong>discard all data written to the database earlier within that transaction</strong>.</p>
+      <p>Note this will roll back the transaction, and <strong>discard all data</strong> written to the database earlier within that transaction.</p>
     </li>
   );
 };
@@ -218,7 +212,8 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          <XminHeldBackInfo type="replication slot" info={heldBackInfo} />.
+          A replication slot is holding back the xmin horizon at{" "}
+          <XminHeldBackPoint info={heldBackInfo} />.
         </p>
       )}
       <p>
@@ -263,7 +258,8 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          <XminHeldBackInfo type="replication slot" info={heldBackInfo} />,
+          A replication slot is holding back the xmin horizon at{" "}
+          <XminHeldBackPoint info={heldBackInfo} />,
           specifically with system catalogs.
         </p>
       )}
@@ -307,7 +303,8 @@ const GuidanceByStandby: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          <XminHeldBackInfo type="long running query on a standby" info={heldBackInfo} />.
+          A long running query on a standby is holding back the xmin horizon at{" "}
+          <XminHeldBackPoint info={heldBackInfo} />.
         </p>
       )}
       <p>
@@ -364,7 +361,8 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          <XminHeldBackInfo type="prepared transaction" info={heldBackInfo} />.
+          A prepared transaction is holding back the xmin horizon at{" "}
+          <XminHeldBackPoint info={heldBackInfo} />.
         </p>
       )}
       <p>
