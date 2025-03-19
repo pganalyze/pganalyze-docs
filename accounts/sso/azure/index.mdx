@@ -44,15 +44,15 @@ Next, navigate to the step 2 and click **Edit**:
 ![Screenshot of Attributes & Claims](azure_setup_saml_step2.png)
 
 In the Attributes & Claims page, click **Add new claim** to add a new claim.
-As a claim `email` is required, create a new claim with a name `email`. Please note that the namespace field _must be empty_.
-For the source attribute, choose `user.email`. If your organization keeps the user's email in the other attribute, pick that one.
+Create a new claim with a name `email`. Please note that the namespace field _must be empty_.
+For the source attribute, you'll typically choose `user.email` unless your organization keeps the user's email in another attribute.
 
 ![Screenshot of Manage claim](azure_setup_saml_email_claim.png)
 
-Ensure that each user has na email attribute set. This field is empty by default when a new user is created.
-You can check this by navigating to **Users**, select a user, then check **Properties** tab.
+Ensure that each user has an email attribute set. This field is empty by default when a new user is created.
+You can check this by navigating to **Users**, select a user, then check the **Properties** tab.
 
-When these parts are not properly done, you will see the error "SAML integration configuration error - missing email attribute" when trying to single sign-on.
+If this is not set up correctly, you will see the error "SAML integration configuration error - missing email attribute" when trying to sign in to pganalyze.
 
 Next, keep the setup page open, and register the Microsoft Entra ID Enterprise application with pganalyze before testing.
 
@@ -71,8 +71,8 @@ or show the following indicating successful setup:
 
 ![Screenshot of successful pganalyze SAML integration](../sso_success.png)
 
-You can now assign the Enterprise application to the appropriate users of your team. Going forward your team members can now sign in to pganalyze by using the Enterprise application.
+You can now assign the Enterprise application to users on your team. Going forward your team members can sign in to pganalyze by using the Enterprise application.
 
 Once setup is complete, return to the SAML setup page in your Azure portal and run the **Test single sign-on** step to verify the integration.
 
-[Read more about how to migrate users and general Single Sign-On functionality](/docs/accounts/sso).
+[Read more about how to migrate existing users to Single Sign-On in pganalyze and general SSO functionality](/docs/accounts/sso).
