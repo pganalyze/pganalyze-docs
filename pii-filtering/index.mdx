@@ -16,11 +16,12 @@ and pg_stat_activity.
 
 In order to strike the right balance between what you share with pganalyze and
 the impact on monitoring, statistics, and insights available through our
-service, we have several collector settings that control metadata collection.
+service, there are several collector settings that control metadata collection.
 
-Note that this filtering happens in the collector, the open-source agent that
-connects to your database and runs on your infrastructure. Filtering occurs
-before the data ever reaches the pganalyze cloud service, or a pganalyze Enterprise Server installation.
+Note that this filtering happens in the collector, the [open-source
+agent](https://github.com/pganalyze/collector/) that connects to your database
+and runs on your infrastructure. Filtering occurs before the data ever reaches
+the pganalyze cloud service, or a pganalyze Enterprise Server installation.
 
 
 ## Filter settings
@@ -41,14 +42,16 @@ The [`filter_query_sample`](/docs/collector/settings#pii-filtering-settings)
 setting determines how content in query samples (individual executions of a
 query collected from logs, which include [Automated EXPLAIN](/docs/explain/setup) plans) is filtered:
  - `all`: do not collect any query samples
- - `normalize`: filter query samples to normalize any literal constants used in the query, and normalize collected EXPLAIN plans to remove constant values
+ - `normalize`: filter query samples and collected EXPLAIN plans to remove any
+   literal constant values and replace them with placeholders
  - `none`: do not filter query samples at all
 
 The [`filter_query_text`](/docs/collector/settings#pii-filtering-settings)
 setting determines how query text from pg_stat_statements is filtered:
  - `none`: do not filter query text at all
  - `unparsable`: filter out queries that could not be parsed by the collector
-Note that these queries are already normalized by pg_stat_statements, so sensitive constants are not a concern here.
+Note that these queries are already normalized by pg_stat_statements, so
+sensitive constants are not a concern here.
 
 
 ## Filtering behavior
@@ -62,7 +65,8 @@ filter_log_secret: credential,parsing_error,unidentified
 ```
 
 For servers containing sensitive information in the logs and to maximize data
-privacy (at the cost of less useful data in pganalyze) we recommend setting:
+privacy (at the cost of less useful data in pganalyze), here is the recommended
+configuration:
 
 ```
 filter_log_secret: all
