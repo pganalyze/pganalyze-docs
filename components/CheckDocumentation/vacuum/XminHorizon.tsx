@@ -8,6 +8,7 @@ import {
 } from "../../../util/checks";
 import { useCodeBlock } from "../../CodeBlock";
 import { useSmartAnchor } from "../../SmartAnchor";
+import PGDocsLink from "../../PGDocsLink";
 
 const XminHorizonTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
@@ -173,11 +174,11 @@ const GuidanceByBackend: React.FunctionComponent<{
                   ORDER BY greatest(age(backend_xmin), age(backend_xid)) DESC;`}
         />
       </CodeBlock>
-      <p>You can cancel it by running either <a href="https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL" target="_blank">pg_cancel_backend</a> if the transaction is running an active query:</p>
+      <p>You can cancel it by running either <PGDocsLink path="/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL">pg_cancel_backend</PGDocsLink> if the transaction is running an active query:</p>
       <CodeBlock>
         <SQL sql={`SELECT pg_cancel_backend('<query_pid>');`} />
       </CodeBlock>
-      <p>or <a href="https://www.postgresql.org/docs/current/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL" target="_blank">pg_terminate_backend</a> if the connection state is "idle in transaction".</p>
+      <p>or <PGDocsLink path="/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL">pg_terminate_backend</PGDocsLink> if the connection state is "idle in transaction".</p>
       <CodeBlock>
         <SQL sql={`SELECT pg_terminate_backend('<query_pid>');`} />
       </CodeBlock>
@@ -348,12 +349,11 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
     <li>
       <h5>Abandoned prepared transactions</h5>
       <p>
-        <a
-          href="https://www.postgresql.org/docs/current/sql-prepare-transaction.html"
-          target="_blank"
+        <PGDocsLink
+          path="/sql-prepare-transaction.html"
         >
           A transaction prepared for a two-phase commit
-        </a>{" "}
+        </PGDocsLink>{" "}
         will prevent cleanup until it is either committed or rolled back.
       </p>
       <h6>
