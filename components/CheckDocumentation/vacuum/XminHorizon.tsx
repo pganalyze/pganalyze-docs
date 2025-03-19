@@ -8,6 +8,7 @@ import {
 } from "../../../util/checks";
 import { useCodeBlock } from "../../CodeBlock";
 import { useSmartAnchor } from "../../SmartAnchor";
+import PGDocsLink from "../../PGDocsLink";
 
 const XminHorizonTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
@@ -98,9 +99,47 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   );
 };
 
+type HeldBackInfoType = {
+  xmin: number;
+  assigned_at: number;
+}
+
+function epochFromFullTransactionId(value: number): number {
+  return Number(BigInt(value) >> BigInt(32));
+}
+
+function xidFromFullTransactionId(value: number | null): number | null {
+  if (value == null) {
+    return null;
+  }
+  const epoch = epochFromFullTransactionId(value);
+  return fullTransactionIdMinusEpoch(value, epoch);
+}
+
+function fullTransactionIdMinusEpoch(
+  value: number,
+  epoch: number,
+): number {
+  return Number(BigInt(value) - (BigInt(epoch) << BigInt(32)));
+}
+
+function formatFullTransactionID(value: number): string {
+  const epoch = epochFromFullTransactionId(value);
+  const xid = xidFromFullTransactionId(value) as number;
+
+  return `${epoch}:${xid}`;
+}
+
+const XminHeldBackPoint: React.FunctionComponent<{
+  info: HeldBackInfoType;
+}> = ({ info }) => {
+  const fullTxid = formatFullTransactionID(info["xmin"]);
+  return <code>{`${fullTxid}`}</code>;
+}
+
 const GuidanceByBackend: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
 }> = ({ inApp, heldBackInfo }) => {
   if (inApp && !heldBackInfo) {
     return null;
@@ -119,8 +158,8 @@ const GuidanceByBackend: React.FunctionComponent<{
       </h6>
       {heldBackInfo && (
         <p>
-          A long running transaction is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>.
+          A long-running transaction is holding back the xmin horizon at{" "}
+          <XminHeldBackPoint info={heldBackInfo} />.
         </p>
       )}
       <p>
@@ -135,17 +174,22 @@ const GuidanceByBackend: React.FunctionComponent<{
                   ORDER BY greatest(age(backend_xmin), age(backend_xid)) DESC;`}
         />
       </CodeBlock>
-      <p>You can cancel it by running either of commands:</p>
+      <p>You can cancel it by running either <PGDocsLink path="/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL">pg_cancel_backend</PGDocsLink> if the transaction is running an active query:</p>
       <CodeBlock>
         <SQL sql={`SELECT pg_cancel_backend('<query_pid>');`} />
       </CodeBlock>
+      <p>or <PGDocsLink path="/functions-admin.html#FUNCTIONS-ADMIN-SIGNAL">pg_terminate_backend</PGDocsLink> if the connection state is "idle in transaction".</p>
+      <CodeBlock>
+        <SQL sql={`SELECT pg_terminate_backend('<query_pid>');`} />
+      </CodeBlock>
+      <p>Note this will roll back the transaction, and <strong>discard all data</strong> written to the database earlier within that transaction.</p>
     </li>
   );
 };
 
 const GuidanceByReplicationSlot: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
   serverReplicationUrl: string;
 }> = ({ inApp, heldBackInfo, serverReplicationUrl }) => {
   if (inApp && !heldBackInfo) {
@@ -170,7 +214,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
       {heldBackInfo && (
         <p>
           A replication slot is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>.
+          <XminHeldBackPoint info={heldBackInfo} />.
         </p>
       )}
       <p>
@@ -190,7 +234,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
 
 const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
   serverReplicationUrl: string;
 }> = ({ inApp, heldBackInfo, serverReplicationUrl }) => {
   if (inApp && !heldBackInfo) {
@@ -216,8 +260,8 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
       {heldBackInfo && (
         <p>
           A replication slot is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>, specifically with system
-          catalogs.
+          <XminHeldBackPoint info={heldBackInfo} />,
+          specifically with system catalogs.
         </p>
       )}
       <p>
@@ -240,7 +284,7 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
 
 const GuidanceByStandby: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
 }> = ({ inApp, heldBackInfo }) => {
   if (inApp && !heldBackInfo) {
     return null;
@@ -261,7 +305,7 @@ const GuidanceByStandby: React.FunctionComponent<{
       {heldBackInfo && (
         <p>
           A long running query on a standby is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>.
+          <XminHeldBackPoint info={heldBackInfo} />.
         </p>
       )}
       <p>
@@ -294,7 +338,7 @@ const GuidanceByStandby: React.FunctionComponent<{
 
 const GuidanceByPreparedXact: React.FunctionComponent<{
   inApp: boolean;
-  heldBackInfo: number | null;
+  heldBackInfo: HeldBackInfoType | null;
 }> = ({ inApp, heldBackInfo }) => {
   if (inApp && !heldBackInfo) {
     return null;
@@ -305,12 +349,11 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
     <li>
       <h5>Abandoned prepared transactions</h5>
       <p>
-        <a
-          href="https://www.postgresql.org/docs/current/sql-prepare-transaction.html"
-          target="_blank"
+        <PGDocsLink
+          path="/sql-prepare-transaction.html"
         >
           A transaction prepared for a two-phase commit
-        </a>{" "}
+        </PGDocsLink>{" "}
         will prevent cleanup until it is either committed or rolled back.
       </p>
       <h6>
@@ -319,7 +362,7 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
       {heldBackInfo && (
         <p>
           A prepared transaction is holding back the xmin horizon at{" "}
-          <code>{heldBackInfo["xmin"]}</code>.
+          <XminHeldBackPoint info={heldBackInfo} />.
         </p>
       )}
       <p>
