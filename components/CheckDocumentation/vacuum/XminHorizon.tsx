@@ -122,17 +122,23 @@ function fullTransactionIdMinusEpoch(
   return Number(BigInt(value) - (BigInt(epoch) << BigInt(32)));
 }
 
+function formatFullTransactionID(value: number): string {
+  const epoch = epochFromFullTransactionId(value);
+  const xid = xidFromFullTransactionId(value) as number;
+
+  return `${epoch}:${xid}`;
+}
+
 const XminHeldBackInfo: React.FunctionComponent<{
   type: string;
   info: HeldBackInfoType;
 }> = ({ type, info }) => {
-  const epoch = epochFromFullTransactionId(info["xmin"]);
-  const xid = xidFromFullTransactionId(info["xmin"]) as number;
+  const fullTxid = formatFullTransactionID(info["xmin"]);
 
   return (
     <>
       A {type} is holding back the xmin horizon at{" "}
-      <code>{`${epoch}:${xid}`}</code> (assigned at {new Date(info["assigned_at"] * 1000).toISOString()})
+      <code>{`${fullTxid}`}</code> (assigned at {new Date(info["assigned_at"] * 1000).toISOString()})
     </>
   );
 }
