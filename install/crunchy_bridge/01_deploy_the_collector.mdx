@@ -11,7 +11,7 @@ import { MonitoringUserLogRead, MonitoringUserPerDatabaseHelpers } from "../../c
 export const CollectorStartCommand = ({ apiKey, cmd, logExplain }) => {
   return (
     <CodeBlock>
-      {`SELECT run_container('` + (cmd ? '' : '-d ') + `-t -e DB_URL="REPLACE_ME" -e PGA_API_KEY="` + (apiKey ? apiKey : 'API_KEY') + '"' + (logExplain ? ' -e PGA_ENABLE_LOG_EXPLAIN=true' : '') + ` -e CRUNCHY_BRIDGE_API_KEY="REPLACE_ME" -e DB_ALL_NAMES=1 quay.io/pganalyze/collector:stable` + (cmd ? ` ${cmd}` : '') + `');`}
+      {`SELECT run_container('` + (cmd ? '' : '-d ') + `-t -e DB_URL="REPLACE_ME" -e PGA_API_KEY="` + (apiKey ? apiKey : 'API_KEY') + '"' + (logExplain ? ' -e PGA_ENABLE_LOG_EXPLAIN=true' : '') + ` -e CRUNCHY_BRIDGE_API_KEY="REPLACE_ME" -e DB_ALL_NAMES=1 --privileged quay.io/pganalyze/collector:stable` + (cmd ? ` ${cmd}` : '') + `');`}
     </CodeBlock>
   );
 };
@@ -29,11 +29,7 @@ To ensure the application user can access monitoring statistics for all users (n
 GRANT pg_monitor TO application;
 ```
 
-Additionally, run the following to allow the application user to read the Postgres server log:
-
-<MonitoringUserLogRead username="application" />
-
-<MonitoringUserPerDatabaseHelpers username="pganalyze" />
+<MonitoringUserPerDatabaseHelpers username="application" />
 
 In later steps you can now specify the application user credentials as the `DB_URL`.
 
@@ -53,31 +49,29 @@ See the [Crunchy Bridge documentation](https://docs.crunchybridge.com/api-concep
 
 ## Run collector test
 
-Run the following command to verify the configuration. For the `DB_URL`, specify the application user credentials.
+Run the following command to verify the configuration. For the `DB_URL`, specify the database URL to monitor.
 For the `CRUNCHY_BRIDGE_API_KEY`, specify the API key created above.
+Before running this command, you can run `\t \a` to show the result in a better format.
 
 <CollectorStartCommand apiKey={props.apiKey} cmd="test" />
 
 This should return output like this:
 
 ```
-                                run_container
---------------------------------------------------------------------------------
- I Running collector test with pganalyze-collector X.XX.X
- I [default] Testing statistics collection...
- I [default]   Test collection successful for PostgreSQL XX.X
- I [default]   Test snapshot successful (27.9 KB)
- I [default] Testing activity snapshots...
- I [default]   Test snapshot successful (2.28 KB)
- I [default] Testing log download...
- I [default]   Test snapshot successful (1.45 KB)
- I [default]   Log test successful
+I Running collector test with pganalyze-collector X.XX.X
+I [default] Testing statistics collection...
+I [default]   Test collection successful for PostgreSQL XX.X
+I [default] Submitted full snapshot successfully
+I [default] Testing activity snapshots...
+I [default] Testing log download...
+E [default] ERROR - Could not download logs: could not collect logs: LogReadSql/QueryRow: pq: permission denied for function pg_read_file
 
- Test successful. View servers in pganalyze:
-  - [default]: https://app.pganalyze.com/servers/SERVER_ID
+...Test summary
 
-(1 row)
+Test successful
 ```
+
+Note that Log Insights will show error until you complete the setup step of [Log Insights](/docs/log-insights/setup/crunchy-bridge/01_create_helper_function_and_test).
 
 ## Start collector in the background
 
