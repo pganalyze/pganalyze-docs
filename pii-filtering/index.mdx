@@ -20,10 +20,10 @@ service, we have several collector settings that control metadata collection.
 
 Note that this filtering happens in the collector, the open-source agent that
 connects to your database and runs on your infrastructure. Filtering occurs
-before the data ever reaches pganalyze.
+before the data ever reaches the pganalyze cloud service, or a pganalyze Enterprise Server installation.
 
 
-## Filtering settings
+## Filter settings
 
 The [`filter_log_secret`](/docs/collector/settings#pii-filtering-settings)
 setting determines how content coming from logs is filtered:
@@ -35,13 +35,13 @@ setting determines how content coming from logs is filtered:
  - `ops`: System errors, network errors, file locations, pg_hba.conf contents, and configured commands (e.g. archive command)
  - `unidentified`: Text that could not be identified and might contain secrets
 
-And of course, `all` and `none` apply all and none of the above filters, respectively.
+Additionally, the special `all` and `none` setting values apply all and none of the above filters, respectively.
 
 The [`filter_query_sample`](/docs/collector/settings#pii-filtering-settings)
 setting determines how content in query samples (individual executions of a
-query collected from logs) is filtered:
+query collected from logs, which include [Automated EXPLAIN](/docs/explain/setup) plans) is filtered:
  - `all`: do not collect any query samples
- - `normalize`: filter query samples to normalize any literal constants used in the query
+ - `normalize`: filter query samples to normalize any literal constants used in the query, and normalize collected EXPLAIN plans to remove constant values
  - `none`: do not filter query samples at all
 
 The [`filter_query_text`](/docs/collector/settings#pii-filtering-settings)
