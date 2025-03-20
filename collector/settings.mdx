@@ -196,10 +196,12 @@ helper functions are expected to be defined, and the one we connect to for serve
 
 ## PII Filtering settings
 
-We take the responsibility of access to your database very seriously. As discussed above, we already
-limit the direct access we have to your data, but some personally-identifiable information or other
-sensitive values can still come up in query text or logs. To address this, the collector has several
-settings to filter these before we collect them.
+We take the responsibility of access to your database very seriously. As
+discussed above, we already limit the direct access we have to your data, but
+some personally-identifiable information or other sensitive values can still
+come up in query text or logs. To address this, the collector has several
+settings to filter these before we collect them. See [additional
+documentation](/docs/pii-filtering) for details.
 
 <table>
   <thead>
@@ -213,7 +215,7 @@ settings to filter these before we collect them.
     <tr>
       <td>filter_log_secret (<code>FILTER_LOG_SECRET</code>)</td>
       <td><code>credential</code>, <code>parsing_error</code>, <code>unidentified</code></td>
-      <td>One or more of <code>none</code>/<code>all</code>/<code>credential</code>/<code>parsing_error</code>/<code>statement_text</code>/<code>statement_parameter</code>/<code>table_data</code>/<code>ops</code>/<code>unidentified</code> (comma separated)</td>
+      <td>Either <code>none</code>, <code>all</code>, or one or more of <code>credential</code>/<code>parsing_error</code>/<code>statement_text</code>/<code>statement_parameter</code>/<code>table_data</code>/<code>ops</code>/<code>unidentified</code> (comma separated)</td>
     </tr>
     <tr>
       <td>filter_query_sample (<code>FILTER_QUERY_SAMPLE</code>)</td>
@@ -228,23 +230,6 @@ settings to filter these before we collect them.
   </tbody>
 </table>
 
-By default the pganalyze collector only filters logs that contain syntax errors (which may contain accidental copy and paste of passwords, etc), or could not be identified.
-
-```
-filter_log_secret: credential,parsing_error,unidentified
-```
-
-For servers containing sensitive information in the logs and to maximize data privacy (at the cost of less useful data in pganalyze) we recommend setting:
-
-```
-filter_log_secret: all
-filter_query_sample: normalize
-filter_query_text: unparsable
-```
-
-Note the `normalize` setting for `filter_query_sample`, which will remove all query parameter values from query samples, including those contained within automatically collected EXPLAIN plans.
-
-In order to utilize `auto_explain` with this configuration, make sure to set `auto_explain.log_format` to `json` (other formats are currently not supported by the EXPLAIN normalization).
 
 ## Schema filter settings
 

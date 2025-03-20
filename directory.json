@@ -88,6 +88,10 @@
       "title": "pganalyze Collector packages",
       "path": "/docs/collector/packages"
     },
+    "collector/pii-filtering": {
+      "title": "PII Filtering",
+      "path": "/docs/collector/pii-filtering"
+    },
     "collector/settings": {
       "title": "pganalyze Collector settings",
       "path": "/docs/collector/settings"
