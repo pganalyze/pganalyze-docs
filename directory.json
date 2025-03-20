@@ -88,6 +88,10 @@
       "title": "pganalyze Collector packages",
       "path": "/docs/collector/packages"
     },
+    "collector/pii-filtering": {
+      "title": "PII Filtering",
+      "path": "/docs/collector/pii-filtering"
+    },
     "collector/settings": {
       "title": "pganalyze Collector settings",
       "path": "/docs/collector/settings"
@@ -999,10 +1003,6 @@
     "opentelemetry/traceparent": {
       "title": "Set up traceparent query tag within your application",
       "path": "/docs/opentelemetry/traceparent"
-    },
-    "pii-filtering": {
-      "title": "PII Filtering",
-      "path": "/docs/pii-filtering"
     },
     "query-performance": {
       "title": "Query Performance",

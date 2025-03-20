@@ -8,5 +8,7 @@
     href: collector/settings
   - name: Upgrading
     href: collector/upgrading
+  - name: PII Filtering
+    href: collector/pii-filtering
   - name: Uninstalling
     href: collector/uninstalling
