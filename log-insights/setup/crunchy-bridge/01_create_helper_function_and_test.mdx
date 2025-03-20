@@ -15,9 +15,14 @@ export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot
 
 Log output for Crunchy Bridge database servers is collected directly from the database server using SQL functions.
 
-If you are using the application user, an additional function needs to be created to grant access to the logs:
+If you are using the application user, an additional function needs to be created to grant access to the logs (**run the following with superuser credentials**):
 
 <MonitoringUserLogRead username="application" />
+
+Next, configure your cluster to enable file logging by adding config parameters using the dashboard with these values:
+
+* **log_destination**: `syslog,stderr`
+* **log_line_prefix**: `'%m [%p] %q[user=%u,db=%d,app=%a] '`
 
 You can then verify whether this is working by running the test command:
 
@@ -26,22 +31,17 @@ You can then verify whether this is working by running the test command:
 This should show an output like this:
 
 ```
-                                run_container
---------------------------------------------------------------------------------
- I Running collector test with pganalyze-collector X.XX.X
- I [default] Testing statistics collection...
- I [default]   Test collection successful for PostgreSQL XX.X
- I [default]   Test snapshot successful (27.9 KB)
- I [default] Testing activity snapshots...
- I [default]   Test snapshot successful (2.28 KB)
- I [default] Testing log download...
- I [default]   Test snapshot successful (1.45 KB)
- I [default]   Log test successful
+I Running collector test with pganalyze-collector X.XX.X
+I [default] Testing statistics collection...
+I [default]   Test collection successful for PostgreSQL XX.X
+I [default] Submitted full snapshot successfully
+I [default] Testing activity snapshots...
+I [default] Testing log download...
+I [default]   Log test successful
 
- Test successful. View servers in pganalyze:
-  - [default]: https://app.pganalyze.com/servers/SERVER_ID
+...Test summary
 
-(1 row)
+Test successful
 ```
 
 Note the "Log test successful", which indicates that the helper method works correctly.
