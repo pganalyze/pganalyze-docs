@@ -23,7 +23,7 @@ In order to monitor a Crunchy Bridge database you run the pganalyze collector di
 
 We recommend using a role with limited privileges for monitoring. You can use Crunchy Bridge's application user as the user for monitoring, or create a separate role. The instructions here assume you are using the application user.
 
-To ensure the application user can access monitoring statistics for all users (not just itself), and can read the server log, **run the following with the superuser credentials**:
+To ensure the application user can access monitoring statistics for all users (not just itself), and can read the server log, **run the following with superuser credentials**:
 
 ```sql
 GRANT pg_monitor TO application;
