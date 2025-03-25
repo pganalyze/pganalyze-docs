@@ -25,8 +25,9 @@ name the other sections after the servers they correspond to, though note these 
 in the app. In-app names are based on hostname settings as determined during monitoring.
 
 After you make changes, you can run `pganalyze-collector --test` to verify the new configuration.
-If the test succeeds, this will automatically load the new configuration in the collector background process
-(equivalent to using the `--reload` flag). This minimizes monitoring interruptions and simplifies config file updates.
+For package-based installs, if the test succeeds, this will automatically load the new configuration in the collector
+background process (equivalent to using the `--reload` flag). This minimizes monitoring interruptions and simplifies
+config file updates.
 
 The tables below list configuration settings, their defaults if not set, and their descriptions. If a setting is
 configurable through environment variables, the environment variable name follows the setting in parentheses.
@@ -69,14 +70,6 @@ Common settings for configuring collector behavior, independent of the platform.
         Note: The name of the environment variable was <code>PGA_API_BASEURL</code> prior to collector release v0.55.0.
       </td>
     </tr>
-    {/*
-      omit this for now
-      <tr>
-        <td>enable_reports (<code>PGA_ENABLE_REPORTS</code>)</td>
-        <td>false</td>
-        <td></td>
-      </tr>
-    */}
     <tr>
       <td>skip_if_replica (<code>SKIP_IF_REPLICA</code>)</td>
       <td>false</td>
@@ -160,7 +153,7 @@ helper functions are expected to be defined, and the one we connect to for serve
     </tr>
     <tr>
       <td>db_sslrootcert_contents (<code>DB_SSLROOTCERT_CONTENTS</code>)</td>
-      <td>n/a, see above</td>
+      <td>[none], see above</td>
       <td>Alternative to above, using actual contents of the certificate(s) instead</td>
     </tr>
     <tr>
@@ -214,7 +207,7 @@ documentation](/docs/collector/pii-filtering) for details.
   <tbody>
     <tr>
       <td>filter_log_secret (<code>FILTER_LOG_SECRET</code>)</td>
-      <td><code>credential</code>, <code>parsing_error</code>, <code>unidentified</code></td>
+      <td>credential, parsing_error, unidentified</td>
       <td>Either <code>none</code>, <code>all</code>, or one or more of <code>credential</code>/<code>parsing_error</code>/<code>statement_text</code>/<code>statement_parameter</code>/<code>table_data</code>/<code>ops</code>/<code>unidentified</code> (comma separated)</td>
     </tr>
     <tr>
@@ -393,7 +386,7 @@ Only relevant if you are running your database in Azure using Azure Database for
     </tr>
     <tr>
       <td>azure_subscription_id (<code>AZURE_SUBSCRIPTION_ID</code>)</td>
-      <td>[none]</td>
+      <td>n/a, required for system stats</td>
       <td>Subscription ID of your Azure Database server</td>
     </tr>
     <tr>
@@ -409,13 +402,12 @@ Only relevant if you are running your database in Azure using Azure Database for
     <tr>
       <td>azure_ad_tenant_id (<code>AZURE_AD_TENANT_ID</code>)</td>
       <td>[none]</td>
-      <td>The "Directory (tenant) ID" on your application. Only necessary if not using the recommended Managed Identity setup; see these <a href="https://pganalyze.com/docs/log-insights/setup/azure-database#setting-up-authentication-using-azure-ad-application-alternative-to-managed-identity">setup instructions</a>
-      for details</td>
+      <td>The "Directory (tenant) ID" on your application. Only necessary if not using the recommended Managed Identity setup; see the <a href="https://pganalyze.com/docs/log-insights/setup/azure-database#setting-up-authentication-using-azure-ad-application-alternative-to-managed-identity">setup instructions</a> for details</td>
     </tr>
     <tr>
       <td>azure_ad_client_id (<code>AZURE_AD_CLIENT_ID</code>)</td>
       <td>[none]</td>
-      <td>The "Application (client) ID" on your application. Alternatively, when using a Managed Identity, this can also be used to define which identity to use, when a VM has multiple identities assigned.</td>
+      <td>The "Application (client) ID" on your application. Only necessary if not using the recommended Managed Identity setup (see above). Alternatively, when using a Managed Identity, this can also be used to define which identity to use when a VM has multiple identities assigned.</td>
     </tr>
     <tr>
       <td>azure_ad_client_secret (<code>AZURE_AD_CLIENT_SECRET</code>)</td>
@@ -566,7 +558,7 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     </tr>
     <tr>
       <td>db_log_syslog_server_ca_contents (<code>LOG_SYSLOG_SERVER_CA_CONTENTS</code>)</td>
-      <td>n/a, see above</td>
+      <td>[none]</td>
       <td>Alternative to above, using actual contents of the CA certificate(s) instead</td>
     </tr>
     <tr>
@@ -578,7 +570,7 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     </tr>
     <tr>
       <td>db_log_syslog_server_cert_contents (<code>LOG_SYSLOG_SERVER_CERT_CONTENTS</code>)</td>
-      <td>n/a, see above</td>
+      <td>[none]</td>
       <td>Alternative to above, using actual contents of the certificate instead</td>
     </tr>
     <tr>
@@ -590,7 +582,7 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     </tr>
     <tr>
       <td>db_log_syslog_server_key_contents (<code>LOG_SYSLOG_SERVER_KEY_CONTENTS</code>)</td>
-      <td>n/a, see above</td>
+      <td>[none]</td>
       <td>Alternative to above, using actual contents of the secret key instead</td>
     </tr>
     <tr>
@@ -604,7 +596,7 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     </tr>
     <tr>
       <td>db_log_syslog_server_client_ca_contents (<code>LOG_SYSLOG_SERVER_CLIENT_CA_CONTENTS</code>)</td>
-      <td>n/a, see above</td>
+      <td>[none]</td>
       <td>Alternative to above, using actual contents of the CA certificate(s) instead</td>
     </tr>
     <tr>
