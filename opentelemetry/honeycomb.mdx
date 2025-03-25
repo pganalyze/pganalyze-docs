@@ -23,8 +23,9 @@ To send EXPLAIN plan spans to Honeycomb:
 If you have already started sending tracing data from your application to
 Honeycomb and you are fine using the existing API key for the pganalyze
 collector, you can skip step 3 and use that key.
-If you wish to create a new API key instead of using the existing API key of the
-environment, it will require ["Send Events" permissions](https://docs.honeycomb.io/working-with-your-data/settings/api-keys/#api-key-permissions).
+If you prefer to create a new API key rather than use the environment's existing
+one, create an [ingest key](https://docs.honeycomb.io/configure/environments/manage-api-keys/#create-api-key)
+for this purpose.
 
 Once you obtain an API key, update the following collector settings to start
 sending out tracing spans to Honeycomb:
