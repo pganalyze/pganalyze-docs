@@ -2248,7 +2248,10 @@
     "Function Scan": {
       "shortDescription": "Scans the result of a set-returning function (like unnest or regexp_split_to_table).",
       "importantFields": [
-        "Function Name"
+        "Function Name",
+        "Function Call",
+        "Filter",
+        "Rows Removed by Filter"
       ],
       "path": "/docs/explain/scan-nodes/function-scan"
     },
