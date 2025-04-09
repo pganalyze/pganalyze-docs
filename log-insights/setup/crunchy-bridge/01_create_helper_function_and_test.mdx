@@ -15,11 +15,13 @@ export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot
 
 Log output for Crunchy Bridge database servers is collected directly from the database server using SQL functions.
 
-If you are using the application user, an additional function needs to be created to grant access to the logs (**run the following with superuser credentials**):
+If you are using the application user, first, **connect with superuser credentials** and ensure this user has the `pg_monitor` role:
 
 ```sql
 GRANT pg_monitor TO application;
 ```
+
+Then, create a function to grant this user access to the logs:
 
 <MonitoringUserLogRead username="application" />
 
