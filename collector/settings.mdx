@@ -485,6 +485,12 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
       <td>n/a, required for IAM Authentication</td>
       <td>GCP region of the Cloud SQL instance</td>
     </tr>
+    <tr>
+      <td>gcp_use_public_ip (<code>GCP_USE_PUBLIC_IP</code>)</td>
+      <td>false</td>
+      <td>Set to 'true' if the CloudSQL proxy connextion should use the available public IP rather than the default private IP. Setting
+        to true when no public IP is assigned will result in a connection error.</td>
+    </tr> 
   </tbody>
 </table>
 
