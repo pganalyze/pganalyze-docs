@@ -1102,7 +1102,7 @@
       "hasAnalysis": null
     },
     "A61": {
-      "title": "Database must be vacuumed within N transactions (TXID Wraparound Warning)",
+      "title": "TXID wraparound warning",
       "category": "autovacuum",
       "collectorKey": "TXID_WRAPAROUND_WARNING",
       "tooltip": "Database is at risk of forced shutdown due to overdue VACUUM",
@@ -1113,7 +1113,7 @@
       "hasAnalysis": null
     },
     "A62": {
-      "title": "Database is not accepting commands to avoid wraparound data loss",
+      "title": "TXID wraparound critical",
       "category": "autovacuum",
       "collectorKey": "TXID_WRAPAROUND_ERROR",
       "tooltip": "The database has been interrupted due to imminent TXID wraparound - manual intervention required",
@@ -1135,7 +1135,7 @@
       "hasAnalysis": null
     },
     "A64": {
-      "title": "Autovacuum launcher shutting down",
+      "title": "Autovacuum launcher stopped",
       "category": "autovacuum",
       "collectorKey": "AUTOVACUUM_LAUNCHER_SHUTTING_DOWN",
       "tooltip": "The autovacuum launcher has been stopped",
@@ -1146,7 +1146,7 @@
       "hasAnalysis": null
     },
     "A65": {
-      "title": "Automatic vacuum of table completed",
+      "title": "Autovacuum completed",
       "category": "autovacuum",
       "collectorKey": "AUTOVACUUM_COMPLETED",
       "tooltip": "Automatic VACUUM for the referenced table has completed",
@@ -1157,7 +1157,7 @@
       "hasAnalysis": null
     },
     "A66": {
-      "title": "Automatic analyze of table completed",
+      "title": "Autoanalyze completed",
       "category": "autovacuum",
       "collectorKey": "AUTOANALYZE_COMPLETED",
       "tooltip": "Automatic ANALYZE for the referenced table has completed",
@@ -1168,7 +1168,7 @@
       "hasAnalysis": null
     },
     "A67": {
-      "title": "Skipping vacuum - lock not available",
+      "title": "Skipping vacuum due to lock",
       "category": "autovacuum",
       "collectorKey": "SKIPPING_VACUUM_LOCK_NOT_AVAILABLE",
       "tooltip": "Vacuum could not be started due to lock failure",
@@ -1179,7 +1179,7 @@
       "hasAnalysis": null
     },
     "A68": {
-      "title": "Skipping analyze - lock not available",
+      "title": "Skipping analyze due to lock",
       "category": "autovacuum",
       "collectorKey": "SKIPPING_ANALYZE_LOCK_NOT_AVAILABLE",
       "tooltip": "Vacuum could not be started due to lock failure",
@@ -1190,7 +1190,7 @@
       "hasAnalysis": null
     },
     "B90": {
-      "title": "Restored log file from archive (WAL replay)",
+      "title": "Replayed WAL file from archive",
       "category": "standby",
       "collectorKey": "STANDBY_RESTORED_WAL_FROM_ARCHIVE",
       "tooltip": "Postgres has replayed a WAL file from the archive using restore_command",
@@ -1201,7 +1201,7 @@
       "hasAnalysis": null
     },
     "B91": {
-      "title": "Started streaming WAL from primary",
+      "title": "Streaming WAL from primary",
       "category": "standby",
       "collectorKey": "STANDBY_STARTED_STREAMING",
       "tooltip": "Streaming replication has successfully started/resumed",
@@ -1212,7 +1212,7 @@
       "hasAnalysis": null
     },
     "B92": {
-      "title": "Could not receive data from WAL stream",
+      "title": "Could not receive WAL data",
       "category": "standby",
       "collectorKey": "STANDBY_STREAMING_INTERRUPTED",
       "tooltip": "Streaming replication was interrupted due to a network issue",
@@ -1223,7 +1223,7 @@
       "hasAnalysis": null
     },
     "B93": {
-      "title": "Terminating walreceiver process due to administrator command",
+      "title": "Terminating walreceiver",
       "category": "standby",
       "collectorKey": "STANDBY_STOPPED_STREAMING",
       "tooltip": "Streaming replication has stopped due to intervention",
@@ -1245,7 +1245,7 @@
       "hasAnalysis": null
     },
     "B95": {
-      "title": "Canceling statement due to conflict with recovery",
+      "title": "Canceling statement due to recovery conflict",
       "category": "standby",
       "collectorKey": "STANDBY_STATEMENT_CANCELED",
       "tooltip": "Statement tried to access data that is about to be removed",
@@ -1278,7 +1278,7 @@
       "hasAnalysis": null
     },
     "C22": {
-      "title": "Authentication failed / pg_hba.conf rejects connection",
+      "title": "Authentication failed",
       "category": "connections",
       "collectorKey": "CONNECTION_REJECTED",
       "tooltip": "New connection was rejected due to authentication/authorization errors",
@@ -1300,7 +1300,7 @@
       "hasAnalysis": null
     },
     "C24": {
-      "title": "Incomplete startup packet (client failed to connect)",
+      "title": "Client failed to connect",
       "category": "connections",
       "collectorKey": "CONNECTION_CLIENT_FAILED_TO_CONNECT",
       "tooltip": "The client opened a connection but didn't complete the initial process",
@@ -1311,7 +1311,7 @@
       "hasAnalysis": null
     },
     "C25": {
-      "title": "Could not receive data from client / connection to client lost",
+      "title": "Connection to client lost",
       "category": "connections",
       "collectorKey": "CONNECTION_LOST",
       "tooltip": "Network connection to the client was interrupted",
@@ -1322,7 +1322,7 @@
       "hasAnalysis": null
     },
     "C26": {
-      "title": "EOF on client connection with an open transaction",
+      "title": "Connection with open transaction lost",
       "category": "connections",
       "collectorKey": "CONNECTION_LOST_OPEN_TX",
       "tooltip": "Network interruption to client with an open transaction",
@@ -1333,7 +1333,7 @@
       "hasAnalysis": null
     },
     "C27": {
-      "title": "Terminating connection due to administrator command",
+      "title": "Terminating connection",
       "category": "connections",
       "collectorKey": "CONNECTION_TERMINATED",
       "tooltip": "This connection was terminated by a DBA / operator",
@@ -1344,7 +1344,7 @@
       "hasAnalysis": null
     },
     "C28": {
-      "title": "Remaining connection slots are reserved for superuser (out of connections)",
+      "title": "Too many connections",
       "category": "connections",
       "collectorKey": "OUT_OF_CONNECTIONS",
       "tooltip": "The number of connections has exceeded the max_connections setting",
@@ -1410,7 +1410,7 @@
       "hasAnalysis": null
     },
     "L70": {
-      "title": "Process acquired lock on tuple / relation / object",
+      "title": "Process acquired lock",
       "category": "locks",
       "collectorKey": "LOCK_ACQUIRED",
       "tooltip": "Lock was successfully acquired after exceeding deadlock_timeout",
@@ -1421,7 +1421,7 @@
       "hasAnalysis": null
     },
     "L71": {
-      "title": "Process still waiting for lock on tuple / relation / object",
+      "title": "Process still waiting for lock",
       "category": "locks",
       "collectorKey": "LOCK_WAITING",
       "tooltip": "Lock has not been acquired yet after waiting for deadlock_timeout",
@@ -1443,7 +1443,7 @@
       "hasAnalysis": null
     },
     "L73": {
-      "title": "Deadlock detected (transaction rolled back)",
+      "title": "Deadlock detected",
       "category": "locks",
       "collectorKey": "LOCK_DEADLOCK_DETECTED",
       "tooltip": "Deadlock between two connections was found and resolved by transaction cancellation",
@@ -1454,7 +1454,7 @@
       "hasAnalysis": null
     },
     "L74": {
-      "title": "Process avoided deadlock by rearranging queue order",
+      "title": "Process avoided deadlock",
       "category": "locks",
       "collectorKey": "LOCK_DEADLOCK_AVOIDED",
       "tooltip": "Deadlock between two connections was found and resolved by lock wait queue reordering",
@@ -1465,7 +1465,7 @@
       "hasAnalysis": null
     },
     "S1": {
-      "title": "Server process was terminated / Terminating connection because of crash",
+      "title": "Server process was terminated",
       "category": "server",
       "collectorKey": "SERVER_CRASHED",
       "tooltip": "Postgres server processes have crashed, server will be restarted",
@@ -1476,7 +1476,7 @@
       "hasAnalysis": null
     },
     "S10": {
-      "title": "Worker process exited / terminated by signal",
+      "title": "Worker process exited",
       "category": "server",
       "collectorKey": "SERVER_PROCESS_EXITED",
       "tooltip": "Internal process has exited - check exit code/signal",
@@ -1509,7 +1509,7 @@
       "hasAnalysis": null
     },
     "S3": {
-      "title": "Database system was interrupted (server starting)",
+      "title": "Database system was interrupted",
       "category": "server",
       "collectorKey": "SERVER_START_RECOVERING",
       "tooltip": "Postgres has restarted after a crash/forceful shutdown",
@@ -1542,7 +1542,7 @@
       "hasAnalysis": null
     },
     "S6": {
-      "title": "Invalid page / page verification failed (data corrupted)",
+      "title": "Data corrupted",
       "category": "server",
       "collectorKey": "SERVER_INVALID_CHECKSUM",
       "tooltip": "Failed to access table or index data due to corruption",
@@ -1553,7 +1553,7 @@
       "hasAnalysis": null
     },
     "S7": {
-      "title": "Temporary file: path ..., size ... (temp file created)",
+      "title": "Temp file created",
       "category": "server",
       "collectorKey": "SERVER_TEMP_FILE_CREATED",
       "tooltip": "Sorting/hashing operation was done through a file instead of in memory",
@@ -1597,7 +1597,7 @@
       "hasAnalysis": null
     },
     "T81": {
-      "title": "Canceling statement due to statement timeout",
+      "title": "Canceling statement due to timeout",
       "category": "statements",
       "collectorKey": "STATEMENT_CANCELED_TIMEOUT",
       "tooltip": "Statement was canceled since it ran longer than statement_timeout",
@@ -1608,7 +1608,7 @@
       "hasAnalysis": null
     },
     "T82": {
-      "title": "Canceling statement due to user request",
+      "title": "Canceling statement due to request",
       "category": "statements",
       "collectorKey": "STATEMENT_CANCELED_USER",
       "tooltip": "Statement was canceled due to operator calling pg_cancel_backend",
@@ -1696,7 +1696,7 @@
       "hasAnalysis": null
     },
     "U115": {
-      "title": "Subquery in FROM must have an alias",
+      "title": "Subquery in FROM must have alias",
       "category": "app-errors",
       "collectorKey": "SUBQUERY_MISSING_ALIAS",
       "tooltip": "The query is missing an alias name for a subquery",
@@ -1707,7 +1707,7 @@
       "hasAnalysis": null
     },
     "U116": {
-      "title": "INSERT has more expressions than target columns",
+      "title": "INSERT does not match target columns",
       "category": "app-errors",
       "collectorKey": "INSERT_TARGET_COLUMN_MISMATCH",
       "tooltip": "The # of columns in your INSERT statements are different than the # of values per row",
@@ -1806,7 +1806,7 @@
       "hasAnalysis": null
     },
     "U125": {
-      "title": "No unique or exclusion constraint matching the ON CONFLICT specification",
+      "title": "Unmatched ON CONFLICT specification",
       "category": "app-errors",
       "collectorKey": "ON_CONFLICT_NO_CONSTRAINT_MATCH",
       "tooltip": "Missing unique/exclusion constraint for conflict resolution in ON CONFLICT statement",
@@ -1817,7 +1817,7 @@
       "hasAnalysis": null
     },
     "U126": {
-      "title": "ON CONFLICT DO UPDATE command cannot affect row a second time",
+      "title": "ON CONFLICT DO UPDATE affected row twice",
       "category": "app-errors",
       "collectorKey": "ON_CONFLICT_ROW_AFFECTED_TWICE",
       "tooltip": "INSERT statement contains the same row twice, as determined by ON CONFLICT constraint",
@@ -1850,7 +1850,7 @@
       "hasAnalysis": null
     },
     "U129": {
-      "title": "Cannot drop table / Cannot drop object",
+      "title": "Cannot drop object",
       "category": "app-errors",
       "collectorKey": "CANNOT_DROP",
       "tooltip": "The statement failed to drop the referenced object",
@@ -1883,7 +1883,7 @@
       "hasAnalysis": null
     },
     "U132": {
-      "title": "There is no parameter $1 / $n",
+      "title": "There is no parameter $n",
       "category": "app-errors",
       "collectorKey": "PARAM_MISSING",
       "tooltip": "The referenced parameter $n is missing",
@@ -1949,7 +1949,7 @@
       "hasAnalysis": null
     },
     "U138": {
-      "title": "Could not serialize access due to concurrent update",
+      "title": "Could not serialize access: concurrent update",
       "category": "app-errors",
       "collectorKey": "COULD_NOT_SERIALIZE_REPEATABLE_READ",
       "tooltip": "UPDATE or DELETE was run concurrently on the same row with isolation level REPEATABLE READ",
@@ -1960,7 +1960,7 @@
       "hasAnalysis": null
     },
     "U139": {
-      "title": "Could not serialize access due to read/write dependencies among transactions",
+      "title": "Could not serialize access: read/write dependencies",
       "category": "app-errors",
       "collectorKey": "COULD_NOT_SERIALIZE_SERIALIZABLE",
       "tooltip": "Transaction could not be completed under SERIALIZABLE isolation level",
@@ -1971,7 +1971,7 @@
       "hasAnalysis": null
     },
     "U140": {
-      "title": "Range lower bound must be less than or equal to range upper bound",
+      "title": "Inconsistent range bounds",
       "category": "app-errors",
       "collectorKey": "INCONSISTENT_RANGE_BOUNDS",
       "tooltip": "Data contains range bounds in the incorrect order",
@@ -1982,7 +1982,7 @@
       "hasAnalysis": null
     },
     "V100": {
-      "title": "Duplicate key value violates unique constraint",
+      "title": "Unique constraint violation",
       "category": "constraint-violations",
       "collectorKey": "UNIQUE_CONSTRAINT_VIOLATION",
       "tooltip": "Unique constraint violated by INSERT/UPDATE",
@@ -1993,7 +1993,7 @@
       "hasAnalysis": null
     },
     "V101": {
-      "title": "Insert or update / update or delete on table violates foreign key constraint",
+      "title": "Foreign key constraint violation",
       "category": "constraint-violations",
       "collectorKey": "FOREIGN_KEY_CONSTRAINT_VIOLATION",
       "tooltip": "Foreign key constraint violated by INSERT/UPDATE/DELETE",
@@ -2004,7 +2004,7 @@
       "hasAnalysis": null
     },
     "V102": {
-      "title": "Null value in column violates not-null constraint",
+      "title": "Not-NULL constraint violation",
       "category": "constraint-violations",
       "collectorKey": "NOT_NULL_CONSTRAINT_VIOLATION",
       "tooltip": "Not-null constraint on column is violated by INSERT/UPDATE",
@@ -2015,7 +2015,7 @@
       "hasAnalysis": null
     },
     "V103": {
-      "title": "New row for relation violates check constraint",
+      "title": "Check constraint violation",
       "category": "constraint-violations",
       "collectorKey": "CHECK_CONSTRAINT_VIOLATION",
       "tooltip": "Check constraint is violated by inserted/updated data",
@@ -2026,7 +2026,7 @@
       "hasAnalysis": null
     },
     "V104": {
-      "title": "Conflicting key value violates exclusion constraint",
+      "title": "Exclusion constraint violation",
       "category": "constraint-violations",
       "collectorKey": "EXCLUSION_CONSTRAINT_VIOLATION",
       "tooltip": "Exclusion constraint violated by inserted/updated data",
@@ -2059,7 +2059,7 @@
       "hasAnalysis": null
     },
     "W42": {
-      "title": "Checkpoints are occurring too frequently",
+      "title": "Checkpoints too frequent",
       "category": "wal-checkpoints",
       "collectorKey": "CHECKPOINT_TOO_FREQUENT",
       "tooltip": "Checkpoints are occurring very quickly, causing I/O impact",
@@ -2092,7 +2092,7 @@
       "hasAnalysis": null
     },
     "W45": {
-      "title": "Recovery restart point at ...",
+      "title": "Recovery restart point",
       "category": "wal-checkpoints",
       "collectorKey": "RESTARTPOINT_AT",
       "tooltip": "Reference for when a new safe restartpoint was established",
@@ -2103,7 +2103,7 @@
       "hasAnalysis": null
     },
     "W46": {
-      "title": "According to history file, WAL location belongs to timeline N",
+      "title": "Invalid WAL timeline",
       "category": "wal-checkpoints",
       "collectorKey": "STANDBY_INVALID_TIMELINE",
       "tooltip": "Phantom WAL segment file is associated to wrong timeline",
@@ -2147,7 +2147,7 @@
       "hasAnalysis": null
     },
     "W53": {
-      "title": "Backup complete, all required WAL segments have been archived",
+      "title": "Backup complete",
       "category": "wal-checkpoints",
       "collectorKey": "WAL_BASE_BACKUP_COMPLETE",
       "tooltip": "The pg_stop_backup command has succeeded (part of base backup)",
