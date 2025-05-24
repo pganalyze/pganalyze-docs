@@ -112,6 +112,9 @@ export const CHECK_FREQUENCY = {
   index_advisor: {
     indexing_engine: CHECK_FREQUENCY_DAILY,
   },
+  query_tuning: {
+    automated_explain: CHECK_FREQUENCY_DAILY,
+  },
   schema: {
     index_invalid: CHECK_FREQUENCY_30MIN,
     index_unused: CHECK_FREQUENCY_DAILY,
