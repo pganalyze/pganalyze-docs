@@ -3,37 +3,47 @@ import VerifyConnection from "../../components/VerifyConnection";
 
 ### Create a service account for monitoring user
 
-Cloud SQL supports IAM database authentication, which allows users to connect to the database using Google Cloud IAM credentials instead of traditional passwords.
+Cloud SQL and AlloyDB support IAM database authentication, which allows users to connect to the database using Google Cloud IAM credentials instead of traditional passwords.
 This means you can use a service account as a monitoring user.
 
-First, create a new service account with the ID "pganalyze", and set the following two roles:
+First, create a new service account with the ID "pganalyze", and set the following two roles in the case of Cloud SQL:
+
 * **Cloud SQL Client** (`roles/cloudsql.client`)
   * Provides connectivity access to Cloud SQL instances
 * **Cloud SQL Instance User** (`roles/cloudsql.instanceUser`)
   * Role allowing access to a Cloud SQL instance
 
+Or the following roles in case of AlloyDB:
+
+* **Cloud AlloyDB Database User** (`roles/alloydb.databaseUser`)
+  * Provides connectivity access to AlloyDB clusters
+* **Service Usage Customer** (`roles/serviceusage.serviceUsageConsumer`)
+  * Provides the user access to an API that checks permissions
+
 The email address `pganalyze@your-project-id.iam.gserviceaccount.com` will be given to this service account.
-For the database username, Cloud SQL for PostgreSQL removes the `.gserviceaccount.com` suffix in the email,
+For the database username, Cloud SQL and AlloyDB remove the `.gserviceaccount.com` suffix in the email,
 therefore the username for this service account becomes `pganalyze@your-project-id.iam`.
 This username will be used in later steps.
 
 ### Configure new and existing instances for IAM database authentication
 
 Once the service account for a monitoring user is created, configure the database to monitor for IAM database authentication.
-Follow the [Cloud SQL documentation](https://cloud.google.com/sql/docs/postgres/create-edit-iam-instances) to configure.
+Follow the [Cloud SQL](https://cloud.google.com/sql/docs/postgres/create-edit-iam-instances)
+or [AlloyDB](https://cloud.google.com/alloydb/docs/database-users/manage-iam-auth) documentation to configure.
 
 You can skip this part if your database is already configured for IAM database authentication.
 
-### Add a service account to a Cloud SQL instance
+### Add a service account to a Cloud SQL instance / AlloyDB cluster
 
-Next, add a service account to a Cloud SQL instance to monitor. This creates an actual Postgres user for this service account.
+Next, add a service account to a Cloud SQL instance or AlloyDB cluster to monitor. This creates an actual Postgres user for this service account.
 The following steps add the service account using the Google Cloud console. Please refer to the
-[Cloud SQL documentation](https://cloud.google.com/sql/docs/postgres/add-manage-iam-users#creating-a-database-user)
+[Cloud SQL](https://cloud.google.com/sql/docs/postgres/add-manage-iam-users#creating-a-database-user)
+or [AlloyDB](https://cloud.google.com/alloydb/docs/database-users/manage-iam-auth#create-user) documentation
 for other ways to add it.
 
-1. In the Google Cloud console, open the **Overview** page of an instance to monitor.
+1. In the Google Cloud console, open the **Overview** page of an instance / cluster to monitor.
 2. Select **Users** from the SQL navigation menu.
-3. Click **Add user account**. The **Add a user account to instance _instance_name_** tab opens.
+3. Click **Add user account**. The **Create user** tab opens.
 4. Click the **Cloud IAM** radio button.
 5. Add the email address `pganalyze@your-project-id.iam` in the **Principal** field.
 6. Click **Add**. The service account is now in the user account list.
