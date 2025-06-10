@@ -26,13 +26,13 @@ ECS, or with Docker.
 
 **Collector Setup**
 * Capability to create an instance for running the collector
-  * The collector instance needs be able to connect to RDS or Aurora instances
+  * The collector instance needs to be able to connect to RDS or Aurora instances
 * Capability to create an IAM policy/role for the collector
   * A new policy/role is required to access to the RDS metadata, Cloudwatch
     metrics, etc.
 * A direct connection to the PostgreSQL instance
   * The collector instance needs to be able to connect to the instance directly,
-    bypass any connection poolers like PgBouncer
+    bypassing any connection poolers like PgBouncer
 
 Here is an overview diagram for how the pganalyze collector will be placed
 within your existing setup.
