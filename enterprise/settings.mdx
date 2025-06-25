@@ -75,7 +75,7 @@ Configured using `SLACK_CLIENT_ID` and `SLACK_CLIENT_SECRET`. See [separate inst
 
 ## LDAP configuration
 
-The collector can optionally support using an LDAP connection to verify user credentials, instead of using a username/password stored in the pganalyze database. When LDAP is enabled regular user authentication is turned off.
+pganalyze Enterprise Server can optionally support using an LDAP connection to verify user credentials, instead of using a username/password stored in the pganalyze database. When LDAP is enabled regular user authentication is turned off.
 
 LDAP is commonly utilized when using Microsoft Active Directory on-premise. If possible we recommend using the [SAML integration](/docs/accounts/sso) instead, including when using Azure Active Directory.
 
@@ -84,8 +84,8 @@ to ensure that new LDAP users are added to the existing organization.
 
 * `LDAP_HOST`: Internal hostname or IP of your LDAP server
 * `LDAP_PORT`: Port of your LDAP server. Use port 636 for LDAPS
-* `LDAP_BASE_DN`: Base DN that all lookups should be done with. You can use this to restrict access to a subset of your LDAP accounts. Note that both the admin CN and regular users need to be members of this DN.
-* `LDAP_LOOKUP_CN`: Common Name of an account that will be used to run authentication lookups on your LDAP directory
+* `LDAP_BASE_DN`: Base Domain Name (DN) that all lookups should be done with. You can use this to restrict access to a subset of your LDAP accounts. Note that users need to be members of this DN.
+* `LDAP_LOOKUP_CN`: Common Name (CN) of an account that will be used to run authentication lookups on your LDAP directory
 * `LDAP_LOOKUP_PASSWORD`: Password for the account that will be used to run authentication lookups
 * `LDAP_FIELD_UID`: UID field on your LDAP entries. This is usually `sAMAccountName` on Active Directory servers
 * `LDAP_ENCRYPTION`: Encryption mode to use for LDAP connections. Only add this when you want to use LDAPS (Port 636) or STARTTLS (Port 389) for a secure connection to your server. Specify `ssl` for LDAPS, and `tls` for STARTTLS (optional)
