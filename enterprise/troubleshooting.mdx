@@ -63,7 +63,7 @@ Verifying enterprise license... FAILED
 When using IAM authentication on AWS (e.g. with an instance role), you may see an error like this in the logs of the pganalyze Enterprise Server container:
 
 ```
-... | [... ERROR pganalyze_workers::full_snapshot_worker] job failed: failed to construct request
+... | [... ERROR pganalyze_rust::full_snapshot_worker] job failed: failed to construct request
 ... |
 ... |     Caused by:
 ... |         no credentials in the property bag
