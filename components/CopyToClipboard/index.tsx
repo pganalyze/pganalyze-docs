@@ -28,7 +28,7 @@ const CopyToClipboard: React.FunctionComponent<Props> = ({
   label,
   title,
 }) => {
-  const unmounted = useUnmounted();
+  const unmounted = useRef(false);
   const [copied, setCopied] = useState(false);
   const [waitingForContent, setWaitingForContent] = useState(false);
   const [copyError, setCopyError] = useState(null);
@@ -37,7 +37,7 @@ const CopyToClipboard: React.FunctionComponent<Props> = ({
     return null;
   }
 
-  const handleCopy = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleCopy = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (clipboard) {
       let actualContent;
@@ -53,6 +53,7 @@ const CopyToClipboard: React.FunctionComponent<Props> = ({
       } else {
         actualContent = content;
       }
+
       clipboard
         .writeText(actualContent)
         .then(() => {
@@ -93,10 +94,18 @@ const CopyToClipboard: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <a href="" className={className} onClick={handleCopy}>
-      {copyIcon} {label}
-    </a>
+    <button
+      className={className}
+      title={title}
+      onClick={handleCopy}
+      disabled={waitingForContent}
+      type="button"
+    >
+      {copyIcon}
+      {label}
+    </button>
   );
+
 };
 
 export default CopyToClipboard;
