@@ -17,10 +17,10 @@ Connect to your database as an RDS superuser (usually the credentials you create
 
 Run the following SQL commands to enable the extension, and make sure it was installed correctly:
 
-```
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
-SELECT * FROM pg_stat_statements LIMIT 1;
-```
+<CodeBlock language="sql">
+{`CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+SELECT * FROM pg_stat_statements LIMIT 1;`}
+</CodeBlock>
 
 This should return one row of query statistics information.
 
@@ -53,5 +53,5 @@ this additional information in the dashboard as well.
 <PublicOnly>
   <br />
   <br />
-  <div><SignupCTA event-label="Docs"></SignupCTA></div>
+  <div><SignupCTA event-label="Docs" /></div>
 </PublicOnly>
