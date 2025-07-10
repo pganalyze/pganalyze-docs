@@ -75,7 +75,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - Previously, this was wrongly providing a warning when a test snapshot was executed recently. This is now fixed.
 - System Stats: Fix CPU core count calculation <!-- 4244 -->
   - We previously multiplied the CPU logical core count by the number of sockets to determine this number, but that's not the commonly expected way of calculating this. Also rename the field to "Logical Cores" to clarify the meaning.
- LDAP Authentication: Require valid SSL certificate for LDAP server if secure connection is specified <!-- 4300 -->
+- LDAP Authentication: Require valid SSL certificate for LDAP server if secure connection is specified <!-- 4300 -->
 - Schema Statistics: Show notice when the column stats are not available for the table due to outdated stats <!-- 4311 -->
   - When the statistics in pg_stats were out of sync with the current table structure, such as when columns have been added or removed since the last statistics collection, they were simply not shown previously. With this change, show notification so that ANALYZE can be run to solve the issue.
 - EXPLAIN: Tweak plan fingerprinting to improve detection of partition indexes <!-- 4304 -->
