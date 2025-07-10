@@ -89,6 +89,8 @@ to ensure that new LDAP users are added to the existing organization.
 * `LDAP_LOOKUP_PASSWORD`: Password for the account that will be used to run authentication lookups
 * `LDAP_FIELD_UID`: UID field on your LDAP entries. This is usually `sAMAccountName` on Active Directory servers
 * `LDAP_ENCRYPTION`: Encryption mode to use for LDAP connections. Only add this when you want to use LDAPS (Port 636) or STARTTLS (Port 389) for a secure connection to your server. Specify `ssl` for LDAPS, and `tls` for STARTTLS (optional)
+* `LDAP_ENCRYPTION_CA_FILE`: Sets the path to CA file to validate server certificate (use a volume mount to provide this file to the container)
+* `LDAP_ENCRYPTION_VERIFY_MODE`: Whether to verify the server certificate ("peer", the default since release v2024.10.0) or not ("none")
 
 Example LDAP configuration, with the required `DEFAULT_ORG_ROLE` setting, but without other unrelated settings:
 
