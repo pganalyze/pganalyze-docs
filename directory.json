@@ -304,6 +304,10 @@
       "title": "2025.03.2 Release",
       "path": "/docs/enterprise/releases/2025-03-2"
     },
+    "enterprise/releases/2025-03-3": {
+      "title": "2025.03.3 Release",
+      "path": "/docs/enterprise/releases/2025-03-3"
+    },
     "enterprise/settings": {
       "title": "Enterprise Server: Container settings",
       "path": "/docs/enterprise/settings"
