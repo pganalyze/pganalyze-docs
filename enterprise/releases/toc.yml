@@ -1,5 +1,7 @@
 - mount: enterprise/releases
   items:
+  - name: 2025.03.3 Release
+    href: enterprise/releases/2025-03-3
   - name: 2025.03.2 Release
     href: enterprise/releases/2025-03-2
   - name: 2025.03.1 Release

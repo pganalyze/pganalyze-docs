@@ -1,0 +1,44 @@
+---
+title: '2025.03.3 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2025.03.3`
+
+## Notes
+
+- This is a patch release on top of **[2025.03.0](2025-03-0)**, **[2025.03.1](2025-03-1)** and **[2025.03.2](2025-03-2)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2025.03.0](2025-03-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+
+## Features
+
+- Add additional LDAP authentication settings for SSL certificate verification <!-- 4999 -->
+  - Adds `LDAP_ENCRYPTION_CA_FILE` to set the path to CA file to validate server certificate (use a volume mount to provide this file to the container)
+  - Adds `LDAP_ENCRYPTION_VERIFY_MODE` to set whether to verify the server certificate ("peer", the default) or not ("none")
+  - Note that `LDAP_ENCRYPTION_VERIFY_MODE=none` restores the historic behavior of not verifying the server side certificate, as it was before v2025.10.0.
+- Update bundled collector from 0.65.0 to 0.66.2 <!-- 5001 -->
+  - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0662------2025-06-25) for the full details
+  - Note that some of the new functionality (e.g. pg_stat_io tracking) is not yet enabled in this Enterprise Server release, as this update is mainly aimed to pull in collector-side bugfixes.
+
+
+## Bugfixes
+
+- Improve reliability of partition creation for internal statistics tables <!-- 4852 and 4860 -->
+  - This replaces the mechanism that runs in the background to create daily partition for the internal database, with
+    a more reliable method that runs directly in the statistics snapshot workers
+  - Resolves errors like "no partition of relation ... found for row" that caused missing data in some cases
+- Improve LDAP self-test to accurately report SSL/TLS connection problems <!-- 4999 -->
+- Connection tracing: Don't show incorrect information from newer backend <!-- 4914 -->
+- Index Advisor: Don't fail with "internal error" in certain cases when handling queries involving 2 or more tables <!-- 4910 -->
+
+
+## Security
+
+- Package security upgrades (nokogiri [CVE-2025-24855](https://nvd.nist.gov/vuln/detail/CVE-2025-24855), nokogiri [CVE-2024-55549](https://nvd.nist.gov/vuln/detail/CVE-2024-55549), nokogiri [CVE-2025-32414](https://nvd.nist.gov/vuln/detail/CVE-2025-32414), nokogiri [CVE-2025-32415](https://nvd.nist.gov/vuln/detail/CVE-2025-32415), net-imap [CVE-2025-43857](https://nvd.nist.gov/vuln/detail/CVE-2025-43857)
+rack [CVE-2025-46727](https://nvd.nist.gov/vuln/detail/CVE-2025-46727) and rack [CVE-2025-49007](https://nvd.nist.gov/vuln/detail/CVE-2025-49007))
+  - These vulnerabilities are not exploitable in our assessment, but may show up in dependency scanners
+- Routine security updates to packages in the base image
