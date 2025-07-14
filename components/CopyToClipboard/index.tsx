@@ -28,7 +28,7 @@ const CopyToClipboard: React.FunctionComponent<Props> = ({
   label,
   title,
 }) => {
-  const unmounted = useRef(false);
+  const unmounted = useUnmounted();
   const [copied, setCopied] = useState(false);
   const [waitingForContent, setWaitingForContent] = useState(false);
   const [copyError, setCopyError] = useState(null);

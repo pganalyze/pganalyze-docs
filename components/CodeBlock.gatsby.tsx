@@ -8,15 +8,12 @@ import styles from "./style.module.scss";
 // Utility to extract text from children
 function getTextFromChildren(children: React.ReactNode): string {
   if (typeof children === "string") {
-    console.log("getTextFromChildren was a string", children); 
     return children;
   }
   if (Array.isArray(children)) {
-    console.log("getTextFromChildren was an array", children);
     return children.map(getTextFromChildren).join(" \n");
   }
   if (typeof children === "object" && children && "props" in children) {
-    console.log("getTextFromChildren was an object", children);
     return getTextFromChildren((children as any).props.children);
   } 
   return "";
@@ -43,7 +40,7 @@ const CodeBlock = ({children, language = 'text', style, hideCopy = false}: Props
     <div className={styles.copyBlock}>
       <div className='gatsby-highlight' data-language={language}>
         <pre className={`language-${language}`} style={style}>
-          <code className={`language-${language}`} ref={ref}>{getTextFromChildren(children)}</code>
+          <code className={`language-${language}`} ref={ref}>{children}</code>
         </pre>
       </div>
      {!hideCopy && (
