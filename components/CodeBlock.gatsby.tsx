@@ -40,7 +40,7 @@ const CodeBlock = ({children, language = 'text', style, hideCopy = false}: Props
     <div className={styles.copyBlock}>
       <div className='gatsby-highlight' data-language={language}>
         <pre className={`language-${language}`} style={style}>
-          <code className={`language-${language}`} ref={ref}>{children}</code>
+          <code className={`language-${language}`} ref={ref}>{getTextFromChildren(children)}</code>
         </pre>
       </div>
      {!hideCopy && (
