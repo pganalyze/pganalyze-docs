@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useCodeBlock } from "./CodeBlock";
+import { useCodeBlock } from "./CodeBlock.gatsby";
 import { useGeneratedPassword } from "./WithGeneratedPassword";
 
 type Props = {
@@ -33,9 +33,10 @@ export const MonitoringUserPerDatabaseHelpers: React.FunctionComponent<{ usernam
         Then, connect to each database that you plan to monitor on this server as {adminUserStr} and
         run the following to enable the collection of additional column statistics and extended statistics:
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE SCHEMA IF NOT EXISTS pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO ${username};
+
 
 DROP FUNCTION IF EXISTS pganalyze.get_column_stats;
 CREATE FUNCTION pganalyze.get_column_stats() RETURNS TABLE(
@@ -85,7 +86,7 @@ export const MonitoringUserColumnStats: React.FunctionComponent<{ username: stri
         Then, connect to each database that you plan to monitor on this server as {adminUserStr} and
         run the following to enable the collection of additional column statistics:
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE SCHEMA IF NOT EXISTS pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO ${username};
 DROP FUNCTION IF EXISTS pganalyze.get_column_stats;
@@ -120,7 +121,7 @@ export const MonitoringUserExtStats: React.FunctionComponent<{ username: string,
         Then, connect to each database that you plan to monitor on this server as {adminUserStr} and
         run the following to enable the collection of additional extended statistics:
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE SCHEMA IF NOT EXISTS pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO ${username};
 DROP FUNCTION IF EXISTS pganalyze.get_relation_stats_ext;
@@ -151,7 +152,7 @@ export const MonitoringUserExplain: React.FunctionComponent<{ username: string }
   const CodeBlock = useCodeBlock();
   return (
     <>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE SCHEMA IF NOT EXISTS pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO ${username};
 CREATE OR REPLACE FUNCTION pganalyze.explain(query text, params text[]) RETURNS text AS
@@ -202,7 +203,7 @@ export const MonitoringUserLogRead: React.FunctionComponent<{ username: string }
   const CodeBlock = useCodeBlock();
   return (
     <>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE SCHEMA IF NOT EXISTS pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO ${username};
 CREATE OR REPLACE FUNCTION pganalyze.read_log_file(log_filename text, read_offset bigint, read_length bigint) RETURNS text AS
@@ -235,7 +236,7 @@ const MonitoringUserBase: React.FunctionComponent<{
   const CodeBlock = useCodeBlock();
   return (
     <>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE USER pganalyze WITH PASSWORD '${password}' CONNECTION LIMIT 5;
 ${noPgMonitor ? '' : 'GRANT pg_monitor TO pganalyze;\n'}
 CREATE SCHEMA pganalyze;
@@ -250,7 +251,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;` : ''}`}
       <p>
         If you enable the optional reset mode (usually not required), you will also need this helper method:
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
       {`CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
 $$
   /* pganalyze-collector */ SELECT * FROM public.pg_stat_statements_reset();
@@ -266,7 +267,7 @@ export const MonitoringUserBaseForGCP: React.FunctionComponent<{
   const CodeBlock = useCodeBlock();
   return (
     <>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`ALTER ROLE "${username}" CONNECTION LIMIT 5;
 GRANT pg_monitor TO "${username}";
 CREATE SCHEMA pganalyze;
@@ -276,7 +277,7 @@ GRANT USAGE ON SCHEMA public TO "${username}";`}
       <p>
         If you enable the optional reset mode (usually not required), you will also need this helper method:
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
       {`CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
 $$
   /* pganalyze-collector */ SELECT * FROM public.pg_stat_statements_reset();
@@ -305,7 +306,7 @@ export const NoPgMonitorPgStatStatementsHelpers: React.FunctionComponent<{
         database and create a function like the following (replace <code>&lt;username&gt;</code> with
         the actual user name):
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements_<username>(showtext boolean = true)
 RETURNS SETOF pg_stat_statements AS
 $$
@@ -316,7 +317,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
         For example, if you have two users, <code>app</code> and <code>analytics</code>, you'll
         need to log in as <code>app</code> and run:
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements_app(showtext boolean = true)
 RETURNS SETOF pg_stat_statements AS
 $$
@@ -326,7 +327,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       <p>
         Then, log in as <code>analytics</code> and run:
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements_analytics(showtext boolean = true)
 RETURNS SETOF pg_stat_statements AS
 $$
@@ -336,7 +337,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
       <p>
         Make sure to also log in as {adminUserStr} and create a function for that user:
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements_${adminUsername}(showtext boolean = true)
 RETURNS SETOF pg_stat_statements AS
 $$
@@ -347,7 +348,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
         Then, still logged in as {adminUserStr}, create a helper function to combine these. For example,
         for the case of the three users above, the final helper function will look like this:
       </p>
-      <CodeBlock>
+      <CodeBlock language="sql">
         {`CREATE OR REPLACE FUNCTION pganalyze.get_stat_statements(showtext boolean = true)
 RETURNS SETOF pg_stat_statements AS
 $$

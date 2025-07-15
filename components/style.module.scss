@@ -65,3 +65,25 @@
   color: #5cb85c;
   vertical-align: baseline;
 }
+
+.copyBlock {
+  position: relative;
+
+  .copyIcon {
+    position: absolute;
+    display: block;
+    right: 8px;
+    top: 8px;
+    font-size: 16px;
+    color: #c8c8c8;
+    background-color: grey;
+    padding: 2px 6px;
+    border: 1px solid #f2f2f2;
+    border-radius: 5px;
+
+    &:hover {
+      color: #f6f6f6;
+    }
+  }
+}
+
