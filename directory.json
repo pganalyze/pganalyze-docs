@@ -340,6 +340,10 @@
       "title": "The Basics of Postgres Query Planning",
       "path": "/docs/explain/basics-of-postgres-query-planning"
     },
+    "explain/grid": {
+      "title": "The pganalyze EXPLAIN grid view",
+      "path": "/docs/explain/grid"
+    },
     "explain/insights": {
       "title": "EXPLAIN - Insights",
       "path": "/docs/explain/insights"

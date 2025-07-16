@@ -5,6 +5,8 @@
   - name: The Basics of Postgres Query Planning
     href: explain/basics-of-postgres-query-planning
   # Note we don't mount "Setup" here, since thats linked in the Installation Guide ToC instead
+  - name: EXPLAIN Grid view
+    href: explain/grid
   - name: Comparing EXPLAIN plans
     href: explain/plan-comparison
   - name: Insights
