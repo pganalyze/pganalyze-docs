@@ -41,14 +41,14 @@ The execution metric to show can be selected at the top of the plan:
   - **Runtime**: How much time was spent executing this node, excluding time spent
     executing the node's children.
   - **Rows**: How many rows each node produced, and how many it was expected to
-    produce according to the query plan
+    produce according to the query plan.
   - **Buffers**: How many buffers were hit in the buffer cache and read from disk
     (these are combined) or dirtied while executing this query, excluding
-    buffers touched while executing the node's children
+    buffers touched while executing the node's children.
   - **Reads**: How much data was read from disk (or the OS page cache) and how much
-    time was spent reading it
+    time was spent reading it.
   - **Writes**: How much data was written to disk and how much time was spent
-    writing it
+    writing it.
 
 Learn more about these in our [plan comparison
 documentation](/docs/explain/plan-comparison). Note that not all execution
