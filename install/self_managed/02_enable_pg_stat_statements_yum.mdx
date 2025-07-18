@@ -9,34 +9,38 @@ backlink_title: 'Installation Guide'
 
 On your database server, make sure that the extensions package is installed:
 
-```
-sudo yum install postgresql-contrib
-```
+<CodeBlock language="bash">
+{`sudo yum install postgresql-contrib
+`}
+</CodeBlock>
 
 ## Enable pg_stat_statements
 
 Run the following SQL statement as a superuser, to enable the `pg_stat_statements` extension:
 
-```
-ALTER SYSTEM SET shared_preload_libraries = 'pg_stat_statements';
-```
+<CodeBlock language="sql">
+{`ALTER SYSTEM SET shared_preload_libraries = 'pg_stat_statements';
+`}
+</CodeBlock>
 
 ## Restart the PostgreSQL daemon
 
 If you have not used pg_stat_statements before, you will need a full Postgres restart to enable it for the first time:
 
-```
-sudo systemctl restart postgresql
-```
+<CodeBlock language="bash">
+{`sudo systemctl restart postgresql
+`}
+</CodeBlock>
 
 ## Verify that pg_stat_statements returns data
 
 As a superuser, run the following statements:
 
-```
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+<CodeBlock language="sql">
+{`CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 SELECT calls, query FROM pg_stat_statements LIMIT 1;
-```
+`}
+</CodeBlock>
 
 If you have configured your database correctly, this will return a result like this:
 

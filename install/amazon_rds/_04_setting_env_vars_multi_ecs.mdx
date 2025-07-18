@@ -37,15 +37,16 @@ To start, create an `INI` collector config file and save it as `pganalyze_collec
 
 Next, create a SSM secret for storing above file:
 
-```bash
-aws ssm put-parameter --name /pganalyze/CONFIG_CONTENTS --type SecureString \
+<CodeBlock language="bash">
+{`aws ssm put-parameter --name /pganalyze/CONFIG_CONTENTS --type SecureString \
   --value file://pganalyze_collector.conf
-```
+`}
+</CodeBlock>
 
 Now, save the following ECS task definition to a file, for example `pganalyze_task.json`:
 
-```json
-{
+<CodeBlock language="json">
+{`{
   "family": "pganalyze-fargate",
   "requiresCompatibilities": [
     "FARGATE"
@@ -77,6 +78,7 @@ Now, save the following ECS task definition to a file, for example `pganalyze_ta
     }
   ]
 }
-```
+`}
+</CodeBlock>
 
 Make sure to adjust `YOUR_ACCOUNT_ID` to be your AWS account ID (in the `executionRoleArn` field).

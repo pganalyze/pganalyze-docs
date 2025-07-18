@@ -30,16 +30,18 @@ by calling a special helper function owned by the role.
 
 First, start by creating the new role:
 
-```sql
-CREATE ROLE pganalyze_explain;
-```
+<CodeBlock language="sql">
+{`CREATE ROLE pganalyze_explain;
+`}
+</CodeBlock>
 
 Then, either use GRANT statements for individual tables ([described separately](#individual-grant-statements-instead-of-pg_read_all_data)), or assign the
 `pg_read_all_data` role to the `pganalyze_explain` role:
 
-```sql
-GRANT pg_read_all_data TO pganalyze_explain;
-```
+<CodeBlock language="sql">
+{`GRANT pg_read_all_data TO pganalyze_explain;
+`}
+</CodeBlock>
 
 The special `pg_read_all_data` role lets the `pganalyze_explain` user read the data of
 all tables on the database server.
@@ -57,21 +59,27 @@ to ensure the `SECURITY DEFINER` privilege is correctly assigned.
 First, ensure the `pganalyze` schema exists, temporarily allow the `pganalyze_explain`
 user to create functions in it, and switch roles:
 
-<CopyCodeBlock content={`CREATE SCHEMA IF NOT EXISTS pganalyze;
+<CodeBlock language="sql">
+{`CREATE SCHEMA IF NOT EXISTS pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
 GRANT CREATE ON SCHEMA pganalyze TO pganalyze_explain;
 SET ROLE pganalyze_explain;
-`} language="sql" />
+`}
+</CodeBlock>
 
 Then, create the function:
 
-<CopyCodeBlock content={explainAnalyzeHelper} language="sql" />
+<CodeBlock language="sql">
+{explainAnalyzeHelper}
+</CodeBlock>
 
 To complete the setup, reset the role, and revoke the creation privilege again:
 
-<CopyCodeBlock content={`RESET ROLE;
+<CodeBlock language="sql">
+{`RESET ROLE;
 REVOKE CREATE ON SCHEMA pganalyze FROM pganalyze_explain;
-`} language="sql" />
+`}
+</CodeBlock>
 
 ## Revoking access for dblink & other problematic functions
 
@@ -87,13 +95,15 @@ By default `dblink` can be used by any user in the system, whether they are supe
 As a general best practice, and to avoid granting access to the `pganalyze_explain` user,
 we recommend explicitly revoking the use of `dblink` from `PUBLIC`:
 
-<CopyCodeBlock content={`REVOKE ALL ON FUNCTION dblink(text, text) FROM PUBLIC;
+<CodeBlock language="sql">
+{`REVOKE ALL ON FUNCTION dblink(text, text) FROM PUBLIC;
 REVOKE ALL ON FUNCTION dblink(text, text, bool) FROM PUBLIC;
 REVOKE ALL ON FUNCTION dblink_connect(text) FROM PUBLIC;
 REVOKE ALL ON FUNCTION dblink_connect(text, text) FROM PUBLIC;
 REVOKE ALL ON FUNCTION dblink_exec(text, text) FROM PUBLIC;
 REVOKE ALL ON FUNCTION dblink_exec(text, text, bool) FROM PUBLIC;
-`} language="sql" />
+`}
+</CodeBlock>
 
 Note that if you have any non-superuser users utilizing `dblink`, you will need to explicitly
 grant them access to these functions instead.
@@ -105,13 +115,17 @@ instead of using `pg_read_all_data` as described earlier.
 
 For example, to grant access to all columns in table `test`, and only some columns in table `restricted`, you can run the following `GRANT` statements:
 
-<CopyCodeBlock content={`GRANT SELECT ON test TO pganalyze_explain;
+<CodeBlock language="sql">
+{`GRANT SELECT ON test TO pganalyze_explain;
 GRANT SELECT (col1, col2) ON restricted TO pganalyze_explain;
-`} language="sql" />
+`}
+</CodeBlock>
 
 Or alternatively you can grant access to all tables in a schema:
 
-<CopyCodeBlock content={`GRANT SELECT ON ALL TABLES IN SCHEMA myschema TO pganalyze_explain;`} language="sql" />
+<CodeBlock language="sql">
+{`GRANT SELECT ON ALL TABLES IN SCHEMA myschema TO pganalyze_explain;`}
+</CodeBlock>
 
 Note this will not grant privileges to tables in the schema that are newly created after the `GRANT` statement was executed.
 
@@ -121,8 +135,12 @@ For most systems we recommend utilizing the `pg_read_all_data` role to avoid hav
 
 In order to deactivate the collector workflow, you will first need to drop the helper function on each database:
 
-<CopyCodeBlock content={`DROP FUNCTION pganalyze.explain_analyze(query text, params text[], param_types text[], analyze_flags text[]);`} language="sql" />
+<CodeBlock language="sql">
+{`DROP FUNCTION pganalyze.explain_analyze(query text, params text[], param_types text[], analyze_flags text[]);`}
+</CodeBlock>
 
 And then you can optionally drop the role as well:
 
-<CopyCodeBlock content={`DROP ROLE pganalyze_explain;`} language="sql" />
+<CodeBlock language="sql">
+{`DROP ROLE pganalyze_explain;`}
+</CodeBlock>

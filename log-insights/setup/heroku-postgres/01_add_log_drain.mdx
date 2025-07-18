@@ -23,16 +23,18 @@ forwards log lines to the pganalyze collector app running in your account.
 
 The collector receives log drains at the following URL:
 
-```
-https://[your-collector-app-domain-name].herokuapp.com/logs/[ALIAS]
-```
+<CodeBlock language="bash">
+{`https://[your-collector-app-domain-name].herokuapp.com/logs/[ALIAS]
+`}
+</CodeBlock>
 
 To check the `[your-collector-app-domain-name]` value of your collector app, run
 the following Heroku command:
 
-```bash
-heroku domains -a [your-collector-app-name]
-```
+<CodeBlock language="bash">
+{`heroku domains -a [your-collector-app-name]
+`}
+</CodeBlock>
 
 It should look like 'your-collector-app-name-[unique identifier].herokuapp.com'.
 
@@ -40,17 +42,19 @@ For the `[ALIAS]` value we recommend you use the add-on attachment name you've c
 in the initial setup, which you can determine by viewing the current Heroku
 configuration of your collector app:
 
-```bash
-heroku config -a [your-collector-app-name]
-```
+<CodeBlock language="bash">
+{`heroku config -a [your-collector-app-name]
+`}
+</CodeBlock>
 <TestAppConfigVars apiKey={props.apiKey} />
 
 So in this case we would use `TESTAPP_URL` as our alias, and then we would add the log drain
 like this:
 
-```bash
-heroku drains:add https://[your-collector-app-domain-name].herokuapp.com/logs/TESTAPP_URL -a [your-app-name]
-```
+<CodeBlock language="bash">
+{`heroku drains:add https://[your-collector-app-domain-name].herokuapp.com/logs/TESTAPP_URL -a [your-app-name]
+`}
+</CodeBlock>
 
 Make sure to replace `[your-collector-app-name]` with the name of your own collector application
 that you've deployed in your Heroku account, and `[your-app-name]` with the name of your main

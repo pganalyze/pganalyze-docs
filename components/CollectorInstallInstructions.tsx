@@ -39,8 +39,8 @@ const CollectorEnvInstallInstructions: React.FunctionComponent<{
         We recommend running our install script to automatically detect your platform and
         install the correct package:
       </p>}
-      <CodeBlock>
-        curl https://packages.pganalyze.com/collector-install.sh | {bashCmd}
+      <CodeBlock language="bash">
+        {`curl https://packages.pganalyze.com/collector-install.sh | ${bashCmd}`}
       </CodeBlock>
       <RepositorySigningKey small />
       {!hideManualInstall && <p>

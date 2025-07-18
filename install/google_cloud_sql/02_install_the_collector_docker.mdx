@@ -9,9 +9,10 @@ backlink_title: 'Installation Guide'
 
 On a VM of your choice, download the Docker image:
 
-```
-docker pull quay.io/pganalyze/collector:stable
-```
+<CodeBlock language="bash">
+{`docker pull quay.io/pganalyze/collector:stable
+`}
+</CodeBlock>
 
 Note that you can't use Google Cloud Run for this, as the collector needs to always be running in the background.
 

@@ -1,19 +1,21 @@
 The following command creates a new IAM role named pganalyze:
 
-```bash
-aws iam create-role \
+<CodeBlock language="bash">
+{`aws iam create-role \
   --role-name pganalyze \
   --description "pganalyze collector" \
   --assume-role-policy-document '{"Version": "2012-10-17", "Statement": [{"Effect": "Allow", "Principal": {"Service": "ec2.amazonaws.com"}, "Action": "sts:AssumeRole"}]}'
-```
+`}
+</CodeBlock>
 
 Then, attach the IAM policy to the created role:
 
-```bash
-aws iam attach-role-policy \
+<CodeBlock language="bash">
+{`aws iam attach-role-policy \
   --role-name pganalyze \
   --policy-arn arn:aws:iam::123456789012:policy/pganalyze
-```
+`}
+</CodeBlock>
 
 Make sure to replace `arn:aws:iam::YOURAWSACCOUNTID:policy/POLICYNAME` with the
 correct policy ARN you created earlier.

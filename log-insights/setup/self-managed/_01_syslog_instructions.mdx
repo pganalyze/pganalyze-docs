@@ -4,29 +4,32 @@ are created with permissions that don't allow the pganalyze user access.
 Assuming that the log files are owned by the Postgres user, you first
 need to add the pganalyze user to the postgres group:
 
-```
-sudo usermod -a -G postgres pganalyze
-```
+<CodeBlock language="bash">
+{`sudo usermod -a -G postgres pganalyze
+`}
+</CodeBlock>
 
 And then make sure that new files are written with chmod 640. For rsyslog, adjust
 your `/etc/rsyslog.conf` as follows:
 
-```
-# Place this at the beginning of the rsyslog.conf file:
+<CodeBlock language="text">
+{`# Place this at the beginning of the rsyslog.conf file:
 $umask 0000
-$FileCreateMode 0600
-
+$FileCreateMode 0600\n
+ 
 # Place this where the postgres log is being output
 $FileCreateMode 0640
 local0.* /var/log/postgres/postgres.log
 $FileCreateMode 0600
-```
+`}
+</CodeBlock>
 
 For syslog-ng and other syslog implementations, the configuration changes may be
 different; consult your syslog documentation.
 
 After this, make sure the current log file has the correct permissions:
 
-```
-sudo chmod 640 /var/log/postgres/postgres.log
-```
+<CodeBlock language="bash">
+{`sudo chmod 640 /var/log/postgres/postgres.log
+`}
+</CodeBlock>

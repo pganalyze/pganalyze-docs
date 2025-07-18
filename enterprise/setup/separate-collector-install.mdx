@@ -24,10 +24,11 @@ Now install and enable the pganalyze collector on a database server (for self-ma
 
 Note that you should be able to follow these instructions as written, with one difference. The `[pganalyze]` section of the config file needs to look like this, with the added `api_base_url` setting, which points to your central pganalyze Enterprise Server container (or a load balancer in front of it):
 
-```
-[pganalyze]
+<CodeBlock language="bash">
+{`[pganalyze]
 api_key: your_pga_organization_api_key
 api_base_url: http://your-docker-container.internal
-```
+`}
+</CodeBlock>
 
 You can follow the regular instructions to issue a test command, and after a successful test you should see data show in the dashboard within 10-20 minutes.

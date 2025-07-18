@@ -21,7 +21,7 @@ export const AddonsAttachOutput = ({ organizationSlug }) => {
   const appName = collectorAppName(organizationSlug);
   const attName = attachmentName(organizationSlug);
   return (
-    <CodeBlock>
+    <CodeBlock hideCopy="true">
       {`Attaching postgresql-objective-11111 as ${attName} to ⬢ ${appName}... done
 Setting ${attName} config vars and restarting ⬢ ${appName}... done, v9`}
     </CodeBlock>
@@ -32,9 +32,10 @@ Setting ${attName} config vars and restarting ⬢ ${appName}... done, v9`}
 
 First, find out the add-on name of your database - this is not the same as your application name on Heroku.
 
-```
-heroku addons
-```
+<CodeBlock language="bash">
+{`heroku addons
+`}
+</CodeBlock>
 
 This will output something like the following:
 

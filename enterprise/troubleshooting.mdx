@@ -10,9 +10,10 @@ backlink_title: 'pganalyze Enterprise Server'
 
 You can run the following command to check the configuration for basic errors:
 
-```
-docker run --env-file ... rake enterprise:self_check
-```
+<CodeBlock language="bash">
+{`docker run --env-file ... rake enterprise:self_check
+`}
+</CodeBlock>
 
 This verifies the Postgres, Redis, SMTP and LDAP configuration (if applicable), as well as confirms that the license is active.
 
@@ -20,9 +21,10 @@ This verifies the Postgres, Redis, SMTP and LDAP configuration (if applicable), 
 
 When running Docker on a virtual machine to run pganalyze, you can run the following command:
 
-```
-docker logs -f pganalyze
-```
+<CodeBlock language="bash">
+{`docker logs -f pganalyze
+`}
+</CodeBlock>
 
 This will show the full log messages from the pganalyze app, as well as errors from the collector inside the Enterprise Server container.
 
@@ -46,42 +48,45 @@ to support in case you don't have your license key available.
 
 If the error is still occurring, please run `rake enterprise:self_check`, which will return more details like this:
 
-```
-$ docker run ... quay.io/pganalyze/enterprise:[version] rake enterprise:self_check
-
+<CodeBlock language="bash">
+{`$ docker run ... quay.io/pganalyze/enterprise:[version] rake enterprise:self_check
+ 
 Testing database connection... Success!
 Testing Redis connection... Success!
 Skipping LDAP test.
 Verifying enterprise license... FAILED
   License file exists: No
-
+   
   ERROR: You need to specify the LICENSE_KEY environment variable
-```
+`}
+</CodeBlock>
 
 ### Error: "no credentials in the property bag"
 
 When using IAM authentication on AWS (e.g. with an instance role), you may see an error like this in the logs of the pganalyze Enterprise Server container:
 
-```
-... | [... ERROR pganalyze_rust::full_snapshot_worker] job failed: failed to construct request
+<CodeBlock language="text">
+{`... | [... ERROR pganalyze_rust::full_snapshot_worker] job failed: failed to construct request
 ... |
 ... |     Caused by:
 ... |         no credentials in the property bag
 ... |
 ... |     Stack backtrace:
 ... |         ...
-```
+`}
+</CodeBlock>
 
 One common cause of this problem can be the HTTP response limit set on the IMDSv2 metadata endpoint, since the container that pganalyze Enterprise Server runs in counts as an extra hop on the network layer.
 
 Typically you can fix this error by raising the IMDSv2 hop limit to `2`, like this:
 
-```
-aws ec2 modify-instance-metadata-options \
+<CodeBlock language="bash">
+{`aws ec2 modify-instance-metadata-options \
     --instance-id YOUR_INSTANCE_ID \
     --http-tokens required \
     --http-endpoint enabled \
     --http-put-response-hop-limit 2
-```
+`}
+</CodeBlock>
 
 If this does not resolve the error, please [reach out to us](/contact).

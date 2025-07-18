@@ -42,9 +42,10 @@ bytes must be written to the index.
 The actual calculation is straightforward, though it involves some Postgres
 internals. The basic formula for overhead is:
 
-```
-write overhead = index entry size  / row size * partial index selectivity
-```
+<CodeBlock language="bash">
+{`write overhead = index entry size  / row size * partial index selectivity
+`}
+</CodeBlock>
 
 The index entry size is an 8-byte header plus the average width (based on
 [column stats](/docs/install/troubleshooting/column_stats_helper) if available;
@@ -61,8 +62,8 @@ clause), and generically estimated at 10% for partial indexes.
 
 Let's walk through a simple example. Let's say you have a schema like
 
-```sql
-CREATE TABLE users (
+<CodeBlock language="sql">
+{`CREATE TABLE users (
   id bigserial primary key,
   email text,
   password_hash bytea,
@@ -70,7 +71,8 @@ CREATE TABLE users (
   team_id bigint
 );
 CREATE INDEX ON users (organization_id);
-```
+`}
+</CodeBlock>
 
 To estimate the write overhead for the organization_id index, first we would
 look at the table stats. Say the column stats show the following average column

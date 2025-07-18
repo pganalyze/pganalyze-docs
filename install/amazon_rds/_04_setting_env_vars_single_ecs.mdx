@@ -33,8 +33,8 @@ To start, create SSM secrets for storing the pganalyze API key and database pass
 
 Now, save the following ECS task definition to a file, for example `pganalyze_task.json`:
 
-```json
-{
+<CodeBlock language="json">
+{`{
   "family": "pganalyze-fargate",
   "requiresCompatibilities": [
     "FARGATE"
@@ -71,6 +71,7 @@ Now, save the following ECS task definition to a file, for example `pganalyze_ta
     }
   ]
 }
-```
+`}
+</CodeBlock>
 
 Make sure to modify the values for `DB_HOST`, `DB_USERNAME`, `DB_NAME`, `AWS_REGION`, `AWS_INSTANCE_ID` to be correct for your RDS instance or Aurora cluster. Also adjust `YOUR_ACCOUNT_ID` to be your AWS account ID (in the `executionRoleArn` field).

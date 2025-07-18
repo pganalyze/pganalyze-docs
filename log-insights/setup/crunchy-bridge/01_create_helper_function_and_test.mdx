@@ -17,9 +17,10 @@ Log output for Crunchy Bridge database servers is collected directly from the da
 
 If you are using the application user, first, **connect with superuser credentials** and ensure this user has the `pg_monitor` role:
 
-```sql
-GRANT pg_monitor TO application;
-```
+<CodeBlock language="sql">
+{`GRANT pg_monitor TO application;
+`}
+</CodeBlock>
 
 Then, create a function to grant this user access to the logs:
 

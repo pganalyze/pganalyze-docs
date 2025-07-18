@@ -8,9 +8,10 @@ backlink_title: 'Log Insights: Setup'
 First you can verify whether the log drain data is coming by looking at the router
 logs of the collector app:
 
-```bash
-heroku logs -d router -t -a [your-collector-app-name]
-```
+<CodeBlock language="bash">
+{`heroku logs -d router -t -a [your-collector-app-name]
+`}
+</CodeBlock>
 
 If this shows no output, wait a few minutes and try again; sometimes it can take a
 moment for data to start coming in.
@@ -24,9 +25,10 @@ You're looking for messages like the following:
 Note the `path` here: it should correspond to the log drain you've configured
 in the previous step, e.g.:
 
-```
-path="/logs/TESTAPP_URL"
-```
+<CodeBlock language="bash">
+{`path="/logs/TESTAPP_URL"
+`}
+</CodeBlock>
 
 Once you see router logs for this path, proceed to the next step:
 
