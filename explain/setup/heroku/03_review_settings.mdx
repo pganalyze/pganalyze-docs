@@ -33,9 +33,10 @@ You can check out the [Heroku documentation](https://devcenter.heroku.com/articl
 for how to update these settings.
 The following is an example of updating `log_min_duration`:
 
-```sh
-heroku pg:settings:auto-explain:log-min-duration [database-addon-name] 1000 -a [your-app-name]
-```
+<CodeBlock language="bash">
+{`heroku pg:settings:auto-explain:log-min-duration [database-addon-name] 1000 -a [your-app-name]
+`}
+</CodeBlock>
 
 <Link className="btn btn-success" to="04_test_and_verify">
   Continue to Step 4: Test and verify

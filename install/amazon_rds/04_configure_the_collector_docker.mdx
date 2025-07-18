@@ -20,32 +20,35 @@ Create your configuration file (e.g. named `pganalyze_collector.env`) with envir
 
 In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance.
 
-```
-DB_HOST=mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
-```
+<CodeBlock language="bash">
+{`DB_HOST=mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
+`}
+</CodeBlock>
 
 This will only monitor the writer instance. If you also want to monitor a reader instance, you'll need to use the Multiple Instances method above.
 
-```
-CONFIG_CONTENTS="[pganalyze]
+<CodeBlock language="text">
+{`CONFIG_CONTENTS="[pganalyze]
 api_key = 'your_pga_organization_api_key'
-
+ 
 [writer_instance]
 db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
 ...
-
+ 
 [reader_instance]
 db_host = mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
 ...
 "
-```
+`}
+</CodeBlock>
 
 Alternatively, you can run a separate Docker container to monitor a reader instance.
 Create a new configuration file (e.g. named `pganalyze_collector.replica.env`) and use the `cluster-ro` endpoint as the `DB_HOST`:
 
-```
-DB_HOST=mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
-```
+<CodeBlock language="bash">
+{`DB_HOST=mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
+`}
+</CodeBlock>
 
 If you have a cluster with multiple readers, you either need to add each instance
 endpoint to the content of `CONFIG_CONTENTS` (e.g. add each sections like `[reader_instance1]`, `[reader_instance2]`),
@@ -55,8 +58,9 @@ or run one pganalyze collector Docker container for each instance.
 
 Then run the following:
 
-```
-docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test
-```
+<CodeBlock language="bash">
+{`docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test
+`}
+</CodeBlock>
 
 <PublicLastStepLogInsightsLink />

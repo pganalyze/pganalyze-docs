@@ -251,8 +251,8 @@ You can avoid reaching this limit by using the following setting to select which
 
 To validate whether the setting is working as intended, you can run a query on your database server to count the number of monitored tables and views. Note you would have to run this on each database on the server and then summarize the counts, which should not exceed the 5,000 limit in aggregate:
 
-```sql
-SELECT current_database() AS dbname,
+<CodeBlock language="sql">
+{`SELECT current_database() AS dbname,
        COUNT(*) AS table_and_view_count
   FROM pg_class c
        LEFT JOIN pg_catalog.pg_namespace n ON (n.oid = c.relnamespace)
@@ -261,7 +261,8 @@ SELECT current_database() AS dbname,
        AND c.relname NOT IN ('pg_stat_statements')
        AND n.nspname NOT IN ('pg_catalog','pg_toast','information_schema')
        AND (n.nspname || '.' || c.relname) !~* 'REGEXP';
-```
+`}
+</CodeBlock>
 
 Make sure to replace `REGEXP` with the value of your `ignore_schema_regexp` setting.
 

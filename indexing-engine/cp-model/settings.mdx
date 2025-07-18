@@ -6,8 +6,8 @@ backlink_title: 'Constraint Programming Model'
 
 The model takes as input a settings JSON object. All settings are optional, and will be assigned their default value if omitted. The settings must follow this structure:
 
-```json
-{
+<CodeBlock language="json">
+{`{
   "Method": "CP",
   "Options": {
     "Goals": [
@@ -28,7 +28,8 @@ The model takes as input a settings JSON object. All settings are optional, and 
     ]
   }
 }
-```
+`}
+</CodeBlock>
 
 The two main fields are `Method` and `Options`. `Method` defines the method used for performing index selection, and can be one of [CP](#cp-method) or [Greedy](#greedy-method). The current default is `Greedy` for backwards compatibility purposes. The `Options` can customize the behavior of the chosen method.
 

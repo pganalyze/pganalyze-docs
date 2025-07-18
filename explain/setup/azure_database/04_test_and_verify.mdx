@@ -14,15 +14,17 @@ synthetic slow query that we can use to confirm everything is working.
 The collector includes a flag to do this for you automatically, based on your
 `auto_explain.log_min_duration`:
 
-```
-sudo pganalyze-collector --test-explain
-```
+<CodeBlock language="bash">
+{`sudo pganalyze-collector --test-explain
+`}
+</CodeBlock>
 
 Or with Docker:
 
-```
-sudo docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test-explain
-```
+<CodeBlock language="bash">
+{`sudo docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test-explain
+`}
+</CodeBlock>
 
 This will produce no output but will run an artificially slow query using the
 Postgres `pg_sleep` function.

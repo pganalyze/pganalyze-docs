@@ -11,15 +11,17 @@ export const ImgLogInsights = () => <img src={imgLogInsights} alt='Screenshot of
 
 To finish, restart the collector app:
 
-```bash
-heroku restart -a [your-collector-app-name]
-```
+<CodeBlock language="bash">
+{`heroku restart -a [your-collector-app-name]
+`}
+</CodeBlock>
 
 Afterwards, check the app logs again.
 
-```bash
-heroku logs -a [your-collector-app-name] -t
-```
+<CodeBlock language="bash">
+{`heroku logs -a [your-collector-app-name] -t
+`}
+</CodeBlock>
 
 If the collector was able to match the log data to the correct database, you will see a log line like this after about a minute:
 
@@ -37,10 +39,11 @@ If the collector was able to match the log data to the correct database, you wil
 Note that on Heroku Postgres you have [limited configuration options](https://devcenter.heroku.com/articles/heroku-postgres-settings),
 but you may want to review the defaults of:
 
-```
-log_min_duration_statement = 2000
+<CodeBlock language="text">
+{`log_min_duration_statement = 2000
 log_lock_waits = on
 log_statement = ddl
-```
+`}
+</CodeBlock>
 
 You can see details on what these settings do in our [tuning guide](https://pganalyze.com/docs/log-insights/setup/tuning-log-config-settings).

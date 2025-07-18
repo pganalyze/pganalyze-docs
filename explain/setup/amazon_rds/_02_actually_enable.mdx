@@ -36,9 +36,10 @@ AWS console:
 After the reboot completes, verify that `shared_preload_libraries` now includes `auto_explain`
 and that the setting change does not require a restart (`pending_restart` should be `f`):
 
-```sql
-SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
-```
+<CodeBlock language="sql">
+{`SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
+`}
+</CodeBlock>
 
 If `auto_explain` is enabled and no longer requires a restart, you can proceed to
 review our recommended `auto_explain` configuration settings:

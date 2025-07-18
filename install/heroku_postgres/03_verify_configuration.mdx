@@ -11,13 +11,13 @@ import { collectorAppName, attachmentName } from "./util";
 
 export const HerokuConfigCommand = ({ organizationSlug }) => {
   return (
-    <CodeBlock>heroku config -a {collectorAppName(organizationSlug)}</CodeBlock>
+    <CodeBlock>{`heroku config -a ${collectorAppName(organizationSlug)}`}</CodeBlock>
   );
 };
 
 export const HerokuConfigOutput = ({ organizationSlug }) => {
   return (
-    <CodeBlock>
+    <CodeBlock hideCopy="true">
       {`=== ${collectorAppName(organizationSlug)} Config Vars
 ${attachmentName(organizationSlug)}_URL: postgres://...:...@...:.../...
 PGA_API_KEY: ...`}
@@ -27,16 +27,14 @@ PGA_API_KEY: ...`}
 
 export const TestCommand = ({ organizationSlug }) => {
   return (
-    <CodeBlock>
-      heroku run -a {collectorAppName(organizationSlug)} -- collector --test
-    </CodeBlock>
+    <CodeBlock>{`heroku run -a ${collectorAppName(organizationSlug)} -- collector --test`}</CodeBlock>
   );
 };
 
 export const TestOutput = ({ organizationSlug }) => {
   const attUrl = attachmentName(organizationSlug) + "_URL";
   return (
-    <CodeBlock>
+    <CodeBlock hideCopy="true">
       {`Running collector --test on ⬢ ${collectorAppName(
         organizationSlug
       )}... up, run.7708
