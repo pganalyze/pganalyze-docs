@@ -16,7 +16,7 @@ You now have a separate read-only API token that can be used for requests to our
 
 You can make API requests to our GraphQL API endpoint like this:
 
-<CodeBlock language="text">
+<CodeBlock language="bash">
 {`curl -XPOST -H 'Authorization: Token XXXXXXX' -F 'query=query { getQueryStats(databaseId: 12345) { id, queryUrl, truncatedQuery, statementType, tableNames, totalCalls, avgTime, bufferHitRatio, pctOfTotal } }' https://app.pganalyze.com/graphql
 `}
 </CodeBlock>
@@ -25,7 +25,7 @@ Note that you'll need to replace `XXXXXXX` with your API key, and `12345` with t
 
 Formatted more readable, the query parameter has to look like this:
 
-<CodeBlock language="text">
+<CodeBlock language="graphql">
 {`query {
   getQueryStats(databaseId: 12345) {
     id
@@ -46,8 +46,8 @@ In case you don't use newlines, use `,` to separate the different fields. Feel f
 
 The result will be a JSON document that looks like this:
 
-```
-{
+<CodeBlock language="json">
+{`{
   "data": {
     "getQueryStats": [
       {
@@ -69,7 +69,8 @@ The result will be a JSON document that looks like this:
     }
   }
 }
-```
+`}
+</CodeBlock>
 
 ## Creating a read-write API token (pganalyze Enterprise Server)
 

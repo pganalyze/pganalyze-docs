@@ -588,6 +588,10 @@
       "title": "Get Started",
       "path": "/docs/install"
     },
+    "install/01_enabling_pg_stat_statements": {
+      "title": "Enabling pg_stat_statements",
+      "path": "/docs/install/01_enabling_pg_stat_statements"
+    },
     "install/aiven/01_create_monitoring_user": {
       "title": "Step 1: Create Monitoring User",
       "path": "/docs/install/aiven/01_create_monitoring_user"

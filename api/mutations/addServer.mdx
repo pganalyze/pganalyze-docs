@@ -42,7 +42,7 @@ Fields returned:
 
 GraphQL mutation:
 
-<CodeBlock language="json">
+<CodeBlock language="graphql">
 {`mutation {
   addServer(dbHost: "my-database.internal", dbUsername: "postgres", dbName: "postgres", enableActivity: true) {
     errors
@@ -63,7 +63,7 @@ Using `curl`, replace `pganalyze.internal` with the hostname or IP of your pgana
 `}
 </CodeBlock>
 
-<CodeBlock language="bash">
+<CodeBlock language="json">
 {`{
   "data": {
     "addServer": {
