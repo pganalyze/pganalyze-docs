@@ -33,8 +33,7 @@ Before starting the database migration task, make sure that the `btree_gist` and
 
 <CodeBlock language="bash">
 {`docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[new version] \
-  rake db:migrate
-`}
+  rake db:migrate`}
 </CodeBlock>
 
 This will upgrade the database schema for the new release - at this point you need to use the new version,
@@ -44,8 +43,7 @@ and can't go back to the old version without recovering from backup (as schemas 
 
 <CodeBlock language="bash">
 {`docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[new version] \
-  rake enterprise:self_check
-`}
+  rake enterprise:self_check`}
 </CodeBlock>
 
 If this returns any errors, please review your environment configuration in `pganalyze.env`.
@@ -56,8 +54,7 @@ Also see **Special Notes: Upgrading from earlier releases to 2018.08 and newer**
 
 <CodeBlock language="bash">
 {`docker run -d --name pganalyze -p 8080:5000 --env-file /etc/pganalyze.env \
-  quay.io/pganalyze/enterprise:[new version]
-`}
+  quay.io/pganalyze/enterprise:[new version]`}
 </CodeBlock>
 
 At this point you are done and the user interface should load again as expected. Please reach out to us if you run into any issues.
@@ -75,8 +72,7 @@ After the backup is restored, start up the container with the old version like t
 
 <CodeBlock language="bash">
 {`docker run -d --name pganalyze -p 8080:5000 --env-file /etc/pganalyze.env \
-  quay.io/pganalyze/enterprise:[old version]
-`}
+  quay.io/pganalyze/enterprise:[old version]`}
 </CodeBlock>
 
 ## Special Notes: Upgrading from earlier releases to 2018.08 and newer

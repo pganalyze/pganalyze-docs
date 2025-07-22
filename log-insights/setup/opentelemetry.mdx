@@ -27,8 +27,7 @@ In values.yaml file, update the section of `service`:
   name: pganalyze-collector-otel-service
   type: ClusterIP
   port: 4318
-  targetPort: 4318
-`}
+  targetPort: 4318`}
 </CodeBlock>
 
 This will create a service with the name `pganalyze-collector-otel-service`.
@@ -41,8 +40,7 @@ you can specify the created service as an OpenTelemetry HTTP endpoint, using the
     name  opentelemetry
     match kube.*postgres*
     host  pganalyze-collector-otel-service
-    port  4318
-`}
+    port  4318`}
 </CodeBlock>
 
 With this flow, Fluent Bit tails the logs of Postgres pods, sends the logs to the

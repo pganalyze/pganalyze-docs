@@ -36,14 +36,12 @@ you can update the collector through the standard update mechanism.
 
 First, update the package metadata:
 <CodeBlock language="bash">
-{`sudo yum makecache
-`}
+{`sudo yum makecache`}
 </CodeBlock>
 
 Then, update to the latest version of the collector package:
 <CodeBlock language="bash">
-{`sudo yum upgrade pganalyze-collector
-`}
+{`sudo yum upgrade pganalyze-collector`}
 </CodeBlock>
 
 Installing the new collector will automatically restart the pganalyze collector
@@ -57,14 +55,12 @@ standard update mechanism.
 
 First, update the package metadata:
 <CodeBlock language="bash">
-{`sudo apt update
-`}
+{`sudo apt update`}
 </CodeBlock>
 
 Then, update to the latest version of the collector package:
 <CodeBlock language="bash">
-{`sudo apt install --only-upgrade pganalyze-collector
-`}
+{`sudo apt install --only-upgrade pganalyze-collector`}
 </CodeBlock>
 
 Installing the new collector will automatically restart the pganalyze collector
@@ -94,33 +90,28 @@ First, check out the latest collector code and `cd` into its directory:
 
 <CodeBlock language="bash">
 {`git clone https://github.com/pganalyze/collector
-cd collector
-`}
+cd collector`}
 </CodeBlock>
 
 Next, look up the git remote for your app (replace `my-heroku-collector` with
 the name of your collector app):
 <CodeBlock language="bash">
-{`heroku info --app my-heroku-collector
-`}
+{`heroku info --app my-heroku-collector`}
 </CodeBlock>
 
 The output should contain a line like
 <CodeBlock language="bash">
-{`Git URL:        https://git.heroku.com/my-heroku-collector.git
-`}
+{`Git URL:        https://git.heroku.com/my-heroku-collector.git`}
 </CodeBlock>
 
 Add that URL as a git remote for Heroku to your local collector repo:
 <CodeBlock language="bash">
-{`git remote add heroku https://git.heroku.com/my-heroku-collector.git
-`}
+{`git remote add heroku https://git.heroku.com/my-heroku-collector.git`}
 </CodeBlock>
 
 Then push the latest code to your collector app:
 <CodeBlock language="bash">
-{`git push heroku main
-`}
+{`git push heroku main`}
 </CodeBlock>
 
 Once the `git push` completes, the upgrade is done.

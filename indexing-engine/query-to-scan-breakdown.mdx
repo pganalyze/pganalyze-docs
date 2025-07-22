@@ -21,8 +21,7 @@ What exactly are scans? Let’s look at an example, in a simple query like this:
   JOIN comments ON (users.id = comments.user_id)
  WHERE users.site_id = 123 AND comments.parent_id IS NULL
  ORDER BY comments.created_at DESC
- LIMIT 10;
-`}
+ LIMIT 10;`}
 </CodeBlock>
 
 This query has two scans:

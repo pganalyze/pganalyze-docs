@@ -15,8 +15,7 @@ Statistics are gathered by running the [ANALYZE](https://www.postgresql.org/docs
 
 <CodeBlock language="sql">
 {`SELECT schemaname, relname, last_analyze, last_autoanalyze
-  FROM pg_stat_user_tables;
-`}
+  FROM pg_stat_user_tables;`}
 </CodeBlock>
 
 Note that if autovacuum is not gathering stats reliably, you should consider changing autovacuum settings to be more aggressive (by default, autovacuum will limit its activity to avoid interfering with your query workload, but if it’s de-prioritizing itself too much you may have chronically stale statistics and runaway dead tuple bloat, which can affect performance). If you make bulk changes to your tables, a manual ANALYZE or VACUUM ANALYZE may also be prudent to ensure statistics are updated right away.

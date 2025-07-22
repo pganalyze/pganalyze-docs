@@ -2,8 +2,7 @@ You can enable `auto_explain` for your Crunchy Bridge cluster by running (as Pos
 
 <CodeBlock language="sql">
 {`ALTER SYSTEM SET session_preload_libraries = 'auto_explain';
-SELECT pg_reload_conf();
-`}
+SELECT pg_reload_conf();`}
 </CodeBlock>
 
 Subsequent Postgres sessions will then be configured with those settings and

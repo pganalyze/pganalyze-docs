@@ -6,8 +6,7 @@ First, to check if `auto_explain` is already enabled on your system, run the fol
 query as a server admin user:
 
 <CodeBlock language="sql">
-{`SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
-`}
+{`SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';`}
 </CodeBlock>
 
 If `auto_explain` is included in the `shared_preload_libraries` value and `pending_restart`

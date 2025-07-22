@@ -17,7 +17,7 @@ export const HerokuConfigCommand = ({ organizationSlug }) => {
 
 export const HerokuConfigOutput = ({ organizationSlug }) => {
   return (
-    <CodeBlock hideCopy="true">
+    <CodeBlock>
       {`=== ${collectorAppName(organizationSlug)} Config Vars
 ${attachmentName(organizationSlug)}_URL: postgres://...:...@...:.../...
 PGA_API_KEY: ...`}
@@ -34,7 +34,7 @@ export const TestCommand = ({ organizationSlug }) => {
 export const TestOutput = ({ organizationSlug }) => {
   const attUrl = attachmentName(organizationSlug) + "_URL";
   return (
-    <CodeBlock hideCopy="true">
+    <CodeBlock>
       {`Running collector --test on ⬢ ${collectorAppName(
         organizationSlug
       )}... up, run.7708

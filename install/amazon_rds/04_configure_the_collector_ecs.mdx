@@ -28,8 +28,7 @@ export const FinishSetup = ({ inviteLink }) => {
 In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance.
 
 <CodeBlock language="json">
-{`{"name": "DB_HOST", "value": "mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com"},
-`}
+{`{"name": "DB_HOST", "value": "mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com"},`}
 </CodeBlock>
 
 This will only monitor the writer instance. If you also want to monitor a reader instance,
@@ -47,16 +46,14 @@ db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
  
 [reader_instance]
 db_host = mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
-...
-`}
+...`}
 </CodeBlock>
 
 Alternatively, you can run a separate Docker container to monitor a reader instance.
 Use the `cluster-ro` endpoint as the `DB_HOST` of the environment variables:
 
 <CodeBlock language="json">
-{`{"name": "DB_HOST", "value": "mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com"},
-`}
+{`{"name": "DB_HOST", "value": "mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com"},`}
 </CodeBlock>
 
 If you have a cluster with multiple readers, you either need to add each instance
@@ -70,15 +67,13 @@ We can now register the task definition like this, as well as create the log gro
 
 <CodeBlock language="bash">
 {`aws ecs register-task-definition --cli-input-json file://pganalyze_task.json
-aws logs create-log-group --log-group-name /ecs/pganalyze
-`}
+aws logs create-log-group --log-group-name /ecs/pganalyze`}
 </CodeBlock>
 
 And then launch the task like this:
 
 <CodeBlock language="bash">
-{`aws ecs run-task --task-definition pganalyze-fargate --launch-type FARGATE --platform-version 1.3.0 --cluster test-cluster --network-configuration "awsvpcConfiguration={assignPublicIp=ENABLED,subnets=[subnet-YOUR_SUBNET],securityGroups=[sg-YOUR_SECURITYGROUP]}"
-`}
+{`aws ecs run-task --task-definition pganalyze-fargate --launch-type FARGATE --platform-version 1.3.0 --cluster test-cluster --network-configuration "awsvpcConfiguration={assignPublicIp=ENABLED,subnets=[subnet-YOUR_SUBNET],securityGroups=[sg-YOUR_SECURITYGROUP]}"`}
 </CodeBlock>
 
 You will need to make sure that `subnet-YOUR_SUBNET` and `sg-YOUR_SECURITYGROUP` are correctly specified.
@@ -91,8 +86,7 @@ To verify that the task is running successfully, first retrieve the task ID:
     "taskArns": [
         "arn:aws:ecs:us-east-1:ACCOUNTID:task/TASKID"
     ]
-}
-`}
+}`}
 </CodeBlock>
 
 Now you can request the logs, which should look like this:
@@ -106,8 +100,7 @@ Now you can request the logs, which should look like this:
             "ingestionTime": 1564856657429,
             "timestamp": 1564856653493,
             "message": "I [default] Submitted compact snapshots successfully: 5 activity, 2 logs"
-        },
-`}
+        },`}
 </CodeBlock>
 
 The `Submitted compact snapshots successfully` message indicates that you have
@@ -129,6 +122,5 @@ Interactively access a container in an ECS task (using `/bin/sh`), then use the
 following command:
 
 <CodeBlock language="bash">
-{`/home/pganalyze/docker-entrypoint.sh test
-`}
+{`/home/pganalyze/docker-entrypoint.sh test`}
 </CodeBlock>

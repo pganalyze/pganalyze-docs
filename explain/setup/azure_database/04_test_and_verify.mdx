@@ -15,15 +15,13 @@ The collector includes a flag to do this for you automatically, based on your
 `auto_explain.log_min_duration`:
 
 <CodeBlock language="bash">
-{`sudo pganalyze-collector --test-explain
-`}
+{`sudo pganalyze-collector --test-explain`}
 </CodeBlock>
 
 Or with Docker:
 
 <CodeBlock language="bash">
-{`sudo docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test-explain
-`}
+{`sudo docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test-explain`}
 </CodeBlock>
 
 This will produce no output but will run an artificially slow query using the

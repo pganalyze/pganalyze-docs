@@ -32,11 +32,10 @@ For servers containing sensitive information in the logs and to maximize data
 privacy (at the cost of less useful data in pganalyze), we recommend the
 following configuration:
 
-<CodeBlock language="bash">
+<CodeBlock language="ini">
 {`filter_log_secret: all
 filter_query_sample: normalize
-filter_query_text: unparsable
-`}
+filter_query_text: unparsable`}
 </CodeBlock>
 
 ## Filter settings

@@ -39,8 +39,7 @@ Next, create a SSM secret for storing above file:
 
 <CodeBlock language="bash">
 {`aws ssm put-parameter --name /pganalyze/CONFIG_CONTENTS --type SecureString \
-  --value file://pganalyze_collector.conf
-`}
+  --value file://pganalyze_collector.conf`}
 </CodeBlock>
 
 Now, save the following ECS task definition to a file, for example `pganalyze_task.json`:
@@ -77,8 +76,7 @@ Now, save the following ECS task definition to a file, for example `pganalyze_ta
       "mountPoints": []
     }
   ]
-}
-`}
+}`}
 </CodeBlock>
 
 Make sure to adjust `YOUR_ACCOUNT_ID` to be your AWS account ID (in the `executionRoleArn` field).

@@ -54,8 +54,7 @@ format(
   trace_id: current_trace.trace_id.rjust(32, '0').downcase,
   parent_id: current_trace.current_segment.guid,
   trace_flags: current_trace.sampled? ? '01' : '00'
-)
-`}
+)`}
 </CodeBlock>
 
 #### Python
@@ -73,8 +72,7 @@ for key, value in dummy_headers:
         traceparent = value
         break
          
-# only add traceparent as a query tag when it's not None
-`}
+# only add traceparent as a query tag when it's not None`}
 </CodeBlock>
 
 For Go, it is best to use the OpenTelemetry SDK as it will integrate well with

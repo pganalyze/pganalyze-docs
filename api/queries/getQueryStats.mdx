@@ -53,8 +53,7 @@ GraphQL query:
     bufferHitRatio
     pctOfTotal
   }
-}
-`}
+}`}
 </CodeBlock>
 
 Using `curl`:
@@ -62,8 +61,7 @@ Using `curl`:
 <CodeBlock language="bash">
 {`curl -XPOST -H 'Authorization: Token XXXXXXX' \
   -F 'query=query { getQueryStats(databaseId: 12345) { id, queryUrl, normalizedQuery, truncatedQuery, statementType, totalCalls, avgTime, bufferHitRatio, pctOfTotal } }' \
-  https://app.pganalyze.com/graphql
-`}
+  https://app.pganalyze.com/graphql`}
 </CodeBlock>
 
 <CodeBlock language="json">
@@ -86,8 +84,7 @@ Using `curl`:
       [ ... ]
     }
   }
-}
-`}
+}`}
 </CodeBlock>
 
 ## CSV Export
@@ -136,8 +133,7 @@ csv_output = CSV.generate do |csv|
   end
 end
  
-puts csv_output
-`}
+puts csv_output`}
 </CodeBlock>
 
 This will output the following on stdout:

@@ -47,8 +47,7 @@ GraphQL query:
       url
     }
   }
-}
-`}
+}`}
 </CodeBlock>
 
 Using `curl`:
@@ -56,8 +55,7 @@ Using `curl`:
 <CodeBlock language="bash">
 {`curl -XPOST -H 'Authorization: Token XXXXXXX' \
   -F 'query=query { getIssues(serverId: "bdp4m73ysjgefke7i2dgkenzi4") { id, description, severity, references { name, url } } }' \
-  https://app.pganalyze.com/graphql
-`}
+  https://app.pganalyze.com/graphql`}
 </CodeBlock>
 
 <CodeBlock language="json">
@@ -77,6 +75,5 @@ Using `curl`:
       }
     ]
   }
-}
-`}
+}`}
 </CodeBlock>

@@ -24,16 +24,14 @@ forwards log lines to the pganalyze collector app running in your account.
 The collector receives log drains at the following URL:
 
 <CodeBlock language="bash">
-{`https://[your-collector-app-domain-name].herokuapp.com/logs/[ALIAS]
-`}
+{`https://[your-collector-app-domain-name].herokuapp.com/logs/[ALIAS]`}
 </CodeBlock>
 
 To check the `[your-collector-app-domain-name]` value of your collector app, run
 the following Heroku command:
 
 <CodeBlock language="bash">
-{`heroku domains -a [your-collector-app-name]
-`}
+{`heroku domains -a [your-collector-app-name]`}
 </CodeBlock>
 
 It should look like 'your-collector-app-name-[unique identifier].herokuapp.com'.
@@ -43,8 +41,7 @@ in the initial setup, which you can determine by viewing the current Heroku
 configuration of your collector app:
 
 <CodeBlock language="bash">
-{`heroku config -a [your-collector-app-name]
-`}
+{`heroku config -a [your-collector-app-name]`}
 </CodeBlock>
 <TestAppConfigVars apiKey={props.apiKey} />
 
@@ -52,8 +49,7 @@ So in this case we would use `TESTAPP_URL` as our alias, and then we would add t
 like this:
 
 <CodeBlock language="bash">
-{`heroku drains:add https://[your-collector-app-domain-name].herokuapp.com/logs/TESTAPP_URL -a [your-app-name]
-`}
+{`heroku drains:add https://[your-collector-app-domain-name].herokuapp.com/logs/TESTAPP_URL -a [your-app-name]`}
 </CodeBlock>
 
 Make sure to replace `[your-collector-app-name]` with the name of your own collector application

@@ -260,8 +260,7 @@ To validate whether the setting is working as intended, you can run a query on y
        AND c.relpersistence <> 't'
        AND c.relname NOT IN ('pg_stat_statements')
        AND n.nspname NOT IN ('pg_catalog','pg_toast','information_schema')
-       AND (n.nspname || '.' || c.relname) !~* 'REGEXP';
-`}
+       AND (n.nspname || '.' || c.relname) !~* 'REGEXP';`}
 </CodeBlock>
 
 Make sure to replace `REGEXP` with the value of your `ignore_schema_regexp` setting.

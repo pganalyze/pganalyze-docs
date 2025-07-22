@@ -43,8 +43,7 @@ The actual calculation is straightforward, though it involves some Postgres
 internals. The basic formula for overhead is:
 
 <CodeBlock language="bash">
-{`write overhead = index entry size  / row size * partial index selectivity
-`}
+{`write overhead = index entry size  / row size * partial index selectivity`}
 </CodeBlock>
 
 The index entry size is an 8-byte header plus the average width (based on
@@ -70,8 +69,7 @@ Let's walk through a simple example. Let's say you have a schema like
   organization_id bigint,
   team_id bigint
 );
-CREATE INDEX ON users (organization_id);
-`}
+CREATE INDEX ON users (organization_id);`}
 </CodeBlock>
 
 To estimate the write overhead for the organization_id index, first we would

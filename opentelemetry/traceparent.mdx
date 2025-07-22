@@ -51,8 +51,7 @@ You can enable this via Rails configuration in `config/application.rb` or an
 initializer:
 
 <CodeBlock language="ruby">
-{`config.active_record.query_log_tags_enabled = true
-`}
+{`config.active_record.query_log_tags_enabled = true`}
 </CodeBlock>
 
 By default, this doesn't have a traceparent query tag, so you'll need to add it
@@ -81,15 +80,13 @@ You can append the traceparent tag like the following:
       )
     }
   }
-]
-`}
+]`}
 </CodeBlock>
 
 With above configuration, queries will have the comments like the following:
 
 <CodeBlock language="sql">
-{`SELECT "articles".* FROM "articles" /*application='myblog',action='index',controller='articles',traceparent='00-953c157ad37a81d94fe83bb95cfc8add-3cf784b99bd43910-01'*/
-`}
+{`SELECT "articles".* FROM "articles" /*application='myblog',action='index',controller='articles',traceparent='00-953c157ad37a81d94fe83bb95cfc8add-3cf784b99bd43910-01'*/`}
 </CodeBlock>
 
 ### Marginalia
@@ -119,8 +116,7 @@ You can define a transparent tag in the initializer
   end
 end
  
-Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent]
-`}
+Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent]`}
 </CodeBlock>
 
 ## Add traceparent with Python
@@ -143,8 +139,7 @@ also attach the appropriate traceparent as a query comment automatically.
 You can enable sqlcommenter in Django by passing `is_sql_commentor_enabled=True`:
 
 <CodeBlock language="python">
-{`DjangoInstrumentor().instrument(is_sql_commentor_enabled=True)
-`}
+{`DjangoInstrumentor().instrument(is_sql_commentor_enabled=True)`}
 </CodeBlock>
 
 ### Flask
@@ -152,8 +147,7 @@ You can enable sqlcommenter in Django by passing `is_sql_commentor_enabled=True`
 For Flask application, you can enable sqlcommenter by passing `enable_commenter=True`:
 
 <CodeBlock language="python">
-{`FlaskInstrumentor().instrument(enable_commenter=True, commenter_options={})
-`}
+{`FlaskInstrumentor().instrument(enable_commenter=True, commenter_options={})`}
 </CodeBlock>
 
 ### SQLAlchemy, Psycopg
@@ -164,8 +158,7 @@ ORM level (SQLAlchemy) or the database driver level (Psycopg).
 <CodeBlock language="python">
 {`SQLAlchemyInstrumentor().instrument(enable_commenter=True, commenter_options={})
  
-Psycopg2Instrumentor().instrument(enable_commenter=True, commenter_options={})
-`}
+Psycopg2Instrumentor().instrument(enable_commenter=True, commenter_options={})`}
 </CodeBlock>
 
 When performing manual instrumentation, these instrumentations won't be enabled
@@ -234,8 +227,7 @@ append the tracestate tag like the following:
       tracestate.to_s
     }
   }
-]
-`}
+]`}
 </CodeBlock>
 
 ### Marginalia
@@ -270,6 +262,5 @@ append the tracestate tag like the following:
   end
 end
  
-Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent, :tracestate]
-`}
+Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent, :tracestate]`}
 </CodeBlock>

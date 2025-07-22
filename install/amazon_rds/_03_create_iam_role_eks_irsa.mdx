@@ -7,8 +7,7 @@ as follows:
 
 <CodeBlock language="bash">
 {`eksctl utils associate-iam-oidc-provider \
-  --region <region> --cluster mycluster --approve
-`}
+  --region <region> --cluster mycluster --approve`}
 </CodeBlock>
 
 Create an IAM role that will be assumed by the Kubernetes service account. The
@@ -34,8 +33,7 @@ following command will create a role named `pganalyzeServiceAccountRole`.
       }
     }
   ]
-}'
-`}
+}'`}
 </CodeBlock>
 
 Replace `OIDC_PROVIDER_ID` with the one created above. You can find it using the
@@ -43,8 +41,7 @@ following command:
 
 <CodeBlock language="bash">
 {`aws eks describe-cluster \
-  --name mycluster --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5
-`}
+  --name mycluster --query "cluster.identity.oidc.issuer" --output text | cut -d '/' -f 5`}
 </CodeBlock>
 
 Attach the policy you created earlier to the created account. Below assumes that
@@ -52,6 +49,5 @@ the policy name is `pganalyze`:
 
 <CodeBlock language="bash">
 {`aws iam attach-role-policy --role-name pganalyzeServiceAccountRole \
-  --policy-arn arn:aws:iam::<aws-account-id>:policy/pganalyze
-`}
+  --policy-arn arn:aws:iam::<aws-account-id>:policy/pganalyze`}
 </CodeBlock>

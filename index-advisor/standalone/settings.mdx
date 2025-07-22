@@ -19,8 +19,7 @@ For the standalone version of the pganalyze Index Advisor, you can use special `
 The simplest example is setting the size of a table. This gets specified in the number of 8Kb pages, as this is how Postgres handles it internally. For the default table size of 10GB, the following SET command happens behind the scenes:
 
 <CodeBlock language="sql">
-{`SET pganalyze.curpages."public"."test" = 1310720;
-`}
+{`SET pganalyze.curpages."public"."test" = 1310720;`}
 </CodeBlock>
 
 The table size can be set directly through the Index Advisor UI. Other settings must be configured using the special `SET` syntax as part of your schema definition:
@@ -30,8 +29,7 @@ The table size can be set directly through the Index Advisor UI. Other settings 
 Table settings must be written as:
 
 <CodeBlock language="sql">
-{`SET pganalyze.[settingname].[schemaname].[tablename] = [value];
-`}
+{`SET pganalyze.[settingname].[schemaname].[tablename] = [value];`}
 </CodeBlock>
 
 For tables you can set the following parameters:
@@ -43,8 +41,7 @@ For tables you can set the following parameters:
 Index settings must be written as:
 
 <CodeBlock language="sql">
-{`SET pganalyze.[settingname].[schemaname].[indexname] = [value];
-`}
+{`SET pganalyze.[settingname].[schemaname].[indexname] = [value];`}
 </CodeBlock>
 
 For indexes you can set the following parameters:
@@ -57,8 +54,7 @@ For indexes you can set the following parameters:
 Attribute settings must be written as:
 
 <CodeBlock language="sql">
-{`SET pganalyze.[settingname].[schemaname].[tablename].[attributename] = [value];
-`}
+{`SET pganalyze.[settingname].[schemaname].[tablename].[attributename] = [value];`}
 </CodeBlock>
 
 For table attributes you can set the following parameters (based on `pg_stats`):
@@ -137,8 +133,7 @@ SELECT format('SET pganalyze.%s.%s = %s;', x.k, j->>'cfgobject', x.v)
   FROM combined,
        jsonb_each_text(combined.j - 'cfgobject') x(k, v)
  WHERE x.v IS NOT NULL
- ORDER BY j->>'cfgobject', x.k;
-`}
+ ORDER BY j->>'cfgobject', x.k;`}
 </CodeBlock>
 
 Running this will give you a result like this:
@@ -149,8 +144,7 @@ SET pganalyze.correlation.public.test.col1 = 0.061594862;
 SET pganalyze.most_common_freqs.public.test.col1 = '{0.0653,0.06446667,0.063766666,0.06363333,0.063533336,0.063433334,0.0629,0.061966665,0.061833333,0.0618,0.0611,0.0605,0.0604,0.060366668,0.059666667,0.0332,0.032133333}';
 SET pganalyze.most_common_vals.public.test.col1 = '{2,3,7,12,13,4,1,5,11,14,9,6,10,8,15,16,0}';
 SET pganalyze.n_distinct.public.test.col1 = 17;
-SET pganalyze.null_frac.public.test.col1 = 0;
-`}
+SET pganalyze.null_frac.public.test.col1 = 0;`}
 </CodeBlock>
 
 Simply paste this at the end of your schema definition, and you're good to go!

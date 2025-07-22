@@ -4,8 +4,7 @@ If the `db_log_location` was discovered by the collector, you only need to confi
 that the pganalyze user has access to the log files. Check this with ls:
 
 <CodeBlock language="bash">
-{`ls -l [discovered_log_location]
-`}
+{`ls -l [discovered_log_location]`}
 </CodeBlock>
 
 This will show output like
@@ -19,8 +18,7 @@ this is **not** `adm` on your system, you should add the pganalyze user to this 
 E.g., if the owning group is `postgres`, run the following:
 
 <CodeBlock language="bash">
-{`sudo usermod -a -G postgres pganalyze
-`}
+{`sudo usermod -a -G postgres pganalyze`}
 </CodeBlock>
 
 Then, update the file permissions of newly created log files to ensure group read
@@ -28,6 +26,5 @@ permissions:
 
 <CodeBlock language="sql">
 {`ALTER SYSTEM SET log_file_mode = '0640';
-SELECT pg_reload_conf();
-`}
+SELECT pg_reload_conf();`}
 </CodeBlock>

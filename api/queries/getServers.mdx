@@ -38,8 +38,7 @@ GraphQL query:
     humanId
     name
   }
-}
-`}
+}`}
 </CodeBlock>
 
 Using `curl`:
@@ -47,8 +46,7 @@ Using `curl`:
 <CodeBlock language="bash">
 {`curl -XPOST -H 'Authorization: Token XXXXXXX' \
   -F 'query=query { getServers(organizationSlug: "example", withRecentData: true) { humanId, name } }' \
-  https://app.pganalyze.com/graphql
-`}
+  https://app.pganalyze.com/graphql`}
 </CodeBlock>
 
 <CodeBlock language="json">
@@ -62,6 +60,5 @@ Using `curl`:
       [ ... ]
     }
   }
-}
-`}
+}`}
 </CodeBlock>

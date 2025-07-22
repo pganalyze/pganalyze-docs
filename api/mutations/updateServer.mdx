@@ -48,8 +48,7 @@ GraphQL mutation:
       humanId
     }
   }
-}
-`}
+}`}
 </CodeBlock>
 
 Using `curl`, replace `pganalyze.internal` with the hostname or IP of your pganalyze installation:
@@ -57,8 +56,7 @@ Using `curl`, replace `pganalyze.internal` with the hostname or IP of your pgana
 <CodeBlock language="bash">
 {`curl -XPOST -H 'Authorization: Token XXXXXXX' \
   -F 'query=mutation { updateServer(serverId: "bdp4m73ysjgefke7i2dgkenzi4", dbPassword: "new-password") { server { humanId }, errors } }' \
-  https://pganalyze.internal/graphql
-`}
+  https://pganalyze.internal/graphql`}
 </CodeBlock>
 
 <CodeBlock language="json">
@@ -71,6 +69,5 @@ Using `curl`, replace `pganalyze.internal` with the hostname or IP of your pgana
       "errors": []
     }
   }
-}
-`}
+}`}
 </CodeBlock>

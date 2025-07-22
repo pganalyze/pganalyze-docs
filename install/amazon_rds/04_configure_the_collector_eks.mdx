@@ -27,8 +27,7 @@ To start, download an example values.yaml file for the Helm chart:
 {`# Add a pganalyze repo:
 helm repo add pganalyze https://charts.pganalyze.com/
 # Download an example values.yaml file:
-helm show values pganalyze/pganalyze-collector > values.yaml
-`}
+helm show values pganalyze/pganalyze-collector > values.yaml`}
 </CodeBlock>
 
 Update the serviceAccount section in the values.yaml file to use the role just
@@ -47,8 +46,7 @@ policy (for IRSA):
   #   eks.amazonaws.com/role-arn: "arn:aws:iam::<aws-account-id>:role/pganalyzeServiceAccountRole"
   # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "pganalyze-service-account"
-`}
+  name: "pganalyze-service-account"`}
 </CodeBlock>
 
 Next, update the `extraEnv` section in the values.yaml file with the following.
@@ -77,8 +75,7 @@ data:
     [instance1]
     db_host = your_database_host
     db_name = your_database_name
-    ...
-`}
+    ...`}
 </CodeBlock>
 
 Then, create a secret volume `config-volume` and mount it to the `/config` path
@@ -102,8 +99,7 @@ volumeMounts:
     name: scratch
     subPath: state
   - mountPath: /config
-    name: config-volume
-`}
+    name: config-volume`}
 </CodeBlock>
 
 With this, the `config-volume` volume will contain a `pganalyze-collector.conf`
@@ -116,8 +112,7 @@ file, with its content being the value of the secret, mounted at `/config/pganal
 In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance.
 
 <CodeBlock language="yaml">
-{`DB_HOST: mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
-`}
+{`DB_HOST: mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com`}
 </CodeBlock>
 
 This will only monitor the writer instance. If you also want to monitor a reader instance,
@@ -134,8 +129,7 @@ db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
  
 [reader_instance]
 db_host = mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
-...
-`}
+...`}
 </CodeBlock>
 
 Alternatively, you can install a Helm chart with the separate release name to
@@ -143,8 +137,7 @@ monitor a reader instance.
 Use the `cluster-ro` endpoint as the `DB_HOST` of the environment variables:
 
 <CodeBlock language="yaml">
-{`DB_HOST: mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
-`}
+{`DB_HOST: mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com`}
 </CodeBlock>
 
 If you have a cluster with multiple readers, you either need to add each instance
@@ -174,8 +167,7 @@ To verify that the install went well, check the deployment:
 <CodeBlock language="bash">
 {`$ kubectl get deployment
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-my-collector-pganalyze-collector   1/1     1            1           1m10s
-`}
+my-collector-pganalyze-collector   1/1     1            1           1m10s`}
 </CodeBlock>
 
 The deployment will create one pod for the collector. Check the pod name and
@@ -186,8 +178,7 @@ obtain the logs to make sure that the collector is running successfully:
 NAME                                                READY   STATUS    RESTARTS   AGE
 my-collector-pganalyze-collector-7d599b49c8-dgxzk   1/1     Running   0          1m10s
 $ kubectl logs my-collector-pganalyze-collector-7d599b49c8-dgxzk
-I [default] Submitted compact snapshots successfully: 6 activity, 2 logs
-`}
+I [default] Submitted compact snapshots successfully: 6 activity, 2 logs`}
 </CodeBlock>
 
 The `Submitted compact snapshots successfully` message indicates that you have

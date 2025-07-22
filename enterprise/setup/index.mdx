@@ -37,8 +37,7 @@ You will have received credentials (username and license key) by email from our 
 Use the provided credentials like this to access to the image:
 
 <CodeBlock language="bash">
-{`docker login -e="." -u="pganalyze+enterprise_customer" -p="REPLACE_ME" quay.io
-`}
+{`docker login -e="." -u="pganalyze+enterprise_customer" -p="REPLACE_ME" quay.io`}
 </CodeBlock>
 
 Note that this will add the login information to your current user's `.dockercfg` file - you will need this on every host where you'd like to access the image.
@@ -46,8 +45,7 @@ Note that this will add the login information to your current user's `.dockercfg
 You should now be able to pull the pganalyze Enterprise Server Docker image:
 
 <CodeBlock language="bash">
-{`docker pull quay.io/pganalyze/enterprise:[version]
-`}
+{`docker pull quay.io/pganalyze/enterprise:[version]`}
 </CodeBlock>
 Please note that `[version]` should be replaced with the version you are using. We recommend using [the latest release](/docs/enterprise/releases).
 
@@ -62,8 +60,7 @@ Here is an example `/etc/pganalyze.env` file to get you started:
 
 <CodeBlock language="text">
 {`DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
-LICENSE_KEY=REPLACE_ME
-`}
+LICENSE_KEY=REPLACE_ME`}
 </CodeBlock>
 
 You can find the full explanation of all variables in the [settings documentation](/docs/enterprise/settings), for example the `MAILER_URL` setting which is required to activate email alerts.
@@ -74,8 +71,7 @@ Run the Enterprise self check, to ensure the configuration is correct:
 
 <CodeBlock language="bash">
 {`docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
-  rake enterprise:self_check
-`}
+  rake enterprise:self_check`}
 </CodeBlock>
 
 ```
@@ -92,8 +88,7 @@ Assuming it succeeds, continue by initializing the database schema.
 
 <CodeBlock language="bash">
 {`docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
-  rake db:structure:load
-`}
+  rake db:structure:load`}
 </CodeBlock>
 
 If you get permission errors, you may need to create the extensions `btree_gist` and `pgcrypto` beforehand. A successful output looks like this:
@@ -116,8 +111,7 @@ Create the initial user:
 
 <CodeBlock language="bash">
 {`docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
-  rake db:seed
-`}
+  rake db:seed`}
 </CodeBlock>
 
 Make sure to note down the default user email and password:
@@ -145,8 +139,7 @@ You can now start the Docker image in the background using this command:
 
 <CodeBlock language="bash">
 {`docker run -d --name pganalyze --env-file /etc/pganalyze.env -p 8080:5000 \
-  quay.io/pganalyze/enterprise:[version]
-`}
+  quay.io/pganalyze/enterprise:[version]`}
 </CodeBlock>
 
 This will make the web interface accessible on the server's address, on port 8080. You should see a site like this when you open your web browser for that address and port:
@@ -212,6 +205,5 @@ When you make changes to the pganalyze container configuration in `/etc/pganalye
 {`docker stop pganalyze
 docker rm pganalyze
 docker run -d --name pganalyze --env-file /etc/pganalyze.env -p 8080:5000 \
-  quay.io/pganalyze/enterprise:[version]
-`}
+  quay.io/pganalyze/enterprise:[version]`}
 </CodeBlock>

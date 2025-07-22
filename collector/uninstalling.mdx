@@ -37,20 +37,17 @@ you can uninstall the collector through the standard uninstall mechanism.
 First, remove the collector package from your system (this includes disabling
 and stopping the service):
 <CodeBlock language="bash">
-{`sudo yum remove pganalyze-collector
-`}
+{`sudo yum remove pganalyze-collector`}
 </CodeBlock>
 
 Then, remove files used to track working collection state:
 <CodeBlock language="bash">
-{`sudo rm -r /var/lib/pganalyze-collector
-`}
+{`sudo rm -r /var/lib/pganalyze-collector`}
 </CodeBlock>
 
 Finally, clean up the collector system user and group:
 <CodeBlock language="bash">
-{`sudo userdel pganalyze # this will delete the group too
-`}
+{`sudo userdel pganalyze # this will delete the group too`}
 </CodeBlock>
 
 ### Debian and Ubuntu package deployment
@@ -61,20 +58,17 @@ the standard uninstall mechanism.
 First, remove the collector package from your system (this includes disabling
 and stopping the service):
 <CodeBlock language="bash">
-{`sudo apt remove pganalyze-collector
-`}
+{`sudo apt remove pganalyze-collector`}
 </CodeBlock>
 
 Then, remove files used to track working collection state:
 <CodeBlock language="bash">
-{`sudo rm -r /var/lib/pganalyze-collector
-`}
+{`sudo rm -r /var/lib/pganalyze-collector`}
 </CodeBlock>
 
 Finally, clean up the collector system user and group:
 <CodeBlock language="bash">
-{`sudo userdel pganalyze # this will delete the group too
-`}
+{`sudo userdel pganalyze # this will delete the group too`}
 </CodeBlock>
 
 ### Container deployment

@@ -33,8 +33,7 @@ aws iam put-role-policy --role-name pganalyzeTaskRole \
   --policy-document '{"Statement":[{"Action": ["ssm:GetParameter", "ssm:GetParameters", "ssm:GetParametersByPath"], "Effect": "Allow", "Resource": "arn:aws:ssm:*:*:parameter/pganalyze/*"}, {"Action": "kms:Decrypt", "Effect": "Allow", "Resource": "arn:aws:kms:*:*:*"}]}'
    
 aws iam attach-role-policy --role-name pganalyzeTaskRole \
-  --policy-arn arn:aws:iam::YOURAWSACCOUNTID:policy/POLICYNAME
-`}
+  --policy-arn arn:aws:iam::YOURAWSACCOUNTID:policy/POLICYNAME`}
 </CodeBlock>
 
 Make sure to replace `arn:aws:iam::YOURAWSACCOUNTID:policy/POLICYNAME` with the

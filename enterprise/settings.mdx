@@ -26,8 +26,7 @@ An example configuration looks like this:
 LICENSE_KEY=KEYKEYKEY
 DOMAIN_NAME=pganalyze.example.com
 MAILER_URL=smtp://myusername:mypassword@example.com:25
-MAILER_FROM=pganalyze@example.com
-`}
+MAILER_FROM=pganalyze@example.com`}
 </CodeBlock>
 
 ## Resource settings
@@ -103,8 +102,7 @@ LDAP_LOOKUP_CN=Admin
 LDAP_LOOKUP_PASSWORD=ReallyLongSecurePassword
 LDAP_FIELD_UID=sAMAccountName
 LDAP_ENCRYPTION=ssl
-DEFAULT_ORG_ROLE=view_all
-`}
+DEFAULT_ORG_ROLE=view_all`}
 </CodeBlock>
 
 Note you can run an [Enterprise self-check](/docs/enterprise/troubleshooting) to verify the connection and lookup LDAP information, but some configuration errors are only visible once logging in.
@@ -126,6 +124,5 @@ Below is an example of a `prometheus.yml` file (with web server `0.0.0.0:5000`):
     authorization:
       credentials: $SIDEKIQ_PROMETHEUS_TOKEN
     static_configs:
-      - targets: [ '0.0.0.0:5000' ]
-`}
+      - targets: [ '0.0.0.0:5000' ]`}
 </CodeBlock>

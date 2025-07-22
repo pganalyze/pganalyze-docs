@@ -9,8 +9,7 @@ First you can verify whether the log drain data is coming by looking at the rout
 logs of the collector app:
 
 <CodeBlock language="bash">
-{`heroku logs -d router -t -a [your-collector-app-name]
-`}
+{`heroku logs -d router -t -a [your-collector-app-name]`}
 </CodeBlock>
 
 If this shows no output, wait a few minutes and try again; sometimes it can take a
@@ -26,8 +25,7 @@ Note the `path` here: it should correspond to the log drain you've configured
 in the previous step, e.g.:
 
 <CodeBlock language="bash">
-{`path="/logs/TESTAPP_URL"
-`}
+{`path="/logs/TESTAPP_URL"`}
 </CodeBlock>
 
 Once you see router logs for this path, proceed to the next step:

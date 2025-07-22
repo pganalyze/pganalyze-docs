@@ -15,8 +15,7 @@ Connect to the primary database you will be monitoring as **avnadmin** and run
 the following SQL statement to enable the `pg_stat_statements` extension:
 
 <CodeBlock language="sql">
-{`CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
-`}
+{`CREATE EXTENSION IF NOT EXISTS pg_stat_statements;`}
 </CodeBlock>
 
 
@@ -25,8 +24,7 @@ the following SQL statement to enable the `pg_stat_statements` extension:
 As **avnadmin**, run the following statement:
 
 <CodeBlock language="sql">
-{`SELECT calls, query FROM pg_stat_statements WHERE userid = current_user::regrole LIMIT 1;
-`}
+{`SELECT calls, query FROM pg_stat_statements WHERE userid = current_user::regrole LIMIT 1;`}
 </CodeBlock>
 
 If you have configured your database correctly, this will return a result like this:

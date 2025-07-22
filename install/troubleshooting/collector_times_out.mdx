@@ -21,8 +21,7 @@ You can check out below points using the following query to identify if ps_stat_
   count(*),
   current_setting('pg_stat_statements.max'),
   pg_size_pretty(sum(length(query)))
-FROM pg_stat_statements;
-`}
+FROM pg_stat_statements;`}
 </CodeBlock>
 
 To mitigate the issue, you can run `SELECT pg_stat_statements_reset()` to reset
@@ -45,8 +44,7 @@ First, identify the primary monitored database. This is the value of the `db_nam
 {`CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
 $$
   /* pganalyze-collector */ SELECT * FROM public.pg_stat_statements_reset();
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;
-`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
 </CodeBlock>
 
 Second, go to the Server Settings panel in Settings page and tune "Collector: Query Statistics Reset Frequency":

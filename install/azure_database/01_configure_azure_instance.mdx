@@ -45,8 +45,7 @@ Run the following SQL commands to enable the extension, and make sure it was ins
 
 <CodeBlock language="sql">
 {`CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-SELECT * FROM pg_stat_statements LIMIT 1;
-`}
+SELECT * FROM pg_stat_statements LIMIT 1;`}
 </CodeBlock>
 
 This should return one row of query statistics information - if it gives an error you might not have restarted your database or changed the configuration correctly.

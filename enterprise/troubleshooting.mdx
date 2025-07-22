@@ -11,8 +11,7 @@ backlink_title: 'pganalyze Enterprise Server'
 You can run the following command to check the configuration for basic errors:
 
 <CodeBlock language="bash">
-{`docker run --env-file ... rake enterprise:self_check
-`}
+{`docker run --env-file ... rake enterprise:self_check`}
 </CodeBlock>
 
 This verifies the Postgres, Redis, SMTP and LDAP configuration (if applicable), as well as confirms that the license is active.
@@ -22,8 +21,7 @@ This verifies the Postgres, Redis, SMTP and LDAP configuration (if applicable), 
 When running Docker on a virtual machine to run pganalyze, you can run the following command:
 
 <CodeBlock language="bash">
-{`docker logs -f pganalyze
-`}
+{`docker logs -f pganalyze`}
 </CodeBlock>
 
 This will show the full log messages from the pganalyze app, as well as errors from the collector inside the Enterprise Server container.
@@ -57,8 +55,7 @@ Skipping LDAP test.
 Verifying enterprise license... FAILED
   License file exists: No
    
-  ERROR: You need to specify the LICENSE_KEY environment variable
-`}
+  ERROR: You need to specify the LICENSE_KEY environment variable`}
 </CodeBlock>
 
 ### Error: "no credentials in the property bag"
@@ -72,8 +69,7 @@ When using IAM authentication on AWS (e.g. with an instance role), you may see a
 ... |         no credentials in the property bag
 ... |
 ... |     Stack backtrace:
-... |         ...
-`}
+... |         ...`}
 </CodeBlock>
 
 One common cause of this problem can be the HTTP response limit set on the IMDSv2 metadata endpoint, since the container that pganalyze Enterprise Server runs in counts as an extra hop on the network layer.
@@ -85,8 +81,7 @@ Typically you can fix this error by raising the IMDSv2 hop limit to `2`, like th
     --instance-id YOUR_INSTANCE_ID \
     --http-tokens required \
     --http-endpoint enabled \
-    --http-put-response-hop-limit 2
-`}
+    --http-put-response-hop-limit 2`}
 </CodeBlock>
 
 If this does not resolve the error, please [reach out to us](/contact).

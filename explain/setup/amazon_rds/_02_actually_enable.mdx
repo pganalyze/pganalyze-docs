@@ -37,8 +37,7 @@ After the reboot completes, verify that `shared_preload_libraries` now includes 
 and that the setting change does not require a restart (`pending_restart` should be `f`):
 
 <CodeBlock language="sql">
-{`SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
-`}
+{`SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';`}
 </CodeBlock>
 
 If `auto_explain` is enabled and no longer requires a restart, you can proceed to
