@@ -53,8 +53,8 @@ the following data from Amazon RDS or Aurora instances using the AWS API.
 Below is a typical IAM policy for the collector. Adjust the actions and/or
 resources as necessary to tailor the permissions to your needs.
 
-```json
-{
+<CodeBlock language="json">
+{`{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -95,5 +95,5 @@ resources as necessary to tailor the permissions to your needs.
             "Resource": "arn:aws:rds:*:*:cluster:*"
         }
     ]
-}
-```
+}`}
+</CodeBlock>

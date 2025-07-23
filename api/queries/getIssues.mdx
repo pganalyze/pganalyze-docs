@@ -36,8 +36,8 @@ Fields returned:
 
 GraphQL query:
 
-```graphql
-query {
+<CodeBlock language="graphql">
+{`query {
   getIssues(serverId: 'bdp4m73ysjgefke7i2dgkenzi4') {
     id
     description
@@ -47,19 +47,19 @@ query {
       url
     }
   }
-}
-```
+}`}
+</CodeBlock>
 
 Using `curl`:
 
-```bash
-curl -XPOST -H 'Authorization: Token XXXXXXX' \
+<CodeBlock language="bash">
+{`curl -XPOST -H 'Authorization: Token XXXXXXX' \
   -F 'query=query { getIssues(serverId: "bdp4m73ysjgefke7i2dgkenzi4") { id, description, severity, references { name, url } } }' \
-  https://app.pganalyze.com/graphql
-```
+  https://app.pganalyze.com/graphql`}
+</CodeBlock>
 
-```json
-{
+<CodeBlock language="json">
+{`{
   "data": {
     "getIssues": [
       {
@@ -75,5 +75,5 @@ curl -XPOST -H 'Authorization: Token XXXXXXX' \
       }
     ]
   }
-}
-```
+}`}
+</CodeBlock>

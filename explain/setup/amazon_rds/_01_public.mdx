@@ -5,9 +5,9 @@ import AutoExplainNotice from '../_auto_explain_notice.mdx'
 First, to check if `auto_explain` is already enabled on your system, run the following
 query as an RDS superuser:
 
-```sql
-SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
-```
+<CodeBlock language="sql">
+{`SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';`}
+</CodeBlock>
 
 If `auto_explain` is included in the `shared_preload_libraries` value and `pending_restart`
 is false, the module is already enabled.

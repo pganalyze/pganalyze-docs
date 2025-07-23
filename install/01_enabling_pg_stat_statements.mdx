@@ -26,9 +26,9 @@ therefore no additional install is required.
 
 RedHat/CentOS:
 
-```
-sudo yum install postgresql-contrib
-```
+<CodeBlock language="bash">
+{`sudo yum install postgresql-contrib`}
+</CodeBlock>
 
 ## Configure PostgreSQL
 
@@ -38,14 +38,14 @@ The right configuration will depend on your server, workload, and preferences,
 but the following is the example of what to modify.
 You can apply these changes by updating your postgresql.conf file.
 
-```
-# postgresql.conf
+<CodeBlock language="text">
+{`# postgresql.conf
 shared_preload_libraries = 'pg_stat_statements'
-
+ 
 pg_stat_statements.track = all
 pg_stat_statements.max = 10000
-track_io_timing = on
-```
+track_io_timing = on`}
+</CodeBlock>
 
 <table>
   <thead>
@@ -108,9 +108,9 @@ to reset the statistics.
 
 If you change `shared_preload_libraries` or `pg_stat_statements.max` above, a restart is required:
 
-```
-sudo systemctl restart postgresql
-```
+<CodeBlock language="bash">
+{`sudo systemctl restart postgresql`}
+</CodeBlock>
 
 
 <br />

@@ -28,46 +28,46 @@ The goal of this first step is to publish the pganalyze software to your private
 
 First, log in with your license information, shared with you by the pganalyze team:
 
-```
-docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io
-```
+<CodeBlock language="bash">
+{`docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io`}
+</CodeBlock>
 
 Now pull the image, replacing VERSION with the [latest pganalyze Enterprise version](/docs/enterprise/releases):
 
-```
-docker pull quay.io/pganalyze/enterprise:VERSION
-```
+<CodeBlock language="bash">
+{`docker pull quay.io/pganalyze/enterprise:VERSION`}
+</CodeBlock>
 
 Create a new container repository for pganalyze in the account-specific AWS container registry:
 
-```
-aws ecr create-repository --repository-name pganalyze-enterprise
-```
+<CodeBlock language="bash">
+{`aws ecr create-repository --repository-name pganalyze-enterprise`}
+</CodeBlock>
 
 Log in to the AWS container registry, replacing `ACCOUNTID` with your AWS account ID, replacing `REGION` with your AWS region (e.g. "us-west-1"):
 
-```
-aws ecr get-login-password --region REGION | docker login --username AWS --password-stdin ACCOUNTID.dkr.ecr.REGION.amazonaws.com
-```
+<CodeBlock language="bash">
+{`aws ecr get-login-password --region REGION | docker login --username AWS --password-stdin ACCOUNTID.dkr.ecr.REGION.amazonaws.com`}
+</CodeBlock>
 
 Now tag the pganalyze image with the correct prefix for the AWS registry - make sure to replace the values (`ACCOUNTID`, `REGION`, `VERSION`) here:
 
-```
-docker tag quay.io/pganalyze/enterprise:VERSION ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION
-```
+<CodeBlock language="bash">
+{`docker tag quay.io/pganalyze/enterprise:VERSION ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION`}
+</CodeBlock>
 
 And now push the tag to the registry:
 
-```
-docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION
-```
+<CodeBlock language="bash">
+{`docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION`}
+</CodeBlock>
 
 ### Step 2: Create an IAM policy that has sufficient access to the Amazon RDS APIs
 
 Create the policy that permits access to Amazon RDS instances you want monitored. Save this to a file named `pganalyze_rds_policy.json`:
 
-```json
-{
+<CodeBlock language="json">
+{`{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -108,20 +108,20 @@ Create the policy that permits access to Amazon RDS instances you want monitored
             "Resource": "arn:aws:rds:*:*:cluster:*"
         }
     ]
-}
-```
+}`}
+</CodeBlock>
 
 This policy allows accessing the metrics and log data for all RDS databases in your account (recommended for the initial setup). Now create the policy:
 
-```
-aws iam create-policy --policy-name pganalyze_rds_policy --policy-document file://pganalyze_rds_policy.json
-```
+<CodeBlock language="bash">
+{`aws iam create-policy --policy-name pganalyze_rds_policy --policy-document file://pganalyze_rds_policy.json`}
+</CodeBlock>
 
 Assign the policy to the Amazon EKS node IAM role (replace `eksctl-CLUSTER-NodeInstanceRole` with your EKS node instance role name):
 
-```
-aws iam attach-role-policy --policy-arn arn:aws:iam::ACCOUNTID:policy/pganalyze_rds_policy --role-name eksctl-CLUSTER-NodeInstanceRole
-```
+<CodeBlock language="bash">
+{`aws iam attach-role-policy --policy-arn arn:aws:iam::ACCOUNTID:policy/pganalyze_rds_policy --role-name eksctl-CLUSTER-NodeInstanceRole`}
+</CodeBlock>
 
 ### Step 3: Set up a Kubernetes secret for configuration settings
 
@@ -133,9 +133,9 @@ The `DATABASE_URL` has the format `postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DA
 
 The `LICENSE_KEY` has been provided to you by the pganalyze Team - replace `KEYKEYKEY` in the command with the actual key.
 
-```
-kubectl create secret generic pganalyze-secret --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE --from-literal=LICENSE_KEY=KEYKEYKEY --dry-run=client -o yaml | kubectl apply -f -
-```
+<CodeBlock language="bash">
+{`kubectl create secret generic pganalyze-secret --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE --from-literal=LICENSE_KEY=KEYKEYKEY --dry-run=client -o yaml | kubectl apply -f -`}
+</CodeBlock>
 
 ### Step 4: Create the pganalyze Enterprise deployment
 

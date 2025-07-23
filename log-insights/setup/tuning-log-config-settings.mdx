@@ -10,16 +10,16 @@ get useful log output that can then be read and analyzed by **pganalyze Log Insi
 If you want to skip the details, this is the recommended configuration to start
 with:
 
-```
-log_min_duration_statement = 1000
+<CodeBlock language="text">
+{`log_min_duration_statement = 1000
 log_lock_waits = on
 log_temp_files = 0
 # Note: log_checkpoints is not available on AWS Aurora (see below)
 log_checkpoints = on
 log_connections = on
 log_disconnections = on
-log_autovacuum_min_duration = 0
-```
+log_autovacuum_min_duration = 0`}
+</CodeBlock>
 
 ## Slow queries
 
@@ -30,9 +30,9 @@ useful.
 As a start, you can set this to `1s`, or `1000` milliseconds, which logs every query
 that takes longer than that:
 
-```
-log_min_duration_statement = 1000
-```
+<CodeBlock language="text">
+{`log_min_duration_statement = 1000`}
+</CodeBlock>
 
 pganalyze will then show these as query samples on the query detail page:
 
@@ -48,9 +48,9 @@ To enable logging of [L70: Process acquired lock](/docs/log-insights/locks/L70)
 and [Process still waiting for lock](/docs/log-insights/locks/L71) events, add
 the following:
 
-```
-log_lock_waits = on
-```
+<CodeBlock language="text">
+{`log_lock_waits = on`}
+</CodeBlock>
 
 Note that this will only report on lock waits that exceed `deadlock_timeout`,
 which defaults to 1s. Whilst you can lower this a bit, the lock checks can be
@@ -62,9 +62,9 @@ See **[Guide: Monitoring Postgres locks using Log Insights](/docs/guides/monitor
 
 For getting [S7: Temporary file](/docs/log-insights/server/S7) notices, add the following:
 
-```
-log_temp_files = 0
-```
+<CodeBlock language="text">
+{`log_temp_files = 0`}
+</CodeBlock>
 
 Note that the value here is a threshold, but in practice its often very useful
 to start with a threshold of `0` (i.e. log all temp files) and then raise the
@@ -77,9 +77,9 @@ Also see **[Guide: Adjusting work_mem based on temporary file creation](/docs/gu
 Checkpoints can be I/O intensive events in Postgres, and so its highly recommended
 to enable logging for them to get more details:
 
-```
-log_checkpoints = on
-```
+<CodeBlock language="text">
+{`log_checkpoints = on`}
+</CodeBlock>
 
 Note that this setting is not available on AWS Aurora (see [here](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Reference.html) and [here](https://aws.amazon.com/blogs/database/optimizing-and-tuning-queries-in-amazon-rds-postgresql-based-on-native-and-external-tools/)).
 
@@ -95,15 +95,15 @@ See **[Guide: Tuning checkpoint intervals to reduce I/O spikes](/docs/guides/tun
 
 For logging connections, i.e. [C20: Connection received](/docs/log-insights/connections/C20) and [C21: Connection authorized](/docs/log-insights/connections/C21), enable the following:
 
-```
-log_connections = on
-```
+<CodeBlock language="text">
+{`log_connections = on`}
+</CodeBlock>
 
 For disconnects ([C23: Disconnection](/docs/log-insights/connections/C23)) add the following:
 
-```
-log_disconnects = on
-```
+<CodeBlock language="text">
+{`log_disconnects = on`}
+</CodeBlock>
 
 In general it is very useful to enable connection logging, both from an auditing perspective
 as well as to be able to trace back when a connection was opened and closed.
@@ -117,9 +117,9 @@ overwhelming, and it'd be better to disable it in such cases.
 In order to log changes to your schema, or other database-affecting operations,
 you can enable logging of all DDL statements:
 
-```
-log_statement = ddl
-```
+<CodeBlock language="text">
+{`log_statement = ddl`}
+</CodeBlock>
 
 **Warning:** Enabling this also causes `ALTER USER` statements to be logged. Make sure that
 you run a session-local `SET log_statement = none` before running any statement that contains
@@ -137,9 +137,9 @@ You can use the `log_autovacuum_min_duration` setting to enable logging of autov
 operations ([A65: Automatic vacuum of table completed](/docs/log-insights/autovacuum/A65) and
 [A66: Automatic analyze of table completed](/docs/log-insights/autovacuum/A66)):
 
-```
-log_autovacuum_min_duration = 0
-```
+<CodeBlock language="text">
+{`log_autovacuum_min_duration = 0`}
+</CodeBlock>
 
 If you are seeing a lot of autovacuum activity it may make sense to specify a specific
 threshold so only slow vacuums get logged. Note that as a starting point `0` is actually

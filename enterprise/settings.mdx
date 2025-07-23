@@ -21,13 +21,13 @@ The settings on this page can be passed in as environment variables into the pga
 
 An example configuration looks like this:
 
-```
-DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
+<CodeBlock language="text">
+{`DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
 LICENSE_KEY=KEYKEYKEY
 DOMAIN_NAME=pganalyze.example.com
 MAILER_URL=smtp://myusername:mypassword@example.com:25
-MAILER_FROM=pganalyze@example.com
-```
+MAILER_FROM=pganalyze@example.com`}
+</CodeBlock>
 
 ## Resource settings
 
@@ -94,16 +94,16 @@ to ensure that new LDAP users are added to the existing organization.
 
 Example LDAP configuration, with the required `DEFAULT_ORG_ROLE` setting, but without other unrelated settings:
 
-```
-LDAP_HOST=example.com
+<CodeBlock language="text">
+{`LDAP_HOST=example.com
 LDAP_PORT=389
 LDAP_BASE_DN=OU=Users,OU=ldaptest,DC=ldaptest,DC=pganalyze,DC=com
 LDAP_LOOKUP_CN=Admin
 LDAP_LOOKUP_PASSWORD=ReallyLongSecurePassword
 LDAP_FIELD_UID=sAMAccountName
 LDAP_ENCRYPTION=ssl
-DEFAULT_ORG_ROLE=view_all
-```
+DEFAULT_ORG_ROLE=view_all`}
+</CodeBlock>
 
 Note you can run an [Enterprise self-check](/docs/enterprise/troubleshooting) to verify the connection and lookup LDAP information, but some configuration errors are only visible once logging in.
 
@@ -116,13 +116,13 @@ If you have a Prometheus setup already, you can add the hostname and port of you
 
 Below is an example of a `prometheus.yml` file (with web server `0.0.0.0:5000`):
 
-```
-scrape_configs:
+<CodeBlock language="text">
+{`scrape_configs:
   - job_name: "sidekiq-prometheus"
     scrape_interval: 60s
     scrape_timeout: 10s
     authorization:
       credentials: $SIDEKIQ_PROMETHEUS_TOKEN
     static_configs:
-      - targets: [ '0.0.0.0:5000' ]
-```
+      - targets: [ '0.0.0.0:5000' ]`}
+</CodeBlock>

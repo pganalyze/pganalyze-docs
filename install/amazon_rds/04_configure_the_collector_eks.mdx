@@ -23,20 +23,20 @@ export const FinishSetup = ({ inviteLink }) => {
 
 To start, download an example values.yaml file for the Helm chart:
 
-```
-# Add a pganalyze repo:
+<CodeBlock language="bash">
+{`# Add a pganalyze repo:
 helm repo add pganalyze https://charts.pganalyze.com/
 # Download an example values.yaml file:
-helm show values pganalyze/pganalyze-collector > values.yaml
-```
+helm show values pganalyze/pganalyze-collector > values.yaml`}
+</CodeBlock>
 
 Update the serviceAccount section in the values.yaml file to use the role just
 created in the previous step. For the name, use "pganalyze-service-account" as
 specified in the Pod Identity association (for Pod Identity) or the assume role
 policy (for IRSA):
 
-```yaml
-serviceAccount:
+<CodeBlock language="yaml">
+{`serviceAccount:
   # -- Specifies whether a service account should be created
   create: true
   # -- Annotations to add to the service account
@@ -46,8 +46,8 @@ serviceAccount:
   #   eks.amazonaws.com/role-arn: "arn:aws:iam::<aws-account-id>:role/pganalyzeServiceAccountRole"
   # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: "pganalyze-service-account"
-```
+  name: "pganalyze-service-account"`}
+</CodeBlock>
 
 Next, update the `extraEnv` section in the values.yaml file with the following.
 This example uses `extraEnv` field for a temporary demonstration. For production
@@ -63,8 +63,8 @@ above, where it is used as the value of the `CONFIG_CONTENTS` environment variab
 For instance, you can create a secret called `pganalyze-secrets` and add a key
 `pganalyze-collector.conf`, setting the `INI` collector config as its value.
 
-```yaml
-apiVersion: v1
+<CodeBlock language="yaml">
+{`apiVersion: v1
 kind: Secret
 metadata:
   name: pganalyze-secrets
@@ -75,21 +75,21 @@ data:
     [instance1]
     db_host = your_database_host
     db_name = your_database_name
-    ...
-```
+    ...`}
+</CodeBlock>
 
 Then, create a secret volume `config-volume` and mount it to the `/config` path
 so that the config file will be created in the default config file location:
 
-```yaml
-# -- List of volumes to attach to the pod
+<CodeBlock language="yaml">
+{`# -- List of volumes to attach to the pod
 volumes:
   - name: scratch
     emptyDir: {}
   - name: config-volume
     secret:
       secretName: pganalyze-secrets
-
+       
 # -- List of volume mounts to attach to the container
 volumeMounts:
   - mountPath: /tmp
@@ -99,8 +99,8 @@ volumeMounts:
     name: scratch
     subPath: state
   - mountPath: /config
-    name: config-volume
-```
+    name: config-volume`}
+</CodeBlock>
 
 With this, the `config-volume` volume will contain a `pganalyze-collector.conf`
 file, with its content being the value of the secret, mounted at `/config/pganalyze-collector.conf`.
@@ -111,34 +111,34 @@ file, with its content being the value of the secret, mounted at `/config/pganal
 
 In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance.
 
-```yaml
-DB_HOST: mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
-```
+<CodeBlock language="yaml">
+{`DB_HOST: mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com`}
+</CodeBlock>
 
 This will only monitor the writer instance. If you also want to monitor a reader instance,
 you'll need to use the Multiple Instances method above and specify the reader instance as a
 second instance within the `CONFIG_CONTENTS` environment variable.
 
-```
-[pganalyze]
+<CodeBlock language="text">
+{`[pganalyze]
 api_key = 'your_pga_organization_api_key'
-
+ 
 [writer_instance]
 db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
 ...
-
+ 
 [reader_instance]
 db_host = mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
-...
-```
+...`}
+</CodeBlock>
 
 Alternatively, you can install a Helm chart with the separate release name to
 monitor a reader instance.
 Use the `cluster-ro` endpoint as the `DB_HOST` of the environment variables:
 
-```yaml
-DB_HOST: mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
-```
+<CodeBlock language="yaml">
+{`DB_HOST: mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com`}
+</CodeBlock>
 
 If you have a cluster with multiple readers, you either need to add each instance
 endpoint to the content of `CONFIG_CONTENTS` (e.g. add each sections like `[reader_instance1]`, `[reader_instance2]`),
@@ -149,37 +149,37 @@ or install one pganalyze collector Helm chart for each instance.
 We can now install a Helm chart to your EKS cluster. First, add a pganalyze repo
 if you already haven't added in the previous step:
 
-```
-helm repo add pganalyze https://charts.pganalyze.com/
-```
+<CodeBlock language="bash">
+{`helm repo add pganalyze https://charts.pganalyze.com/`}
+</CodeBlock>
 
 Then, install a chart, using the values.yaml file created earlier:
 
-```
-helm upgrade --install my-collector pganalyze/pganalyze-collector --values=values.yaml
-```
+<CodeBlock language="bash">
+{`helm upgrade --install my-collector pganalyze/pganalyze-collector --values=values.yaml`}
+</CodeBlock>
 
 Adjust the namespace if needed. You can run the same command when you make a
 change to the values.yaml file.
 
 To verify that the install went well, check the deployment:
 
-```
-$ kubectl get deployment
+<CodeBlock language="bash">
+{`$ kubectl get deployment
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-my-collector-pganalyze-collector   1/1     1            1           1m10s
-```
+my-collector-pganalyze-collector   1/1     1            1           1m10s`}
+</CodeBlock>
 
 The deployment will create one pod for the collector. Check the pod name and
 obtain the logs to make sure that the collector is running successfully:
 
-```
-$ kubectl get pods
+<CodeBlock language="bash">
+{`$ kubectl get pods
 NAME                                                READY   STATUS    RESTARTS   AGE
 my-collector-pganalyze-collector-7d599b49c8-dgxzk   1/1     Running   0          1m10s
 $ kubectl logs my-collector-pganalyze-collector-7d599b49c8-dgxzk
-I [default] Submitted compact snapshots successfully: 6 activity, 2 logs
-```
+I [default] Submitted compact snapshots successfully: 6 activity, 2 logs`}
+</CodeBlock>
 
 The `Submitted compact snapshots successfully` message indicates that you have
 configured the collector correctly.
@@ -198,6 +198,7 @@ You can run the test in a Kubernetes environment using the `docker-entrypoint.sh
 script located in the home directory of the container.
 Use the following command, replacing the pod name with the actual name of your pod:
 
-```
-kubectl exec my-collector-pganalyze-collector-7d599b49c8-dgxzk -- /home/pganalyze/docker-entrypoint.sh test
-```
+<CodeBlock language="bash">
+{`kubectl exec my-collector-pganalyze-collector-7d599b49c8-dgxzk -- /home/pganalyze/docker-entrypoint.sh test`}
+</CodeBlock>
+

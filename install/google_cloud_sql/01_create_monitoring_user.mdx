@@ -39,10 +39,10 @@ Connect to your database with **cloudsqlsuperuser / alloydbsuperuser** privilege
 
 Run the following SQL commands to enable the `pg_stat_statements` extension, and make sure it was installed correctly:
 
-```
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
-SELECT * FROM pg_stat_statements LIMIT 1;
-```
+<CodeBlock language="sql">
+{`CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+SELECT * FROM pg_stat_statements LIMIT 1;`}
+</CodeBlock>
 
 ## Create monitoring user
 

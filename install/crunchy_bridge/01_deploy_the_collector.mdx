@@ -25,9 +25,9 @@ We recommend using a role with limited privileges for monitoring. You can use Cr
 
 To ensure the application user can access monitoring statistics for all users (not just itself), and can read the server log, **run the following with superuser credentials**:
 
-```sql
-GRANT pg_monitor TO application;
-```
+<CodeBlock language="sql">
+{`GRANT pg_monitor TO application;`}
+</CodeBlock>
 
 <MonitoringUserPerDatabaseHelpers username="application" />
 
@@ -37,9 +37,9 @@ In later steps you can now specify the application user credentials as the `DB_U
 
 If you have not yet enabled Postgres Container Apps, connect to your Crunchy Bridge Postgres database, and run the following commands as a superuser:
 
-```sql
-CREATE EXTENSION IF NOT EXISTS pgpodman;
-```
+<CodeBlock language="sql">
+{`CREATE EXTENSION IF NOT EXISTS pgpodman;`}
+</CodeBlock>
 
 ## Create Crunchy Bridge API key
 

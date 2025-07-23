@@ -27,30 +27,30 @@ Fields returned:
 
 GraphQL mutation:
 
-```graphql
-mutation {
+<CodeBlock language="graphql">
+{`mutation {
   deleteServer(serverId: "bdp4m73ysjgefke7i2dgkenzi4") {
     success
     errors
   }
-}
-```
+}`}
+</CodeBlock>
 
 Using `curl`, replace `pganalyze.internal` with the hostname or IP of your pganalyze installation:
 
-```bash
-curl -XPOST -H 'Authorization: Token XXXXXXX' \
+<CodeBlock language="bash">
+{`curl -XPOST -H 'Authorization: Token XXXXXXX' \
   -F 'query=mutation { deleteServer(serverId: "bdp4m73ysjgefke7i2dgkenzi4") { success, errors } }' \
-  https://pganalyze.internal/graphql
-```
+  https://pganalyze.internal/graphql`}
+</CodeBlock>
 
-```json
-{
+<CodeBlock language="json">
+{`{
   "data": {
     "deleteServer": {
       "success": true,
       "errors": []
     }
   }
-}
-```
+}`}
+</CodeBlock>

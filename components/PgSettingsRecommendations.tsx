@@ -151,7 +151,7 @@ const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommend
         // that says "do not edit" or use even more convoluted workarounds to get things running again.
         const value = s.name === 'shared_preload_libraries' ? s.recommended : `'${s.recommended}'`
         return (
-          <div key={s.name}>ALTER SYSTEM SET {s.name} TO {value};</div>
+         `ALTER SYSTEM SET ${s.name} TO ${value};`
         )
       })}
     </CodeBlock>

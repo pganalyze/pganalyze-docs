@@ -32,25 +32,25 @@ Fields returned:
 
 GraphQL query:
 
-```graphql
-query {
+<CodeBlock language="graphql">
+{`query {
   getServers(organizationSlug: "example", withRecentData: true) {
     humanId
     name
   }
-}
-```
+}`}
+</CodeBlock>
 
 Using `curl`:
 
-```bash
-curl -XPOST -H 'Authorization: Token XXXXXXX' \
+<CodeBlock language="bash">
+{`curl -XPOST -H 'Authorization: Token XXXXXXX' \
   -F 'query=query { getServers(organizationSlug: "example", withRecentData: true) { humanId, name } }' \
-  https://app.pganalyze.com/graphql
-```
+  https://app.pganalyze.com/graphql`}
+</CodeBlock>
 
-```json
-{
+<CodeBlock language="json">
+{`{
   "data": {
     "getServers": [
       {
@@ -60,5 +60,5 @@ curl -XPOST -H 'Authorization: Token XXXXXXX' \
       [ ... ]
     }
   }
-}
-```
+}`}
+</CodeBlock>

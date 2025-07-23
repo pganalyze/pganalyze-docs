@@ -17,9 +17,9 @@ config and add the
 [`db_log_syslog_server`](https://pganalyze.com/docs/collector/settings#self-managed-servers)
 setting. This should be set to a local address on any free port:
 
-```
-db_log_syslog_server: 0.0.0.0:32514
-```
+<CodeBlock language="text">
+{`db_log_syslog_server: 0.0.0.0:32514`}
+</CodeBlock>
 
 (If using Docker, use the `LOG_SYSLOG_SERVER` environment variable instead.)
 

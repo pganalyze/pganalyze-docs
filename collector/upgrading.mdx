@@ -35,14 +35,14 @@ On Amazon Linux 2, RHEL, CentOS, Fedora, and other systems using RPM packages,
 you can update the collector through the standard update mechanism.
 
 First, update the package metadata:
-```
-sudo yum makecache
-```
+<CodeBlock language="bash">
+{`sudo yum makecache`}
+</CodeBlock>
 
 Then, update to the latest version of the collector package:
-```
-sudo yum upgrade pganalyze-collector
-```
+<CodeBlock language="bash">
+{`sudo yum upgrade pganalyze-collector`}
+</CodeBlock>
 
 Installing the new collector will automatically restart the pganalyze collector
 service that's running in the background.
@@ -54,14 +54,14 @@ On systems using Debian-based packages, you can update the collector through the
 standard update mechanism.
 
 First, update the package metadata:
-```
-sudo apt update
-```
+<CodeBlock language="bash">
+{`sudo apt update`}
+</CodeBlock>
 
 Then, update to the latest version of the collector package:
-```
-sudo apt install --only-upgrade pganalyze-collector
-```
+<CodeBlock language="bash">
+{`sudo apt install --only-upgrade pganalyze-collector`}
+</CodeBlock>
 
 Installing the new collector will automatically restart the pganalyze collector
 service that's running in the background.
@@ -88,31 +88,31 @@ push it to your collector app.
 
 First, check out the latest collector code and `cd` into its directory:
 
-```
-git clone https://github.com/pganalyze/collector
-cd collector
-```
+<CodeBlock language="bash">
+{`git clone https://github.com/pganalyze/collector
+cd collector`}
+</CodeBlock>
 
 Next, look up the git remote for your app (replace `my-heroku-collector` with
 the name of your collector app):
-```
-heroku info --app my-heroku-collector
-```
+<CodeBlock language="bash">
+{`heroku info --app my-heroku-collector`}
+</CodeBlock>
 
 The output should contain a line like
-```
-Git URL:        https://git.heroku.com/my-heroku-collector.git
-```
+<CodeBlock language="bash">
+{`Git URL:        https://git.heroku.com/my-heroku-collector.git`}
+</CodeBlock>
 
 Add that URL as a git remote for Heroku to your local collector repo:
-```
-git remote add heroku https://git.heroku.com/my-heroku-collector.git
-```
+<CodeBlock language="bash">
+{`git remote add heroku https://git.heroku.com/my-heroku-collector.git`}
+</CodeBlock>
 
 Then push the latest code to your collector app:
-```
-git push heroku main
-```
+<CodeBlock language="bash">
+{`git push heroku main`}
+</CodeBlock>
 
 Once the `git push` completes, the upgrade is done.
 

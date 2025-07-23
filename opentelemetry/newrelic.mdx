@@ -44,36 +44,36 @@ add it as a query tag, then you can generate a traceparent tag as follows.
 
 #### Ruby
 
-```ruby
-# make sure NewRelic::Agent::Transaction.tl_current is present
+<CodeBlock language="ruby">
+{`# make sure NewRelic::Agent::Transaction.tl_current is present
 # before generating a traceparent
 current_trace = NewRelic::Agent::Transaction.tl_current
-
+ 
 format(
   '00-%<trace_id>s-%<parent_id>s-%<trace_flags>.2d',
   trace_id: current_trace.trace_id.rjust(32, '0').downcase,
   parent_id: current_trace.current_segment.guid,
   trace_flags: current_trace.sampled? ? '01' : '00'
-)
-```
+)`}
+</CodeBlock>
 
 #### Python
 
-```python
-import newrelic.agent
-
-
+<CodeBlock language="python">
+{`import newrelic.agent
+ 
+  
 dummy_headers = []
 newrelic.agent.insert_distributed_trace_headers(dummy_headers)
 traceparent = None
-
+ 
 for key, value in dummy_headers:
     if key == 'traceparent':
         traceparent = value
         break
-
-# only add traceparent as a query tag when it's not None
-```
+         
+# only add traceparent as a query tag when it's not None`}
+</CodeBlock>
 
 For Go, it is best to use the OpenTelemetry SDK as it will integrate well with
 [sqlcommenter](https://google.github.io/sqlcommenter/) and the traceparent query

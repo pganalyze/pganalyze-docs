@@ -43,10 +43,10 @@ Connect to your database as a user with **azure_pg_admin** privileges (usually t
 
 Run the following SQL commands to enable the extension, and make sure it was installed correctly:
 
-```
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
-SELECT * FROM pg_stat_statements LIMIT 1;
-```
+<CodeBlock language="sql">
+{`CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+SELECT * FROM pg_stat_statements LIMIT 1;`}
+</CodeBlock>
 
 This should return one row of query statistics information - if it gives an error you might not have restarted your database or changed the configuration correctly.
 

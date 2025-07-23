@@ -34,25 +34,25 @@ Note that if a table is considered a Top 10 table it will be excluded from the T
 
 Using collector version [0.63.0 or later](/docs/collector/upgrading), enable the extension:
 
-```sql
-CREATE EXTENSION IF NOT EXISTS pg_buffercache WITH SCHEMA public;
-```
+<CodeBlock language="sql">
+{`CREATE EXTENSION IF NOT EXISTS pg_buffercache WITH SCHEMA public;`}
+</CodeBlock>
 
 If you don't see stats after 20 minutes, check the collector logs for error messages.
 
 If the collector runs into permissions issues when querying pg_buffercache, you may need to upgrade the extension:
 
-```sql
-ALTER EXTENSION pg_buffercache UPDATE;
-```
+<CodeBlock language="sql">
+{`ALTER EXTENSION pg_buffercache UPDATE;`}
+</CodeBlock>
 
 Or on older Postgres versions, you can grant the permissions manually:
 
-```sql
-GRANT USAGE ON SCHEMA public TO pganalyze;
+<CodeBlock language="sql">
+{`GRANT USAGE ON SCHEMA public TO pganalyze;
 GRANT SELECT ON pg_buffercache TO pganalyze;
-GRANT EXECUTE ON FUNCTION pg_buffercache_pages TO pganalyze;
-```
+GRANT EXECUTE ON FUNCTION pg_buffercache_pages TO pganalyze;`}
+</CodeBlock>
 
 ## Performance implications of collecting shared buffer statistics
 

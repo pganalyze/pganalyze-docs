@@ -14,9 +14,9 @@ synthetic slow query that we can use to confirm everything is working.
 The collector includes a flag to do this for you automatically, based on your
 `log_min_duration_statement`:
 
-```
-sudo pganalyze-collector --test-explain
-```
+<CodeBlock language="bash">
+{`sudo pganalyze-collector --test-explain`}
+</CodeBlock>
 
 This will produce no output but will run an artificially slow query using the
 Postgres `pg_sleep` function.

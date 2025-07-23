@@ -1,8 +1,8 @@
 Go to **[Create IAM policy](https://console.aws.amazon.com/iam/home#/policies$new?step=edit)**,
 select JSON and then paste the following policy:
 
-```json
-{
+<CodeBlock language="json">
+{`{
     "Version": "2012-10-17",
     "Statement": [
         {
@@ -43,7 +43,7 @@ select JSON and then paste the following policy:
             "Resource": "arn:aws:rds:*:*:cluster:*"
         }
     ]
-}
-```
+}`}
+</CodeBlock>
 
 We recommend naming the policy "pganalyze" or similar, so you can easily identify it again.

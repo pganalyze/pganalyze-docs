@@ -21,27 +21,27 @@ If you are deploying the pganalyze collector using a Helm chart, you can update
 the values.yaml file to create a service for this HTTP server.
 In values.yaml file, update the section of `service`:
 
-```yaml
-service:
+<CodeBlock language="yaml">
+{`service:
   create: true
   name: pganalyze-collector-otel-service
   type: ClusterIP
   port: 4318
-  targetPort: 4318
-```
+  targetPort: 4318`}
+</CodeBlock>
 
 This will create a service with the name `pganalyze-collector-otel-service`.
 Assuming you use [Fluent Bit](https://fluentbit.io/) as a telemetry agent,
 you can specify the created service as an OpenTelemetry HTTP endpoint, using the
 [OpenTelemetry output plugin](https://docs.fluentbit.io/manual/pipeline/outputs/opentelemetry):
 
-```
-  [OUTPUT]
+<CodeBlock language="text">
+{`  [OUTPUT]
     name  opentelemetry
     match kube.*postgres*
     host  pganalyze-collector-otel-service
-    port  4318
-```
+    port  4318`}
+</CodeBlock>
 
 With this flow, Fluent Bit tails the logs of Postgres pods, sends the logs to the
 pganalyze collector's OpenTelemetry HTTP endpoint (via `pganalyze-collector-otel-service`),

@@ -17,9 +17,9 @@ In this step we'll install the collector which sends statistics information to p
 
 On a VM of your choice, download the Docker image:
 
-```
-docker pull quay.io/pganalyze/collector:stable
-```
+<CodeBlock language="bash">
+{`docker pull quay.io/pganalyze/collector:stable`}
+</CodeBlock>
 
 As the collector needs to always be running in the background, avoid using Azure Container Instances.
 

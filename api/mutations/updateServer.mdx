@@ -40,27 +40,27 @@ Fields returned:
 
 GraphQL mutation:
 
-```graphql
-mutation {
+<CodeBlock language="graphql">
+{`mutation {
   updateServer(serverId: "bdp4m73ysjgefke7i2dgkenzi4", dbPassword: "new-password") {
     errors
     server {
       humanId
     }
   }
-}
-```
+}`}
+</CodeBlock>
 
 Using `curl`, replace `pganalyze.internal` with the hostname or IP of your pganalyze installation:
 
-```bash
-curl -XPOST -H 'Authorization: Token XXXXXXX' \
+<CodeBlock language="bash">
+{`curl -XPOST -H 'Authorization: Token XXXXXXX' \
   -F 'query=mutation { updateServer(serverId: "bdp4m73ysjgefke7i2dgkenzi4", dbPassword: "new-password") { server { humanId }, errors } }' \
-  https://pganalyze.internal/graphql
-```
+  https://pganalyze.internal/graphql`}
+</CodeBlock>
 
-```json
-{
+<CodeBlock language="json">
+{`{
   "data": {
     "updateServer": {
       "server": {
@@ -69,5 +69,5 @@ curl -XPOST -H 'Authorization: Token XXXXXXX' \
       "errors": []
     }
   }
-}
-```
+}`}
+</CodeBlock>
