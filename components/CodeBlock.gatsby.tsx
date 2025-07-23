@@ -23,27 +23,21 @@ function getTextFromChildren(children: React.ReactNode): string {
   return "";
 }
 
-type Props = {
-   language?: string;
-   style?: React.CSSProperties;
-   children: React.ReactNode;
-   hideCopy?: boolean;
+type Props = { 
+  /** 
+   * Language for highlighting. 
+   * 
+   * Supported languages: sql, bash, json, yaml, graphql, ruby, python, text 
+   */ 
+  language?: string; 
+  /** Style properties to pass down to the wrapping div */ 
+  style?: React.CSSProperties; 
+  /** Code block content */ 
+  children: React.ReactNode; 
+  /** Whether to hide the copy button */ 
+  hideCopy?: boolean; 
 }
 
-/**
- * @typedef {object} CodeBlock
- * @property {string} children - CodeBlock content, can be a string or React node.
- * @property {string} [language='text'] - The programming language for syntax highlighting.
- * @property {React.CSSProperties} [style] - Optional inline styles for the code block
- * @property {boolean} [hideCopy=false] - Whether to hide the copy button.
- */
-
-/**
- * A reusable React component that displays a code block with syntax highlighting. It
- * uses the `highlight.js` library for syntax highlighting and includes a copy-to-clipboard
- * @param {CodeBlock} props - The component's props.
- * @returns {JSX.Element}
- */
 const CodeBlock = ({children, language = 'text', style, hideCopy = false}: Props) => {
   const ref = useRef<HTMLElement>();
   useEffect(() => {
