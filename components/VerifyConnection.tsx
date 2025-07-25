@@ -7,7 +7,7 @@ export const VerifyConnection: React.FunctionComponent<{host:string}> = ({host})
   const CodeBlock = useCodeBlock();
   const password = useGeneratedPassword();
   return (
-    <CodeBlock>{`PGPASSWORD=${password} psql -h {host} -d mydatabase -U pganalyze`}</CodeBlock>
+    <CodeBlock>{`PGPASSWORD=${password} psql -h ${host} -d mydatabase -U pganalyze`}</CodeBlock>
   )
 }
 
