@@ -8,14 +8,62 @@ If you are running the database in a Kubernetes cluster, you can use the
 [`db_log_otel_server`](/docs/collector/settings#self-managed-servers) setting to
 have the collector listen for OpenTelemetry log data model messages.
 When this is specified, the collector will run an HTTP server behind the scenes
-on the specified port to receive logs at the `/v1/logs` endpoint.
-This should be a local address like `0.0.0.0:4318` and it's recommended to use
-an unprivileged port number (1024 and up) to avoid running the HTTP server as
-root.
+on the specified port to receive logs at the `/v1/logs` endpoint. Currently, this endpoint
+expects OpenTelemetry log messages sent as protobuf.
 
-**Note:** This currently only supports [CloudNativePG PostgreSQL logs](https://cloudnative-pg.io/documentation/current/logging/#postgresql-log).
+The configuration setting should be local address like `0.0.0.0:4318` and
+it's recommended to use an unprivileged port number (1024 and up) to avoid
+running the HTTP server as root.
 
-### Using with a pganalyze collector Helm chart
+
+<CodeBlock language="text">
+{`[pganalyze]
+api_key = your_pga_organization_api_key
+ 
+[server1]
+db_host = your_db_host
+...
+db_log_otel_server = 0.0.0.0:4318`}
+</CodeBlock>
+
+### Multiple OpenTelemetry endpoints
+If you have multiple Postgres clusters that you want to monitor through OpenTelemetry, you can
+configure one pganalyze collector to start multiple OpenTelemetry HTTP servers on different ports,
+each for a specific monitored cluster.
+
+For each monitored server in the `pganalyze-collector.conf` file, you can specify
+the `db_log_otel_server` setting with a different port number, like this:
+
+<CodeBlock language="text">
+{`[pganalyze]
+api_key = your_pga_organization_api_key
+ 
+[server1]
+db_host = your_db_host
+...
+db_log_otel_server = 0.0.0.0:4318
+ 
+[server2]
+db_host = your_db_host2
+...
+db_log_otel_server = 0.0.0.0:4319`}
+</CodeBlock>
+
+This would start two OpenTelemetry HTTP servers, one on port 4318 and another on port 4319 when 
+the collector starts. To verify, you can start the collector with verbose logging to verify 
+output similar to the example below.
+
+```
+$ sudo pganalyze-collector --verbose
+...
+...
+2025/07/29 11:20:53 I Setting up OTLP HTTP server receiving logs with 0.0.0.0:4318
+2025/07/29 11:20:53 I Setting up OTLP HTTP server receiving logs with 0.0.0.0:4319
+...
+```
+
+
+## Using with a pganalyze collector Helm chart
 
 If you are deploying the pganalyze collector using a Helm chart, you can update
 the values.yaml file to create a service for this HTTP server.
@@ -31,18 +79,124 @@ In values.yaml file, update the section of `service`:
 </CodeBlock>
 
 This will create a service with the name `pganalyze-collector-otel-service`.
-Assuming you use [Fluent Bit](https://fluentbit.io/) as a telemetry agent,
-you can specify the created service as an OpenTelemetry HTTP endpoint, using the
-[OpenTelemetry output plugin](https://docs.fluentbit.io/manual/pipeline/outputs/opentelemetry):
+
+To create multiple OpenTelemetry endpoints, you can add multiple port entries under the `ports` section:
+
+<CodeBlock language="yaml">
+{`service:
+  create: true
+  name: pganalyze-collector-otel-service
+  type: ClusterIP
+  ports:
+    - name: pganalyze-collector-otel1
+      port: 4318
+      targetPort: 4318
+    - name: pganalyze-collector-otel2
+      port: 4319
+      targetPort: 4319`}
+</CodeBlock>
+
+When there is a `ports` section, the Helm chart will ignore the settings 
+for any individual `port` and `targetPort` settings.
+
+
+## Fluent Bit configuration
+If you are using [Fluent Bit](https://fluentbit.io/) as a telemetry agent, you need to specify
+the correct INPUT and OUTPUT plugin settings to send logs to the pganalyze collector's OpenTelemetry 
+HTTP endpoint. Assuming that the Fluent Bit pod is correctly configured as a DaemonSet, the 
+following INPUT and OUTPUT configuration examples should successfully start sending logs from
+each Postgres pod to the pganalyze collector for processing. You will need to adjust your input
+path accordingly.
 
 <CodeBlock language="text">
-{`  [OUTPUT]
-    name  opentelemetry
-    match kube.*postgres*
-    host  pganalyze-collector-otel-service
-    port  4318`}
+{`[INPUT]
+    Name  tail
+    Path  /var/log/postgresql/cluster-example-*_default_postgres*.log
+    Tag kube.*
+    multiline.parser docker, cri
+    DB /var/log/flb_kube.db`}
+</CodeBlock>
+
+<CodeBlock language="text">
+{`[OUTPUT]
+    Name  opentelemetry
+    Match kube.*postgres*
+    Host  pganalyze-collector-otel-service
+    Port  4318`}
 </CodeBlock>
 
 With this flow, Fluent Bit tails the logs of Postgres pods, sends the logs to the
 pganalyze collector's OpenTelemetry HTTP endpoint (via `pganalyze-collector-otel-service`),
 and the collector processes the logs.
+
+If you have multiple Postgres clusters, you can set up multiple Fluent Bit OUTPUT
+plugins, each pointing to a different OpenTelemetry HTTP endpoint on the pganalyze collector. 
+
+<CodeBlock language="text">
+{`[OUTPUT]
+    Name  opentelemetry
+    Match kube.*cluster-example2-*
+    Host  192.168.12.242
+    Port  4319
+ 
+[OUTPUT]
+    Name  opentelemetry
+    Match kube.*cluster-example-*
+    Host  192.168.12.242
+    Port  4318`}
+</CodeBlock>
+
+### Troubleshooting Fluent Bit and other Protobuf payloads
+One of the common issues when using Fluent Bit with OpenTelemetry is that
+the payloads are sent in Protobuf format which is a compact, efficient transport
+format, yet difficult to debug on the receiving end when it doesn't match the
+expected OpenTelemetry log data model.
+
+To assist with troubleshooting, you can set the `--very-verbose` runtime parameter
+for the pganalyze collector. This will log the raw Protobuf payloads received
+by the OpenTelemetry HTTP server and output them as JSON, which can help you 
+identify if the payloads are correctly formatted and match the expected OpenTelemetry 
+log data model.
+
+**Note:** Before starting another collector to test for OpenTelemetry input, you will have to 
+stop the collector background process to avoid port conflicts. For package based installs
+you can do this through `systemctl stop pganalyze-collector`.
+
+<CodeBlock language="bash">
+{`$ sudo systemctl stop pganalyze-collector
+ 
+$ sudo pganalyze-collector --very-verbose`}
+</CodeBlock>
+
+This will start the collector with very verbose logging enabled, and you should see
+output like this when it receives a Protobuf payload. 
+
+**Warning:** this output is very verbose and could quickly become overwhelming, 
+so it's recommended to use it only for troubleshooting purposes for a short period of time.
+
+<CodeBlock language="json">
+{`2025/07/21 22:25:21 I {
+  "resource_logs": [
+    {
+      "resource": {},
+      "scope_logs": [
+        {
+          "scope": {},
+          "log_records": [
+            {
+              "time_unix_nano": 1753151120429549420,
+              "body": {
+                "Value": {
+                  "KvlistValue": {
+                    "values": [
+                      {
+                        "key": "stream",
+                        "value": {
+                          "Value": {
+                            "StringValue": "stderr"
+                          }
+                        }
+                      },
+...`}
+</CodeBlock>
+
