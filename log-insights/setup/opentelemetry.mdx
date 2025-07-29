@@ -49,16 +49,17 @@ db_host = your_db_host2
 db_log_otel_server = 0.0.0.0:4319`}
 </CodeBlock>
 
-This would start two OpenTelemetry HTTP servers, one on port 4318 and another on port 4319. When
-starting the collector. To verify, you can start the collector with verbose logging to verify 
+This would start two OpenTelemetry HTTP servers, one on port 4318 and another on port 4319 when 
+the collector starts. To verify, you can start the collector with verbose logging to verify 
 output similar to the example below.
 
 ```
 $ sudo pganalyze-collector --verbose
 ...
 ...
-2025/07/21 13:58:49 I Registered OpenTelemetry log handler on 0.0.0.0:4318
-2025/07/21 13:58:49 I Registered OpenTelemetry log handler on 0.0.0.0:4319
+2025/07/29 11:20:53 I Setting up OTLP HTTP server receiving logs with 0.0.0.0:4318
+2025/07/29 11:20:53 I Setting up OTLP HTTP server receiving logs with 0.0.0.0:4319
+...
 ```
 
 
@@ -86,8 +87,6 @@ To create multiple OpenTelemetry endpoints, you can add multiple port entries un
   create: true
   name: pganalyze-collector-otel-service
   type: ClusterIP
-  port: 4318
-  targetPort: 4318
   ports:
     - name: pganalyze-collector-otel1
       port: 4318
@@ -98,21 +97,21 @@ To create multiple OpenTelemetry endpoints, you can add multiple port entries un
 </CodeBlock>
 
 When there is a `ports` section, the Helm chart will ignore the settings 
-for any indidivual `port` and `targetPort` settings.
+for any individual `port` and `targetPort` settings.
 
 
 ## Fluent Bit configuration
 If you are using [Fluent Bit](https://fluentbit.io/) as a telemetry agent, you need to specify
 the correct INPUT and OUTPUT plugin settings to send logs to the pganalyze collector's OpenTelemetry 
-HTTP endpoint. Assuming that the Fluent Bit pod is correctly configured as a DeamonSet, the 
+HTTP endpoint. Assuming that the Fluent Bit pod is correctly configured as a DaemonSet, the 
 following INPUT and OUTPUT configuration examples should successfully start sending logs from
 each Postgres pod to the pganalyze collector for processing. You will need to adjust your input
 path accordingly.
 
 <CodeBlock language="text">
 {`[INPUT]
-    name  tail
-    path  /var/log/postgresql/cluster-example-*_default_postgres*.log
+    Name  tail
+    Path  /var/log/postgresql/cluster-example-*_default_postgres*.log
     Tag kube.*
     multiline.parser docker, cri
     DB /var/log/flb_kube.db`}
@@ -120,10 +119,10 @@ path accordingly.
 
 <CodeBlock language="text">
 {`[OUTPUT]
-  name  opentelemetry
-  match kube.*postgres*
-  host  pganalyze-collector-otel-service
-  port  4318`}
+    Name  opentelemetry
+    Match kube.*postgres*
+    Host  pganalyze-collector-otel-service
+    Port  4318`}
 </CodeBlock>
 
 With this flow, Fluent Bit tails the logs of Postgres pods, sends the logs to the
@@ -155,20 +154,24 @@ expected OpenTelemetry log data model.
 
 To assist with troubleshooting, you can set the `--very-verbose` runtime parameter
 for the pganalyze collector. This will log the raw Protobuf payloads received
-by the OpenTelemetry HTTP server, which can help you identify if the payloads
-are correctly formatted and match the expected OpenTelemetry log data model.
+by the OpenTelemetry HTTP server and output them as JSON, which can help you 
+identify if the payloads are correctly formatted and match the expected OpenTelemetry 
+log data model.
 
-For example, assuming that `pganalyze-collector.conf` file is in the expected `/etc` location,
-you can run the collector with debug logs enabled like this:
+**Note:** Before starting another collector to test for OpenTelemetry input, you will have to 
+stop the collector background process to avoid port conflicts. For package based installs
+you can do this through `systemctl stop pganalyze-collector`.
 
 <CodeBlock language="bash">
-{`$ sudo pganalyze-collector --very-verbose`}
+{`$ sudo systemctl stop pganalyze-collector
+ 
+$ sudo pganalyze-collector --very-verbose`}
 </CodeBlock>
 
 This will start the collector with very verbose logging enabled, and you should see
 output like this when it receives a Protobuf payload. 
 
-**Please note:** this output is very verbose and could quickly become overwhelming, 
+**Warning:** this output is very verbose and could quickly become overwhelming, 
 so it's recommended to use it only for troubleshooting purposes for a short period of time.
 
 <CodeBlock language="json">
