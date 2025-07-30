@@ -10,3 +10,5 @@
     href: query-tuning/collector-workflow
   - name: Security & Privacy Considerations
     href: query-tuning/security-privacy
+  - name: Enabling pg_hint_plan
+    href: query-tuning/enabling_pg_hint_plan

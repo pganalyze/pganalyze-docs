@@ -1028,6 +1028,10 @@
       "title": "Setting up the Collector Workflow",
       "path": "/docs/query-tuning/collector-workflow"
     },
+    "query-tuning/enabling_pg_hint_plan": {
+      "title": "Enabling pg_hint_plan",
+      "path": "/docs/query-tuning/enabling_pg_hint_plan"
+    },
     "query-tuning/how-to-use-workbooks": {
       "title": "How to Optimize Slow Queries with Workbooks",
       "path": "/docs/query-tuning/how-to-use-workbooks"
