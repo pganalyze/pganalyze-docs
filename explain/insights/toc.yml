@@ -2,14 +2,10 @@
   items:
   - name: Disk Sort
     href: explain/insights/disk-sort
-  - name: Expensive
-    href: explain/insights/expensive
   - name: Hash Batches
     href: explain/insights/hash-batches
   - name: Inefficient Index
     href: explain/insights/inefficient-index
-  - name: I/O Heavy
-    href: explain/insights/io-heavy
   - name: Large Offset
     href: explain/insights/large-offset
   - name: Lossy Bitmaps
