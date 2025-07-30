@@ -2,6 +2,9 @@ export const CHECK_TITLES = {
   queries: {
     slowness: "New Slow Queries",
   },
+  query_tuning: {
+    automated_explain: "Query Performance: Advisor Insights",
+  },
   connections: {
     active_query: "Active Queries",
     idle_transaction: "Idle Transactions",
