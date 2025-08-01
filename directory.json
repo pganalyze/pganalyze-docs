@@ -1092,6 +1092,10 @@
       "title": "How to Optimize Slow Queries with Workbooks",
       "path": "/docs/workbooks/how-to-use-workbooks"
     },
+    "workbooks/planner-settings-and-hints": {
+      "title": "Optimizing Queries with Planner Settings and Planner Hints",
+      "path": "/docs/workbooks/planner-settings-and-hints"
+    },
     "workbooks/query-optimization-examples": {
       "title": "Query Optimization Examples",
       "path": "/docs/workbooks/query-optimization-examples"
