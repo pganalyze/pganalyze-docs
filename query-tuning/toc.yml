@@ -6,6 +6,8 @@
     href: query-tuning/how-to-use-workbooks
   - name: Query Optimization Examples
     href: query-tuning/query-optimization-examples
+  - name: Optimizing Queries with Planner Settings and Planner Hints
+    href: query-tuning/planner-settings-and-hints
   - name: Setting up the Collector Workflow
     href: query-tuning/collector-workflow
   - name: Security & Privacy Considerations
