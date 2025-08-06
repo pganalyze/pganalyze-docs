@@ -1,0 +1,12 @@
+- mount: workbooks
+  items:
+  - name: Overview
+    href: workbooks
+  - name: How to Optimize Slow Queries with Workbooks
+    href: workbooks/how-to-use-workbooks
+  - name: Query Optimization Examples
+    href: workbooks/query-optimization-examples
+  - name: Setting up the Collector Workflow
+    href: workbooks/collector-workflow
+  - name: Security & Privacy Considerations
+    href: workbooks/security-privacy

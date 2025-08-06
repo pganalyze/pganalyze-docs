@@ -8,8 +8,8 @@
     href: collector
   - name: Query Performance
     href: query-performance
-  - name: Query Tuning
-    href: query-tuning
+  - name: Workbooks
+    href: workbooks
   - name: EXPLAIN Plans
     href: explain
   - name: Index Advisor

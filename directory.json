@@ -1020,26 +1020,6 @@
       "title": "Query Tags",
       "path": "/docs/query-performance/query-tags"
     },
-    "query-tuning": {
-      "title": "Query Tuning",
-      "path": "/docs/query-tuning"
-    },
-    "query-tuning/collector-workflow": {
-      "title": "Setting up the Collector Workflow",
-      "path": "/docs/query-tuning/collector-workflow"
-    },
-    "query-tuning/how-to-use-workbooks": {
-      "title": "How to Optimize Slow Queries with Workbooks",
-      "path": "/docs/query-tuning/how-to-use-workbooks"
-    },
-    "query-tuning/query-optimization-examples": {
-      "title": "Query Optimization Examples",
-      "path": "/docs/query-tuning/query-optimization-examples"
-    },
-    "query-tuning/security-privacy": {
-      "title": "Security & Privacy Considerations",
-      "path": "/docs/query-tuning/security-privacy"
-    },
     "schema-statistics": {
       "title": "Tracking Postgres schema statistics in pganalyze",
       "path": "/docs/schema-statistics"
@@ -1095,6 +1075,26 @@
     "vacuum-advisor/what-is-freezing": {
       "title": "What is Freezing?",
       "path": "/docs/vacuum-advisor/what-is-freezing"
+    },
+    "workbooks": {
+      "title": "Workbooks",
+      "path": "/docs/workbooks"
+    },
+    "workbooks/collector-workflow": {
+      "title": "Setting up the Collector Workflow",
+      "path": "/docs/workbooks/collector-workflow"
+    },
+    "workbooks/how-to-use-workbooks": {
+      "title": "How to Optimize Slow Queries with Workbooks",
+      "path": "/docs/workbooks/how-to-use-workbooks"
+    },
+    "workbooks/query-optimization-examples": {
+      "title": "Query Optimization Examples",
+      "path": "/docs/workbooks/query-optimization-examples"
+    },
+    "workbooks/security-privacy": {
+      "title": "Security & Privacy Considerations",
+      "path": "/docs/workbooks/security-privacy"
     }
   },
   "logClassifications": {
