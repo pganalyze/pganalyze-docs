@@ -22,12 +22,8 @@ Below is an example of installing `pg_hint_plan` from a binary package:
 
 You don't need to run `CREATE EXTENSION` for `pg_hint_plan` unless you plan to
 use the hint table (in most cases, you won't need it).
-You can load it with the `LOAD` command (for the current session), or via
-`shared_preload_libraries` (to enable it globally).
-
-<CodeBlock language="bash">
-{`LOAD 'pg_hint_plan';`}
-</CodeBlock>
+You can load it for testing with the `LOAD 'pg_hint_plan'` command (for the
+current session), or via `shared_preload_libraries` (to enable it globally).
 
 ## Installing and enabling (Cloud providers)
 
@@ -57,8 +53,11 @@ group
 
 ### Azure Database for PostgreSQL
 
-* Enable `PG_HINT_PLAN` in the Server Parameters page
+* Allowlist the `pg_hint_plan` extension by adding `PG_HINT_PLAN` to the
+  `azure.extensions` parameter in the Server Parameters page
   * See [Enabling pg_stat_statements](/docs/install/azure_database/01_configure_azure_instance#enabling-pg_stat_statements)
     section for how to tweak the server parameters
-* Restart the instance to apply the change
+* Load `pg_hint_plan` by adding `PG_HINT_PLAN` to the `shared_preload_libraries`
+  parameter in the Server Parameters page
+* Save and Restart to save and apply changes the change
 * Run `CREATE EXTENSION pg_hint_plan;`
