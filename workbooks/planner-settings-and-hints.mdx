@@ -1,14 +1,14 @@
 ---
 title: 'Optimizing Queries with Planner Settings and Planner Hints'
-backlink_href: /docs/query-tuning
-backlink_title: 'Query Tuning'
+backlink_href: /docs/workbooks
+backlink_title: 'Workbooks'
 ---
 
 import DocsBetaFeature from '../components/DocsBetaFeature'
 
-<DocsBetaFeature feature="Query Tuning" />
+<DocsBetaFeature feature="Workbooks" />
 
-You can test optimizing queries by creating variants. In the rewrite query page
+You can test optimizing queries by creating variants. In the Rewrite Query page
 of the create new variant flow, you can not only rewrite a query, but also tweak
 the planner settings and planner hints.
 
@@ -31,17 +31,19 @@ For `enable_nestloop`, the default value is `on`, so you can only set it to
 The Edit Planner Hints modal helps you add `pg_hint_plan` hinting phrases to the
 query. Pick a hint to add, then specify the value enclosed in parentheses.
 
+Editing planner hints is only available when the database is loading the
+`pg_hint_plan` module in `shared_preload_libraries`. Check the [Enabling pg_hint_plan](/docs/workbooks/enabling_pg_hint_plan)
+page for how to enable `pg_hint_plan`.
+
 ![Screenshot of Edit Planner Hints](planner_hints.png)
 
 When saving the hint, it is validated against the current query. It checks any
 syntax errors, whether it will be used (e.g., if the hint specifies a table name
 that does not exist in the query, it will be considered unused), or if it is
 redundant or conflicts with existing hints.
-Editing planner hints is only available when the database has `pg_hint_plan`
-enabled.
 
-When a new hint is saved, the query is updated with the hinting phrases. Unlike
-hints, when a new planner setting is saved, it does not update the current query,
-but you can see the changes in the sidebar.
+When a new hint is saved, the query is updated with the hinting phrases. In
+contrast, saving a new planner setting does not update the current query, but
+the changes are reflected in the sidebar.
 
 ![Screenshot of Planner Settings and Hints](planner_settings_and_hints.png)
