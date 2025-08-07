@@ -1,0 +1,36 @@
+---
+title: '2025.03.4 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2025.03.4`
+
+## Notes
+
+- This is a patch release on top of **[2025.03.0](2025-03-0)**, **[2025.03.1](2025-03-1)**, **[2025.03.2](2025-03-2)** and **[2025.03.3](2025-03-3)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2025.03.0](2025-03-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+
+## Features
+
+- Optionally support PostGIS in Index Advisor for Enterprise Server deployments
+  - Due to PostGIS licensing restrictions, PostGIS is not bundled with pganalyze Enterprise Server, but this release now allows adding in the required files to a custom image
+  - Reach out to us via a support ticket for details
+
+
+## Bugfixes
+
+- Enforce correct search_path for internal corrections <!-- 4899 -->
+  - This ensures the partition creation changes in 2025.03.3 do not cause problems on systems where a "pganalyze" user is used, and a "pganalyze" schema is present
+- Immediately create internal table partitions on boot <!-- 5011 -->
+- Log details when there are partition creation problems <!-- 5011 -->
+
+
+## Security
+
+- Package security upgrades (rack-session [CVE-2025-46336](https://nvd.nist.gov/vuln/detail/CVE-2025-46336), nokogiri [CVE-2025-6021](https://nvd.nist.gov/vuln/detail/CVE-2025-6021), nokogiri [CVE-2025-6170](https://nvd.nist.gov/vuln/detail/CVE-2025-6170), nokogiri [CVE-2025-49794](https://nvd.nist.gov/vuln/detail/CVE-2025-49794), nokogiri [CVE-2025-49795](https://nvd.nist.gov/vuln/detail/CVE-2025-49795), nokogiri [CVE-2025-49796](https://nvd.nist.gov/vuln/detail/CVE-2025-49796), thor [CVE-2025-54314](https://nvd.nist.gov/vuln/detail/CVE-2025-54314), chrono-node [CVE-2021-23371](https://nvd.nist.gov/vuln/detail/CVE-2021-23371), form-data [CVE-2025-7783](https://nvd.nist.gov/vuln/detail/CVE-2025-7783) and ruby-saml [CVE-2025-54572](https://nvd.nist.gov/vuln/detail/CVE-2025-54572))
+  - These vulnerabilities are not exploitable in our assessment, but may show up in dependency scanners
+- Routine security updates to packages in the base image
