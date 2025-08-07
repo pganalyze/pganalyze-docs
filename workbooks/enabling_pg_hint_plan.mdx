@@ -1,0 +1,74 @@
+---
+title: 'Enabling pg_hint_plan'
+backlink_href: /docs/workbooks
+backlink_title: 'Workbooks'
+---
+
+`pg_hint_plan` is a PostgreSQL module that offers the possibility to tweak
+PostgreSQL execution plans using so-called "hints" in SQL comments.
+
+It is generally preferable to guide the planner by tweaking [planner settings](https://www.postgresql.org/docs/current/runtime-config-query.html#RUNTIME-CONFIG-QUERY-CONSTANTS),
+ensuring statistics are representative of table contents (e.g., [SET STATISTICS](https://www.postgresql.org/docs/current/sql-altertable.html#SQL-ALTERTABLE-DESC-SET-STATISTICS)),
+and using [Extended Statistics](https://www.postgresql.org/docs/current/planner-stats.html#PLANNER-STATS-EXTENDED)
+if necessary.
+However, in some situations, the above options may not be available, and in
+these cases, `pg_plan` can help you guide the planner to pick or avoid specific
+execution plans, which is useful for tuning queries.
+
+## Installing and enabling (Self-managed)
+
+For self-managed servers, install `pg_hint_plan` either by building a binary
+module from the code, or from a binary package.
+
+Below is an example of installing `pg_hint_plan` from a binary package:
+
+<CodeBlock language="bash">
+{`# For Debian or Ubuntu
+sudo apt install postgresql-<postgres version>-pg-hint-plan`}
+</CodeBlock>
+<CodeBlock language="bash">
+{`# For RHEL-based systems (assuming the PostgreSQL Yum repository is already enabled)
+sudo dnf install pg_hint_plan_<postgres version>`}
+</CodeBlock>
+
+You don't need to run `CREATE EXTENSION` for `pg_hint_plan` unless you plan to
+use the hint table (in most cases, you won't need it).
+You can load it for testing with the `LOAD 'pg_hint_plan'` command (for the
+current session), or via `shared_preload_libraries` (to enable it globally).
+
+## Installing and enabling (Cloud providers)
+
+For cloud providers, the module is usually available so no separate install step
+is required.
+
+Each provider has a slightly different way to enable `pg_hint_plan`, however the
+basic flow is the same. Add it in `shared_preload_libraries`, restart, then run
+`CREATE EXTENSION pg_hint_plan;`.
+
+### Amazon RDS for PostgreSQL or Amazon Aurora PostgreSQL
+
+* Add `pg_hint_plan` to `shared_preload_libraries` by tweaking the parameter
+group
+  * See the [the troubleshooting document about pg_stat_statements](/docs/install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries)
+    for how to tweak the parameter group
+* Restart the instance to apply the change
+* Run `CREATE EXTENSION pg_hint_plan;`
+
+### Google Cloud SQL
+
+* Set the `cloudsql.enable_pg_hint_plan` flag to `on`
+  * See [Configure database flags](https://cloud.google.com/sql/docs/postgres/flags)
+    Google Cloud SQL documentation for how to set flags
+* Save the change and restart (automatically triggered as the change requires restart)
+* For Google Cloud SQL, no need to run `CREATE EXTENSION`
+
+### Azure Database for PostgreSQL
+
+* Allowlist the `pg_hint_plan` extension by adding `PG_HINT_PLAN` to the
+  `azure.extensions` parameter in the Server Parameters page
+  * See [Enabling pg_stat_statements](/docs/install/azure_database/01_configure_azure_instance#enabling-pg_stat_statements)
+    section for how to tweak the server parameters
+* Load `pg_hint_plan` by adding `PG_HINT_PLAN` to `shared_preload_libraries`
+  parameter in the Server Parameters page
+* Save and Restart to save and apply changes the change
+* Run `CREATE EXTENSION pg_hint_plan;`
