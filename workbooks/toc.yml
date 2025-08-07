@@ -10,3 +10,5 @@
     href: workbooks/collector-workflow
   - name: Security & Privacy Considerations
     href: workbooks/security-privacy
+  - name: Enabling pg_hint_plan
+    href: workbooks/enabling_pg_hint_plan
