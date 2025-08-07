@@ -52,7 +52,7 @@ This pattern involves cases where ORDER BY combined with LIMIT leads to suboptim
 
 ### Detection
 
-View individual plans in a workbook to identify:
+View individual plans in a Workbook to identify:
 
 * Index Scans with high filter removal rates
 * Indexes being used primarily for sort ordering
@@ -82,7 +82,7 @@ This pattern occurs when GROUP BY operations lead to suboptimal index choices.
 
 ### Detection
 
-View individual plans in a workbook to identify:
+View individual plans in a Workbook to identify:
 
 * Index Scans lacking Index Conditions (using Filter only)
 * Merge Joins where index sort order appears to take precedence over filtering
