@@ -57,10 +57,8 @@ Wondering how you should optimize a particular query?
 pganalyze automatically analyzes EXPLAIN plans to find the most important insights:
 
 * **[Disk Sort](/docs/explain/insights/disk-sort)**<br />When a Sort operation spills to disk due to low work_mem settings
-* **[Expensive](/docs/explain/insights/expensive)**<br />When particular nodes are more expensive than others in a plan
 * **[Hash Batches](/docs/explain/insights/hash-batches)**<br />When a Hash operation spills to disk due to low work_mem settings
 * **[Inefficient Index](/docs/explain/insights/inefficient-index)**<br />When an index is inefficient because it's loading too much data and then filters rows without an index
-* **[I/O Heavy](/docs/explain/insights/io-heavy)**<br />When most plan I/O happens in just a few plan nodes
 * **[Large Offset](/docs/explain/insights/large-offset)**<br />When OFFSET is used for pagination, instead of an efficient method such as keyset-based pagination
 * **[Lossy Bitmaps](/docs/explain/insights/lossy-bitmaps)**<br />Bitmap Heap Scan that utilizes a lossy bitmap due to low work_mem 
 * **[Mis-Estimate](/docs/explain/insights/mis-estimate)**<br />The Postgres planner mis-estimated the number of rows a particular plan node returns
