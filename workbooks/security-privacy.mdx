@@ -1,14 +1,14 @@
 ---
 title: 'Security & Privacy Considerations'
-backlink_href: /docs/query-tuning
-backlink_title: 'Query Tuning'
+backlink_href: /docs/workbooks
+backlink_title: 'Workbooks'
 ---
 
 import DocsBetaFeature from '../components/DocsBetaFeature'
 
-<DocsBetaFeature feature="Query Tuning" />
+<DocsBetaFeature feature="Workbooks" />
 
-Query Tuning workbooks are designed to allow running [EXPLAIN ANALYZE](https://www.postgresql.org/docs/current/sql-explain.html) on a production Postgres
+Workbooks are designed to allow running [EXPLAIN ANALYZE](https://www.postgresql.org/docs/current/sql-explain.html) on a production Postgres
 server (either manually or via the collector workflow) and sharing the resulting query plan
 and execution statistics information with your whole team.
 
@@ -38,29 +38,29 @@ The Collector Workflow does not protect against:
 
 ## Permissions in pganalyze that control access to workbooks
 
-Query Tuning workbook data, including parameter values, is viewable by anyone with [View permission](/docs/accounts/permissions#view) on the server / database.
+Workbooks data, including parameter values, is viewable by anyone with [View permission](/docs/accounts/permissions#view) on the server / database.
 
 In order to create new workbooks, create query variants, and utilize the Collector Workflow, the user must have the [Tune Queries permission](/docs/accounts/permissions#tune-queries) on the server / database.
 
 ## Data privacy considerations
 
-Due to the required use of parameter values, Query Tuning workbooks may contain additional data
-beyond what pganalyze typically collects from your database. Query Tuning workbooks have the option
+Due to the required use of parameter values, Workbooks may contain additional data
+beyond what pganalyze typically collects from your database. Workbooks have the option
 to either copy existing parameter values from query samples (collected automatically by pganalyze),
 or to manually enter new parameter values.
 
-In some cases Query Tuning workbooks may contain data beyond the parameters provided, specifically
+In some cases Workbooks may contain data beyond the parameters provided, specifically
 the recorded plans in a workbook will also:
 
 * Show selectivity data about the query result, e.g. indicating how many rows match a condition
 * Show values output from `IMMUTABLE` functions that were [pre-evaluated during planning](https://www.postgresql.org/docs/current/xfunc-volatility.html)
 
-Note that all data in Query Tuning workbooks is retained until the workbook is explicitly
+Note that all data in Workbooks is retained until the workbook is explicitly
 deleted, there is no time-based expiry.
 
-## Your responsibilities when using Query Tuning
+## Your responsibilities when using Workbooks
 
-As a user of the Query Tuning functionality, you are required to:
+As a user of the Workbooks functionality, you are required to:
 
 * Only enter parameter values that are safe to share and store in pganalyze
 * Use additional `REVOKE` statements as needed to avoid the collector calling problematic
@@ -69,8 +69,8 @@ As a user of the Query Tuning functionality, you are required to:
 * Restrict access to the "Tune Queries" permission in pganalyze to authorized users
 * Delete workbooks when required by your data retention policies
 
-## Reporting security vulnerabilities in Query Tuning
+## Reporting security vulnerabilities in Workbooks
 
-The Query Tuning functionality is included in our [Security Bug Bounty program](https://pganalyze.com/security/bug-bounty-program).
+The Workbooks functionality is included in our [Security Bug Bounty program](https://pganalyze.com/security/bug-bounty-program).
 
-If you find a security vulnerability in the Query Tuning functionality, we ask for [responsible disclosure](https://pganalyze.com/security/bug-bounty-program) and will consider payment of a bug bounty per our guidelines.
+If you find a security vulnerability in the Workbooks functionality, we ask for [responsible disclosure](https://pganalyze.com/security/bug-bounty-program) and will consider payment of a bug bounty per our guidelines.

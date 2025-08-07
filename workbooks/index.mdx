@@ -1,18 +1,18 @@
 ---
-title: 'Query Tuning'
+title: 'Workbooks'
 backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
 import DocsBetaFeature from '../components/DocsBetaFeature'
 
-<DocsBetaFeature feature="Query Tuning" />
+<DocsBetaFeature feature="Workbooks" />
 
 ## Getting Started
 
-Query Tuning provides a unified interface and workflow for optimizing slow Postgres queries.
+Workbooks provide a unified interface and workflow for optimizing slow Postgres queries.
 
-The Query Tuning Workbooks feature lets you organize related `EXPLAIN ANALYZE`
+The Workbooks feature lets you organize related `EXPLAIN ANALYZE`
 outputs and share them easily and securely with your team. Each workbook contains a
 baseline query documenting a query's current performance, and one or more variants.
 
@@ -30,19 +30,19 @@ a different plan for a specific query. The parameter sets feature makes it easy 
 for different bind parameter values across the baseline and variants, making sure that optimizing
 for one user's experience does not slow down other cases.
 
-Query Tuning workbooks automatically convert positional parameters to named parameters, e.g. turning
+Workbooks automatically convert positional parameters to named parameters, e.g. turning
 `user_id = $1` into `user_id = $user_id`. This makes it easy to test rewrites of a query, or test
 individual portions of a query.
 
-[Learn how to navigate and use workbooks](/docs/query-tuning/how-to-use-workbooks)
+[Learn how to navigate and use workbooks](/docs/workbooks/how-to-use-workbooks)
 
-## How to enable Query Tuning
+## How to enable Workbooks
 
 ### New role and permissions
 
-Query Tuning utilizes a separate user permission, [Tune Queries](/docs/accounts/permissions#tune-queries).
+Workbooks utilize a separate user permission, [Tune Queries](/docs/accounts/permissions#tune-queries).
 This permission allows users to create workbooks and to use all associated
-Query Tuning features.
+Workbooks features.
 
 Only users with the `Admin (All Servers)` role (assigned to the initial organization owner by default)
 or the `View & Tune Queries (All Servers)` role (not assigned to anyone by default),
@@ -53,14 +53,14 @@ information, but cannot create new workbooks, variants, or use the collector wor
 
 ### Set up the collector to run EXPLAIN ANALYZE for you
 
-Query Tuning streamlines the process of gathering query plans through either automatic collector-based
+Workbooks streamline the process of gathering query plans through either automatic collector-based
 or manual workflows.
 
 If set up, the collector can run `EXPLAIN ANALYZE` queries automatically for you, saving time and effort. To use this
 functionality, ensure you're running collector [version 0.64.0](/docs/collector/upgrading) or later and follow the
-[documentation for setting up the collector workflow](/docs/query-tuning/collector-workflow).
+[documentation for setting up the collector workflow](/docs/workbooks/collector-workflow).
 
-We also recommend reviewing the [Security & Privacy Considerations](/docs/query-tuning/security-privacy)
+We also recommend reviewing the [Security & Privacy Considerations](/docs/workbooks/security-privacy)
 to assess whether the collector workflow is a good fit for a given production server.
 
 If you prefer not to use the automatic collection, you can alternatively use the manual workflow that

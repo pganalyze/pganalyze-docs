@@ -1,16 +1,16 @@
 ---
 title: 'Query Optimization Examples'
-backlink_href: /docs/query-tuning
-backlink_title: 'Query Tuning'
+backlink_href: /docs/workbooks
+backlink_title: 'Workbooks'
 ---
 
 import DocsBetaFeature from '../components/DocsBetaFeature'
 
-<DocsBetaFeature feature="Query Tuning" />
+<DocsBetaFeature feature="Workbooks" />
 
 Query optimization often involves recognizing and addressing common patterns that lead
 to suboptimal performance. While seasoned database engineers may spot these patterns
-through experience, Query Tuning helps identify and solve them systematically.
+through experience, Workbooks help identify and solve them systematically.
 
 We'll explore three common patterns that often impact query performance:
 
@@ -21,11 +21,11 @@ We'll explore three common patterns that often impact query performance:
 ## Inefficient Nested Loops
 
 When the query planner chooses nested loops for joins where other strategies might be
-more efficient, Query Tuning can help identify and resolve the issue.
+more efficient, Workbooks can help identify and resolve the issue.
 
 ### Detection
 
-Query Tuning automatically flags cases where Nested Loop joins show actual rows
+Workbooks automatically flag cases where Nested Loop joins show actual rows
 significantly higher than estimated, using EXPLAIN Insights.
 
 You can also identify cases where Inner side operations consume substantial time
@@ -52,7 +52,7 @@ This pattern involves cases where ORDER BY combined with LIMIT leads to suboptim
 
 ### Detection
 
-View individual plans in a Query Tuning Workbook to identify:
+View individual plans in a Workbook to identify:
 
 * Index Scans with high filter removal rates
 * Indexes being used primarily for sort ordering
@@ -82,7 +82,7 @@ This pattern occurs when GROUP BY operations lead to suboptimal index choices.
 
 ### Detection
 
-View individual plans in a Query Tuning Workbook to identify:
+View individual plans in a Workbook to identify:
 
 * Index Scans lacking Index Conditions (using Filter only)
 * Merge Joins where index sort order appears to take precedence over filtering
