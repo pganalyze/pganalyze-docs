@@ -44,6 +44,12 @@ that can be helpful, e.g. to debug I/O issues.
 If Enhanced Monitoring is enabled, pganalyze will automatically collect and show
 this additional information in the dashboard as well.
 
+## Enable aurora_compute_plan_id for Amazon Aurora 
+If you are using Amazon Aurora versions 14.10, 15.5, or later, you can enable the `aurora_compute_plan_id` parameter in your RDS parameter group to get
+more detailed plan statistic information [(reference article)](https://pganalyze.com/blog/introducing-postgres-plan-statistics-for-amazon-aurora). The 
+pganalyze-collector will automatically collect this information and send it to pganalyze if this Amazon Aurora parameter is enabled.
+
+
 ---
 
 <Link className="btn btn-success" to="02_create_monitoring_user">
