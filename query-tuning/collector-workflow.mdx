@@ -75,7 +75,29 @@ To complete the setup, reset the role, and revoke the creation privilege again:
 {`RESET ROLE;
 REVOKE CREATE ON SCHEMA pganalyze FROM pganalyze_explain;`}
 </CodeBlock>
+<br/>
 
+## Resolving search_path issues
+The explain_analyze function is created with `SECURITY DEFINER`, which means it will run with the privileges of the `pganalyze_explain` role,
+but using the `search_path` of the role that calls it. This will be the role that the pganalyze-collector uses to connect to the database. If
+this role has a different `search_path` than the role(s) that are running queries, the function may return `object not found` errors when trying to
+run a query variant using the collector workflow.
+
+There are two ways to resolve this:
+ 1. Set the search_path of the pganalyze role to include all necessary schemas in the proper order. Replace `app_schema1,app_schema2` with the actual schema names you need.
+
+<CodeBlock language="sql">
+{`ALTER ROLE pganalyze SET search_path = app_schema1,app_schema2,public;`}
+</CodeBlock>
+
+ 2. Set the `search_path` on the function when you have SECURITY DEFINER set. This ensures that the function always uses the correct schemas regardless of who calls the function. 
+
+<CodeBlock language="sql">
+{`ALTER FUNCTION pganalyze.explain_analyze() SET search_path = master, extensions, public;`}
+</CodeBlock>
+<br/>
+
+ 
 ## Revoking access for dblink & other problematic functions
 
 Certain functions in Postgres can be problematic if permitted to be called. It is your
