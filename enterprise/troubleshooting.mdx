@@ -72,7 +72,8 @@ When using IAM authentication on AWS (e.g. with an instance role), you may see a
 ... |         ...`}
 </CodeBlock>
 
-One common cause of this problem can be the HTTP response limit set on the IMDSv2 metadata endpoint, since the container that pganalyze Enterprise Server runs in counts as an extra hop on the network layer.
+One common cause of this problem can be the HTTP response limit set on the IMDSv2 metadata endpoint, since the container that pganalyze Enterprise Server runs 
+in counts as an extra hop on the network layer.
 
 Typically you can fix this error by raising the IMDSv2 hop limit to `2`, like this:
 
@@ -83,5 +84,14 @@ Typically you can fix this error by raising the IMDSv2 hop limit to `2`, like th
     --http-endpoint enabled \
     --http-put-response-hop-limit 2`}
 </CodeBlock>
+
+### Error: "NoCredentialProviders: no valid providers in chain. Deprecated.""
+
+When accessing logs for Amazon RDS or Aurora databases with IAM authentication, you may receive an error like this in the logs or when running a pganalyze-collector 
+test or self-check. This error, like the one above, usually indicates that the pganalyze container is unable to access the AWS metadata service to retrieve credentials 
+and needs at least one additional hop configured. In some cases, a hop limit of `3` may be required, depending on your network setup.
+
+Update the `http-put-response-hop-limit` to `2` as shown above.
+
 
 If this does not resolve the error, please [reach out to us](/contact).
