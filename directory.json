@@ -308,6 +308,10 @@
       "title": "2025.03.3 Release",
       "path": "/docs/enterprise/releases/2025-03-3"
     },
+    "enterprise/releases/2025-03-4": {
+      "title": "2025.03.4 Release",
+      "path": "/docs/enterprise/releases/2025-03-4"
+    },
     "enterprise/settings": {
       "title": "Enterprise Server: Container settings",
       "path": "/docs/enterprise/settings"
@@ -2495,14 +2499,8 @@
     "disk sort": {
       "path": "/docs/explain/insights/disk-sort"
     },
-    "expensive": {
-      "path": "/docs/explain/insights/expensive"
-    },
     "hash batches": {
       "path": "/docs/explain/insights/hash-batches"
-    },
-    "i/o-heavy": {
-      "path": "/docs/explain/insights/io-heavy"
     },
     "inefficient index": {
       "path": "/docs/explain/insights/inefficient-index"

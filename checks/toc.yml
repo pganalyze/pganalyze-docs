@@ -23,6 +23,8 @@
   items:
   - name: New Slow Queries
     href: checks/queries/slowness
+  - name: Advisor Insight
+    href: checks/queries/advisor_insight
 - mount: checks/connections
   items:
   - name: Active Queries
