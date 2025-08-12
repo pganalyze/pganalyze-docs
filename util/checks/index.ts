@@ -1,9 +1,7 @@
 export const CHECK_TITLES = {
   queries: {
     slowness: "New Slow Queries",
-  },
-  query_tuning: {
-    automated_explain: "Query Performance: Advisor Insights",
+    advisor_insight: "Advisor Insights",
   },
   connections: {
     active_query: "Active Queries",
@@ -106,6 +104,7 @@ export const CHECK_FREQUENCY_DAILY = "Daily";
 export const CHECK_FREQUENCY = {
   queries: {
     slowness: CHECK_FREQUENCY_DAILY,
+    advisor_insight: CHECK_FREQUENCY_DAILY,
   },
   connections: {
     active_query: CHECK_FREQUENCY_REALTIME,
@@ -114,9 +113,6 @@ export const CHECK_FREQUENCY = {
   },
   index_advisor: {
     indexing_engine: CHECK_FREQUENCY_DAILY,
-  },
-  query_tuning: {
-    automated_explain: CHECK_FREQUENCY_DAILY,
   },
   schema: {
     index_invalid: CHECK_FREQUENCY_30MIN,
@@ -160,6 +156,9 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
         minimum_calls: 50
       }
     },
+    advisor_insight: {
+      enabled: true
+    }
   },
   connections: {
     active_query: {
