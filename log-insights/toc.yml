@@ -27,5 +27,5 @@
     href: log-insights/standby
   - name: Constraint Violations
     href: log-insights/constraint-violations
-  - name: Application / User Errors
+  - name: Application Errors
     href: log-insights/app-errors
