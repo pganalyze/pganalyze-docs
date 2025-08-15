@@ -12,5 +12,7 @@
     href: enterprise/upgrade
   - name: Reference architecture
     href: enterprise/architecture
+  - name: Integrating PostGIS
+    href: enterprise/postgis
   - name: Troubleshooting
     href: enterprise/troubleshooting

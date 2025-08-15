@@ -128,6 +128,10 @@
       "title": "Enterprise Edition: Log Insights Setup",
       "path": "/docs/enterprise/log-insights"
     },
+    "enterprise/postgis": {
+      "title": "Enterprise Server: Integrating PostGIS with pganalyze",
+      "path": "/docs/enterprise/postgis"
+    },
     "enterprise/releases": {
       "title": "Enterprise Server: Release Changelog",
       "path": "/docs/enterprise/releases"
