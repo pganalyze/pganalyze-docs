@@ -12,13 +12,13 @@ For licensing reasons, PostGIS is not included in the pganalyze Enterprise Serve
 However, users can create their own custom container image based on the official pganalyze Enterprise Server image and 
 install PostGIS in that image using the sample Dockerfile below.
 
-Replace `quay.io/pganalyze/enterprise:v2005.03.4` with the version of the pganalyze Enterprise Server image you are using.
+Replace `quay.io/pganalyze/enterprise:v2025.03.4` with the version of the pganalyze Enterprise Server image you are using.
 
-**Note:** You must be using a version of pganalyze Enterprise Server that is at least v2005.03.4 to integrate PostGIS with
+**Note:** You must be using a version of pganalyze Enterprise Server that is at least v2025.03.4 to integrate PostGIS with
 your own custom image.
 
 <CodeBlock>
-{`FROM quay.io/pganalyze/enterprise:v2005.03.3
+{`FROM quay.io/pganalyze/enterprise:v2025.03.4
  
 RUN apt-get update && apt-get install wget -y
  
