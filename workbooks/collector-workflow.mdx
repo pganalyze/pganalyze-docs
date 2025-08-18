@@ -88,7 +88,7 @@ calls the function. Run the following `ALTER` command, ensuring that you replace
 tables and functions.
 
 <CodeBlock language="sql">
-{`ALTER FUNCTION pganalyze.explain_analyze(text, text[], text[], text[]) SET search_path = my_app_schema, public;`}
+{`ALTER FUNCTION pganalyze.explain_analyze SET search_path = my_app_schema, public;`}
 </CodeBlock>
 <br/>
 
