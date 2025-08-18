@@ -84,10 +84,11 @@ this role has a different `search_path` than the role(s) that are running querie
 run a query variant using the collector workflow.
 
 To resolve the `search_path` issues, set the `search_path` on the function to ensure that it always uses the correct schemas regardless of what role
-calls the function. 
+calls the function. Run the following `ALTER` command, ensuring that you replace `my_app_schema` with the schema(s) that contains your application 
+tables and functions.
 
 <CodeBlock language="sql">
-{`ALTER FUNCTION pganalyze.explain_analyze() SET search_path = master, extensions, public;`}
+{`ALTER FUNCTION pganalyze.explain_analyze SET search_path = my_app_schema, public;`}
 </CodeBlock>
 <br/>
 
