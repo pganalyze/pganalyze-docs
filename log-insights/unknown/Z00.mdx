@@ -13,5 +13,9 @@ This indicates a log event that could not be parsed by the pganalyze system.
 Sometimes this occurs if log lines are received out of order, or if we don't support
 a particular message yet.
 
+Note that by default pganalyze redacts unknown log events, and the log
+text will instead show as `[redacted]`. To see original texts you can omit `unidentified`
+from the [log secret PII filter setting](/docs/collector/pii-filtering#log-secrets).
+
 Please reach out to our support team to learn more why a log line is marked as
 unknown.
