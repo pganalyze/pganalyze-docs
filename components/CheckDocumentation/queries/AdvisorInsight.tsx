@@ -2,9 +2,7 @@ import React from "react";
 
 import { CheckDocs, CheckGuidanceProps } from "../../../util/checks";
 
-const AdvisorInsightGuidance: React.FunctionComponent<
-  CheckGuidanceProps
-> = () => {
+const AdvisorInsightGuidance: React.FunctionComponent<CheckGuidanceProps> = () => {
   return (
     <div>
       <p>
@@ -13,17 +11,17 @@ const AdvisorInsightGuidance: React.FunctionComponent<
         insights section of "Query Summary" panel. Tweaking this query may
         improve the performance of this query.
       </p>
-      <h4>Next Step</h4>
+      <h4>Next Steps</h4>
       <p>
-        You can tune a query using Workbooks.
+        You can test a Query Advisor insight using Workbooks.
         <ul>
           <li>
             <h5>Create a new workbook and record the baseline</h5>
             <p>
               For each insight, there is a "Create Workbook" button to create a
               new workbook using this query. Create a new workbook using this
-              button, then follow the steps to record the baseline. This is also
-              important step to make sure that the insight can be found with the
+              button, then follow the steps to record the baseline. This step
+              re-confirms that the insight still can be reproduced in the
               baseline too. If the query has multiple query plans, it's
               important to select the parameter set that matches to the query
               plan fingerprint of this insight.
@@ -78,7 +76,7 @@ const AdvisorInsightGuidance: React.FunctionComponent<
 
 const documentation: CheckDocs = {
   description:
-    "Checks EXPLAIN Plans captured by Automated EXPLAIN and creates insights for any query tuning opportunities are found.",
+    "Checks EXPLAIN Plans captured by Automated EXPLAIN and creates Query Advisor insights for tuning opportunities.",
   Trigger: null,
   Guidance: AdvisorInsightGuidance,
 };
