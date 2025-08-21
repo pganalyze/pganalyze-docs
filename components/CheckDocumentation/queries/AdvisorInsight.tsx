@@ -8,8 +8,8 @@ const AdvisorInsightGuidance: React.FunctionComponent<CheckGuidanceProps> = () =
       <p>
         Some common patterns that lead to suboptimal performance are found for
         this query. You can check out the exact pattern (insight) in the
-        insights section of "Query Summary" panel. Tweaking this query may
-        improve the performance of this query.
+        insights section of "Query Summary" panel. Tweaking the query could lead
+        to better performance.
       </p>
       <h4>Next Steps</h4>
       <p>
@@ -65,7 +65,7 @@ const AdvisorInsightGuidance: React.FunctionComponent<CheckGuidanceProps> = () =
           </p>
         </li>
       </ul>
-      For more details of each pattern, see
+      For more details of each pattern, see{" "}
       <a href="https://pganalyze.com/docs/workbooks/query-optimization-examples">
         the Query Optimization Examples documentation
       </a>
