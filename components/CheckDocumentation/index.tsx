@@ -3,6 +3,7 @@ import React from "react";
 import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../util/checks";
 
 import QuerySlowness from "./queries/Slowness";
+import AdvisorInsight from "./queries/AdvisorInsight";
 import ActiveQuery from "./connections/ActiveQuery";
 import IdleTransaction from "./connections/IdleTransaction";
 import BlockingQuery from "./connections/BlockingQuery";
@@ -28,6 +29,7 @@ const Docs: {
 } = {
   queries: {
     slowness: QuerySlowness,
+    advisor_insight: AdvisorInsight,
   },
   connections: {
     active_query: ActiveQuery,
