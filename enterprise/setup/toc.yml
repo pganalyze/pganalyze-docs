@@ -4,9 +4,13 @@
     href: enterprise/setup
   - name: Initial setup on Kubernetes (Amazon EKS)
     href: enterprise/setup/kubernetes_amazon_eks
+  - name: Initial setup on Kubernetes (non-root)
+    href: enterprise/setup/kubernetes_as_non_root
   - name: Separate collector installation
     href: enterprise/setup/separate-collector-install
   - name: Google Auth setup
     href: enterprise/google-auth
+  - name: Firewall configuration
+    href: enterprise/setup/firewall-configuration   
   - name: PagerDuty and Slack integration setup
     href: enterprise/integrations
