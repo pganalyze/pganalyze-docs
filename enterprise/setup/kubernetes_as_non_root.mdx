@@ -9,6 +9,9 @@ import ToC from '../../components/Toc'
 In some environments, running containers as the root user is not acceptable. This guide describes how to set up [pganalyze Enterprise Server](/enterprise-postgres-monitoring) 
 in a Kubernetes cluster, without running the container as root. This requires using the slim version of the pganalyze Enterprise Docker image and a separate Redis container.
 
+**Please note** that the slim container image does not contain a build in pganalyze collector application. Therefore, you will need to have a standalone pganalyze collector 
+running somewhere with access to your PostgreSQL instances once you have finished setting up the Enterprise Server Kubernetes deployment.
+ 
 <ToC items={props.toc} />
 
 ## Installation steps
@@ -17,15 +20,15 @@ in a Kubernetes cluster, without running the container as root. This requires us
 
 * Provision a standalone Postgres database to store pganalyze statistics information
 * Kubernetes CLI (`kubectl`) installed on your machine, and logged into the Kubernetes cluster with full permissions
-* A standalone pganalyze collector running somewhere with access to your PostgreSQL instances (see [Installing the pganalyze Collector](/docs/collector)) 
 
-## Step 1: Accessing the pganalyze Enterprise Slim Docker image
+### Step 1: Accessing the pganalyze Enterprise Slim Docker image
 
 As with any Kubernetes deployment, the pganalyze Enterprise container image needs to be accessible from within the cluster. You can do this by either pulling the
 image directly from [Quay.io](https://quay.io/repository/pganalyze/enterprise?tab=tags), or by re-publishing the image to your own private container registry. In 
 both cases you will need to authenticate with your license information, shared with you by the pganalyze team.
 
-### Option A: Create a Kubernetes secret for accessing Quay.io
+**Option A: Create a Kubernetes secret for accessing Quay.io**
+
 If your Kubernetes cluster has access to the internet, start by creating a Kubernetes secret with your quay.io credentials provided by the pganalyze team. Replace the
 username, password, and namespace in the command below:
 
@@ -38,9 +41,10 @@ username, password, and namespace in the command below:
 </CodeBlock>
 
 
-### Option B: Re-publish the Docker image to your private container registry
+**Option B: Re-publish the Docker image to your private container registry**
 
-Perform the next steps on a machine that has full internet connectivity, e.g your personal machine, or a VM, with no outbound access restrictions.
+Alternatively, if your server has restricted connectivity, you can perform the next steps on a machine that has full internet connectivity, e.g your personal machine, or a VM, 
+with no outbound access restrictions.
 
 The goal of this option is to publish the pganalyze Enterprise Slim container image to your private Container Registry, typically in AWS, GCP, or Azure, 
 depending on which hosting provider your Kubernetes cluster is running on. In the examples below, we will use AWS Elastic Container Registry (ECR) as an example,
@@ -52,7 +56,7 @@ First, log in with your license information, shared with you by the pganalyze te
 {`docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io`}
 </CodeBlock>
 
-Now pull the image, replacing VERSION with the [latest pganalyze Enterprise version](/docs/enterprise/releases):
+Now pull the image, replacing VERSION with the [latest pganalyze Enterprise version](/docs/enterprise/releases) (e.g. `v2025.03.4`):
 
 <CodeBlock language="bash">
 {`docker pull quay.io/pganalyze/enterprise:VERSION-slim`}
@@ -82,14 +86,9 @@ And now push the tag to the registry:
 {`docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION`}
 </CodeBlock>
 
-## Step 2: Create an IAM policy that has sufficient access your provider metric APIs
+### Step 2: Set up a Kubernetes secret for configuration settings
 
-You will need to create a policy that allows the Kubernetes nodes to access the metrics and log data for your PostgreSQL instances. The exact steps depend on your hosting provider,
-but an example policy for Amazon RDS is shown in Step 2 of the [AWS Kubernetes setup instructions](/docs/enterprise/setup/kubernetes_amazon_eks#step-2-create-an-iam-policy-that-has-sufficient-access-to-the-amazon-rds-apis).
-
-## Step 3: Set up a Kubernetes secret for configuration settings
-
-You can manage Kubernetes secrets using [kubectl](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)
+You can manage Kubernetes secrets using [kubectl](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/).
 
 There are two sensitive settings, `DATABASE_URL` and `LICENSE_KEY` that we store using a Kubernetes secret.
 
@@ -98,17 +97,20 @@ The `DATABASE_URL` has the format `postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DA
 The `LICENSE_KEY` has been provided to you by the pganalyze Team - replace `KEYKEYKEY` in the command with the actual key.
 
 <CodeBlock language="bash">
-{`kubectl create secret generic pganalyze-secret --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE --from-literal=LICENSE_KEY=KEYKEYKEY --dry-run=client -o yaml | kubectl apply -f -`}
+{`kubectl create secret generic pganalyze-secret \\
+    --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \\
+    --from-literal=LICENSE_KEY=KEYKEYKEY \\
+    --dry-run=client -o yaml | kubectl apply -f -`}
 </CodeBlock>
 
-## Step 4: Create the pganalyze Enterprise Slim deployment
+### Step 3: Create the pganalyze Enterprise Slim deployment
 
-When you are required to use the pganalyze Enterprise Server Slim image, the kubernetes cluster must also include a Redis container that runs alongside of the
+When you are required to use the pganalyze Enterprise Server Slim image, the Kubernetes cluster must also include a Redis container that runs alongside of the
 pganalyze `web` and `worker` pods. The following YAML sample assumes that the `pganalyze` namespace has already been created. Applying this sample YAML creates:
 
  * a Redis server accessible on port 6379
  * a pganalyze pod running as the "web" application running as a non-root user
- * a pganalyze pod running as the "worker" application for processing data running as a non-root user
+ * a pganalyze pod running as the "worker" application for running background tasks such as Index Advisor, running as a non-root user
  * a sample ConfigMap for environment variable configuration
  * references to the quay.io secret created earlier
  
@@ -123,12 +125,12 @@ metadata:
   namespace: pganalyze
 data:
   REDIS_URL: "redis://redis.pganalyze.svc.cluster.local:6379/0"
-  PGANALYZE_APP_URL: "https://web.pganalyze.svc.cluster.local:5000"
+  PGANALYZE_APP_URL: "https://web.pganalyze.svc.cluster.local:5000" (may not be needed)
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis
+  name: pganalyze-redis
   namespace: pganalyze
 spec:
   replicas: 1
@@ -142,6 +144,9 @@ spec:
         app: pganalyze
         role: redis
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
       containers:
         - name: redis
           image: redis:7-alpine
@@ -198,7 +203,7 @@ spec:
           command: ['sh', '-c', 'until nc -z redis 6379; do echo "waiting for redis"; sleep 1; done']
       containers:
         - name: web
-          image: quay.io/pganalyze/enterprise:v2025.03.4-slim
+          image: quay.io/pganalyze/enterprise:VERSION-slim
           args: ["web"]
           envFrom:
             - configMapRef:
@@ -237,7 +242,7 @@ spec:
           command: ['sh', '-c', 'until nc -z redis 6379; do echo "waiting for redis"; sleep 1; done']
       containers:
         - name: worker
-          image: quay.io/pganalyze/enterprise:v2025.03.4-slim
+          image: quay.io/pganalyze/enterprise:VERSION-slim
           args: ["worker"]
           envFrom:
             - configMapRef:
@@ -283,7 +288,7 @@ We can confirm the deployment is completed by checking `kubectl get deploy`. Cha
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
 pganalyze-web      1/1     1            1           3d1h
 pganalyze-worker   1/1     1            1           3d1h
-redis              1/1     1            1           3d1h
+pganalyze-redis    1/1     1            1           3d1h
 ```
 
 ### Step 5: Run the Enterprise self check to verify the configuration and license
@@ -314,7 +319,7 @@ In case you get an error for the license verification, please reach out to the p
 Run the following to initialize the pganalyze statistics database:
 
 <CodeBlock language="bash">
-{`kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:structure:load`}
+{`kubectl exec -i -t deploy/pganalyze-web -- /docker-entrypoint.enterprise.sh rake db:structure:load`}
 </CodeBlock>
 
 ```
@@ -328,7 +333,7 @@ Database 'postgres' already exists
 Then run the following to create the initial admin user:
 
 <CodeBlock language="bash">
-{`kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:seed`}
+{`kubectl exec -i -t deploy/pganalyze-web -- /docker-entrypoint.enterprise.sh rake db:seed`}
 </CodeBlock>
 
 
@@ -350,15 +355,6 @@ INFO -- : Use these credentials to login and then change email address and passw
 Now we can connect to the pganalyze UI. Depending on how you configured the service ports for the `pganalyze-web` pod, you may have to first create a port forwarding entrypoint. For hosting providers
 that support load balancers, you can also create a load balancer service for the `pganalyze-web` service.
 
-```
-$ kubectl get ingress
-```
-
-```
-NAME        CLASS    HOSTS   ADDRESS                                        PORTS   AGE
-pganalyze   <none>   *       HOSTNAME.REGION.elb.amazonaws.com              80      5m58s
-```
-
 When you go to the hostname in your browser you should see the login page. You can now use the initial admin details to log in:
 
 ![](login.png)
@@ -369,28 +365,18 @@ Please now log in to the pganalyze interface using the generated credentials you
 
 ![](create_organization.png)
 
-If authentication does not work, or you see an error message, please check the container's logs using `kubectl logs deploy/pganalyze`.
+If authentication does not work, or you see an error message, please check the container's logs using `kubectl logs deploy/pganalyze-web`.
 
 Choose an organization name of your choice (typically your company name).
 
-### Step 8: Preparing your PostgreSQL database for monitoring
+### Step 8: Add your first database server to pganalyze
 
-Before you can add a database to the pganalyze installation, you'll need to enable the `pg_stat_statements` extension on it.
+The pganalyze Collector is not included in the Enterprise Server Slim image, so you will need to run it separately. Select the "Add Server" button at the bottom of the server selection dropdown to get started.
 
-This extension is bundled with PostgreSQL and allows you detailed query monitoring. Its overhead on the database system is minimal, and it is required to use pganalyze.
+![](add_server_button.png)
 
-Please see the appropriate setup instructions depending on where your monitored database resides (eg. [self-hosted systems](/docs/install/01_enabling_pg_stat_statements), [Amazon RDS](/docs/install/amazon_rds/01_configure_rds_instance), [Google Cloud SQL](/docs/install/google_cloud_sql/01_create_monitoring_user), [Microsoft Azure](/docs/install/azure_database/01_configure_azure_instance), etc.).
-
-In addition you will need to either use the database superuser (usually "postgres") to give pganalyze access to your database, or create a special [restricted monitoring user](/docs/install/amazon_rds/02_create_monitoring_user).
-
-You don't need to run anything else on your database server - the pganalyze collector will connect to your database at regular intervals to gather information from PostgreSQL's statistics tables.
-
-### Step 9: Add your first database server to pganalyze
-
-The pganalyze Collector is not included in the Enterprise Server Slim image, so you will need to run it separately. During the setup and configuration process, you will need to set both the
+During the setup and configuration process, you will need to set both the
 `api_key` and `api_base_url` parameters in your Collector configuration file. 
-
-Please see the instructions for using a separate Collector with pganalyze Enterprise Server [here](/docs/enterprise/setup/separate-collector-install).
 
 ### Next steps
 
