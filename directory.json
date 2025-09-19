@@ -2566,15 +2566,15 @@
     }
   },
   "logCategories": {
-    "server": "Server Events",
-    "connections": "Connection Events",
-    "wal-checkpoints": "WAL & Checkpoint Events",
-    "autovacuum": "Autovacuum Events",
-    "locks": "Lock Events",
-    "statements": "Statement Events",
-    "standby": "Standby Server Events",
-    "constraint-violations": "Constraint Violations",
-    "app-errors": "Application / User Errors",
-    "unknown": "Unknown Events"
+    "server": "Server",
+    "connections": "Connections",
+    "wal-checkpoints": "WAL & Checkpoints",
+    "autovacuum": "Autovacuum",
+    "locks": "Locks",
+    "statements": "Statements",
+    "standby": "Standby Servers",
+    "constraint-violations": "Constraints",
+    "app-errors": "Application",
+    "unknown": "Unknown"
   }
 }
