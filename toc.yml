@@ -12,6 +12,8 @@
     href: workbooks
   - name: EXPLAIN Plans
     href: explain
+  - name: Query Advisor
+    href: query-advisor
   - name: Index Advisor
     href: index-advisor
   - name: Indexing Engine
