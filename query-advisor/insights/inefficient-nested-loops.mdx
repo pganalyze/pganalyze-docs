@@ -1,0 +1,214 @@
+---
+title: 'Inefficient Nested Loops'
+backlink_href: /docs/query-advisor/insights
+backlink_title: 'Query Advisor Insights'
+---
+
+The Inefficient Nested Loops insight detects when PostgreSQL chooses nested loop joins due to row estimation mismatches, often resulting in dramatically slower performance than hash or merge joins would provide.
+
+## Problem description
+
+PostgreSQL's cost-based optimizer sometimes chooses nested loop joins based on incorrect row count estimates. When the actual number of rows significantly exceeds the estimate, nested loops become extremely inefficient compared to hash or merge joins.
+
+### Common scenario
+<CodeBlock language="sql">
+{`SELECT o.*, c.customer_name 
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+WHERE o.order_date >= '2024-01-01';`}
+</CodeBlock>
+
+If PostgreSQL estimates the WHERE clause will return 1 row but it actually returns 10,000 rows, a nested loop join will scan the customers table 10,000 times instead of once.
+
+## Detection criteria
+
+Query Advisor identifies inefficient nested loops when:
+
+### Row estimation mismatch
+- **Estimated rows**: PostgreSQL planner estimates ≤ 1 row
+- **Actual rows**: Query actually processes 10+ rows  
+- **Severity threshold**: Actual/estimated ratio > 10x
+
+### Performance impact
+- **Inner side runtime**: Nested loop inner side takes >10% of total query time
+- **Minimum runtime**: Inner side execution > 100ms
+- **Join complexity**: Multi-table joins with significant row processing
+
+### Alternative availability
+Query Advisor verifies that hash or merge joins would be viable:
+- **Memory availability**: Sufficient work_mem for hash joins
+- **Sort capability**: Columns support merge join ordering
+- **Table statistics**: Join selectivity supports alternative strategies
+
+## Root cause analysis
+
+Nested loop inefficiency typically stems from:
+
+### Statistics problems
+- **Outdated statistics**: Table hasn't been analyzed recently
+- **Correlation issues**: WHERE clause selectivity incorrectly estimated
+- **Functional dependencies**: Complex predicates confuse the planner
+
+### Query patterns
+- **Parameterized queries**: Different parameter values have different selectivity
+- **Dynamic conditions**: OR clauses with variable selectivity
+- **Subquery correlations**: Correlated subqueries with poor estimates
+
+## Optimization strategies
+
+Query Advisor provides several approaches to resolve inefficient nested loops:
+
+### Materialized CTE approach (primary solution)
+
+Query Advisor rewrites the query to force materialization of the outer relation:
+
+<CodeBlock language="sql">
+{`WITH filtered_orders AS MATERIALIZED (
+  SELECT * FROM orders 
+  WHERE order_date >= '2024-01-01'
+)
+SELECT o.*, c.customer_name 
+FROM filtered_orders o
+JOIN customers c ON o.customer_id = c.id;`}
+</CodeBlock>
+
+**Benefits:**
+- Forces PostgreSQL to materialize the filtered result set
+- Prevents parameterized nested loop scans
+- Enables hash or merge join selection for the final join
+- Maintains query semantics exactly
+
+### Planner hints (when pg_hint_plan available)
+
+If pg_hint_plan extension is installed, Query Advisor can suggest:
+
+<CodeBlock language="sql">
+{`/*+ HashJoin(o c) */
+SELECT o.*, c.customer_name 
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+WHERE o.order_date >= '2024-01-01';`}
+</CodeBlock>
+
+### Settings adjustments (temporary testing)
+
+For validation purposes, Query Advisor may suggest testing with:
+
+<CodeBlock language="sql">
+{`SET enable_nestloop = off;
+-- Run query to test hash/merge join performance
+-- Reset setting afterward`}
+</CodeBlock>
+
+**Important**: This approach is only for testing - never disable nested loops globally in production.
+
+## Implementation example
+
+Here's how Query Advisor transforms a problematic nested loop query:
+
+### Original query (problematic)
+<CodeBlock language="sql">
+{`SELECT p.product_name, SUM(oi.quantity * oi.unit_price) as revenue
+FROM products p
+JOIN order_items oi ON p.id = oi.product_id  
+JOIN orders o ON oi.order_id = o.id
+WHERE o.order_date BETWEEN '2024-01-01' AND '2024-01-31'
+GROUP BY p.id, p.product_name;`}
+</CodeBlock>
+
+**Problem**: If the date range returns many more orders than estimated, the nested loop between products and order_items becomes extremely expensive.
+
+### Query Advisor rewrite
+<CodeBlock language="sql">
+{`WITH january_orders AS MATERIALIZED (
+  SELECT id FROM orders 
+  WHERE order_date BETWEEN '2024-01-01' AND '2024-01-31'
+),
+january_order_items AS MATERIALIZED (
+  SELECT oi.* FROM order_items oi
+  JOIN january_orders o ON oi.order_id = o.id
+)
+SELECT p.product_name, SUM(joi.quantity * joi.unit_price) as revenue
+FROM products p
+JOIN january_order_items joi ON p.id = joi.product_id
+GROUP BY p.id, p.product_name;`}
+</CodeBlock>
+
+**Benefits**:
+- Materializes the date-filtered orders first
+- Reduces join complexity through staged approach  
+- Enables hash joins for final product aggregation
+- Often results in 10-100x performance improvement
+
+## Validation workflow
+
+Query Advisor helps validate the optimization through pganalyze Workbooks:
+
+### 1. Baseline measurement
+- Record original query performance
+- Document nested loop behavior in EXPLAIN plan
+- Note "loops" count and inner relation scan time
+
+### 2. Apply optimization
+- Use Query Advisor's suggested rewrite
+- Test with same parameter values
+- Verify plan switches to hash/merge joins
+
+### 3. Performance comparison
+- Compare total runtime (often 10-100x improvement)
+- Verify plan complexity reduction
+- Check memory usage (may increase for hash joins)
+
+### 4. Parameter validation
+- Test with multiple parameter sets
+- Ensure optimization works across data distributions
+- Validate that query semantics remain identical
+
+## When this insight may not apply
+
+Nested loops aren't always problematic. Query Advisor only flags inefficient cases, but optimization may not help when:
+
+### Small result sets
+- **Low row counts**: If actual rows are genuinely small, nested loops may be optimal
+- **Selective joins**: High selectivity makes nested loops efficient
+- **Index-based lookups**: Unique key joins favor nested loops
+
+### Memory constraints  
+- **Limited work_mem**: Hash joins may not fit in available memory
+- **Concurrent workload**: Multiple hash joins competing for memory
+- **Large tables**: Both relations too large for efficient hashing
+
+### Recent statistics
+- **Fresh ANALYZE**: Updated statistics may resolve estimation issues
+- **Plan changes**: PostgreSQL may already be using better plans
+- **Data distribution shifts**: Query patterns may have evolved
+
+## Best practices
+
+### Permanent solutions
+1. **Update statistics**: Run ANALYZE on affected tables regularly
+2. **Improve estimates**: Consider extended statistics for correlated columns
+3. **Query restructuring**: Implement the materialized CTE approach in application code
+4. **Parameter tuning**: Adjust work_mem if hash joins consistently perform better
+
+### Monitoring approach
+1. **Track plan changes**: Monitor whether PostgreSQL reverts to nested loops
+2. **Performance regression**: Watch for estimate accuracy over time
+3. **Workload evolution**: Re-evaluate as data patterns change
+
+### Production deployment
+1. **Gradual rollout**: Test optimized queries with production-like data volumes
+2. **Fallback plan**: Keep original query available for quick reversion
+3. **Monitoring**: Track query performance metrics post-deployment
+
+## Related insights
+
+- **[ORDER BY + LIMIT Issues](/docs/query-advisor/insights/order-by-limit)**: Another common estimation-related problem
+- **[Index Advisor](/docs/index-advisor)**: May suggest indexes that improve join selectivity
+- **[VACUUM Advisor](/docs/vacuum-advisor)**: Outdated statistics often stem from insufficient vacuuming
+
+## Next steps
+
+- **[Complete workflow example](/docs/query-advisor/from-insight-to-conclusion)** - See this insight applied in practice
+- **[Configure Workbooks](/docs/workbooks)** - Set up testing environment for validating optimizations  
+- **[Set up alerts](/docs/query-advisor/alerts)** - Get notified when new inefficient nested loops are detected

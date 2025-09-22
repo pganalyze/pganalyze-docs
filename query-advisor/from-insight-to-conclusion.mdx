@@ -1,0 +1,182 @@
+---
+title: 'From Insight to Conclusion'
+backlink_href: /docs/query-advisor
+backlink_title: 'Query Advisor'
+---
+
+This guide walks through a complete Query Advisor workflow, from detecting a performance issue to applying the optimization in production. We'll use a real example of an ORDER BY + LIMIT query that PostgreSQL optimizes poorly due to incorrect index selection.
+
+## The performance problem
+
+Query Advisor automatically detected this problematic query pattern in production:
+
+<CodeBlock language="sql">
+{`SELECT * FROM large_table 
+WHERE database_id = $1 
+ORDER BY created_at 
+LIMIT 50;`}
+</CodeBlock>
+
+The query appeared to run fast initially but degraded significantly under certain conditions, taking up to **75 seconds** to complete. The EXPLAIN plan revealed the issue:
+
+- **Index scan** on a created_at index (good for sorting)
+- **Filter condition** applied after index scan (inefficient)
+- **10+ million rows** examined to find 50 matching results
+- **High "Rows Removed by Filter"** count indicating wasted work
+
+PostgreSQL chose the wrong optimization strategy - it prioritized the ORDER BY over the WHERE clause filtering.
+
+## Step 1: Query Advisor detection
+
+Query Advisor automatically analyzed the EXPLAIN plan and identified the **ORDER BY + LIMIT index problem** pattern:
+
+### Detection criteria
+- Index scan with no Index Condition (only Filter)
+- High "Rows Removed by Filter" count
+- Index benefits sort order but not filtering
+- Alternative indexes available for WHERE conditions
+
+### Insight details
+Query Advisor flagged this as a **high-severity optimization opportunity** because:
+- Runtime exceeded threshold for optimization (>1 second)
+- Clear alternative index strategy available
+- Pattern matches known PostgreSQL planner inefficiency
+
+The insight appeared on the Query Advisor landing page with sample runtime data and affected query details.
+
+## Step 2: Create workbook for testing
+
+From the Query Advisor insight, we clicked **"Create Workbook"** to begin systematic testing:
+
+### Workbook setup
+1. **Query import**: Automatically populated with the problematic query
+2. **Parameter detection**: Identified `database_id` parameter from query samples
+3. **Sample data**: Selected representative parameter values from historical executions
+
+### Parameter set selection
+We chose two test cases to validate the optimization:
+- **Fast case**: `database_id = 123` (historical runtime: ~1.5 seconds)
+- **Slow case**: `database_id = 456` (historical runtime: ~6.4 seconds)
+
+Testing multiple parameter sets ensures the optimization works consistently across different data distributions.
+
+## Step 3: Record baseline performance
+
+Before applying any changes, we recorded baseline performance using the **collector workflow**:
+
+### Baseline results
+- **Parameter set 1**: 1,580ms execution time
+- **Parameter set 2**: 6,400ms execution time
+- **Warm cache**: Intentionally ran twice to eliminate I/O variability
+- **Consistent pattern**: Both showed high "Rows Removed by Filter"
+
+The baseline confirmed the issue was reproducible and not just a one-time occurrence due to cold caches or concurrent load.
+
+## Step 4: Apply Query Advisor insight
+
+In the workbook variant editor, Query Advisor provided an **"Apply"** button for the detected insight:
+
+### Automatic rewrite
+Query Advisor automatically modified the query to force better index selection:
+
+<CodeBlock language="sql">
+{`SELECT * FROM large_table 
+WHERE database_id = $1 
+ORDER BY created_at + $2  -- Added +0 to prevent index sort usage
+LIMIT 50;`}
+</CodeBlock>
+
+### The `+0` technique
+This PostgreSQL optimization technique:
+- **Prevents sort optimization**: PostgreSQL can't use the created_at index for sorting
+- **Forces filter-first strategy**: Must use database_id index for efficient filtering
+- **Maintains correctness**: Adding zero doesn't change sort order
+- **Triggers replanning**: Forces PostgreSQL to reconsider index selection
+
+This is a well-known PostgreSQL expert technique that Query Advisor automates for you.
+
+## Step 5: Benchmark the optimization
+
+We executed the modified query using the collector workflow:
+
+### Performance improvement
+- **Parameter set 1**: 1,580ms → **6ms** (250x improvement)
+- **Parameter set 2**: 6,400ms → **5ms** (1,280x improvement)
+- **Index strategy**: Switched from created_at index to database_id index
+- **Rows removed**: Eliminated the filter overhead entirely
+
+### Plan comparison
+The workbook's compare view highlighted the key changes:
+- **Index usage**: Primary key → database_id index
+- **Rows removed by filter**: 10M+ → 0
+- **Cost estimate**: Increased (PostgreSQL's estimate was wrong)
+- **Actual runtime**: Dramatically improved
+
+## Step 6: Validate the results
+
+The dramatic improvement confirmed Query Advisor's analysis was correct:
+
+### Why PostgreSQL chose poorly
+PostgreSQL's cost-based planner estimated it could find 50 matching rows quickly by scanning the created_at index in sort order. This worked when matching rows were densely packed but failed when they were sparse.
+
+### Why the rewrite works
+By preventing sort-order optimization, PostgreSQL had to:
+1. Use the database_id index for efficient filtering
+2. Sort only the 50 filtered results (not 10M+ rows)
+3. Return results much faster despite higher estimated cost
+
+### Cost vs. reality
+The PostgreSQL planner estimated higher cost for the optimized version (79,000 vs 15,000 cost units), but actual runtime was 1,000x faster. This demonstrates why testing real performance trumps planner estimates.
+
+## Step 7: Apply to production
+
+With verified performance improvements, we applied the optimization to production:
+
+### Implementation options
+1. **Query rewrite**: Update application code to use the `+0` technique
+2. **ORM modification**: Adjust ORM query generation if applicable
+3. **Stored procedure**: Implement optimized version as a database function
+
+### Monitoring results
+After production deployment:
+- **Query runtime**: Consistently fast across all parameter values
+- **Query Advisor**: No longer flags this query as problematic
+- **Overall impact**: Reduced database load and improved user experience
+
+## Understanding when insights may not reproduce
+
+Query Advisor occasionally detects optimization opportunities that don't reproduce during testing:
+
+### Common scenarios
+- **Data distribution changes**: Query characteristics may have shifted since detection
+- **Statistics updates**: Fresh PostgreSQL statistics may resolve estimation issues
+- **Concurrent workload**: Original slowness may have been due to lock contention
+- **Cache state**: Cold vs. warm cache differences
+
+### Troubleshooting approach
+When insights don't reproduce:
+1. **Check recent execution**: Verify the issue still occurs with current data
+2. **Review statistics**: Consider if ANALYZE has updated table statistics
+3. **Test different parameters**: Try multiple parameter sets from query samples
+4. **Monitor over time**: Some issues are intermittent based on data patterns
+
+This is normal behavior, not a bug - Query Advisor detects real issues but database conditions can change.
+
+## Key takeaways
+
+This workflow demonstrates Query Advisor's systematic approach to query optimization:
+
+1. **Automated detection**: Continuously monitors for optimization opportunities
+2. **Expert knowledge**: Applies PostgreSQL optimization techniques automatically
+3. **Systematic testing**: Integrates with Workbooks for thorough validation
+4. **Risk mitigation**: Tests multiple scenarios before production changes
+5. **Measurable results**: Provides clear before/after performance metrics
+
+Query Advisor makes PostgreSQL query optimization accessible to teams without deep database expertise while maintaining the rigor needed for production systems.
+
+## Next steps
+
+- **[Learn about all supported insights](/docs/query-advisor/insights)** - Understand the full range of optimization patterns
+- **[Set up alerts](/docs/query-advisor/alerts)** - Get notified when new opportunities are detected
+- **[Explore Workbooks features](/docs/workbooks)** - Master the testing and benchmarking platform
+- **[Configure auto_explain](/docs/explain/setup)** - Ensure optimal data collection for Query Advisor

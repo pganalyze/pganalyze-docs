@@ -1,0 +1,120 @@
+---
+title: 'Getting Started with Query Advisor'
+backlink_href: /docs/query-advisor
+backlink_title: 'Query Advisor'
+---
+
+Query Advisor automatically analyzes PostgreSQL query execution plans to detect optimization opportunities. This guide covers the requirements and setup needed to start using Query Advisor effectively.
+
+## What you get with Query Advisor
+
+Query Advisor provides **continuous, automated query optimization insights** for your PostgreSQL databases:
+
+- **Automated analysis**: Continuously examines EXPLAIN plans to identify performance anti-patterns
+- **Single query focus**: Optimizes individual queries through rewrites and planner hints, complementing Index Advisor's schema-level recommendations
+- **Deterministic approach**: Uses purpose-built algorithms based on PostgreSQL planner behavior with no AI hallucinations
+- **Workbooks integration**: Seamlessly integrates with pganalyze Workbooks for systematic testing and benchmarking
+- **Confidence building**: Provides suggested parameter sets and systematic validation workflows
+
+Query Advisor identifies the optimization opportunities - you maintain control over applying changes to production.
+
+## Supported optimization insights
+
+Query Advisor currently detects and provides solutions for these common PostgreSQL performance issues:
+
+### Inefficient Nested Loops
+Detects when PostgreSQL chooses nested loop joins due to row estimation mismatches, suggesting hash or merge join alternatives through query rewrites.
+
+### ORDER BY + LIMIT Index Problems
+Identifies queries where PostgreSQL uses an index only for sorting while filtering large numbers of rows, suggesting modifications to force better index utilization.
+
+More optimization patterns are continuously being added. See the complete list in [Supported Insights](/docs/query-advisor/insights).
+
+## Collector requirements
+
+Query Advisor requires the pganalyze collector to be properly configured for query monitoring:
+
+### Basic Requirements
+- **pganalyze collector** installed and running
+- **pg_stat_statements** enabled for query statistics collection
+- **Database connectivity** for the collector to access query metadata
+
+### EXPLAIN Plan Collection
+Query Advisor analyzes PostgreSQL EXPLAIN plans, which can be collected through:
+
+**Automated collection (recommended):**
+- **auto_explain** extension enabled
+- **log_analyze** parameter enabled for row count accuracy
+
+**Manual collection:**
+- EXPLAIN plans uploaded directly through pganalyze Workbooks
+- On-demand analysis when creating new workbooks
+
+### Enhanced Experience
+For the best Query Advisor experience:
+- Enable the collector workflow for seamless workbook testing
+- Configure auto_explain with appropriate thresholds to capture slow queries
+- Enable log_analyze to provide accurate row count data for misestimation detection
+
+## Set up auto_explain for continuous monitoring
+
+To enable continuous Query Advisor analysis, configure PostgreSQL's auto_explain extension:
+
+WIP
+
+### Platform-specific auto_explain setup
+
+The auto_explain configuration process varies by PostgreSQL hosting platform:
+
+- **Amazon RDS/Aurora**: [Configure auto_explain via parameter groups](/docs/explain/setup/amazon_rds)
+- **Google Cloud SQL**: [Enable auto_explain through database flags](/docs/explain/setup/google_cloud_sql)
+- **Azure Database**: [Configure auto_explain via server parameters](/docs/explain/setup/azure_database)
+- **Self-managed**: [Manual auto_explain configuration](/docs/explain/setup/self_managed)
+
+Refer to the [EXPLAIN setup guides](/docs/explain/setup) for detailed platform-specific instructions.
+
+## Enable log_analyze for accurate insights
+
+The `log_analyze` parameter is crucial for Query Advisor's misestimation detection:
+
+<CodeBlock language="sql">
+{`-- Enable row count collection in auto_explain
+SET auto_explain.log_analyze = on;`}
+</CodeBlock>
+
+This setting ensures that EXPLAIN ANALYZE data includes actual row counts, enabling Query Advisor to detect when PostgreSQL's row estimates differ significantly from reality - a key indicator of optimization opportunities.
+
+## Where to find Query Advisor
+
+Once configured, Query Advisor insights appear in several locations:
+
+### Query Advisor Landing Page
+Access the dedicated Query Advisor section to view all detected optimization opportunities across your databases, organized by potential impact.
+
+### Automated EXPLAIN Collection
+As pganalyze collects EXPLAIN plans through auto_explain, Query Advisor automatically analyzes them and flags problematic patterns in near real-time.
+
+### Workbooks Integration
+When creating workbooks or analyzing queries, Query Advisor automatically assesses plans and provides optimization suggestions you can apply directly in the workbook editor.
+
+### Query Detail Views
+Individual query performance pages display Query Advisor insights alongside other metrics, providing context-aware optimization recommendations.
+
+## Verification and testing
+
+Query Advisor integrates with pganalyze Workbooks to provide a systematic approach to testing optimizations:
+
+1. **Baseline recording**: Capture current query performance as a baseline
+2. **Apply insights**: Use Query Advisor's suggested rewrites to create variants
+3. **Benchmark results**: Compare performance improvements systematically
+4. **Validate changes**: Ensure optimizations work across different parameter sets
+5. **Apply to production**: Implement verified improvements with confidence
+
+This workflow ensures that all optimizations are tested and validated before production deployment.
+
+## Next steps
+
+- [Follow the complete optimization workflow](/docs/query-advisor/from-insight-to-conclusion) - See Query Advisor in action from detection to resolution
+- [Learn about specific insights](/docs/query-advisor/insights) - Understand the optimization patterns Query Advisor detects
+- [Configure alerts](/docs/query-advisor/alerts) - Get notified when new optimization opportunities are discovered
+- [Explore pganalyze Workbooks](/docs/workbooks) - Learn about the testing and benchmarking platform

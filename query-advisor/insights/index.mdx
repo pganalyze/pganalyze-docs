@@ -1,0 +1,142 @@
+---
+title: 'Query Advisor Insights'
+backlink_href: /docs/query-advisor
+backlink_title: 'Query Advisor'
+---
+
+Query Advisor automatically detects common PostgreSQL query optimization opportunities by analyzing EXPLAIN plans for known performance anti-patterns. This section documents each supported insight type, including detection criteria, optimization strategies, and implementation approaches.
+
+## How insights work
+
+Query Advisor uses a **pattern library approach** to identify optimization opportunities:
+
+1. **Pattern detection**: Analyzes EXPLAIN plans for specific performance anti-patterns
+2. **Validation**: Verifies that alternative query plans are likely available
+3. **Solution generation**: Provides tested query modifications or configuration changes
+4. **Integration**: Seamlessly applies suggestions through pganalyze Workbooks
+
+All insights are based on **deterministic algorithms** derived from PostgreSQL planner behavior - no AI or machine learning involved.
+
+## Currently supported insights
+
+### Inefficient Nested Loops
+
+Detects when PostgreSQL chooses nested loop joins due to row estimation mismatches, often resulting in dramatically slower performance than hash or merge joins.
+
+**[Learn more about Inefficient Nested Loops →](/docs/query-advisor/insights/inefficient-nested-loops)**
+
+### ORDER BY + LIMIT Index Problems  
+
+Identifies queries where PostgreSQL uses an index primarily for sorting while filtering large numbers of rows, indicating that a different index strategy would be more efficient.
+
+**[Learn more about ORDER BY + LIMIT Issues →](/docs/query-advisor/insights/order-by-limit)**
+
+## Optimization techniques
+
+Query Advisor employs several proven PostgreSQL optimization techniques:
+
+### Query rewrites
+- **Materialized CTEs**: Forces PostgreSQL to materialize intermediate results to prevent inefficient nested loops
+- **Sort prevention**: Uses arithmetic expressions (e.g., `+0`) to prevent PostgreSQL from using index sort order
+- **Expression modification**: Adjusts WHERE clauses to influence index selection
+
+### Planner hints (when available)
+- **pg_hint_plan integration**: Validates and suggests planner hints for forcing specific join types or index usage
+- **Temporary settings**: Recommends session-level parameter changes for testing specific optimizations
+
+### Statistics improvements
+- **Statistics target increases**: Suggests raising default_statistics_target for better row estimation
+- **Extended statistics**: Recommends CREATE STATISTICS for correlated columns when applicable
+
+## Detection methodology
+
+Query Advisor analyzes EXPLAIN plans through a **two-phase process**:
+
+### Phase 1: Initial screening
+- Processes **7 million+ plan samples daily** in real-time
+- Applies fast heuristics to identify potentially problematic patterns
+- Marks plans for deeper analysis without performance impact
+
+### Phase 2: Detailed validation  
+- Runs scheduled background analysis on flagged plans
+- Verifies schema compatibility (available indexes, constraints)
+- Confirms that alternative optimization strategies exist
+- Generates specific insights with confidence scores
+
+This approach ensures **scalable analysis** while maintaining accuracy.
+
+## Insight reliability
+
+Query Advisor prioritizes **correctness and determinism**:
+
+### High-confidence patterns
+Current insights focus on well-understood PostgreSQL behaviors where:
+- Root causes are clearly identified
+- Alternative approaches are proven effective  
+- Query semantics remain unchanged
+- Solutions are widely applicable
+
+### Validation workflow
+Each insight includes:
+- **Automated detection** of the problematic pattern
+- **Schema verification** that alternatives exist
+- **Suggested modifications** with clear rationale
+- **Testing integration** through pganalyze Workbooks
+
+### When insights may not apply
+Occasionally, detected insights may not reproduce during testing due to:
+- **Data distribution changes** since original detection
+- **Updated statistics** that resolve estimation issues  
+- **Concurrent workload** effects during original measurement
+- **Cache state differences** between detection and testing
+
+This is normal behavior - database conditions evolve, and Query Advisor adapts accordingly.
+
+## Expanding coverage
+
+The Query Advisor pattern library continues to grow based on:
+
+### Common PostgreSQL issues
+- **OR to UNION transformations** for complex filtering
+- **Subquery materialization** problems
+- **Function inlining** opportunities
+- **Partition pruning** inefficiencies
+
+### Settings-based optimizations
+- **work_mem adjustments** for sort-heavy queries
+- **random_page_cost tuning** for index vs. sequential scan decisions
+- **effective_cache_size optimization** for planner estimates
+
+### Advanced techniques
+- **Window function optimizations** 
+- **Recursive CTE improvements**
+- **Parallel query tuning**
+- **Partitioning strategy recommendations**
+
+New insights are added continuously based on real-world PostgreSQL performance analysis.
+
+## Integration with other pganalyze features
+
+Query Advisor complements other pganalyze optimization tools:
+
+### Index Advisor
+- **Query Advisor**: Optimizes existing queries for current schema
+- **Index Advisor**: Recommends schema changes (new indexes) for query optimization
+- **Combined approach**: Both tools work together for comprehensive optimization
+
+### VACUUM Advisor
+- **Query performance**: Can be impacted by insufficient vacuuming
+- **Statistics accuracy**: VACUUM updates affect Query Advisor's detection accuracy
+- **Coordinated optimization**: Address VACUUM issues before query optimization
+
+### Workbooks
+- **Testing platform**: Provides systematic validation for Query Advisor suggestions
+- **Benchmarking**: Enables before/after performance comparison
+- **Safety**: Validates optimizations before production deployment
+
+## Next steps
+
+- **[Inefficient Nested Loops](/docs/query-advisor/insights/inefficient-nested-loops)** - Learn about join optimization
+- **[ORDER BY + LIMIT Issues](/docs/query-advisor/insights/order-by-limit)** - Understand index selection problems  
+- **[Set up alerts](/docs/query-advisor/alerts)** - Get notified of new optimization opportunities
+- **[Complete workflow guide](/docs/query-advisor/from-insight-to-conclusion)** - See Query Advisor in action

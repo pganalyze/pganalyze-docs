@@ -1,0 +1,274 @@
+---
+title: 'ORDER BY + LIMIT Index Problems'
+backlink_href: /docs/query-advisor/insights
+backlink_title: 'Query Advisor Insights'
+---
+
+The ORDER BY + LIMIT insight detects when PostgreSQL uses an index primarily for sorting while filtering large numbers of rows, indicating that a different index strategy would be more efficient for the query's WHERE conditions.
+
+## Problem description
+
+PostgreSQL's optimizer sometimes prioritizes ORDER BY optimization over WHERE clause filtering when both are present with LIMIT. This "quickstart" optimization attempts to return results quickly by scanning an index in sort order, but becomes extremely inefficient when matching rows are sparse.
+
+### Common scenario
+<CodeBlock language="sql">
+{`SELECT * FROM large_table 
+WHERE database_id = 123
+ORDER BY created_at DESC 
+LIMIT 50;`}
+</CodeBlock>
+
+If PostgreSQL chooses the `created_at` index for sorting, it may scan millions of rows to find 50 that match `database_id = 123`, instead of using the `database_id` index to filter first.
+
+## Detection criteria
+
+Query Advisor identifies ORDER BY + LIMIT problems when:
+
+### Index usage pattern
+- **Index scan present**: Query uses index scan (not sequential scan)
+- **No index condition**: Index scan only has Filter, no Index Cond
+- **Sort order benefit**: Index provides sort order for ORDER BY clause
+- **High filter removal**: Significant "Rows Removed by Filter" count
+
+### Performance indicators
+- **Runtime threshold**: Query takes longer than expected for LIMIT size
+- **Row examination**: Examines 1000+ rows to return small LIMIT
+- **Filter efficiency**: <5% of scanned rows match WHERE conditions
+
+### Alternative availability
+Query Advisor verifies better strategies exist:
+- **Filtering indexes**: Indexes available that match WHERE conditions
+- **Composite options**: Multi-column indexes covering both WHERE and ORDER BY
+- **Index intersection**: Multiple indexes that could be combined
+
+## Root cause analysis
+
+This optimization problem occurs due to:
+
+### Planner estimation errors
+- **Row distribution assumptions**: PostgreSQL assumes matching rows are evenly distributed
+- **Early result optimism**: Planner believes it will find LIMIT rows quickly
+- **Correlation misunderstanding**: Sort order and filter conditions are correlated incorrectly
+
+### Data distribution realities
+- **Sparse matches**: Matching rows are clustered, not evenly distributed
+- **Temporal correlation**: Time-based ORDER BY with non-temporal WHERE clauses
+- **Selectivity variations**: WHERE clause selectivity varies significantly across sort ranges
+
+## Optimization strategies
+
+Query Advisor provides several techniques to force better index selection:
+
+### Sort prevention technique (primary solution)
+
+Query Advisor adds arithmetic to the ORDER BY clause to prevent index sort optimization:
+
+<CodeBlock language="sql">
+{`SELECT * FROM large_table 
+WHERE database_id = 123
+ORDER BY created_at + 0 DESC  -- Prevents index sort usage
+LIMIT 50;`}
+</CodeBlock>
+
+**How it works:**
+- **Disables sort optimization**: PostgreSQL can't use created_at index for sorting `created_at + 0`
+- **Forces filter-first**: Must use database_id index for efficient filtering  
+- **Maintains correctness**: Adding zero doesn't change sort order
+- **Triggers replanning**: Forces PostgreSQL to reconsider index selection strategy
+
+### Alternative expressions
+
+Depending on the data type, Query Advisor may suggest variations:
+
+<CodeBlock language="sql">
+{`-- For timestamps
+ORDER BY created_at + INTERVAL '0 seconds'
+
+-- For numeric types  
+ORDER BY price + 0.0
+
+-- For text (forces expression evaluation)
+ORDER BY name || ''`}
+</CodeBlock>
+
+### Planner hints (when available)
+
+If pg_hint_plan is installed, Query Advisor can suggest forcing specific indexes:
+
+<CodeBlock language="sql">
+{`/*+ IndexScan(large_table database_id_idx) */
+SELECT * FROM large_table 
+WHERE database_id = 123
+ORDER BY created_at DESC 
+LIMIT 50;`}
+</CodeBlock>
+
+### Settings-based testing
+
+For validation, Query Advisor may suggest testing with:
+
+<CodeBlock language="sql">
+{`SET enable_incremental_sort = off;  -- If incremental sort is involved
+-- Test query performance
+-- Reset setting`}
+</CodeBlock>
+
+## Implementation example
+
+Here's a real-world transformation from the Query Advisor workflow:
+
+### Original query (problematic)
+<CodeBlock language="sql">
+{`SELECT customer_id, order_date, total_amount
+FROM orders 
+WHERE customer_id = $1
+ORDER BY order_date DESC
+LIMIT 10;`}
+</CodeBlock>
+
+**EXPLAIN analysis shows:**
+- Index Scan using `orders_order_date_idx`
+- Filter: `(customer_id = $1)`
+- Rows Removed by Filter: 2,847,392
+- Execution time: 15,000ms
+
+### Query Advisor rewrite
+<CodeBlock language="sql">
+{`SELECT customer_id, order_date, total_amount
+FROM orders 
+WHERE customer_id = $1
+ORDER BY order_date + INTERVAL '0 seconds' DESC
+LIMIT 10;`}
+</CodeBlock>
+
+**Optimized EXPLAIN shows:**
+- Index Scan using `orders_customer_id_idx` 
+- Index Cond: `(customer_id = $1)`
+- Sort: `(order_date + '00:00:00'::interval) DESC`
+- Execution time: 12ms
+
+**Result**: 1,250x performance improvement by filtering first, then sorting.
+
+## Advanced cases
+
+### Multiple sort columns
+<CodeBlock language="sql">
+{`-- Original (problematic)
+SELECT * FROM events
+WHERE user_id = 456
+ORDER BY created_at DESC, event_type
+LIMIT 20;
+
+-- Query Advisor rewrite  
+SELECT * FROM events
+WHERE user_id = 456
+ORDER BY created_at + 0 DESC, event_type
+LIMIT 20;`}
+</CodeBlock>
+
+### Complex WHERE conditions
+<CodeBlock language="sql">
+{`-- Original (problematic)
+SELECT * FROM products
+WHERE category_id IN (1, 2, 3) AND status = 'active'
+ORDER BY popularity_score DESC
+LIMIT 25;
+
+-- Query Advisor rewrite
+SELECT * FROM products  
+WHERE category_id IN (1, 2, 3) AND status = 'active'
+ORDER BY popularity_score + 0 DESC
+LIMIT 25;`}
+</CodeBlock>
+
+## Validation workflow
+
+Use pganalyze Workbooks to validate the optimization:
+
+### 1. Baseline measurement
+- Record original query execution plan
+- Note "Rows Removed by Filter" count
+- Document total execution time and index usage
+
+### 2. Apply optimization
+- Test Query Advisor's suggested rewrite
+- Verify plan switches to filter-first strategy
+- Confirm sort operation handles fewer rows
+
+### 3. Performance comparison
+- Compare execution times (often 100-1000x improvement)
+- Verify index usage change (sort index → filter index)
+- Check that LIMIT results are identical
+
+### 4. Parameter validation
+- Test with different parameter values
+- Ensure optimization works across data distributions
+- Validate edge cases (no matching rows, etc.)
+
+## When this insight may not apply
+
+ORDER BY + LIMIT optimization isn't always problematic. Query Advisor only flags inefficient cases, but the optimization may not help when:
+
+### Data distribution favors sort-first
+- **Dense matches**: Most rows in sort order match WHERE conditions
+- **Recent data bias**: LIMIT typically finds matches quickly in sort order
+- **Temporal queries**: WHERE conditions align with ORDER BY temporal patterns
+
+### Index strategy limitations
+- **No filter indexes**: No indexes available for WHERE conditions
+- **Composite index exists**: Single index efficiently handles both WHERE and ORDER BY
+- **Small table**: Table size doesn't justify optimization complexity
+
+### Recent statistics updates
+- **Fresh ANALYZE**: Updated statistics may resolve estimation issues
+- **Plan stabilization**: PostgreSQL may already be choosing better plans
+- **Workload changes**: Query patterns may have evolved since detection
+
+## Performance characteristics
+
+### Before optimization
+- **Index strategy**: Sort-optimized index scan
+- **Row examination**: Examines many rows to satisfy LIMIT
+- **Filter timing**: Applies WHERE conditions after index scan
+- **Performance**: O(rows_examined) - can be very large
+
+### After optimization  
+- **Index strategy**: Filter-optimized index scan  
+- **Row examination**: Only examines matching rows
+- **Sort timing**: Sorts only LIMIT-sized result set
+- **Performance**: O(matching_rows + sort_cost) - typically much smaller
+
+## Best practices
+
+### Permanent solutions
+1. **Application-level rewrite**: Implement the `+0` technique in application queries
+2. **Composite indexes**: Create indexes covering both WHERE and ORDER BY columns
+3. **Query restructuring**: Split into filter + sort operations when appropriate
+4. **Statistics maintenance**: Ensure regular ANALYZE to improve estimates
+
+### Index design considerations
+<CodeBlock language="sql">
+-- Instead of separate indexes:
+CREATE INDEX orders_order_date_idx ON orders(order_date);
+CREATE INDEX orders_customer_id_idx ON orders(customer_id);
+
+-- Consider composite index:
+CREATE INDEX orders_customer_date_idx ON orders(customer_id, order_date DESC);
+</CodeBlock>
+
+### Monitoring approach
+1. **Track plan stability**: Monitor whether PostgreSQL reverts to sort-first strategy
+2. **Parameter sensitivity**: Watch for parameter values that trigger the problematic pattern
+3. **Performance regression**: Alert on query runtime increases
+
+## Related insights
+
+- **[Inefficient Nested Loops](/docs/query-advisor/insights/inefficient-nested-loops)**: Another estimation-related optimization problem
+- **[Index Advisor](/docs/index-advisor)**: May suggest composite indexes that eliminate the ORDER BY + LIMIT issue
+- **[Statistics recommendations](/docs/schema-statistics)**: Improving statistics can resolve planner estimation errors
+
+## Next steps
+
+- **[See complete example](/docs/query-advisor/from-insight-to-conclusion)** - Full walkthrough of this optimization in practice
+- **[Configure Workbooks](/docs/workbooks)** - Set up testing environment for validating ORDER BY + LIMIT fixes
+- **[Set up alerts](/docs/query-advisor/alerts)** - Get notified when new ORDER BY + LIMIT issues are detected
