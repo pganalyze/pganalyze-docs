@@ -4,11 +4,11 @@ backlink_href: /docs/query-advisor/insights
 backlink_title: 'Query Advisor Insights'
 ---
 
-The Inefficient Nested Loops insight detects when PostgreSQL chooses nested loop joins due to row estimation mismatches, often resulting in dramatically slower performance than hash or merge joins would provide.
+The Inefficient Nested Loops insight detects when Postgres chooses nested loop joins due to row estimation mismatches, often resulting in dramatically slower performance than hash or merge joins would provide.
 
 ## Problem description
 
-PostgreSQL's cost-based optimizer sometimes chooses nested loop joins based on incorrect row count estimates. When the actual number of rows significantly exceeds the estimate, nested loops become extremely inefficient compared to hash or merge joins.
+Postgres's cost-based optimizer sometimes chooses nested loop joins based on incorrect row count estimates. When the actual number of rows significantly exceeds the estimate, nested loops become extremely inefficient compared to hash or merge joins.
 
 ### Common scenario
 <CodeBlock language="sql">
@@ -18,14 +18,14 @@ JOIN customers c ON o.customer_id = c.id
 WHERE o.order_date >= '2024-01-01';`}
 </CodeBlock>
 
-If PostgreSQL estimates the WHERE clause will return 1 row but it actually returns 10,000 rows, a nested loop join will scan the customers table 10,000 times instead of once.
+If Postgres estimates the WHERE clause will return 1 row but it actually returns 10,000 rows, a nested loop join will scan the customers table 10,000 times instead of once.
 
 ## Detection criteria
 
 Query Advisor identifies inefficient nested loops when:
 
 ### Row estimation mismatch
-- **Estimated rows**: PostgreSQL planner estimates ≤ 1 row
+- **Estimated rows**: Postgres planner estimates ≤ 1 row
 - **Actual rows**: Query actually processes 10+ rows  
 - **Severity threshold**: Actual/estimated ratio > 10x
 
@@ -73,7 +73,7 @@ JOIN customers c ON o.customer_id = c.id;`}
 </CodeBlock>
 
 **Benefits:**
-- Forces PostgreSQL to materialize the filtered result set
+- Forces Postgres to materialize the filtered result set
 - Prevents parameterized nested loop scans
 - Enables hash or merge join selection for the final join
 - Maintains query semantics exactly
@@ -180,7 +180,7 @@ Nested loops aren't always problematic. Query Advisor only flags inefficient cas
 
 ### Recent statistics
 - **Fresh ANALYZE**: Updated statistics may resolve estimation issues
-- **Plan changes**: PostgreSQL may already be using better plans
+- **Plan changes**: Postgres may already be using better plans
 - **Data distribution shifts**: Query patterns may have evolved
 
 ## Best practices
@@ -192,7 +192,7 @@ Nested loops aren't always problematic. Query Advisor only flags inefficient cas
 4. **Parameter tuning**: Adjust work_mem if hash joins consistently perform better
 
 ### Monitoring approach
-1. **Track plan changes**: Monitor whether PostgreSQL reverts to nested loops
+1. **Track plan changes**: Monitor whether Postgres reverts to nested loops
 2. **Performance regression**: Watch for estimate accuracy over time
 3. **Workload evolution**: Re-evaluate as data patterns change
 

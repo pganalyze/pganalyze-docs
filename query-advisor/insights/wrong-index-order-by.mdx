@@ -4,11 +4,11 @@ backlink_href: /docs/query-advisor/insights
 backlink_title: 'Query Advisor Insights'
 ---
 
-The ORDER BY + LIMIT insight detects when PostgreSQL uses an index primarily for sorting while filtering large numbers of rows, indicating that a different index strategy would be more efficient for the query's WHERE conditions.
+The ORDER BY + LIMIT insight detects when Postgres uses an index primarily for sorting while filtering large numbers of rows, indicating that a different index strategy would be more efficient for the query's WHERE conditions.
 
 ## Problem description
 
-PostgreSQL's optimizer sometimes prioritizes ORDER BY optimization over WHERE clause filtering when both are present with LIMIT. This "quickstart" optimization attempts to return results quickly by scanning an index in sort order, but becomes extremely inefficient when matching rows are sparse.
+Postgres's optimizer sometimes prioritizes ORDER BY optimization over WHERE clause filtering when both are present with LIMIT. This "quickstart" optimization attempts to return results quickly by scanning an index in sort order, but becomes extremely inefficient when matching rows are sparse.
 
 ### Common scenario
 <CodeBlock language="sql">
@@ -18,7 +18,7 @@ ORDER BY created_at DESC
 LIMIT 50;`}
 </CodeBlock>
 
-If PostgreSQL chooses the `created_at` index for sorting, it may scan millions of rows to find 50 that match `database_id = 123`, instead of using the `database_id` index to filter first.
+If Postgres chooses the `created_at` index for sorting, it may scan millions of rows to find 50 that match `database_id = 123`, instead of using the `database_id` index to filter first.
 
 ## Detection criteria
 
@@ -46,7 +46,7 @@ Query Advisor verifies better strategies exist:
 This optimization problem occurs due to:
 
 ### Planner estimation errors
-- **Row distribution assumptions**: PostgreSQL assumes matching rows are evenly distributed
+- **Row distribution assumptions**: Postgres assumes matching rows are evenly distributed
 - **Early result optimism**: Planner believes it will find LIMIT rows quickly
 - **Correlation misunderstanding**: Sort order and filter conditions are correlated incorrectly
 
@@ -71,10 +71,10 @@ LIMIT 50;`}
 </CodeBlock>
 
 **How it works:**
-- **Disables sort optimization**: PostgreSQL can't use created_at index for sorting `created_at + 0`
+- **Disables sort optimization**: Postgres can't use created_at index for sorting `created_at + 0`
 - **Forces filter-first**: Must use database_id index for efficient filtering  
 - **Maintains correctness**: Adding zero doesn't change sort order
-- **Triggers replanning**: Forces PostgreSQL to reconsider index selection strategy
+- **Triggers replanning**: Forces Postgres to reconsider index selection strategy
 
 ### Alternative expressions
 
@@ -221,7 +221,7 @@ ORDER BY + LIMIT optimization isn't always problematic. Query Advisor only flags
 
 ### Recent statistics updates
 - **Fresh ANALYZE**: Updated statistics may resolve estimation issues
-- **Plan stabilization**: PostgreSQL may already be choosing better plans
+- **Plan stabilization**: Postgres may already be choosing better plans
 - **Workload changes**: Query patterns may have evolved since detection
 
 ## Performance characteristics
@@ -257,7 +257,7 @@ CREATE INDEX orders_customer_date_idx ON orders(customer_id, order_date DESC);
 </CodeBlock>
 
 ### Monitoring approach
-1. **Track plan stability**: Monitor whether PostgreSQL reverts to sort-first strategy
+1. **Track plan stability**: Monitor whether Postgres reverts to sort-first strategy
 2. **Parameter sensitivity**: Watch for parameter values that trigger the problematic pattern
 3. **Performance regression**: Alert on query runtime increases
 

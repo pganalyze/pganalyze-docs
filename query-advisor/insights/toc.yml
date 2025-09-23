@@ -4,5 +4,5 @@
     href: query-advisor/insights
   - name: "Inefficient Nested Loops"
     href: query-advisor/insights/inefficient-nested-loops
-  - name: "ORDER BY + LIMIT Problems"
-    href: query-advisor/insights/order-by-limit
+  - name: "Wrong Index Due To ORDER BY"
+    href: query-advisor/insights/wrong-index-order-by

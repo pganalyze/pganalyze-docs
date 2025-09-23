@@ -4,7 +4,7 @@ backlink_href: /docs/query-advisor
 backlink_title: 'Query Advisor'
 ---
 
-Query Advisor automatically detects common PostgreSQL query optimization opportunities by analyzing EXPLAIN plans for known performance anti-patterns. This section documents each supported insight type, including detection criteria, optimization strategies, and implementation approaches.
+Query Advisor automatically detects common Postgres query optimization opportunities by analyzing EXPLAIN plans for known performance anti-patterns. This section documents each supported insight type, including detection criteria, optimization strategies, and implementation approaches.
 
 ## How insights work
 
@@ -15,29 +15,29 @@ Query Advisor uses a **pattern library approach** to identify optimization oppor
 3. **Solution generation**: Provides tested query modifications or configuration changes
 4. **Integration**: Seamlessly applies suggestions through pganalyze Workbooks
 
-All insights are based on **deterministic algorithms** derived from PostgreSQL planner behavior - no AI or machine learning involved.
+All insights are based on **deterministic algorithms** derived from Postgres planner behavior - no AI or machine learning involved.
 
 ## Currently supported insights
 
 ### Inefficient Nested Loops
 
-Detects when PostgreSQL chooses nested loop joins due to row estimation mismatches, often resulting in dramatically slower performance than hash or merge joins.
+Detects when Postgres chooses nested loop joins due to row estimation mismatches, often resulting in dramatically slower performance than hash or merge joins.
 
 **[Learn more about Inefficient Nested Loops →](/docs/query-advisor/insights/inefficient-nested-loops)**
 
 ### ORDER BY + LIMIT Index Problems  
 
-Identifies queries where PostgreSQL uses an index primarily for sorting while filtering large numbers of rows, indicating that a different index strategy would be more efficient.
+Identifies queries where Postgres uses an index primarily for sorting while filtering large numbers of rows, indicating that a different index strategy would be more efficient.
 
 **[Learn more about ORDER BY + LIMIT Issues →](/docs/query-advisor/insights/order-by-limit)**
 
 ## Optimization techniques
 
-Query Advisor employs several proven PostgreSQL optimization techniques:
+Query Advisor employs several proven Postgres optimization techniques:
 
 ### Query rewrites
-- **Materialized CTEs**: Forces PostgreSQL to materialize intermediate results to prevent inefficient nested loops
-- **Sort prevention**: Uses arithmetic expressions (e.g., `+0`) to prevent PostgreSQL from using index sort order
+- **Materialized CTEs**: Forces Postgres to materialize intermediate results to prevent inefficient nested loops
+- **Sort prevention**: Uses arithmetic expressions (e.g., `+0`) to prevent Postgres from using index sort order
 - **Expression modification**: Adjusts WHERE clauses to influence index selection
 
 ### Planner hints (when available)
@@ -70,7 +70,7 @@ This approach ensures **scalable analysis** while maintaining accuracy.
 Query Advisor prioritizes **correctness and determinism**:
 
 ### High-confidence patterns
-Current insights focus on well-understood PostgreSQL behaviors where:
+Current insights focus on well-understood Postgres behaviors where:
 - Root causes are clearly identified
 - Alternative approaches are proven effective  
 - Query semantics remain unchanged
@@ -96,7 +96,7 @@ This is normal behavior - database conditions evolve, and Query Advisor adapts a
 
 The Query Advisor pattern library continues to grow based on:
 
-### Common PostgreSQL issues
+### Common Postgres issues
 - **OR to UNION transformations** for complex filtering
 - **Subquery materialization** problems
 - **Function inlining** opportunities
@@ -113,7 +113,7 @@ The Query Advisor pattern library continues to grow based on:
 - **Parallel query tuning**
 - **Partitioning strategy recommendations**
 
-New insights are added continuously based on real-world PostgreSQL performance analysis.
+New insights are added continuously based on real-world Postgres performance analysis.
 
 ## Integration with other pganalyze features
 

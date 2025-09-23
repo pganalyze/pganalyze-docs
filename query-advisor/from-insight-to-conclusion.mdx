@@ -4,7 +4,7 @@ backlink_href: /docs/query-advisor
 backlink_title: 'Query Advisor'
 ---
 
-This guide walks through a complete Query Advisor workflow, from detecting a performance issue to applying the optimization in production. We'll use a real example of an ORDER BY + LIMIT query that PostgreSQL optimizes poorly due to incorrect index selection.
+This guide walks through a complete Query Advisor workflow, from detecting a performance issue to applying the optimization in production. We'll use a real example of an ORDER BY + LIMIT query that Postgres optimizes poorly due to incorrect index selection.
 
 ## The performance problem
 
@@ -24,7 +24,7 @@ The query appeared to run fast initially but degraded significantly under certai
 - **10+ million rows** examined to find 50 matching results
 - **High "Rows Removed by Filter"** count indicating wasted work
 
-PostgreSQL chose the wrong optimization strategy - it prioritized the ORDER BY over the WHERE clause filtering.
+Postgres chose the wrong optimization strategy - it prioritized the ORDER BY over the WHERE clause filtering.
 
 ## Step 1: Query Advisor detection
 
@@ -40,7 +40,7 @@ Query Advisor automatically analyzed the EXPLAIN plan and identified the **ORDER
 Query Advisor flagged this as a **high-severity optimization opportunity** because:
 - Runtime exceeded threshold for optimization (>1 second)
 - Clear alternative index strategy available
-- Pattern matches known PostgreSQL planner inefficiency
+- Pattern matches known Postgres planner inefficiency
 
 The insight appeared on the Query Advisor landing page with sample runtime data and affected query details.
 
@@ -87,13 +87,13 @@ LIMIT 50;`}
 </CodeBlock>
 
 ### The `+0` technique
-This PostgreSQL optimization technique:
-- **Prevents sort optimization**: PostgreSQL can't use the created_at index for sorting
+This Postgres optimization technique:
+- **Prevents sort optimization**: Postgres can't use the created_at index for sorting
 - **Forces filter-first strategy**: Must use database_id index for efficient filtering
 - **Maintains correctness**: Adding zero doesn't change sort order
-- **Triggers replanning**: Forces PostgreSQL to reconsider index selection
+- **Triggers replanning**: Forces Postgres to reconsider index selection
 
-This is a well-known PostgreSQL expert technique that Query Advisor automates for you.
+This is a well-known Postgres expert technique that Query Advisor automates for you.
 
 ## Step 5: Benchmark the optimization
 
@@ -109,24 +109,24 @@ We executed the modified query using the collector workflow:
 The workbook's compare view highlighted the key changes:
 - **Index usage**: Primary key → database_id index
 - **Rows removed by filter**: 10M+ → 0
-- **Cost estimate**: Increased (PostgreSQL's estimate was wrong)
+- **Cost estimate**: Increased (Postgres's estimate was wrong)
 - **Actual runtime**: Dramatically improved
 
 ## Step 6: Validate the results
 
 The dramatic improvement confirmed Query Advisor's analysis was correct:
 
-### Why PostgreSQL chose poorly
-PostgreSQL's cost-based planner estimated it could find 50 matching rows quickly by scanning the created_at index in sort order. This worked when matching rows were densely packed but failed when they were sparse.
+### Why Postgres chose poorly
+Postgres's cost-based planner estimated it could find 50 matching rows quickly by scanning the created_at index in sort order. This worked when matching rows were densely packed but failed when they were sparse.
 
 ### Why the rewrite works
-By preventing sort-order optimization, PostgreSQL had to:
+By preventing sort-order optimization, Postgres had to:
 1. Use the database_id index for efficient filtering
 2. Sort only the 50 filtered results (not 10M+ rows)
 3. Return results much faster despite higher estimated cost
 
 ### Cost vs. reality
-The PostgreSQL planner estimated higher cost for the optimized version (79,000 vs 15,000 cost units), but actual runtime was 1,000x faster. This demonstrates why testing real performance trumps planner estimates.
+The Postgres planner estimated higher cost for the optimized version (79,000 vs 15,000 cost units), but actual runtime was 1,000x faster. This demonstrates why testing real performance trumps planner estimates.
 
 ## Step 7: Apply to production
 
@@ -149,7 +149,7 @@ Query Advisor occasionally detects optimization opportunities that don't reprodu
 
 ### Common scenarios
 - **Data distribution changes**: Query characteristics may have shifted since detection
-- **Statistics updates**: Fresh PostgreSQL statistics may resolve estimation issues
+- **Statistics updates**: Fresh Postgres statistics may resolve estimation issues
 - **Concurrent workload**: Original slowness may have been due to lock contention
 - **Cache state**: Cold vs. warm cache differences
 
@@ -167,12 +167,12 @@ This is normal behavior, not a bug - Query Advisor detects real issues but datab
 This workflow demonstrates Query Advisor's systematic approach to query optimization:
 
 1. **Automated detection**: Continuously monitors for optimization opportunities
-2. **Expert knowledge**: Applies PostgreSQL optimization techniques automatically
+2. **Expert knowledge**: Applies Postgres optimization techniques automatically
 3. **Systematic testing**: Integrates with Workbooks for thorough validation
 4. **Risk mitigation**: Tests multiple scenarios before production changes
 5. **Measurable results**: Provides clear before/after performance metrics
 
-Query Advisor makes PostgreSQL query optimization accessible to teams without deep database expertise while maintaining the rigor needed for production systems.
+Query Advisor makes Postgres query optimization accessible to teams without deep database expertise while maintaining the rigor needed for production systems.
 
 ## Next steps
 

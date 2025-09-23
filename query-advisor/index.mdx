@@ -4,14 +4,14 @@ backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
-pganalyze Query Advisor automatically analyzes PostgreSQL query execution plans to identify optimization opportunities and provides actionable suggestions for improving query performance. Unlike traditional query optimization approaches, Query Advisor operates continuously in the background, detecting common PostgreSQL planner issues and offering deterministic, tested solutions.
+pganalyze Query Advisor automatically analyzes Postgres query execution plans to identify optimization opportunities and provides actionable suggestions for improving query performance. Unlike traditional query optimization approaches, Query Advisor operates continuously in the background, detecting common Postgres planner issues and offering deterministic, tested solutions.
 
 ## What Query Advisor provides
 
 Query Advisor focuses on **single query optimization** through systematic analysis of EXPLAIN plans. Key capabilities include:
 
-- **Automated pattern detection**: Continuously analyzes query plans to identify known PostgreSQL performance anti-patterns
-- **Deterministic insights**: Uses purpose-built algorithms based on PostgreSQL planner behavior - no AI hallucinations
+- **Automated pattern detection**: Continuously analyzes query plans to identify known Postgres performance anti-patterns
+- **Deterministic insights**: Uses purpose-built algorithms based on Postgres planner behavior - no AI hallucinations
 - **Actionable rewrites**: Provides tested query modifications that resolve detected issues
 - **Workbook integration**: Seamlessly works with [pganalyze Workbooks](/docs/workbooks) for benchmarking and validation
 - **Confidence building**: Suggests parameter sets and provides systematic testing workflows
@@ -72,18 +72,18 @@ As pganalyze collects EXPLAIN plans through auto_explain, Query Advisor continuo
 
 ## Common optimization patterns
 
-Query Advisor currently detects and provides solutions for these PostgreSQL performance issues:
+Query Advisor currently detects and provides solutions for these Postgres performance issues:
 
-- **Inefficient Nested Loops**: Identifies row estimation mismatches that cause PostgreSQL to choose nested loops instead of more efficient hash or merge joins
-- **Wrong Index Due To ORDER BY**: Detects when PostgreSQL uses an index only for sorting while filtering large numbers of rows, suggesting better index usage patterns
+- **Inefficient Nested Loops**: Identifies row estimation mismatches that cause Postgres to choose nested loops instead of more efficient hash or merge joins
+- **Wrong Index Due To ORDER BY**: Detects when Postgres uses an index only for sorting while filtering large numbers of rows, suggesting better index usage patterns
 
-Additional optimization patterns are continuously being added based on real-world PostgreSQL performance issues.
+Additional optimization patterns are continuously being added based on real-world Postgres performance issues.
 
 ## Requirements
 
 To use Query Advisor effectively:
 
-- **PostgreSQL monitoring**: pganalyze collector must be installed and collecting query statistics
+- **Postgres monitoring**: pganalyze collector must be installed and collecting query statistics
 - **EXPLAIN plan collection**: Either auto_explain enabled or manual EXPLAIN uploads via workbooks
 - **Best experience**: [Enable the collector workflow](/docs/workbooks/collector-workflow) for seamless testing and verification
 

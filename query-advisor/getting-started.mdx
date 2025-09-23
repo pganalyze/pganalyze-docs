@@ -4,15 +4,15 @@ backlink_href: /docs/query-advisor
 backlink_title: 'Query Advisor'
 ---
 
-Query Advisor automatically analyzes PostgreSQL query execution plans to detect optimization opportunities. This guide covers the requirements and setup needed to start using Query Advisor effectively.
+Query Advisor automatically analyzes Postgres query execution plans to detect optimization opportunities. This guide covers the requirements and setup needed to start using Query Advisor effectively.
 
 ## What you get with Query Advisor
 
-Query Advisor provides **continuous, automated query optimization insights** for your PostgreSQL databases:
+Query Advisor provides **continuous, automated query optimization insights** for your Postgres databases:
 
 - **Automated analysis**: Continuously examines EXPLAIN plans to identify performance anti-patterns
 - **Single query focus**: Optimizes individual queries through rewrites and planner hints, complementing Index Advisor's schema-level recommendations
-- **Deterministic approach**: Uses purpose-built algorithms based on PostgreSQL planner behavior with no AI hallucinations
+- **Deterministic approach**: Uses purpose-built algorithms based on Postgres planner behavior with no AI hallucinations
 - **Workbooks integration**: Seamlessly integrates with pganalyze Workbooks for systematic testing and benchmarking
 - **Confidence building**: Provides suggested parameter sets and systematic validation workflows
 
@@ -20,13 +20,13 @@ Query Advisor identifies the optimization opportunities - you maintain control o
 
 ## Supported optimization insights
 
-Query Advisor currently detects and provides solutions for these common PostgreSQL performance issues:
+Query Advisor currently detects and provides solutions for these common Postgres performance issues:
 
 ### Inefficient Nested Loops
-Detects when PostgreSQL chooses nested loop joins due to row estimation mismatches, suggesting hash or merge join alternatives through query rewrites.
+Detects when Postgres chooses nested loop joins due to row estimation mismatches, suggesting hash or merge join alternatives through query rewrites.
 
 ### Wrong Index Due To ORDER BY
-Identifies queries where PostgreSQL uses an index only for sorting while filtering large numbers of rows, suggesting modifications to force better index utilization.
+Identifies queries where Postgres uses an index only for sorting while filtering large numbers of rows, suggesting modifications to force better index utilization.
 
 More optimization patterns are continuously being added. See the complete list in [Supported Insights](/docs/query-advisor/insights).
 
@@ -40,7 +40,7 @@ Query Advisor requires the pganalyze collector to be properly configured for que
 - **Database connectivity** for the collector to access query metadata
 
 ### EXPLAIN Plan Collection
-Query Advisor analyzes PostgreSQL EXPLAIN plans, which can be collected through:
+Query Advisor analyzes Postgres EXPLAIN plans, which can be collected through:
 
 **Automated collection (recommended):**
 - **auto_explain** extension enabled
@@ -58,13 +58,13 @@ For the best Query Advisor experience:
 
 ## Set up auto_explain for continuous monitoring
 
-To enable continuous Query Advisor analysis, configure PostgreSQL's auto_explain extension:
+To enable continuous Query Advisor analysis, configure Postgres's auto_explain extension:
 
 WIP
 
 ### Platform-specific auto_explain setup
 
-The auto_explain configuration process varies by PostgreSQL hosting platform:
+The auto_explain configuration process varies by Postgres hosting platform:
 
 - **Amazon RDS/Aurora**: [Configure auto_explain via parameter groups](/docs/explain/setup/amazon_rds)
 - **Google Cloud SQL**: [Enable auto_explain through database flags](/docs/explain/setup/google_cloud_sql)
@@ -82,7 +82,7 @@ The `log_analyze` parameter is crucial for Query Advisor's misestimation detecti
 SET auto_explain.log_analyze = on;`}
 </CodeBlock>
 
-This setting ensures that EXPLAIN ANALYZE data includes actual row counts, enabling Query Advisor to detect when PostgreSQL's row estimates differ significantly from reality - a key indicator of optimization opportunities.
+This setting ensures that EXPLAIN ANALYZE data includes actual row counts, enabling Query Advisor to detect when Postgres's row estimates differ significantly from reality - a key indicator of optimization opportunities.
 
 ## Where to find Query Advisor
 
