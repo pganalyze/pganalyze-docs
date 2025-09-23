@@ -8,18 +8,18 @@
     href: collector
   - name: Query Performance
     href: query-performance
-  - name: Workbooks
-    href: workbooks
-  - name: EXPLAIN Plans
-    href: explain
   - name: Query Advisor
     href: query-advisor
+  - name: EXPLAIN Plans
+    href: explain
   - name: Index Advisor
     href: index-advisor
   - name: Indexing Engine
     href: indexing-engine
   - name: VACUUM Advisor
     href: vacuum-advisor
+  - name: Workbooks
+    href: workbooks
   - name: Schema Statistics
     href: schema-statistics
   - name: Log Insights

@@ -25,7 +25,7 @@ Query Advisor currently detects and provides solutions for these common PostgreS
 ### Inefficient Nested Loops
 Detects when PostgreSQL chooses nested loop joins due to row estimation mismatches, suggesting hash or merge join alternatives through query rewrites.
 
-### ORDER BY + LIMIT Index Problems
+### Wrong Index Due To ORDER BY
 Identifies queries where PostgreSQL uses an index only for sorting while filtering large numbers of rows, suggesting modifications to force better index utilization.
 
 More optimization patterns are continuously being added. See the complete list in [Supported Insights](/docs/query-advisor/insights).

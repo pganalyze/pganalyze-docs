@@ -75,7 +75,7 @@ As pganalyze collects EXPLAIN plans through auto_explain, Query Advisor continuo
 Query Advisor currently detects and provides solutions for these PostgreSQL performance issues:
 
 - **Inefficient Nested Loops**: Identifies row estimation mismatches that cause PostgreSQL to choose nested loops instead of more efficient hash or merge joins
-- **ORDER BY + LIMIT Index Problems**: Detects when PostgreSQL uses an index only for sorting while filtering large numbers of rows, suggesting better index usage patterns
+- **Wrong Index Due To ORDER BY**: Detects when PostgreSQL uses an index only for sorting while filtering large numbers of rows, suggesting better index usage patterns
 
 Additional optimization patterns are continuously being added based on real-world PostgreSQL performance issues.
 
