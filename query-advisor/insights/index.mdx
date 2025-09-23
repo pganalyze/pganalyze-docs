@@ -29,7 +29,7 @@ Detects when Postgres chooses nested loop joins due to row estimation mismatches
 
 Identifies queries where Postgres uses an index primarily for sorting while filtering large numbers of rows, indicating that a different index strategy would be more efficient.
 
-**[Learn more about ORDER BY + LIMIT Issues →](/docs/query-advisor/insights/order-by-limit)**
+**[Learn more about ORDER BY + LIMIT Issues →](/docs/query-advisor/insights/wrong-index-order-by)**
 
 ## Optimization techniques
 
@@ -137,6 +137,6 @@ Query Advisor complements other pganalyze optimization tools:
 ## Next steps
 
 - **[Inefficient Nested Loops](/docs/query-advisor/insights/inefficient-nested-loops)** - Learn about join optimization
-- **[ORDER BY + LIMIT Issues](/docs/query-advisor/insights/order-by-limit)** - Understand index selection problems  
+- **[ORDER BY + LIMIT Issues](/docs/query-advisor/insights/wrong-index-order-by)** - Understand index selection problems  
 - **[Set up alerts](/docs/query-advisor/alerts)** - Get notified of new optimization opportunities
 - **[Complete workflow guide](/docs/query-advisor/from-insight-to-conclusion)** - See Query Advisor in action
