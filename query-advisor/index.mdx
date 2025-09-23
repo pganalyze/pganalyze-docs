@@ -11,7 +11,7 @@ pganalyze Query Advisor automatically analyzes Postgres query execution plans to
 Query Advisor focuses on **single query optimization** through systematic analysis of EXPLAIN plans. Key capabilities include:
 
 - **Automated pattern detection**: Continuously analyzes query plans to identify known Postgres performance anti-patterns
-- **Deterministic insights**: Uses purpose-built algorithms based on Postgres planner behavior - no AI hallucinations
+- **Deterministic insights**: Uses purpose-built algorithms based on Postgres planner behavior
 - **Actionable rewrites**: Provides tested query modifications that resolve detected issues
 - **Workbook integration**: Seamlessly works with [pganalyze Workbooks](/docs/workbooks) for benchmarking and validation
 - **Confidence building**: Suggests parameter sets and provides systematic testing workflows
@@ -30,14 +30,21 @@ Query Advisor detects issues automatically and provides the insights - you apply
   </Link>
   <Link
     className={styles.overviewFeatureChoiceStep}
+    to="/docs/query-advisor/where-to-find"
+  >
+    <strong>Where to Find Query Advisor</strong>
+    Discover all locations where optimization insights appear
+  </Link>
+</div>
+
+<div className={styles.overviewFeatureChoice}>
+  <Link
+    className={styles.overviewFeatureChoiceStep}
     to="/docs/query-advisor/from-insight-to-conclusion"
   >
     <strong>From Insight to Conclusion</strong>
     Complete walkthrough from detecting issues to applying fixes
   </Link>
-</div>
-
-<div className={styles.overviewFeatureChoice}>
   <Link
     className={styles.overviewFeatureChoiceStep}
     to="/docs/query-advisor/insights"
@@ -45,6 +52,9 @@ Query Advisor detects issues automatically and provides the insights - you apply
     <strong>Supported Insights</strong>
     Learn about detection patterns and optimization techniques
   </Link>
+</div>
+
+<div className={styles.overviewFeatureChoice}>
   <Link
     className={styles.overviewFeatureChoiceStep}
     to="/docs/query-advisor/alerts"
@@ -53,38 +63,3 @@ Query Advisor detects issues automatically and provides the insights - you apply
     Configure notifications for newly detected optimization opportunities
   </Link>
 </div>
-
-## Where to find Query Advisor
-
-Query Advisor insights appear in multiple locations throughout pganalyze:
-
-### Query Advisor Landing Page
-The dedicated Query Advisor section shows all automatically detected issues across your databases, organized by severity and potential impact.
-
-### Workbooks Integration
-When creating new workbooks or analyzing existing queries, Query Advisor automatically assesses plans and suggests optimizations. You can apply suggested rewrites directly in the workbook editor.
-
-### Query Detail Views
-Individual query pages display Query Advisor insights alongside other performance metrics, providing context-aware optimization suggestions.
-
-### Automated EXPLAIN Collection
-As pganalyze collects EXPLAIN plans through auto_explain, Query Advisor continuously evaluates them for optimization opportunities in real-time.
-
-## Common optimization patterns
-
-Query Advisor currently detects and provides solutions for these Postgres performance issues:
-
-- **Inefficient Nested Loops**: Identifies row estimation mismatches that cause Postgres to choose nested loops instead of more efficient hash or merge joins
-- **Wrong Index Due To ORDER BY**: Detects when Postgres uses an index only for sorting while filtering large numbers of rows, suggesting better index usage patterns
-
-Additional optimization patterns are continuously being added based on real-world Postgres performance issues.
-
-## Requirements
-
-To use Query Advisor effectively:
-
-- **Postgres monitoring**: pganalyze collector must be installed and collecting query statistics
-- **EXPLAIN plan collection**: Either auto_explain enabled or manual EXPLAIN uploads via workbooks
-- **Best experience**: [Enable the collector workflow](/docs/workbooks/collector-workflow) for seamless testing and verification
-
-Query Advisor works with both automated collection (continuous monitoring) and on-demand analysis (workbook-based testing).

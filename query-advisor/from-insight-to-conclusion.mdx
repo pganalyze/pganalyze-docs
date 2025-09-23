@@ -11,20 +11,24 @@ This guide walks through a complete Query Advisor workflow, from detecting a per
 Query Advisor automatically detected this problematic query pattern in production:
 
 <CodeBlock language="sql">
-{`SELECT * FROM large_table 
-WHERE database_id = $1 
-ORDER BY created_at 
-LIMIT 50;`}
+{`SELECT databases.*
+FROM databases
+WHERE databases.server_id = $1
+  AND databases.hidden = $2
+ORDER BY databases.id ASC
+LIMIT $3;`}
 </CodeBlock>
 
-The query appeared to run fast initially but degraded significantly under certain conditions, taking up to **75 seconds** to complete. The EXPLAIN plan revealed the issue:
+The query appeared to run fast initially but degraded significantly under certain conditions, taking over **6 seconds** to complete. The EXPLAIN plan revealed the issue:
 
-- **Index scan** on a created_at index (good for sorting)
-- **Filter condition** applied after index scan (inefficient)
-- **10+ million rows** examined to find 50 matching results
-- **High "Rows Removed by Filter"** count indicating wasted work
+- **Parallel Index Scan (Forward)** on the databases_pkey index for sorting
+- **Filter condition** applied after index scan (inefficient filtering)
+- **949,508 rows removed by filter** indicating massive wasted work
+- **6,213.65ms runtime** with high I/O read time
 
 Postgres chose the wrong optimization strategy - it prioritized the ORDER BY over the WHERE clause filtering.
+
+![Query Advisor insight showing detailed EXPLAIN plan analysis with identified optimization opportunity](query-adivisor-insight-issue-explain-plan.png)
 
 ## Step 1: Query Advisor detection
 
@@ -44,6 +48,8 @@ Query Advisor flagged this as a **high-severity optimization opportunity** becau
 
 The insight appeared on the Query Advisor landing page with sample runtime data and affected query details.
 
+![Query Advisor landing page showing detected optimization opportunities with runtime impact analysis](query-advisor-landing.png)
+
 ## Step 2: Create workbook for testing
 
 From the Query Advisor insight, we clicked **"Create Workbook"** to begin systematic testing:
@@ -54,44 +60,64 @@ From the Query Advisor insight, we clicked **"Create Workbook"** to begin system
 3. **Sample data**: Selected representative parameter values from historical executions
 
 ### Parameter set selection
-We chose two test cases to validate the optimization:
-- **Fast case**: `database_id = 123` (historical runtime: ~1.5 seconds)
-- **Slow case**: `database_id = 456` (historical runtime: ~6.4 seconds)
+We chose a representative test case to validate the optimization based on the actual query parameters:
+- **Parameter Set 1**: `server_id` and `hidden` values from production workload
+- **Historical performance**: Query #3887820334 showing 495.51ms baseline runtime
 
-Testing multiple parameter sets ensures the optimization works consistently across different data distributions.
+Testing with real parameter values ensures the optimization reflects actual production conditions.
 
 ## Step 3: Record baseline performance
 
 Before applying any changes, we recorded baseline performance using the **collector workflow**:
 
+### Workbooks testing workflow
+Query Advisor integrates with pganalyze Workbooks to provide systematic optimization testing:
+
 ### Baseline results
-- **Parameter set 1**: 1,580ms execution time
-- **Parameter set 2**: 6,400ms execution time
-- **Warm cache**: Intentionally ran twice to eliminate I/O variability
-- **Consistent pattern**: Both showed high "Rows Removed by Filter"
+- **Runtime**: 495.51ms execution time
+- **Total Est. Cost**: 39,259 cost units
+- **I/O Read Time**: 0.00ms (warm cache scenario)
+- **Plan Fingerprint**: 45fd5ec indicating specific execution path
 
 The baseline confirmed the issue was reproducible and not just a one-time occurrence due to cold caches or concurrent load.
+
+![Workbooks baseline plan showing initial query performance before optimization](workbooks-baseline-plan.png)
+
+### Complete testing workflow
+The systematic approach to testing Query Advisor optimizations includes:
+
+1. **Baseline recording** - Capture current performance as reference point
+2. **Apply insights** - Use suggested rewrites to create variants
+3. **Benchmark results** - Compare performance improvements systematically
+4. **Validate changes** - Ensure optimizations work across parameter sets
+5. **Apply to production** - Implement verified improvements with confidence
 
 ## Step 4: Apply Query Advisor insight
 
 In the workbook variant editor, Query Advisor provided an **"Apply"** button for the detected insight:
 
+![Workbooks interface showing Query Advisor sidebar with apply insight functionality](workbooks-query-advisor-sidebar.png)
+
+![Workbooks variant editor for applying Query Advisor insights to create optimized query versions](workbooks-query-advisor-apply-insight.png)
+
 ### Automatic rewrite
 Query Advisor automatically modified the query to force better index selection:
 
 <CodeBlock language="sql">
-{`SELECT * FROM large_table 
-WHERE database_id = $1 
-ORDER BY created_at + $2  -- Added +0 to prevent index sort usage
-LIMIT 50;`}
+{`SELECT databases.*
+FROM databases
+WHERE databases.server_id = $1
+  AND databases.hidden = $2
+ORDER BY databases.id + $zero ASC  -- Added +0 to prevent index sort usage
+LIMIT $3;`}
 </CodeBlock>
 
-### The `+0` technique
+### The `+ $zero` technique
 This Postgres optimization technique:
-- **Prevents sort optimization**: Postgres can't use the created_at index for sorting
-- **Forces filter-first strategy**: Must use database_id index for efficient filtering
+- **Prevents sort optimization**: Postgres can't use the primary key index for sorting
+- **Forces filter-first strategy**: Must use a better index for efficient filtering of server_id and hidden columns
 - **Maintains correctness**: Adding zero doesn't change sort order
-- **Triggers replanning**: Forces Postgres to reconsider index selection
+- **Triggers replanning**: Forces Postgres to reconsider index selection strategy
 
 This is a well-known Postgres expert technique that Query Advisor automates for you.
 
@@ -100,33 +126,35 @@ This is a well-known Postgres expert technique that Query Advisor automates for 
 We executed the modified query using the collector workflow:
 
 ### Performance improvement
-- **Parameter set 1**: 1,580ms → **6ms** (250x improvement)
-- **Parameter set 2**: 6,400ms → **5ms** (1,280x improvement)
-- **Index strategy**: Switched from created_at index to database_id index
-- **Rows removed**: Eliminated the filter overhead entirely
+- **Baseline runtime**: 495.51ms → **58.11ms** (8.5x improvement)
+- **Cost estimate**: 39,259 → 60,680 (higher estimated cost)
+- **Plan strategy**: Changed from Index Scan to Sort + Bitmap Heap Scan approach
+- **Index usage**: Switched to index_databases_on_server_id_and_datname
 
 ### Plan comparison
 The workbook's compare view highlighted the key changes:
-- **Index usage**: Primary key → database_id index
-- **Rows removed by filter**: 10M+ → 0
-- **Cost estimate**: Increased (Postgres's estimate was wrong)
-- **Actual runtime**: Dramatically improved
+- **Plan A (Baseline)**: Gather Merge → Index Scan on databases_pkey
+- **Plan B (Variant 1)**: Limit → Sort → Bitmap Heap Scan → Bitmap Index Scan
+- **Runtime improvement**: 495.51ms → 58.11ms
+- **Index strategy**: Primary key scan → server_id + datname index
+
+![Workbooks plan comparison showing performance improvements between baseline and optimized query variants](workbooks-compare-plans.png)
 
 ## Step 6: Validate the results
 
 The dramatic improvement confirmed Query Advisor's analysis was correct:
 
 ### Why Postgres chose poorly
-Postgres's cost-based planner estimated it could find 50 matching rows quickly by scanning the created_at index in sort order. This worked when matching rows were densely packed but failed when they were sparse.
+Postgres's cost-based planner estimated it could find the limited rows quickly by scanning the primary key index in sort order. This failed because filtering happened after sorting, requiring examination of many irrelevant rows.
 
 ### Why the rewrite works
 By preventing sort-order optimization, Postgres had to:
-1. Use the database_id index for efficient filtering
-2. Sort only the 50 filtered results (not 10M+ rows)
-3. Return results much faster despite higher estimated cost
+1. Use the index_databases_on_server_id_and_datname index for efficient filtering
+2. Apply bitmap heap scan to gather only relevant rows
+3. Sort only the filtered results instead of scanning the entire table sequentially
 
 ### Cost vs. reality
-The Postgres planner estimated higher cost for the optimized version (79,000 vs 15,000 cost units), but actual runtime was 1,000x faster. This demonstrates why testing real performance trumps planner estimates.
+The Postgres planner estimated higher cost for the optimized version (60,680 vs 39,259 cost units), but actual runtime was 8.5x faster. This demonstrates why testing real performance trumps planner estimates.
 
 ## Step 7: Apply to production
 

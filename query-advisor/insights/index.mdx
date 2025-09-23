@@ -15,7 +15,7 @@ Query Advisor uses a **pattern library approach** to identify optimization oppor
 3. **Solution generation**: Provides tested query modifications or configuration changes
 4. **Integration**: Seamlessly applies suggestions through pganalyze Workbooks
 
-All insights are based on **deterministic algorithms** derived from Postgres planner behavior - no AI or machine learning involved.
+All insights are based on **deterministic algorithms** derived from Postgres planner behavior - no machine learning involved.
 
 ## Currently supported insights
 
@@ -25,11 +25,11 @@ Detects when Postgres chooses nested loop joins due to row estimation mismatches
 
 **[Learn more about Inefficient Nested Loops →](/docs/query-advisor/insights/inefficient-nested-loops)**
 
-### ORDER BY + LIMIT Index Problems  
+### Wrong Index Due To ORDER BY
 
 Identifies queries where Postgres uses an index primarily for sorting while filtering large numbers of rows, indicating that a different index strategy would be more efficient.
 
-**[Learn more about ORDER BY + LIMIT Issues →](/docs/query-advisor/insights/wrong-index-order-by)**
+**[Learn more about Wrong Index Due To ORDER BY →](/docs/query-advisor/insights/wrong-index-order-by)**
 
 ## Optimization techniques
 
@@ -38,15 +38,6 @@ Query Advisor employs several proven Postgres optimization techniques:
 ### Query rewrites
 - **Materialized CTEs**: Forces Postgres to materialize intermediate results to prevent inefficient nested loops
 - **Sort prevention**: Uses arithmetic expressions (e.g., `+0`) to prevent Postgres from using index sort order
-- **Expression modification**: Adjusts WHERE clauses to influence index selection
-
-### Planner hints (when available)
-- **pg_hint_plan integration**: Validates and suggests planner hints for forcing specific join types or index usage
-- **Temporary settings**: Recommends session-level parameter changes for testing specific optimizations
-
-### Statistics improvements
-- **Statistics target increases**: Suggests raising default_statistics_target for better row estimation
-- **Extended statistics**: Recommends CREATE STATISTICS for correlated columns when applicable
 
 ## Detection methodology
 
@@ -91,48 +82,6 @@ Occasionally, detected insights may not reproduce during testing due to:
 - **Cache state differences** between detection and testing
 
 This is normal behavior - database conditions evolve, and Query Advisor adapts accordingly.
-
-## Expanding coverage
-
-The Query Advisor pattern library continues to grow based on:
-
-### Common Postgres issues
-- **OR to UNION transformations** for complex filtering
-- **Subquery materialization** problems
-- **Function inlining** opportunities
-- **Partition pruning** inefficiencies
-
-### Settings-based optimizations
-- **work_mem adjustments** for sort-heavy queries
-- **random_page_cost tuning** for index vs. sequential scan decisions
-- **effective_cache_size optimization** for planner estimates
-
-### Advanced techniques
-- **Window function optimizations** 
-- **Recursive CTE improvements**
-- **Parallel query tuning**
-- **Partitioning strategy recommendations**
-
-New insights are added continuously based on real-world Postgres performance analysis.
-
-## Integration with other pganalyze features
-
-Query Advisor complements other pganalyze optimization tools:
-
-### Index Advisor
-- **Query Advisor**: Optimizes existing queries for current schema
-- **Index Advisor**: Recommends schema changes (new indexes) for query optimization
-- **Combined approach**: Both tools work together for comprehensive optimization
-
-### VACUUM Advisor
-- **Query performance**: Can be impacted by insufficient vacuuming
-- **Statistics accuracy**: VACUUM updates affect Query Advisor's detection accuracy
-- **Coordinated optimization**: Address VACUUM issues before query optimization
-
-### Workbooks
-- **Testing platform**: Provides systematic validation for Query Advisor suggestions
-- **Benchmarking**: Enables before/after performance comparison
-- **Safety**: Validates optimizations before production deployment
 
 ## Next steps
 

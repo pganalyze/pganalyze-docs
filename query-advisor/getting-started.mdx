@@ -56,11 +56,7 @@ For the best Query Advisor experience:
 - Configure auto_explain with appropriate thresholds to capture slow queries
 - Enable log_analyze to provide accurate row count data for misestimation detection
 
-## Set up auto_explain for continuous monitoring
-
-To enable continuous Query Advisor analysis, configure Postgres's auto_explain extension:
-
-WIP
+To enable continuous Query Advisor analysis, configure Postgres's auto_explain extension.
 
 ### Platform-specific auto_explain setup
 
@@ -84,33 +80,19 @@ SET auto_explain.log_analyze = on;`}
 
 This setting ensures that EXPLAIN ANALYZE data includes actual row counts, enabling Query Advisor to detect when Postgres's row estimates differ significantly from reality - a key indicator of optimization opportunities.
 
-## Where to find Query Advisor
+Once configured, you can find Query Advisor insights in [multiple locations throughout pganalyze](/docs/query-advisor/where-to-find).
 
-Once configured, Query Advisor insights appear in several locations:
+## Testing and validation
 
-### Query Advisor Landing Page
-Access the dedicated Query Advisor section to view all detected optimization opportunities across your databases, organized by potential impact.
+Query Advisor integrates with pganalyze Workbooks for systematic optimization testing. The recommended workflow is:
 
-### Automated EXPLAIN Collection
-As pganalyze collects EXPLAIN plans through auto_explain, Query Advisor automatically analyzes them and flags problematic patterns in near real-time.
+1. **Record baseline** performance to establish reference metrics
+2. **Apply insights** using suggested query rewrites to create variants
+3. **Benchmark results** to measure performance improvements
+4. **Validate across conditions** to ensure consistent optimization
+5. **Deploy to production** with confidence in verified improvements
 
-### Workbooks Integration
-When creating workbooks or analyzing queries, Query Advisor automatically assesses plans and provides optimization suggestions you can apply directly in the workbook editor.
-
-### Query Detail Views
-Individual query performance pages display Query Advisor insights alongside other metrics, providing context-aware optimization recommendations.
-
-## Verification and testing
-
-Query Advisor integrates with pganalyze Workbooks to provide a systematic approach to testing optimizations:
-
-1. **Baseline recording**: Capture current query performance as a baseline
-2. **Apply insights**: Use Query Advisor's suggested rewrites to create variants
-3. **Benchmark results**: Compare performance improvements systematically
-4. **Validate changes**: Ensure optimizations work across different parameter sets
-5. **Apply to production**: Implement verified improvements with confidence
-
-This workflow ensures that all optimizations are tested and validated before production deployment.
+This ensures all optimizations are thoroughly tested before production deployment.
 
 ## Next steps
 
