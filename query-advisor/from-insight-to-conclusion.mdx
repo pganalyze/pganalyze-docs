@@ -165,15 +165,9 @@ With verified performance improvements, we applied the optimization to productio
 2. **ORM modification**: Adjust ORM query generation if applicable
 3. **Stored procedure**: Implement optimized version as a database function
 
-### Monitoring results
-After production deployment:
-- **Query runtime**: Consistently fast across all parameter values
-- **Query Advisor**: No longer flags this query as problematic
-- **Overall impact**: Reduced database load and improved user experience
-
 ## Understanding when insights may not reproduce
 
-Query Advisor occasionally detects optimization opportunities that don't reproduce during testing:
+Query Advisor occasionally detects optimization opportunities that don't reproduce during testing in workbooks:
 
 ### Common scenarios
 - **Data distribution changes**: Query characteristics may have shifted since detection
@@ -188,7 +182,7 @@ When insights don't reproduce:
 3. **Test different parameters**: Try multiple parameter sets from query samples
 4. **Monitor over time**: Some issues are intermittent based on data patterns
 
-This is normal behavior, not a bug - Query Advisor detects real issues but database conditions can change.
+This is normal behavior, not a bug: Query Advisor detects real issues but database conditions can change.
 
 ## Key takeaways
 
