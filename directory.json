@@ -1020,6 +1020,38 @@
       "title": "Set up traceparent query tag within your application",
       "path": "/docs/opentelemetry/traceparent"
     },
+    "query-advisor": {
+      "title": "pganalyze Query Advisor",
+      "path": "/docs/query-advisor"
+    },
+    "query-advisor/alerts": {
+      "title": "Track Query Advisor Insights With Alerts",
+      "path": "/docs/query-advisor/alerts"
+    },
+    "query-advisor/from-insight-to-conclusion": {
+      "title": "From Insight to Conclusion",
+      "path": "/docs/query-advisor/from-insight-to-conclusion"
+    },
+    "query-advisor/getting-started": {
+      "title": "Getting Started with Query Advisor",
+      "path": "/docs/query-advisor/getting-started"
+    },
+    "query-advisor/insights": {
+      "title": "Query Advisor Insights",
+      "path": "/docs/query-advisor/insights"
+    },
+    "query-advisor/insights/inefficient-nested-loops": {
+      "title": "Inefficient Nested Loops",
+      "path": "/docs/query-advisor/insights/inefficient-nested-loops"
+    },
+    "query-advisor/insights/wrong-index-order-by": {
+      "title": "Wrong Index Due To ORDER BY",
+      "path": "/docs/query-advisor/insights/wrong-index-order-by"
+    },
+    "query-advisor/where-to-find": {
+      "title": "Where to Find Query Advisor",
+      "path": "/docs/query-advisor/where-to-find"
+    },
     "query-performance": {
       "title": "Query Performance",
       "path": "/docs/query-performance"
