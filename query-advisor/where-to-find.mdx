@@ -14,6 +14,20 @@ Access the dedicated Query Advisor page to view all detected optimization opport
 
 As pganalyze collects EXPLAIN plans through auto_explain, Query Advisor automatically analyzes them and flags problematic patterns in near real-time.
 
+## Issue Detail Page
+
+Each optimization opportunity detected by Query Advisor has a dedicated detail page that provides comprehensive analysis and actionable solutions.
+
+![Issue detail page showing query rewrite preview with before/after comparison and performance impact analysis](query-advisor-insight-issue.png)
+
+The Issue Detail Page features:
+
+- **Query Rewrite Preview**: Side-by-side comparison of original and optimized queries with highlighted changes
+- **EXPLAIN Plan Panel**: Visual representation of query execution plans with optimization opportunities clearly highlighted
+- **Detailed Recommendations**: Step-by-step guidance for implementing the suggested optimizations
+
+![EXPLAIN Plan panel showing execution plan visualization with highlighted optimization opportunities and bottlenecks](query-adivisor-insight-issue-explain-plan.png)
+
 ## Workbooks Integration
 
 When creating workbooks or analyzing queries, Query Advisor automatically assesses plans and provides optimization suggestions you can apply directly in the workbook editor.

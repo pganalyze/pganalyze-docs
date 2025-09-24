@@ -40,12 +40,6 @@ Query Advisor automatically analyzed the EXPLAIN plan and identified the **ORDER
 - Index benefits sort order but not filtering
 - Alternative indexes available for WHERE conditions
 
-### Insight details
-Query Advisor flagged this as a **high-severity optimization opportunity** because:
-- Runtime exceeded threshold for optimization (>1 second)
-- Clear alternative index strategy available
-- Pattern matches known Postgres planner inefficiency
-
 The insight appeared on the Query Advisor landing page with sample runtime data and affected query details.
 
 ![Query Advisor landing page showing detected optimization opportunities with runtime impact analysis](query-advisor-landing.png)
@@ -62,7 +56,9 @@ From the Query Advisor insight, we clicked **"Create Workbook"** to begin system
 ### Parameter set selection
 We chose a representative test case to validate the optimization based on the actual query parameters:
 - **Parameter Set 1**: `server_id` and `hidden` values from production workload
-- **Historical performance**: Query #3887820334 showing 495.51ms baseline runtime
+- **Historical performance**: Query showing 495.51ms baseline runtime
+
+![Workbooks parameter set collection](workbooks-parameter-set-selection.png)
 
 Testing with real parameter values ensures the optimization reflects actual production conditions.
 
@@ -77,7 +73,6 @@ Query Advisor integrates with pganalyze Workbooks to provide systematic optimiza
 - **Runtime**: 495.51ms execution time
 - **Total Est. Cost**: 39,259 cost units
 - **I/O Read Time**: 0.00ms (warm cache scenario)
-- **Plan Fingerprint**: 45fd5ec indicating specific execution path
 
 The baseline confirmed the issue was reproducible and not just a one-time occurrence due to cold caches or concurrent load.
 

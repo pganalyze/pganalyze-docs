@@ -58,18 +58,7 @@ For the best Query Advisor experience:
 - Configure auto_explain with appropriate thresholds to capture slow queries
 - Enable log_analyze to provide accurate row count data for misestimation detection
 
-To enable continuous Query Advisor analysis, configure Postgres's auto_explain extension.
-
-### Platform-specific auto_explain setup
-
-The auto_explain configuration process varies by Postgres hosting platform:
-
-- **Amazon RDS/Aurora**: [Configure auto_explain via parameter groups](/docs/explain/setup/amazon_rds)
-- **Google Cloud SQL**: [Enable auto_explain through database flags](/docs/explain/setup/google_cloud_sql)
-- **Azure Database**: [Configure auto_explain via server parameters](/docs/explain/setup/azure_database)
-- **Self-managed**: [Manual auto_explain configuration](/docs/explain/setup/self_managed)
-
-Refer to the [EXPLAIN setup guides](/docs/explain/setup) for detailed platform-specific instructions.
+To enable continuous Query Advisor analysis, configure Postgres's auto_explain extension. Refer to the [EXPLAIN setup guides](/docs/explain/setup) for detailed platform-specific instructions.
 
 ## Enable log_analyze for accurate insights
 
