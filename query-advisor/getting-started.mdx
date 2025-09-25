@@ -44,9 +44,10 @@ Query Advisor requires the pganalyze collector to be properly configured for que
 ### EXPLAIN Plan Collection
 Query Advisor analyzes Postgres EXPLAIN plans, which can be collected through:
 
-**Automated collection (recommended):**
+**Automated analysis of slow queries with auto_explain (recommended):**
 - **auto_explain** extension enabled
-- **log_analyze** parameter enabled for row count accuracy
+- **auto_explain.log_analyze** enabled to capture row mis-estimates
+- **auto_explain.log_format** set to `json`
 
 **Manual collection:**
 - EXPLAIN plans uploaded directly through pganalyze Workbooks
