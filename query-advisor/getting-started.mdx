@@ -22,24 +22,13 @@ Query Advisor identifies the optimization opportunities - you maintain control o
 
 ## Supported optimization insights
 
-Query Advisor currently detects and provides solutions for these common Postgres performance issues:
+Query Advisor detects common Postgres performance issues including inefficient nested loops and suboptimal index usage due to ORDER BY clauses. More optimization patterns are continuously being added.
 
-### Inefficient Nested Loops
-Detects when Postgres chooses nested loop joins due to row estimation mismatches, suggesting hash or merge join alternatives through query rewrites.
-
-### Wrong Index Due To ORDER BY
-Identifies queries where Postgres uses an index only for sorting while filtering large numbers of rows, suggesting modifications to force better index utilization.
-
-More optimization patterns are continuously being added. See the complete list in [Supported Insights](/docs/query-advisor/insights).
+See the complete list and detailed explanations in [Supported Insights](/docs/query-advisor/insights).
 
 ## Collector requirements
 
-Query Advisor requires the pganalyze collector to be properly configured for query monitoring:
-
-### Basic Requirements
-- **pganalyze collector** installed and running
-- **pg_stat_statements** enabled for query statistics collection
-- **Database connectivity** for the collector to access query metadata
+Query Advisor requires the [pganalyze collector](/docs/install) to be properly configured for query monitoring.
 
 ### EXPLAIN Plan Collection
 Query Advisor analyzes Postgres EXPLAIN plans, which can be collected through:
@@ -48,6 +37,8 @@ Query Advisor analyzes Postgres EXPLAIN plans, which can be collected through:
 - **auto_explain** extension enabled
 - **auto_explain.log_analyze** enabled to capture row mis-estimates
 - **auto_explain.log_format** set to `json`
+
+To enable continuous Query Advisor analysis, configure Postgres's auto_explain extension. Refer to the [EXPLAIN setup guides](/docs/explain/setup) for detailed platform-specific instructions.
 
 **Manual collection:**
 - EXPLAIN plans uploaded directly through pganalyze Workbooks
@@ -59,21 +50,6 @@ For the best Query Advisor experience:
 - Configure auto_explain with appropriate thresholds to capture slow queries
 - Enable log_analyze to provide accurate row count data for misestimation detection
 
-To enable continuous Query Advisor analysis, configure Postgres's auto_explain extension. Refer to the [EXPLAIN setup guides](/docs/explain/setup) for detailed platform-specific instructions.
-
-## Enable log_analyze for accurate insights
-
-The `log_analyze` parameter is crucial for Query Advisor's misestimation detection:
-
-<CodeBlock language="sql">
-{`-- Enable row count collection in auto_explain
-SET auto_explain.log_analyze = on;`}
-</CodeBlock>
-
-This setting ensures that EXPLAIN ANALYZE data includes actual row counts, enabling Query Advisor to detect when Postgres's row estimates differ significantly from reality - a key indicator of optimization opportunities.
-
-Once configured, you can find Query Advisor insights in [multiple locations throughout pganalyze](/docs/query-advisor/where-to-find).
-
 ## Testing and validation
 
 Query Advisor integrates with pganalyze Workbooks for systematic optimization testing. The recommended workflow is:
@@ -81,10 +57,48 @@ Query Advisor integrates with pganalyze Workbooks for systematic optimization te
 1. **Record baseline** performance to establish reference metrics
 2. **Apply insights** using suggested query rewrites to create variants
 3. **Benchmark results** to measure performance improvements
-4. **Validate across conditions** to ensure consistent optimization
+4. **Validate across different parameter sets** to ensure consistent optimization
 5. **Deploy to production** with confidence based on systematic testing
 
-This ensures all optimizations are thoroughly tested before production deployment.
+## How to navigate Query Advisor
+
+Once Query Advisor is configured and collecting EXPLAIN plans, optimization insights appear in several locations throughout pganalyze:
+
+### Query Advisor Landing Page
+
+Access the dedicated Query Advisor page to view all detected optimization opportunities across your databases, organized by potential impact.
+
+![Query Advisor landing page showing automated EXPLAIN plan analysis with detected optimization opportunities](query-advisor-landing.png)
+
+As pganalyze collects EXPLAIN plans through auto_explain, Query Advisor automatically analyzes them and flags problematic patterns daily.
+
+### Issue Detail Page
+
+Each optimization opportunity detected by Query Advisor has a dedicated detail page that provides comprehensive analysis and actionable solutions.
+
+![Issue detail page showing query rewrite preview with before/after comparison and performance impact analysis](query-advisor-insight-issue.png)
+
+The Issue Detail Page features:
+
+- **Query Rewrite Preview**: Side-by-side comparison of original and optimized queries with highlighted changes
+- **EXPLAIN Plan Panel**: Visual representation of query execution plans with optimization opportunities clearly highlighted
+- **Detailed Recommendations**: Step-by-step guidance for implementing the suggested optimizations
+
+![EXPLAIN Plan panel showing execution plan visualization with highlighted optimization opportunities and bottlenecks](query-adivisor-insight-issue-explain-plan.png)
+
+### Workbooks Integration
+
+When creating workbooks or analyzing queries, Query Advisor automatically assesses plans and provides optimization suggestions you can apply directly in the workbook editor.
+
+![Workbooks interface showing Query Advisor sidebar with optimization insights and suggested query rewrites](workbooks-query-advisor-sidebar.png)
+
+### Query Detail Views
+
+Individual query performance pages display Query Advisor insights alongside other metrics.
+
+![Query detail page showing Query Advisor insights integrated with performance metrics and optimization recommendations](query-detail-page.png)
+
+This integrated approach ensures that optimization opportunities are visible wherever you're working with query performance data.
 
 ## Next steps
 

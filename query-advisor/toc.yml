@@ -2,8 +2,6 @@
   items:
   - name: "Getting Started"
     href: query-advisor/getting-started
-  - name: "Where to Find Query Advisor"
-    href: query-advisor/where-to-find
   - name: "From Insight to Conclusion"
     href: query-advisor/from-insight-to-conclusion
   - name: "Insights"

@@ -1048,10 +1048,6 @@
       "title": "Wrong Index Due To ORDER BY",
       "path": "/docs/query-advisor/insights/wrong-index-order-by"
     },
-    "query-advisor/where-to-find": {
-      "title": "Where to Find Query Advisor",
-      "path": "/docs/query-advisor/where-to-find"
-    },
     "query-performance": {
       "title": "Query Performance",
       "path": "/docs/query-performance"

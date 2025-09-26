@@ -13,8 +13,8 @@ Query Advisor automatically detected this problematic query pattern in productio
 <CodeBlock language="sql">
 {`SELECT databases.*
 FROM databases
-WHERE databases.server_id = $1
-  AND databases.hidden = $2
+WHERE databases.server_id = $server_id
+  AND databases.hidden = $hidden
 ORDER BY databases.id ASC
 LIMIT $3;`}
 </CodeBlock>
@@ -137,14 +137,14 @@ The workbook's compare view highlighted the key changes:
 
 ## Step 6: Validate the results
 
-The dramatic improvement confirmed Query Advisor's analysis was correct:
+The dramatic improvement confirmed Query Advisor's analysis was correct.
 
 ### Why Postgres chose poorly
 Postgres's cost-based planner estimated it could find the limited rows quickly by scanning the primary key index in sort order. This failed because filtering happened after sorting, requiring examination of many irrelevant rows.
 
 ### Why the rewrite works
 By preventing sort-order optimization, Postgres had to:
-1. Use the index_databases_on_server_id_and_datname index for efficient filtering
+1. Use the server_id + datname index for efficient filtering
 2. Apply bitmap heap scan to gather only relevant rows
 3. Sort only the filtered results instead of scanning the entire table sequentially
 
@@ -153,12 +153,7 @@ The Postgres planner estimated higher cost for the optimized version (60,680 vs 
 
 ## Step 7: Apply to production
 
-With verified performance improvements, we applied the optimization to production:
-
-### Implementation options
-1. **Query rewrite**: Update application code to use the `+0` technique
-2. **ORM modification**: Adjust ORM query generation if applicable
-3. **Stored procedure**: Implement optimized version as a database function
+With verified performance improvements, the final step is implementing the optimization in your application through code changes, ORM adjustments, or database functions to complete the optimization workflow.
 
 ## Understanding when insights may not reproduce
 
