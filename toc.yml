@@ -12,14 +12,14 @@
     href: query-advisor
   - name: EXPLAIN Plans
     href: explain
+  - name: Workbooks
+    href: workbooks
   - name: Index Advisor
     href: index-advisor
   - name: Indexing Engine
     href: indexing-engine
   - name: VACUUM Advisor
     href: vacuum-advisor
-  - name: Workbooks
-    href: workbooks
   - name: Schema Statistics
     href: schema-statistics
   - name: Log Insights
