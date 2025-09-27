@@ -19,12 +19,12 @@ ORDER BY databases.id ASC
 LIMIT $3;`}
 </CodeBlock>
 
-The query appeared to run fast initially but degraded significantly under certain conditions, taking over **6 seconds** to complete. The EXPLAIN plan revealed the issue:
+The query appeared to run fast initially but degraded significantly under certain conditions, taking over **6 seconds** to complete. The EXPLAIN plan (shown below) revealed the issue:
 
 - **Parallel Index Scan (Forward)** on the databases_pkey index for sorting
-- **Filter condition** applied after index scan (inefficient filtering)
-- **949,508 rows removed by filter** indicating massive wasted work
-- **6,213.65ms runtime** with high I/O read time
+- **`Filter` condition** applied after index scan, with no `Index Cond` on the index scan itself
+- **949,508 rows removed by filter** showing many rows discarded that were fetched unnecessarily
+- **6,219.71ms runtime** with 1/4th of it being I/O read time
 
 Postgres chose the wrong optimization strategy - it prioritized the ORDER BY over the WHERE clause filtering.
 
@@ -40,23 +40,24 @@ Query Advisor automatically analyzed the EXPLAIN plan and identified the **ORDER
 - Index benefits sort order but not filtering
 - Alternative indexes available for WHERE conditions
 
-The insight appeared on the Query Advisor landing page with sample runtime data and affected query details.
+The insight appeared on the Query Advisor overview page with sample runtime data and affected query details.
 
 ![Query Advisor landing page showing detected optimization opportunities with runtime impact analysis](query-advisor-landing.png)
 
 ## Step 2: Create workbook for testing
 
-From the Query Advisor insight, we clicked **"Create Workbook"** to begin systematic testing:
+From the Query Advisor insight, we clicked **"Create Workbook"** to begin systematic testing.
 
-### Workbook setup
-1. **Query import**: Automatically populated with the problematic query
-2. **Parameter detection**: Identified `database_id` parameter from query samples
-3. **Sample data**: Selected representative parameter values from historical executions
+Workbooks are automatically set up from the source query, and parameters get names assigned for easy
+rewriting. To test query performance, we need to choose parameter values.
 
-### Parameter set selection
-We chose a representative test case to validate the optimization based on the actual query parameters:
-- **Parameter Set 1**: `server_id` and `hidden` values from production workload
-- **Historical performance**: Query showing 495.51ms baseline runtime
+### Choosing parameters
+
+We chose a representative test case to validate the optimization based on the actual query parameters. The shown
+**Parameter Set 1** has `param` (LIMIT), `server_id` and `hidden` values that correspond with the query plan we saw earlier.
+
+For some queries multiple parameter values will be shown (we recommend choosing 2-3 if possible),
+or additional parameters can be added manually. To keep it simple we will continue with 1 parameter set in this example.
 
 ![Workbooks parameter set collection](workbooks-parameter-set-selection.png)
 
@@ -64,30 +65,20 @@ Testing with real parameter values ensures the optimization reflects actual prod
 
 ## Step 3: Record baseline performance
 
-Before applying any changes, we recorded baseline performance using the **collector workflow**:
+Before applying any changes to the query, we record baseline performance using the **collector workflow**. The baseline
+supports a like-for-like comparison of rewrites using warm cache runs. Without the baseline, we may see a performance improvement
+simply because the data used by the query is now in cache.
 
-### Workbooks testing workflow
-Query Advisor integrates with pganalyze Workbooks to provide systematic optimization testing:
-
-### Baseline results
-- **Runtime**: 495.51ms execution time
-- **Total Est. Cost**: 39,259 cost units
-- **I/O Read Time**: 0.00ms (warm cache scenario)
-
-The baseline confirmed the issue was reproducible and not just a one-time occurrence due to cold caches or concurrent load.
+In this example, the query performance changed from 6,219.71ms (original plan sample) to **495.51ms** in the baseline. Any
+rewrites will aim to improve this baseline performance. We can also see based on the I/O Read Time being 0.00ms that
+this is indeed a warm cache result.
 
 ![Workbooks baseline plan showing initial query performance before optimization](workbooks-baseline-plan.png)
 
-### Complete testing workflow
-The systematic approach to testing Query Advisor optimizations includes:
-
-1. **Baseline recording** - Capture current performance as reference point
-2. **Apply insights** - Use suggested rewrites to create variants
-3. **Benchmark results** - Compare performance improvements systematically
-4. **Validate changes** - Ensure optimizations work across parameter sets
-5. **Apply to production** - Implement verified improvements with confidence
-
 ## Step 4: Apply Query Advisor insight
+
+We can see that Query Advisor confirms the baseline still has the same query plan problem using the wrong index. We now
+create a variant to rewrite the query into a more efficient form.
 
 In the workbook variant editor, Query Advisor provided an **"Apply"** button for the detected insight:
 
@@ -105,84 +96,71 @@ ORDER BY databases.id + $zero ASC  -- Added +0 to prevent index sort usage
 LIMIT $3;`}
 </CodeBlock>
 
-### The `+ $zero` technique
-This Postgres optimization technique:
-- **Prevents sort optimization**: Postgres can't use the primary key index for sorting
-- **Forces filter-first strategy**: Must use a better index for efficient filtering of server_id and hidden columns
-- **Maintains correctness**: Adding zero doesn't change sort order
-- **Triggers replanning**: Forces Postgres to reconsider index selection strategy
-
-This is a well-known Postgres expert technique that Query Advisor automates for you.
+The `$zero` here is identical with `0`. This is common workaround for this kind of Postgres query planner problem,
+as it forces the planner to not use an index on the `id` column in the `ORDER BY`. Instead, the planner will prefer
+indexes supporting the `WHERE` condition.
 
 ## Step 5: Benchmark the optimization
 
-We executed the modified query using the collector workflow:
+We executed the modified query using the collector workflow. We can see that the **Baseline runtime** went
+from 495.51ms to **58.11ms** (8.5x improvement).
 
-### Performance improvement
-- **Baseline runtime**: 495.51ms → **58.11ms** (8.5x improvement)
-- **Cost estimate**: 39,259 → 60,680 (higher estimated cost)
-- **Plan strategy**: Changed from Index Scan to Sort + Bitmap Heap Scan approach
-- **Index usage**: Switched to index_databases_on_server_id_and_datname
+What might be surprising is that the **Total Est. Cost** actually increased from 39,259 to 60,680. Cost
+represents the "currency" the planner uses during planning, and also explains why the planner originally chose
+the inefficient plan - it assessed (incorrectly) that its cost was lower.
 
-### Plan comparison
-The workbook's compare view highlighted the key changes:
-- **Plan A (Baseline)**: Gather Merge → Index Scan on databases_pkey
-- **Plan B (Variant 1)**: Limit → Sort → Bitmap Heap Scan → Bitmap Index Scan
-- **Runtime improvement**: 495.51ms → 58.11ms
-- **Index strategy**: Primary key scan → server_id + datname index
+When we review the details with the **Compare Plans** feature in Workbooks, we can also see that
+the used index changed, based on the Index usage section on the bottom right, and corresponding index numbers
+in the plan.
+
+Because Postgres can no longer use the index sort order to fulfill the `ORDER BY` we also see an
+additional `Sort` node in Plan B (the rewritten query).
 
 ![Workbooks plan comparison showing performance improvements between baseline and optimized query variants](workbooks-compare-plans.png)
 
-## Step 6: Validate the results
+## Step 6: Conclusion
 
-The dramatic improvement confirmed Query Advisor's analysis was correct.
+The dramatic 8.5x improvement confirmed Query Advisor's analysis was correct.
 
-### Why Postgres chose poorly
-Postgres's cost-based planner estimated it could find the limited rows quickly by scanning the primary key index in sort order. This failed because filtering happened after sorting, requiring examination of many irrelevant rows.
+Postgres's cost-based planner estimated it could find the limited rows quickly by scanning the primary key index in sort order. This
+failed because significant filtering happened after sorting, requiring examination of many irrelevant rows.
 
-### Why the rewrite works
-By preventing sort-order optimization, Postgres had to:
-1. Use the server_id + datname index for efficient filtering
-2. Apply bitmap heap scan to gather only relevant rows
-3. Sort only the filtered results instead of scanning the entire table sequentially
+By preventing this optimization with the rewrite, Postgres instead used an index supporting the `WHERE` clause (`server_id` column)
+for efficient filtering, and did not use the sort order of the index to fulfill the `ORDER BY`.
 
-### Cost vs. reality
-The Postgres planner estimated higher cost for the optimized version (60,680 vs 39,259 cost units), but actual runtime was 8.5x faster. This demonstrates why testing real performance trumps planner estimates.
+The Postgres planner estimated higher cost for the optimized version (60,680 vs 39,259 cost units), but actual runtime
+was 8.5x faster. This demonstrates why testing real performance is critical for validating planner estimates.
 
 ## Step 7: Apply to production
 
-With verified performance improvements, the final step is implementing the optimization in your application through code changes, ORM adjustments, or database functions to complete the optimization workflow.
+With the collected evidence showing a clear performance improvement, the final step is implementing the optimization in the
+application through code changes, ORM adjustments, or database functions to complete the optimization workflow.
+
+For certain situations this may be the same as the rewritten version, in other cases you may choose to implement another
+improvement based on the knowledge that a better plan is possible.
+
+In this specific example, we may choose to either add the `+0` in the application query, or we could alternatively create
+a different index that both fulfills the `WHERE` and the `ORDER BY` conditions.
 
 ## Understanding when insights may not reproduce
 
 Query Advisor occasionally detects optimization opportunities that don't reproduce during testing in workbooks:
 
-### Common scenarios
-- **Data distribution changes**: Query characteristics may have shifted since detection
-- **Statistics updates**: Fresh Postgres statistics may resolve estimation issues
-- **Concurrent workload**: Original slowness may have been due to lock contention
-- **Cache state**: Cold vs. warm cache differences
+- **Table data changes**: The data used in the query may have changed since the initial detection
+- **Statistics updates**: An automatic or manual `ANALYZE` updated Postgres statistics, and resolved estimation issues
+- **Parameter changes**: The parameters that encountered the problematic query plan are different than the ones in the workbook.
 
-### Troubleshooting approach
-When insights don't reproduce:
-1. **Check recent execution**: Verify the issue still occurs with current data
-2. **Review statistics**: Consider if ANALYZE has updated table statistics
+You will also often see query runtime be lower in workbooks than in the Automated EXPLAIN data. This could be due to concurrent
+workloads (contention on system resources or locks), or cold vs. warm cache differences.
+
+When insights don't reproduce its recommended to:
+
+1. **Check recent EXPLAIN plans**: Verify the issue still occurs with current data
+2. **Review ANALYZE runs on referenced tables**: Check if table statistics were updated 
 3. **Test different parameters**: Try multiple parameter sets from query samples
 4. **Monitor over time**: Some issues are intermittent based on data patterns
 
 This is normal behavior, not a bug: Query Advisor detects real issues but database conditions can change.
-
-## Key takeaways
-
-This workflow demonstrates Query Advisor's systematic approach to query optimization:
-
-1. **Automated detection**: Continuously monitors for optimization opportunities
-2. **Expert knowledge**: Applies Postgres optimization techniques automatically
-3. **Systematic testing**: Integrates with Workbooks for thorough validation
-4. **Risk mitigation**: Tests multiple scenarios before production changes
-5. **Measurable results**: Provides clear before/after performance metrics
-
-Query Advisor makes Postgres query optimization accessible to teams without deep database expertise while maintaining the rigor needed for production systems.
 
 ## Next steps
 
