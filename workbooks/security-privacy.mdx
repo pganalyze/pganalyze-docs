@@ -4,10 +4,6 @@ backlink_href: /docs/workbooks
 backlink_title: 'Workbooks'
 ---
 
-import DocsBetaFeature from '../components/DocsBetaFeature'
-
-<DocsBetaFeature feature="Workbooks" />
-
 Workbooks are designed to allow running [EXPLAIN ANALYZE](https://www.postgresql.org/docs/current/sql-explain.html) on a production Postgres
 server (either manually or via the collector workflow) and sharing the resulting query plan
 and execution statistics information with your whole team.
@@ -40,7 +36,7 @@ The Collector Workflow does not protect against:
 
 Workbooks data, including parameter values, is viewable by anyone with [View permission](/docs/accounts/permissions#view) on the server / database.
 
-In order to create new workbooks, create query variants, and utilize the Collector Workflow, the user must have the [Tune Queries permission](/docs/accounts/permissions#tune-queries) on the server / database.
+In order to create new workbooks, create query variants, and utilize the Collector Workflow, the user must have the [Create Workbooks permission](/docs/accounts/permissions#create-workbooks) on the server / database.
 
 ## Data privacy considerations
 
@@ -66,7 +62,7 @@ As a user of the Workbooks functionality, you are required to:
 * Use additional `REVOKE` statements as needed to avoid the collector calling problematic
   functions (e.g. [dblink](https://www.postgresql.org/docs/current/dblink.html), or custom functions used by your application)
 * Ensure no functions are marked as `IMMUTABLE` that may expose data in the EXPLAIN output
-* Restrict access to the "Tune Queries" permission in pganalyze to authorized users
+* Restrict access to the "Create Workbooks" permission in pganalyze to authorized users
 * Delete workbooks when required by your data retention policies
 
 ## Reporting security vulnerabilities in Workbooks
