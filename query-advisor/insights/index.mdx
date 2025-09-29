@@ -1,0 +1,77 @@
+---
+title: 'Query Advisor Insights'
+backlink_href: /docs/query-advisor
+backlink_title: 'Query Advisor'
+---
+
+Query Advisor automatically detects common Postgres query optimization opportunities by analyzing EXPLAIN plans for known performance anti-patterns. This section documents each supported insight type, including detection criteria, optimization strategies, and implementation approaches.
+
+## How insights work
+
+Query Advisor uses a **pattern library approach** to identify optimization opportunities:
+
+1. **Pattern detection**: Analyzes EXPLAIN plans for specific performance anti-patterns
+2. **Validation**: Verifies that alternative query plans are likely available
+3. **Solution generation**: Provides tested query modifications or configuration changes
+
+Query Advisor seamlessly applies suggestions through pganalyze Workbooks. All insights are based on **deterministic algorithms** derived from Postgres planner behavior.
+
+## Currently supported insights
+
+### Inefficient Nested Loops
+
+Detects when Postgres chooses nested loop joins due to row estimation mismatches, often resulting in dramatically slower performance than hash or merge joins.
+
+**[Learn more about Inefficient Nested Loops →](/docs/query-advisor/insights/inefficient-nested-loops)**
+
+### Wrong Index Due To ORDER BY
+
+Identifies queries where Postgres uses an index primarily for sorting while filtering large numbers of rows, indicating that a different index strategy would be more efficient.
+
+**[Learn more about Wrong Index Due To ORDER BY →](/docs/query-advisor/insights/wrong-index-order-by)**
+
+## Optimization techniques
+
+Query Advisor employs different techniques to cause the Postgres planner to change a query plan. For example
+to turn an inefficient Nested Loop into a Hash Join it uses a CTE with the `MATERIALIZED` keyword to force
+Postgres to materialize intermediate results and change the planner cost difference between join types.
+
+Future Query Advisor changes may rely on planner settings, planner hints (`pg_hint_plan`) or other changes
+to implement suggestions.
+
+## Detection methodology
+
+Query Advisor analyzes EXPLAIN plans through a **two-phase process**:
+
+### Phase 1: Initial screening
+
+- Processes millions of plan samples daily** in real-time
+- Applies fast heuristics to identify potentially problematic patterns
+- Marks plans for deeper analysis without performance impact
+
+### Phase 2: Detailed validation
+
+- Runs scheduled background analysis on marked plans
+- Verifies schema compatibility (available indexes, etc)
+- Confirms that alternative optimization strategies exist
+- Generates specific insights, or discards insights where conditions are not met
+
+This approach ensures **scalable analysis** while maintaining accuracy.
+
+## When insights may not apply
+
+Occasionally, detected insights may not reproduce during testing due to:
+
+- **Data distribution changes** since original detection
+- **Updated statistics** that resolve estimation issues  
+- **Concurrent workload** effects during original measurement
+- **Cache state differences** between detection and testing
+
+This is normal behavior - database conditions evolve, and Query Advisor adapts accordingly.
+
+## Next steps
+
+- **[Inefficient Nested Loops](/docs/query-advisor/insights/inefficient-nested-loops)** - Learn about join optimization
+- **[ORDER BY + LIMIT Issues](/docs/query-advisor/insights/wrong-index-order-by)** - Understand index selection problems  
+- **[Set up alerts](/docs/query-advisor/alerts)** - Get notified of new optimization opportunities
+- **[Complete workflow guide](/docs/query-advisor/from-insight-to-conclusion)** - See Query Advisor in action

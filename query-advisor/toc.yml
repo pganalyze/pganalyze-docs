@@ -1,0 +1,18 @@
+- mount: query-advisor
+  items:
+  - name: "Getting Started"
+    href: query-advisor/getting-started
+  - name: "From Insight to Conclusion"
+    href: query-advisor/from-insight-to-conclusion
+  - name: "Insights"
+    href: query-advisor/insights
+  - name: "Alerts for New Insights"
+    href: query-advisor/alerts
+- mount: query-advisor/
+  items:
+  - name: "Overview"
+    href: insights
+  - name: "Inefficient Nested Loops"
+    href: insights/inefficient-nested-loops
+  - name: "ORDER BY + LIMIT Problems"
+    href: insights/order-by-limit

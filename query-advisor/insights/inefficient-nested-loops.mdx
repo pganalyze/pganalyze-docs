@@ -1,0 +1,55 @@
+---
+title: 'Inefficient Nested Loops'
+backlink_href: /docs/query-advisor/insights
+backlink_title: 'Query Advisor Insights'
+---
+
+Query Advisor detects when Postgres chooses Nested Loop Joins that scan the inner table thousands of times unnecessarily,
+often resulting in dramatically slower performance than alternative join strategies like a Hash Join.
+
+## The problem
+
+Sometimes Postgres underestimates how many rows the outer table in a Nested Loop Join will produce, and the overall join becomes
+very inefficient. Instead of reading the inner table only a few times, the query ends up scanning it an 10x or 100x more often.
+
+### Example scenario
+
+<CodeBlock language="sql">
+{`SELECT o.*, c.customer_name
+ FROM orders o
+ JOIN customers c ON o.customer_id = c.id
+ WHERE o.store_id = 'sf-union-square'
+   AND c.zipcode = 94108
+   AND c.city = 'San Francisco';`}
+</CodeBlock>
+
+If Postgres expects only a handful of rows to match in the customers table, it might choose a nested loop that first
+retrieves all customers with the given Zipcode and City, and then iterates over the orders table for each customer. But if
+the actual workload includes tens of thousands of matching customers, the orders table is scanned repeatedly.
+
+## How Query Advisor helps
+
+When Query Advisor detects this pattern, it provides optimized query rewrites that force Postgres to use more efficient join strategies.
+
+### Typical optimization approach
+
+Query Advisor may suggest restructuring the query to avoid the problematic nested loops:
+
+<CodeBlock language="sql">
+{`WITH __orders AS MATERIALIZED (
+   SELECT * FROM orders
+   WHERE store_id = 'sf-union-square'
+)
+SELECT o.*, c.customer_name
+ FROM __orders o
+ JOIN customers c ON o.customer_id = c.id
+WHERE c.zipcode = 94108 AND c.city = 'San Francisco';`}
+</CodeBlock>
+
+This approach forces Postgres to filter the data first, then join more efficiently, often resulting in 10-100x performance improvements.
+
+## Next steps
+
+- **[See complete example](/docs/query-advisor/from-insight-to-conclusion)** - Full walkthrough of Query Advisor optimization workflow
+- **[Configure Workbooks](/docs/workbooks)** - Set up testing environment for validating optimizations
+- **[Set up alerts](/docs/query-advisor/alerts)** - Get notified when new optimization opportunities are detected

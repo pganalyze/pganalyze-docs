@@ -1,0 +1,108 @@
+---
+title: 'Getting Started with Query Advisor'
+backlink_href: /docs/query-advisor
+backlink_title: 'Query Advisor'
+---
+
+Query Advisor automatically analyzes Postgres query plans to detect optimization opportunities. This guide covers the requirements and setup needed to start using Query Advisor effectively.
+
+![Issue page for Query Advisor Insight](query-advisor-insight-issue.png)
+
+## What you get with Query Advisor
+
+Query Advisor provides **continuous, automated query optimization insights** for your Postgres databases:
+
+- **Automated analysis**: Continuously examines EXPLAIN plans to identify performance anti-patterns
+- **Query-centric optimization**: Optimizes specific queries through rewrites and planner hints, complementing Index Advisor's schema-level recommendations
+- **Deterministic algorithms**: Uses purpose-built logic based on Postgres planner behavior
+- **Workbooks integration**: Seamlessly integrates with pganalyze Workbooks for systematic testing and benchmarking
+- **Tuning based on best practices**: Provides multiple parameter sets to test to ensure optimizations don't regress other input parameters
+
+Query Advisor identifies the optimization opportunities - you maintain control over applying changes to production.
+
+## Supported optimization insights
+
+Query Advisor detects common Postgres performance issues including inefficient nested loops and suboptimal index usage due to ORDER BY clauses. More optimization patterns are continuously being added.
+
+See the complete list and detailed explanations in [Supported Insights](/docs/query-advisor/insights).
+
+## Requirements for using Query Advisor
+
+Query Advisor requires the [pganalyze collector](/docs/install) to be installed and configured, with additional requirements noted below.
+
+### EXPLAIN Plan Collection
+
+Query Advisor analyzes Postgres EXPLAIN plans, which can be collected through:
+
+**Automated analysis of slow queries with auto_explain (recommended):**
+- **auto_explain** extension enabled. Refer to the [setup guide](/docs/explain/setup/auto_explain) for platform-specific instructions.
+- **auto_explain.log_analyze** enabled to capture row mis-estimates.
+- **auto_explain.log_format** set to `json` (other formats are currently not supported).
+
+With auto_explain configured correctly, you will get proactive Query Advisor insights into query plans with potential optimizations as they occur.
+
+**Manual collection:**
+
+Alternatively, you can create a [pganalyze Workbook](/docs/workbooks). Query Advisor analysis runs automatically on all EXPLAIN plans uploaded to workbooks.
+
+### Collector Workflow
+
+For the best Query Advisor experience we also recommend [enabling the collector workflow](/docs/workbooks/collector-workflow) in pganalyze Workbooks for seamless testing.
+
+## Testing and validation
+
+Query Advisor integrates with pganalyze Workbooks for systematic testing of query rewrites. The recommended workflow is:
+
+1. **Record baseline** performance of a query to establish reference metrics
+2. **Apply insights** using suggested query rewrites to create variants
+3. **Benchmark results** to measure performance improvements
+4. **Validate across different parameter sets** to ensure consistent optimization
+5. **Deploy to production** with confidence based on systematic testing
+
+## How to navigate Query Advisor
+
+Once Query Advisor is configured and collecting EXPLAIN plans, optimization insights appear in several locations throughout pganalyze:
+
+### Query Advisor Landing Page
+
+Access the dedicated Query Advisor page to view all detected optimization opportunities for a database, organized by potential impact based on query runtime.
+
+![Query Advisor landing page showing automated EXPLAIN plan analysis with detected optimization opportunities](query-advisor-landing.png)
+
+As pganalyze collects EXPLAIN plans through auto_explain, Query Advisor automatically analyzes them and flags problematic patterns daily. On the "Workbooks with Insights" tab you can also see insights detected in plans uploaded to pganalyze Workbooks.
+
+### Issue Detail Page
+
+Each optimization opportunity detected in Automated EXPLAIN data by Query Advisor has a dedicated detail page that provides comprehensive analysis and actionable solutions.
+
+![Issue detail page showing query rewrite preview with before/after comparison and performance impact analysis](query-advisor-insight-issue.png)
+
+The Issue Detail Page shows:
+
+- **Detailed Problem Analysis and Solution**: Detailed explanation of the pathological pattern detected, and guidance for implementing the suggested optimizations.
+- **Query Rewrite Preview**: Side-by-side comparison of original and optimized queries with highlighted changes. For some rewrites you may see instructions instead of a preview.
+- **EXPLAIN Plan**: Visual representation of query execution plans with Query Advisor insights clearly highlighted.
+- **Workbooks integration**: Direct link to create a workbook for validating a query rewrite, or reference to an existing workbook that was previously created.
+
+![EXPLAIN Plan panel showing execution plan visualization with highlighted optimization opportunities and bottlenecks](query-adivisor-insight-issue-explain-plan.png)
+
+### Workbooks Integration
+
+When creating workbooks or analyzing queries, Query Advisor automatically assesses plans and provides optimization suggestions you can apply directly in the workbook editor.
+
+![Workbooks interface showing Query Advisor sidebar with optimization insights and suggested query rewrites](workbooks-query-advisor-sidebar.png)
+
+### Query Detail Views
+
+Individual query performance pages display Query Advisor insights alongside other metrics.
+
+![Query detail page showing Query Advisor insights integrated with performance metrics and optimization recommendations](query-detail-page.png)
+
+This integrated approach ensures that optimization opportunities are visible wherever you're working with query performance data.
+
+## Next steps
+
+- [Follow the complete optimization workflow](/docs/query-advisor/from-insight-to-conclusion) - See Query Advisor in action from detection to resolution
+- [Learn about specific insights](/docs/query-advisor/insights) - Understand the optimization patterns Query Advisor detects
+- [Configure alerts](/docs/query-advisor/alerts) - Get notified when new optimization opportunities are discovered
+- [Explore pganalyze Workbooks](/docs/workbooks) - Learn about the testing and benchmarking platform
