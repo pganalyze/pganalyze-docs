@@ -4,13 +4,17 @@ backlink_href: /docs/query-advisor/insights
 backlink_title: 'Query Advisor Insights'
 ---
 
-Query Advisor detects when Postgres chooses to sort first and filter second, often scanning millions of rows unnecessarily to return a small result set.
+Query Advisor detects when Postgres incorrectly chooses to sort first using an Index and then filter
+all results, often scanning millions of rows unnecessarily to return a small result set.
 
 ## The problem
 
-When queries combine WHERE conditions with ORDER BY and LIMIT, Postgres sometimes optimizes for quick sorting instead of efficient filtering. This can result in scanning massive amounts of data when only a few rows are needed.
+When queries combine WHERE conditions with ORDER BY and LIMIT, Postgres sometimes optimizes for quick
+sorting instead of efficient filtering. This can result in scanning massive amounts of data when only
+a few rows are needed.
 
 ### Example scenario
+
 <CodeBlock language="sql">
 {`SELECT * FROM large_table
 WHERE database_id = 123
@@ -18,7 +22,8 @@ ORDER BY created_at DESC
 LIMIT 50;`}
 </CodeBlock>
 
-If Postgres chooses the `created_at` index for sorting, it may scan millions of rows to find 50 that match `database_id = 123`, instead of efficiently filtering first with the `database_id` index.
+If Postgres chooses an index on `created_at` for its sort order, it may scan millions of rows to find 50 that
+match `database_id = 123`, instead of efficiently filtering first with an index on `database_id`.
 
 ## How Query Advisor helps
 
@@ -31,48 +36,12 @@ Query Advisor often suggests a simple modification to prevent inefficient sortin
 <CodeBlock language="sql">
 {`SELECT * FROM large_table
 WHERE database_id = 123
-ORDER BY created_at + 0 DESC  -- Forces better index selection
+ORDER BY created_at + 0 DESC  -- The "+0" forces not using an index on created_at
 LIMIT 50;`}
 </CodeBlock>
 
-This small change forces Postgres to use the `database_id` index for filtering first, then sort only the matching rows. The result is identical, but performance often improves by 100-1000x.
-
-## Real-world example
-
-Here's a typical transformation that Query Advisor provides:
-
-### Before optimization
-<CodeBlock language="sql">
-{`SELECT customer_id, order_date, total_amount
-FROM orders
-WHERE customer_id = $1
-ORDER BY order_date DESC
-LIMIT 10;`}
-</CodeBlock>
-
-**Performance**: Scans millions of rows, takes 15+ seconds
-
-### After Query Advisor optimization
-<CodeBlock language="sql">
-{`SELECT customer_id, order_date, total_amount
-FROM orders
-WHERE customer_id = $1
-ORDER BY order_date + INTERVAL '0 seconds' DESC
-LIMIT 10;`}
-</CodeBlock>
-
-**Performance**: Uses customer index first, completes in 12ms - over 1000x improvement
-
-## Testing with Workbooks
-
-Use pganalyze Workbooks to validate Query Advisor's suggested optimizations:
-
-1. **Baseline measurement** - Record current query performance and execution plan
-2. **Apply optimization** - Test the suggested rewrite
-3. **Compare results** - Verify performance improvements and identical results
-4. **Validate with different parameters** - Ensure optimization works across different data sets
-
-Workbooks provides a safe testing environment to validate optimizations before applying them to production.
+This small change forces Postgres to use the `database_id` index for filtering first, then sort
+only the matching rows. The result is identical, but performance often improves by orders of magnitude.
 
 ## Next steps
 

@@ -13,9 +13,8 @@ Query Advisor uses a **pattern library approach** to identify optimization oppor
 1. **Pattern detection**: Analyzes EXPLAIN plans for specific performance anti-patterns
 2. **Validation**: Verifies that alternative query plans are likely available
 3. **Solution generation**: Provides tested query modifications or configuration changes
-4. **Integration**: Seamlessly applies suggestions through pganalyze Workbooks
 
-All insights are based on **deterministic algorithms** derived from Postgres planner behavior - no machine learning involved.
+Query Advisor seamlessly applies suggestions through pganalyze Workbooks. All insights are based on **deterministic algorithms** derived from Postgres planner behavior.
 
 ## Currently supported insights
 
@@ -33,49 +32,36 @@ Identifies queries where Postgres uses an index primarily for sorting while filt
 
 ## Optimization techniques
 
-Query Advisor employs several proven Postgres optimization techniques:
+Query Advisor employs different techniques to cause the Postgres planner to change a query plan. For example
+to turn an inefficient Nested Loop into a Hash Join it uses a CTE with the `MATERIALIZED` keyword to force
+Postgres to materialize intermediate results and change the planner cost difference between join types.
 
-### Query rewrites
-- **Materialized CTEs**: Forces Postgres to materialize intermediate results to prevent inefficient nested loops
-- **Sort prevention**: Uses arithmetic expressions (e.g., `+0`) to prevent Postgres from using index sort order
+Future Query Advisor changes may rely on planner settings, planner hints (`pg_hint_plan`) or other changes
+to implement suggestions.
 
 ## Detection methodology
 
 Query Advisor analyzes EXPLAIN plans through a **two-phase process**:
 
 ### Phase 1: Initial screening
+
 - Processes millions of plan samples daily** in real-time
 - Applies fast heuristics to identify potentially problematic patterns
 - Marks plans for deeper analysis without performance impact
 
-### Phase 2: Detailed validation  
-- Runs scheduled background analysis on flagged plans
-- Verifies schema compatibility (available indexes, constraints)
+### Phase 2: Detailed validation
+
+- Runs scheduled background analysis on marked plans
+- Verifies schema compatibility (available indexes, etc)
 - Confirms that alternative optimization strategies exist
-- Generates specific insights with confidence scores
+- Generates specific insights, or discards insights where conditions are not met
 
 This approach ensures **scalable analysis** while maintaining accuracy.
 
-## Insight reliability
+## When insights may not apply
 
-Query Advisor prioritizes **correctness and determinism**:
-
-### High-confidence patterns
-Current insights focus on well-understood Postgres behaviors where:
-- Root causes are clearly identified
-- Alternative approaches are proven effective  
-- Query semantics remain unchanged
-- Solutions are widely applicable
-
-### Validation workflow
-Each insight includes:
-- **Automated detection** of the problematic pattern
-- **Schema verification** that alternatives exist
-- **Suggested modifications** with clear rationale
-- **Testing integration** through pganalyze Workbooks
-
-### When insights may not apply
 Occasionally, detected insights may not reproduce during testing due to:
+
 - **Data distribution changes** since original detection
 - **Updated statistics** that resolve estimation issues  
 - **Concurrent workload** effects during original measurement

@@ -6,7 +6,7 @@
     href: query-advisor/from-insight-to-conclusion
   - name: "Insights"
     href: query-advisor/insights
-  - name: "Alerts & Tracking"
+  - name: "Alerts for New Insights"
     href: query-advisor/alerts
 - mount: query-advisor/
   items:

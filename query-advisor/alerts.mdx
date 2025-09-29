@@ -4,23 +4,36 @@ backlink_href: /docs/query-advisor
 backlink_title: 'Query Advisor'
 ---
 
-Query Advisor automatically detects optimization opportunities, but you need to configure alerts to get notified when new insights are discovered. This guide covers setting up alerts for Query Advisor insights and integrating with your notification workflows.
+Query Advisor automatically detects optimization opportunities, but you need to configure alerts
+to get notified when new insights are discovered. This guide covers setting up alerts for
+Query Advisor insights and integrating with your notification workflows.
 
 ## Alert configuration overview
 
-Query Advisor checks are **enabled by default** for all databases in your pganalyze organization on Scale and Enterprise plans, but **alerts must be explicitly configured** to receive notifications about newly detected optimization opportunities for new customers.
+Query Advisor checks are enabled by default for all databases in your pganalyze organization
+on Scale and Enterprise plans, but **alerts must be explicitly configured** to receive notifications
+about newly detected optimization opportunities for new customers.
 
-### Default behavior
-- **Continuous monitoring**: Query Advisor analyzes all incoming EXPLAIN plans automatically
-- **Background detection**: Insights are generated and stored without notifications
-- **Dashboard visibility**: All insights appear on the Query Advisor landing page
-- **No notifications**: You won't receive alerts until explicitly configured
+Currently Query Advisor alerts are only supported for Slack, or if implemented through a custom API
+integration with the [getIssues](/docs/api/queries/getIssues) API.
+
+### Enabling Slack Alerts
+
+To enable Slack alerts, first configure the pganalyze [Slack integration](/docs/checks/#alerting), and then
+navigate to a specific servers alert configuration page.
+
+After selecting "Configure alerts for this server" you can see the "Query Performance: Advisor Insights" option.
+
+![Alert configuration option](alerts-config.png)
+
+This will notify you of new Query Advisor insights for a query in a Slack channel of your choice.
 
 ## Troubleshooting alerts
 
 ### No alerts despite slow queries
-- **Check auto_explain configuration**: Ensure EXPLAIN plans are being collected
-- **Verify alert policy**: Confirm Query Advisor checks are enabled
+
+- **Check auto_explain configuration**: Ensure EXPLAIN plans are being collected and all settings are correctly set: `log_analyze` is enabled, `log_format` is set to `json`.
+- **Verify alert configuration**: Ensure you have enabled Slack notifications per the above instructions.
 
 ## Next steps
 

@@ -4,21 +4,28 @@ backlink_href: /docs/query-advisor/insights
 backlink_title: 'Query Advisor Insights'
 ---
 
-Query Advisor detects when Postgres chooses nested loop joins that scan the same table thousands of times unnecessarily, often resulting in dramatically slower performance than alternative join strategies.
+Query Advisor detects when Postgres chooses Nested Loop Joins that scan the inner table thousands of times unnecessarily,
+often resulting in dramatically slower performance than alternative join strategies like a Hash Join.
 
 ## The problem
 
-Sometimes Postgres underestimates how many rows a query will process and chooses nested loop joins that become extremely inefficient. Instead of reading each table once, the query ends up scanning the same table repeatedly.
+Sometimes Postgres underestimates how many rows the outer table in a Nested Loop Join will produce, and the overall join becomes
+very inefficient. Instead of reading the inner table only a few times, the query ends up scanning it an 10x or 100x more often.
 
 ### Example scenario
+
 <CodeBlock language="sql">
 {`SELECT o.*, c.customer_name
-FROM orders o
-JOIN customers c ON o.customer_id = c.id
-WHERE o.order_date >= '2024-01-01';`}
+ FROM orders o
+ JOIN customers c ON o.customer_id = c.id
+ WHERE o.store_id = 'sf-union-square'
+   AND c.zipcode = 94108
+   AND c.city = 'San Francisco';`}
 </CodeBlock>
 
-If this query processes 10,000 orders instead of the expected few rows, Postgres may scan the customers table 10,000 times instead of using a more efficient join method.
+If Postgres expects only a handful of rows to match in the customers table, it might choose a nested loop that first
+retrieves all customers with the given Zipcode and City, and then iterates over the orders table for each customer. But if
+the actual workload includes tens of thousands of matching customers, the orders table is scanned repeatedly.
 
 ## How Query Advisor helps
 
@@ -29,27 +36,17 @@ When Query Advisor detects this pattern, it provides optimized query rewrites th
 Query Advisor may suggest restructuring the query to avoid the problematic nested loops:
 
 <CodeBlock language="sql">
-{`WITH filtered_orders AS MATERIALIZED (
-  SELECT * FROM orders
-  WHERE order_date >= '2024-01-01'
+{`WITH __orders AS MATERIALIZED (
+   SELECT * FROM orders
+   WHERE store_id = 'sf-union-square'
 )
 SELECT o.*, c.customer_name
-FROM filtered_orders o
-JOIN customers c ON o.customer_id = c.id;`}
+ FROM __orders o
+ JOIN customers c ON o.customer_id = c.id
+WHERE c.zipcode = 94108 AND c.city = 'San Francisco';`}
 </CodeBlock>
 
 This approach forces Postgres to filter the data first, then join more efficiently, often resulting in 10-100x performance improvements.
-
-## Testing with Workbooks
-
-Use pganalyze Workbooks to validate Query Advisor's suggested optimizations:
-
-1. **Baseline measurement** - Record current query performance
-2. **Apply optimization** - Test the suggested rewrite
-3. **Compare results** - Verify performance improvements
-4. **Validate with different parameters** - Ensure the optimization works consistently
-
-Workbooks provides a safe testing environment to validate optimizations before applying them to production.
 
 ## Next steps
 
