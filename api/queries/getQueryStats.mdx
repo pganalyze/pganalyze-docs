@@ -27,7 +27,7 @@ Fields returned:
 * **`normalizedQuery` (string)**<br/>Full query text, normalized to remove inline parameters
 * **`truncatedQuery` (string)**<br/>Shortened query text up to 100 characters (same as displayed in "Query Performance" overview)
 * **`queryComment` (string)**<br/>First comment contained in the query (this is taken from the full query string, not just the truncated one)
-* **`statementType` (array of strings)**<br/>List of statement type(s) used in this query
+* **`statementTypes` (array of strings)**<br/>List of statement type(s) used in this query
 * **`totalCalls` (integer)**<br/>Total number of calls for this query
 * **`avgTime` (float)**<br/>Average runtime in milliseconds for this query
 * **`avgIoTime` (float)**<br/>Average time spent in I/O operations for this query (this requires `track_io_timing` to be enabled on the database)
@@ -47,7 +47,7 @@ GraphQL query:
     queryUrl
     normalizedQuery
     truncatedQuery
-    statementType
+    statementTypes
     totalCalls
     avgTime
     bufferHitRatio
@@ -60,7 +60,7 @@ Using `curl`:
 
 <CodeBlock language="bash">
 {`curl -XPOST -H 'Authorization: Token XXXXXXX' \
-  -F 'query=query { getQueryStats(databaseId: 12345) { id, queryUrl, normalizedQuery, truncatedQuery, statementType, totalCalls, avgTime, bufferHitRatio, pctOfTotal } }' \
+  -F 'query=query { getQueryStats(databaseId: 12345) { id, queryUrl, normalizedQuery, truncatedQuery, statementTypes, totalCalls, avgTime, bufferHitRatio, pctOfTotal } }' \
   https://app.pganalyze.com/graphql`}
 </CodeBlock>
 
@@ -73,7 +73,7 @@ Using `curl`:
         "queryUrl": "https://app.pganalyze.com/databases/12345/queries/678910",
         "normalizedQuery": "UPDATE \"pgbench_accounts\" SET abalance = $1 WHERE \"aid\" = $2",
         "truncatedQuery": "UPDATE \"pgbench_accounts\" SET abalance = $1 WHERE \"aid\" = $2",
-        "statementType": [
+        "statementTypes": [
           "UPDATE"
         ],
         "totalCalls": 1887313,
@@ -106,7 +106,7 @@ query {
     id
     queryUrl
     truncatedQuery
-    statementType
+    statementTypes
     totalCalls
     avgTime
     bufferHitRatio
@@ -139,7 +139,7 @@ puts csv_output`}
 This will output the following on stdout:
 
 ```
-id,queryUrl,truncatedQuery,statementType,totalCalls,avgTime,bufferHitRatio,pctOfTotal
+id,queryUrl,truncatedQuery,statementTypes,totalCalls,avgTime,bufferHitRatio,pctOfTotal
 678910,https://app.pganalyze.com/databases/12345/queries/678910,"UPDATE ""pgbench_accounts"" SET abalance = $1 WHERE ""aid"" = $2","[""UPDATE""]","[""pgbench_accounts""]",1887313,35.3024511808419,69.50736528891339,96.0880225982751
 ...
 ```

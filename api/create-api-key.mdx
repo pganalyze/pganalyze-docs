@@ -17,7 +17,7 @@ You now have a separate read-only API token that can be used for requests to our
 You can make API requests to our GraphQL API endpoint like this:
 
 <CodeBlock language="bash">
-{`curl -XPOST -H 'Authorization: Token XXXXXXX' -F 'query=query { getQueryStats(databaseId: 12345) { id, queryUrl, truncatedQuery, statementType, tableNames, totalCalls, avgTime, bufferHitRatio, pctOfTotal } }' https://app.pganalyze.com/graphql`}
+{`curl -XPOST -H 'Authorization: Token XXXXXXX' -F 'query=query { getQueryStats(databaseId: 12345) { id, queryUrl, truncatedQuery, statementTypes, tableNames, totalCalls, avgTime, bufferHitRatio, pctOfTotal } }' https://app.pganalyze.com/graphql`}
 </CodeBlock>
 
 Note that you'll need to replace `XXXXXXX` with your API key, and `12345` with the correct database ID.
@@ -30,7 +30,7 @@ Formatted more readable, the query parameter has to look like this:
     id
     queryUrl
     truncatedQuery
-    statementType
+    statementTypes
     tableNames
     totalCalls
     avgTime
@@ -52,7 +52,7 @@ The result will be a JSON document that looks like this:
         "id":"678910",
         "queryUrl": "https://app.pganalyze.com/databases/12345/queries/678910",
         "truncatedQuery": "UPDATE \"pgbench_accounts\" SET abalance = $1 WHERE \"aid\" = $2",
-        "statementType": [
+        "statementTypes": [
           "UPDATE"
         ],
         "tableNames": [
