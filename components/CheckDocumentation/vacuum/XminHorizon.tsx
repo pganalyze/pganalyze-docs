@@ -320,6 +320,17 @@ const GuidanceByStandby: React.FunctionComponent<{
         />
       </CodeBlock>
       <p>
+        If you're using Aurora, also use the following command to find the
+        <code>xmin</code> of readers:
+      </p>
+      <CodeBlock>
+        <SQL
+          sql={`SELECT server_id, session_id, feedback_xmin::text::xid as backend_xmin
+                  FROM aurora_replica_status()
+                  ORDER BY age(feedback_xmin::text::xid) DESC;`}
+        />
+      </CodeBlock>
+      <p>
         Once the standby is identified, you can find the query holding back the
         xmin horizon and its connection's pid in that standby by running the
         following command:
