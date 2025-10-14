@@ -125,7 +125,6 @@ metadata:
   namespace: pganalyze
 data:
   REDIS_URL: "redis://redis.pganalyze.svc.cluster.local:6379/0"
-  PGANALYZE_APP_URL: "https://web.pganalyze.svc.cluster.local:5000" (may not be needed)
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -371,9 +370,10 @@ Choose an organization name of your choice (typically your company name).
 
 ### Step 8: Add your first database server to pganalyze
 
-The pganalyze Collector is not included in the Enterprise Server Slim image, so you will need to run it separately. Select the "Add Server" button at the bottom of the server selection dropdown to get started.
+The pganalyze Collector is not included in the Enterprise Server Slim image, so you will need to run it separately. After selecting the "Add Server" button at the bottom of the server selection dropdown, select 
+the "Any Supported Provider" button to get started. Choosing any option under the "Collector inside pganalyze Enterprise Server container" will not work.
 
-![](add_server_button.png)
+![](slim_image_collector_setup.png)
 
 During the setup and configuration process, you will need to set both the
 `api_key` and `api_base_url` parameters in your Collector configuration file. 
@@ -390,12 +390,14 @@ Additionally, you can review [all configuration settings](/docs/enterprise/setti
 
 In case you want to make adjustments to the configuration, simply adjust the `pganalyze-enterprise.yml` file from earlier, and then apply with `kubectl`:
 
-```
-kubectl apply -f pganalyze-enterprise.yml
-```
+<CodeBlock language="bash">
+{`kubectl apply -f pganalyze-enterprise-slim.yml`}
+</CodeBlock>
 
 When changing the secrets information without changing the Kubernetes template, you can restart the deployment like this:
 
-```
-kubectl rollout restart deployment pganalyze
-```
+<CodeBlock language="bash">
+{`kubectl rollout restart deployment pganalyze-web
+kubectl rollout restart deployment pganalyze-worker`}
+</CodeBlock>
+
