@@ -1008,6 +1008,10 @@
       "title": "OpenTelemetry Tracing Integration",
       "path": "/docs/opentelemetry"
     },
+    "opentelemetry/datadog": {
+      "title": "Integrating pganalyze with Datadog APM",
+      "path": "/docs/opentelemetry/datadog"
+    },
     "opentelemetry/honeycomb": {
       "title": "Integrating pganalyze with Honeycomb",
       "path": "/docs/opentelemetry/honeycomb"
