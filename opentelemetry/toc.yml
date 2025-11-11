@@ -6,5 +6,7 @@
     href: opentelemetry/traceparent
   - name: Integrating with Honeycomb
     href: opentelemetry/honeycomb
+  - name: Integrating with Datadog APM
+    href: opentelemetry/datadog
   - name: Integrating with New Relic
     href: opentelemetry/newrelic
