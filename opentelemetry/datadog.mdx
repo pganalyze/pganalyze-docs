@@ -11,8 +11,8 @@ can easily visit the pganalyze page to find out why the query is slow.
 
 ![Screenshot of Datadog APM integration](./datadog.png)
 
-Compared to Datadog DBM, pganalyze gives you exact details on the specific query execution,
-by combining `auto_explain` data extracted from the Postgres logs, with a specific trace.
+Compared to Datadog DBM, pganalyze gives you exact details on the specific query execution
+by combining `auto_explain` data extracted from the Postgres logs with a specific trace.
 
 For example, in this specific request we can determine that the slowness originated in
 a Nested Loop that executed 784 times over a CTE scan:
