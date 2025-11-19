@@ -324,9 +324,17 @@
       "title": "Enterprise Server: Initial Setup",
       "path": "/docs/enterprise/setup"
     },
+    "enterprise/setup/firewall-configuration": {
+      "title": "Enterprise Server: Firewall Configuration",
+      "path": "/docs/enterprise/setup/firewall-configuration"
+    },
     "enterprise/setup/kubernetes_amazon_eks": {
       "title": "Enterprise Server: Initial Setup (Kubernetes on Amazon EKS)",
       "path": "/docs/enterprise/setup/kubernetes_amazon_eks"
+    },
+    "enterprise/setup/kubernetes_as_non_root": {
+      "title": "Enterprise Server: Initial Non-root Setup with Kubernetes",
+      "path": "/docs/enterprise/setup/kubernetes_as_non_root"
     },
     "enterprise/setup/separate-collector-install": {
       "title": "Enterprise Server: Separate collector installation",
