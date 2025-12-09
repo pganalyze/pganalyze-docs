@@ -1,0 +1,20 @@
+---
+title: 'Enterprise Server: Firewall Configuration'
+backlink_href: /docs/enterprise
+backlink_title: 'pganalyze Enterprise Server'
+---
+
+When hosting pganalyze Enterprise Server within your own environment, you may need to adjust firewall settings to allow the various components to communicate. The following
+outbound ports need to be open:
+
+## pganalyze Enterprise Docker VM
+  * ***.quay.io**, Ports 80 (HTTP) and 443 (HTTPS) - Optionally, reference specific hostnames listed on [Firewall changes for container image pulls 2024/2025](https://access.redhat.com/articles/7084334) if necessary
+  * **enterprise-license-check.pganalyze.com**, Port 443 (HTTPS) - Used for pganalyze Enterprise Server license check every 24 hours
+
+## pganalyze Collector VM (typically the PostgreSQL server)
+  * **packages.pganalyze.com**, Port 443 (HTTPS) - To download pganalyze collector packages
+  * pganalyze Enterprise VM, Port 8080 - used by the pganalyze collector to send information to the internal pganalyze installation
+  * PostgreSQL server, Port 5432 (or custom port) - used by the pganalyze collector to connect to the PostgreSQL database server to collect metrics
+
+We highly recommend that the pganalyze collector is installed on the same VM as the PostgreSQL database server when possible. However, regardless of where the collector is installed, it 
+needs to be able to connect to the pganalyze Enterprise VM on port 8080.
