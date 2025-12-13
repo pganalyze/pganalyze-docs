@@ -71,6 +71,14 @@ Common settings for configuring collector behavior, independent of the platform.
       </td>
     </tr>
     <tr>
+      <td>api_require_websocket (<code>API_REQUIRE_WEBSOCKET</code>)</td>
+      <td>false</td>
+      <td>
+        Enable to require a WebSocket connection to the pganalyze server, turning off the HTTP(S) fallback. WebSockets are more efficient for submitting snapshots, and are also required for the optional <a href="/docs/workbooks/collector-workflow">
+        Workbooks Collector Workflow</a>. A future collector release will change the default of this setting to true.
+      </td>
+    </tr>
+    <tr>
       <td>skip_if_replica (<code>SKIP_IF_REPLICA</code>)</td>
       <td>false</td>
       <td>Skip all metadata collection and snapshot submission while this server is a replica (according to <code>pg_is_in_recovery</code>).
@@ -466,6 +474,17 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
       <td>
         See <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql#step-1-create-new-pubsub-topic-and-subscriber">
         GCP setup instructions</a> for details</td>
+    </tr>
+    <tr>
+      <td>gcp_pubsub_max_age (<code>GCP_PUBSUB_MAX_AGE</code>)</td>
+      <td>0</td>
+      <td>
+        Allow multiple collectors subscribing to the same topic by returning
+        a PubSub message that's not for a configured server to the topic (by sending a "Nack"
+        response), allowing a different collector to pick it up. After the
+        age limit is reached, messages will always be acknowledged. Keeping the
+        limit low is recommended, e.g. 10 minutes (<code>10m</code>), maximum 24 hours (<code>24h</code>).
+      </td>
     </tr>
     <tr>
       <td>gcp_credentials_file (<code>GCP_CREDENTIALS_FILE</code>)</td>
