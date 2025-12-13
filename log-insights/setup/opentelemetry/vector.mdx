@@ -1,0 +1,128 @@
+---
+title: 'Log Insights: Kubernetes with OpenTelemetry (Vector)'
+backlink_href: /docs/log-insights/opentelemetry
+backlink_title: 'Log Insights: Kubernetes with OpenTelemetry'
+---
+
+If you are using [Vector](https://vector.dev/) for log forwarding from CloudNativePG (CNPG)
+containers you will need to configure it correctly to map input data collected from
+Kubernetes logs to the OpenTelemetry OTLP log record format, optionally filtering out
+clusters/pods you don't intend to monitor with pganalyze, and then forward it to the pganalyze-collector.
+
+You can find a full example with Helm charts at the [end of this page](vector#deploying-vector-through-helm-chart).
+
+## Configuring Vector to send OpenTelemetry logs
+
+First, you need to ensure your Vector configuration is sourcing logs from your Kubernetes cluster, like this:
+
+```yaml
+  sources:
+    kubernetes_logs:
+      type: kubernetes_logs
+      exclude_paths_glob_patterns:
+        - "/var/log/pods/kube-system_*/**"
+```
+
+Second, we recommend filtering the logs to just the CNPG output, and limiting it down to the clusters you
+want to monitor in pganalyze, like `cluster-test1` and `cluster-test2` in the below example. Note that you
+can send the logs of multiple clusters/pods to the same pganalyze-collector installation, and then use the
+[collector configuration](/docs/collector/settings#self-managed-servers) to split it up by cluster or
+Kubernetes pod labels.
+
+```yaml
+  transforms:
+    cnpg_route:
+      type: route
+      inputs:
+        - kubernetes_logs
+      reroute_unmatched: false
+      route:
+        cnpg: |
+          exists(.kubernetes.pod_labels."cnpg.io/cluster") &&
+          exists(.kubernetes.pod_labels."cnpg.io/podRole") &&
+          .kubernetes.pod_labels."cnpg.io/podRole" == "instance" &&
+          ## Optionally filter out replicas
+          # exists(.kubernetes.pod_labels."cnpg.io/instanceRole") &&
+          # .kubernetes.pod_labels."cnpg.io/instanceRole" == "primary" &&
+          includes(
+            [
+              "cluster-test1",
+              "cluster-test2",
+            ],
+            .kubernetes.pod_labels."cnpg.io/cluster"
+          )
+```
+
+Third, the CNPG log output needs to be transformed to inline the jsonlog output produced by CNPG,
+and modify it to match the expected OTLP log record format. This is accomplished through another
+transform step that uses a custom [VRL](https://vector.dev/docs/reference/vrl/) script, found in full in the
+[collector repository](https://github.com/pganalyze/collector/blob/main/contrib/vector/cnpg_remap.yaml).
+
+```yaml
+   cnpg_remap:
+      type: remap
+      inputs:
+        - cnpg_route.cnpg
+      source: |
+        ... VRL Script omitted ...
+        ... Copy from collector repository (contrib/vector/cnpg_remap.yaml) ...
+```
+
+Last, the log output needs to be sent to your pganalyze collector configuration that has the
+[OTLP log server](/docs/log-insights/setup/opentelemetry) configured, correctly wrapping the log
+records in OTLP JSON encoding:
+
+```yaml
+  sinks:
+    pganalyze:
+      inputs:
+        - cnpg_remap
+      type: opentelemetry
+      protocol:
+        type: http
+        # ! Update this to point to the pganalyze-collector with db_log_otel_server / LOG_OTEL_SERVER configured
+        uri: "http://pganalyze-collector-service:4318/v1/logs"
+        method: post
+        encoding:
+          codec: json
+        framing:
+          method: "character_delimited"
+          character_delimited:
+            delimiter: ","
+        payload_prefix: '{"resourceLogs":'
+        payload_suffix: '}'
+        batch:
+          max_events: 50
+          timeout_secs: 5
+        request:
+          headers:
+            content-type: "application/json"
+```
+
+
+## Deploying Vector through Helm chart
+
+The easiest way to deploy Vector in a Kubernetes environment is using
+[Helm charts](https://vector.dev/docs/setup/installation/package-managers/helm/).
+
+First, fetch the example `values.yaml` that works with pganalyze from the
+[collector repository](https://github.com/pganalyze/collector/blob/main/contrib/vector/values.yaml):
+
+```
+wget https://github.com/pganalyze/collector/blob/main/contrib/vector/values.yaml
+```
+
+**Important:** Next, customize the `values.yaml` file to use your cluster names in the `cnpg_route` step,
+and point to the correct pganalyze-collector installation in the sink.
+
+
+Then, use the following commands to deploy Vector:
+
+```
+helm repo add vector https://helm.vector.dev
+helm repo update
+helm install vector vector/vector \
+  --namespace vector \
+  --create-namespace \
+  --values values.yaml
+```

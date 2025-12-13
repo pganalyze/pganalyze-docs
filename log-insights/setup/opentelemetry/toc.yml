@@ -1,0 +1,8 @@
+- mount: log-insights/setup/opentelemetry
+  items:
+  - name: "Overview"
+    href: log-insights/setup/opentelemetry
+  - name: "Fluent Bit"
+    href: log-insights/setup/opentelemetry/fluentbit
+  - name: "Vector"
+    href: log-insights/setup/opentelemetry/vector
