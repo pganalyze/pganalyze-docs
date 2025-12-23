@@ -984,6 +984,14 @@
       "title": "Log Insights: Kubernetes with OpenTelemetry",
       "path": "/docs/log-insights/setup/opentelemetry"
     },
+    "log-insights/setup/opentelemetry/fluentbit": {
+      "title": "Log Insights: Kubernetes with OpenTelemetry (Fluent Bit)",
+      "path": "/docs/log-insights/setup/opentelemetry/fluentbit"
+    },
+    "log-insights/setup/opentelemetry/vector": {
+      "title": "Log Insights: Kubernetes with OpenTelemetry (Vector)",
+      "path": "/docs/log-insights/setup/opentelemetry/vector"
+    },
     "log-insights/setup/self-managed": {
       "title": "Log Insights: Setup (Self-Managed)",
       "path": "/docs/log-insights/setup/self-managed"
