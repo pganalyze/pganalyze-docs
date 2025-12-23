@@ -9,9 +9,13 @@ containers you will need to configure it correctly to map input data collected f
 Kubernetes logs to the OpenTelemetry OTLP log record format, optionally filtering out
 clusters/pods you don't intend to monitor with pganalyze, and then forward it to the pganalyze-collector.
 
-You can find a full example with Helm charts at the [end of this page](vector#deploying-vector-through-helm-chart).
+You can find a full example with Helm charts at the [end of this page](vector#deploying-vector-through-helm-chart),
+where all of the configuration steps described below are implemented together inside a single `values.yaml` file.
 
 ## Configuring Vector to send OpenTelemetry logs
+
+The following steps describe the logical structure of the Vector configuration. When deploying Vector via Helm,
+all of these steps are expressed together inside the Helm chart's `values.yaml` file.
 
 First, you need to ensure your Vector configuration is sourcing logs from your Kubernetes cluster, like this:
 
@@ -109,7 +113,7 @@ First, fetch the example `values.yaml` that works with pganalyze from the
 [collector repository](https://github.com/pganalyze/collector/blob/main/contrib/vector/values.yaml):
 
 ```
-wget https://github.com/pganalyze/collector/blob/main/contrib/vector/values.yaml
+wget https://github.com/pganalyze/collector/raw/refs/heads/main/contrib/helm/pganalyze-collector/values.yaml
 ```
 
 **Important:** Next, customize the `values.yaml` file to use your cluster names in the `cnpg_route` step,
