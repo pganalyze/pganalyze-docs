@@ -479,9 +479,11 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
       <td>gcp_pubsub_max_age (<code>GCP_PUBSUB_MAX_AGE</code>)</td>
       <td>0</td>
       <td>
-        Allow multiple collectors subscribing to the same topic by returning
-        a PubSub message that's not for a configured server to the topic (by sending a "Nack"
-        response), allowing a different collector to pick it up. After the
+        Allow multiple collectors to subscribe to the same topic by sending a
+        "Nack" response to Pub/Sub messages that don't match a configured
+        Postgres server, so they can be redelivered and handled by another collector.
+        <br /><br />
+        After the
         age limit is reached, messages will always be acknowledged. Keeping the
         limit low is recommended, e.g. 10 minutes (<code>10m</code>), maximum 24 hours (<code>24h</code>).
       </td>
