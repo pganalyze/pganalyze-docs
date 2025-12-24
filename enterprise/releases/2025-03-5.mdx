@@ -1,0 +1,58 @@
+---
+title: '2025.03.5 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2025.03.5`
+
+**Release date:** December 23, 2025
+
+## Notes
+
+- This is a patch release on top of **[2025.03.0](2025-03-0)**, **[2025.03.1](2025-03-1)**, **[2025.03.2](2025-03-2)**, **[2025.03.3](2025-03-3)** and **[2025.03.4](2025-03-4)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2025.03.0](2025-03-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+
+## Features
+
+- Support for Postgres 18 <!-- 5408 -->
+- Support for Plan Statistics captured with [pg_stat_plans](https://github.com/pganalyze/pg_stat_plans)
+- Update bundled collector from 0.66.2 to 0.67.0 <!-- 5409 -->
+  - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0670------2025-12-08) for the full details
+- Add support for converting text plans collected with EXPLAIN (COSTS OFF) to JSON <!-- 4911 -->
+- Alerts & Check-Up: Relax `pganalyze:no-alert` check <!-- 5326 -->
+  - Previously, to skip Active Query and Blocking Query alerts for a
+    specific query, the string `pganalyze:no-alert` was required to be
+    embedded in a properly formatted comment. Now, the string can occur
+    anywhere in the query text to avoid an issue being created
+
+## Bugfixes
+
+- Enterprise self-check: Correctly handle `MAILER_SSL=none` configuration <!-- 5114 -->
+  - This configuration would previously fail to pass the self-check, despite working in practice.
+- Fix over-counting table sizes in table overview stats per database <!-- 5323 -->
+- Skip pg_query truncation when query text is over 10k characters long <!-- 5342 -->
+- Drop unused GeoIP library dependency <!-- 5403 -->
+- Correctly parse `X-Forwarded-For` header in snapshot API <!-- 5297 -->
+- Avoid internal errors when external redirects encounter unauthorized routes <!-- 5316 -->
+
+## Security
+
+- Redact statement text on server-side for old collector versions <!-- 5369 -->
+  - A bug between collector versions 0.60.0 and 0.66.3 caused the collector to not correctly
+    redact STATEMENT lines when the full line was redacted, due to an off-by-one bug in the
+    replacement code. This is fixed in 0.67.0 but in case the collector has not been upgraded
+    yet, this removes any STATEMENT lines on the server side
+- Package security upgrades (Rails [CVE-2025-24293](https://nvd.nist.gov/vuln/detail/CVE-2025-24293), Rails [CVE-2025-55193](https://nvd.nist.gov/vuln/detail/CVE-2025-55193),
+PyO3 [RUSTSEC-2025-0020](https://rustsec.org/advisories/RUSTSEC-2025-0020.html), brace-expansion [CVE-2025-5889](https://nvd.nist.gov/vuln/detail/CVE-2025-5889), 
+unset-value [SNYK-JS-UNSETVALUE-2400660](https://security.snyk.io/vuln/SNYK-JS-UNSETVALUE-2400660), aws-s3-sdk [CVE-2025-14762](https://nvd.nist.gov/vuln/detail/CVE-2025-14762),
+rack [CVE-2025-61780](https://nvd.nist.gov/vuln/detail/CVE-2025-61780), rack [CVE-2025-61919](https://nvd.nist.gov/vuln/detail/CVE-2025-61919),
+rack [CVE-2025-61770](https://nvd.nist.gov/vuln/detail/CVE-2025-61770), rack [CVE-2025-61771](https://nvd.nist.gov/vuln/detail/CVE-2025-61771),
+rack [CVE-2025-61772](https://nvd.nist.gov/vuln/detail/CVE-2025-61772), uri [CVE-2025-61594](https://nvd.nist.gov/vuln/detail/CVE-2025-61594),
+rexml [CVE-2025-58767](https://nvd.nist.gov/vuln/detail/CVE-2025-58767))
+  - These vulnerabilities are not exploitable in our assessment, but may show up in dependency scanners
+- Routine security updates to packages in the base image
+
