@@ -13,8 +13,8 @@ and then set it up like this:
 sudo chown postgres:postgres /my/log/directory`}
 </CodeBlock>
 
-Also make sure that the pganalyze user can access this directory, by making it a member
-of the postgres group:
+Also make sure that the `pganalyze` user can access this directory, by making it a member
+of the `postgres` group:
 
 <CodeBlock language="bash">
 {`sudo usermod -a -G postgres pganalyze`}
@@ -36,3 +36,7 @@ Now, re-run
 </CodeBlock>
 
 and you should get the expected output from above with the `log_directory` you just configured.
+
+**Important:** After changing group membership of the `pganalyze` user you will need to restart
+the pganalyze collector for the change to take effect. You can do so after updating the
+configuration in the next step.

@@ -28,3 +28,7 @@ permissions:
 {`ALTER SYSTEM SET log_file_mode = '0640';
 SELECT pg_reload_conf();`}
 </CodeBlock>
+
+**Important:** If you changed the group membership of the `pganalyze` user you will need to restart
+the pganalyze collector for the change to take effect. You can do so after updating the
+configuration in the next step.
