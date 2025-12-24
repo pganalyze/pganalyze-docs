@@ -9,7 +9,10 @@ type Props = {
 }
 
 const CollectorInstallInstructions: React.FunctionComponent<Props> = ({apiKey, guided}) => {
-  const env = {};
+  const env: {
+    PGA_API_KEY?: string;
+    PGA_GUIDED_SETUP?: string;
+  } = {};
   if (apiKey) {
     env['PGA_API_KEY'] = apiKey
   }

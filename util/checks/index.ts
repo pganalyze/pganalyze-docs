@@ -78,6 +78,7 @@ export const CHECK_SEVERITIES = {
 }
 
 export function checkMaxSeverity(checkGroup: string, checkName: string): string | undefined {
+  // @ts-ignore no-implicit-any
   const severities = CHECK_SEVERITIES[checkGroup]?.[checkName];
   if (!severities) {
     return undefined;
@@ -95,6 +96,7 @@ export function checkMaxSeverity(checkGroup: string, checkName: string): string 
 
 
 export function checkTitle(checkGroup: string, checkName: string): string {
+  // @ts-ignore no-implicit-any
   return CHECK_TITLES[checkGroup]?.[checkName] ?? "Unknown check";
 }
 
@@ -291,6 +293,7 @@ export function checkFrequency(
   checkGroup: string,
   checkName: string
 ): string | undefined {
+  // @ts-ignore no-implicit-any
   return CHECK_FREQUENCY[checkGroup]?.[checkName];
 }
 
