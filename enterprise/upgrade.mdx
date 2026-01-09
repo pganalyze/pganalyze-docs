@@ -92,7 +92,7 @@ run it after migrations have been applied:
 {`Rust::Migrate.migrate('20250902174735_backfill_query_stats_pco')
 require './db/migrate/20251030164200_drop_query_stats_packed'
 DropQueryStatsPacked.new.up
-
+ 
 Rust::Migrate.migrate('20251031193250_backfill_table_stats_pco')
 require './db/migrate/20251212175907_drop_table_stats_packed'
 DropTableStatsPacked.new.up`}
