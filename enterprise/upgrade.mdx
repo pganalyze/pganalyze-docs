@@ -75,7 +75,24 @@ After the backup is restored, start up the container with the old version like t
   quay.io/pganalyze/enterprise:[old version]`}
 </CodeBlock>
 
-## Special Notes: Upgrading from earlier releases to 2018.08 and newer
+## Special Note: Upgrading from earlier release to 2026.01 and newer
+
+The 2026.01 release introduced the new "pco" storage format, with the migration to the
+format happening during the release upgrade process by default.
+
+For large installations (100+ servers monitored), this migration may take **1 hour** or
+longer to complete, during which time your pganalyze install would be unavailable. To keep
+the system online and accepting data, you can optionally delay the data backfill step to
+run it after migrations have been applied:
+
+1. During the release upgrade run the migrations with `SKIP_QUERY_STATS_PCO_BACKFILL=1` environment variable set.
+2. After the new code is deployed run `Rust::Migrate.migrate('20250902174735_backfill_query_stats_pco')` in a console (`console` command to
+    the container / Docker entrypoint).
+
+Until the migration is completed the pganalyze UI will only show new data. After the migration
+is complete the full history will be available again.
+
+## Special Note: Upgrading from earlier releases to 2018.08 and newer
 
 Starting in pganalyze Enterprise [2018.08.0](/docs/enterprise/releases/2018-08-0), the pganalyze
 container requires the `LICENSE_KEY` environment variable to be configured.
