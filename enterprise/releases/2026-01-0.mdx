@@ -23,17 +23,16 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 ## Features
 
-- Enable 100 day retention for query and schema statistics <!-- 5319 -->
+- **Enable 100 day retention** for query, table and index statistics <!-- 5319 -->
   - pganalyze Enterprise Server now stores 100 days (increased from 30 days) of history for query statistics and table/index statistics.
   - The date picker interface has been updated to reflect the additional retention time and to allow selecting longer time frames.
 
-- Query Advisor: Proactive query plan optimization for Postgres is now generally available <!-- 5212 -->
+- **Query Advisor:** Proactive query plan optimization for Postgres is now generally available <!-- 5212 -->
   - Query Advisor continuously analyzes EXPLAIN plans in the background to detect problematic patterns and
   provide actionable query rewrites.
-  - Detected issues appear in the Query Advisor landing page, Workbooks, and query detail views.
-  - [Learn more in the announcement post](https://pganalyze.com/blog/query-advisor-ga)
+  - Detected issues appear in the Query Advisor landing page, Workbooks, and query detail views. [Learn more in the announcement post](https://pganalyze.com/blog/query-advisor-ga)
 
-- The Query Tuning Workbooks feature is now generally available (GA), and has been renamed "Workbooks"
+- Query Tuning Workbooks are now generally available (GA), and have been renamed **Workbooks**
   - Add list of workbooks related to the query in the query details page <!-- 5303 -->
   - Improve SQL editor with syntax highlighting and auto-completion  <!-- 4832, 5031, 4956, 5144, 5027 -->
   - Support viewing differences between Query Plan variants <!-- 4988 -->
@@ -53,37 +52,36 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 - Further improve internal statistics compression using specialized "pco" format <!-- 5150 -->
   - Adjust the internal query, table and index statistics tables to use the "pco" format for best-in-class compression
-    of timeseries data. This is part of te effort to allow increased retention times due to significantly
-    smaller storage requirements.
+    of timeseries data. This enables increased retention times due to significantly smaller storage requirements.
 
 - Combine queries run by multiple Postgres roles <!-- 4874 -->
   - Previously if a query was run by multiple Postgres roles, a duplicate query would exist in pganalyze for each role. Those
-    duplicates are now merged into a single query, making pganalyze easier to use if many roles call the same queries. The call
-    count for each role can be viewed on the Query Tags page when viewing a specific query.
+    duplicates are now merged into a single query, making pganalyze easier to use if many roles call the same queries.
+  - The call count for each role can be viewed on the Query Tags page when viewing a specific query.
 
-* Support showing scans information for the index of the partition parent <!-- 4856 -->
+- Support showing scans information for the index of the partition parent <!-- 4856 -->
   - Previously, if you navigate to the index page of the partition parent, the "Scans on Index" panel didn't have any data to show,
-  even though the index is actively used. With this change, the scan information is properly analyzed with the partition parent so
+  even though the index is actively used.
+  - With this change, the scan information is properly analyzed with the partition parent so
   that the scan information will show up in the "Scans on Index" panel.
 
-* Schema Statistics: Add support for handling named NOT NULL constraints, added in Postgres 18 <!-- 4909 -->
-
-  When running the upcoming Postgres 18 release, you will see columns marked as NOT NULL on each table's "Columns" tab, as well as the automatically
+- Schema Statistics: Add support for handling named NOT NULL constraints, added in Postgres 18 <!-- 4909 -->
+  - When running the upcoming Postgres 18 release, you will see columns marked as NOT NULL on each table's "Columns" tab, as well as the automatically
   created named NOT NULL constraints on the "Constraints" tab.
 
 ## Other improvements and bugfixes
 
-* Show warning when websocket connection is unhealthy <!-- 5367 -->
+* Show warning when collector is not using WebSockets connection, or it is unhealthy <!-- 5367 -->
   - In 2024 the collector moved to a persistent websocket connection to reduce overhead and enable two-way communication.
   - If your servers haven't been updated to a recent collector version or have networking issues that don't allow the
-    connection to stay alive for at least an hour, you will now see an in-app warning. A future major Enterprise release
-    will likely drop the legacy API and require a websocket connection.
-  - Please [reach out to support](/contact) if you see this warning so we can review your networking setup.
+    connection to stay alive for at least an hour, you will now see an in-app warning.
+  - A future major Enterprise release will likely drop the legacy API and require a websocket connection.
+    Please [reach out to support](/contact) if you see this warning so we can review your networking setup.
 
 * Ensure logical date ranges like "Last 24h" are resolved appropriately <!-- 5363 -->
-  - Currently, when a period like "Last 24h" is selected in the date picker, this is only resolved to a
-    concrete date range (e.g., "2025-12-04 00:00:00 to 2025-12-05 00:00:00") once. If you use the app for
-    an extended period of time, that resolved date range is stuck in the past and grows stale.
+  - Previously, when a period like "Last 24h" was selected in the date picker, it only resolved to a
+    concrete date range (e.g., "2025-12-04 00:00:00 to 2025-12-05 00:00:00") once. If you used the app for
+    an extended period of time, that resolved date range was stuck in the past and grew stale.
   - Instead, re-resolve the date range periodically (only when navigating to a new page) to ensure fresh data is always loaded.
 
 * Index Advisor
@@ -146,46 +144,31 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 * Plan Statistics: Improve display for queries that run infrequently <!-- 5428 -->
   - Previously the plan statistics graphs would show data points where the query didn't run with the dashed area marker,
-  typically used for missing data for the whole database/server. Instead, the graphs now show zero at such points when
-  there were other queries with activity on that database.
-
-* Drop obsolete mentions of Postgres 9.6-specific functionality <!-- 5411 -->
-
-* Fix over-counting table sizes in table overview stats per database <!-- 5323 -->
+  typically used for missing data for the whole database/server.
+  - Instead, the graphs now show zero at such points when there were other queries with activity on that database.
 
 * Query Details: Show the most recently seen tags in the Query Tags tab <!-- 4749 -->
   - Previously, when a query had many associated tags, the Query Tags tab displayed an arbitrary limited subset,
     typically showing the oldest tags seen within the last 7 days. We now prioritize the most recently seen tags.
-* Fix issue that can cause paginated tables to reset to the first page sometimes <!-- 4744 -->
 
-* Add Inter as a fallback font option for the application UI <!-- 5079 -->
+* Connections:
+  - Add ability to select time range in Connection States History graph by dragging with the mouse <!-- 5306 -->
+  - Don't show incorrect information from newer backend <!-- 4914 -->
 
-* System / Replication: Improve loading performance of replication follower list <!-- 5204 -->
+* Schema Statistics:
+  - Show View detail page when a view is loaded through the Table detail page <!-- 5375 -->
+  - Show index last used date on list views, making it easier to prioritize unused indexes by their size <!-- 4790 -->
+  - Show estimated row count for partitions on table list view <!-- 5335 -->
+  - Fix over-counting table sizes in table overview stats per database <!-- 5323 -->
 
-* Connections: Add ability to select time range in Connection States History graph by dragging with the mouse <!-- 5306 -->
-
-* Show estimated row count for partitions on table list view <!-- 5335 -->
-
-* Schema Statistics: Show View detail page when a view is loaded through the Table detail page <!-- 5375 -->
-
-* Schema Statistics: Show index last used date on list views, making it easier to prioritize unused indexes by their size <!-- 4790 -->
-
-* System Metrics: Improve guidance when buffer cache metrics are not available <!-- 5414 -->
-
-* Config Settings: Update bundled Postgres documentation to include Postgres 18 <!-- 5446 -->
-
-* Fix page focus after loading to allow scrolling the main content with arrow keys <!-- 5054 -->
-
-* Fix long dropdown option text overflowing into "clear" icon in some dropdowns <!-- 5006 -->
-
-* Connection tracing: Don't show incorrect information from newer backend <!-- 4914 -->
-
-* System: Hide unavailable system metrics data for Crunchy Bridge instances <!-- 4922 -->
+* System Metrics:
+  - Improve loading performance of replication follower list <!-- 5204 -->
+  - Improve guidance when buffer cache metrics are not available <!-- 5414 -->
+  - Hide unavailable system metrics data for Crunchy Bridge instances <!-- 4922 -->
 
 * Query Samples: Ability to show full parameter values <!-- 4952 -->
-  - Currently, the parameter value exceeding 20 characters is truncated. With a new "Show full values" button, it'll expand
-  the truncated part and show full values when available. Note that the full value still might not be available depending on
-  the log_parameter_max_length setting.
+  - Previously, parameter values exceeding 20 characters were truncated. The new "Show full values" button allows accessing full values when available.
+  - Note that the full value still might not be available depending on the `log_parameter_max_length` setting.
 
 * Email confirmation can now be required <!-- 4679 -->
   - For Enterprise Server setups using email/password logins, you can now optionally require that email addresses
@@ -197,6 +180,18 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 * Remove option to sort query stats by query text <!-- 5099 -->
   - This change helps improve request performance. Note that searching by query text is still fully supported.
+
+* Drop obsolete mentions of Postgres 9.6-specific functionality <!-- 5411 -->
+
+* Fix issue that can cause paginated tables to reset to the first page sometimes <!-- 4744 -->
+
+* Add Inter as a fallback font option for the application UI <!-- 5079 -->
+
+* Config Settings: Update bundled Postgres documentation to include Postgres 18 <!-- 5446 -->
+
+* Fix page focus after loading to allow scrolling the main content with arrow keys <!-- 5054 -->
+
+* Fix long dropdown option text overflowing into "clear" icon in some dropdowns <!-- 5006 -->
 
 * Remove mention of no longer existent LDAP_ADMIN_GROUP_CN setting when running `rake db:seed` <!-- 4948 -->
 
