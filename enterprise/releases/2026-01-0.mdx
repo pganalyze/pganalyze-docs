@@ -1,0 +1,205 @@
+---
+title: '2026.01.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2026.01.0`
+
+## Notes
+
+- This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+- **Important:** If you are currently running v2023.08.0 or older, please [reach out to us](/contact) to walk you through the upgrade process.
+  - The query statistics format has changed in this release, and requires upgrading from at least v2024.10.X to keep previous statistics.
+- **Important:** This release introduces the "pco" statistics format for internal statistics tables
+  - The required data migration runs as part of the `rake db:migrate` upgrade task by default.
+  - If your pganalyze installation monitors hundreds of servers or more, this data migration may take **1
+    hour** or more to run. See [alternative upgrade guidance](/docs/enterprise/upgrade/#special-note-upgrading-from-earlier-release-to-202601-and-newer) if you want to run the migration of historic data separately.
+  - Smaller installation upgrades will typically complete within minutes.
+- Postgres 13+ is now required for the internal statistics database used by Enterprise Server <!-- 4784 -->
+
+- This release removes GraphQL fields from `getIssues` API deprecated in [2023.08.0](2023-08-0) <!-- 4916 -->
+   - The `displayName`, `referent`, `references.secondaryUrl` fields have been removed from `getIssues`. Please [reach out](/contact) if you need help updating API clients.
+
+## Features
+
+- Enable 100 day retention for query and schema statistics <!-- 5319 -->
+  - pganalyze Enterprise Server now stores 100 days (increased from 30 days) of history for query statistics and table/index statistics.
+  - The date picker interface has been updated to reflect the additional retention time and to allow selecting longer time frames.
+
+- Query Advisor: Proactive query plan optimization for Postgres is now generally available <!-- 5212 -->
+  - Query Advisor continuously analyzes EXPLAIN plans in the background to detect problematic patterns and
+  provide actionable query rewrites.
+  - Detected issues appear in the Query Advisor landing page, Workbooks, and query detail views.
+  - [Learn more in the announcement post](https://pganalyze.com/blog/query-advisor-ga)
+
+- The Query Tuning Workbooks feature is now generally available (GA), and has been renamed "Workbooks"
+  - Add list of workbooks related to the query in the query details page <!-- 5303 -->
+  - Improve SQL editor with syntax highlighting and auto-completion  <!-- 4832, 5031, 4956, 5144, 5027 -->
+  - Support viewing differences between Query Plan variants <!-- 4988 -->
+    - When viewing a variant in a Query Tuning Workbook, you can now see any difference in query text, hints or planner settings, as compared to the baseline.
+  - Support choosing parameter sets from query samples even if parameters are merged <!-- 5251 -->
+    - Previously, merging or renaming parameters caused a "Failed to create a parameter set" error when query samples are selected as parameter sets.
+  - Fix parameter type inference when IN lists are used <!-- 5269 -->
+  - Show "Run EXPLAIN" option on the overview page when upload is incomplete <!-- 5234 -->
+    - Now you can resume the upload directly from the overview, instead of having to go to the variant page.
+  - Move the workbook info sidebar on the Overview page from the left to the right side for better consistency across the app <!-- 5089 -->
+  - Add built-in diffing option in Editor <!-- 5008 -->
+    When drafting a new Query Tuning variant, you can now compare the diff of that draft against the original query.
+  - Workbooks: Format and normalize query text using standardized SQL format <!-- 5036 -->
+    - To support new diffing option as well as prepare for upcoming Query Advisor functionality, pganalyze Query Tuning Workbooks now always format
+      the SQL text in the editor and on variant pages using a consistent format.
+     This change also normalizes certain SQL expressions without impacting their meaning, for example `interval $1` will be rewritten to `$1::interval`.
+
+- Further improve internal statistics compression using specialized "pco" format <!-- 5150 -->
+  - Adjust the internal query, table and index statistics tables to use the "pco" format for best-in-class compression
+    of timeseries data. This is part of te effort to allow increased retention times due to significantly
+    smaller storage requirements.
+
+- Combine queries run by multiple Postgres roles <!-- 4874 -->
+  - Previously if a query was run by multiple Postgres roles, a duplicate query would exist in pganalyze for each role. Those
+    duplicates are now merged into a single query, making pganalyze easier to use if many roles call the same queries. The call
+    count for each role can be viewed on the Query Tags page when viewing a specific query.
+
+* Support showing scans information for the index of the partition parent <!-- 4856 -->
+  - Previously, if you navigate to the index page of the partition parent, the "Scans on Index" panel didn't have any data to show,
+  even though the index is actively used. With this change, the scan information is properly analyzed with the partition parent so
+  that the scan information will show up in the "Scans on Index" panel.
+
+* Schema Statistics: Add support for handling named NOT NULL constraints, added in Postgres 18 <!-- 4909 -->
+
+  When running the upcoming Postgres 18 release, you will see columns marked as NOT NULL on each table's "Columns" tab, as well as the automatically
+  created named NOT NULL constraints on the "Constraints" tab.
+
+## Other improvements and bugfixes
+
+* Show warning when websocket connection is unhealthy <!-- 5367 -->
+  - In 2024 the collector moved to a persistent websocket connection to reduce overhead and enable two-way communication.
+  - If your servers haven't been updated to a recent collector version or have networking issues that don't allow the
+    connection to stay alive for at least an hour, you will now see an in-app warning. A future major Enterprise release
+    will likely drop the legacy API and require a websocket connection.
+  - Please [reach out to support](/contact) if you see this warning so we can review your networking setup.
+
+* Ensure logical date ranges like "Last 24h" are resolved appropriately <!-- 5363 -->
+  - Currently, when a period like "Last 24h" is selected in the date picker, this is only resolved to a
+    concrete date range (e.g., "2025-12-04 00:00:00 to 2025-12-05 00:00:00") once. If you use the app for
+    an extended period of time, that resolved date range is stuck in the past and grows stale.
+  - Instead, re-resolve the date range periodically (only when navigating to a new page) to ensure fresh data is always loaded.
+
+* Index Advisor
+  - Fix handling of queries that reference domains (or tables with domain columns) with NOT VALID constraints <!-- 4748 -->
+    - The previous fix did not resolve the issue, and query analysis for these queries was still failing.
+  - Support analyzing queries referencing the names with tildes <!-- 4785 -->
+    - Previously, when the query is referencing some names (e.g. table names, index names) with tildes, the
+      query analysis was failing and the Index Advisor was unable to process.
+  - Support analyzing queries with tables referenced in subqueries under WHERE ... IS NULL or IS TRUE <!-- 4954 -->
+  - Support schemas that include multiline CHECK constraints <!-- 4883 -->
+  - Support extensions installed in pg_catalog schema <!-- 4890 -->
+  - Fix "Unexpected rtekind: 2" on certain queries with Postgres 16/17 <!-- 5025 -->
+  - Add support for the pgcrypto Postgres extension <!-- 5051 -->
+  - Improve support of tables with many scans or columns <!-- 5157 -->
+    - When a table has many scans or columns, the number of possible indexes to consider can be very large,
+      which was causing OOM and prevented the Index Advisor from running on such tables. This change improves
+      memory usage and increases the support for these cases.
+    - Note: There are still tables with a high
+      number of scans or columns that we are not able to run the Index Advisor on, and we continue to work
+      on supporting more of them.
+  - Fix color of Considered Index icons in Index Advisor UI <!-- 4851 -->
+    - Previously, this icon did not show the index id unless hovered.
+
+* EXPLAIN plans
+  - Support I/O Timing data in EXPLAIN with Postgres 17 and above <!-- 4955 -->
+  - Support showing EXPLAIN plans containing JIT info using new (Postgres 17) format <!-- 5434 -->
+  - Support showing the extra information like the execution time when JSON format view is selected <!-- 5059 -->
+    - Previously, when the JSON format view was selected, it was dropping the information like "Planning Time", "Execution Time", "Query Identifier",
+    etc.
+    - With this change, the JSON format view will show all information captured by auto_explain.
+    - If auto_explain is using the text format, it's converted to JSON format on a best effort basis.
+  - Default to grid view when showing plans <!-- 5328 -->
+    - The grid view for displaying EXPLAIN plans in pganalyze is now the default. It is more compact, and is generally a
+      better way to examine EXPLAIN plans. The old "node tree" view may be retired at some point. Please reach out if
+      you find features of the node tree view that you would like to see in the grid view, or any other EXPLAIN display feedback.
+  - Update the sidebar insight listing for the Grid view <!-- 5117 -->
+  - Fix node selection in the Node Tree view <!-- 4913 -->
+  - Add some inline details to the EXPLAIN grid view <!-- 5003 -->
+
+* Alerts & Check-Up:
+  - Update in-app documentation for the Xmin Horizon Check <!-- 4775 -->
+    - Update the [Xmin Horizon Check](https://pganalyze.com/docs/checks/vacuum/xmin_horizon) to format full (64-bit)
+      transaction IDs specially. Currently, they are formatted as numbers, but that makes it hard to read the lower
+      32-bit transaction ID Postgres sometimes uses (e.g., backend_xmin in pg_stat_activity).
+    - Instead, separate the lower 32 bits and the "epoch" (the upper 32 bits) and separate them with `:`.
+  - Fix New Slow Query query stats loading problem <!-- 4906 -->
+    - This fixes a problem that could occur on issue detail pages for the New Slow Query check
+      that would cause stats for the associated query to fail to load.
+  - Relax pganalyze:no-alert check <!-- 5326 -->
+    - Previously, to skip Active Query and Blocking Query alerts for a specific query, the string `pganalyze:no-alert` was
+      required to be embedded in a properly formatted comment. Now, the string can occur anywhere in the query text to
+      avoid an issue being created.
+  - Improve "Replication: High Replication Lag" check-up <!-- 5205 -->
+     - This adds a graph of the replication lag to the Issue page, and clarifies which IP address the affected
+       replica is using, instead of naming the follower by internal UUID.
+
+* Log Insights
+  - Update overview to improve styling, use consistent colors for each category, and allow collapsing categories <!-- 4924 -->
+  - Fix expansion of log line details outside of the main Log Insights page <!-- 5020 -->
+
+* Plan Statistics: Improve display for queries that run infrequently <!-- 5428 -->
+  - Previously the plan statistics graphs would show data points where the query didn't run with the dashed area marker,
+  typically used for missing data for the whole database/server. Instead, the graphs now show zero at such points when
+  there were other queries with activity on that database.
+
+* Drop obsolete mentions of Postgres 9.6-specific functionality <!-- 5411 -->
+
+* Fix over-counting table sizes in table overview stats per database <!-- 5323 -->
+
+* Query Details: Show the most recently seen tags in the Query Tags tab <!-- 4749 -->
+  - Previously, when a query had many associated tags, the Query Tags tab displayed an arbitrary limited subset,
+    typically showing the oldest tags seen within the last 7 days. We now prioritize the most recently seen tags.
+* Fix issue that can cause paginated tables to reset to the first page sometimes <!-- 4744 -->
+
+* Add Inter as a fallback font option for the application UI <!-- 5079 -->
+
+* System / Replication: Improve loading performance of replication follower list <!-- 5204 -->
+
+* Connections: Add ability to select time range in Connection States History graph by dragging with the mouse <!-- 5306 -->
+
+* Show estimated row count for partitions on table list view <!-- 5335 -->
+
+* Schema Statistics: Show View detail page when a view is loaded through the Table detail page <!-- 5375 -->
+
+* Schema Statistics: Show index last used date on list views, making it easier to prioritize unused indexes by their size <!-- 4790 -->
+
+* System Metrics: Improve guidance when buffer cache metrics are not available <!-- 5414 -->
+
+* Config Settings: Update bundled Postgres documentation to include Postgres 18 <!-- 5446 -->
+
+* Fix page focus after loading to allow scrolling the main content with arrow keys <!-- 5054 -->
+
+* Fix long dropdown option text overflowing into "clear" icon in some dropdowns <!-- 5006 -->
+
+* Connection tracing: Don't show incorrect information from newer backend <!-- 4914 -->
+
+* System: Hide unavailable system metrics data for Crunchy Bridge instances <!-- 4922 -->
+
+* Query Samples: Ability to show full parameter values <!-- 4952 -->
+  - Currently, the parameter value exceeding 20 characters is truncated. With a new "Show full values" button, it'll expand
+  the truncated part and show full values when available. Note that the full value still might not be available depending on
+  the log_parameter_max_length setting.
+
+* Email confirmation can now be required <!-- 4679 -->
+  - For Enterprise Server setups using email/password logins, you can now optionally require that email addresses
+    used are confirmed by clicking a confirmation link. This is only relevant for setups that allow direct user
+    signups, and want to verify the email addresses are correct.
+  - To enable, set the `CONFIRMABLE_CUTOFF_DATE` environment variable to a particular date. All user accounts created
+    after that date will require email address confirmation. Before enabling, ensure that the mailer configuration
+    (`MAILER_URL` and related settings) is set up correctly.
+
+* Remove option to sort query stats by query text <!-- 5099 -->
+  - This change helps improve request performance. Note that searching by query text is still fully supported.
+
+* Remove mention of no longer existent LDAP_ADMIN_GROUP_CN setting when running `rake db:seed` <!-- 4948 -->
+
+## Security
+
+- Routine security updates to packages in the base image and library dependencies
