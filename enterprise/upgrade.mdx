@@ -87,9 +87,9 @@ run it after migrations have been applied:
 
 1. During the release upgrade run the migrations with `SKIP_PCO_BACKFILL=1` environment variable set.
 2. After the new code is deployed run these commands in a console (`console` command to the container / Docker entrypoint).
+
 <CodeBlock language="ruby">
-{`
-Rust::Migrate.migrate('20250902174735_backfill_query_stats_pco')
+{`Rust::Migrate.migrate('20250902174735_backfill_query_stats_pco')
 require './db/migrate/20251030164200_drop_query_stats_packed'
 DropQueryStatsPacked.new.up
 
