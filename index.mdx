@@ -16,7 +16,7 @@ To continue, select in which environment you are running your Postgres database:
 
 <OverviewInstallChoice />
 
-If you're interested in integrating pganalyze with your database hosting provider but don't see it listed as officially supported, you can follow the [manual installation guide for self-managed databases](docs/install/self_managed/01_create_monitoring_user). You will need to run the pganalyze collector on a server with network connectivity to your database in order to monitor your database. Note that system-level statistics (memory usage, I/O, etc.) cannot be collected this way and will not be available in pganalyze. [Log Insights](/docs/log-insights) (and the features that depend on it) is only available if your provider exports Postgres logs for your database server [via syslog](/docs/log-insights/setup/syslog-server).
+If you're interested in integrating pganalyze with your database hosting provider but don't see it listed as officially supported, you can follow the [manual installation guide for self-managed databases](docs/install/self_managed/01_create_monitoring_user). You will need to run the pganalyze collector on a server with network connectivity to your database in order to monitor your database. Note that system-level statistics (memory usage, I/O, etc.) cannot be collected this way and will not be available in pganalyze. [Log Insights](/docs/log-insights) (and the features that depend on it) is only available for unsupported providers if they support exporting Postgres logs for your database server [via syslog](/docs/log-insights/setup/syslog-server).
 
 ## Explore how pganalyze works
 
