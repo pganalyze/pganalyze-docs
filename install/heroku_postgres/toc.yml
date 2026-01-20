@@ -2,7 +2,7 @@
   items:
   - name: "Step 1: Deploy the Collector"
     href: install/heroku_postgres/01_deploy_the_collector
-  - name: "Step 2: Attach Databases"
+  - name: "Step 2: Create Credential and Attach Databases"
     href: install/heroku_postgres/02_attach_databases
   - name: "Step 3: Verify Configuration"
     href: install/heroku_postgres/03_verify_configuration
