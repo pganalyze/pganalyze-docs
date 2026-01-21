@@ -43,9 +43,9 @@ testapp     postgresql-objective-11111   heroku-postgresql:essential-0  ~$0.007/
 ```
 
 ## Create the pganalyze role
-For Heroku Postgres production plans (Standard, Premium, Private, and Shield), you need to create a new credential
-(role) for your Postgres instance. This allows you to create a specific `pganalyze` role and apply the same recommended
-read-only monitoring privileges used in the other installation guides. More details on managing Heroku Postgres credentials
+For Heroku Postgres production plans (Standard, Premium, Private, and Shield), we recommend creating a new Heroku credential
+(role) for your Postgres instance. This allows you to create a specific `pganalyze` role and apply the recommended
+read-only monitoring privileges. More details on managing Heroku Postgres credentials
 can be found in the [Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql-credentials).
 
 Using the add-on name from the previous step (`postgresql-objective-11111` in the example), and the correct application
@@ -71,7 +71,7 @@ GRANT USAGE ON SCHEMA public TO pganalyze;`}
 </CodeBlock>
 
 ## Create monitoring helper functions
-Next, connect to **each database** that you plan to monitor on this server as the default Heroku admin role (NOT the 
+Next, connect to the hosted database that you plan to monitor using `heroku pg:psql` and the default Heroku admin role (NOT the 
 new `pganalyze` role) and add the following two functions to enable the collection of additional statistics.
 
 <CodeBlock language="sql">
@@ -102,7 +102,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
 
 ## Attach database
 
-Finally, use that add-on name once more (`postgresql-objective-11111` in the example) to attach the Heroku Postgres database to the collector. **Be 
+Finally, use that add-on name (`postgresql-objective-11111` in the example) to attach the Heroku Postgres database to the collector. **Be 
 sure to use the newly created `pganalyze` credential**.
 
 You can utilize the `--as` parameter to specify an alias for this database, this is in particular useful when you attach multiple databases to the same collector.
