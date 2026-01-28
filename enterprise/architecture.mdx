@@ -4,8 +4,14 @@ backlink_href: /docs/enterprise
 backlink_title: 'pganalyze Enterprise Server'
 ---
 
-Here you can see the reference architecture for a scaled out version of pganalyze Enterprise Server. This diagram also illustrates how data gets sent between different components.
+Below you can see the reference architecture for a scaled out version of pganalyze Enterprise Server. This diagram also illustrates how data gets sent between different components.
 
-This is focused on a deployment for monitoring Amazon RDS or Aurora, [deployed using Amazon EKS](/docs/enterprise/setup/kubernetes_amazon_eks) and intended for larger setups that [run the collector separately](/docs/enterprise/setup/separate-collector-install), with a separation between the central AWS account and the application AWS accounts.
+You can see two different options for the monitored environment below:
+
+**Option 1:** Integration with cloud environments like AWS, Azure and GCP. The pganalyze collector runs in a container or VM in the same region as the monitored instance (e.g. Amazon Aurora).
+
+**Option 2:** Self-managed Postgres servers running on-premise, in a virtual machine in the cloud, or using containerized deployments (e.g. with [CNPG](https://cloudnative-pg.io/)).
+
+This diagram is focused on larger setups that [run the collector separately](/docs/enterprise/setup/separate-collector-install), sending data to an internal, central installation of pganalyze Enterprise Server. For small deployments and evaluations we recommend the [simplified installation](/docs/enterprise/setup) (collector runs in the combined image and connects out).
 
 ![Reference architecture diagram](architecture.svg)
