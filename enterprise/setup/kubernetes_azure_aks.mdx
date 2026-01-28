@@ -1,0 +1,326 @@
+---
+title: Enterprise Server: Initial Setup (Kubernetes on Azure AKS)
+backlink: /docs/enterprise
+toc: true
+---
+
+# Enterprise Server: Initial Setup (Kubernetes on Azure AKS)
+
+These are the installation instructions for [pganalyze Enterprise Server](/enterprise-postgres-monitoring), targeted for a Kubernetes cluster managed by Azure AKS in your own Azure subscription.
+
+## Installation steps
+
+- [Pre-requisites](#pre-requisites)
+- [Step 1: Re-publish the Docker image to your private container registry](#step-1-re-publish-the-docker-image-to-your-private-container-registry)
+- [Step 2: Create Azure Role-Based Access Control for database access](#step-2-create-azure-role-based-access-control-rbac-for-database-access)
+- [Step 3: Set up a Kubernetes secret for configuration settings](#step-3-set-up-a-kubernetes-secret-for-configuration-settings)
+- [Step 4: Create the pganalyze Enterprise deployment](#step-4-create-the-pganalyze-enterprise-deployment)
+- [Step 5: Run the Enterprise self-check to verify the configuration and license](#step-5-run-the-enterprise-self-check-to-verify-the-configuration-and-license)
+- [Step 6: Initialize the database](#step-6-initialize-the-database)
+- [Step 7: Log in to pganalyze](#step-7-log-in-to-pganalyze)
+- [Step 8: Preparing your PostgreSQL database for monitoring](#step-8-preparing-your-postgresql-database-for-monitoring)
+- [Step 9: Add your first database server to pganalyze](#step-9-add-your-first-database-server-to-pganalyze)
+- [Next steps](#next-steps)
+- [Appendix: How to apply config changes](#appendix-how-to-apply-config-changes)
+
+## Pre-requisites
+
+- Provision an **Azure Kubernetes Service (AKS)** cluster in your Azure subscription
+- Install the **Azure Application Gateway Ingress Controller** or use the native **Azure Load Balancer** on your AKS cluster
+- Provision a **PostgreSQL database** (e.g., Azure Database for PostgreSQL or Azure Database for PostgreSQL - Flexible Server) to store pganalyze statistics
+- **Azure CLI** (`az`) installed on your machine and logged in with appropriate permissions on your Azure subscription
+- **Kubernetes CLI** (`kubectl`) installed and configured to access your AKS cluster
+
+## Step 1: Re-publish the Docker image to your private container registry
+
+The goal of this first step is to publish the pganalyze software to your private Azure Container Registry, which can be accessed from your Azure AKS cluster.
+
+Perform the next steps on a machine that has full internet connectivity with no outbound access restrictions.
+
+First, log in with your license information, shared with you by the pganalyze team:
+```bash
+docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io
+```
+
+Now pull the image, replacing VERSION with the [latest pganalyze Enterprise version](/docs/enterprise/releases):
+```bash
+docker pull quay.io/pganalyze/enterprise:VERSION
+```
+
+Create a container registry in Azure (if you don't have one):
+```bash
+az acr create --resource-group YOUR_RESOURCE_GROUP --name pganalyzeregistry --sku Basic
+```
+
+Log in to your Azure Container Registry:
+```bash
+az acr login --name pganalyzeregistry
+```
+
+Tag the pganalyze image for your ACR, replacing the values (REGISTRY_NAME, VERSION):
+```bash
+docker tag quay.io/pganalyze/enterprise:VERSION pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION
+```
+
+And now push the tag to the registry:
+```bash
+docker push pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION
+```
+
+## Step 2: Create Azure Role-Based Access Control (RBAC) for database access
+
+Instead of creating an IAM policy like in AWS, Azure uses Role-Based Access Control (RBAC). You have two options:
+
+### Option A: Using Managed Identity (Recommended)
+
+Create a managed identity for your AKS nodes:
+```bash
+az identity create --resource-group YOUR_RESOURCE_GROUP --name pganalyze-identity
+```
+
+Assign the identity to your AKS cluster (update your cluster to use managed identity if not already done):
+```bash
+az aks update --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \\
+  --assign-identity /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity
+```
+
+Grant the identity permissions to access your PostgreSQL database. If using **Azure Database for PostgreSQL**, ensure network access is configured to allow your AKS cluster.
+
+### Option B: Using Service Principal (Legacy)
+
+If not using managed identity, assign the necessary Azure roles:
+```bash
+az role assignment create --assignee YOUR_SERVICE_PRINCIPAL_ID \\
+  --role "Reader" \\
+  --scope /subscriptions/SUBSCRIPTION_ID/resourceGroups/YOUR_RESOURCE_GROUP
+```
+
+## Step 3: Set up a Kubernetes secret for configuration settings
+
+You can manage Kubernetes secrets using [kubectl](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/).
+
+There are two sensitive settings, `DATABASE_URL` and `LICENSE_KEY` that we store using a Kubernetes secret.
+
+The `DATABASE_URL` has the format `postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE` and specifies the connection used for storing the pganalyze statistics data. We recommend using an administrative user on the statistics database for this connection.
+
+For Azure Database for PostgreSQL, the hostname typically looks like: `servername.postgres.database.azure.com`
+
+The `LICENSE_KEY` has been provided to you by the pganalyze Team - replace `KEYKEYKEY` in the command with the actual key.
+```bash
+kubectl create secret generic pganalyze-secret \\
+  --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \\
+  --from-literal=LICENSE_KEY=KEYKEYKEY \\
+  --dry-run=client -o yaml | kubectl apply -f -
+```
+
+## Step 4: Create the pganalyze Enterprise deployment
+
+Save the following text into a file `pganalyze-enterprise.yml`:
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pganalyze
+  namespace: default
+  labels:
+    app: pganalyze
+spec:
+  selector:
+    matchLabels:
+      app: pganalyze
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pganalyze
+    spec:
+      containers:
+      - name: main
+        image: 'pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION'
+        resources:
+          limits:
+            memory: "8Gi"
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - secretRef:
+            name: pganalyze-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pganalyze-service
+  namespace: default
+  labels:
+    app: pganalyze
+spec:
+  type: LoadBalancer
+  selector:
+    app: pganalyze
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pganalyze-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pganalyze-service
+            port:
+              number: 80
+```
+
+You will need to adjust the following settings:
+
+- `image: pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION` - This needs to match the Docker image tag we created earlier
+- `kubernetes.io/ingress.class: azure/application-gateway` - Use `azure/application-gateway` for Application Gateway, or `nginx` if you're using NGINX Ingress Controller
+
+Now deploy the pganalyze Enterprise application:
+```bash
+kubectl apply -f pganalyze-enterprise.yml
+```
+
+We can confirm the deployment is completed by checking:
+```bash
+kubectl get deploy
+```
+
+Output should show:
+```
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+pganalyze  1/1     1            1           1m
+```
+
+## Step 5: Run the Enterprise self-check to verify the configuration and license
+
+Run the following command to perform the Enterprise self-check:
+```bash
+kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake enterprise:self_check
+```
+
+This should return the following:
+```
+Testing database connection... Success!
+Testing Redis connection... Success!
+Skipping SMTP mailer check - configure MAILER_URL to enable mail sending
+Verifying enterprise license... Success!
+All tests completed successfully!
+```
+
+If you see an error, double check your configuration settings, and especially the database connections.
+
+In case you get an error for the license verification, please reach out to the pganalyze team.
+
+## Step 6: Initialize the database
+
+Run the following to initialize the pganalyze statistics database:
+```bash
+kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:structure:load
+```
+
+Output should show:
+```
+Database 'postgres' already exists
+set_config
+-----------
+          1
+(1 row)
+```
+
+Then run the following to create the initial admin user:
+```bash
+kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:seed
+```
+
+And note down the credentials that are returned:
+```
+INFO -- : *****************************
+INFO -- : *** INITIAL ADMIN CREATED ***
+INFO -- : *****************************
+INFO -- :
+INFO -- : *****************************
+INFO -- : Email: admin@example.com
+INFO -- : Password: PASSWORDPASSWORD
+INFO -- : *****************************
+INFO -- :
+INFO -- : Use these credentials to login and then change email address and password.
+```
+
+Now we can connect to the pganalyze UI. Run the following to determine the IP address or hostname of the load balancer that was provisioned:
+```bash
+kubectl get svc pganalyze-service
+```
+
+Output should show:
+```
+NAME                 TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+pganalyze-service    LoadBalancer   10.0.1.23     20.124.89.150   80:31234/TCP   5m
+```
+
+When you go to the external IP in your browser you should see the login page. You can now use the initial admin details to log in.
+
+## Step 7: Log in to pganalyze
+
+Please now log in to the pganalyze interface using the generated credentials you've seen earlier when setting up the database.
+
+If authentication does not work, or you see an error message, please check the container's logs using:
+```bash
+kubectl logs deploy/pganalyze
+```
+
+After successful login, choose an organization name of your choice (typically your company name).
+
+## Step 8: Preparing your PostgreSQL database for monitoring
+
+Before you can add a database to the pganalyze installation, you'll need to enable the `pg_stat_statements` extension on it. You can find details in the [Azure Database for PostgreSQL instructions](/docs/install/azure_database/01_configure_azure_instance).
+
+In addition you will need to either use the database superuser (usually "postgres") to give pganalyze access to your database, or create a [restricted monitoring user](/docs/install/azure_database/02_create_monitoring_user).
+
+You don't need to run anything else on your database server - the pganalyze container will connect to your database at regular intervals to gather information from PostgreSQL's statistics tables.
+
+## Step 9: Add your first database server to pganalyze
+
+For monitoring an Azure Database for PostgreSQL instance, you can use the bundled container with the pganalyze Enterprise Server container image.
+
+To do so, fill out the "Add Postgres Server" form in the pganalyze UI. When monitoring Azure Database for PostgreSQL you can use the server hostname directly (e.g., `servername.postgres.database.azure.com`).
+
+Once you click "Add Database" the collector running inside the container will update, and start collecting information within 10 minutes.
+
+You can check whether any information has been received by clicking the "Server Settings" link in the left navigation, and scrolling down to the "Debug Info" section.
+
+Once data is coming in successfully, you should see connection and metrics information appear in the Debug Info section.
+
+**Important:** Be aware that some graphs need at least a few hours worth of data and might not work properly before that period.
+
+## Next steps
+
+To learn more about adding additional team members, see [Account Management](/docs/accounts).
+
+We also recommend changing both the email and password of the admin user initially created (you can do so by clicking on "Admin" in the lower left of the screen).
+
+Additionally, you can review [all configuration settings](/docs/enterprise/settings) for the Enterprise container.
+
+## Appendix: How to apply config changes
+
+In case you want to make adjustments to the configuration, simply adjust the `pganalyze-enterprise.yml` file from earlier, and then apply with kubectl:
+```bash
+kubectl apply -f pganalyze-enterprise.yml
+```
+
+When changing the secrets information without changing the Kubernetes template, you can restart the deployment like this:
+```bash
+kubectl rollout restart deployment pganalyze
+```
