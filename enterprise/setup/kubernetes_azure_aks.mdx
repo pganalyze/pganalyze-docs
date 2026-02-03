@@ -15,7 +15,7 @@ These are the installation instructions for [pganalyze Enterprise Server](/enter
 ### Pre-requisites
 
 - Provision an **Azure Kubernetes Service (AKS)** cluster in your Azure subscription
-- Provision a **PostgreSQL database** (e.g., Azure Database for PostgreSQL or Azure Database for PostgreSQL - Flexible Server) to store pganalyze statistics
+- Provision a **PostgreSQL database** (e.g., Azure Database for PostgreSQL - Flexible Server) to store pganalyze statistics
   - The pganalyze statistics database **must have the `pgcrypto` and `btree_gin` extensions enabled** under the "Server Parameters" section, using the `azure.extensions` setting
 - **Azure CLI** (`az`) installed on your machine and logged in with appropriate permissions on your Azure subscription
 - **Kubernetes CLI** (`kubectl`) installed and configured to access your AKS cluster
@@ -87,7 +87,8 @@ You may be prompted to confirm switching from system-assigned to user-assigned m
 Workload identity federation requires the OIDC issuer URL from your AKS cluster. Retrieve it with the `show` command:
 
 <CodeBlock language="bash">
-{`az aks show --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER --query oidcIssuerProfile.issuerUrl -o tsv`}
+{`az aks show --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \\
+  --query oidcIssuerProfile.issuerUrl -o tsv`}
 </CodeBlock>
 
 Save this URL—you'll need it in the next step. It will look something like:
@@ -110,8 +111,14 @@ Create the federated credential using the OIDC issuer URL from above:
 
 Replace the issuer URL with the one you retrieved above (it should already include your region, subscription ID, and cluster ID).
 
-#### (Optional) Grant Event Hub permissions for log streaming
-If you plan to stream PostgreSQL logs from Azure Event Hub, grant the managed identity the necessary permissions:
+#### Grant Event Hub permissions for log streaming (optional)
+Log Insights is an essential feature of pganalyze Enterprise, providing access to EXPLAIN plans through `auto_explain`, the information necessary to power Query Advisor, and
+allowing pganalyze to classify all of your logs for easy searching and recognition. Gaining access to PostgreSQL logs in Azure is done using an Event Hub. The instructions for
+setting up log streaming is covered in the [Log Insights Setup for the collector](/docs/log-insights/setup/azure-database/01_set_up_managed_identity) as one of the steps to prepare your
+Azure database for monitoring.
+
+If you plan to use the built-in pganalyze Collector to monitor your PostgreSQL databases in Azure, you'll need to grant the managed identity of the container the necessary permissions to the 
+Event Hub. **If you haven't set up log streaming yet, you can skip this step for now and return to it later.** Just note that log streaming won't work until this step is completed.
 
 <CodeBlock language="bash">
 {`az role assignment create \\
@@ -219,8 +226,8 @@ Now deploy the pganalyze Enterprise application:
 {`kubectl apply -f pganalyze-enterprise.yml`}
 </CodeBlock>
 
-> **Note on Memory Requirements:** The pganalyze container requests 8GB of memory in the template above. Ensure your AKS cluster has nodes with sufficient memory. 
-> If you see "Insufficient memory" errors, you may need to scale up your cluster or reduce the requested memory limit in the YAML.
+**Note on Memory Requirements:** The pganalyze container requests 8GB of memory in the template above. Ensure your AKS cluster has nodes with sufficient memory. 
+If you see "Insufficient memory" errors, you may need to scale up your cluster or reduce the requested memory limit in the YAML.
 
 We can confirm the deployment is completed by checking:
 
@@ -230,7 +237,7 @@ We can confirm the deployment is completed by checking:
 
 Output should show:
 
-<CodeBlock language="bash" hideCopy={true}>
+<CodeBlock language="text" hideCopy={true}>
 {`NAME       READY   UP-TO-DATE   AVAILABLE   AGE
 pganalyze  1/1     1            1           1m`}
 </CodeBlock>
@@ -245,7 +252,7 @@ Run the following command to perform the Enterprise self-check:
 
 This should return the following:
 
-<CodeBlock language="bash" hideCopy={true}>
+<CodeBlock language="text" hideCopy={true}>
 {`Testing database connection... Success!
 Testing Redis connection... Success!
 Skipping SMTP mailer check - configure MAILER_URL to enable mail sending
@@ -267,7 +274,7 @@ Run the following to initialize the pganalyze statistics database:
 
 Output should show:
 
-<CodeBlock language="bash" hideCopy={true}>
+<CodeBlock language="text" hideCopy={true}>
 {`Database 'postgres' already exists
 set_config
 -----------
@@ -283,7 +290,7 @@ Then run the following to create the initial admin user:
 
 And note down the credentials that are returned:
 
-<CodeBlock language="bash" hideCopy={true}>
+<CodeBlock language="text" hideCopy={true}>
 {`INFO -- : *****************************
 INFO -- : *** INITIAL ADMIN CREATED ***
 INFO -- : *****************************
@@ -304,7 +311,7 @@ Now we can connect to the pganalyze UI. Run the following to determine the IP ad
 
 Output should show:
 
-<CodeBlock language="bash" hideCopy={true}>
+<CodeBlock language="text" hideCopy={true}>
 {`NAME                 TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
 pganalyze-service    LoadBalancer   10.0.1.23     20.124.89.150   80:31234/TCP   5m`}
 </CodeBlock>
