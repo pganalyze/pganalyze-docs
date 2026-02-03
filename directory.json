@@ -344,6 +344,10 @@
       "title": "Enterprise Server: Initial Non-root Setup with Kubernetes",
       "path": "/docs/enterprise/setup/kubernetes_as_non_root"
     },
+    "enterprise/setup/kubernetes_azure_aks": {
+      "title": "Enterprise Server: Initial Setup (Kubernetes on Azure AKS)",
+      "path": "/docs/enterprise/setup/kubernetes_azure_aks"
+    },
     "enterprise/setup/separate-collector-install": {
       "title": "Enterprise Server: Separate collector installation",
       "path": "/docs/enterprise/setup/separate-collector-install"

@@ -1,0 +1,385 @@
+---
+title: 'Enterprise Server: Initial Setup (Kubernetes on Azure AKS)'
+backlink_href: /docs/enterprise
+backlink_title: 'pganalyze Enterprise Server'
+---
+
+import ToC from '../../components/Toc'
+
+These are the installation instructions for [pganalyze Enterprise Server](/enterprise-postgres-monitoring), targeted for a Kubernetes cluster managed by Azure AKS.
+
+<ToC items={props.toc} />
+
+## Installation Steps
+
+### Pre-requisites
+
+- Provision an **Azure Kubernetes Service (AKS)** cluster in your Azure subscription
+- Provision a **PostgreSQL database** (e.g., Azure Database for PostgreSQL - Flexible Server) to store pganalyze statistics
+  - The pganalyze statistics database **must have the `pgcrypto` and `btree_gin` extensions enabled** under the "Server Parameters" section, using the `azure.extensions` setting
+- **Azure CLI** (`az`) installed on your machine and logged in with appropriate permissions on your Azure subscription
+- **Kubernetes CLI** (`kubectl`) installed and configured to access your AKS cluster
+
+### Step 1: Re-publish the Docker image to your private container registry
+
+The goal of this first step is to publish the pganalyze Enterprise container image to your private Azure Container Registry, which can be accessed from your Azure AKS cluster.
+
+Perform the next steps on a machine that has full internet connectivity with no outbound access restrictions.
+
+First, log in with your license information, shared with you by the pganalyze team:
+
+<CodeBlock language="bash">
+{`docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io`}
+</CodeBlock>
+
+Now pull the image, replacing VERSION with the [latest pganalyze Enterprise version](/docs/enterprise/releases):
+
+<CodeBlock language="bash">
+{`docker pull quay.io/pganalyze/enterprise:VERSION`}
+</CodeBlock>
+
+Create a container registry in Azure (if you don't have one):
+
+<CodeBlock language="bash">
+{`az acr create --resource-group YOUR_RESOURCE_GROUP --name pganalyzeregistry --sku Basic`}
+</CodeBlock>
+
+Log in to your Azure Container Registry:
+
+<CodeBlock language="bash">
+{`az acr login --name pganalyzeregistry`}
+</CodeBlock>
+
+Tag the pganalyze image for your ACR, replacing the values (REGISTRY_NAME, VERSION):
+
+<CodeBlock language="bash">
+{`docker tag quay.io/pganalyze/enterprise:VERSION pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION`}
+</CodeBlock>
+
+And now push the tag to the registry:
+
+<CodeBlock language="bash">
+{`docker push pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION`}
+</CodeBlock>
+
+### Step 2: Configure Azure managed identity for workload authentication
+pganalyze Enterprise requires a managed identity to authenticate with Azure services like Event Hub for log streaming. Follow these steps to set up the identity and configure Kubernetes workload identity federation.
+
+#### Create the managed identity
+Create a managed identity that will be assigned to your AKS cluster:
+
+<CodeBlock language="bash">
+{`az identity create --resource-group YOUR_RESOURCE_GROUP --name pganalyze-identity`}
+</CodeBlock>
+
+#### Assign the identity to your AKS cluster
+Enable managed identity on your AKS cluster and assign the identity you just created:
+
+<CodeBlock language="bash">
+{`az aks update --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \\
+  --enable-managed-identity \\
+  --assign-identity /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity`}
+</CodeBlock>
+
+You may be prompted to confirm switching from system-assigned to user-assigned managed identity. Type `y` to proceed.
+
+#### Get the OIDC issuer URL
+Workload identity federation requires the OIDC issuer URL from your AKS cluster. Retrieve it with the `show` command:
+
+<CodeBlock language="bash">
+{`az aks show --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \\
+  --query oidcIssuerProfile.issuerUrl -o tsv`}
+</CodeBlock>
+
+Save this URL—you'll need it in the next step. It will look something like:
+
+`https://eastus.oic.prod-aks.azure.com/SUBSCRIPTION_ID/CLUSTER_ID/`
+
+#### Create federated identity credentials
+Workload identity federation establishes a trust relationship between your Kubernetes ServiceAccount and the Azure managed identity. This is **required** for the pod to authenticate using the identity.
+
+Create the federated credential using the OIDC issuer URL from above:
+
+<CodeBlock language="bash">
+{`az identity federated-credential create \\
+  --resource-group YOUR_RESOURCE_GROUP \\
+  --identity-name pganalyze-identity \\
+  --name pganalyze-fic \\
+  --issuer "https://eastus.oic.prod-aks.azure.com/SUBSCRIPTION_ID/CLUSTER_ID/" \\
+  --subject "system:serviceaccount:default:pganalyze-sa"`}
+</CodeBlock>
+
+Replace the issuer URL with the one you retrieved above (it should already include your region, subscription ID, and cluster ID).
+
+#### Grant Event Hub permissions for log streaming (optional)
+Log Insights is an essential feature of pganalyze Enterprise, providing access to EXPLAIN plans through `auto_explain`, the information necessary to power Query Advisor, and
+allowing pganalyze to classify all of your logs for easy searching and recognition. Gaining access to PostgreSQL logs in Azure is done using an Event Hub. The instructions for
+setting up log streaming is covered in the [Log Insights Setup for the collector](/docs/log-insights/setup/azure-database/01_set_up_managed_identity) as one of the steps to prepare your
+Azure database for monitoring.
+
+If you plan to use the built-in pganalyze Collector to monitor your PostgreSQL databases in Azure, you'll need to grant the managed identity of the container the necessary permissions to the 
+Event Hub. **If you haven't set up log streaming yet, you can skip this step for now and return to it later.** Just note that log streaming won't work until this step is completed.
+
+<CodeBlock language="bash">
+{`az role assignment create \\
+  --assignee /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity \\
+  --role "Azure Event Hubs Data Receiver" \\
+  --scope /subscriptions/SUBSCRIPTION_ID/resourceGroups/YOUR_RESOURCE_GROUP/providers/Microsoft.EventHub/namespaces/YOUR_EVENT_HUB_NAMESPACE`}
+</CodeBlock>
+
+Replace `YOUR_EVENT_HUB_NAMESPACE` with your actual Event Hub namespace name.
+
+### Step 3: Set up a Kubernetes secret for configuration settings
+
+You can manage Kubernetes secrets using [kubectl](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/).
+
+There are two sensitive settings, `DATABASE_URL` and `LICENSE_KEY` that we store using a Kubernetes secret.
+
+The `DATABASE_URL` has the format `postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE` and specifies the connection used for storing the pganalyze statistics data. We recommend using an administrative user on the statistics database for this connection.
+
+For Azure Database for PostgreSQL, the hostname typically looks like: `servername.postgres.database.azure.com`
+
+The `LICENSE_KEY` has been provided to you by the pganalyze team - replace `KEYKEYKEY` in the command with the actual key.
+
+<CodeBlock language="bash">
+{`kubectl create secret generic pganalyze-secret \\
+  --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \\
+  --from-literal=LICENSE_KEY=KEYKEYKEY \\
+  --dry-run=client -o yaml | kubectl apply -f -`}
+</CodeBlock>
+
+### Step 4: Create the pganalyze Enterprise deployment
+
+Save the following text into a file `pganalyze-enterprise.yml`:
+
+<CodeBlock language="yaml">
+{`apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pganalyze-sa
+  namespace: default
+  annotations:
+    azure.workload.identity/client-id: YOUR_CLIENT_ID
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pganalyze
+  namespace: default
+  labels:
+    app: pganalyze
+spec:
+  selector:
+    matchLabels:
+      app: pganalyze
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pganalyze
+        azure.workload.identity/use: "true"
+    spec:
+      serviceAccountName: pganalyze-sa
+      containers:
+      - name: main
+        image: 'pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION'
+        resources:
+          limits:
+            memory: "8Gi"
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - secretRef:
+            name: pganalyze-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pganalyze-service
+  namespace: default
+  labels:
+    app: pganalyze
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: pganalyze-enterprise
+spec:
+  type: LoadBalancer
+  selector:
+    app: pganalyze
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000`}
+</CodeBlock>
+
+You will need to adjust the following settings:
+
+- `image: pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION` - This needs to match the Docker image tag we created earlier
+- replace `YOUR_CLIENT_ID` with the Client ID of the managed identity you created earlier. You can get it by running:
+<CodeBlock language="bash">
+{`az identity show --resource-group YOUR_RESOURCE_GROUP --name pganalyze-identity --query clientId -o tsv`}
+</CodeBlock>
+
+Now deploy the pganalyze Enterprise application:
+
+<CodeBlock language="bash">
+{`kubectl apply -f pganalyze-enterprise.yml`}
+</CodeBlock>
+
+**Note on Memory Requirements:** The pganalyze container requests 8GB of memory in the template above. Ensure your AKS cluster has nodes with sufficient memory. 
+If you see "Insufficient memory" errors, you may need to scale up your cluster or reduce the requested memory limit in the YAML.
+
+We can confirm the deployment is completed by checking:
+
+<CodeBlock language="bash">
+{`kubectl get deploy`}
+</CodeBlock>
+
+Output should show:
+
+<CodeBlock language="text" hideCopy={true}>
+{`NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+pganalyze  1/1     1            1           1m`}
+</CodeBlock>
+
+### Step 5: Run the Enterprise self-check to verify the configuration and license
+
+Run the following command to perform the Enterprise self-check:
+
+<CodeBlock language="bash">
+{`kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake enterprise:self_check`}
+</CodeBlock>
+
+This should return the following:
+
+<CodeBlock language="text" hideCopy={true}>
+{`Testing database connection... Success!
+Testing Redis connection... Success!
+Skipping SMTP mailer check - configure MAILER_URL to enable mail sending
+Verifying enterprise license... Success!
+All tests completed successfully!`}
+</CodeBlock>
+
+If you see an error, double check your configuration settings, and especially the database connections.
+
+In case you get an error for the license verification, please reach out to the pganalyze team.
+
+### Step 6: Initialize the database
+
+Run the following to initialize the pganalyze statistics database:
+
+<CodeBlock language="bash">
+{`kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:structure:load`}
+</CodeBlock>
+
+Output should show:
+
+<CodeBlock language="text" hideCopy={true}>
+{`Database 'postgres' already exists
+set_config
+-----------
+          1
+(1 row)`}
+</CodeBlock>
+
+Then run the following to create the initial admin user:
+
+<CodeBlock language="bash">
+{`kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:seed`}
+</CodeBlock>
+
+And note down the credentials that are returned:
+
+<CodeBlock language="text" hideCopy={true}>
+{`INFO -- : *****************************
+INFO -- : *** INITIAL ADMIN CREATED ***
+INFO -- : *****************************
+INFO -- :
+INFO -- : *****************************
+INFO -- : Email: admin@example.com
+INFO -- : Password: PASSWORDPASSWORD
+INFO -- : *****************************
+INFO -- :
+INFO -- : Use these credentials to login and then change email address and password.`}
+</CodeBlock>
+
+Now we can connect to the pganalyze UI. Run the following to determine the IP address or hostname of the load balancer that was provisioned:
+
+<CodeBlock language="bash">
+{`kubectl get svc pganalyze-service`}
+</CodeBlock>
+
+Output should show:
+
+<CodeBlock language="text" hideCopy={true}>
+{`NAME                 TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+pganalyze-service    LoadBalancer   10.0.1.23     20.124.89.150   80:31234/TCP   5m`}
+</CodeBlock>
+
+When you go to the external IP in your browser you should see the login page. You can now use the initial admin details to log in.
+
+![](login.png)
+
+### Step 7: Log in to pganalyze
+
+Please now log in to the pganalyze interface using the generated credentials you've seen earlier when setting up the database.
+
+![](create_organization.png)
+
+If authentication does not work, or you see an error message, please check the container's logs using:
+
+<CodeBlock language="bash">
+{`kubectl logs deploy/pganalyze`}
+</CodeBlock>
+
+After successful login, choose an organization name of your choice (typically your company name).
+
+### Step 8: Preparing your PostgreSQL database for monitoring
+
+Before you can add a database to the pganalyze installation, you'll need to enable the `pg_stat_statements` extension on it. You can find details in the [Azure Database for PostgreSQL instructions](/docs/install/azure_database/01_configure_azure_instance).
+
+In addition you will need to either use the database superuser (usually "postgres") to give pganalyze access to your database, or create a [restricted monitoring user](/docs/install/azure_database/02_create_monitoring_user).
+
+You don't need to run anything else on your database server - the pganalyze container will connect to your database at regular intervals to gather information from PostgreSQL's statistics tables.
+
+### Step 9: Add your first database server to pganalyze
+
+For monitoring an Azure Database for PostgreSQL instance, you can use the bundled container with the pganalyze Enterprise Server container image.
+
+To do so, fill out the "Add Postgres Server" form in the pganalyze UI. When monitoring Azure Database for PostgreSQL you can use the server hostname directly (e.g., `servername.postgres.database.azure.com`).
+
+![](add_server_azure.png)
+
+Once you click "Add Database" the collector running inside the container will update, and start collecting information within 10 minutes.
+
+You can check whether any information has been received by clicking the "Server Settings" link in the left navigation, and scrolling down to the "Debug Info" section.
+
+![](debug_info_no_data_azure.png)
+
+Once data is coming in successfully, you should see connection and metrics information appear in the Debug Info section.
+
+![](debug_info_with_data_azure.png)
+
+**Important:** Be aware that some graphs need at least a few hours worth of data and might not work properly before that period.
+
+## Next steps
+
+To learn more about adding additional team members, see [Account Management](/docs/accounts).
+
+We also recommend changing both the email and password of the admin user initially created (you can do so by clicking on "Admin" in the lower left of the screen).
+
+Additionally, you can review [all configuration settings](/docs/enterprise/settings) for the Enterprise container.
+
+## Appendix: How to apply config changes
+
+In case you want to make adjustments to the configuration, simply adjust the `pganalyze-enterprise.yml` file from earlier, and then apply with kubectl:
+
+<CodeBlock language="bash">
+{`kubectl apply -f pganalyze-enterprise.yml`}
+</CodeBlock>
+
+When changing the secrets information without changing the Kubernetes template, you can restart the deployment like this:
+
+<CodeBlock language="bash">
+{`kubectl rollout restart deployment pganalyze`}
+</CodeBlock>
