@@ -22,7 +22,7 @@ These are the installation instructions for [pganalyze Enterprise Server](/enter
 
 ### Step 1: Re-publish the Docker image to your private container registry
 
-The goal of this first step is to publish the pganalyze Enterprise container to your private Azure Container Registry, which can be accessed from your Azure AKS cluster.
+The goal of this first step is to publish the pganalyze Enterprise container image to your private Azure Container Registry, which can be accessed from your Azure AKS cluster.
 
 Perform the next steps on a machine that has full internet connectivity with no outbound access restrictions.
 
@@ -132,7 +132,7 @@ The `DATABASE_URL` has the format `postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DA
 
 For Azure Database for PostgreSQL, the hostname typically looks like: `servername.postgres.database.azure.com`
 
-The `LICENSE_KEY` has been provided to you by the pganalyze Team - replace `KEYKEYKEY` in the command with the actual key.
+The `LICENSE_KEY` has been provided to you by the pganalyze team - replace `KEYKEYKEY` in the command with the actual key.
 
 <CodeBlock language="bash">
 {`kubectl create secret generic pganalyze-secret \\
