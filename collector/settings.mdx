@@ -79,6 +79,12 @@ Common settings for configuring collector behavior, independent of the platform.
       </td>
     </tr>
     <tr>
+      <td>api_cluster_id (<code>API_CLUSTER_ID</code>)</td>
+      <td>Auto detected</td>
+      <td>Sets the identity of the cluster the server belongs to. Defaults to cluster ID retrieved from cloud provider APIs (if available), or to the Postgres database system identifier for self-managed servers.
+      </td>
+    </tr>
+    <tr>
       <td>skip_if_replica (<code>SKIP_IF_REPLICA</code>)</td>
       <td>false</td>
       <td>Skip all metadata collection and snapshot submission while this server is a replica (according to <code>pg_is_in_recovery</code>).
