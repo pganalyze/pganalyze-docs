@@ -5,6 +5,7 @@ import Null from './Null';
 import styles from './style.module.scss';
 import { useDescriptionPopup } from './WithDescriptionPopup';
 import { useIcon } from './WithIcons';
+import Callout from "./Callout";
 
 type PGSettingRecommendation = {
   name: string;
@@ -17,7 +18,7 @@ type PGSettingRecommendation = {
 
 type RecommendationMode = 'list' | 'alter system';
 
-type Props ={
+type Props = {
   mode?: RecommendationMode,
   recommendations: PGSettingRecommendation[]
 }
@@ -54,6 +55,12 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
           })}
         </tbody>
       </table>
+      <Callout
+        learnMoreLink="https://www.postgresql.org/docs/current/using-explain.html#USING-EXPLAIN-CAVEATS"
+      >
+        <code>auto_explain.log_timing</code> is helpful when understanding complex queries, but the 5% or more query
+        overhead may not be acceptable for your production database.
+      </Callout>
       <RecommendationSummary mode={mode} recommendations={recommendations} />
     </>
   )
@@ -207,9 +214,9 @@ export const getAllAutoExplainRecommendations = (settings: CurrentSettings | und
     },
     {
       name: 'auto_explain.log_timing',
-      recommended: 'off',
+      recommended: 'on',
       recommendChange: true,
-      description: "Controls whether per-node timing information is printed when an execution plan is logged; it's equivalent to the TIMING option of EXPLAIN. The overhead of repeatedly reading the system clock can slow down queries significantly. This parameter has no effect unless auto_explain.log_analyze is enabled."
+      description: "Controls whether per-node timing information is printed when an execution plan is logged; it's equivalent to the TIMING option of EXPLAIN. The overhead of repeatedly reading the system clock can slow down queries by 5% or more. This parameter has no effect unless auto_explain.log_analyze is enabled."
     },
     {
       name: 'auto_explain.log_triggers',
