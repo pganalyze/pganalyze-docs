@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="317.94264 -1384.0255 1023.2657 696.52555" width="1023.2657" height="696.52555">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="317.94264 -1384.0255 1023.2657 696.52555" width="1023.2657" height="696.52555">
   <defs>
     <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
       <g>
@@ -8,7 +8,7 @@
       </g>
     </marker>
   </defs>
-  <g id="Canvas_1" stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+  <g id="Canvas_1" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1" stroke="none">
     <title>Canvas 1</title>
     <rect fill="white" x="317.94264" y="-1384.0255" width="1023.2657" height="696.52555"/>
     <g id="Canvas_1_Layer_1">
@@ -102,10 +102,10 @@
         </text>
       </g>
       <g id="Line_146">
-        <line x1="834.9113" y1="-797.2" x2="835.3272" y2="-825.8341" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <line x1="891.8153" y1="-797.2" x2="892.4258" y2="-825.8353" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Line_147">
-        <line x1="835.471" y1="-990.22" x2="835.471" y2="-1074.7325" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <line x1="892.6368" y1="-990.22" x2="892.6368" y2="-1074.7325" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_148">
         <path d="M 338.44264 -1258.0919 L 648.46875 -1258.0919 L 648.46875 -708 L 338.44264 -708 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
@@ -131,10 +131,12 @@
         <rect x="382.5143" y="-1196.0612" width="228.66315" height="108" fill="#bfda89"/>
         <rect x="382.5143" y="-1196.0612" width="228.66315" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <text transform="translate(387.5143 -1186.0612)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">User with</tspan>
-          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="38" xml:space="preserve">“Tune Queries” permission </tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="60" xml:space="preserve">creates a workbook for a </tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="82" xml:space="preserve">query of their choice</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">User with </tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" y="16" xml:space="preserve">permission</tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="38" xml:space="preserve">“Create Workbooks” </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" y="38" xml:space="preserve">creates </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="60" xml:space="preserve">a workbook for a query of </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="82" xml:space="preserve">their choice</tspan>
         </text>
       </g>
       <g id="Graphic_152">

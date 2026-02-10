@@ -1,5 +1,5 @@
 ---
-title: 'Step 2: Attach Databases'
+title: 'Step 2: Create Credential and Attach Databases'
 install_track_title: Installation Guide (Heroku Postgres)
 backlink_href: /docs/install
 backlink_title: 'Installation Guide'
@@ -10,9 +10,7 @@ import { collectorAppName, attachmentName } from "./util";
 export const AddonsAttachCommand = ({ organizationSlug }) => {
   return (
     <CodeBlock>
-      heroku addons:attach postgresql-objective-11111 -a{" "}
-      {collectorAppName(organizationSlug)} --as{" "}
-      {attachmentName(organizationSlug)}
+      {`heroku addons:attach postgresql-objective-11111 --credential pganalyze -a ${collectorAppName(organizationSlug)} --as ${attachmentName(organizationSlug)}`}
     </CodeBlock>
   );
 };
@@ -44,9 +42,68 @@ Owning App  Add-on                       Plan                           Price   
 testapp     postgresql-objective-11111   heroku-postgresql:essential-0  ~$0.007/hour $5/month  created
 ```
 
+## Create the pganalyze role
+For Heroku Postgres production plans (Standard, Premium, Private, and Shield), we recommend creating a new Heroku credential
+(role) for your Postgres instance. This allows you to create a specific `pganalyze` role and apply the recommended
+read-only monitoring privileges. More details on managing Heroku Postgres credentials
+can be found in the [Heroku documentation](https://devcenter.heroku.com/articles/heroku-postgresql-credentials).
+
+Using the add-on name from the previous step (`postgresql-objective-11111` in the example), and the correct application
+name, run the following command to create the new credential (named `pganalyze`):
+
+<CodeBlock language="bash">
+{`heroku pg:credentials:create postgresql-objective-11111 --name pganalyze -a testapp`}
+</CodeBlock>
+
+## Grant monitoring privileges to the pganalyze role
+Now connect to the database server with an admin user using the `heroku` CLI and grant the recommended predefined role and create the necessary schema.
+
+<CodeBlock language="bash">
+{`heroku pg:psql -a testapp`}
+</CodeBlock>
+ 
+<CodeBlock language="sql">
+{`GRANT pg_monitor TO pganalyze;
+ 
+CREATE SCHEMA pganalyze;
+GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
+GRANT USAGE ON SCHEMA public TO pganalyze;`}
+</CodeBlock>
+
+## Create monitoring helper functions
+Next, connect to the hosted database that you plan to monitor using `heroku pg:psql` and the default Heroku admin role (NOT the 
+new `pganalyze` role) and add the following two functions to enable the collection of additional statistics.
+
+<CodeBlock language="sql">
+{`DROP FUNCTION IF EXISTS pganalyze.get_column_stats;
+CREATE FUNCTION pganalyze.get_column_stats() RETURNS TABLE(
+  schemaname name, tablename name, attname name, inherited bool, null_frac real, avg_width int, n_distinct real, correlation real
+) AS $$
+  /* pganalyze-collector */
+  SELECT schemaname, tablename, attname, inherited, null_frac, avg_width, n_distinct, correlation
+  FROM pg_catalog.pg_stats
+  WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;
+ 
+DROP FUNCTION IF EXISTS pganalyze.get_relation_stats_ext;
+CREATE FUNCTION pganalyze.get_relation_stats_ext() RETURNS TABLE(
+  statistics_schemaname text, statistics_name text,
+  inherited boolean, n_distinct pg_ndistinct, dependencies pg_dependencies,
+  most_common_val_nulls boolean[], most_common_freqs float8[], most_common_base_freqs float8[]
+) AS
+$$
+  /* pganalyze-collector */ SELECT statistics_schemaname::text, statistics_name::text,
+  (row_to_json(se.*)::jsonb ->> 'inherited')::boolean AS inherited, n_distinct, dependencies,
+  most_common_val_nulls, most_common_freqs, most_common_base_freqs
+  FROM pg_catalog.pg_stats_ext se
+  WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+</CodeBlock>
+
 ## Attach database
 
-Now, use that add-on name (`postgresql-objective-11111` in the example) to attach the Heroku Postgres database to the collector.
+Finally, use that add-on name (`postgresql-objective-11111` in the example) to attach the Heroku Postgres database to the collector. **Be 
+sure to use the newly created `pganalyze` credential**.
 
 You can utilize the `--as` parameter to specify an alias for this database, this is in particular useful when you attach multiple databases to the same collector.
 

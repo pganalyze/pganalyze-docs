@@ -344,6 +344,10 @@
       "title": "Enterprise Server: Initial Non-root Setup with Kubernetes",
       "path": "/docs/enterprise/setup/kubernetes_as_non_root"
     },
+    "enterprise/setup/kubernetes_azure_aks": {
+      "title": "Enterprise Server: Initial Setup (Kubernetes on Azure AKS)",
+      "path": "/docs/enterprise/setup/kubernetes_azure_aks"
+    },
     "enterprise/setup/separate-collector-install": {
       "title": "Enterprise Server: Separate collector installation",
       "path": "/docs/enterprise/setup/separate-collector-install"
@@ -785,7 +789,7 @@
       "path": "/docs/install/heroku_postgres/01_deploy_the_collector"
     },
     "install/heroku_postgres/02_attach_databases": {
-      "title": "Step 2: Attach Databases",
+      "title": "Step 2: Create Credential and Attach Databases",
       "path": "/docs/install/heroku_postgres/02_attach_databases"
     },
     "install/heroku_postgres/03_verify_configuration": {

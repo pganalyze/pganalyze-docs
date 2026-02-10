@@ -4,6 +4,8 @@
     href: enterprise/setup
   - name: Initial setup on Kubernetes (Amazon EKS)
     href: enterprise/setup/kubernetes_amazon_eks
+  - name: Initial setup on Kubernetes (Azure AKS)
+    href: enterprise/setup/kubernetes_azure_aks
   - name: Initial setup on Kubernetes (non-root)
     href: enterprise/setup/kubernetes_as_non_root
   - name: Separate collector installation
