@@ -12,6 +12,10 @@ The model is configurable, and prioritizes different types and amount of indexes
 configuration. Behind the scenes the model is solved using the [CP-SAT solver](https://developers.google.com/optimization/cp/cp_solver),
 to find the optimum choice of indexes based on the selected goals.
 
+For clusters, the model receives combined scan data from all servers in the cluster. This means 
+a single constraint programming model run considers workloads from the primary and all replicas, 
+ensuring index recommendations account for the complete query activity across the cluster.
+
 ## Learn more about the model
 
 To learn all the details about the Constraint Programming Model, we recommend watching the webinar recording (56min)
