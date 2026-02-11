@@ -54,3 +54,9 @@ scan](https://pganalyze.com/blog/how-postgres-chooses-index#parameterized-index-
 
 If such a paramterized index scan is likely, we include the JOIN clause in the scan data provided
 to the second phase of the Indexing Engine - otherwise JOIN clauses are excluded.
+
+For clusters, scans from all servers (primary and replicas) are combined for each table. 
+This ensures the Indexing Engine considers the full workload when making index recommendations.
+
+For example, a scan that only occurs on replicas will be included alongside scans from the primary, 
+preventing scenarios where an index critical to replica performance would be marked as unused.
