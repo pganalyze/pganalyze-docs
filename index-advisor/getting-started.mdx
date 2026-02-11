@@ -114,6 +114,10 @@ Insights are listed below and split into two types: Missing indexes and
 unused indexes. By default insights are sorted by impact which highlights
 the most important items to address.
 
+For servers in a cluster, insights are shown on the primary server and include 
+data from all cluster members. When viewing insights from a replica server, 
+you'll see a link to view insights on the primary.
+
 ### Missing indexes
 
 Detects tables that have potential to be improved by adding indexes. Queries
@@ -124,7 +128,8 @@ See more details in the [Indexing Engine documentation](/docs/indexing-engine).
 
 The impact of a missing index insight is measured by weighted cost improvement,
 which represents the estimated cost reduction for all scans that are expected to use
-the index, weighted by the frequency (calls / minute) of the scan.
+the index, weighted by the frequency (calls / minute) of the scan. For clusters, 
+this includes scan frequency across all server instances in a cluster.
 
 ### Unused indexes
 
@@ -136,7 +141,8 @@ used even though it looked applicable, or the query workload changed.
 [The unused index check](https://pganalyze.com/docs/checks/schema/index_unused)
 detects indexes that haven't been used recently (last 35 days by default),
 as determined by Postgres statistics, and notes these indexes as potentially
-being candidates for removal.
+being candidates for removal. For clusters, an index is only considered unused 
+if it hasn't been used on any server in the cluster.
 
 The impact of an unused index insight is measured by reduced Index Write
 Overhead.
@@ -157,6 +163,4 @@ Index Advisor is also available from query detail pages, showing a breakdown of
 the query into the individual scans that are then analyzed by Index Advisor. For
 each scanned table you can see the WHERE and JOIN conditions, the current scan
 method that is expected to be used, and Index Advisor insights, with a link to
-the full details in the per-table Index Advisor view.
-
-todobison https://pganalyze.com/docs/index-advisor/getting-started
+the full details in the per-table Index Advisor view. For clusters, affected queries may link to databases hosted by any server in the cluster.
