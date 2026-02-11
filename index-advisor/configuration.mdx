@@ -47,22 +47,22 @@ identifier from `pg_controldata` to group replicas with their primary.
 For other providers like Azure or Amazon RDS without defined clusters, you can 
 manually define clusters using the collector configuration. Set the same `api_cluster_id` 
 for all servers that should be treated as a cluster:
-```
-[server1]
+
+
+<CodeBlock>
+{`[server1]
 db_host = my-db-primary.postgres.database.azure.com
 ...
-api_cluster_id = my-db
-
+api_cluster_id = my-db\n
 [server2]
 db_host = my-db-replica.postgres.database.azure.com
 ...
-api_cluster_id = my-db
-```
-
-For environment variable configuration, use `API_CLUSTER_ID`:
-```
-API_CLUSTER_ID=my-db
-```
+api_cluster_id = my-db`}
+</CodeBlock>
+For environment variable configuration, use API_CLUSTER_ID.
+<CodeBlock>
+{`API_CLUSTER_ID=my-db`}
+</CodeBlock>
 
 Once configured, Index Advisor will combine workload data from all servers with the same cluster ID and produce recommendations 
 on the primary server.
