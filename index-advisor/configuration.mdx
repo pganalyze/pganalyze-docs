@@ -38,6 +38,35 @@ on each table's workload by clicking on "Configure thresholds" on the Index Advi
 "Configure" tab. You can also override the configuration for specific tables, or use
 a completely customized configuration for the underlying [Constraint Programming Model](/docs/indexing-engine/cp-model).
 
+## Configuring clusters
+
+For AWS RDS/Aurora, Google AlloyDB, and Crunchy Bridge, cluster detection happens 
+automatically. For self-managed Postgres, the collector uses the database system 
+identifier from `pg_controldata` to group replicas with their primary.
+
+For other providers like Azure or Amazon RDS without defined clusters, you can 
+manually define clusters using the collector configuration. Set the same `api_cluster_id` 
+for all servers that should be treated as a cluster:
+```
+[server1]
+db_host = my-db-primary.postgres.database.azure.com
+...
+api_cluster_id = my-db
+
+[server2]
+db_host = my-db-replica.postgres.database.azure.com
+...
+api_cluster_id = my-db
+```
+
+For environment variable configuration, use `API_CLUSTER_ID`:
+```
+API_CLUSTER_ID=my-db
+```
+
+Once configured, Index Advisor will combine workload data from all servers with the same cluster ID and produce recommendations 
+on the primary server.
+
 ## Exploring alternate configurations
 
 ![](/table-ia-detail.png)
@@ -77,4 +106,3 @@ only members with the Modify permission can save them.
 
 To get an overview what configurations are currently applied across a database, you
 can navigate to the Configure tab in Index Advisor.
-
