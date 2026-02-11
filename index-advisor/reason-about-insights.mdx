@@ -27,7 +27,8 @@ an expected cost improvement.
 **Scan Cost**
 
 The total and maximum of estimated scan costs across all scans. This is an estimate of I/O effort to
-read data, but does not directly translate to query runtime. Lower is better.
+read data, but does not directly translate to query runtime. Lower is better. For clusters, this 
+includes scans from all server instances in the cluster.
 
 **Weighted Cost**
 
@@ -39,7 +40,8 @@ use relative differences between weighted cost to compare different scans.
 
 This is a weighted average of the estimated cost improvement across all scans
 on the table, weighting by average scans / minute. Higher weighted cost
-improvements are shown as higher impact.
+improvements are shown as higher impact. For clusters, this accounts for scan 
+frequency across all servers.
 
 **Scan Coverage**
 
@@ -63,7 +65,9 @@ optimization in Postgres due to indexes being present. If possible, this should 
 ![](/issue-missing-indexes-index-detail.png)
 
 If you want to understand what scans and queries are affected by one of the index recommendations,
-you can view them on the index detail view. Compare the current costs with the estimated new costs.
+you can view them on the index detail view. Compare the current costs with the estimated new costs. For 
+clusters, when viewing the primary server you can see all affected queries for each database hosted by a 
+server in the cluster.
 
 ## Scan details
 
@@ -77,7 +81,8 @@ The cost for each index is based on the [Postgres query execution cost model](ht
 
 The weighted cost is weighted by the frequency of the scan (based on the queries that
 contain the scan). More frequent queries will have a more significant impact on
-the overall weighted cost improvement.
+the overall weighted cost improvement. For clusters, scan frequency shown on the 
+primary server includes activity for both the primary instance and across the whole cluster.
 
 ## Scans
 
@@ -120,7 +125,8 @@ selected index. You can show all queries that could possibly use the index by
 marking the “Show all queries” checkbox.
 
 The scan cost change shows how the estimated cost of the query's scan on the
-current table would change when the index is added.
+current table would change when the index is added. For clusters, affected queries 
+may be hosted on any server in the cluster, not just the primary.
 
 ## Existing indexes
 
