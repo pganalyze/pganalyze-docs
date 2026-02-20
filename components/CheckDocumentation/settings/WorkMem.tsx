@@ -22,7 +22,7 @@ const WorkMemGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   issue,
 }) => {
   const Link = useSmartAnchor();
-  const issueDetails = issue && JSON.parse(issue.detailsJson);
+  const issueDetails = issue?.details;
   const currSharedBuffers =
     typeof issueDetails?.["shared_buffers"] === "number"
       ? formatBytes(issueDetails["shared_buffers"])
