@@ -31,7 +31,7 @@ const XminHorizonGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   urls: { serverReplicationUrl },
   issue,
 }) => {
-  const issueDetails = issue && JSON.parse(issue.detailsJson);
+  const issueDetails = issue?.details;
   const heldBackBy = issueDetails && issueDetails["held_back_by"];
   let byBackend = null;
   let byReplicationSlot = null;
