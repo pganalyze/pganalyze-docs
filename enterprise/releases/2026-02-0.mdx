@@ -133,7 +133,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - This provides an easier mechanism to get the index recommendations for a particular table, without having to parse the complex `data` field.
   - Note this is currently still a private API, but we intend to stabilize this in the near future. 
 
-- This release changes some GraphQL API fields from a serialized JSON type that needs parsing, to instead be inlined in the GraphQL response. If you're currently using a private API accessing the following types, you might have to update your client: <!-- 5582 -->
+- This release changes some GraphQL API fields from a JSON-encoded string type that needs parsing, to instead be inlined in the GraphQL response. If you're currently using a private API accessing the following types, you might have to update your client: <!-- 5582 -->
   - `CheckConfigType`: `settings_json` renamed to `settings` and returning inlined JSON
   - `IntegrationConfigType`: `config` changed to return inlined JSON
   - `IssueReferenceType`: New `details` field returning inlined JSON, existing `details_json` returning serialized JSON kept for compatibility but deprecated
