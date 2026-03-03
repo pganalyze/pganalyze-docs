@@ -1,0 +1,147 @@
+---
+title: '2026.02.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2026.02.0`
+
+## Notes
+
+- This release does not require a database migration when coming from v2026.01.0
+- If upgrading from older releases, review the migration notes on the [v2026.01.0 release notes](/docs/enterprise/releases/2026-01-0)
+- Postgres 14+ is now required for the internal statistics database used by Enterprise Server <!-- 5339 -->
+  - Postgres 13 is marked end-of-life as of November 2025. If you are using Postgres 13 for the internal database, upgrade it before upgrading pganalyze.
+
+- This release changes some private GraphQL API fields. If you've built custom clients on top of the pganalyze GraphQL API, see notes at the end of the release notes.
+
+## Features
+
+- **Index Advisor: Add cluster-aware index recommendations** <!-- 5499 -->
+  - Index Advisor now aggregates scan data across all servers in a cluster when generating index recommendations. This provides more accurate recommendations by considering query stats from both primary and replica servers.
+  - [Read the release announcement](/blog/cluster-aware-index-advisor)
+
+- Update combined collector from 0.67.0 to [v0.69.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0690------2026-02-26) <!-- 5485, 5602 -->
+  - Improve query text collection to reduce missing query texts
+    - Add a fingerprint cache that retains known query IDs across collection
+      cycles, increasing memory use by up to about 9 MB per server whilst reducing
+      CPU overhead
+    - For data from pg_stat_activity (Connections page in pganalyze), this reduces
+      the occurrence of `<truncated query>`
+    - For data from pg_stat_statements (Query Performance page in pganalyze), this
+      reduces the likelihood of "query text unavailable" by re-using previous
+      query texts already stored on the server side
+  - Allow explicitly setting Cluster ID
+    - The new `api_cluster_id` setting enables overriding the
+      automatically detected cluster ID, or set it on platforms that don't have
+      built-in detection.
+    - This is stored by pganalyze for each server, and used for grouping
+      servers together. Alternate mechanisms to create server groups in pganalyze
+      will be offered in a future release.
+  - Improve collector log analysis
+    - Add matching for autovacuum messages produced by PG18 and newer AlloyDB versions
+    - Handle changes in Postgres 14+ where "misses" became "reads"
+      in buffer usage reporting
+    - Capture SLRU and LSN information from checkpoint completion messages
+    - Add new log event type for connection authenticated messages
+    - Expand patterns for connection failure scenarios
+  - Fix infrequent crash in query normalization when encountering certain utility statements
+
+- Improve server and database dropdown navigation to better support long server names <!-- 5563 -->
+  - The server dropdown now dynamically sizes its width based on the longest server name, expanding up to the right edge of the database select. Primary and replica badges are visually distinct and always fully visible alongside server names.
+
+- Single Sign-On: Support SAML certificate update <!-- 5540 -->
+  - When a SAML Identity Provider certificate is rotated or approaching expiration, it can now be updated directly from the Integrations page without needing to reconfigure the entire SAML integration. A warning banner is shown when the certificate expires within 14 days (or has already expired).
+
+- VACUUM/ANALYZE Activity: Show `autovacuum_vacuum_max_threshold` value for Postgres 18+ <!-- 5464 -->
+  - The dead rows graph now takes autovacuum_vacuum_max_threshold into account when available, improving visibility into when autovacuum is expected to run.
+
+- Persist search input in URL query string <!-- 5490 -->
+  - This allows navigating back to a page of filtered results (e.g., in the Query Performance list) and maintain the filtered list.
+
+- Connections: Update wait event name list to support Postgres 18 <!-- 5485 -->
+  - Previously, some wait event names were not appearing correctly on the Connections page and were shown as Unknown (e.g. `Activity / Unknown` instead of `Activity / BgwriterMain`)
+
+- Expand combined/local collector configuration options <!-- 5541 -->
+  - Add support for the `api_cluster_id`, `max_buffer_cache_monitoring_gb`, and `ignore_schema_regexp` collector settings with the local collector built-in with the pganalyze Enterprise Server container.
+
+## Other improvements and bugfixes
+
+- Connections page: Improve performance with many connections <!-- 5539 -->
+  - When the connection count at a given time exceeds thousands, the page was very slow or sometimes unable to load. Now it supports rendering multiple thousands of connections.
+
+- Date range / retention handling
+  - Schema Statistics: Fix tree map links to tables and indexes to preserve date range selection <!-- 5468 -->
+  - Fix occasional issues that caused parts of the app to be shown with limited seven day retention instead of normal retention. <!-- 5472 -->
+
+- Index Advisor:
+  - Fix broken links to query detail pages <!-- 5470 -->
+    - This fixes some Index Advisor pages that had incorrectly-generated links to the queries involved.
+  - Support schema names with uppercase letters <!-- 5547 -->
+    - Previously, when the referenced tables or functions are in the schema with uppercase letters, we were unable to run the query analysis of the query, therefore the Index Advisor was failing to run with such queries.
+  - Fix handling of fully qualified table names not in search path <!-- 5572 -->
+    - Previously the query analysis process (part of Index Advisor) did not correctly handle such cases, leading to errors because the referenced tables could not be found.
+  - Fix handling of table names that need quoting (uppercase, special characters, etc) <!-- 5578 -->
+
+- Fix GraphQL CSRF validation failing for installations using non-standard ports <!-- 5469 -->
+  - The newly introduced CSRF validation in the 2026.01.0 Enterprise Server release did not work as expected in certain situations, specifically it always failed when a non-standard port (e.g. 8080) was used for the Enterprise Server installation, showing an "Internal Server Error" after logging in. This fixes the CSRF check to work as expected.
+
+- Query Advisor: Avoid internal error when referenced EXPLAIN plans have aged out <!-- 5500 -->
+  - On resolved Query Advisor issues you may not be able to access the associated EXPLAIN plan anymore (which is only retained for 7 days currently). Instead of showing an error, show a notice explaining this.
+
+- Fix "Replication - High Lag" check-up graph rendering issue <!-- 5528 -->
+
+- Ensure JWT tokens generated by application use integers for `exp` field <!-- 5577 -->
+  - The `exp` field was previously incorrectly serialized as a string in the JWT token, which is a violation of the JWT spec, and may cause issues with proxies between the application and the end-user browser.
+
+- Fix Copy to Clipboard button not rendering in non-HTTPS environments <!-- 5594 -->
+  - The Copy to Clipboard button previously required a secure context (HTTPS or localhost) and would not render at all in other environments. It now falls back to an alternative approach when the primary method is unavailable.
+
+- Always set search_path to public for internal database connections <!-- 5473 -->
+  - This avoids issues where migrations incorrectly placed pganalyze internal tables in the `pganalyze` schema
+
+- Run background workers through cluster script and restart on failure <!-- 5481, 5492, 5494-->
+  - This intends to avoid issues where a crash of the workers causes the whole Enterprise Server container to restart
+
+- Snapshot API: Don't update special queries like `<query text unavailable>` <!-- 5559 -->
+  - This ensures that if the collector sends us a special query string as a placeholder, we don't mess with an existing entry that may be the real
+    query text instead of the placeholder. Specifically this matters in the case where the recently added collector query fingerprint cache (v0.69.0 and newer)
+    is able to help with the queryid => fingerprint mapping, despite the text having aged out of pg_stat_statements already.
+
+## Security
+
+- Update base image for Enterprise Server to Ubuntu 24.04 (noble) <!-- 5465 -->
+
+- Routine security updates to packages in the base image and library dependencies
+
+- Package security upgrades: js-yaml [CVE-2025-64718](https://nvd.nist.gov/vuln/detail/CVE-2025-64718), react-router-dom [CVE-2025-68470](https://nvd.nist.gov/vuln/detail/CVE-2025-68470),
+  brace-expansion [CVE-2025-5889](https://nvd.nist.gov/vuln/detail/CVE-2025-5889), lodash [CVE-2025-13465](https://nvd.nist.gov/vuln/detail/CVE-2025-13465),
+  lodash-es [CVE-2025-13465](https://nvd.nist.gov/vuln/detail/CVE-2025-13465), @isaacs/brace-expansion [CVE-2026-25547](https://nvd.nist.gov/vuln/detail/CVE-2026-25547),
+  faraday [CVE-2026-25765](https://nvd.nist.gov/vuln/detail/CVE-2026-25765), rack [CVE-2026-22860](https://nvd.nist.gov/vuln/detail/CVE-2026-22860),
+  minimatch [CVE-2026-26996](https://nvd.nist.gov/vuln/detail/CVE-2026-26996), nokogiri [GHSA-wx95-c6cv-8532](https://github.com/advisories/GHSA-wx95-c6cv-8532),
+  uri [CVE-2025-61594](https://nvd.nist.gov/vuln/detail/CVE-2025-61594), resolv [CVE-2025-24294](https://nvd.nist.gov/vuln/detail/CVE-2025-24294), net-imap [CVE-2025-25186](https://nvd.nist.gov/vuln/detail/CVE-2025-25186)
+  - These vulnerabilities are not exploitable in our assessment, but may show up in dependency scanners
+
+
+## GraphQL API changes
+
+- Add `getQueryExplainFromTrace` resolver to get EXPLAIN plans from `"db.postgresql.plan"` trace spans <!-- 5587 -->
+  - When the pganalyze [OpenTelemetry tracing integration](/docs/opentelemetry) is utilized, the pganalyze-collector will insert special links into the respective traces to link back to the full EXPLAIN plan in pganalyze. These links can be easily followed with a browser, but can be challenging for AI tools to resolve.
+  - To assist AI tools / MCP servers, provide a dedicated `getQueryExplainFromTrace` GraphQL resolver that takes the necessary arguments from the link (datname, timestamp, fingerprint) and returns an EXPLAIN plan.
+
+- Add new `summary` field to `getSchemaTableIndexSelection` resolver
+  - This provides an easier mechanism to get the index recommendations for a particular table, without having to parse the complex `data` field.
+  - Note this is currently still a private API, but we intend to stabilize this in the near future. 
+
+- This release changes some GraphQL API fields from a JSON-encoded string type that needs parsing, to instead be inlined in the GraphQL response. If you're currently using a private API accessing the following types, you might have to update your client: <!-- 5582 -->
+  - `CheckConfigType`: `settings_json` renamed to `settings` and returning inlined JSON
+  - `IntegrationConfigType`: `config` changed to return inlined JSON
+  - `IssueReferenceType`: New `details` field returning inlined JSON, existing `details_json` returning serialized JSON kept for compatibility but deprecated
+  - `IssueType`: `grouping_key` changed to return inlined JSON, `details_json` renamed to `details` and returning inlined JSON
+  - `LogLineType`: `details` changed to return inlined JSON
+  - `QueryExplainType`: `output_json`, `annotated_json` and `advisor_insights` changed to return inlined JSON
+  - `QueryPlanType`: `annotated_json` changed to return inlined JSON
+  - `QueryTagsetType`: `comment_data` changed to return inlined JSON
+  - `QueryType`: `query_analysis` changed to return inlined JSON
+  - `SnapshotType`: `system_json` changed to return inlined JSON
+  - `WorkbookResultType`: `output_json`, `annotated_json` and `node_insights` changed to return inlined JSON
