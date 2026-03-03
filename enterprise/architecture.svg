@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="88.96868 -535.96167 1434.0313 1492.4617" width="1434.0313" height="1492.4617">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="100.96868 -497.33333 1186.0313 1294.8333" width="1186.0313" height="1294.8333">
   <defs>
     <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
       <g>
@@ -17,494 +17,380 @@
         <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
       </g>
     </marker>
-    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_4" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="#a5a5a5">
-      <g>
-        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
-      </g>
-    </marker>
-    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_5" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
-      <g>
-        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
-      </g>
-    </marker>
   </defs>
-  <g id="Canvas_1" fill="none" stroke="none" stroke-dasharray="none" stroke-opacity="1" fill-opacity="1">
+  <g id="Canvas_1" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1" stroke="none">
     <title>Canvas 1</title>
-    <rect fill="white" x="88.96868" y="-535.96167" width="1434.0313" height="1492.4617"/>
+    <rect fill="white" x="100.96868" y="-497.33333" width="1186.0313" height="1294.8333"/>
     <g id="Canvas_1_Layer_1">
       <title>Layer 1</title>
+      <g id="Graphic_143">
+        <path d="M 683.78296 -294 L 1186.3143 -294 L 1186.3143 54 L 683.78296 54 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(693.78296 -284)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Option 2: On-Premise / Self-Managed Environment</tspan>
+        </text>
+      </g>
+      <g id="Graphic_149">
+        <rect x="699.4514" y="-250" width="469.5486" height="287.99384" fill="white"/>
+        <rect x="699.4514" y="-250" width="469.5486" height="287.99384" stroke="#a5a5a5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(709.4514 -240)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Database Server VM</tspan>
+        </text>
+      </g>
       <g id="Graphic_130">
-        <path d="M 139.46868 -485.46167 L 897 -485.46167 L 897 54 L 139.46868 54 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
-        <text transform="translate(149.46868 -475.46167)" fill="black">
-          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16">Application AWS Account</tspan>
+        <path d="M 131.46868 -442 L 634 -442 L 634 54 L 131.46868 54 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(141.46868 -432)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Option 1: Cloud Environment</tspan>
         </text>
       </g>
       <g id="Graphic_20">
-        <path d="M 139.46868 209.10827 L 1168.4687 209.10827 L 1168.4687 906 L 139.46868 906 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
-        <text transform="translate(149.46868 219.10827)" fill="black">
-          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16">Internal AWS Account</tspan>
+        <path d="M 133.2028 201.0274 L 944.8428 201.0274 L 944.8428 767 L 133.2028 767 Z" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(143.2028 211.0274)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Central Installation</tspan>
         </text>
       </g>
       <g id="Graphic_129">
-        <rect x="146.95439" y="507" width="1005.0456" height="151.5" fill="white"/>
-        <rect x="146.95439" y="507" width="1005.0456" height="151.5" stroke="#a5a5a5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(156.95439 517)" fill="black">
-          <tspan font-family="Helvetica Neue" font-weight="bold" font-size="16" fill="black" x="0" y="16">Internal EKS</tspan>
+        <rect x="147" y="377.01744" width="784.0456" height="151.5" fill="white"/>
+        <rect x="147" y="377.01744" width="784.0456" height="151.5" stroke="#a5a5a5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(157 387.01744)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Container / Kubernetes / VM</tspan>
         </text>
       </g>
       <g id="Graphic_102">
-        <rect x="954.25" y="533.58333" width="181" height="108" fill="white"/>
-        <rect x="954.25" y="533.58333" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(959.25 554.58333)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="16">pganalyze</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="43.012" y="38">Web Server</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="66.268" y="60">(app)</tspan>
-        </text>
-      </g>
-      <g id="Graphic_101">
-        <rect x="661.02104" y="533.8169" width="181" height="108" fill="white"/>
-        <rect x="661.02104" y="533.8169" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(666.02104 554.8169)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="16.036" y="16">pganalyze Workers</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="8.628" y="38">(Statistics Processing, </tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="18.532" y="60">Index Advisor, etc)</tspan>
+        <rect x="657.5253" y="406.74275" width="181" height="108" fill="white"/>
+        <rect x="657.5253" y="406.74275" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(662.5253 427.74275)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="16" xml:space="preserve">pganalyze</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="43.012" y="38" xml:space="preserve">Web Server</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="66.268" y="60" xml:space="preserve">(app)</tspan>
         </text>
       </g>
       <g id="Graphic_100">
-        <rect x="371.5533" y="533.8169" width="181" height="108" fill="white"/>
-        <rect x="371.5533" y="533.8169" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(376.5533 554.8169)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="16">pganalyze</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="47.852" y="38">API Server</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="69.348" y="60">(api)</tspan>
-        </text>
-      </g>
-      <g id="Graphic_28">
-        <rect x="382.5143" y="-441" width="228.66315" height="456" fill="white"/>
-        <rect x="382.5143" y="-441" width="228.66315" height="456" stroke="#a5a5a5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(392.5143 -431)" fill="black">
-          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16">Application EKS</tspan>
+        <rect x="409.16814" y="404.3261" width="181" height="108" fill="white"/>
+        <rect x="409.16814" y="404.3261" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(414.16814 425.3261)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="16" xml:space="preserve">pganalyze</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="47.852" y="38" xml:space="preserve">API Server</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="69.348" y="60" xml:space="preserve">(api)</tspan>
         </text>
       </g>
       <g id="Graphic_2">
-        <rect x="950" y="528" width="181" height="108" fill="#afabbe"/>
-        <rect x="950" y="528" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(955 549)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="16">pganalyze</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="22.708" y="38">Enterprise Server</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="40.572" y="60">(App server)</tspan>
+        <rect x="651.2753" y="401.9094" width="181" height="108" fill="#afabbe"/>
+        <rect x="651.2753" y="401.9094" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(656.2753 411.9094)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="47.228" y="16" xml:space="preserve">pganalyze</tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="21.772" y="38" xml:space="preserve">Enterprise Server</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="26.996" y="60" xml:space="preserve">Web Server and </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="12.868" y="82" xml:space="preserve">Statistics Processing</tspan>
         </text>
       </g>
       <g id="Graphic_3">
-        <rect x="366" y="528" width="181" height="108" fill="#afabbe"/>
-        <rect x="366" y="528" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(371 549)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="16">pganalyze</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="22.708" y="38">Enterprise Server</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="44.012" y="60">(API server)</tspan>
-        </text>
-      </g>
-      <g id="Graphic_4">
-        <rect x="719.6667" y="251.5" width="181" height="108" fill="#bfd989"/>
-        <rect x="719.6667" y="251.5" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(724.6667 283.5)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="49.564" y="16">S3 Bucket</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="63.268" y="38">(Logs)</tspan>
-        </text>
-      </g>
-      <g id="Graphic_5">
-        <rect x="489.33333" y="251.5" width="181" height="108" fill="#bfd989"/>
-        <rect x="489.33333" y="251.5" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(494.33333 283.5)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="49.564" y="16">S3 Bucket</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="42.996" y="38">(Snapshots)</tspan>
+        <rect x="403.6148" y="398.5092" width="181" height="108" fill="#afabbe"/>
+        <rect x="403.6148" y="398.5092" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(408.6148 408.5092)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="47.228" y="16" xml:space="preserve">pganalyze</tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="21.772" y="38" xml:space="preserve">Enterprise Server</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="23.484" y="60" xml:space="preserve">Background Task </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="55.3" y="82" xml:space="preserve">Workers</tspan>
         </text>
       </g>
       <g id="Graphic_6">
-        <rect x="259" y="769.5345" width="181" height="108" fill="#bfd989"/>
-        <rect x="259" y="769.5345" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(264 790.5345)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="15.34" y="16">Elastic Cache Redis</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="16.124" y="38">(Internal Queue for </tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="45.74" y="60">pganalyze)</tspan>
+        <rect x="695.7721" y="635.3963" width="193.04561" height="108" fill="#bfd989"/>
+        <rect x="695.7721" y="635.3963" width="193.04561" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(700.7721 656.3963)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="45.522804" y="16" xml:space="preserve">Redis Server</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="14.842804" y="38" xml:space="preserve">Queue for pganalyze</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="56.394804" y="60" xml:space="preserve">(optional)</tspan>
         </text>
       </g>
       <g id="Graphic_7">
-        <rect x="719.6667" y="770.1869" width="181" height="108" fill="#bfd989"/>
-        <rect x="719.6667" y="770.1869" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(724.6667 791.1869)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="4.868" y="16">RDS Postgres Instance</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="30.172" y="38">(Internal DB for </tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="45.74" y="60">pganalyze)</tspan>
-        </text>
-      </g>
-      <g id="Graphic_9">
-        <rect x="401.5143" y="-115" width="181" height="108" fill="#afabbe"/>
-        <rect x="401.5143" y="-115" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(406.5143 -83)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="16">pganalyze</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="53.7" y="38">collector</tspan>
+        <rect x="433.0732" y="635.3963" width="181" height="108" fill="#bfd989"/>
+        <rect x="433.0732" y="635.3963" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(438.0732 656.3963)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="28.316" y="16" xml:space="preserve">Postgres Server</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="32.572" y="38" xml:space="preserve">Internal DB for </tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="60" xml:space="preserve">pganalyze</tspan>
         </text>
       </g>
       <g id="Graphic_12">
-        <rect x="159.46868" y="-441" width="181" height="108" fill="#acdfdf"/>
-        <rect x="159.46868" y="-441" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(164.46868 -409)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="4.868" y="16">RDS Postgres Instance</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="26.676" y="38">(for Application)</tspan>
+        <rect x="151.46868" y="-391" width="181" height="76" fill="#acdfdf"/>
+        <rect x="151.46868" y="-391" width="181" height="76" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(156.46868 -364)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="21.284" y="16" xml:space="preserve">Postgres Instance</tspan>
         </text>
       </g>
       <g id="Line_14">
-        <path d="M 446.7643 -7 L 446.7643 227.98438 L 349.5 227.98438 L 349.5 241.6" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_15">
-        <rect x="656.1877" y="528" width="181" height="108" fill="#afabbe"/>
-        <rect x="656.1877" y="528" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(661.1877 549)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="16">pganalyze</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="22.708" y="38">Enterprise Server</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="50.5" y="60">(Workers)</tspan>
-        </text>
+        <path d="M 470.9692 24.230002 L 470.9692 223.1218 L 741.7753 223.1218 L 741.7753 236.2211" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Line_16">
-        <path d="M 402.2 636 L 402.2 681.0833 L 349.5 681.0833 L 349.5 759.6345" marker-end="url(#FilledArrow_Marker_2)" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 548.4148 506.5092 L 548.4148 546.4862 L 856.6434 546.4862 L 856.6434 625.4963" marker-end="url(#FilledArrow_Marker_2)" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_21">
-        <rect x="950" y="769.5345" width="181" height="108" fill="#bfd989"/>
-        <rect x="950" y="769.5345" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(955 790.5345)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="23.268" y="16">Application Load </tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="53.748" y="38">Balancer</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="64.94" y="60">(App)</tspan>
+        <rect x="651.2753" y="246.1211" width="181" height="76" fill="#bfd989"/>
+        <rect x="651.2753" y="246.1211" width="181" height="76" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(656.2753 262.1211)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="33.02" y="16" xml:space="preserve">Load Balancer</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="50.372" y="38" xml:space="preserve">(optional)</tspan>
         </text>
-      </g>
-      <g id="Graphic_27"/>
-      <g id="Graphic_29"/>
-      <g id="Line_38">
-        <path d="M 492.0143 -7 L 492.0143 126.85417 L 579.8333 126.85417 L 579.8333 241.6" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_42">
-        <rect x="400.8683" y="171.58854" width="91.792" height="32" fill="white"/>
-        <text transform="translate(405.8683 176.58854)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16">HTTPS/443</tspan>
-        </text>
-      </g>
-      <g id="Graphic_43">
-        <rect x="533.93733" y="172.50548" width="91.792" height="32" fill="white"/>
-        <text transform="translate(538.93733 177.50548)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16">HTTPS/443</tspan>
-        </text>
-      </g>
-      <g id="Graphic_45">
-        <rect x="158.46868" y="-192.1308" width="181" height="108" fill="#acdedd"/>
-        <rect x="158.46868" y="-192.1308" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(163.46868 -160.1308)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="53.532" y="16">AWS API</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="16.212" y="38">(RDS, CloudWatch)</tspan>
+        <rect x="380.4332" y="166.32824" width="181.072" height="32" fill="white"/>
+        <text transform="translate(385.4332 171.32824)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="5684342e-20" y="16" xml:space="preserve">WebSocket Secure/443</tspan>
         </text>
       </g>
       <g id="Line_47">
-        <path d="M 446.7643 -115 L 446.7643 -212.14736 L 307.84762 -212.14736 L 307.84762 -299.33333 L 295.21868 -299.33333 L 295.21868 -323.1" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 470.9692 -51.77 L 470.9692 -212.14736 L 339.84762 -212.14736 L 339.84762 -211.64384 L 473.50685 -211.64384 L 287.21868 -211.64384 L 287.21868 -305.1" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_48">
-        <rect x="250.36762" y="-312.20485" width="114.96" height="32" fill="white"/>
-        <text transform="translate(255.36762 -307.20485)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16">Postgres/5432</tspan>
+        <rect x="314.3635" y="-228.14736" width="114.96" height="32" fill="white"/>
+        <text transform="translate(319.3635 -223.14736)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Postgres/5432</tspan>
         </text>
-      </g>
-      <g id="Line_49">
-        <path d="M 401.5143 -61 L 248.96868 -61 L 248.96868 -74.2308" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_50">
-        <rect x="258.3737" y="-77" width="91.792" height="32" fill="white"/>
-        <text transform="translate(263.3737 -72)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16">HTTPS/443</tspan>
-        </text>
-      </g>
-      <g id="Line_57">
-        <path d="M 474.6 528 L 474.6 425.5729 L 579.8333 425.5729 L 579.8333 369.4" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Line_58">
-        <path d="M 995.25 636 L 995.25 681.0208 L 349.5 681.0208 L 349.5 759.6345" marker-end="url(#FilledArrow_Marker_2)" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_61">
-        <path d="M 537.2643 -7 L 537.2643 86.40625 L 810.1667 86.40625 L 810.1667 241.6" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 787.0253 509.9094 L 787.0253 546.51124 L 856.6434 546.51124 L 856.6434 625.4963" marker-end="url(#FilledArrow_Marker_2)" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Line_62">
-        <path d="M 1040.5 636 L 1040.5 715.9541 L 810.1667 715.9541 L 810.1667 760.2869" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_63">
-        <path d="M 701.4377 528 L 701.4377 425.97917 L 579.8333 425.97917 L 579.8333 369.4" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_64">
-        <rect x="259" y="251.5" width="181" height="108" fill="#bfd989"/>
-        <rect x="259" y="251.5" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(264 272.5)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="23.268" y="16">Application Load </tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="53.748" y="38">Balancer</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="68.38" y="60">(API)</tspan>
-        </text>
-      </g>
-      <g id="Graphic_65">
-        <rect x="764.2707" y="170.72697" width="91.792" height="32" fill="white"/>
-        <text transform="translate(769.2707 175.72697)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16">HTTPS/443</tspan>
-        </text>
+        <path d="M 696.5253 509.9094 L 696.5253 540.9862 C 702.0253 540.9862 702.0253 551.9862 696.5253 551.9862 L 696.5253 572.5526 L 523.5732 572.5526 L 523.5732 615.5963" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Line_66">
-        <path d="M 349.5 359.5 L 349.5 443.75 L 402.2 443.75 L 402.2 518.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <line x1="741.7753" y1="322.1211" x2="741.7753" y2="392.0094" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_68">
-        <rect x="330.7215" y="427.75" width="92.048" height="32" fill="white"/>
-        <text transform="translate(335.7215 432.75)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16">HTTP/5000</tspan>
-        </text>
-      </g>
-      <g id="Line_70">
-        <path d="M 1040.5 769.5345 L 1040.5 747.5417 L 1085.75 747.5417 L 1085.75 645.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_71">
-        <rect x="1039.726" y="722.2879" width="92.048" height="32" fill="white"/>
-        <text transform="translate(1044.726 727.2879)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16">HTTP/5000</tspan>
+        <rect x="695.7513" y="336.47242" width="92.048" height="32" fill="white"/>
+        <text transform="translate(700.7513 341.47242)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">HTTP/5000</tspan>
         </text>
       </g>
       <g id="Graphic_72">
-        <rect x="1245" y="769.5345" width="181" height="108" fill="white"/>
-        <rect x="1245" y="769.5345" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(1250 801.5345)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="52.332" y="16">End User</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6.972" y="38">(e.g. DBA, developer)</tspan>
+        <rect x="1014" y="246.1211" width="181" height="76" fill="white"/>
+        <rect x="1014" y="246.1211" width="181" height="76" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1019 262.1211)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="52.332" y="16" xml:space="preserve">End User</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6.972" y="38" xml:space="preserve">(e.g. DBA, developer)</tspan>
         </text>
       </g>
       <g id="Line_73">
-        <line x1="1245" y1="823.5345" x2="1140.9" y2="823.5345" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_76">
-        <rect x="533.93733" y="377.595" width="91.792" height="32" fill="white"/>
-        <text transform="translate(538.93733 382.595)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16">HTTPS/443</tspan>
-        </text>
-      </g>
-      <g id="Line_77">
-        <path d="M 746.6877 636 L 746.6877 681.1406 L 349.5 681.1406 L 349.5 759.6345" marker-end="url(#FilledArrow_Marker_2)" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <line x1="1014" y1="284.1211" x2="842.1753" y2="284.1211" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_80">
-        <rect x="303.06" y="723.8461" width="92.88" height="32" fill="white"/>
-        <text transform="translate(308.06 728.8461)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="5115908e-19" y="16">Redis/6379</tspan>
+        <rect x="810.2034" y="587.0643" width="92.88" height="32" fill="white"/>
+        <text transform="translate(815.2034 592.0643)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="5115908e-19" y="16" xml:space="preserve">Redis/6379</tspan>
         </text>
       </g>
       <g id="Graphic_81">
-        <rect x="1152.2242" y="807.5345" width="91.792" height="32" fill="white"/>
-        <text transform="translate(1157.2242 812.5345)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16">HTTPS/443</tspan>
+        <rect x="891.3102" y="268.1211" width="91.792" height="32" fill="white"/>
+        <text transform="translate(896.3102 273.1211)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16" xml:space="preserve">HTTPS/443</tspan>
         </text>
       </g>
-      <g id="Line_87">
-        <path d="M 995.25 528 L 995.25 456.30713 L 810.1667 456.30713 L 810.1667 369.4" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
       <g id="Graphic_92">
-        <text transform="translate(627.0627 -110)" fill="black">
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16">Each collector can monitor</tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38">one or more RDS instances</tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82">Collector can filter sensitive data</tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="104">(query parameters, log events, ..)</tspan>
+        <text transform="translate(152.43774 -122.98133)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Each collector can monitor</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">one or more Postgres instances,</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">and uses Cloud Provider APIs to</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82" xml:space="preserve">collect logs/system metrics.</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="126" xml:space="preserve">Collector can filter sensitive data.</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="148" xml:space="preserve">(query parameters, log events, ..)</tspan>
         </text>
       </g>
       <g id="Graphic_94">
-        <text transform="translate(164.46868 -319.22327)" fill="black">
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16">Postgres is </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38">accessed</tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60">using restricted </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82">monitoring user</tspan>
+        <text transform="translate(152.43774 -301.5)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Postgres is </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">accessed</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">using restricted </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82" xml:space="preserve">monitoring user</tspan>
         </text>
-      </g>
-      <g id="Graphic_95">
-        <text transform="translate(171.95439 -45.038333)" fill="black">
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16">Instance role with</tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38">IAM policy that allows </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60">RDS log download</tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82">and system metrics</tspan>
-        </text>
-      </g>
-      <g id="Line_96">
-        <path d="M 791.9377 636 L 791.9377 675.5208 C 797.4377 675.5208 797.4377 686.5208 791.9377 686.5208 L 791.9377 715.8867 L 810.1667 715.8867 L 810.1667 750.3869" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_98">
-        <rect x="401.5143" y="-368.7977" width="181" height="108" fill="white"/>
-        <rect x="401.5143" y="-368.7977" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(406.5143 -336.7977)" fill="#a5a5a5">
-          <tspan font-family="Avenir Next" font-size="16" fill="#a5a5a5" x="57.1" y="16">Existing</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="#a5a5a5" x="43.46" y="38">Application</tspan>
-        </text>
-      </g>
-      <g id="Line_99">
-        <path d="M 401.5143 -314.79768 L 370.9915 -314.79768 L 370.9915 -387 L 350.3687 -387" marker-end="url(#FilledArrow_Marker_4)" stroke="#a5a5a5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_103">
-        <rect x="489.33333" y="769.5345" width="181" height="108" fill="#bfd989"/>
-        <rect x="489.33333" y="769.5345" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(494.33333 790.5345)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="39.732" y="16">Amazon SES</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="25.476" y="38">(For alert emails,</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="29.828" y="60">weekly reports)</tspan>
-        </text>
-      </g>
-      <g id="Graphic_106">
-        <text transform="translate(599 98.55414)" fill="black">
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16">S3 bucket access is granted </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38">to collector via short-lived </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60">upload-only credentials</tspan>
+        <rect x="166.98561" y="635.3963" width="181" height="108" fill="#bfd989"/>
+        <rect x="166.98561" y="635.3963" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(171.98561 656.3963)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="39.108" y="16" xml:space="preserve">Email Server</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="27.876" y="38" xml:space="preserve">For alert emails,</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="32.228" y="60" xml:space="preserve">weekly reports</tspan>
         </text>
       </g>
       <g id="Graphic_108">
-        <text transform="translate(202 124.9375)" fill="black">
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16">pganalyze API server access is </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38">authenticated using special</tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60">collector API keys</tspan>
+        <text transform="translate(160.48335 94.5137)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Collectors report server data to </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">pganalyze installation and </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">authenticate with collector API key.</tspan>
         </text>
       </g>
       <g id="Graphic_109">
-        <rect x="1245" y="590.75445" width="181" height="108" fill="#acdfdf"/>
-        <rect x="1245" y="590.75445" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(1250 622.75445)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="7.82" y="16">External SAML-based </tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="37.34" y="38">SSO Provider</tspan>
+        <rect x="1014" y="414.5092" width="181" height="76" fill="#acdfdf"/>
+        <rect x="1014" y="414.5092" width="181" height="76" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1019 430.5092)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="3.94" y="16" xml:space="preserve">External</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" y="16" xml:space="preserve"> </tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" y="16" xml:space="preserve">SSO Provider</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="50.372" y="38" xml:space="preserve">(optional)</tspan>
         </text>
       </g>
       <g id="Line_111">
-        <line x1="1335.5" y1="769.5345" x2="1335.5" y2="708.65445" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <line x1="1104.5" y1="322.1211" x2="1104.5" y2="404.6092" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_112">
-        <text transform="translate(1231 517.75445)" fill="black">
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16">pganalyze can be configured to </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38">accept SAML-based logins</tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60">(e.g. to integrate with Okta, etc)</tspan>
+        <text transform="translate(996 507)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">pganalyze can be configured to</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">accept SAML-based logins.</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">(Okta/Azure Entra ID/etc.)</tspan>
         </text>
       </g>
       <g id="Graphic_114">
-        <rect x="1289.604" y="728.1418" width="91.792" height="32" fill="white"/>
-        <text transform="translate(1294.604 733.1418)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16">HTTPS/443</tspan>
+        <rect x="1058.604" y="339.26585" width="91.792" height="32" fill="white"/>
+        <text transform="translate(1063.604 344.26585)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16" xml:space="preserve">HTTPS/443</tspan>
         </text>
       </g>
       <g id="Graphic_115">
-        <rect x="950" y="-413.7977" width="30" height="30" fill="#b1acbf"/>
-        <rect x="950" y="-413.7977" width="30" height="30" stroke="#797979" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <rect x="696.5914" y="-418.15053" width="30" height="30" fill="#b1acbf"/>
+        <rect x="696.5914" y="-418.15053" width="30" height="30" stroke="#797979" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_116">
-        <text transform="translate(955 -466)" fill="black">
-          <tspan font-family="Avenir Next" font-weight="bold" font-size="20" fill="black" x="0" y="20">Legend</tspan>
+        <text transform="translate(688.78296 -462.33333)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="20" fill="black" x="0" y="20" xml:space="preserve">Legend</tspan>
         </text>
       </g>
       <g id="Graphic_117">
-        <text transform="translate(997.5 -408.7977)" fill="black">
-          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">New component provided by pganalyze Enterprise Server</tspan>
+        <text transform="translate(744.0914 -421.15053)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">New component provided</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="33.448" xml:space="preserve">by pganalyze</tspan>
         </text>
       </g>
       <g id="Graphic_119">
-        <rect x="950" y="-363.59536" width="30" height="30" fill="#bfd989"/>
-        <rect x="950" y="-363.59536" width="30" height="30" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <rect x="964.4733" y="-417.2652" width="30" height="30" fill="#bfd989"/>
+        <rect x="964.4733" y="-417.2652" width="30" height="30" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_118">
-        <text transform="translate(997.5 -358.59536)" fill="black">
-          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">New cloud resource provisioned for pganalyze Enterprise Server</tspan>
+        <text transform="translate(1011.9733 -420.2652)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">New service / cloud resource</tspan>
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="33.448" xml:space="preserve">provisioned for pganalyze</tspan>
         </text>
       </g>
       <g id="Graphic_121">
-        <rect x="950" y="-313.39304" width="30" height="30" fill="#acdfdf"/>
-        <rect x="950" y="-313.39304" width="30" height="30" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <rect x="696.5914" y="-364.04" width="30" height="30" fill="#acdfdf"/>
+        <rect x="696.5914" y="-364.04" width="30" height="30" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_120">
-        <text transform="translate(997.5 -308.39304)" fill="black">
-          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">Existing application / infrastructure component</tspan>
+        <text transform="translate(744.0914 -359.04)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15" xml:space="preserve">Existing application / infrastructure component</tspan>
         </text>
       </g>
       <g id="Graphic_122">
-        <text transform="translate(165.9172 538.58333)" fill="black">
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16">The pganalyze Enterprise </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38">Server container image </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60">has different commands </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82">for each component </tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="104">that’s deployed</tspan>
+        <text transform="translate(160.48335 412.02543)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Container image has </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">different commands for each </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">component that’s deployed, </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82" xml:space="preserve">can also run as single </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="104" xml:space="preserve">combined container.</tspan>
         </text>
-      </g>
-      <g id="Line_59">
-        <path d="M 438.4 528 L 438.4 456.3854 L 469.1 456.3854 C 469.1 450.8854 480.1 450.8854 480.1 456.3854 L 695.9377 456.3854 C 695.9377 450.8854 706.9377 450.8854 706.9377 456.3854 L 810.1667 456.3854 L 810.1667 379.3" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Line_60">
-        <path d="M 746.6877 528 L 746.6877 456.3032 L 810.1667 456.3032 L 810.1667 369.4" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Line_39">
-        <path d="M 510.8 636 L 510.8 675.5208 C 516.3 675.5208 516.3 686.6406 510.8 686.6406 L 510.8 715.9583 L 810.1667 715.9583 L 810.1667 750.3869" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 476.0148 506.5092 L 476.0148 572.662 L 518.0732 572.662 C 521.90654 568.71794 527.56303 574.2157 523.7297 578.15974 L 523.5913 615.59634" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
-      <g id="Graphic_97">
-        <rect x="752.6867" y="722.375" width="114.96" height="32" fill="white"/>
-        <text transform="translate(757.6867 727.375)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16">Postgres/5432</tspan>
+      <g id="Graphic_141">
+        <rect x="711.4088" y="-51.77" width="181" height="76" fill="#afabbe"/>
+        <rect x="711.4088" y="-51.77" width="181" height="76" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(716.4088 -35.77)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="47.228" y="16" xml:space="preserve">pganalyze</tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="53.42" y="38" xml:space="preserve">collector</tspan>
         </text>
       </g>
-      <g id="Line_123">
-        <path d="M 958.5 -194.79768 L 975.4219 -194.79768 L 975.4219 -169.46435 L 962.5667 -169.46435" marker-end="url(#FilledArrow_Marker_2)" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_124">
-        <text transform="translate(1000.5443 -191.35501)" fill="black">
-          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">Redis protocol connection</tspan>
+      <g id="Graphic_140">
+        <rect x="711.4088" y="-207" width="181" height="76" fill="#acdfdf"/>
+        <rect x="711.4088" y="-207" width="181" height="76" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(716.4088 -180)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="28.316" y="16" xml:space="preserve">Postgres Server</tspan>
         </text>
       </g>
-      <g id="Line_126">
-        <path d="M 958.5 -252.8225 L 975.4219 -252.8225 L 975.4219 -227.48916 L 962.5667 -227.48916" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <g id="Line_139">
+        <path d="M 741.5755 24.230002 L 741.5755 34.23 L 741.68985 223.12446 L 741.7753 231.2211 L 741.7753 236.2211" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
-      <g id="Graphic_125">
-        <text transform="translate(1000.5443 -249.37983)" fill="black">
-          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">Postgres protocol connection</tspan>
+      <g id="Graphic_137">
+        <rect x="651.1292" y="166.454" width="181.072" height="32" fill="white"/>
+        <text transform="translate(656.1292 171.454)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="5684342e-20" y="16" xml:space="preserve">WebSocket Secure/443</tspan>
         </text>
       </g>
-      <g id="Graphic_88">
-        <rect x="764.2707" y="378.4944" width="91.792" height="32" fill="white"/>
-        <text transform="translate(769.2707 383.4944)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16">HTTPS/443</tspan>
+      <g id="Line_136">
+        <line x1="801.9088" y1="-51.77" x2="801.9088" y2="-121.1" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_135">
+        <rect x="744.4288" y="-102.58778" width="114.96" height="32" fill="white"/>
+        <text transform="translate(749.4288 -97.58778)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Postgres/5432</tspan>
         </text>
       </g>
-      <g id="Line_128">
-        <path d="M 958.5 -136.77287 L 975.4219 -136.77287 L 975.4219 -111.43953 L 962.5667 -111.43953" marker-end="url(#FilledArrow_Marker_5)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <g id="Line_146">
+        <path d="M 439.8148 506.5092 L 439.8148 546.3766 L 257.4856 546.3766 L 257.4856 635.3963" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
-      <g id="Graphic_127">
-        <text transform="translate(1000.5443 -133.3302)" fill="black">
-          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="0" y="15">Other connections (HTTP, etc.)</tspan>
+      <g id="Graphic_147">
+        <rect x="214.8056" y="586.5936" width="85.36" height="32" fill="white"/>
+        <text transform="translate(219.8056 591.5936)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="29842795e-20" y="16" xml:space="preserve">SMTP/587</tspan>
         </text>
       </g>
-      <g id="Line_104">
-        <path d="M 701.4377 636 L 701.4377 675.5208 C 706.9377 675.5208 706.9377 686.6406 701.4377 686.6406 L 701.4377 710.4583 C 706.9377 710.4583 706.9377 721.4583 701.4377 721.4583 L 701.4377 740.082 L 579.8333 740.082 L 579.8333 749.7345" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-      </g>
-      <g id="Graphic_105">
-        <rect x="537.15333" y="722.2879" width="85.36" height="32" fill="white"/>
-        <text transform="translate(542.15333 727.2879)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="29842795e-20" y="16">SMTP/587</tspan>
+      <g id="Graphic_148">
+        <rect x="466.0932" y="588.6112" width="114.96" height="32" fill="white"/>
+        <text transform="translate(471.0932 593.6112)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Postgres/5432</tspan>
         </text>
       </g>
-      <g id="Graphic_131">
-        <rect x="950" y="251.5" width="181" height="108" fill="#bfd989"/>
-        <rect x="950" y="251.5" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(955 283.5)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="36.868" y="16">Amazon KMS</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="13.7" y="38">(For log encryption)</tspan>
+      <g id="Graphic_150">
+        <text transform="translate(904.928 -46.77)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Collector can read logs &amp; system</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">metrics directly from Linux hosts for</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">on-premise / self-managed servers.</tspan>
         </text>
       </g>
-      <g id="Line_132">
-        <path d="M 791.9377 528 L 791.9377 487.2969 L 989.75 487.2969 C 989.75 481.7969 1000.75 481.7969 1000.75 487.2969 L 1040.5 487.2969 L 1040.5 359.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <g id="Graphic_151">
+        <rect x="425.7192" y="-391" width="181" height="76" fill="#acdfdf"/>
+        <rect x="425.7192" y="-391" width="181" height="76" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(430.7192 -375)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="15.556" y="16" xml:space="preserve">Cloud Provider API</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6.428" y="38" xml:space="preserve">Logs / System Metrics</tspan>
+        </text>
       </g>
-      <g id="Line_133">
-        <line x1="1040.5" y1="528" x2="1040.5" y2="369.4" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <g id="Line_152">
+        <path d="M 561.4692 -51.77 L 561.4692 -61.77 L 561.75 -115.8551 L 561.4692 -300.1 L 561.4692 -305.1" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
-      <g id="Line_135">
-        <path d="M 510.8 528 L 510.8 487.09375 L 695.9377 487.09375 C 695.9377 481.59375 706.9377 481.59375 706.9377 487.09375 L 741.1877 487.09375 C 741.1877 481.59375 752.1877 481.59375 752.1877 487.09375 L 989.75 487.09375 C 989.75 481.59375 1000.75 481.59375 1000.75 487.09375 L 1040.5 487.09375 L 1040.5 359.5" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <g id="Graphic_153"/>
+      <g id="Graphic_154">
+        <rect x="412.3627" y="-93" width="207.71296" height="130.99384" fill="white"/>
+        <rect x="412.3627" y="-93" width="207.71296" height="130.99384" stroke="#a5a5a5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(422.3627 -83)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Container / K8S / VM</tspan>
+        </text>
       </g>
-      <g id="Graphic_134">
-        <rect x="994.604" y="378.66107" width="91.792" height="32" fill="white"/>
-        <text transform="translate(999.604 383.66107)" fill="black">
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16">HTTPS/443</tspan>
+      <g id="Graphic_9">
+        <rect x="425.7192" y="-51.77" width="181" height="76" fill="#afabbe"/>
+        <rect x="425.7192" y="-51.77" width="181" height="76" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(430.7192 -35.77)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="47.228" y="16" xml:space="preserve">pganalyze</tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="53.42" y="38" xml:space="preserve">collector</tspan>
+        </text>
+      </g>
+      <g id="Graphic_155">
+        <text transform="translate(996 646)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Separate Redis Server is optional</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">when deploying a single container, </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">Redis runs in combined image by </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82" xml:space="preserve">default.</tspan>
+        </text>
+      </g>
+      <g id="Graphic_156">
+        <rect x="515.7315" y="-212.2194" width="91.792" height="32" fill="white"/>
+        <text transform="translate(520.7315 -207.2194)" fill="black">
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="6394885e-19" y="16" xml:space="preserve">HTTPS/443</tspan>
+        </text>
+      </g>
+      <g id="Graphic_158">
+        <text transform="translate(907.6667 -191)" fill="black">
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Postgres is accessed using </tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">restricted monitoring user</tspan>
         </text>
       </g>
     </g>
