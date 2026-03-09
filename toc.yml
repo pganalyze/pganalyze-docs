@@ -30,7 +30,7 @@
     href: checks
   - name: Account Management
     href: accounts
-  - name: MCP Server
+  - name: MCP Server (Preview)
     href: mcp
   - name: OpenTelemetry Integration
     href: opentelemetry
