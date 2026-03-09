@@ -17,7 +17,7 @@ The MCP server uses OAuth for authentication. When you first connect, you will b
 Add the pganalyze MCP server using the CLI:
 
 <CodeBlock language="bash">
-{`claude mcp add --transport http pganalyze https://pganalyze.com/mcp`}
+{`claude mcp add --transport http pganalyze https://app.pganalyze.com/mcp`}
 </CodeBlock>
 
 ### Codex
@@ -29,7 +29,7 @@ Add the pganalyze MCP server in your project's `codex.json` configuration:
   "mcpServers": {
     "pganalyze": {
       "type": "url",
-      "url": "https://pganalyze.com/mcp"
+      "url": "https://app.pganalyze.com/mcp"
     }
   }
 }`}
@@ -43,7 +43,7 @@ In Cursor settings, add a new MCP server with the following configuration:
 {`{
   "mcpServers": {
     "pganalyze": {
-      "url": "https://pganalyze.com/mcp"
+      "url": "https://app.pganalyze.com/mcp"
     }
   }
 }`}
@@ -51,7 +51,7 @@ In Cursor settings, add a new MCP server with the following configuration:
 
 ### Other MCP clients
 
-Any MCP client that supports HTTP transport can connect to the pganalyze MCP server at `https://pganalyze.com/mcp`. Refer to your client's documentation for how to configure HTTP-based MCP servers.
+Any MCP client that supports HTTP transport can connect to the pganalyze MCP server at `https://app.pganalyze.com/mcp`. Refer to your client's documentation for how to configure HTTP-based MCP servers.
 
 ## Available tools
 
