@@ -30,6 +30,8 @@
     href: checks
   - name: Account Management
     href: accounts
+  - name: MCP Server
+    href: mcp
   - name: OpenTelemetry Integration
     href: opentelemetry
   - name: pganalyze Enterprise Server
