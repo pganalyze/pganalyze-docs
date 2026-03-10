@@ -10,10 +10,6 @@ import DocsEarlyAccessFeature from '../components/DocsEarlyAccessFeature'
 
 The pganalyze [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server allows AI assistants to interact with your pganalyze data. This enables AI coding tools like Claude Code, Codex, or Cursor to query server metrics, inspect EXPLAIN plans, run the Index Advisor, and review active issues.
 
-The MCP server uses OAuth for authentication. When you first connect, you will be prompted to authorize access through your pganalyze account. Access is further limited by your account permissions. For example, if you can only view certain servers, this app will have the same restriction.
-
-![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
-
 For a demo of the MCP server in action, watch the webinar recording:
 
 <iframe
@@ -70,6 +66,12 @@ In Cursor settings, add a new MCP server with the following configuration:
 ### Other MCP clients
 
 Any MCP client that supports HTTP transport can connect to the pganalyze MCP server at `https://app.pganalyze.com/mcp`. Refer to your client's documentation for how to configure HTTP-based MCP servers.
+
+### Authentication
+
+The MCP server uses OAuth for authentication. When you first connect, you will be prompted to authorize access through your pganalyze account. Access is further limited by your account permissions. For example, if you can only view certain servers, this app will have the same restriction.
+
+![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
 
 ## Available tools
 
