@@ -104,3 +104,8 @@ The MCP server exposes tools, organized by the type of data they access. Since t
 | `get_issues` | Get active check-up issues and alerts |
 | `get_checkup_status` | Get check-up status overview for a database |
 
+## Example use cases
+
+- **Investigate slow queries during development**: Ask your AI tool to pull the top queries by runtime for a specific database using `get_query_stats`, then inspect EXPLAIN plans for a query that regressed using `get_query_explains` and `get_query_explain`.
+- **Review active issues**: Check the current check-up status for a database using `get_checkup_status` to see if there are unresolved alerts, such as insufficient VACUUM frequency or unused indexes.
+- **Trace a slow request to its query plan**: If your application uses [OpenTelemetry tracing](/docs/opentelemetry), resolve a trace span to the corresponding EXPLAIN plan using `get_query_explain_from_trace` to understand why a specific request was slow.
