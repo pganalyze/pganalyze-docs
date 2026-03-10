@@ -1032,6 +1032,10 @@
       "title": "Log Insights: Tuning Log Config Settings",
       "path": "/docs/log-insights/setup/tuning-log-config-settings"
     },
+    "mcp": {
+      "title": "MCP Server (Preview)",
+      "path": "/docs/mcp"
+    },
     "open_source_components": {
       "title": "Open-Source Components",
       "path": "/docs/open_source_components"
