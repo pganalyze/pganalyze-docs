@@ -4,11 +4,29 @@ backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
+import DocsEarlyAccessFeature from '../components/DocsEarlyAccessFeature'
+
+<DocsEarlyAccessFeature feature="MCP Server" />
+
 The pganalyze [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server allows AI assistants to interact with your pganalyze data. This enables AI coding tools like Claude Code, Codex, or Cursor to query server metrics, inspect EXPLAIN plans, run the Index Advisor, and review active issues.
 
 The MCP server uses OAuth for authentication. When you first connect, you will be prompted to authorize access through your pganalyze account. Access is further limited by your account permissions. For example, if you can only view certain servers, this app will have the same restriction.
 
 ![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
+
+For a demo of the MCP server in action, watch the webinar recording:
+
+<iframe
+    width="750"
+    height="421"
+    src="https://www.youtube-nocookie.com/embed/Av_vNGIZz_k"
+    frameborder="0"
+    modestbranding="1" controls="0" allownetworking="internal"
+    allow="autoplay; encrypted-media"
+    allowfullscreen
+>
+</iframe>
+<br /><br />
 
 ## Setup
 
@@ -55,7 +73,7 @@ Any MCP client that supports HTTP transport can connect to the pganalyze MCP ser
 
 ## Available tools
 
-The MCP server exposes 19 tools, organized by the type of data they access. Since this feature is in preview, the available tools and their parameters may change.
+The MCP server exposes tools, organized by the type of data they access. Since this feature is in preview, the available tools and their parameters may change.
 
 | Tool | Description |
 |------|-------------|
@@ -77,7 +95,7 @@ The MCP server exposes 19 tools, organized by the type of data they access. Sinc
 | **EXPLAIN Plans** | |
 | `get_query_explains` | List EXPLAIN plans for a query (last 7 days) |
 | `get_query_explain` | Get a specific EXPLAIN plan with full output |
-| `get_query_explain_from_trace` | Resolve a trace span to an EXPLAIN plan |
+| `get_query_explain_from_trace` | Resolve a trace span to an EXPLAIN plan (requires [OpenTelemetry integration](/docs/opentelemetry)) |
 | **Backends** | |
 | `get_backend_counts` | Get time-series connection counts by state |
 | `get_backends` | Get a point-in-time snapshot of active connections |
