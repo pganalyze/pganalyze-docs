@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="100.96868 -497.33333 1186.0313 1294.8333" width="1186.0313" height="1294.8333">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="100.96868 -497.33333 1186.0313 1294.8333" width="1186.0313" height="1294.8333">
   <defs>
     <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
       <g>
         <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
       </g>
     </marker>
-    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="#d5362c">
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="#336792">
       <g>
         <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
       </g>
     </marker>
-    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_3" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="#336792">
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_3" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="#d5362c">
       <g>
         <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
       </g>
     </marker>
   </defs>
-  <g id="Canvas_1" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1" stroke="none">
+  <g id="Canvas_1" stroke-dasharray="none" fill-opacity="1" fill="none" stroke="none" stroke-opacity="1">
     <title>Canvas 1</title>
     <rect fill="white" x="100.96868" y="-497.33333" width="1186.0313" height="1294.8333"/>
     <g id="Canvas_1_Layer_1">
@@ -33,7 +33,7 @@
         <rect x="699.4514" y="-250" width="469.5486" height="287.99384" fill="white"/>
         <rect x="699.4514" y="-250" width="469.5486" height="287.99384" stroke="#a5a5a5" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         <text transform="translate(709.4514 -240)" fill="black">
-          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Database Server VM</tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Database Server VM / Kubernetes Cluster</tspan>
         </text>
       </g>
       <g id="Graphic_130">
@@ -94,18 +94,18 @@
         </text>
       </g>
       <g id="Graphic_6">
-        <rect x="695.7721" y="635.3963" width="193.04561" height="108" fill="#bfd989"/>
-        <rect x="695.7721" y="635.3963" width="193.04561" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(700.7721 656.3963)" fill="black">
+        <rect x="690.5533" y="635.3963" width="193.04561" height="108" fill="#bfd989"/>
+        <rect x="690.5533" y="635.3963" width="193.04561" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(695.5533 656.3963)" fill="black">
           <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="45.522804" y="16" xml:space="preserve">Redis Server</tspan>
           <tspan font-family="Avenir Next" font-size="16" fill="black" x="14.842804" y="38" xml:space="preserve">Queue for pganalyze</tspan>
           <tspan font-family="Avenir Next" font-size="16" fill="black" x="56.394804" y="60" xml:space="preserve">(optional)</tspan>
         </text>
       </g>
       <g id="Graphic_7">
-        <rect x="433.0732" y="635.3963" width="181" height="108" fill="#bfd989"/>
-        <rect x="433.0732" y="635.3963" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(438.0732 656.3963)" fill="black">
+        <rect x="428.76947" y="636" width="181" height="108" fill="#bfd989"/>
+        <rect x="428.76947" y="636" width="181" height="108" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(433.76947 657)" fill="black">
           <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="28.316" y="16" xml:space="preserve">Postgres Server</tspan>
           <tspan font-family="Avenir Next" font-size="16" fill="black" x="32.572" y="38" xml:space="preserve">Internal DB for </tspan>
           <tspan font-family="Avenir Next" font-size="16" fill="black" x="48.14" y="60" xml:space="preserve">pganalyze</tspan>
@@ -122,7 +122,7 @@
         <path d="M 470.9692 24.230002 L 470.9692 223.1218 L 741.7753 223.1218 L 741.7753 236.2211" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Line_16">
-        <path d="M 548.4148 506.5092 L 548.4148 546.4862 L 856.6434 546.4862 L 856.6434 625.4963" marker-end="url(#FilledArrow_Marker_2)" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 548.4148 506.5092 L 548.4148 546.692 L 787.0761 546.692 L 787.0761 635.3963" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_21">
         <rect x="651.2753" y="246.1211" width="181" height="76" fill="#bfd989"/>
@@ -139,7 +139,7 @@
         </text>
       </g>
       <g id="Line_47">
-        <path d="M 470.9692 -51.77 L 470.9692 -212.14736 L 339.84762 -212.14736 L 339.84762 -211.64384 L 473.50685 -211.64384 L 287.21868 -211.64384 L 287.21868 -305.1" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 470.9692 -51.77 L 470.9692 -212.14736 L 339.84762 -212.14736 L 339.84762 -211.64384 L 473.50685 -211.64384 L 287.21868 -211.64384 L 287.21868 -305.1" marker-end="url(#FilledArrow_Marker_2)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_48">
         <rect x="314.3635" y="-228.14736" width="114.96" height="32" fill="white"/>
@@ -148,10 +148,10 @@
         </text>
       </g>
       <g id="Line_58">
-        <path d="M 787.0253 509.9094 L 787.0253 546.51124 L 856.6434 546.51124 L 856.6434 625.4963" marker-end="url(#FilledArrow_Marker_2)" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 787.0253 509.9094 L 787.0253 552.6172 L 787.0761 620.4963 L 787.0761 625.4963" marker-end="url(#FilledArrow_Marker_3)" stroke="#d5362c" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Line_62">
-        <path d="M 696.5253 509.9094 L 696.5253 540.9862 C 702.0253 540.9862 702.0253 551.9862 696.5253 551.9862 L 696.5253 572.5526 L 523.5732 572.5526 L 523.5732 615.5963" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 696.5253 509.9094 L 696.5253 541.192 C 702.0253 541.192 702.0253 552.192 696.5253 552.192 L 696.5253 572.5526 L 519.26947 572.5526 L 519.26947 636" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Line_66">
         <line x1="741.7753" y1="322.1211" x2="741.7753" y2="392.0094" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
@@ -174,8 +174,8 @@
         <line x1="1014" y1="284.1211" x2="842.1753" y2="284.1211" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_80">
-        <rect x="810.2034" y="587.0643" width="92.88" height="32" fill="white"/>
-        <text transform="translate(815.2034 592.0643)" fill="black">
+        <rect x="740.6361" y="586.0599" width="92.88" height="32" fill="white"/>
+        <text transform="translate(745.6361 591.0599)" fill="black">
           <tspan font-family="Avenir Next" font-size="16" fill="black" x="5115908e-19" y="16" xml:space="preserve">Redis/6379</tspan>
         </text>
       </g>
@@ -222,11 +222,10 @@
       <g id="Graphic_109">
         <rect x="1014" y="414.5092" width="181" height="76" fill="#acdfdf"/>
         <rect x="1014" y="414.5092" width="181" height="76" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
-        <text transform="translate(1019 430.5092)" fill="black">
-          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="3.94" y="16" xml:space="preserve">External</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" y="16" xml:space="preserve"> </tspan>
-          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" y="16" xml:space="preserve">SSO Provider</tspan>
-          <tspan font-family="Avenir Next" font-size="16" fill="black" x="50.372" y="38" xml:space="preserve">(optional)</tspan>
+        <text transform="translate(1019 419.5092)" fill="black">
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="36.924" y="16" xml:space="preserve">External SSO</tspan>
+          <tspan font-family="Avenir Next" font-weight="bold" font-size="16" fill="black" x="24.252" y="38" xml:space="preserve">Identity Provider</tspan>
+          <tspan font-family="Avenir Next" font-size="16" fill="black" x="50.372" y="60" xml:space="preserve">(optional)</tspan>
         </text>
       </g>
       <g id="Line_111">
@@ -289,7 +288,7 @@
         </text>
       </g>
       <g id="Line_39">
-        <path d="M 476.0148 506.5092 L 476.0148 572.662 L 518.0732 572.662 C 521.90654 568.71794 527.56303 574.2157 523.7297 578.15974 L 523.5913 615.59634" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 476.0148 506.5092 L 476.0148 572.57224 L 519.26947 572.57224 L 519.26947 626.1" marker-end="url(#FilledArrow_Marker_2)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_141">
         <rect x="711.4088" y="-51.77" width="181" height="76" fill="#afabbe"/>
@@ -316,7 +315,7 @@
         </text>
       </g>
       <g id="Line_136">
-        <line x1="801.9088" y1="-51.77" x2="801.9088" y2="-121.1" marker-end="url(#FilledArrow_Marker_3)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <line x1="801.9088" y1="-51.77" x2="801.9088" y2="-121.1" marker-end="url(#FilledArrow_Marker_2)" stroke="#336792" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_135">
         <rect x="744.4288" y="-102.58778" width="114.96" height="32" fill="white"/>
@@ -325,7 +324,7 @@
         </text>
       </g>
       <g id="Line_146">
-        <path d="M 439.8148 506.5092 L 439.8148 546.3766 L 257.4856 546.3766 L 257.4856 635.3963" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <path d="M 439.8148 506.5092 L 439.8148 546.3766 L 257.4856 546.3766 L 257.4856 625.4963" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
       </g>
       <g id="Graphic_147">
         <rect x="214.8056" y="586.5936" width="85.36" height="32" fill="white"/>
@@ -334,16 +333,17 @@
         </text>
       </g>
       <g id="Graphic_148">
-        <rect x="466.0932" y="588.6112" width="114.96" height="32" fill="white"/>
-        <text transform="translate(471.0932 593.6112)" fill="black">
+        <rect x="461.78947" y="587.2422" width="114.96" height="32" fill="white"/>
+        <text transform="translate(466.78946 592.2422)" fill="black">
           <tspan font-family="Avenir Next" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Postgres/5432</tspan>
         </text>
       </g>
       <g id="Graphic_150">
-        <text transform="translate(904.928 -46.77)" fill="black">
+        <text transform="translate(904.6667 -57.77)" fill="black">
           <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="16" xml:space="preserve">Collector can read logs &amp; system</tspan>
           <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="38" xml:space="preserve">metrics directly from Linux hosts for</tspan>
-          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">on-premise / self-managed servers.</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="60" xml:space="preserve">on-premise / self-managed servers,</tspan>
+          <tspan font-family="Avenir Next" font-style="italic" font-size="16" fill="black" x="0" y="82" xml:space="preserve">or get logs via OTel for Kubernetes.</tspan>
         </text>
       </g>
       <g id="Graphic_151">
