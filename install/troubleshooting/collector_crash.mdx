@@ -8,6 +8,10 @@ If you find the collector crashing, the most likely cause is running out of memo
 a small instance size by default as that is enough for the typical case, but with a very large
 schema or a large or diverse query workload, that may not be sufficient.
 
+Before increasing the memory limit of the collector, you may want to try enabling the collector's
+<a href="/docs/install/troubleshooting/reset_stat_statements">automatic pg_stat_statements reset</a>
+to reduce memory usage from query text.
+
 Collector memory may be limited either through available instance memory, or through systemd (if
 your platform uses it).
 
