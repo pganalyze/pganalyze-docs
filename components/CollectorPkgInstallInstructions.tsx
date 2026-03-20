@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import TabPanel, { TabItem } from './TabPanel'
+import TabPanel, { Tab } from './TabPanel'
 import { useCodeBlock } from './CodeBlock'
 import RepositorySigningKey from './RepositorySigningKey'
 
@@ -48,12 +48,12 @@ type DebProps = {
 
 type Props = YumProps | DebProps
 
-const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'kind'>> = ({ kind }) => {
-  type InstallOpt = [id: string, distro: YumProps['distro'] | DebProps['distro'], label: string];
-  let installOpts: InstallOpt[] = [];
+type InstallOpt = [id: string, distro: YumProps['distro'] | DebProps['distro'], label: string];
+
+function getInstallOpts(kind: string): InstallOpt[] {
   switch (kind) {
     case 'yum':
-      installOpts = [
+      return [
         [ 'el9', 'el/9', 'RHEL / Rocky / OL 9' ],
         [ 'el8', 'el/8', 'RHEL / Rocky / OL 8' ],
         [ 'al2023', 'el/9', 'Amazon Linux 2023' ],
@@ -61,25 +61,29 @@ const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'k
         [ 'fedora37', 'fedora/37', 'Fedora 37' ],
         [ 'fedora36', 'fedora/36', 'Fedora 36' ],
       ]
-      break
     case 'deb':
-      installOpts = [
+      return [
         ["noble", "ubuntu/noble", "Ubuntu 24.04"],
         ["jammy", "ubuntu/jammy", "Ubuntu 22.04"],
         ["focal", "ubuntu/focal", "Ubuntu 20.04"],
         ["bookworm", "debian/bookworm", "Debian 12"],
         ["bullseye", "debian/bullseye", "Debian 11"],
       ]
-      break
+    default:
+      return []
   }
-  const tabs = installOpts.map<TabItem>(opt => [opt[0], opt[2]])
+}
+
+const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'kind'>> = ({ kind }) => {
+  const installOpts = getInstallOpts(kind);
   return (
     <>
-      <TabPanel items={tabs}>
-        {(idx: number) => {
-          const distro = installOpts[idx][1];
-          return <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
-        }}
+      <TabPanel>
+        {installOpts.map(([id, distro, label]) => (
+          <Tab key={id} id={id} label={label}>
+            <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
+          </Tab>
+        ))}
       </TabPanel>
       <RepositorySigningKey />
     </>

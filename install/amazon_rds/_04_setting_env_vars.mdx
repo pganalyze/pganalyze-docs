@@ -1,4 +1,4 @@
-import TabPanel, {TabTextContent} from '../../components/TabPanel'
+import TabPanel, {Tab} from '../../components/TabPanel'
 
 import CollectorDotEnvSingle from './_04_setting_env_vars_single.mdx';
 import CollectorDotEnvMulti from './_04_setting_env_vars_multi.mdx';
@@ -8,67 +8,40 @@ import CollectorDotEnvSingleEKS from './_04_setting_env_vars_single_eks.mdx';
 import CollectorDotEnvMultiEKS from './_04_setting_env_vars_multi_eks.mdx';
 
 export const SettingEnvVarsDocker = ({ apiKey }) => {
-  const tabs = [
-    [ 'single', 'Single DB Instance' ],
-    [ 'multiple', 'Multiple DB Instances'],
-  ];
   return (
-    <TabPanel items={tabs}>
-      {(idx) => {
-        const tab = tabs[idx][0];
-        switch (tab) {
-          case 'single':
-            return <TabTextContent><CollectorDotEnvSingle apiKey={apiKey} /></TabTextContent>;
-          case 'multiple':
-            return <TabTextContent><CollectorDotEnvMulti apiKey={apiKey} /></TabTextContent>;
-          default:
-            return null;
-        }
-      }}
+    <TabPanel>
+      <Tab id="single" label="Single DB Instance" textContent>
+        <CollectorDotEnvSingle apiKey={apiKey} />
+      </Tab>
+      <Tab id="multiple" label="Multiple DB Instances" textContent>
+        <CollectorDotEnvMulti apiKey={apiKey} />
+      </Tab>
     </TabPanel>
   )
 }
 
 export const SettingEnvVarsECS = ({ apiKey }) => {
-  const tabs = [
-    [ 'single', 'Single DB Instance' ],
-    [ 'multiple', 'Multiple DB Instances'],
-  ];
   return (
-    <TabPanel items={tabs}>
-      {(idx) => {
-        const tab = tabs[idx][0];
-        switch (tab) {
-          case 'single':
-            return <TabTextContent><CollectorDotEnvSingleECS apiKey={apiKey} /></TabTextContent>;
-          case 'multiple':
-            return <TabTextContent><CollectorDotEnvMultiECS apiKey={apiKey} /></TabTextContent>;
-          default:
-            return null;
-        }
-      }}
+    <TabPanel>
+      <Tab id="single" label="Single DB Instance" textContent>
+        <CollectorDotEnvSingleECS apiKey={apiKey} />
+      </Tab>
+      <Tab id="multiple" label="Multiple DB Instances" textContent>
+        <CollectorDotEnvMultiECS apiKey={apiKey} />
+      </Tab>
     </TabPanel>
   )
 }
 
 export const SettingEnvVarsEKS = ({ apiKey }) => {
-  const tabs = [
-    [ 'single', 'Single DB Instance' ],
-    [ 'multiple', 'Multiple DB Instances'],
-  ];
   return (
-    <TabPanel items={tabs}>
-      {(idx) => {
-        const tab = tabs[idx][0];
-        switch (tab) {
-          case 'single':
-            return <TabTextContent><CollectorDotEnvSingleEKS apiKey={apiKey} /></TabTextContent>;
-          case 'multiple':
-            return <TabTextContent><CollectorDotEnvMultiEKS apiKey={apiKey} /></TabTextContent>;
-          default:
-            return null;
-        }
-      }}
+    <TabPanel>
+      <Tab id="single" label="Single DB Instance" textContent>
+        <CollectorDotEnvSingleEKS apiKey={apiKey} />
+      </Tab>
+      <Tab id="multiple" label="Multiple DB Instances" textContent>
+        <CollectorDotEnvMultiEKS apiKey={apiKey} />
+      </Tab>
     </TabPanel>
   )
 }

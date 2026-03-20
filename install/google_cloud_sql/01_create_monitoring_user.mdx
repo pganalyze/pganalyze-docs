@@ -5,31 +5,9 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
-import TabPanel, {TabTextContent} from '../../components/TabPanel'
+import TabPanel, {Tab} from '../../components/TabPanel'
 import CreateMonitoringUserPsql from './_01_create_monitoring_user_psql.mdx'
 import CreateMonitoringUserIam from './_01_create_monitoring_user_iam.mdx'
-
-export const MonitoringUserCreation = () => {
-  const tabs = [
-    [ 'psql', 'Manually with psql' ],
-    [ 'iam', 'IAM Authentication'],
-  ];
-  return (
-    <TabPanel items={tabs}>
-      {(idx) => {
-        const tab = tabs[idx][0];
-        switch (tab) {
-          case 'psql':
-            return <TabTextContent><CreateMonitoringUserPsql /></TabTextContent>;
-          case 'iam':
-            return <TabTextContent><CreateMonitoringUserIam /></TabTextContent>;
-          default:
-            return null;
-        }
-      }}
-    </TabPanel>
-  )
-}
 
 We recommend creating a separate monitoring user on your PostgreSQL database for pganalyze.
 
@@ -48,7 +26,14 @@ SELECT * FROM pg_stat_statements LIMIT 1;`}
 
 You can either create a monitoring user manually using psql, or create a service account and use IAM authentication.
 
-<MonitoringUserCreation />
+<TabPanel>
+  <Tab id="psql" label="Manually with psql" textContent>
+    <CreateMonitoringUserPsql />
+  </Tab>
+  <Tab id="iam" label="IAM Authentication" textContent>
+    <CreateMonitoringUserIam />
+  </Tab>
+</TabPanel>
 
 ---
 
