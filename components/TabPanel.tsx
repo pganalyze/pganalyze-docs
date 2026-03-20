@@ -59,8 +59,7 @@ const TabPanel: React.FunctionComponent<Props> = ({ children }) => {
     });
   }, [activeIdx, tabs]);
 
-  const handleTabClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
+  const handleTabClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     setActiveIdx(parseInt(e.currentTarget.dataset.tabIdx!, 10));
   }, []);
 
@@ -70,14 +69,14 @@ const TabPanel: React.FunctionComponent<Props> = ({ children }) => {
         <ul className={classNames(styles.nav, styles.navTabs)}>
           {tabs.map((tab, idx) => (
             <li key={tab.id} className={styles.navItem}>
-              <a
-                href={`#${tab.id}`}
+              <button
+                type="button"
                 data-tab-idx={idx}
                 onClick={handleTabClick}
                 className={classNames(styles.navLink, idx === activeIdx && styles.active)}
               >
                 {tab.label}
-              </a>
+              </button>
             </li>
           ))}
         </ul>

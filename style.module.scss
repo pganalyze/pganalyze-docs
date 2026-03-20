@@ -151,18 +151,22 @@
   float: left;
   margin-bottom: -1px;
 }
-.navTabs > li > a {
+.navTabs > li > button {
   margin-right: 2px;
   line-height: 1.42857143;
   border: 1px solid transparent;
   border-radius: 4px 4px 0 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  padding: 10px 15px;
 }
-.navTabs > li > a:hover {
+.navTabs > li > button:hover {
   border-color: #eeeeee #eeeeee #ddd;
 }
-.navTabs > li.active > a,
-.navTabs > li.active > a:hover,
-.navTabs > li.active > a:focus {
+.navTabs > li.active > button,
+.navTabs > li.active > button:hover,
+.navTabs > li.active > button:focus {
   color: #555555;
   background-color: #fff;
   border: 1px solid #ddd;
