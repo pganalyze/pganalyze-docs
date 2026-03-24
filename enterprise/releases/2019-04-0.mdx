@@ -32,7 +32,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 ## Bugfixes
 
-* Index Check: Refactor query <=> table associations to be text-based instead
+* Index Check: Refactor query {'<=>'} table associations to be text-based instead
   - Previously we used table IDs for this, which led to all kinds of problems
     when tables temporarily disappeared (which led to the Index Check failing)
 * Postgres roles: Filter our roles from failed logins

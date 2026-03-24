@@ -18,12 +18,12 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 ## Features
 
-- Support for Postgres 18 <!-- 5408 -->
+- Support for Postgres 18 {/* 5408 */}
 - Support for Plan Statistics captured with [pg_stat_plans](https://github.com/pganalyze/pg_stat_plans)
-- Update bundled collector from 0.66.2 to 0.67.0 <!-- 5409 -->
+- Update bundled collector from 0.66.2 to 0.67.0 {/* 5409 */}
   - See the [collector changelog](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0670------2025-12-08) for the full details
-- Add support for converting text plans collected with EXPLAIN (COSTS OFF) to JSON <!-- 4911 -->
-- Alerts & Check-Up: Relax `pganalyze:no-alert` check <!-- 5326 -->
+- Add support for converting text plans collected with EXPLAIN (COSTS OFF) to JSON {/* 4911 */}
+- Alerts & Check-Up: Relax `pganalyze:no-alert` check {/* 5326 */}
   - Previously, to skip Active Query and Blocking Query alerts for a
     specific query, the string `pganalyze:no-alert` was required to be
     embedded in a properly formatted comment. Now, the string can occur
@@ -31,17 +31,17 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 ## Bugfixes
 
-- Enterprise self-check: Correctly handle `MAILER_SSL=none` configuration <!-- 5114 -->
+- Enterprise self-check: Correctly handle `MAILER_SSL=none` configuration {/* 5114 */}
   - This configuration would previously fail to pass the self-check, despite working in practice.
-- Fix over-counting table sizes in table overview stats per database <!-- 5323 -->
-- Skip pg_query truncation when query text is over 10k characters long <!-- 5342 -->
-- Drop unused GeoIP library dependency <!-- 5403 -->
-- Correctly parse `X-Forwarded-For` header in snapshot API <!-- 5297 -->
-- Avoid internal errors when external redirects encounter unauthorized routes <!-- 5316 -->
+- Fix over-counting table sizes in table overview stats per database {/* 5323 */}
+- Skip pg_query truncation when query text is over 10k characters long {/* 5342 */}
+- Drop unused GeoIP library dependency {/* 5403 */}
+- Correctly parse `X-Forwarded-For` header in snapshot API {/* 5297 */}
+- Avoid internal errors when external redirects encounter unauthorized routes {/* 5316 */}
 
 ## Security
 
-- Redact statement text on server-side for old collector versions <!-- 5369 -->
+- Redact statement text on server-side for old collector versions {/* 5369 */}
   - A bug between collector versions 0.60.0 and 0.66.3 caused the collector to not correctly
     redact STATEMENT lines when the full line was redacted, due to an off-by-one bug in the
     replacement code. This is fixed in 0.67.0 but in case the collector has not been upgraded
