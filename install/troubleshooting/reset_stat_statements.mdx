@@ -1,40 +1,45 @@
 ---
-title: Reducing memory usage and query text unavailable
+title: Query text unavailable and reducing memory usage
 backlink_href: /docs/install/troubleshooting
 backlink_title: 'Installation Troubleshooting'
 ---
 
 If the collector is using too much memory or `<query text unavailable>` is showing up in pganalyze,
-you may want to set up an automatic reset of pg_stat_statements.
+you may want to set up an automatic reset of `pg_stat_statements`.
 
 ## &lt;query text unavailable&gt;
 
-Some versions of Postgres aren't able to accurately normalize queries (e.g. those with variable bind params),
-leading to many duplicate entries that often have very low call counts. When `pg_stat_statements.max` is reached,
-Postgres will deallocate (remove) the entries with the lowest call count. In periods of high database activity
-this can happen so so quickly that the collector isn't able to capture the query text, causing
-`<query text unavailable>` to show up in pganalyze.
+Earlier versions of Postgres aren't able to group certain queries together (e.g. those using `IN`
+lists of variable lengths), leading to many duplicate entries that often have very low call counts.
+When `pg_stat_statements.max` is reached, Postgres will deallocate (remove) entries based on their
+usage, which is based on the call count. In periods of high database activity this can happen so
+quickly that the collector isn't able to capture the query text, causing `<query text unavailable>`
+to show up in pganalyze.
 
-This can be addressed by enabling the Maximum Query Stats Reset Frequency setting. We recommend a setting of
-"Every 1 hour" unless you're specifically concerned about lock contention on a very busy database. This enables
-automatic pg_stat_statments resets to be done once the statement space is 90% full (so a deallocation would occur soon),
-but resets will not occur more often than the frequency setting you choose.
+This can be addressed by enabling the "Maximum Query Stats Reset Frequency" setting in pganalyze.
+We recommend a setting of "Every 1 hour" unless you're specifically concerned about lock contention
+(`LWLock:pg_stat_statements`) on a very busy database. This enables automatic pg_stat_statments
+resets once the statement space is 90% full (so a deallocation would occur soon), but resets will
+not occur more often than the frequency setting you choose.
 
 ## High memory usage
 
-Every 10 minutes, the collector loads the query text from pg_stat_statements into memory in order to normalize and
-fingerprint it. This is a very expensive step and can result in the collector crashing from running out of memory.
-To address that, when resets are enabled with the Maximum Query Stats Reset Frequency setting, the collector will
-also perform a reset if the size of the query text grows beyond 250 MB. You can optionally increase that limit
-using the Maximum Query Size Before Next Reset setting.
+Every 10 minutes, the collector loads the query text from pg_stat_statements into memory in order
+to normalize and fingerprint it. This is a very expensive step and can result in the collector
+crashing from running out of memory. To address that, when resets are enabled with the "Maximum
+Query Stats Reset Frequency" setting, the collector will also perform a reset if the aggregate
+size of the query text returned from pg_stat_statements grows beyond 250 MB. You can optionally
+increase that limit using the "Maximum Query Size Before Next Reset" setting, which can be
+advisable when you have very large query texts.
 
 ## Setup
 
-Collector version 0.70.0 or later is required.
+[Collector version 0.70.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md)
+or later is required.
 
-After enabling the Maximum Query Stats Reset Frequency setting on the server settings page (and optionally tuning
-    Maximum Query Size Before Next Reset), the collector will automatically start performing resets when needed.
-You should see evidence of that in the collector logs.
+After enabling the "Maximum Query Stats Reset Frequency" setting on the server settings page
+(and optionally tuning "Maximum Query Size Before Next Reset"), the collector will automatically
+start performing resets when needed. You should see evidence of that in the collector logs.
 
 If the collector fails to reset with permissions errors, you may need to define this function:
 

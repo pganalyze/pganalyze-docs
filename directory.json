@@ -885,7 +885,7 @@
       "path": "/docs/install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries"
     },
     "install/troubleshooting/reset_stat_statements": {
-      "title": "Reducing memory usage and query text unavailable",
+      "title": "Query text unavailable and reducing memory usage",
       "path": "/docs/install/troubleshooting/reset_stat_statements"
     },
     "log-insights": {

@@ -2,7 +2,7 @@
   items:
   - name: Collector crashes
     href: install/troubleshooting/collector_crash
-  - name: Reducing memory usage and query text unavailable
+  - name: Query text unavailable and reducing memory usage
     href: install/troubleshooting/reset_stat_statements
   - name: 'Resolving the "Limited access to table column statistics" warning'
     href: install/troubleshooting/column_stats_helper
