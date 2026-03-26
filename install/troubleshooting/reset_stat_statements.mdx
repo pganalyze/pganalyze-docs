@@ -37,11 +37,7 @@ advisable when you have very large query texts.
 [Collector version 0.70.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md)
 or later is required.
 
-After enabling the "Maximum Query Stats Reset Frequency" setting on the server settings page
-(and optionally tuning "Maximum Query Size Before Next Reset"), the collector will automatically
-start performing resets when needed. You should see evidence of that in the collector logs.
-
-If the collector fails to reset with permissions errors, you may need to define this function:
+We recommend defining this function to avoid permissions errors:
 
 <CodeBlock language="sql">
 {`CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
@@ -49,3 +45,9 @@ $$
   /* pganalyze-collector */ SELECT * FROM public.pg_stat_statements_reset();
 $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
 </CodeBlock>
+
+After enabling the "Maximum Query Stats Reset Frequency" setting on the server settings page
+and optionally tuning "Maximum Query Size Before Next Reset", the collector will automatically
+perform resets when needed. You should see evidence of that in the collector logs.
+
+![Collector Settings](/collector_settings.png)
