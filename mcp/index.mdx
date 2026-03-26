@@ -36,17 +36,10 @@ Add the pganalyze MCP server using the CLI:
 
 ### Codex
 
-Add the pganalyze MCP server in your project's `codex.json` configuration:
+Add the pganalyze MCP server using the CLI:
 
 <CodeBlock language="json">
-{`{
-  "mcpServers": {
-    "pganalyze": {
-      "type": "url",
-      "url": "https://app.pganalyze.com/mcp"
-    }
-  }
-}`}
+{`codex mcp add pganalyze --url https://app.pganalyze.com/mcp`}
 </CodeBlock>
 
 ### Cursor
@@ -65,7 +58,9 @@ In Cursor settings, add a new MCP server with the following configuration:
 
 ### Other MCP clients
 
-Any MCP client that supports HTTP transport can connect to the pganalyze MCP server at `https://app.pganalyze.com/mcp`. Refer to your client's documentation for how to configure HTTP-based MCP servers.
+MCP clients that support HTTP transport can connect to the pganalyze MCP server at `https://app.pganalyze.com/mcp`. Refer to your client's documentation for how to configure HTTP-based MCP servers.
+
+If you're using an MCP client hosted on the web (instead of running locally) the OAuth redirect URI may not be permitted and you will get an authentication error during OAuth Dynamic Client Registration (DCR). Reach out to pganalyze support to verify the permitted redirect URIs.
 
 ### Authentication
 
