@@ -32,13 +32,10 @@ const CopyToClipboard: React.FunctionComponent<Props> = ({
   const [copied, setCopied] = useState(false);
   const [waitingForContent, setWaitingForContent] = useState(false);
   const [copyError, setCopyError] = useState(null);
-  const { clipboard } = typeof navigator === 'object' && navigator;
-  if (!clipboard) {
-    return null;
-  }
 
   const handleCopy = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const clipboard = typeof navigator === 'object' && navigator?.clipboard;
     if (clipboard) {
       let actualContent;
       if (typeof content === "function") {

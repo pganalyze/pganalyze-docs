@@ -153,25 +153,19 @@
 }
 .navTabs > li > button {
   margin-right: 2px;
-  line-height: 1.42857143;
   border: 1px solid transparent;
   border-radius: 4px 4px 0 0;
   background: none;
   font: inherit;
+  line-height: 1.42857143;
+  color: #337ab7;
   cursor: pointer;
   padding: 10px 15px;
 }
 .navTabs > li > button:hover {
   border-color: #eeeeee #eeeeee #ddd;
-}
-.navTabs > li.active > button,
-.navTabs > li.active > button:hover,
-.navTabs > li.active > button:focus {
-  color: #555555;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-bottom-color: transparent;
-  cursor: default;
+  background-color: #eee;
+  color: #555;
 }
 
 .navTabs {

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import StyledCodeBlock from './CodeBlock.gatsby'
 
 type Props = {
   // ignored for now in this implementation but still accepted
@@ -7,15 +8,7 @@ type Props = {
   children: React.ReactNode;
 }
 
-const CodeBlock = ({style, children}: Props) => {
-  return (
-    <pre style={style}>
-      <code>{children}</code>
-    </pre>
-  )
-}
-
-const CodeBlockContext = React.createContext<React.ComponentType<Props>>(CodeBlock);
+const CodeBlockContext = React.createContext<React.ComponentType<Props>>(StyledCodeBlock);
 
 export const WithCodeBlock = ({component, children}: {
   component: React.ComponentType<Props>;
@@ -32,4 +25,4 @@ export const useCodeBlock = () => {
   return useContext(CodeBlockContext);
 }
 
-export default CodeBlock;
+export default StyledCodeBlock;

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import CopyToClipboard from "./CopyToClipboard";
 import hljs from "highlight.js/lib/core";
 import json from "highlight.js/lib/languages/json";
@@ -18,18 +18,15 @@ hljs.registerLanguage("bash", bash);
 hljs.registerLanguage("ruby", ruby);
 hljs.registerLanguage("python", python);
 
-// Utility to extract text from children
-function getTextFromChildren(children: React.ReactNode): string {
-  if (typeof children === "string") {
-    return children;
+function highlightCode(text: string, language: string): string {
+  try {
+    if (language && language !== 'text' && hljs.getLanguage(language)) {
+      return hljs.highlight(text, { language }).value;
+    }
+    return hljs.highlightAuto(text).value;
+  } catch {
+    return text;
   }
-  if (Array.isArray(children)) {
-    return children.map(getTextFromChildren).join(" \n");
-  }
-  if (typeof children === "object" && children && "props" in children) {
-    return getTextFromChildren((children as any).props.children);
-  }
-  return "";
 }
 
 type Props = {
@@ -37,40 +34,47 @@ type Props = {
   language?: "sql" | "bash" | "json" | "yaml" | "ruby" | "python" | "text";
   /** Style properties to pass down to the wrapping div */
   style?: React.CSSProperties;
-  /** Code block content */
-  children: React.ReactNode;
+  /** Code content as a string (preferred, set by remark plugin). */
+  code?: string;
+  /** Code block content (legacy children approach). */
+  children?: React.ReactNode;
   /** Whether to hide the copy button */
   hideCopy?: boolean;
 }
 
-const CodeBlock = ({children, language = 'text', style, hideCopy = false}: Props) => {
-  const text = getTextFromChildren(children);
+const CodeBlock = ({children, code, language = 'text', style, hideCopy = false}: Props) => {
+  const codeRef = useRef<HTMLElement>(null);
 
-  // Highlight synchronously so it works during SSR (no useEffect needed)
-  let highlightedHtml: string;
-  try {
-    if (language && language !== 'text' && hljs.getLanguage(language)) {
-      highlightedHtml = hljs.highlight(text, { language }).value;
-    } else {
-      highlightedHtml = hljs.highlightAuto(text).value;
+  // Prefer the `code` prop (plain string, no encoding issues).
+  // Fall back to rendering children directly with client-side highlighting.
+  const text = code ?? (typeof children === "string" ? children : null);
+
+  useEffect(() => {
+    if (text === null && codeRef.current && language !== 'text' && hljs.getLanguage(language)) {
+      hljs.highlightElement(codeRef.current);
     }
-  } catch {
-    highlightedHtml = text;
-  }
+  }, [language, text]);
 
   return (
     <div className={styles.copyBlock}>
       <div className='gatsby-highlight' data-language={language}>
         <pre className={`language-${language}`} style={style}>
-          <code
-            className={`language-${language}`}
-            dangerouslySetInnerHTML={{ __html: highlightedHtml }}
-          />
+          {text !== null ? (
+            <code
+              ref={codeRef}
+              className={`language-${language}`}
+              dangerouslySetInnerHTML={{ __html: highlightCode(text, language) }}
+            />
+          ) : (
+            <code ref={codeRef} className={`language-${language}`}>
+              {children}
+            </code>
+          )}
         </pre>
       </div>
      {!hideCopy && (
         <CopyToClipboard
-          content={text}
+          content={text ?? (() => codeRef.current?.textContent || '')}
           label=""
           className={styles.copyIcon}
         />

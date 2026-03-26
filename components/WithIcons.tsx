@@ -1,5 +1,7 @@
 import React, { useContext } from 'react'
 import Null from './Null';
+import { FontAwesomeIcon } from './FontAwesomeIcon';
+import { faLock } from '@fortawesome/pro-solid-svg-icons';
 
 export type IconProps = {
   className?: string;
@@ -13,12 +15,16 @@ type Icons = {
   secure: React.ComponentType<IconProps>;
 }
 
+const SecureIcon: React.FunctionComponent<IconProps> = ({ className }) => (
+  <FontAwesomeIcon icon={faLock} className={className} />
+);
+
 const IconContext = React.createContext<Icons>({
   okay: Null,
   changeRequired: Null,
   info: Null,
   externalLink: Null,
-  secure: Null,
+  secure: SecureIcon,
 });
 
 const WithIcons = ({icons, children}: {icons: Icons, children: React.ReactNode}) => {
