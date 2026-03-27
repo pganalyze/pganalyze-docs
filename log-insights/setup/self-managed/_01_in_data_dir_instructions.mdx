@@ -8,32 +8,32 @@ of the data directory.
 First, choose a location for log files that is outside of the Postgres data directory,
 and then set it up like this:
 
-<CodeBlock language="bash">
-{`sudo mkdir /my/log/directory
-sudo chown postgres:postgres /my/log/directory`}
-</CodeBlock>
+```bash
+sudo mkdir /my/log/directory
+sudo chown postgres:postgres /my/log/directory
+```
 
 Also make sure that the `pganalyze` user can access this directory, by making it a member
 of the `postgres` group:
 
-<CodeBlock language="bash">
-{`sudo usermod -a -G postgres pganalyze`}
-</CodeBlock>
+```bash
+sudo usermod -a -G postgres pganalyze
+```
 
 Then, adjust the Postgres configuration to log everything to this new directory by running
 the following commands as a Postgres superuser:
 
-<CodeBlock language="sql">
-{`ALTER SYSTEM SET log_directory = '/my/log/directory';
+```sql
+ALTER SYSTEM SET log_directory = '/my/log/directory';
 ALTER SYSTEM SET log_file_mode = '0640';
-SELECT pg_reload_conf();`}
-</CodeBlock>
+SELECT pg_reload_conf();
+```
 
 Now, re-run
 
-<CodeBlock language="bash">
-{`sudo pganalyze-collector --discover-log-location`}
-</CodeBlock>
+```bash
+sudo pganalyze-collector --discover-log-location
+```
 
 and you should get the expected output from above with the `log_directory` you just configured.
 

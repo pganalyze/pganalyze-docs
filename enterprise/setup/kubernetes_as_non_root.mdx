@@ -32,13 +32,13 @@ both cases you will need to authenticate with your license information, shared w
 If your Kubernetes cluster has access to the internet, start by creating a Kubernetes secret with your quay.io credentials provided by the pganalyze team. Replace the
 username, password, and namespace in the command below:
 
-<CodeBlock language="bash">
-{`kubectl create secret docker-registry quay-io-secret \\
+```bash
+kubectl create secret docker-registry quay-io-secret \\
  --docker-server=quay.io \\
  --docker-username=USERNAME \\
  --docker-password=PASSWORD \\
- --namespace=pganalyze`}
-</CodeBlock>
+ --namespace=pganalyze
+```
 
 
 **Option B: Re-publish the Docker image to your private container registry**
@@ -52,39 +52,39 @@ However, the steps are similar for other providers with their provided registrie
 
 First, log in with your license information, shared with you by the pganalyze team:
 
-<CodeBlock language="bash">
-{`docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io`}
-</CodeBlock>
+```bash
+docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io
+```
 
 Now pull the image, replacing VERSION with the [latest pganalyze Enterprise version](/docs/enterprise/releases) (e.g. `v2025.03.4`):
 
-<CodeBlock language="bash">
-{`docker pull quay.io/pganalyze/enterprise:VERSION-slim`}
-</CodeBlock>
+```bash
+docker pull quay.io/pganalyze/enterprise:VERSION-slim
+```
 
 Create a new container repository for pganalyze in the account-specific AWS container registry:
 
-<CodeBlock language="bash">
-{`aws ecr create-repository --repository-name pganalyze-enterprise-slim`}
-</CodeBlock>
+```bash
+aws ecr create-repository --repository-name pganalyze-enterprise-slim
+```
 
 Log in to the AWS container registry, replacing `ACCOUNTID` with your AWS account ID, replacing `REGION` with your AWS region (e.g. "us-west-1"):
 
-<CodeBlock language="bash">
-{`aws ecr get-login-password --region REGION | docker login --username AWS --password-stdin ACCOUNTID.dkr.ecr.REGION.amazonaws.com`}
-</CodeBlock>
+```bash
+aws ecr get-login-password --region REGION | docker login --username AWS --password-stdin ACCOUNTID.dkr.ecr.REGION.amazonaws.com
+```
 
 Now tag the pganalyze image with the correct prefix for the AWS registry - make sure to replace the values (`ACCOUNTID`, `REGION`, `VERSION`) here:
 
-<CodeBlock language="bash">
-{`docker tag quay.io/pganalyze/enterprise:VERSION-slim ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION-slim`}
-</CodeBlock>
+```bash
+docker tag quay.io/pganalyze/enterprise:VERSION-slim ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION-slim
+```
 
 And now push the tag to the registry:
 
-<CodeBlock language="bash">
-{`docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION`}
-</CodeBlock>
+```bash
+docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION
+```
 
 ### Step 2: Set up a Kubernetes secret for configuration settings
 
@@ -96,12 +96,12 @@ The `DATABASE_URL` has the format `postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DA
 
 The `LICENSE_KEY` has been provided to you by the pganalyze Team - replace `KEYKEYKEY` in the command with the actual key.
 
-<CodeBlock language="bash">
-{`kubectl create secret generic pganalyze-secret \\
+```bash
+kubectl create secret generic pganalyze-secret \\
     --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \\
     --from-literal=LICENSE_KEY=KEYKEYKEY \\
-    --dry-run=client -o yaml | kubectl apply -f -`}
-</CodeBlock>
+    --dry-run=client -o yaml | kubectl apply -f -
+```
 
 ### Step 3: Create the pganalyze Enterprise Slim deployment
 
@@ -116,8 +116,8 @@ pganalyze `web` and `worker` pods. The following YAML sample assumes that the `p
  
 Save this sample to a text a file named `pganalyze-enterprise-slim.yml` and modify it as needed.
 
-<CodeBlock language="yaml">
-{`---
+```yaml
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -268,20 +268,20 @@ spec:
       port: 5000
       targetPort: 5000
   type: ClusterIP
-`}
-</CodeBlock>
+
+```
 
 Now deploy the pganalyze Enterprise application:
 
-<CodeBlock language="bash">
-{`kubectl apply -f pganalyze-enterprise-slim.yml`}
-</CodeBlock>
+```bash
+kubectl apply -f pganalyze-enterprise-slim.yml
+```
 
 We can confirm the deployment is completed by checking `kubectl get deploy`. Change the namespace if you used something other than `pganalyze`:
 
-<CodeBlock language="bash">
-{`kubectl get deploy -n pganalyze`}
-</CodeBlock>
+```bash
+kubectl get deploy -n pganalyze
+```
 
 ``` 
 NAME               READY   UP-TO-DATE   AVAILABLE   AGE
@@ -294,9 +294,9 @@ pganalyze-redis    1/1     1            1           3d1h
 
 Run the following command to perform the Enterprise self-check:
 
-<CodeBlock language="bash">
-{`kubectl exec -i -t deploy/pganalyze-web -- /docker-entrypoint.enterprise.sh rake enterprise:self_check`}
-</CodeBlock>
+```bash
+kubectl exec -i -t deploy/pganalyze-web -- /docker-entrypoint.enterprise.sh rake enterprise:self_check
+```
 
 This should return the following:
 
@@ -317,9 +317,9 @@ In case you get an error for the license verification, please reach out to the p
 
 Run the following to initialize the pganalyze statistics database:
 
-<CodeBlock language="bash">
-{`kubectl exec -i -t deploy/pganalyze-web -- /docker-entrypoint.enterprise.sh rake db:structure:load`}
-</CodeBlock>
+```bash
+kubectl exec -i -t deploy/pganalyze-web -- /docker-entrypoint.enterprise.sh rake db:structure:load
+```
 
 ```
 Database 'postgres' already exists
@@ -331,9 +331,9 @@ Database 'postgres' already exists
 
 Then run the following to create the initial admin user:
 
-<CodeBlock language="bash">
-{`kubectl exec -i -t deploy/pganalyze-web -- /docker-entrypoint.enterprise.sh rake db:seed`}
-</CodeBlock>
+```bash
+kubectl exec -i -t deploy/pganalyze-web -- /docker-entrypoint.enterprise.sh rake db:seed
+```
 
 
 And note down the credentials that are returned:
@@ -390,14 +390,14 @@ Additionally, you can review [all configuration settings](/docs/enterprise/setti
 
 In case you want to make adjustments to the configuration, simply adjust the `pganalyze-enterprise.yml` file from earlier, and then apply with `kubectl`:
 
-<CodeBlock language="bash">
-{`kubectl apply -f pganalyze-enterprise-slim.yml`}
-</CodeBlock>
+```bash
+kubectl apply -f pganalyze-enterprise-slim.yml
+```
 
 When changing the secrets information without changing the Kubernetes template, you can restart the deployment like this:
 
-<CodeBlock language="bash">
-{`kubectl rollout restart deployment pganalyze-web
-kubectl rollout restart deployment pganalyze-worker`}
-</CodeBlock>
+```bash
+kubectl rollout restart deployment pganalyze-web
+kubectl rollout restart deployment pganalyze-worker
+```
 

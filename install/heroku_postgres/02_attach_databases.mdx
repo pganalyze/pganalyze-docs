@@ -30,9 +30,9 @@ Setting ${attName} config vars and restarting ⬢ ${appName}... done, v9`}
 
 First, find out the add-on name of your database - this is not the same as your application name on Heroku.
 
-<CodeBlock language="bash">
-{`heroku addons`}
-</CodeBlock>
+```bash
+heroku addons
+```
 
 This will output something like the following:
 
@@ -51,31 +51,31 @@ can be found in the [Heroku documentation](https://devcenter.heroku.com/articles
 Using the add-on name from the previous step (`postgresql-objective-11111` in the example), and the correct application
 name, run the following command to create the new credential (named `pganalyze`):
 
-<CodeBlock language="bash">
-{`heroku pg:credentials:create postgresql-objective-11111 --name pganalyze -a testapp`}
-</CodeBlock>
+```bash
+heroku pg:credentials:create postgresql-objective-11111 --name pganalyze -a testapp
+```
 
 ## Grant monitoring privileges to the pganalyze role
 Now connect to the database server with an admin user using the `heroku` CLI and grant the recommended predefined role and create the necessary schema.
 
-<CodeBlock language="bash">
-{`heroku pg:psql -a testapp`}
-</CodeBlock>
+```bash
+heroku pg:psql -a testapp
+```
  
-<CodeBlock language="sql">
-{`GRANT pg_monitor TO pganalyze;
+```sql
+GRANT pg_monitor TO pganalyze;
  
 CREATE SCHEMA pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
-GRANT USAGE ON SCHEMA public TO pganalyze;`}
-</CodeBlock>
+GRANT USAGE ON SCHEMA public TO pganalyze;
+```
 
 ## Create monitoring helper functions
 Next, connect to the hosted database that you plan to monitor using `heroku pg:psql` and the default Heroku admin role (NOT the 
 new `pganalyze` role) and add the following two functions to enable the collection of additional statistics.
 
-<CodeBlock language="sql">
-{`DROP FUNCTION IF EXISTS pganalyze.get_column_stats;
+```sql
+DROP FUNCTION IF EXISTS pganalyze.get_column_stats;
 CREATE FUNCTION pganalyze.get_column_stats() RETURNS TABLE(
   schemaname name, tablename name, attname name, inherited bool, null_frac real, avg_width int, n_distinct real, correlation real
 ) AS $$
@@ -97,8 +97,8 @@ $$
   most_common_val_nulls, most_common_freqs, most_common_base_freqs
   FROM pg_catalog.pg_stats_ext se
   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
-</CodeBlock>
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;
+```
 
 ## Attach database
 

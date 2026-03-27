@@ -30,38 +30,38 @@ For a demo of the MCP server in action, watch the webinar recording:
 
 Add the pganalyze MCP server using the CLI:
 
-<CodeBlock language="bash">
-{`claude mcp add --transport http pganalyze https://app.pganalyze.com/mcp`}
-</CodeBlock>
+```bash
+claude mcp add --transport http pganalyze https://app.pganalyze.com/mcp
+```
 
 ### Codex
 
 Add the pganalyze MCP server in your project's `codex.json` configuration:
 
-<CodeBlock language="json">
-{`{
+```json
+{
   "mcpServers": {
     "pganalyze": {
       "type": "url",
       "url": "https://app.pganalyze.com/mcp"
     }
   }
-}`}
-</CodeBlock>
+}
+```
 
 ### Cursor
 
 In Cursor settings, add a new MCP server with the following configuration:
 
-<CodeBlock language="json">
-{`{
+```json
+{
   "mcpServers": {
     "pganalyze": {
       "url": "https://app.pganalyze.com/mcp"
     }
   }
-}`}
-</CodeBlock>
+}
+```
 
 ### Other MCP clients
 

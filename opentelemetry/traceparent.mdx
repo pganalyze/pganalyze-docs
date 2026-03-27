@@ -50,17 +50,17 @@ which automatically appends comments (query tags) to SQL queries.
 You can enable this via Rails configuration in `config/application.rb` or an
 initializer:
 
-<CodeBlock language="ruby">
-{`config.active_record.query_log_tags_enabled = true`}
-</CodeBlock>
+```ruby
+config.active_record.query_log_tags_enabled = true
+```
 
 By default, this doesn't have a traceparent query tag, so you'll need to add it
 manually. New comment tags can be defined by adding them in a `Hash` to the tags
 `Array`.
 You can append the traceparent tag like the following:
 
-<CodeBlock language="ruby">
-{`config.active_record.query_log_tags = [
+```ruby
+config.active_record.query_log_tags = [
   :application,
   :controller,
   :action,
@@ -80,14 +80,14 @@ You can append the traceparent tag like the following:
       )
     }
   }
-]`}
-</CodeBlock>
+]
+```
 
 With above configuration, queries will have the comments like the following:
 
-<CodeBlock language="sql">
-{`SELECT "articles".* FROM "articles" /*application='myblog',action='index',controller='articles',traceparent='00-953c157ad37a81d94fe83bb95cfc8add-3cf784b99bd43910-01'*/`}
-</CodeBlock>
+```sql
+SELECT "articles".* FROM "articles" /*application='myblog',action='index',controller='articles',traceparent='00-953c157ad37a81d94fe83bb95cfc8add-3cf784b99bd43910-01'*/
+```
 
 ### Marginalia
 
@@ -97,8 +97,8 @@ If you are using Rails 6 and below, you can attach SQL comments using the
 You can define a transparent tag in the initializer
 (e.g. `config/initializers/marginalia.rb`):
 
-<CodeBlock language="ruby">
-{`module Marginalia
+```ruby
+module Marginalia
   module Comment
     def self.traceparent
       current_span = ::OpenTelemetry::Trace.current_span
@@ -116,8 +116,8 @@ You can define a transparent tag in the initializer
   end
 end
  
-Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent]`}
-</CodeBlock>
+Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent]
+```
 
 ## Add traceparent with Python
 
@@ -138,28 +138,28 @@ also attach the appropriate traceparent as a query comment automatically.
 
 You can enable sqlcommenter in Django by passing `is_sql_commentor_enabled=True`:
 
-<CodeBlock language="python">
-{`DjangoInstrumentor().instrument(is_sql_commentor_enabled=True)`}
-</CodeBlock>
+```python
+DjangoInstrumentor().instrument(is_sql_commentor_enabled=True)
+```
 
 ### Flask
 
 For Flask application, you can enable sqlcommenter by passing `enable_commenter=True`:
 
-<CodeBlock language="python">
-{`FlaskInstrumentor().instrument(enable_commenter=True, commenter_options={})`}
-</CodeBlock>
+```python
+FlaskInstrumentor().instrument(enable_commenter=True, commenter_options={})
+```
 
 ### SQLAlchemy, Psycopg
 
 In addition to framework-level settings, you can also enable sqlcommenter at the
 ORM level (SQLAlchemy) or the database driver level (Psycopg).
 
-<CodeBlock language="python">
-{`SQLAlchemyInstrumentor().instrument(enable_commenter=True, commenter_options={})
+```python
+SQLAlchemyInstrumentor().instrument(enable_commenter=True, commenter_options={})
  
-Psycopg2Instrumentor().instrument(enable_commenter=True, commenter_options={})`}
-</CodeBlock>
+Psycopg2Instrumentor().instrument(enable_commenter=True, commenter_options={})
+```
 
 When performing manual instrumentation, these instrumentations won't be enabled
 automatically. To have better tracing spans around the queries, it is
@@ -199,8 +199,8 @@ time.
 Assuming that you already have the traceparent set up with Rails 7+, you can
 append the tracestate tag like the following:
 
-<CodeBlock language="ruby">
-{`config.active_record.query_log_tags = [
+```ruby
+config.active_record.query_log_tags = [
   :application,
   :controller,
   :action,
@@ -227,8 +227,8 @@ append the tracestate tag like the following:
       tracestate.to_s
     }
   }
-]`}
-</CodeBlock>
+]
+```
 
 ### Marginalia
 
@@ -236,8 +236,8 @@ Assuming that you already have the traceparent set up with Marginalia, you can
 append the tracestate tag like the following:
 
 
-<CodeBlock language="ruby">
-{`module Marginalia
+```ruby
+module Marginalia
   module Comment
     def self.traceparent
       current_span = ::OpenTelemetry::Trace.current_span
@@ -262,5 +262,5 @@ append the tracestate tag like the following:
   end
 end
  
-Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent, :tracestate]`}
-</CodeBlock>
+Marginalia::Comment.components = [:application, :controller, :action, :job, :traceparent, :tracestate]
+```

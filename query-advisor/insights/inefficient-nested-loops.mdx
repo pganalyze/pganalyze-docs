@@ -14,14 +14,14 @@ very inefficient. Instead of reading the inner table only a few times, the query
 
 ### Example scenario
 
-<CodeBlock language="sql">
-{`SELECT o.*, c.customer_name
+```sql
+SELECT o.*, c.customer_name
  FROM orders o
  JOIN customers c ON o.customer_id = c.id
  WHERE o.store_id = 'sf-union-square'
    AND c.zipcode = 94108
-   AND c.city = 'San Francisco';`}
-</CodeBlock>
+   AND c.city = 'San Francisco';
+```
 
 If Postgres expects only a handful of rows to match in the customers table, it might choose a nested loop that first
 retrieves all customers with the given Zipcode and City, and then iterates over the orders table for each customer. But if
@@ -35,16 +35,16 @@ When Query Advisor detects this pattern, it provides optimized query rewrites th
 
 Query Advisor may suggest restructuring the query to avoid the problematic nested loops:
 
-<CodeBlock language="sql">
-{`WITH __orders AS MATERIALIZED (
+```sql
+WITH __orders AS MATERIALIZED (
    SELECT * FROM orders
    WHERE store_id = 'sf-union-square'
 )
 SELECT o.*, c.customer_name
  FROM __orders o
  JOIN customers c ON o.customer_id = c.id
-WHERE c.zipcode = 94108 AND c.city = 'San Francisco';`}
-</CodeBlock>
+WHERE c.zipcode = 94108 AND c.city = 'San Francisco';
+```
 
 This approach forces Postgres to filter the data first, then join more efficiently, often resulting in 10-100x performance improvements.
 

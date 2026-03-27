@@ -20,8 +20,8 @@ will create an appropriate role.
 This assumes you are using your account's default KMS key for accessing SSM
 parameters.
 
-<CodeBlock language="bash">
-{`aws iam create-role --role-name pganalyzeTaskRole \
+```bash
+aws iam create-role --role-name pganalyzeTaskRole \
   --description "pganalyze collector ECS tasks" \
   --assume-role-policy-document '{"Version": "2012-10-17", "Statement": [{"Effect": "Allow", "Principal": {"Service": "ecs-tasks.amazonaws.com"}, "Action": "sts:AssumeRole"}]}'
    
@@ -33,8 +33,8 @@ aws iam put-role-policy --role-name pganalyzeTaskRole \
   --policy-document '{"Statement":[{"Action": ["ssm:GetParameter", "ssm:GetParameters", "ssm:GetParametersByPath"], "Effect": "Allow", "Resource": "arn:aws:ssm:*:*:parameter/pganalyze/*"}, {"Action": "kms:Decrypt", "Effect": "Allow", "Resource": "arn:aws:kms:*:*:*"}]}'
    
 aws iam attach-role-policy --role-name pganalyzeTaskRole \
-  --policy-arn arn:aws:iam::YOURAWSACCOUNTID:policy/POLICYNAME`}
-</CodeBlock>
+  --policy-arn arn:aws:iam::YOURAWSACCOUNTID:policy/POLICYNAME
+```
 
 Make sure to replace `arn:aws:iam::YOURAWSACCOUNTID:policy/POLICYNAME` with the
 correct policy ARN you created earlier.

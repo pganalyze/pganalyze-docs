@@ -16,15 +16,15 @@ it's recommended to use an unprivileged port number (1024 and up) to avoid
 running the HTTP server as root.
 
 
-<CodeBlock language="text">
-{`[pganalyze]
+```text
+[pganalyze]
 api_key = your_pga_organization_api_key
  
 [server1]
 db_host = your_db_host
 ...
-db_log_otel_server = 0.0.0.0:4318`}
-</CodeBlock>
+db_log_otel_server = 0.0.0.0:4318
+```
 
 ### Multiple OpenTelemetry endpoints
 If you have multiple Postgres clusters that you want to monitor through OpenTelemetry, you can
@@ -34,8 +34,8 @@ each for a specific monitored cluster.
 For each monitored server in the `pganalyze-collector.conf` file, you can specify
 the `db_log_otel_server` setting with a different port number, like this:
 
-<CodeBlock language="text">
-{`[pganalyze]
+```text
+[pganalyze]
 api_key = your_pga_organization_api_key
  
 [server1]
@@ -46,8 +46,8 @@ db_log_otel_server = 0.0.0.0:4318
 [server2]
 db_host = your_db_host2
 ...
-db_log_otel_server = 0.0.0.0:4319`}
-</CodeBlock>
+db_log_otel_server = 0.0.0.0:4319
+```
 
 This would start two OpenTelemetry HTTP servers, one on port 4318 and another on port 4319 when 
 the collector starts. To verify, you can start the collector with verbose logging to verify 
@@ -69,21 +69,21 @@ If you are deploying the pganalyze collector using a Helm chart, you can update
 the values.yaml file to create a service for this HTTP server.
 In values.yaml file, update the section of `service`:
 
-<CodeBlock language="yaml">
-{`service:
+```yaml
+service:
   create: true
   name: pganalyze-collector-otel-service
   type: ClusterIP
   port: 4318
-  targetPort: 4318`}
-</CodeBlock>
+  targetPort: 4318
+```
 
 This will create a service with the name `pganalyze-collector-otel-service`.
 
 To create multiple OpenTelemetry endpoints, you can add multiple port entries under the `ports` section:
 
-<CodeBlock language="yaml">
-{`service:
+```yaml
+service:
   create: true
   name: pganalyze-collector-otel-service
   type: ClusterIP
@@ -93,8 +93,8 @@ To create multiple OpenTelemetry endpoints, you can add multiple port entries un
       targetPort: 4318
     - name: pganalyze-collector-otel2
       port: 4319
-      targetPort: 4319`}
-</CodeBlock>
+      targetPort: 4319
+```
 
 When there is a `ports` section, the Helm chart will ignore the settings 
 for any individual `port` and `targetPort` settings.
@@ -125,11 +125,11 @@ log data model.
 stop the collector background process to avoid port conflicts. For package based installs
 you can do this through `systemctl stop pganalyze-collector`.
 
-<CodeBlock language="bash">
-{`$ sudo systemctl stop pganalyze-collector
+```bash
+$ sudo systemctl stop pganalyze-collector
  
-$ sudo pganalyze-collector --very-verbose`}
-</CodeBlock>
+$ sudo pganalyze-collector --very-verbose
+```
 
 This will start the collector with very verbose logging enabled, and you should see
 output like this when it receives a Protobuf payload. 
@@ -137,8 +137,8 @@ output like this when it receives a Protobuf payload.
 **Warning:** this output is very verbose and could quickly become overwhelming, 
 so it's recommended to use it only for troubleshooting purposes for a short period of time.
 
-<CodeBlock language="json">
-{`2025/07/21 22:25:21 I {
+```json
+2025/07/21 22:25:21 I {
   "resource_logs": [
     {
       "resource": {},
@@ -160,6 +160,6 @@ so it's recommended to use it only for troubleshooting purposes for a short peri
                           }
                         }
                       },
-...`}
-</CodeBlock>
+...
+```
 
