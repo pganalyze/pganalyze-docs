@@ -14,7 +14,8 @@ your `/etc/rsyslog.conf` as follows:
 ```text
 # Place this at the beginning of the rsyslog.conf file:
 $umask 0000
-$FileCreateMode 0600\n
+$FileCreateMode 0600
+
  
 # Place this where the postgres log is being output
 $FileCreateMode 0640

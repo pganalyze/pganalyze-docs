@@ -83,7 +83,8 @@ contain samples of that data.
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS pgstattuple; --- For pg_relpages (also uncomment the relevant lines below)
-CREATE EXTENSION IF NOT EXISTS pageinspect; --- For bt_metap (also uncomment the relevant line below)\n
+CREATE EXTENSION IF NOT EXISTS pageinspect; --- For bt_metap (also uncomment the relevant line below)
+
 WITH input_tables AS (
   SELECT pg_class.oid AS relid, nspname, relname
     FROM pg_class
