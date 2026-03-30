@@ -504,7 +504,7 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
       <td>false</td>
       <td>
         Fetches a short-lived token for logging into the database instance from the Google Cloud API, instead of using a hardcoded password
-        in the collector configuration file.
+        in the collector configuration file. If using Private Service Connect (PSC), enable `gcp_use_psc` as discussed below.
       </td>
     </tr>
     <tr>
@@ -518,6 +518,12 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
       <td>Set to <code>true</code> if the CloudSQL proxy connection should use the available public IP rather than the default private IP. Setting
         to <code>true</code> when no public IP is assigned will result in a connection error.</td>
     </tr> 
+    <tr>
+      <td>gcp_use_psc (<code>GCP_USE_PSC</code>)</td>
+      <td>false</td>
+      <td>Set to <code>true</code> if the connection is using IAM authentication and the Private Service Connect (PSC) connection should be used rather
+      than the private IP address. This requires additional setup ahead of time, specifically the creation of an `A` record as <a href="https://docs.cloud.google.com/alloydb/docs/configure-private-service-connect#configure-dns">described here</a></td>
+    </tr>     
   </tbody>
 </table>
 
