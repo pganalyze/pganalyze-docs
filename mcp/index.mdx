@@ -62,11 +62,11 @@ MCP clients that support HTTP transport can connect to the pganalyze MCP server 
 
 If you're using an MCP client hosted on the web (instead of running locally) the OAuth redirect URI may not be permitted and you will get an authentication error during OAuth Dynamic Client Registration (DCR). Reach out to pganalyze support to verify the permitted redirect URIs.
 
-### Authentication
+## Authentication
 
 The MCP server supports two authentication methods: **OAuth** (interactive) and **API key** (non-interactive).
 
-#### OAuth (recommended)
+### OAuth (recommended)
 
 OAuth is the recommended authentication method for most users. When you first connect, you will be prompted to authorize access through your pganalyze account. During authorization, you can choose between two permission levels:
 
@@ -77,7 +77,7 @@ OAuth is the recommended authentication method for most users. When you first co
 
 Access is further limited by your account permissions. For example, if you can only view certain servers, the MCP server will have the same restriction.
 
-#### API key
+### API key
 
 As an alternative to OAuth, you can authenticate using a pganalyze read API key. This gives full read access to your account data, equivalent to granting the "Full read access" OAuth permission.
 
