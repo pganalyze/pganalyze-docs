@@ -64,9 +64,42 @@ If you're using an MCP client hosted on the web (instead of running locally) the
 
 ### Authentication
 
-The MCP server uses OAuth for authentication. When you first connect, you will be prompted to authorize access through your pganalyze account. Access is further limited by your account permissions. For example, if you can only view certain servers, this app will have the same restriction.
+The MCP server supports two authentication methods: **OAuth** (interactive) and **API key** (non-interactive).
+
+#### OAuth (recommended)
+
+OAuth is the recommended authentication method for most users. When you first connect, you will be prompted to authorize access through your pganalyze account. During authorization, you can choose between two permission levels:
+
+- **Basic read access** (always granted): Read access to your account data, excluding sensitive information such as query text and EXPLAIN plans.
+- **Full read access** (optional): Full read access to your account data, including query text and EXPLAIN plans.
 
 ![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
+
+Access is further limited by your account permissions. For example, if you can only view certain servers, the MCP server will have the same restriction.
+
+#### API key
+
+As an alternative to OAuth, you can authenticate using a pganalyze read API key. This gives full read access to your account data, equivalent to granting the "Full read access" OAuth permission.
+
+To use API key authentication, first [create an API key](/docs/api/create-api-key), then configure your MCP client to pass the key as a Bearer token in the `Authorization` header. For example, with Claude Code:
+
+<CodeBlock language="bash">
+{`claude mcp add --transport http \\
+  pganalyze https://app.pganalyze.com/mcp \\
+  -H "Authorization: Bearer YOUR_API_KEY"`}
+</CodeBlock>
+
+The exact configuration for other MCP clients depends on how they support custom headers. Refer to your client's documentation for details.
+
+API key authentication is useful for non-interactive use cases such as:
+
+- **Automated workflows**: Run scheduled or event-driven agents that query pganalyze without requiring manual OAuth authorization.
+- **CI/CD pipelines**: Integrate pganalyze data into your deployment or review processes.
+- **Custom integrations**: Build deeper integrations that programmatically access pganalyze data through the MCP server.
+
+## Rate limiting
+
+During the preview, the MCP server is limited to 100 requests per billable server per hour, regardless of authentication method. If you exceed this limit, requests will be rejected until the next hour window. This limit may be adjusted as we learn more about common use cases and usage patterns.
 
 ## Available tools
 
