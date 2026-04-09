@@ -864,10 +864,6 @@
       "title": "Collector crashes",
       "path": "/docs/install/troubleshooting/collector_crash"
     },
-    "install/troubleshooting/collector_times_out": {
-      "title": "Collector times out",
-      "path": "/docs/install/troubleshooting/collector_times_out"
-    },
     "install/troubleshooting/column_stats_helper": {
       "title": "Resolving the \"Limited access to table column statistics\" warning",
       "path": "/docs/install/troubleshooting/column_stats_helper"
@@ -887,6 +883,10 @@
     "install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries": {
       "title": "Amazon RDS: Resolving the \"pg_stat_statements must be loaded via shared_preload_libraries\" error",
       "path": "/docs/install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries"
+    },
+    "install/troubleshooting/reset_stat_statements": {
+      "title": "Query text unavailable and reducing memory usage",
+      "path": "/docs/install/troubleshooting/reset_stat_statements"
     },
     "log-insights": {
       "title": "pganalyze Log Insights",
