@@ -64,4 +64,4 @@ reliably depend on pg_stat_statements.
 - Utility statements including a random comment (like a request ID), which can be addressed by
   upgrading to Postgres 16 or by setting `pg_stat_statements.track_utility = off`
 - Dynamically-generated queries with varying column lists or where clauses, which can be addressed by
-  increasing `pg_stat_statements.max`
+  increasing `pg_stat_statements.max` at the cost of higher Postgres memory usage
