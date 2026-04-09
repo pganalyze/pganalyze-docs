@@ -68,7 +68,7 @@ The MCP server supports two authentication methods: **OAuth** (interactive) and 
 
 ### OAuth (recommended)
 
-OAuth is the recommended authentication method for most users. When you first connect, you will be prompted to authorize access through your pganalyze account. During authorization, you can choose between two permission levels:
+When you first connect, your MCP client will open an OAuth authorization flow through your pganalyze account. During authorization, you can choose between two permission levels:
 
 - **Basic read access** (always granted): Read access to your account data, excluding sensitive information such as query text and EXPLAIN plans.
 - **Full read access** (optional): Full read access to your account data, including query text and EXPLAIN plans.
@@ -91,11 +91,7 @@ To use API key authentication, first [create an API key](/docs/api/create-api-ke
 
 The exact configuration for other MCP clients depends on how they support custom headers. Refer to your client's documentation for details.
 
-API key authentication is useful for non-interactive use cases such as:
-
-- **Automated workflows**: Run scheduled or event-driven agents that query pganalyze without requiring manual OAuth authorization.
-- **CI/CD pipelines**: Integrate pganalyze data into your deployment or review processes.
-- **Custom integrations**: Build deeper integrations that programmatically access pganalyze data through the MCP server.
+Since API key authentication does not require interactive authorization, it is suited for scenarios where OAuth is impractical, for example, automated background agents, CI/CD pipelines, or other programmatic integrations that run without user interaction.
 
 ## Rate limiting
 
