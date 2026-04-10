@@ -62,11 +62,40 @@ MCP clients that support HTTP transport can connect to the pganalyze MCP server 
 
 If you're using an MCP client hosted on the web (instead of running locally) the OAuth redirect URI may not be permitted and you will get an authentication error during OAuth Dynamic Client Registration (DCR). Reach out to pganalyze support to verify the permitted redirect URIs.
 
-### Authentication
+## Authentication
 
-The MCP server uses OAuth for authentication. When you first connect, you will be prompted to authorize access through your pganalyze account. Access is further limited by your account permissions. For example, if you can only view certain servers, this app will have the same restriction.
+The MCP server supports two authentication methods: **OAuth** (interactive) and **API key** (non-interactive).
+
+### OAuth (recommended)
+
+When you first connect, your MCP client will open an OAuth authorization flow through your pganalyze account. During authorization, you can choose between two permission levels:
+
+- **Basic read access** (always granted): Read access to your account data, excluding sensitive information such as query text and EXPLAIN plans.
+- **Full read access** (optional): Full read access to your account data, including query text and EXPLAIN plans.
 
 ![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
+
+Access is further limited by your account permissions. For example, if you can only view certain servers, the MCP server will have the same restriction.
+
+### API key
+
+As an alternative to OAuth, you can authenticate using a pganalyze read API key. This gives full read access to your account data, equivalent to granting the "Full read access" OAuth permission.
+
+To use API key authentication, first [create an API key](/docs/api/create-api-key), then configure your MCP client to pass the key as a Bearer token in the `Authorization` header. For example, with Claude Code:
+
+<CodeBlock language="bash">
+{`claude mcp add --transport http \\
+  pganalyze https://app.pganalyze.com/mcp \\
+  -H "Authorization: Bearer YOUR_API_KEY"`}
+</CodeBlock>
+
+The exact configuration for other MCP clients depends on how they support custom headers. Refer to your client's documentation for details.
+
+Since API key authentication does not require interactive authorization, it is suited for scenarios where OAuth is impractical, for example, automated background agents, CI/CD pipelines, or other programmatic integrations that run without user interaction.
+
+## Rate limiting
+
+During the preview, the MCP server is limited to 100 requests per [billable server](/docs/accounts/billing) per hour per organization, regardless of authentication method. If you exceed this limit, requests will be rejected until the quota gradually refills over time. This limit may be adjusted as we learn more about common use cases and usage patterns.
 
 ## Available tools
 
