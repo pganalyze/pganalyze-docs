@@ -1,7 +1,9 @@
 - mount: enterprise/setup
   items:
-  - name: Initial setup on a VM
+  - name: Setup overview
     href: enterprise/setup
+  - name: Docker on a VM
+    href: enterprise/setup/docker_vm
   - name: Initial setup on Kubernetes (Amazon EKS)
     href: enterprise/setup/kubernetes_amazon_eks
   - name: Initial setup on Kubernetes (Azure AKS)

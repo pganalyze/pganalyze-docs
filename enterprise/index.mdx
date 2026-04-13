@@ -5,28 +5,54 @@ backlink_title: 'Documentation'
 ---
 
 pganalyze Enterprise Server is a fully self-contained version of pganalyze that runs
-behind your firewall. We recommend using this deploy for storing highly sensitive data
-(e.g. medical data or financial services), or other situations where our cloud-based version is not a good fit.
+behind your firewall. It is designed for environments where sensitive data must stay
+within your own infrastructure — financial services, healthcare, air-gapped networks, or
+other situations where our cloud-hosted service is not a good fit.
 
-If you'd like to start a trial of pganalyze Enterprise Server in your environment,
+pganalyze Enterprise Server gives you the same query performance monitoring, index and
+query advisor, EXPLAIN plan analysis, and log-based insights as the hosted service, deployed
+entirely within your environment.
+
+If you'd like to start a trial of pganalyze Enterprise Server,
 **[please contact us](/contact)**.
 
-## Setup instructions
+## Getting started
 
-- [Initial setup on a VM](/docs/enterprise/setup)
-- [Initial setup on Kubernetes (Amazon EKS)](/docs/enterprise/setup/kubernetes_amazon_eks)
-- [Initial setup on Kubernetes (Azure AKS)](/docs/enterprise/setup/kubernetes_azure_aks)
-- [Initial setup on Kubernetes (non-root)](/docs/enterprise/setup/kubernetes_as_non_root)
-- [Separate collector installation](/docs/enterprise/setup/separate-collector-install)
-- [Google Auth setup](/docs/enterprise/google-auth)
+If you are setting up pganalyze for the first time, or need a reminder of the overall architecture 
+of the self-hosted application, start here. Specifically, the **[Setup overview](/docs/enterprise/setup)** explains how the 
+components fit together and walks through the general concepts of the installation process - from 
+provisioning infrastructure through connecting your first monitored database. We strongly suggest
+that you read through the setup overview before jumping into the platform-specific installation guides.
+
+- **[Setup overview](/docs/enterprise/setup)** — start here
+
+The platform-specific deployment guides are also linked at the end of the setup overview, but here 
+they are again for easy access:
+
+- [Docker on a VM](/docs/enterprise/setup/docker)
+- [Kubernetes on Amazon EKS](/docs/enterprise/setup/kubernetes_amazon_eks)
+- [Kubernetes on Azure AKS](/docs/enterprise/setup/kubernetes_azure_aks)
+- [Kubernetes (non-root)](/docs/enterprise/setup/kubernetes_as_non_root)
+
+## Managing your installation
+
+- [Container settings](/docs/enterprise/settings) — environment variables for configuring the pganalyze Enterprise Server
+- [Separate collector installation](/docs/enterprise/setup/separate-collector-install) — running the collector outside the main container
 - [Firewall configuration](/docs/enterprise/setup/firewall-configuration)
-- [PagerDuty and Slack integration setup](/docs/enterprise/integrations)
-- [Container settings](/docs/enterprise/settings)
+- [Google Auth setup](/docs/enterprise/google-auth)
+- [PagerDuty and Slack integration](/docs/enterprise/integrations)
 
-## Other information
+## Upgrading
 
-- [Release changelog](/docs/enterprise/releases)
-- [Upgrading to new releases](/docs/enterprise/upgrade)
+- **[Upgrade overview](/docs/enterprise/upgrade)** — core concepts for upgrading to a new release
+
+Platform-specific upgrade guides:
+- [Docker on a VM](/docs/enterprise/upgrade/docker)
+- [Kubernetes on Azure AKS](/docs/enterprise/upgrade/kubernetes_azure_aks)
+
+## Reference
+
+- [Release changelog](/docs/enterprise/releases) — what changed in each version
 - [Reference architecture](/docs/enterprise/architecture)
 - [Adding PostGIS support](/docs/enterprise/postgis)
 - [Troubleshooting](/docs/enterprise/troubleshooting)
