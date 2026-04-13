@@ -3,7 +3,7 @@
   - name: Upgrade overview
     href: enterprise/upgrade
   - name: Docker on a VM
-    href: enterprise/upgrade/docker_vm
+    href: enterprise/upgrade/docker
   - name: Kubernetes (Azure AKS)
     href: enterprise/upgrade/kubernetes_azure_aks
   
