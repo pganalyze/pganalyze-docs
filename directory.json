@@ -372,6 +372,10 @@
       "title": "Enterprise Server: Upgrade Docker on a VM",
       "path": "/docs/enterprise/upgrade/docker"
     },
+    "enterprise/upgrade/kubernetes_amazon_eks": {
+      "title": "Enterprise Server: Upgrade Amazon EKS",
+      "path": "/docs/enterprise/upgrade/kubernetes_amazon_eks"
+    },
     "enterprise/upgrade/kubernetes_azure_aks": {
       "title": "Enterprise Server: Upgrade Azure AKS",
       "path": "/docs/enterprise/upgrade/kubernetes_azure_aks"

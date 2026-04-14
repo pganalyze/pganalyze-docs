@@ -14,10 +14,10 @@
   items:
   - name: Amazon RDS and Amazon Aurora
     href: install/amazon_rds
-  - name: Google Cloud SQL and AlloyDB
-    href: install/google_cloud_sql
   - name: Azure Database for PostgreSQL
     href: install/azure_database
+  - name: Google Cloud SQL and AlloyDB
+    href: install/google_cloud_sql
   - name: Crunchy Bridge
     href: install/crunchy_bridge
   - name: Heroku Postgres
