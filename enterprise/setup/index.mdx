@@ -21,7 +21,7 @@ If you're upgrading an existing installation, see the
 A pganalyze Enterprise Server deployment has three main components:
 
 - **pganalyze Enterprise Server** — the central application that stores metrics, processes
-  statistics, and serves the web UI. It runs as a container (Docker, podman, or Kubernetes)
+  statistics, and serves the web UI. It runs as one or more containers (Docker, podman, or Kubernetes)
   and needs a PostgreSQL database for its internal data storage. This is what your team
   logs into.
 
@@ -48,7 +48,7 @@ connects it to the system.
 
 ---
 
-### Phase 1: Deploy the pganalyze Enterprise Server
+### Phase 1: Deploy pganalyze Enterprise Server
 
 This phase is typically done once in each environment. By the end, you'll have a running pganalyze Enterprise
 Server instance that your team can log into.
@@ -85,7 +85,7 @@ The following network connections need to be open between components:
 
 | Connection | Port | Protocol |
 |---|---|---|
-| Monitored PostgreSQL databases &rarr; collector | 5432 | TCP |
+| collector &rarr; Monitored PostgreSQL databases | 5432 | TCP |
 | Collector &rarr; pganalyze Enterprise Server | 443 | WebSocket Secure |
 | End users &rarr; pganalyze Enterprise Server | 443 | HTTPS |
 | Internal load balancer &rarr; pganalyze Enterprise Server | 5000 | HTTP |
@@ -101,7 +101,7 @@ traffic to port 5000. See the
 Each deployment guide includes steps to initialize the database schema, run the pganalyze
 Enterprise Server self-check, and create an initial admin user. Once complete, you can log
 in to the pganalyze web UI, create your organization, and optionally get the required API key(s) to
-allow an separately installed collector to submit monitoring data.
+allow a separately installed collector to submit monitoring data.
 
 ---
 
@@ -175,4 +175,4 @@ These guides cover the full process for preparing a database and connecting the 
 
 - [Amazon RDS and Aurora](/docs/install/amazon_rds/00_overview)
 - [Azure Database for PostgreSQL](/docs/install/azure_database/01_configure_azure_instance)
-- [Self-managed PostgreSQL servers](/docs/install/self_managed/00_choose_setup_method)
+- [Self-managed PostgreSQL servers](/docs/install/self_managed/01_create_monitoring_user)
