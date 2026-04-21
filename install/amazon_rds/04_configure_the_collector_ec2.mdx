@@ -16,7 +16,7 @@ export const APIKeyInstructions = ({ apiKey }) => {
   ) : (
     <React.Fragment>
       The <code>api_key</code> can be found on the pganalyze Settings page for
-      your organization under the API keys tab
+      your organization under the API Access tab
     </React.Fragment>
   );
 };
@@ -61,7 +61,7 @@ In the case of Amazon Aurora, the collector automatically resolves `cluster` end
 {`[writer_instance]
 db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
 ...
- 
+
 [reader_instance]
 db_host = mydbcluster.cluster-ro-123456789012.us-east-1.rds.amazonaws.com
 ...`}
@@ -76,11 +76,11 @@ If you have a cluster with multiple readers, you instead need to specify each in
 {`[instance1]
 db_host = mydbinstance1.123456789012.us-east-1.rds.amazonaws.com
 ...
- 
+
 [instance2]
 db_host = mydbinstance2.123456789012.us-east-1.rds.amazonaws.com
 ...
- 
+
 [instance3]
 db_host = mydbinstance3.123456789012.us-east-1.rds.amazonaws.com
 ...`}
