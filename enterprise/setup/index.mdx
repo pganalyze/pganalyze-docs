@@ -116,7 +116,7 @@ over time.
 pganalyze monitoring is made up of three layers. Enabling all three layers provides the most
 robust monitoring and optimization experience in pganalyze and is what we recommend. However, 
 some services (eg. Azure Event Hubs for streaming Postgres logs in Azure) may require assistance
-from other teams in your organization and cannot be setup initially. Each of these can layers can
+from other teams in your organization and cannot be setup initially. Each of these layers can
 be enabled incrementally as time and resources allow.
 
 1. **Query and metric collection** — the core layer. Requires `pg_stat_statements` and a
@@ -144,7 +144,7 @@ be enabled incrementally as time and resources allow.
   `pg_monitor` role, which provides read access to all the statistics views pganalyze needs
   without requiring superuser privileges.
 
-- **Configure log delivery** (for Log Insights) — the setup varies by platform. See
+- **Configure log delivery** (for [Log Insights](/docs/log-insights/setup)) — the setup varies by platform. See
   your platform's installation guide for specific instructions.
 
 - **Enable `auto_explain`** (for Automated EXPLAIN) — configure it to log execution plans for
@@ -156,15 +156,17 @@ be enabled incrementally as time and resources allow.
 The collector is what connects your monitored databases to the pganalyze Enterprise Server.
 You have two options:
 
-- **Integrated collector** — runs inside the pganalyze Enterprise Server container. This is
-  the fastest way to get started, especially for evaluations or when monitoring a small
-  number of databases. You configure monitored servers through the pganalyze web UI.
-
 - **Separate collector installation** — runs on its own instance near the monitored databases.
   Recommended for production deployments with multiple servers, when databases span
   different networks or regions, or when you want the collector closer to the databases it
-  monitors. See the
+  monitors. Additionally, the collector is updated at a different, often more frequent schedule
+  than the Enterprise server container. When it is installed separately, patches and improvements can
+  be installed as they become available. See the
   [separate collector installation guide](/docs/enterprise/setup/separate-collector-install).
+
+- **Integrated collector** — runs inside the pganalyze Enterprise Server container. This is
+  the fastest way to get started, especially for evaluations or when monitoring a small
+  number of databases. You configure monitored servers through the pganalyze web UI.
 
 Each collector instance can monitor multiple PostgreSQL servers. Collectors authenticate
 to the pganalyze Enterprise Server using an API key.

@@ -172,10 +172,13 @@ You don't need to run anything else on your database server - the pganalyze cont
 
 You can now either:
 
-1. Use the integrated collector in the pganalyze Enterprise Server image (works best for Amazon RDS / Aurora)
-2. Use a [separate collector installation](/docs/enterprise/setup/separate-collector-install) (recommended all other environments)
+1. Use a [separate collector installation](/docs/enterprise/setup/separate-collector-install). Recommended 
+for production deployments with multiple servers, when databases span different networks or regions, 
+or when you want the collector closer to the databases it monitors.
+2. Use the integrated collector in the pganalyze Enterprise Server image. This is the fastest way to get 
+started, especially for evaluations or when monitoring a small number of databases.
 
-To do so, follow the instructions shown in pganalyze on the "Add Server" page.
+To use the integrated collector, follow the instructions shown in pganalyze on the "Add Server" page.
 
 After adding a database server through one of these methods, initially, until sufficient information is available, your screen will look like this:
 
@@ -201,7 +204,7 @@ Additionally, you can review [all configuration settings](/docs/enterprise/setti
 
 ## Appendix: How to apply config changes
 
-When you make changes to the pganalyze container configuration in `/etc/pganalye.env`, make sure to fully restart the container afterwards, like this:
+When you make changes to the pganalyze container configuration in `/etc/pganalyze.env`, make sure to fully restart the container afterwards, like this:
 
 <CodeBlock language="bash">
 {`docker stop pganalyze

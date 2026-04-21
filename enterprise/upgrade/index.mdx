@@ -18,28 +18,32 @@ the guides linked below.
 
 Regardless of how you deploy the pganalyze Enterprise Server, every upgrade follows the
 same sequence:
-0. ** Review release notes** — check the [release notes](https://pganalyze.com/docs/enterprise/releases) for the new version (and any intermediate versions you are upgrading past). Releases with extra migration steps are noted in the following section, but release notes will help you know what to expect.
 
-1. **Back up the statistics database** — take a backup of the pganalyze statistics database
+1. ** Review release notes** — check the [release notes](https://pganalyze.com/docs/enterprise/releases) 
+   for the new version (and any intermediate versions you are upgrading past). Releases with 
+   extra migration steps are noted in the following section, but release notes will help you 
+   know what to expect.
+
+2. **Back up the statistics database** — take a backup of the pganalyze statistics database
    before starting. This is your recovery path if something goes wrong. You don't need to
    save any other state — all configuration lives in your environment variables, Kubernetes
    secrets, or deployment manifests.
 
-2. **Pull the new container image** — download the new pganalyze Enterprise Server image
+3. **Pull the new container image** — download the new pganalyze Enterprise Server image
    from quay.io. Check the [Releases](/docs/enterprise/releases) page for the latest version.
 
-3. **Stop the currently running pganalyze Enterprise Server** — shut down the running
+4. **Stop the currently running pganalyze Enterprise Server** — shut down the running
    container or scale the deployment to zero. No application code should be running against
    the statistics database while you perform the migration.
 
-4. **Run the database migration** — execute `rake db:migrate` using the new image. This
+5. **Run the database migration** — execute `rake db:migrate` using the new image. This
    upgrades the database schema for the new release. After this point, rolling back requires
    restoring from the backup taken in step 1, as schemas are not compatible across versions.
 
-5. **Run the Enterprise self-check** — execute `rake enterprise:self_check` to verify
+6. **Run the Enterprise self-check** — execute `rake enterprise:self_check` to verify
    the configuration is correct and all services are reachable.
 
-6. **Start the pganalyze Enterprise Server with the new image** — bring the container or
+7. **Start the pganalyze Enterprise Server with the new image** — bring the container or
    deployment back up using the new version. Verify that the web UI is accessible and
    healthy.
 
@@ -50,6 +54,7 @@ If any step fails, refer to the recovery instructions in your environment-specif
 Each guide walks through the exact commands for your deployment method:
 
 - [Docker on a VM](/docs/enterprise/upgrade/docker)
+- [Kubernetes on Amazon EKS](/docs/enterprise/upgrade/kubernetes_amazon_eks)
 - [Kubernetes on Azure AKS](/docs/enterprise/upgrade/kubernetes_azure_aks)
 
 ## Release-specific notes

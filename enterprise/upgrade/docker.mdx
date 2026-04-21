@@ -26,12 +26,19 @@ allows a convenient restore (e.g. Amazon RDS snapshots).
 
 ### Step 2: Pull the new pganalyze image
 
+Log in to the pganalyze image registry:
+
+<CodeBlock language="bash">
+{`docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io`}
+</CodeBlock>
+
+Pull the new version. Replace `[new version]` with the release you are upgrading to — check 
+the [Releases page](https://pganalyze.com/docs/enterprise/releases) for the latest 
+version. The format of the version string is `v2026.01.0` (year, month of release, minor updates).
+
 <CodeBlock language="bash">
 {`docker pull quay.io/pganalyze/enterprise:[new version]`}
 </CodeBlock>
-
-Be sure to replace `[new version]` with the specific release you are upgrading
-to. You can see the latest release on the [Releases](/docs/enterprise/releases) page.
 
 ### Step 3: Stop the currently running container
 

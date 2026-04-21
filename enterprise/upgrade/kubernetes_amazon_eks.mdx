@@ -26,7 +26,7 @@ configuration lives in your Kubernetes secret and deployment manifest.
 
 ### Step 2: Pull the new image and push it to ECR
 
-These steps are run on a machine with internet access and Docker installed. Replace `VERSION` with the release
+These steps are run on a machine with internet access and Docker installed. Replace `[new version]` with the release
 you are upgrading to — check the [Releases page](https://pganalyze.com/docs/enterprise/releases) for the latest
 version. The format of the version string is `v2026.01.0` (year, month of release, minor updates).
 
@@ -39,7 +39,7 @@ Log in to the pganalyze image registry:
 Pull the new version:
 
 <CodeBlock language="bash">
-{`docker pull quay.io/pganalyze/enterprise:VERSION`}
+{`docker pull quay.io/pganalyze/enterprise:[new version]`}
 </CodeBlock>
 
 Log in to your AWS container registry, replacing `ACCOUNTID` with your AWS account ID and `REGION` with your AWS region (e.g. "us-west-1"):
@@ -51,10 +51,10 @@ Log in to your AWS container registry, replacing `ACCOUNTID` with your AWS accou
 Tag and push the new image, replacing `ACCOUNTID`, `REGION`, and `VERSION`:
 
 <CodeBlock language="bash">
-{`docker tag quay.io/pganalyze/enterprise:VERSION \\
-  ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION
+{`docker tag quay.io/pganalyze/enterprise:[new version] \\
+  ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]
  
-docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION`}
+docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]`}
 </CodeBlock>
 
 ### Step 3: Scale down the current deployment
@@ -82,13 +82,13 @@ Run the following command, replacing `ACCOUNTID`, `REGION`, and `VERSION` with t
 
 <CodeBlock language="bash">
 {`kubectl run pganalyze-migrate --rm -i \\
-  --image=ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION \\
+  --image=ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version] \\
   --restart=Never \\
   --overrides='{
     "spec": {
       "containers": [{
         "name": "pganalyze-migrate",
-        "image": "ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION",
+        "image": "ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]",
         "command": ["/docker-entrypoint.enterprise.sh"],
         "args": ["rake", "db:migrate"],
         "envFrom": [{"secretRef": {"name": "pganalyze-secret"}}]
@@ -110,13 +110,13 @@ Run the following command, again replacing `ACCOUNTID`, `REGION`, and `VERSION`:
 
 <CodeBlock language="bash">
 {`kubectl run pganalyze-selfcheck --rm -i \\
-  --image=ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION \\
+  --image=ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version] \\
   --restart=Never \\
   --overrides='{
     "spec": {
       "containers": [{
         "name": "pganalyze-selfcheck",
-        "image": "ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION",
+        "image": "ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]",
         "command": ["/docker-entrypoint.enterprise.sh"],
         "args": ["rake", "enterprise:self_check"],
         "envFrom": [{"secretRef": {"name": "pganalyze-secret"}}]
@@ -164,7 +164,7 @@ Once resolved, re-run the self-check command before proceeding.
 Open your `pganalyze-enterprise.yml` file and update the image tag to the new version:
 
 <CodeBlock language="yaml">
-{`image: 'ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:VERSION'`}
+{`image: 'ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]'`}
 </CodeBlock>
 
 

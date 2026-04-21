@@ -26,7 +26,7 @@ configuration lives in your Kubernetes secret and deployment manifest.
 
 ### Step 2: Pull the new image and push it to ACR
 
-These steps are run on a machine with internet access and Docker installed. Replace `VERSION` with the release 
+These steps are run on a machine with internet access and Docker installed. Replace `[new version]` with the release 
 you are upgrading to — check the [Releases page](https://pganalyze.com/docs/enterprise/releases) for the latest 
 version. The format of the version string is `v2026.01.0` (year, month of release, minor updates).
 
@@ -39,7 +39,7 @@ Log in to the pganalyze image registry:
 Pull the new version:
 
 <CodeBlock language="bash">
-{`docker pull quay.io/pganalyze/enterprise:VERSION`}
+{`docker pull quay.io/pganalyze/enterprise:[new version]`}
 </CodeBlock>
 
 Log in to your Azure Container Registry and push the new image:
@@ -47,10 +47,10 @@ Log in to your Azure Container Registry and push the new image:
 <CodeBlock language="bash">
 {`az acr login --name pganalyzeregistry
  
-docker tag quay.io/pganalyze/enterprise:VERSION \\
-  pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION
+docker tag quay.io/pganalyze/enterprise:[new version] \\
+  pganalyzeregistry.azurecr.io/pganalyze-enterprise:[new version]
  
-docker push pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION`}
+docker push pganalyzeregistry.azurecr.io/pganalyze-enterprise:[new version]`}
 </CodeBlock>
 
 **Alternatively**, if your ACR has outbound internet access, you can use `az acr import` to have Azure pull 
@@ -59,8 +59,8 @@ the image directly from Quay server-side — no local Docker installation or dow
 <CodeBlock language="bash">
 {`az acr import \\
   --name pganalyzeregistry \\
-  --source quay.io/pganalyze/enterprise:VERSION \\
-  --image pganalyze-enterprise:VERSION \\
+  --source quay.io/pganalyze/enterprise:[new version] \\
+  --image pganalyze-enterprise:[new version] \\
   --username "pganalyze+enterprise_customer" \\
   --password "YOUR_PASSWORD"`}
 </CodeBlock>
@@ -90,17 +90,17 @@ The output should show no running pods before you proceed.
 
 ### Step 4: Run the database migration
 
-Run the following command, replacing `VERSION` with the version you are upgrading to:
+Run the following command, replacing `[new version]` with the version you are upgrading to:
 
 <CodeBlock language="bash">
 {`kubectl run pganalyze-migrate --rm -i \\
-  --image=pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION \\
+  --image=pganalyzeregistry.azurecr.io/pganalyze-enterprise:[new version] \\
   --restart=Never \\
   --overrides='{
     "spec": {
       "containers": [{
         "name": "pganalyze-migrate",
-        "image": "pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION",
+        "image": "pganalyzeregistry.azurecr.io/pganalyze-enterprise:[new version]",
         "command": ["/docker-entrypoint.enterprise.sh"],
         "args": ["rake", "db:migrate"],
         "envFrom": [{"secretRef": {"name": "pganalyze-secret"}}]
@@ -118,17 +118,17 @@ the backup taken in Step 1.
 
 ### Step 5: Run the Enterprise self-check
 
-Run the following command, again replacing `VERSION`:
+Run the following command, again replacing `[new version]`:
 
 <CodeBlock language="bash">
 {`kubectl run pganalyze-selfcheck --rm -i \\
-  --image=pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION \\
+  --image=pganalyzeregistry.azurecr.io/pganalyze-enterprise:[new version] \\
   --restart=Never \\
   --overrides='{
     "spec": {
       "containers": [{
         "name": "pganalyze-selfcheck",
-        "image": "pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION",
+        "image": "pganalyzeregistry.azurecr.io/pganalyze-enterprise:[new version]",
         "command": ["/docker-entrypoint.enterprise.sh"],
         "args": ["rake", "enterprise:self_check"],
         "envFrom": [{"secretRef": {"name": "pganalyze-secret"}}]
@@ -175,7 +175,7 @@ Once resolved, re-run the self-check command before proceeding.
 Open your `pganalyze-enterprise.yml` file and update the image tag to the new version:
 
 <CodeBlock language="yaml">
-{`image: 'pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION'`}
+{`image: 'pganalyzeregistry.azurecr.io/pganalyze-enterprise:[new version]'`}
 </CodeBlock>
 
 
