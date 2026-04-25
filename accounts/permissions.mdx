@@ -10,13 +10,18 @@ Every member of your organization gets to see the list of all other members in t
 but can't access any database information without having the **View** permission on them.
 
 Permissions are additive-only - that means if you grant a role that gives
-unrestricted access to all databases and servers, another restrictive permission
-that is also assigned will not restrict access for them.
+unrestricted access to all databases, servers, and server groups, another
+restrictive permission that is also assigned will not restrict access for
+them.
 
 ## View
 
 Allows the member to see statistics information for a database, including full
 query details as well as complete log information when using Log Insights.
+
+You can restrict the view permission to a specific database, server, or
+server group. A permission granted on a server group applies to every server and 
+database in the group.
 
 ## Modify
 
@@ -25,18 +30,20 @@ for the databases and servers they have the modify permission on.
 
 Note that the modify permission does not grant any access to the actual database server.
 
+You can restrict the modify permission to a specific database, server, or server group.
+
 ## Billing
 
 Allows the member to input billing details, change the subscription an organization
 is on, as well as view invoices.
 
-You cannot restrict the billing permission to a specific database or server.
+You cannot restrict the billing permission to a specific database, server, or server group.
 
 ## API
 
 Allows the member to see API keys, typically required for integrating the pganalyze collector on a server.
 
-You cannot restrict the API permission to a specific database or server.
+You cannot restrict the API permission to a specific database, server, or server group.
 
 ## Manage
 
@@ -47,10 +54,12 @@ as remove any other member from the organization.
 This also grants the permission to create new servers in the organization, as well
 as removing existing servers and their statistics.
 
-You cannot restrict the manage permission to a specific database or server.
+You cannot restrict the manage permission to a specific database, server, or server group.
 
 ## Create Workbooks
 
 Allows the member to create a workbook to tune queries. This also allows the
 member to run EXPLAIN ANALYZE queries using the collector, to collect EXPLAIN
 plans for tuning queries.
+
+You can restrict the create workbooks permission to a specific database, server, or server group.

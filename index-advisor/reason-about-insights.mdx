@@ -84,6 +84,10 @@ contain the scan). More frequent queries will have a more significant impact on
 the overall weighted cost improvement. For clusters, scan frequency shown on the 
 primary server includes activity for both the primary instance and across the whole cluster.
 
+For clusters, the affected queries listed for each scan are labeled with the
+server and database they came from, so you can tell whether a given query
+originates on the primary or on a replica.
+
 ## Scans
 
 ![](/scans-list.png)
@@ -126,7 +130,8 @@ marking the “Show all queries” checkbox.
 
 The scan cost change shows how the estimated cost of the query's scan on the
 current table would change when the index is added. For clusters, affected queries 
-may be hosted on any server in the cluster, not just the primary.
+may be hosted on any server in the cluster, not just the primary. Each query
+lists the server and database it came from.
 
 ## Existing indexes
 

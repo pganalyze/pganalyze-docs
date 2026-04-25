@@ -1,0 +1,22 @@
+---
+title: 'Server Groups'
+backlink_href: /docs/accounts
+backlink_title: 'Account Management'
+---
+
+A server group is a way to group related servers within an organization, so
+that pganalyze can present them together and aggregate data across their
+members.
+
+## Cluster server groups
+
+A cluster server group is created automatically when two or more servers in
+the same organization share a cluster ID. The cluster ID is set by the
+pganalyze collector via the `api_cluster_id` setting — see [Configuring
+Clusters](/docs/index-advisor/configuration#configuring-clusters) for how to
+set it manually or rely on auto-detection on supported providers.
+
+Every server whose cluster ID matches the cluster server group's cluster ID
+is automatically a member. You do not add or remove members directly.
+
+The display name of a cluster server group is the cluster ID.
