@@ -27,13 +27,13 @@ the query.
 
 For servers grouped into a [cluster server
 group](/docs/accounts/server_groups), the same view is available across the
-whole cluster at `/servergroups/:id/queries`. The default page summarizes
-query activity per database group (databases sharing a name across cluster
-members). Pick a database group from the table or Database picker to see
-top queries for that group, aggregated across every cluster member that
-hosts that database. The drill-down offers the same latency graph,
-statement-type filters, and time filter as the per-server view, and the query 
-list adds a column showing which server each query came from.
+whole cluster. The default page summarizes query activity per database group 
+(databases sharing a name across cluster members). Pick a database group from 
+the table or Database picker to see top queries for that group, aggregated 
+across every cluster member that hosts that database. The drill-down offers the 
+same latency graph, statement-type filters, and time filter as the per-server
+view, and the query list adds a column showing which server each query came
+from.
 
 ### How percentiles are calculated
 
