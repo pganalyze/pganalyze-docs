@@ -76,8 +76,8 @@ The MCP server supports two authentication methods: **OAuth** (interactive) and 
 
 When you first connect, your MCP client will open an OAuth authorization flow through your pganalyze account. During authorization, you can choose between two permission levels:
 
-- **Basic read access** (always granted): Read access to your account data, excluding sensitive information such as query text and EXPLAIN plans.
-- **Full read access** (optional): Full read access to your account data, including query text and EXPLAIN plans.
+- **Basic read access** (required): Read access to your account data, excluding sensitive information such as query parameters. EXPLAIN plans are available when the pganalyze collector is configured to normalize query samples for PII filtering.
+- **Full read access** (optional): Full read access to your account data, including query parameters and EXPLAIN plans.
 
 ![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
 
