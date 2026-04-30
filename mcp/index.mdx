@@ -4,11 +4,9 @@ backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
-import DocsEarlyAccessFeature from '../components/DocsEarlyAccessFeature'
-
-<DocsEarlyAccessFeature feature="MCP Server" />
-
 The pganalyze [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server allows AI assistants to interact with your pganalyze data. This enables AI coding tools like Claude Code, Codex, or Cursor to query server metrics, inspect EXPLAIN plans, run the Index Advisor, and review active issues.
+
+The pganalyze MCP server is currently in public preview, and available on current pganalyze [plans](/pricing). If you are on a legacy plan you may need to upgrade to access the MCP Server.
 
 For a demo of the MCP server in action, watch the webinar recording:
 
@@ -23,6 +21,14 @@ For a demo of the MCP server in action, watch the webinar recording:
 >
 </iframe>
 <br /><br />
+
+## Enabling the MCP server
+
+Admins can enable or disable the MCP server for the entire organization from the API Access settings page. New organizations have the MCP server enabled by default; organizations created before the public preview have it disabled and need to opt in.
+
+![MCP Server Access section in the organization API Access settings, showing an Enable/Disable MCP Server button](mcp-admin-access.png)
+
+When the MCP server is disabled, MCP clients cannot access any data for the organization.
 
 ## Setup
 
@@ -70,8 +76,8 @@ The MCP server supports two authentication methods: **OAuth** (interactive) and 
 
 When you first connect, your MCP client will open an OAuth authorization flow through your pganalyze account. During authorization, you can choose between two permission levels:
 
-- **Basic read access** (always granted): Read access to your account data, excluding sensitive information such as query text and EXPLAIN plans.
-- **Full read access** (optional): Full read access to your account data, including query text and EXPLAIN plans.
+- **Basic read access** (required): Read access to your account data, excluding sensitive information such as query parameters. EXPLAIN plans are available when the pganalyze collector is configured to normalize query samples for PII filtering.
+- **Full read access** (optional): Full read access to your account data, including query parameters and EXPLAIN plans.
 
 ![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
 
@@ -115,6 +121,7 @@ The MCP server exposes tools, organized by the type of data they access. Since t
 | `get_query_samples` | Get sample executions with runtime and parameters |
 | **Tables** | |
 | `get_tables` | List tables with filtering and pagination |
+| `get_table` | Get detailed information about a single table: schema details, columns (with per-column stats), indexes, and constraints |
 | `get_table_stats` | Get time-series table statistics |
 | `get_index_selection` | Get Index Advisor results for an existing run |
 | `run_index_selection` | Run the Index Advisor for a table |
