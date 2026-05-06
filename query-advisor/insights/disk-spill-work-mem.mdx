@@ -1,0 +1,103 @@
+---
+title: 'Disk Spill Due To Low work_mem'
+backlink_href: /docs/query-advisor/insights
+backlink_title: 'Query Advisor Insights'
+---
+
+Query Advisor detects when a Sort or Hash operation in your query exceeds the available `work_mem` and
+spills intermediate data to temporary files on disk, which is significantly slower than processing
+the same data in memory.
+
+## The problem
+
+When a Sort or Hash node cannot fit its working set within `work_mem`, Postgres falls back to writing
+intermediate results to temporary files. Reading and writing those files adds I/O overhead that often
+dominates the runtime of the query, even on fast storage.
+
+### Example scenario
+
+<CodeBlock language="sql">
+{`SELECT customer_id, COUNT(*)
+FROM orders
+GROUP BY customer_id
+ORDER BY COUNT(*) DESC;`}
+</CodeBlock>
+
+In `EXPLAIN (ANALYZE, BUFFERS)` output, a spilling Sort node looks like this:
+
+<CodeBlock language="text">
+{`Sort  (cost=... rows=... width=...) (actual time=... rows=...)
+  Sort Key: (count(*)) DESC
+  Sort Method: external merge  Disk: 11456kB
+  Buffers: shared hit=54504 dirtied=2, temp read=32453 written=32552`}
+</CodeBlock>
+
+The `Sort Method: external merge` and the `temp read`/`temp written` buffers are the signal that the
+node spilled. A Hash node spills similarly, falling back to batched processing once it runs out of
+memory.
+
+## How Query Advisor helps
+
+When Query Advisor detects a disk spill, it surfaces the actual size of the spilled data, the current
+`work_mem` setting on the server, and a recommended target value. The recommended target is bounded
+by a safe ceiling computed from the server's total memory, `shared_buffers`, and typical active
+connection count, so the suggestion leaves headroom for normal load.
+
+### Typical optimization approach
+
+The fix is to give the operation enough `work_mem` to stay in memory. Where you apply the change
+matters: a one-off investigation should not alter the server-wide default, and a recurring workload
+should not depend on a per-session `SET`.
+
+Query Advisor presents three scopes, from narrowest to broadest:
+
+**1. Temporarily, in a session.** Useful for ad-hoc investigation or comparing plans in a Workbook
+without changing anything persistent.
+
+<CodeBlock language="sql">
+{`SET work_mem = '128MB';
+SELECT customer_id, COUNT(*)
+FROM orders
+GROUP BY customer_id
+ORDER BY COUNT(*) DESC;
+RESET work_mem;`}
+</CodeBlock>
+
+**2. Per query, using `pg_hint_plan`.** If the [`pg_hint_plan`](https://github.com/ossc-db/pg_hint_plan)
+extension is installed, you can raise `work_mem` for a single statement by prefixing it with a `Set`
+hint comment. Other queries on the same connection are unaffected.
+
+<CodeBlock language="sql">
+{`/*+ Set(work_mem "128MB") */
+SELECT customer_id, COUNT(*)
+FROM orders
+GROUP BY customer_id
+ORDER BY COUNT(*) DESC;`}
+</CodeBlock>
+
+**3. Persistently, scoped to a database, role, or the whole server.** When the higher value is needed
+for a recurring workload, scope it as narrowly as you can. Per-database or per-role overrides keep
+unrelated workloads on the previous default.
+
+<CodeBlock language="sql">
+{`ALTER DATABASE mydb SET work_mem = '128MB';
+-- or
+ALTER ROLE myrole SET work_mem = '128MB';`}
+</CodeBlock>
+
+To raise the server-wide default instead, update `work_mem` in your Postgres configuration (the
+parameter group or configuration UI provided by your managed Postgres service, or `postgresql.conf`
+for self-managed servers) and reload the configuration.
+
+### A note on Hash operations
+
+For Hash nodes specifically (Hash Join, Hash Aggregate), Postgres 13 and later support
+`hash_mem_multiplier` (default `2.0`), which gives hash operations more effective memory without
+affecting sorts. Raising that multiplier is a good alternative when the spill is on a Hash node and
+you want to leave Sort behavior unchanged.
+
+## Next steps
+
+- **[See complete example](/docs/query-advisor/from-insight-to-conclusion)** - Full walkthrough of Query Advisor optimization workflow
+- **[Configure Workbooks](/docs/workbooks)** - Set up testing environment for validating optimizations
+- **[Set up alerts](/docs/query-advisor/alerts)** - Get notified when new optimization opportunities are detected
