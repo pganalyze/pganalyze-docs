@@ -12,7 +12,7 @@ the same data in memory.
 
 When a Sort or Hash node cannot fit its working set within `work_mem`, Postgres falls back to writing
 intermediate results to temporary files. Reading and writing those files adds I/O overhead that often
-dominates the runtime of the query, even on fast storage.
+slows down the query, even on fast storage.
 
 ### Example scenario
 
@@ -38,7 +38,7 @@ memory.
 
 ## How Query Advisor helps
 
-When Query Advisor detects a disk spill, it surfaces the actual size of the spilled data, the current
+When Query Advisor detects a disk spill, it surfaces the amount of temporary file writes, the current
 `work_mem` setting on the server, and a recommended target value. The recommended target is bounded
 by a safe ceiling computed from the server's total memory, `shared_buffers`, and typical active
 connection count, so the suggestion leaves headroom for normal load.
@@ -48,8 +48,6 @@ connection count, so the suggestion leaves headroom for normal load.
 The fix is to give the operation enough `work_mem` to stay in memory. Where you apply the change
 matters: a one-off investigation should not alter the server-wide default, and a recurring workload
 should not depend on a per-session `SET`.
-
-Query Advisor presents three scopes, from narrowest to broadest:
 
 **1. Temporarily, in a session.** Useful for ad-hoc investigation or comparing plans in a Workbook
 without changing anything persistent.
@@ -87,7 +85,7 @@ ALTER ROLE myrole SET work_mem = '128MB';`}
 
 To raise the server-wide default instead, update `work_mem` in your Postgres configuration (the
 parameter group or configuration UI provided by your managed Postgres service, or `postgresql.conf`
-for self-managed servers) and reload the configuration.
+/ `ALTER SYSTEM` for self-managed servers) and reload the configuration.
 
 ### A note on Hash operations
 
