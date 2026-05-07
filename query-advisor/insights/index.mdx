@@ -30,6 +30,12 @@ Identifies queries where Postgres uses an index primarily for sorting while filt
 
 **[Learn more about Wrong Index Due To ORDER BY →](/docs/query-advisor/insights/wrong-index-order-by)**
 
+### Disk Spill Due To Low work_mem
+
+Detects when a Sort or Hash node exceeds `work_mem` and spills intermediate data to temporary files on disk, suggesting an appropriately scoped increase to keep the operation in memory.
+
+**[Learn more about Disk Spill Due To Low work_mem →](/docs/query-advisor/insights/disk-spill-work-mem)**
+
 ## Optimization techniques
 
 Query Advisor employs different techniques to cause the Postgres planner to change a query plan. For example
@@ -73,5 +79,6 @@ This is normal behavior - database conditions evolve, and Query Advisor adapts a
 
 - **[Inefficient Nested Loops](/docs/query-advisor/insights/inefficient-nested-loops)** - Learn about join optimization
 - **[ORDER BY + LIMIT Issues](/docs/query-advisor/insights/wrong-index-order-by)** - Understand index selection problems  
+- **[Disk Spill Due To Low work_mem](/docs/query-advisor/insights/disk-spill-work-mem)** - Keep Sort and Hash operations in memory
 - **[Set up alerts](/docs/query-advisor/alerts)** - Get notified of new optimization opportunities
 - **[Complete workflow guide](/docs/query-advisor/from-insight-to-conclusion)** - See Query Advisor in action
