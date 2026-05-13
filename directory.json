@@ -16,6 +16,10 @@
       "title": "Permissions and Roles",
       "path": "/docs/accounts/permissions"
     },
+    "accounts/server_groups": {
+      "title": "Server Groups",
+      "path": "/docs/accounts/server_groups"
+    },
     "accounts/sso": {
       "title": "Single Sign-On",
       "path": "/docs/accounts/sso"

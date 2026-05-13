@@ -118,6 +118,10 @@ For servers in a cluster, insights are shown on the primary server and include
 data from all cluster members. When viewing insights from a replica server, 
 you'll see a link to view insights on the primary.
 
+These cluster-wide insights require access to the whole cluster, either
+through unrestricted View or View scoped to the server group. Viewers 
+restricted to individual cluster members see per-server data instead.
+
 ### Missing indexes
 
 Detects tables that have potential to be improved by adding indexes. Queries
