@@ -1100,6 +1100,10 @@
       "title": "Query Advisor Insights",
       "path": "/docs/query-advisor/insights"
     },
+    "query-advisor/insights/disk-spill-work-mem": {
+      "title": "Disk Spill Due To Low work_mem",
+      "path": "/docs/query-advisor/insights/disk-spill-work-mem"
+    },
     "query-advisor/insights/inefficient-nested-loops": {
       "title": "Inefficient Nested Loops",
       "path": "/docs/query-advisor/insights/inefficient-nested-loops"
