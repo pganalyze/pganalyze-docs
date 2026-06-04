@@ -16,6 +16,10 @@
       "title": "Permissions and Roles",
       "path": "/docs/accounts/permissions"
     },
+    "accounts/server_groups": {
+      "title": "Server Groups",
+      "path": "/docs/accounts/server_groups"
+    },
     "accounts/sso": {
       "title": "Single Sign-On",
       "path": "/docs/accounts/sso"
@@ -328,13 +332,21 @@
       "title": "2026.02.0 Release",
       "path": "/docs/enterprise/releases/2026-02-0"
     },
+    "enterprise/releases/2026-05-0": {
+      "title": "2026.05.0 Release",
+      "path": "/docs/enterprise/releases/2026-05-0"
+    },
     "enterprise/settings": {
       "title": "Enterprise Server: Container settings",
       "path": "/docs/enterprise/settings"
     },
     "enterprise/setup": {
-      "title": "Enterprise Server: Initial Setup",
+      "title": "Enterprise Server: Setup Overview",
       "path": "/docs/enterprise/setup"
+    },
+    "enterprise/setup/docker": {
+      "title": "Enterprise Server: Initial Setup on a VM",
+      "path": "/docs/enterprise/setup/docker"
     },
     "enterprise/setup/firewall-configuration": {
       "title": "Enterprise Server: Firewall Configuration",
@@ -361,8 +373,20 @@
       "path": "/docs/enterprise/troubleshooting"
     },
     "enterprise/upgrade": {
-      "title": "Enterprise Server: Upgrading to new releases",
+      "title": "Enterprise Server: Upgrade Overview",
       "path": "/docs/enterprise/upgrade"
+    },
+    "enterprise/upgrade/docker": {
+      "title": "Enterprise Server: Upgrade Docker on a VM",
+      "path": "/docs/enterprise/upgrade/docker"
+    },
+    "enterprise/upgrade/kubernetes_amazon_eks": {
+      "title": "Enterprise Server: Upgrade Amazon EKS",
+      "path": "/docs/enterprise/upgrade/kubernetes_amazon_eks"
+    },
+    "enterprise/upgrade/kubernetes_azure_aks": {
+      "title": "Enterprise Server: Upgrade Azure AKS",
+      "path": "/docs/enterprise/upgrade/kubernetes_azure_aks"
     },
     "explain": {
       "title": "Monitoring Postgres EXPLAIN plans",
@@ -864,10 +888,6 @@
       "title": "Collector crashes",
       "path": "/docs/install/troubleshooting/collector_crash"
     },
-    "install/troubleshooting/collector_times_out": {
-      "title": "Collector times out",
-      "path": "/docs/install/troubleshooting/collector_times_out"
-    },
     "install/troubleshooting/column_stats_helper": {
       "title": "Resolving the \"Limited access to table column statistics\" warning",
       "path": "/docs/install/troubleshooting/column_stats_helper"
@@ -887,6 +907,10 @@
     "install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries": {
       "title": "Amazon RDS: Resolving the \"pg_stat_statements must be loaded via shared_preload_libraries\" error",
       "path": "/docs/install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries"
+    },
+    "install/troubleshooting/reset_stat_statements": {
+      "title": "Query text unavailable and reducing memory usage",
+      "path": "/docs/install/troubleshooting/reset_stat_statements"
     },
     "log-insights": {
       "title": "pganalyze Log Insights",
@@ -1079,6 +1103,10 @@
     "query-advisor/insights": {
       "title": "Query Advisor Insights",
       "path": "/docs/query-advisor/insights"
+    },
+    "query-advisor/insights/disk-spill-work-mem": {
+      "title": "Disk Spill Due To Low work_mem",
+      "path": "/docs/query-advisor/insights/disk-spill-work-mem"
     },
     "query-advisor/insights/inefficient-nested-loops": {
       "title": "Inefficient Nested Loops",

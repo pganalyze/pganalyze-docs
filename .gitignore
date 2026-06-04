@@ -1,1 +1,6 @@
 .DS_Store
+
+# Astro build cache / generated types (created when the pganalyze-web Astro build
+# uses this repo as a content collection source)
+.astro/
+node_modules/

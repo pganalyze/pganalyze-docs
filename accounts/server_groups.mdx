@@ -1,0 +1,52 @@
+---
+title: 'Server Groups'
+backlink_href: /docs/accounts
+backlink_title: 'Account Management'
+---
+
+A server group is a way to group related servers within an organization, so
+that pganalyze can present them together and aggregate data across their
+members.
+
+Today, pganalyze only supports cluster server groups, which are created
+automatically based on the cluster ID determined by the collector (see below).
+
+## Cluster-Based Server Groups
+
+A cluster server group is created automatically when two or more servers in
+the same organization share a cluster ID. The cluster ID is set by the
+pganalyze collector via the `api_cluster_id` setting. See [Configuring
+Clusters](/docs/index-advisor/configuration#configuring-clusters) for how to
+set it manually or rely on auto-detection on supported providers.
+
+Every server whose cluster ID matches the cluster server group's cluster ID
+is automatically a member. You do not add or remove members directly.
+
+The display name of a cluster server group is the cluster ID.
+
+To verify which cluster a server belongs to, check the Debug Info panel
+in Settings > Server Settings. The panel shows the Cluster ID when
+available, so you can confirm that replicas are grouped as expected.
+
+## Server Groups Dashboard
+
+The Server Groups page provides a fleet-level overview of all clusters in
+your organization. The top-level rows are clusters, expanded by default to
+show their members as children. Each member has a badge indicating whether it
+is a primary or a replica. Both cluster and member rows share the same
+columns, including database count and the number of open warning and critical
+issues. This lets you compare cluster totals against the stats of each
+instance at a glance.
+
+You can sort by any column. Sorting by issues can help surface
+the worst-affected cluster first. From there you can drill down to a specific 
+server for more detail.
+
+## Navigation
+
+The server dropdown in the header includes a Clusters section below
+recent servers. Each cluster lists its primary and replicas, with status
+icons that bubble up from members to the cluster level. Selecting a cluster
+takes you to the Server Groups dashboard or [cluster-wide Query
+Performance](/docs/query-performance#cluster-wide-query-performance) page.
+Navigating away from either moves you onto the cluster primary by default.

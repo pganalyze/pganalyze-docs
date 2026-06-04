@@ -1,210 +1,180 @@
 ---
-title: 'Enterprise Server: Initial Setup'
+title: 'Enterprise Server: Setup Overview'
 backlink_href: /docs/enterprise
 backlink_title: 'pganalyze Enterprise Server'
 ---
 
 import ToC from '../../components/Toc'
 
-These are the installation instructions for [pganalyze Enterprise Server](/enterprise-postgres-monitoring), which runs fully-contained within your own environment.
+This guide walks through the general process of setting up
+[pganalyze Enterprise Server](/enterprise-postgres-monitoring) in your environment. It
+covers what you'll need to provision, how the components fit together, and where to go
+for platform-specific instructions.
 
-The pganalyze container image is mostly self-contained, and runs various services inside the Docker (or podman) container.
+If you're upgrading an existing installation, see the
+[upgrade instructions](/docs/enterprise/upgrade) instead.
 
 <ToC items={props.toc} />
 
-## Installation steps
+## How it all fits together
 
-### Pre-requisites
+A pganalyze Enterprise Server deployment has three main components:
 
-* Provision a virtual machine
-  * Assign at least 4GB - 8GB of RAM, 1-2 dedicated CPU cores
-* Install Docker or podman on your virtual machine
-  * pganalyze Enterprise Server is delivered as a container image compatible with Docker / podman
-  * When using podman, make sure to replace `docker` with `podman` in the steps below
-* Setup a PostgreSQL database that can be used for storing statistics data
-  * PostgreSQL 11 or newer is required
-  * 50 GB of dedicated disk space or more
-* Optional: If you use the RDS integration, set up an appropriate IAM role that can be used to download logs and system metrics
-  * You can also assign the required policy to an existing EC2 instance and its instance role
-  * You will need the [collector IAM policy](/docs/install/amazon_rds/iam_policy)
+- **pganalyze Enterprise Server** — the central application that stores metrics, processes
+  statistics, and serves the web UI. It runs as one or more containers (Docker, podman, or Kubernetes)
+  and needs a PostgreSQL database for its internal data storage. This is what your team
+  logs into.
 
-### Step 1: Download the container image
+- **Statistics database** — a PostgreSQL database that you provision and manage. The
+  pganalyze Enterprise Server uses it to store all collected metrics, query statistics, and
+  configuration data. This is separate from the databases you are monitoring.
 
-The Docker image is made available to you through the container hosting service quay.io.
+- **pganalyze collector** — a lightweight agent that connects to your monitored PostgreSQL
+  servers, gathers performance data, and reports it back to the pganalyze Enterprise Server.
+  The collector can run as part of the pganalyze Enterprise Server container (simplest for
+  getting started) or as a [separate installation](/docs/enterprise/setup/separate-collector-install)
+  (recommended for production deployments with multiple servers or network boundaries).
 
-You will have received credentials (username and license key) by email from our sales team.
+The data flow is straightforward: each collector connects to one or more PostgreSQL servers,
+collects statistics and optionally streams logs, then sends everything to your pganalyze
+Enterprise Server over a secure WebSocket connection. End users access the pganalyze
+web UI through a load balancer or directly.
 
-Use the provided credentials like this to access to the image:
+## What you'll set up
 
-```bash
-docker login -e="." -u="pganalyze+enterprise_customer" -p="REPLACE_ME" quay.io
-```
+Setting up pganalyze Enterprise Server happens in two phases. The first phase gets the central
+application running. The second phase prepares each database you want to monitor and
+connects it to the system.
 
-Note that this will add the login information to your current user's `.dockercfg` file - you will need this on every host where you'd like to access the image.
+---
 
-You should now be able to pull the pganalyze Enterprise Server Docker image:
+### Phase 1: Deploy pganalyze Enterprise Server
 
-```bash
-docker pull quay.io/pganalyze/enterprise:[version]
-```
+This phase is typically done once in each environment. By the end, you'll have a running pganalyze Enterprise
+Server instance that your team can log into.
 
-Please note that `[version]` should be replaced with the version you are using. We recommend using [the latest release](/docs/enterprise/releases).
+**1. Provision a statistics database**
 
+You need to supply an empty PostgreSQL database for the pganalyze Enterprise Server's
+internal use. pganalyze will connect to this database during setup to initialize the schema
+and seed the necessary data.
 
-### Step 2: Setting environment variables
+- PostgreSQL 14 or newer
+- Self-hosted or cloud-managed (Amazon RDS, Azure Database for PostgreSQL, etc.)
+- At least 50 GB of storage (100 GB or more recommended for production)
+- A modest instance size is fine for evaluations; production deployments monitoring many
+  servers will benefit from additional CPU, memory, and storage resources
 
-The Docker image uses environment variables that are passed in to determine how to access outside services, like PostgreSQL, LDAP and mail servers.
+**2. Deploy the pganalyze Enterprise Server container**
 
-We recommend keeping the environment variables in the file `/etc/pganalyze.env`.
+The pganalyze Enterprise Server is delivered as a container image. Choose the deployment
+method that fits your infrastructure. Each guide walks through pulling the image, configuring environment variables, initializing
+the database, creating an admin user, and starting the server. Resource requirements
+will vary — a proof-of-concept with a handful of servers needs far fewer resources than a
+production deployment monitoring dozens of instances.
 
-Here is an example `/etc/pganalyze.env` file to get you started:
+- [Docker on a VM](/docs/enterprise/setup/docker) — the simplest option for evaluations
+  and smaller deployments
+- [Kubernetes on Amazon EKS](/docs/enterprise/setup/kubernetes_amazon_eks)
+- [Kubernetes on Azure AKS](/docs/enterprise/setup/kubernetes_azure_aks)
+- [Kubernetes (non-root)](/docs/enterprise/setup/kubernetes_as_non_root)
 
-```text
-DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
-LICENSE_KEY=REPLACE_ME
-```
+**3. Configure network access**
 
-You can find the full explanation of all variables in the [settings documentation](/docs/enterprise/settings), for example the `MAILER_URL` setting which is required to activate email alerts.
+The following network connections need to be open between components:
 
-### Step 3: Initialize database & verify installation
+| Connection | Port | Protocol |
+|---|---|---|
+| Collector &rarr; Monitored PostgreSQL databases | 5432 | TCP |
+| Collector &rarr; pganalyze Enterprise Server | 443 | WebSocket Secure |
+| End users &rarr; pganalyze Enterprise Server | 443 | HTTPS |
+| Internal load balancer &rarr; pganalyze Enterprise Server | 5000 | HTTP |
+| Email alerts (optional) | 587 | SMTP |
 
-Run the Enterprise self check, to ensure the configuration is correct:
+The pganalyze Enterprise Server exposes its web UI on port 5000 internally. In most
+deployments, a load balancer or reverse proxy terminates TLS on port 443 and forwards
+traffic to port 5000. See the
+[firewall configuration guide](/docs/enterprise/setup/firewall-configuration) for details.
 
-```bash
-docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
-  rake enterprise:self_check
-```
+**4. Run initial setup and verify**
 
-```
-Testing database connection... Success!
-Testing Redis connection... Success!
-Testing LDAP connection... Success!
+Each deployment guide includes steps to initialize the database schema, run the pganalyze
+Enterprise Server self-check, and create an initial admin user. Once complete, you can log
+in to the pganalyze web UI, create your organization, and optionally get the required API key(s) to
+allow a separately installed collector to submit monitoring data.
 
-All tests completed successfully!
-```
+---
 
-In the case of an error this will give you a very verbose error message - please don't hesitate to [ask us about it](/contact/).
+### Phase 2: Prepare and connect each monitored database
 
-Assuming it succeeds, continue by initializing the database schema.
+Once the pganalyze Enterprise Server is running, you'll repeat these steps for each
+PostgreSQL server you want to monitor. You can start with a single server and add more
+over time.
 
-```bash
-docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
-  rake db:structure:load
-```
+#### Monitoring layers
 
-If you get permission errors, you may need to create the extensions `btree_gist` and `pgcrypto` beforehand. A successful output looks like this:
+pganalyze monitoring is made up of three layers. Enabling all three layers provides the most
+robust monitoring and optimization experience in pganalyze and is what we recommend. However, 
+some services (eg. Azure Event Hubs for streaming Postgres logs in Azure) may require assistance
+from other teams in your organization and cannot be setup initially. Each of these layers can
+be enabled incrementally as time and resources allow.
 
-```
-Jul  2 07:15:16 aa84f55aceba syslog-ng[160]: syslog-ng starting up; version='3.13.2'
-Jul  2 07:15:17 aa84f55aceba cron[180]: (CRON) INFO (pidfile fd = 3)
-Jul  2 07:15:17 aa84f55aceba cron[180]: (CRON) INFO (Running @reboot jobs)
- set_config
-------------
+1. **Query and metric collection** — the core layer. Requires `pg_stat_statements` and a
+   restricted monitoring user. This gives you query performance statistics, table and index
+   stats, connection activity, vacuum metrics, and more. **This layer is always required**.
 
-(1 row)
+2. **Log Insights** — streams and parses PostgreSQL logs into structured events: slow queries,
+   lock waits, autovacuum activity, errors, and more. The mechanism for delivering logs to
+   the collector varies by platform (for example, AWS uses IAM-based API access while Azure
+   requires an Event Hub), but the end result is the same. Log Insights is also required for 
+   retrieving EXPLAIN plans for slow queries, which is the next layer.
 
-Jul  2 07:15:22 aa84f55aceba syslog-ng[160]: syslog-ng shutting down; version='3.13.2'
-```
+3. **Automated EXPLAIN** — once logs are flowing, pganalyze can automatically collect
+   EXPLAIN plans for slow queries using `auto_explain`. This gives you the actual execution
+   plan used at query time, including buffer usage and timing data.
 
-### Step 4: Create initial admin user
+#### For each monitored server
 
-Create the initial user:
+- **Enable `pg_stat_statements`** — this extension is bundled with PostgreSQL but not
+  enabled by default in most environments. It must be added to `shared_preload_libraries`, 
+  which requires a database restart. If you plan to also enable `auto_explain`, add both at the 
+  same time to avoid a second restart.
 
-```bash
-docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[version] \
-  rake db:seed
-```
+- **Create a monitoring user and helper functions** — we recommend a dedicated user with the
+  `pg_monitor` role, which provides read access to all the statistics views pganalyze needs
+  without requiring superuser privileges.
 
-Make sure to note down the default user email and password:
+- **Configure log delivery** (for [Log Insights](/docs/log-insights/setup)) — the setup varies by platform. See
+  your platform's installation guide for specific instructions.
 
-```
-Jul  2 07:15:29 8bc5a4c0e6b6 syslog-ng[150]: syslog-ng starting up; version='3.13.2'
-Jul  2 07:15:30 8bc5a4c0e6b6 cron[167]: (CRON) INFO (pidfile fd = 3)
-Jul  2 07:15:30 8bc5a4c0e6b6 cron[167]: (CRON) INFO (Running @reboot jobs)
-I, [2020-07-02T07:15:35.006455 #159]  INFO -- : *****************************
-I, [2020-07-02T07:15:35.006520 #159]  INFO -- : *** INITIAL ADMIN CREATED ***
-I, [2020-07-02T07:15:35.006538 #159]  INFO -- : *****************************
-I, [2020-07-02T07:15:35.006551 #159]  INFO -- :
-I, [2020-07-02T07:15:35.006563 #159]  INFO -- : *****************************
-I, [2020-07-02T07:15:35.006599 #159]  INFO -- : Email:    admin@example.com
-I, [2020-07-02T07:15:35.006619 #159]  INFO -- : Password: abcdefabcdef
-I, [2020-07-02T07:15:35.006636 #159]  INFO -- : *****************************
-I, [2020-07-02T07:15:35.006648 #159]  INFO -- :
-I, [2020-07-02T07:15:35.006660 #159]  INFO -- : Use these credentials to login and then change email address and password.
-Jul  2 07:15:35 8bc5a4c0e6b6 syslog-ng[150]: syslog-ng shutting down; version='3.13.2'
-```
+- **Enable `auto_explain`** (for Automated EXPLAIN) — configure it to log execution plans for
+  queries exceeding a duration threshold. With the recommended settings, the performance
+  impact is minimal.
 
-### Step 5: Start web server and log in to pganalyze
+#### Install and configure the collector
 
-You can now start the Docker image in the background using this command:
+The collector is what connects your monitored databases to the pganalyze Enterprise Server.
+You have two options:
 
-```bash
-docker run -d --name pganalyze --env-file /etc/pganalyze.env -p 8080:5000 \
-  quay.io/pganalyze/enterprise:[version]
-```
+- **Separate collector installation** — runs on its own instance near the monitored databases.
+  Recommended for production deployments with multiple servers, when databases span
+  different networks or regions, or when you want the collector closer to the databases it
+  monitors. Additionally, the collector is updated at a different, often more frequent schedule
+  than the Enterprise server container. When it is installed separately, patches and improvements can
+  be installed as they become available. See the
+  [separate collector installation guide](/docs/enterprise/setup/separate-collector-install).
 
-This will make the web interface accessible on the server's address, on port 8080. You should see a site like this when you open your web browser for that address and port:
+- **Integrated collector** — runs inside the pganalyze Enterprise Server container. This is
+  the fastest way to get started, especially for evaluations or when monitoring a small
+  number of databases. You configure monitored servers through the pganalyze web UI.
 
-![](login.png)
+Each collector instance can monitor multiple PostgreSQL servers. Collectors authenticate
+to the pganalyze Enterprise Server using an API key.
 
-Now you can log in to the pganalyze interface using the generated credentials you've seen earlier when setting up the database. If successful you should see this screen:
+#### Platform-specific installation guides
 
-![](create_organization.png)
+These guides cover the full process for preparing a database and connecting the collector:
 
-If authentication does not work, or you see an error message, please check the container's logs using `docker logs`.
-
-Choose an organization name of your choice (typically your company name), and then click "Add Server" on the next screen.
-
-### Step 6: Preparing your PostgreSQL database for monitoring
-
-Before you can add a database to the pganalyze installation, you'll need to enable the `pg_stat_statements` extension on it.
-
-This extension is bundled with PostgreSQL and allows you detailed query monitoring. Its overhead on the database system is minimal, and it is required to use pganalyze.
-
-Please see [self-hosted systems](/docs/install/01_enabling_pg_stat_statements) or [Amazon RDS](/docs/install/amazon_rds/00_overview) instructions on how to add it to your database.
-
-In addition you will need to either use the database superuser (usually "postgres") to give pganalyze access to your database, or create a special [restricted monitoring user](/docs/install/amazon_rds/02_create_monitoring_user).
-
-You don't need to run anything else on your database server - the pganalyze container will connect to your database at regular intervals to gather information from PostgreSQL's statistics tables.
-
-### Step 7: Add your first database to pganalyze
-
-You can now either:
-
-1. Use the integrated collector in the Enterprise Server image (works best for Amazon RDS / Aurora)
-2. Use a [separate collector installation](/docs/enterprise/setup/separate-collector-install) (recommended all other environments)
-
-To do so, follow the instructions shown in pganalyze on the "Add Server" page.
-
-After adding a database server through one of these methods, initially, until sufficient information is available, your screen will look like this:
-
-![](server_empty.png)
-
-You can check whether any information has been received by clicking the "Server Settings" link in the left navigation, and scrolling down to the "Debug Info" section:
-
-![](debug_info_no_data.png)
-
-Once data is coming in successfully, the "Debug Info" looks like this:
-
-![](debug_info_with_data.png)
-
-**Important:** Be aware that some graphs need at least a few hours worth of data and might not work properly before.
-
-### Next steps
-
-To learn more about adding additional team members, see [Account Management](/docs/accounts).
-
-We also recommend changing both the email and password of the admin user initially created (you can do so by clicking on "Admin" in the lower left of the screen).
-
-Additionally, you can review [all configuration settings](/docs/enterprise/settings) for the Enterprise container.
-
-## Appendix: How to apply config changes
-
-When you make changes to the pganalyze container configuration in `/etc/pganalye.env`, make sure to fully restart the container afterwards, like this:
-
-```bash
-docker stop pganalyze
-docker rm pganalyze
-docker run -d --name pganalyze --env-file /etc/pganalyze.env -p 8080:5000 \
-  quay.io/pganalyze/enterprise:[version]
-```
+- [Amazon RDS and Aurora](/docs/install/amazon_rds/00_overview)
+- [Azure Database for PostgreSQL](/docs/install/azure_database/01_configure_azure_instance)
+- [Self-managed PostgreSQL servers](/docs/install/self_managed/01_create_monitoring_user)

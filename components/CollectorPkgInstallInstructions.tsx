@@ -38,7 +38,7 @@ const CollectorPkgInstallInstructions = () => {
 
 type YumProps = {
   kind: 'yum'
-  distro: 'el/9' | 'el/8' | 'el/7' | 'fedora/37' | 'fedora/36'
+  distro: 'el/10' | 'el/9' | 'el/8' | 'el/7' | 'fedora/43' | 'fedora/42'
 }
 
 type DebProps = {
@@ -54,12 +54,13 @@ function getInstallOpts(kind: string): InstallOpt[] {
   switch (kind) {
     case 'yum':
       return [
+        [ 'el10', 'el/10', 'RHEL / Rocky / OL 10' ],
         [ 'el9', 'el/9', 'RHEL / Rocky / OL 9' ],
         [ 'el8', 'el/8', 'RHEL / Rocky / OL 8' ],
         [ 'al2023', 'el/9', 'Amazon Linux 2023' ],
         [ 'al2', 'el/7', 'Amazon Linux 2' ],
-        [ 'fedora37', 'fedora/37', 'Fedora 37' ],
-        [ 'fedora36', 'fedora/36', 'Fedora 36' ],
+        [ 'fedora43', 'fedora/43', 'Fedora 43' ],
+        [ 'fedora42', 'fedora/42', 'Fedora 42' ],
       ]
     case 'deb':
       return [

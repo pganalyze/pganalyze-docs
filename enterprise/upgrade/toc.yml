@@ -1,0 +1,11 @@
+- mount: enterprise/upgrade
+  items:
+  - name: Upgrade overview
+    href: enterprise/upgrade
+  - name: Docker on a VM
+    href: enterprise/upgrade/docker
+  - name: Kubernetes (Amazon EKS)
+    href: enterprise/upgrade/kubernetes_amazon_eks
+  - name: Kubernetes (Azure AKS)
+    href: enterprise/upgrade/kubernetes_azure_aks
+  

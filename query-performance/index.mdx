@@ -23,6 +23,18 @@ The list is sorted by the percentage of all runtime by default. You can search
 this list by part of the query text, or the name of the Postgres roles executing
 the query.
 
+### Cluster-wide query performance
+
+For servers grouped into a [cluster server
+group](/docs/accounts/server_groups), the same view is available across the
+whole cluster. The default page summarizes query activity per database group 
+(databases sharing a name across cluster members). Pick a database group from 
+the table or Database picker to see top queries for that group, aggregated 
+across every cluster member that hosts that database. The drill-down offers the 
+same latency graph, statement-type filters, and time filter as the per-server
+view, and the query list adds a column showing which server each query came
+from.
+
 ### How percentiles are calculated
 
 Our percentile calculations use weighted averages of execution times, derived

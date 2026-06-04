@@ -1,0 +1,107 @@
+---
+title: 'Enterprise Server: Upgrade Overview'
+backlink_href: /docs/enterprise
+backlink_title: 'pganalyze Enterprise Server'
+---
+
+import ToC from '../../components/Toc'
+
+This page covers the general upgrade process for
+[pganalyze Enterprise Server](/enterprise-postgres-monitoring) and any release-specific
+notes that apply across all deployment environments. For environment-specific steps, see
+the guides linked below.
+
+<ToC items={props.toc} />
+
+## General upgrade process
+
+Regardless of how you deploy the pganalyze Enterprise Server, every upgrade follows the
+same sequence:
+
+1. ** Review release notes** — check the [release notes](https://pganalyze.com/docs/enterprise/releases) 
+   for the new version (and any intermediate versions you are upgrading past). Releases with 
+   extra migration steps are noted in the following section, but release notes will help you 
+   know what to expect.
+
+2. **Back up the statistics database** — take a backup of the pganalyze statistics database
+   before starting. This is your recovery path if something goes wrong. You don't need to
+   save any other state — all configuration lives in your environment variables, Kubernetes
+   secrets, or deployment manifests.
+
+3. **Pull the new container image** — download the new pganalyze Enterprise Server image
+   from quay.io. Check the [Releases](/docs/enterprise/releases) page for the latest version.
+
+4. **Stop the currently running pganalyze Enterprise Server** — shut down the running
+   container or scale the deployment to zero. No application code should be running against
+   the statistics database while you perform the migration.
+
+5. **Run the database migration** — execute `rake db:migrate` using the new image. This
+   upgrades the database schema for the new release. After this point, rolling back requires
+   restoring from the backup taken in step 1, as schemas are not compatible across versions.
+
+6. **Run the Enterprise self-check** — execute `rake enterprise:self_check` to verify
+   the configuration is correct and all services are reachable.
+
+7. **Start the pganalyze Enterprise Server with the new image** — bring the container or
+   deployment back up using the new version. Verify that the web UI is accessible and
+   healthy.
+
+If any step fails, refer to the recovery instructions in your environment-specific guide.
+
+## Environment-specific upgrade guides
+
+Each guide walks through the exact commands for your deployment method:
+
+- [Docker on a VM](/docs/enterprise/upgrade/docker)
+- [Kubernetes on Amazon EKS](/docs/enterprise/upgrade/kubernetes_amazon_eks)
+- [Kubernetes on Azure AKS](/docs/enterprise/upgrade/kubernetes_azure_aks)
+
+## Release-specific notes
+
+Some releases require additional steps or configuration changes during the upgrade. Review
+the notes below before upgrading — your environment-specific guide will reference this
+section where applicable.
+
+### Upgrading to 2026.01 and newer: pco storage migration
+
+The 2026.01 release introduced the new "pco" storage format, with the migration to the
+format happening during the release upgrade process by default.
+
+For large installations (100+ servers monitored), this migration may take **1 hour** or
+longer to complete, during which time your pganalyze Enterprise Server install would be
+unavailable. To keep the system online and accepting data, you can optionally delay the
+data backfill step to run it after migrations have been applied:
+
+1. During the release upgrade, run the migrations with the `SKIP_PCO_BACKFILL=1`
+   environment variable set.
+2. After the new code is deployed, run these commands in a console (`console` command
+   to the container / Docker entrypoint):
+
+<CodeBlock language="ruby">
+{`Rust::Migrate.migrate('20250902174735_backfill_query_stats_pco')
+require './db/migrate/20251030164200_drop_query_stats_packed'
+DropQueryStatsPacked.new.up
+ 
+Rust::Migrate.migrate('20251031193250_backfill_table_stats_pco')
+require './db/migrate/20251212175907_drop_table_stats_packed'
+DropTableStatsPacked.new.up`}
+</CodeBlock>
+
+Until the migration is completed the pganalyze UI will only show new data. After the
+migration is complete the full history will be available again.
+
+### Upgrading to 2018.08 and newer: license key requirement
+
+Starting in pganalyze Enterprise Server
+[2018.08.0](/docs/enterprise/releases/2018-08-0), the pganalyze container requires the
+`LICENSE_KEY` environment variable to be configured.
+
+Before starting the new container, set the `LICENSE_KEY` environment variable to
+the download password that you were given when first setting up pganalyze Enterprise Server.
+
+Note that this requires the container to be able to make an HTTPS connection (port 443) to
+`enterprise-license-check.pganalyze.com` — if this is not possible in your setup
+please [contact support](mailto:support@pganalyze.com) for workarounds.
+
+After setting the `LICENSE_KEY` you can verify using `rake enterprise:self_check`
+that the license verification works as expected.
