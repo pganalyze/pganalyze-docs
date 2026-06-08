@@ -13,20 +13,29 @@ automatically based on the cluster ID determined by the collector (see below).
 
 ## Cluster-Based Server Groups
 
-A cluster server group is created automatically when two or more servers in
-the same organization share a cluster ID. The cluster ID is set by the
+A cluster-based server group is created automatically when two or more servers
+in the same organization share a cluster ID. The cluster ID is set by the
 pganalyze collector via the `api_cluster_id` setting. See [Configuring
 Clusters](/docs/index-advisor/configuration#configuring-clusters) for how to
 set it manually or rely on auto-detection on supported providers.
 
-Every server whose cluster ID matches the cluster server group's cluster ID
+Every server whose cluster ID matches the server group's cluster ID
 is automatically a member. You do not add or remove members directly.
 
-The display name of a cluster server group is the cluster ID.
+By default, the display name of a server group is its cluster ID.
 
 To verify which cluster a server belongs to, check the Debug Info panel
 in Settings > Server Settings. The panel shows the Cluster ID when
 available, so you can confirm that replicas are grouped as expected.
+
+## Renaming a Server Group
+
+When cluster ids become hard to distinguish from each other, or if you just
+want to update the display name, select the cluster you want to rename in 
+the server dropdown and then open Settings > Server Group Settings page. Enter 
+a name in the Name field. The underlying cluster ID will not change, but you will 
+see the new display name used throughout the app. Leaving the field blank
+reverts the display name to the cluster ID.
 
 ## Server Groups Dashboard
 
