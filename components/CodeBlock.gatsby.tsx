@@ -29,6 +29,26 @@ function highlightCode(text: string, language: string): string {
   }
 }
 
+// Recursively extract code text from children so it can be highlighted
+// synchronously (SSR-safe). Handles the shapes CodeBlock receives directly:
+//   - plain strings / numbers
+//   - arrays / interpolated children (e.g. `{`...${x}...`}` in a JSX context)
+//   - React elements wrapping text (recurse into props.children)
+// Top-level MDX `<CodeBlock>{`...`}</CodeBlock>` never reaches here as a string:
+// the remark plugin hoists its child into the `code` prop, so it doesn't pass
+// through Astro's slot pipeline. Returns "" when there's no extractable text
+// (e.g. a self-rendering element like <SQL sql=.../> that keeps its code in a
+// non-children prop) — the caller then renders the children directly.
+function extractText(node: React.ReactNode): string {
+  if (node === null || node === undefined || typeof node === "boolean") return "";
+  if (typeof node === "string") return node;
+  if (typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(extractText).join("");
+  const props = (node as any)?.props;
+  if (props && props.children !== undefined) return extractText(props.children);
+  return "";
+}
+
 type Props = {
   /** Language for highlighting. */
   language?: "sql" | "bash" | "json" | "yaml" | "ruby" | "python" | "text";
@@ -45,9 +65,14 @@ type Props = {
 const CodeBlock = ({children, code, language = 'text', style, hideCopy = false}: Props) => {
   const codeRef = useRef<HTMLElement>(null);
 
-  // Prefer the `code` prop (plain string, no encoding issues).
-  // Fall back to rendering children directly with client-side highlighting.
-  const text = code ?? (typeof children === "string" ? children : null);
+  // Prefer the `code` prop (plain string — set by the remark plugin for fenced
+  // blocks and for inline MDX `<CodeBlock>{`...`}`). Otherwise extract plain-text
+  // children and highlight them the same way, synchronously, so it works during
+  // SSR (Astro renders docs statically, so a useEffect-based highlight would
+  // never run). Children with no extractable text (e.g. a self-rendering
+  // <SQL sql=.../>) yield "" → null, and fall back to rendering children directly.
+  const extracted = extractText(children);
+  const text = code ?? (extracted.trim() !== "" ? extracted : null);
 
   useEffect(() => {
     if (text === null && codeRef.current && language !== 'text' && hljs.getLanguage(language)) {
