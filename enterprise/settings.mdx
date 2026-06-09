@@ -21,7 +21,7 @@ The settings on this page can be passed in as environment variables into the pga
 
 An example configuration looks like this:
 
-```text
+```ini
 DATABASE_URL=postgres://myusername:mypassword@example.com:5432/mydatabase
 LICENSE_KEY=KEYKEYKEY
 DOMAIN_NAME=pganalyze.example.com
@@ -94,7 +94,7 @@ to ensure that new LDAP users are added to the existing organization.
 
 Example LDAP configuration, with the required `DEFAULT_ORG_ROLE` setting, but without other unrelated settings:
 
-```text
+```ini
 LDAP_HOST=example.com
 LDAP_PORT=389
 LDAP_BASE_DN=OU=Users,OU=ldaptest,DC=ldaptest,DC=pganalyze,DC=com

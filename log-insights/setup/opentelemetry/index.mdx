@@ -16,7 +16,7 @@ it's recommended to use an unprivileged port number (1024 and up) to avoid
 running the HTTP server as root.
 
 
-```text
+```ini
 [pganalyze]
 api_key = your_pga_organization_api_key
  
@@ -34,7 +34,7 @@ each for a specific monitored cluster.
 For each monitored server in the `pganalyze-collector.conf` file, you can specify
 the `db_log_otel_server` setting with a different port number, like this:
 
-```text
+```ini
 [pganalyze]
 api_key = your_pga_organization_api_key
  

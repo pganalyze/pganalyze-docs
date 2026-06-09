@@ -57,7 +57,7 @@ The collector configuration file lives in `/etc/pganalyze-collector.conf`, and l
 
 In the case of Amazon Aurora, the collector automatically resolves `cluster` endpoints to the underlying writer instance, and `cluster-ro` to the underlying reader instance:
 
-```text
+```ini
 [writer_instance]
 db_host = mydbcluster.cluster-123456789012.us-east-1.rds.amazonaws.com
 ...
@@ -72,7 +72,7 @@ reader instances this is only supported in two-node clusters (i.e. single reader
 
 If you have a cluster with multiple readers, you instead need to specify each instance endpoint separately:
 
-```text
+```ini
 [instance1]
 db_host = mydbinstance1.123456789012.us-east-1.rds.amazonaws.com
 ...
