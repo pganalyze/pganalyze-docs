@@ -18,15 +18,22 @@ hljs.registerLanguage("bash", bash);
 hljs.registerLanguage("ruby", ruby);
 hljs.registerLanguage("python", python);
 
-function highlightCode(text: string, language: string): string {
-  try {
-    if (language && language !== 'text' && hljs.getLanguage(language)) {
+// Returns highlighted HTML for languages we explicitly support, or null when
+// there's nothing to highlight — `text`, an untagged fenced block (which
+// arrives here as "text"), or an unregistered language. We deliberately do NOT
+// fall back to hljs.highlightAuto(), which guesses a language and produces
+// spurious tokens. A null result is rendered as a plain React child, so React
+// handles HTML escaping (no hand-rolled escaper, and dangerouslySetInnerHTML
+// only ever receives highlight.js's own already-escaped output).
+function highlightCode(text: string, language: string): string | null {
+  if (language && language !== "text" && hljs.getLanguage(language)) {
+    try {
       return hljs.highlight(text, { language }).value;
+    } catch {
+      // fall through to plain rendering
     }
-    return hljs.highlightAuto(text).value;
-  } catch {
-    return text;
   }
+  return null;
 }
 
 // Recursively extract code text from children so it can be highlighted
@@ -73,6 +80,7 @@ const CodeBlock = ({children, code, language = 'text', style, hideCopy = false}:
   // <SQL sql=.../>) yield "" → null, and fall back to rendering children directly.
   const extracted = extractText(children);
   const text = code ?? (extracted.trim() !== "" ? extracted : null);
+  const highlighted = text !== null ? highlightCode(text, language) : null;
 
   useEffect(() => {
     if (text === null && codeRef.current && language !== 'text' && hljs.getLanguage(language)) {
@@ -84,15 +92,22 @@ const CodeBlock = ({children, code, language = 'text', style, hideCopy = false}:
     <div className={styles.copyBlock}>
       <div className='gatsby-highlight' data-language={language}>
         <pre className={`language-${language}`} style={style}>
-          {text !== null ? (
+          {text === null ? (
+            // No extractable text (e.g. a self-rendering <SQL/>): render children.
+            <code ref={codeRef} className={`language-${language}`}>
+              {children}
+            </code>
+          ) : highlighted !== null ? (
+            // Highlighted: highlight.js output is already HTML-escaped.
             <code
               ref={codeRef}
               className={`language-${language}`}
-              dangerouslySetInnerHTML={{ __html: highlightCode(text, language) }}
+              dangerouslySetInnerHTML={{ __html: highlighted }}
             />
           ) : (
+            // Plain text (text / untagged / unregistered): React escapes it.
             <code ref={codeRef} className={`language-${language}`}>
-              {children}
+              {text}
             </code>
           )}
         </pre>
