@@ -116,7 +116,7 @@ If you have a Prometheus setup already, you can add the hostname and port of you
 
 Below is an example of a `prometheus.yml` file (with web server `0.0.0.0:5000`):
 
-```text
+```yaml
 scrape_configs:
   - job_name: "sidekiq-prometheus"
     scrape_interval: 60s
