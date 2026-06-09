@@ -27,7 +27,7 @@ identify the constraint.
 
 You can explicitly specify the constraint like this:
 
-```
+```sql
 INSERT INTO distributors (did, dname) VALUES (9, 'Antwerp Design')
   ON CONFLICT ON CONSTRAINT distributors_pkey DO NOTHING;
 ```

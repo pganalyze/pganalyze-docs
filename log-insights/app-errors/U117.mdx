@@ -20,7 +20,7 @@ STATEMENT: SELECT * FROM x WHERE id = ANY ($1)
 Usually you would see this log event when using parameterized queries together
 with the ANY/ALL expression, like this:
 
-```
+```sql
 SELECT * FROM x WHERE id = ANY ($1)
 ```
 

@@ -219,7 +219,7 @@ You will need to adjust the following settings:
 
 Now deploy the pganalyze Enterprise application:
 
-```
+```bash
 kubectl apply -f pganalyze-enterprise.yml
 ```
 
@@ -235,7 +235,7 @@ pganalyze   1/1     1            1           1m
 
 Run the following command to perform the Enterprise self-check:
 
-```
+```bash
 kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake enterprise:self_check
 ```
 
@@ -258,7 +258,7 @@ In case you get an error for the license verification, please reach out to the p
 
 Run the following to initialize the pganalyze statistics database:
 
-```
+```bash
 kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:structure:load
 ```
 ```
@@ -271,7 +271,7 @@ Database 'postgres' already exists
 
 Then run the following to create the initial admin user:
 
-```
+```bash
 kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:seed
 ```
 
@@ -355,12 +355,12 @@ Additionally, you can review [all configuration settings](/docs/enterprise/setti
 
 In case you want to make adjustments to the configuration, simply adjust the `pganalyze-enterprise.yml` file from earlier, and then apply with `kubectl`:
 
-```
+```bash
 kubectl apply -f pganalyze-enterprise.yml
 ```
 
 When changing the secrets information without changing the Kubernetes template, you can restart the deployment like this:
 
-```
+```bash
 kubectl rollout restart deployment pganalyze
 ```

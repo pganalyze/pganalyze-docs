@@ -30,7 +30,7 @@ Docker Compose and not by the Docker CLI** (`docker run`).
 If you want to use the Docker CLI with `CONFIG_CONTENTS`, you can pass this
 directly as an environment variable, like the following:
 
-```
+```bash
 docker run -e CONFIG_CONTENTS="
 [pganalyze]
 api_key = ..." quay.io/pganalyze/collector:stable test
