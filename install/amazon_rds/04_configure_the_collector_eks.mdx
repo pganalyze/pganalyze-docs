@@ -164,7 +164,7 @@ change to the values.yaml file.
 
 To verify that the install went well, check the deployment:
 
-```bash
+```console
 $ kubectl get deployment
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
 my-collector-pganalyze-collector   1/1     1            1           1m10s
@@ -173,7 +173,7 @@ my-collector-pganalyze-collector   1/1     1            1           1m10s
 The deployment will create one pod for the collector. Check the pod name and
 obtain the logs to make sure that the collector is running successfully:
 
-```bash
+```console
 $ kubectl get pods
 NAME                                                READY   STATUS    RESTARTS   AGE
 my-collector-pganalyze-collector-7d599b49c8-dgxzk   1/1     Running   0          1m10s

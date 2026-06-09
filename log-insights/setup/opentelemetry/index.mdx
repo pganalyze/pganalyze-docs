@@ -53,7 +53,7 @@ This would start two OpenTelemetry HTTP servers, one on port 4318 and another on
 the collector starts. To verify, you can start the collector with verbose logging to verify 
 output similar to the example below.
 
-```
+```console
 $ sudo pganalyze-collector --verbose
 ...
 ...
@@ -125,7 +125,7 @@ log data model.
 stop the collector background process to avoid port conflicts. For package based installs
 you can do this through `systemctl stop pganalyze-collector`.
 
-```bash
+```console
 $ sudo systemctl stop pganalyze-collector
  
 $ sudo pganalyze-collector --very-verbose

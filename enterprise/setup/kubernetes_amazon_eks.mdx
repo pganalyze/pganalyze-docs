@@ -225,7 +225,7 @@ kubectl apply -f pganalyze-enterprise.yml
 
 We can confirm the deployment is completed by checking `kubectl get deploy`:
 
-```
+```console
 $ kubectl get deploy
 NAME        READY   UP-TO-DATE   AVAILABLE   AGE
 pganalyze   1/1     1            1           1m
@@ -292,7 +292,7 @@ INFO -- : Use these credentials to login and then change email address and passw
 
 Now we can connect to the pganalyze UI. Run the following to determine the hostname of the load balancer that was provisioned:
 
-```
+```console
 $ kubectl get ingress
 ```
 

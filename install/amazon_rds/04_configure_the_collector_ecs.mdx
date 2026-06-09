@@ -80,7 +80,7 @@ You will need to make sure that `subnet-YOUR_SUBNET` and `sg-YOUR_SECURITYGROUP`
 
 To verify that the task is running successfully, first retrieve the task ID:
 
-```bash
+```console
 $ aws ecs list-tasks --cluster test-cluster
 {
     "taskArns": [
@@ -91,7 +91,7 @@ $ aws ecs list-tasks --cluster test-cluster
 
 Now you can request the logs, which should look like this:
 
-```bash
+```console
 $ aws logs get-log-events --log-group-name /ecs/pganalyze --log-stream-name pganalyze/pganalyze/TASKID
 {
     "nextForwardToken": "...",
