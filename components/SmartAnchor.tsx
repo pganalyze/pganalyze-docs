@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { useIcon } from "./WithIcons";
+import { FontAwesomeIcon } from "./FontAwesomeIcon";
+import { faExternalLink } from "@fortawesome/pro-regular-svg-icons";
 
 import classNames from "classnames";
 
@@ -25,7 +26,6 @@ type Props = BaseProps & {
 }
 
 const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelative: adjustLinks, ...rest}) => {
-  const ExternaLinkIcon = useIcon('externalLink')
   let destination: string;
   if ('to' in rest) {
     destination = rest.to;
@@ -72,7 +72,7 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
           target ?? (isAbsolute && !skipExternalLinkIcon) ? "_blank" : "_self"
         }
       >
-        {children}{!skipExternalLinkIcon && <ExternaLinkIcon className={styles.externalLinkIcon} />}
+        {children}{!skipExternalLinkIcon && <FontAwesomeIcon icon={faExternalLink} className={styles.externalLinkIcon} />}
       </a>
     )
   }
