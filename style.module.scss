@@ -64,6 +64,12 @@
     margin-right: 0;
   }
 
+  // MDX wraps the card's title + description in a <p>; zero its default margin
+  // so the card isn't padded by the paragraph's top/bottom margin.
+  p {
+    margin: 0;
+  }
+
   strong {
     font-size: 16px;
     font-weight: 600;
