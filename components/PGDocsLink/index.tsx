@@ -16,7 +16,6 @@ const PGDocsLink = ({
   return (
     <a
       target="_blank"
-      rel="noopener noreferrer"
       href={`https://www.postgresql.org/docs/${version ?? "current"}${path}`}
     >
       {children} <FontAwesomeIcon icon={faExternalLink} />

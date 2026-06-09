@@ -66,14 +66,6 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
 
     const internal = isInternalUrl(destination);
 
-    if (isAbsolute) {
-      const rel = ["noopener"]
-      if (!internal) {
-        rel.push("noreferrer")
-      }
-      props.rel = rel.join(' ')
-    }
-
     const { children, className, target, ...otherProps } = props;
     // Show the external-link icon only for links that leave our own site.
     // Internal links (relative, pganalyze.com, or the current host) get no icon;
