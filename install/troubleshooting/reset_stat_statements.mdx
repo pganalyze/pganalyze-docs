@@ -39,12 +39,12 @@ or later is required.
 
 We recommend defining this function to avoid permissions errors:
 
-<CodeBlock language="sql">
-{`CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
+```sql
+CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
 $$
   /* pganalyze-collector */ SELECT * FROM public.pg_stat_statements_reset();
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
-</CodeBlock>
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER;
+```
 
 After enabling the "Maximum Query Stats Reset Frequency" setting on the server settings page
 and optionally tuning "Maximum Query Size Before Next Reset", the collector will automatically

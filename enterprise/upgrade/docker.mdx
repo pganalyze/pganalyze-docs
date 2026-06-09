@@ -27,24 +27,24 @@ allows a convenient restore (e.g. Amazon RDS snapshots).
 
 Log in to the pganalyze image registry:
 
-<CodeBlock language="bash">
-{`docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io`}
-</CodeBlock>
+```bash
+docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io
+```
 
 Pull the new version. Replace `[new version]` with the release you are upgrading to — check 
 the [Releases page](https://pganalyze.com/docs/enterprise/releases) for the latest 
 version. The format of the version string is `v2026.01.0` (year, month of release, minor updates).
 
-<CodeBlock language="bash">
-{`docker pull quay.io/pganalyze/enterprise:[new version]`}
-</CodeBlock>
+```bash
+docker pull quay.io/pganalyze/enterprise:[new version]
+```
 
 ### Step 3: Stop the currently running container
 
-<CodeBlock language="bash">
-{`docker stop pganalyze
-docker rm pganalyze`}
-</CodeBlock>
+```bash
+docker stop pganalyze
+docker rm pganalyze
+```
 
 ### Step 4: Run the database migration
 
@@ -85,10 +85,10 @@ At this point the upgrade is complete and the pganalyze UI should be accessible.
 
 Stop the pganalyze container if it is still running:
 
-<CodeBlock language="bash">
-{`docker stop pganalyze
-docker rm pganalyze`}
-</CodeBlock>
+```bash
+docker stop pganalyze
+docker rm pganalyze
+```
 
 Restore the statistics database from the backup taken in Step 1. On Amazon RDS you
 might choose to recover from a snapshot; on other systems you would usually use

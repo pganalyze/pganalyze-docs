@@ -31,45 +31,45 @@ version. The format of the version string is `v2026.01.0` (year, month of releas
 
 Log in to the pganalyze image registry:
 
-<CodeBlock language="bash">
-{`docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io`}
-</CodeBlock>
+```bash
+docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io
+```
 
 Pull the new version:
 
-<CodeBlock language="bash">
-{`docker pull quay.io/pganalyze/enterprise:[new version]`}
-</CodeBlock>
+```bash
+docker pull quay.io/pganalyze/enterprise:[new version]
+```
 
 Log in to your AWS container registry, replacing `ACCOUNTID` with your AWS account ID and `REGION` with your AWS region (e.g. "us-west-1"):
 
-<CodeBlock language="bash">
-{`aws ecr get-login-password --region REGION | docker login --username AWS --password-stdin ACCOUNTID.dkr.ecr.REGION.amazonaws.com`}
-</CodeBlock>
+```bash
+aws ecr get-login-password --region REGION | docker login --username AWS --password-stdin ACCOUNTID.dkr.ecr.REGION.amazonaws.com
+```
 
 Tag and push the new image, replacing `ACCOUNTID`, `REGION`, and `VERSION`:
 
-<CodeBlock language="bash">
-{`docker tag quay.io/pganalyze/enterprise:[new version] \\
+```bash
+docker tag quay.io/pganalyze/enterprise:[new version] \
   ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]
  
-docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]`}
-</CodeBlock>
+docker push ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]
+```
 
 ### Step 3: Scale down the current deployment
 
 Stop the currently running pganalyze pods by scaling the deployment to zero replicas. This ensures no application
 code is running against the database while you perform the migration:
 
-<CodeBlock language="bash">
-{`kubectl scale deployment pganalyze --replicas=0`}
-</CodeBlock>
+```bash
+kubectl scale deployment pganalyze --replicas=0
+```
 
 Confirm that all pods have stopped:
 
-<CodeBlock language="bash">
-{`kubectl get pods -l app=pganalyze`}
-</CodeBlock>
+```bash
+kubectl get pods -l app=pganalyze
+```
 
 The output should show no running pods before you proceed.
 
@@ -79,10 +79,10 @@ The output should show no running pods before you proceed.
 
 Run the following command, replacing `ACCOUNTID`, `REGION`, and `VERSION` with the appropriate values:
 
-<CodeBlock language="bash">
-{`kubectl run pganalyze-migrate --rm -i \\
-  --image=ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version] \\
-  --restart=Never \\
+```bash
+kubectl run pganalyze-migrate --rm -i \
+  --image=ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version] \
+  --restart=Never \
   --overrides='{
     "spec": {
       "containers": [{
@@ -93,8 +93,8 @@ Run the following command, replacing `ACCOUNTID`, `REGION`, and `VERSION` with t
         "envFrom": [{"secretRef": {"name": "pganalyze-secret"}}]
       }]
     }
-  }'`}
-</CodeBlock>
+  }'
+```
 
 This will stream output directly to your terminal. You may see the message **"If you don't see a command prompt,
 try pressing enter"** — this is expected and can be ignored. Output will appear on its own shortly after. The pod
@@ -107,10 +107,10 @@ the backup taken in Step 1.
 
 Run the following command, again replacing `ACCOUNTID`, `REGION`, and `VERSION`:
 
-<CodeBlock language="bash">
-{`kubectl run pganalyze-selfcheck --rm -i \\
-  --image=ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version] \\
-  --restart=Never \\
+```bash
+kubectl run pganalyze-selfcheck --rm -i \
+  --image=ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version] \
+  --restart=Never \
   --overrides='{
     "spec": {
       "containers": [{
@@ -121,8 +121,8 @@ Run the following command, again replacing `ACCOUNTID`, `REGION`, and `VERSION`:
         "envFrom": [{"secretRef": {"name": "pganalyze-secret"}}]
       }]
     }
-  }'`}
-</CodeBlock>
+  }'
+```
 
 Output will stream directly to your terminal. Confirm the expected output before proceeding:
 
@@ -136,24 +136,24 @@ All tests completed successfully!
 
 If you see any errors, review your Kubernetes secret values. You can decode your current secret values with:
 
-<CodeBlock language="bash">
-{`kubectl get secret pganalyze-secret \\
+```bash
+kubectl get secret pganalyze-secret \
   -o jsonpath='{.data.DATABASE_URL}' | base64 --decode
 echo
  
-kubectl get secret pganalyze-secret \\
+kubectl get secret pganalyze-secret \
   -o jsonpath='{.data.LICENSE_KEY}' | base64 --decode
-echo`}
-</CodeBlock>
+echo
+```
 
 If any values need to be corrected or updated, include all values — existing and new — in a single command:
 
-<CodeBlock language="bash">
-{`kubectl create secret generic pganalyze-secret \\
-  --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \\
-  --from-literal=LICENSE_KEY=KEYKEYKEY \\
-  --dry-run=client -o yaml | kubectl apply -f -`}
-</CodeBlock>
+```bash
+kubectl create secret generic pganalyze-secret \
+  --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \
+  --from-literal=LICENSE_KEY=KEYKEYKEY \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
 
 Once resolved, re-run the self-check command before proceeding.
 
@@ -162,36 +162,36 @@ Once resolved, re-run the self-check command before proceeding.
 
 Open your `pganalyze-enterprise.yml` file and update the image tag to the new version:
 
-<CodeBlock language="yaml">
-{`image: 'ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]'`}
-</CodeBlock>
+```yaml
+image: 'ACCOUNTID.dkr.ecr.REGION.amazonaws.com/pganalyze-enterprise:[new version]'
+```
 
 
 ### Step 7: Redeploy
 
 Apply the updated manifest with the new image version:
 
-<CodeBlock language="bash">
-{`kubectl apply -f pganalyze-enterprise.yml`}
-</CodeBlock>
+```bash
+kubectl apply -f pganalyze-enterprise.yml
+```
 
 Then scale the deployment back up to 1 replica:
 
-<CodeBlock language="bash">
-{`kubectl scale deployment pganalyze --replicas=1`}
-</CodeBlock>
+```bash
+kubectl scale deployment pganalyze --replicas=1
+```
 
 Confirm the rollout completes successfully:
 
-<CodeBlock language="bash">
-{`kubectl rollout status deployment pganalyze`}
-</CodeBlock>
+```bash
+kubectl rollout status deployment pganalyze
+```
 
 And verify the pod is running:
 
-<CodeBlock language="bash">
-{`kubectl get pods -l app=pganalyze`}
-</CodeBlock>
+```bash
+kubectl get pods -l app=pganalyze
+```
 
 At this point the upgrade is complete and the pganalyze UI should be accessible as expected.
 
@@ -200,21 +200,21 @@ At this point the upgrade is complete and the pganalyze UI should be accessible 
 
 Scale down the deployment if it is not already at zero:
 
-<CodeBlock language="bash">
-{`kubectl scale deployment pganalyze --replicas=0`}
-</CodeBlock>
+```bash
+kubectl scale deployment pganalyze --replicas=0
+```
 
 Restore the statistics database from the backup taken in Step 1. Once the restore is complete, update
 `pganalyze-enterprise.yml` to reference the **old** image version and redeploy:
 
-<CodeBlock language="bash">
-{`kubectl apply -f pganalyze-enterprise.yml`}
-</CodeBlock>
+```bash
+kubectl apply -f pganalyze-enterprise.yml
+```
 
 Then scale the deployment back up:
 
-<CodeBlock language="bash">
-{`kubectl scale deployment pganalyze --replicas=1`}
-</CodeBlock>
+```bash
+kubectl scale deployment pganalyze --replicas=1
+```
 
 Confirm the pod is running and healthy before investigating what went wrong with the upgrade.
