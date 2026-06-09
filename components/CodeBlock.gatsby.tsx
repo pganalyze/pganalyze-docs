@@ -7,6 +7,8 @@ import yaml from "highlight.js/lib/languages/yaml";
 import bash from "highlight.js/lib/languages/bash";
 import ruby from "highlight.js/lib/languages/ruby";
 import python from "highlight.js/lib/languages/python";
+import dockerfile from "highlight.js/lib/languages/dockerfile";
+import ini from "highlight.js/lib/languages/ini";
 import styles from "./style.module.scss";
 
 // Register languages once at module load
@@ -17,6 +19,8 @@ hljs.registerLanguage("yaml", yaml);
 hljs.registerLanguage("bash", bash);
 hljs.registerLanguage("ruby", ruby);
 hljs.registerLanguage("python", python);
+hljs.registerLanguage("dockerfile", dockerfile);
+hljs.registerLanguage("ini", ini);
 
 // Returns highlighted HTML for languages we explicitly support, or null when
 // there's nothing to highlight — `text`, an untagged fenced block (which
@@ -58,7 +62,7 @@ function extractText(node: React.ReactNode): string {
 
 type Props = {
   /** Language for highlighting. */
-  language?: "sql" | "bash" | "json" | "yaml" | "ruby" | "python" | "text";
+  language?: "sql" | "bash" | "json" | "yaml" | "ruby" | "python" | "dockerfile" | "ini" | "text";
   /** Style properties to pass down to the wrapping div */
   style?: React.CSSProperties;
   /** Code content as a string (preferred, set by remark plugin). */
