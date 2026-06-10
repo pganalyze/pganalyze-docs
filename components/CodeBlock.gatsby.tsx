@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import CopyToClipboard from "./CopyToClipboard";
+import { useCopyButton } from "./WithCopyButton";
 import hljs from "highlight.js/lib/core";
 import json from "highlight.js/lib/languages/json";
 import sql from "highlight.js/lib/languages/pgsql";
@@ -80,6 +80,7 @@ type Props = {
 
 const CodeBlock = ({children, code, language = 'text', style, hideCopy = false}: Props) => {
   const codeRef = useRef<HTMLElement>(null);
+  const CopyButton = useCopyButton();
 
   // Prefer the `code` prop (plain string — set by the remark plugin for fenced
   // blocks and for inline MDX `<CodeBlock>{`...`}`). Otherwise extract plain-text
@@ -122,7 +123,7 @@ const CodeBlock = ({children, code, language = 'text', style, hideCopy = false}:
         </pre>
       </div>
      {!hideCopy && (
-        <CopyToClipboard
+        <CopyButton
           content={text ?? (() => codeRef.current?.textContent || '')}
           label=""
           className={styles.copyIcon}
