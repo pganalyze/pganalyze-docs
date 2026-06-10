@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import StyledCodeBlock from './CodeBlock.gatsby'
+import StyledCodeBlock, { Language } from './CodeBlock.gatsby'
 
 type Props = {
   // ignored for now in this implementation but still accepted
-  language?: string;
+  language?: Language;
   style?: React.CSSProperties;
   children: React.ReactNode;
 }

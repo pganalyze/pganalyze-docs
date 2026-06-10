@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 
 // TODO: Support using this component in-app by not having a hard-coded website reference
-import CodeBlock from "../CodeBlock.gatsby";
+import CodeBlock, { Language } from "../CodeBlock.gatsby";
 import CopyToClipboard from "../CopyToClipboard";
 
 import styles from "./style.module.scss";
 
 const CopyCodeBlock: React.FunctionComponent<{
   content: string;
-  language?: string;
+  language?: Language;
   style?: React.CSSProperties;
 }> = ({ content, language, style }) => {
   const ref = useRef<HTMLDivElement>();

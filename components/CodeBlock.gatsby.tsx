@@ -62,9 +62,12 @@ function extractText(node: React.ReactNode): string {
   return "";
 }
 
+/** Languages we explicitly support for syntax highlighting. */
+export type Language = "sql" | "bash" | "json" | "yaml" | "ruby" | "python" | "dockerfile" | "ini" | "console" | "text";
+
 type Props = {
   /** Language for highlighting. */
-  language?: "sql" | "bash" | "json" | "yaml" | "ruby" | "python" | "dockerfile" | "ini" | "console" | "text";
+  language?: Language;
   /** Style properties to pass down to the wrapping div */
   style?: React.CSSProperties;
   /** Code content as a string (preferred, set by remark plugin). */
