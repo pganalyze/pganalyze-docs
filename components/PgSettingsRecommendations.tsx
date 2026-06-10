@@ -140,7 +140,7 @@ const ListRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'
 const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({recommendations}) => {
   const CodeBlock = useCodeBlock();
   return (
-    <CodeBlock>
+    <CodeBlock language="sql">
       {recommendations.map(s => {
         // List-style settings like shared_preload_libraries must be passed to ALTER SYSTEM unquoted,
         // or Postgres will treat the whole list as a single library, which of course normally does

@@ -11,7 +11,7 @@ import { collectorAppName, attachmentName } from "./util";
 
 export const HerokuConfigCommand = ({ organizationSlug }) => {
   return (
-    <CodeBlock>{`heroku config -a ${collectorAppName(organizationSlug)}`}</CodeBlock>
+    <CodeBlock language="bash">{`heroku config -a ${collectorAppName(organizationSlug)}`}</CodeBlock>
   );
 };
 
@@ -27,7 +27,7 @@ PGA_API_KEY: ...`}
 
 export const TestCommand = ({ organizationSlug }) => {
   return (
-    <CodeBlock>{`heroku run -a ${collectorAppName(organizationSlug)} -- collector --test`}</CodeBlock>
+    <CodeBlock language="bash">{`heroku run -a ${collectorAppName(organizationSlug)} -- collector --test`}</CodeBlock>
   );
 };
 

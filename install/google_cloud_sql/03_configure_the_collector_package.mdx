@@ -23,7 +23,7 @@ export const APIKeyInstructions = ({ apiKey }) => {
 
 export const ConfigSample = ({ apiKey }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="ini">
       {`[pganalyze]
 api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
 [server1]
@@ -56,7 +56,7 @@ Fill in the values step-by-step:
 
 If you're using IAM Authentication, the configuration file looks like the following instead:
 
-<CodeBlock>
+<CodeBlock language="ini">
   {`[pganalyze]
 api_key = ${props.apiKey ?? 'your_pga_organization_api_key'}\n
 [server1]
@@ -73,7 +73,7 @@ and the host name will be specified using the project ID, the region, and the in
 
 Instead of specifying `gcp_region`, you can also update `gcp_cloudsql_instance_id` with the shape of `project_id:region:instance_id`.
 
-<CodeBlock>
+<CodeBlock language="ini">
   {`[pganalyze]
 api_key = ${props.apiKey ?? 'your_pga_organization_api_key'}\n
 [server1]

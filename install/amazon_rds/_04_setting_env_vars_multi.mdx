@@ -2,7 +2,7 @@ import { APIKeyInstructions } from './04_configure_the_collector_ec2.mdx'
 
 export const CollectorDotEnv = ({ apiKey }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="bash">
       {`CONFIG_CONTENTS="[pganalyze]
 api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
 [instance1]

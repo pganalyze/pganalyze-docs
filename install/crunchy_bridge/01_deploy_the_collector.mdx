@@ -10,7 +10,7 @@ import { MonitoringUserLogRead, MonitoringUserPerDatabaseHelpers } from "../../c
 
 export const CollectorStartCommand = ({ apiKey, cmd, logExplain }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="sql">
       {`SELECT run_container('` + (cmd ? '' : '-d ') + `-t -e DB_URL="REPLACE_ME" -e PGA_API_KEY="` + (apiKey ? apiKey : 'API_KEY') + '"' + (logExplain ? ' -e PGA_ENABLE_LOG_EXPLAIN=true' : '') + ` -e CRUNCHY_BRIDGE_API_KEY="REPLACE_ME" -e DB_ALL_NAMES=1 --privileged quay.io/pganalyze/collector:stable` + (cmd ? ` ${cmd}` : '') + `');`}
     </CodeBlock>
   );

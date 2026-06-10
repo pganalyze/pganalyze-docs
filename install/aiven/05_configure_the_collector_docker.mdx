@@ -27,7 +27,7 @@ export const APIKeyInstructions = ({ apiKey }) => {
 
 export const CollectorDotEnv = ({ apiKey }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="bash">
       {`PGA_API_KEY=${apiKey ?? 'your_pga_organization_api_key'}
 DB_HOST=your_database_host
 DB_PORT=your_database_port

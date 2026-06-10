@@ -120,7 +120,7 @@ sudo apt-get install pganalyze-collector`
   }
 
   return (
-    <CodeBlock style={{ maxWidth: "100%" }}>
+    <CodeBlock language="bash" style={{ maxWidth: "100%" }}>
       {instructions}
     </CodeBlock>
   )

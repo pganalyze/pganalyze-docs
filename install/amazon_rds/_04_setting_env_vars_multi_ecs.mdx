@@ -2,7 +2,7 @@ import { APIKeyInstructions } from './04_configure_the_collector_ec2.mdx'
 
 export const MultiECSConfigFile = ({ apiKey }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="ini">
       {`[pganalyze]
 api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
 [instance1]

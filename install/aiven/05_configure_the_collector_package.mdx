@@ -27,7 +27,7 @@ export const APIKeyInstructions = ({ apiKey }) => {
 
 export const ConfigSample = ({ apiKey }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="ini">
       {`[pganalyze]
 api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
 [server1]

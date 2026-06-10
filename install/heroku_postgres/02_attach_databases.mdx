@@ -9,7 +9,7 @@ import { collectorAppName, attachmentName } from "./util";
 
 export const AddonsAttachCommand = ({ organizationSlug }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="bash">
       {`heroku addons:attach postgresql-objective-11111 --credential pganalyze -a ${collectorAppName(organizationSlug)} --as ${attachmentName(organizationSlug)}`}
     </CodeBlock>
   );
