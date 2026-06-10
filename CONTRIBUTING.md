@@ -5,8 +5,6 @@ the CodeBlock component which has built-in copy functionality. If code highlight
 is not required and copying of the codeblock text is unlikely to be necessary, you
 can still use the default markdown "```" block.
 
-Do not use `<CopyCodeBlock>` directly anymore.
-
 ### For code copy with syntax highlighting
 To provide syntax highlighting and a copy button, use the `<CodeBlock>` component like this.
 
