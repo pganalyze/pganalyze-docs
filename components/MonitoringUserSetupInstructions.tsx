@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useCodeBlock } from "./CodeBlock.gatsby";
+import { useCodeBlock } from "./CodeBlock";
 import { useGeneratedPassword } from "./WithGeneratedPassword";
 
 type Props = {
