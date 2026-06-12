@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import TabPanel, { Tab } from './TabPanel'
-import { useCodeBlock } from './CodeBlock'
+import CodeBlock from './CodeBlock'
 import RepositorySigningKey from './RepositorySigningKey'
 
 const CollectorPkgInstallInstructions = () => {
@@ -96,7 +96,6 @@ const CollectorDistroPkgInstallInstructions: React.FunctionComponent<{
   distro: string
 }> = ({ kind, distro }) => {
   let instructions = "";
-  const CodeBlock = useCodeBlock();
   switch (kind) {
     case 'yum':
       instructions = `echo "[pganalyze_collector]

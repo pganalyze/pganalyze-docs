@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useCodeBlock } from "./CodeBlock";
+import CodeBlock from "./CodeBlock";
 import { useGeneratedPassword } from "./WithGeneratedPassword";
 
 type Props = {
@@ -26,7 +26,6 @@ export const MonitoringUserPerDatabaseHelpers: React.FunctionComponent<{ usernam
   adminUsername
 }) => {
   const adminUserStr = !!adminUsername ? <strong>{adminUsername}</strong> : 'a superuser (or equivalent)'
-  const CodeBlock = useCodeBlock();
   return (
     <>
       <p>
@@ -79,7 +78,6 @@ export const MonitoringUserColumnStats: React.FunctionComponent<{ username: stri
   adminUsername
 }) => {
   const adminUserStr = !!adminUsername ? <strong>{adminUsername}</strong> : 'a superuser (or equivalent)'
-  const CodeBlock = useCodeBlock();
   return (
     <>
       <p>
@@ -114,7 +112,6 @@ export const MonitoringUserExtStats: React.FunctionComponent<{ username: string,
   adminUsername
 }) => {
   const adminUserStr = !!adminUsername ? <strong>{adminUsername}</strong> : 'a superuser (or equivalent)'
-  const CodeBlock = useCodeBlock();
   return (
     <>
       <p>
@@ -149,7 +146,6 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
 };
 
 export const MonitoringUserExplain: React.FunctionComponent<{ username: string }> = ({username}) => {
-  const CodeBlock = useCodeBlock();
   return (
     <>
       <CodeBlock language="sql">
@@ -200,7 +196,6 @@ $$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;`}
 };
 
 export const MonitoringUserLogRead: React.FunctionComponent<{ username: string }> = ({username}) => {
-  const CodeBlock = useCodeBlock();
   return (
     <>
       <CodeBlock language="sql">
@@ -233,7 +228,6 @@ const MonitoringUserBase: React.FunctionComponent<{
   password: string;
   noPgMonitor?: boolean;
 }> = ({password, noPgMonitor}) => {
-  const CodeBlock = useCodeBlock();
   return (
     <>
       <CodeBlock language="sql">
@@ -264,7 +258,6 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
 export const MonitoringUserBaseForGCP: React.FunctionComponent<{
   username: string;
 }> = ({username}) => {
-  const CodeBlock = useCodeBlock();
   return (
     <>
       <CodeBlock language="sql">
@@ -293,7 +286,6 @@ export const NoPgMonitorPgStatStatementsHelpers: React.FunctionComponent<{
 }> = ({adminUsername, systemType}) => {
   const adminUserStr = <strong>{adminUsername}</strong>;
   const pgProvider = getProviderName(systemType);
-  const CodeBlock = useCodeBlock();
   return (
     <>
       <p>

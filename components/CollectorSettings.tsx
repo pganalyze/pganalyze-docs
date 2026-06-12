@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCodeBlock } from './CodeBlock'
+import CodeBlock from './CodeBlock'
 
 type CollectorSetting = [ name: string, value: string ];
 
@@ -37,7 +37,6 @@ const CollectorSettings: React.FunctionComponent<{settings: CollectorSetting[], 
 }
 
 const CollectorConfigFileSettings: React.FunctionComponent<{settings: CollectorSetting[]}> = ({settings}) => {
-  const CodeBlock = useCodeBlock();
   return (
     <CodeBlock language="bash">
       {settings.map(([setting, value]) => {

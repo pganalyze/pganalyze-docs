@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCodeBlock } from './CodeBlock';
+import CodeBlock from './CodeBlock';
 import Null from './Null';
 
 import classNames from 'classnames';
@@ -138,7 +138,6 @@ const ListRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'
 }
 
 const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({recommendations}) => {
-  const CodeBlock = useCodeBlock();
   return (
     <CodeBlock language="sql">
       {recommendations.map(s => {

@@ -1,12 +1,12 @@
-// Framework-agnostic copy button for docs code blocks — the default copy button
-// on the public docs site (the in-app build injects its own button via
-// WithCopyButton). CodeBlock renders
+// Framework-agnostic copy button for docs code blocks, shared by the web and
+// the app. CodeBlock renders
 //   <copy-code-button><button class="copyIcon">…copy icon…</button></copy-code-button>
 // and this custom element wires that button to copy the adjacent code block's
 // text on the client, so copy works on statically-rendered docs pages without
 // hydrating the CodeBlock React component.
 //
-// Defined once via a <script> in DocsLayout; the registry persists across
+// Registered once per consumer (a <script> in DocsLayout on the web, a
+// side-effect import in the app entrypoint); the registry persists across
 // view-transition navigations and new instances upgrade automatically.
 
 import { faCheck } from "@fortawesome/pro-light-svg-icons";

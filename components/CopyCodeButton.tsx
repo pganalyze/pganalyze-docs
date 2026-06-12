@@ -1,16 +1,18 @@
 import React from "react";
 import { FontAwesomeIcon } from "./FontAwesomeIcon";
 import { faCopy } from "@fortawesome/pro-light-svg-icons";
-import type { CopyButtonProps } from "./WithCopyButton";
 
-// Default copy button on the public docs site. Renders a real <button> (so the
-// existing `.copyIcon` styling applies) inside a <copy-code-button> custom
-// element that wires click→clipboard on the client without React hydration —
-// the docs pages are rendered statically by Astro, so the copy button can't rely
-// on hydration. The element is defined by copyCodeButton.client.ts, loaded once
-// in DocsLayout. This file does NOT import that module so the in-app build —
-// which injects its own copy button — doesn't bundle the element definition.
-const CopyCodeButton: React.FC<CopyButtonProps> = ({ className, title }) =>
+type CopyCodeButtonProps = { className?: string; title?: string };
+
+// The copy button for docs code blocks. Renders a real <button> (so the
+// `.copyIcon` styling applies) inside a <copy-code-button> custom element that
+// wires click→clipboard on the client. The element is defined by
+// copyCodeButton.client.ts, registered once per consumer (a <script> in
+// DocsLayout on the web, a side-effect import in the app entrypoint), so the
+// button works without hydrating this component — the web renders docs
+// statically. This file does NOT import that module, so the definition is
+// bundled only where it's registered, not everywhere CodeBlock is referenced.
+const CopyCodeButton: React.FC<CopyCodeButtonProps> = ({ className, title }) =>
   React.createElement(
     "copy-code-button",
     null,

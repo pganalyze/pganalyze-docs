@@ -1,8 +1,7 @@
 import React from 'react'
-import { useCodeBlock } from './CodeBlock'
+import CodeBlock from './CodeBlock'
 
 const CollectorLogTest: React.FunctionComponent<{provider: string, configFromEnv?: boolean}> = ({provider, configFromEnv}) => {
-  const CodeBlock = useCodeBlock();
 
   const sampleOutput = `...
 I [server1] Testing log collection (${provider})...
