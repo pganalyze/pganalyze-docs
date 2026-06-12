@@ -121,7 +121,7 @@ const CodeBlock = ({children, code, language = 'text', style, hideCopy = false}:
 
   return (
     <div className={styles.copyBlock}>
-      <div className='gatsby-highlight' data-language={language}>
+      <div className='gatsby-highlight' data-code-block data-language={language}>
         <pre className={`language-${language}`} style={style}>
           {text === null ? (
             // No extractable text (e.g. a self-rendering <SQL/>): render children.
