@@ -76,8 +76,8 @@ az identity create --resource-group YOUR_RESOURCE_GROUP --name pganalyze-identit
 Enable managed identity on your AKS cluster and assign the identity you just created:
 
 ```bash
-az aks update --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \\
-  --enable-managed-identity \\
+az aks update --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \
+  --enable-managed-identity \
   --assign-identity /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity
 ```
 
@@ -87,7 +87,7 @@ You may be prompted to confirm switching from system-assigned to user-assigned m
 Workload identity federation requires the OIDC issuer URL from your AKS cluster. Retrieve it with the `show` command:
 
 ```bash
-az aks show --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \\
+az aks show --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \
   --query oidcIssuerProfile.issuerUrl -o tsv
 ```
 
@@ -101,11 +101,11 @@ Workload identity federation establishes a trust relationship between your Kuber
 Create the federated credential using the OIDC issuer URL from above:
 
 ```bash
-az identity federated-credential create \\
-  --resource-group YOUR_RESOURCE_GROUP \\
-  --identity-name pganalyze-identity \\
-  --name pganalyze-fic \\
-  --issuer "https://eastus.oic.prod-aks.azure.com/SUBSCRIPTION_ID/CLUSTER_ID/" \\
+az identity federated-credential create \
+  --resource-group YOUR_RESOURCE_GROUP \
+  --identity-name pganalyze-identity \
+  --name pganalyze-fic \
+  --issuer "https://eastus.oic.prod-aks.azure.com/SUBSCRIPTION_ID/CLUSTER_ID/" \
   --subject "system:serviceaccount:default:pganalyze-sa"
 ```
 
@@ -121,9 +121,9 @@ If you plan to use the built-in pganalyze Collector to monitor your PostgreSQL d
 Event Hub. **If you haven't set up log streaming yet, you can skip this step for now and return to it later.** Just note that log streaming won't work until this step is completed.
 
 ```bash
-az role assignment create \\
-  --assignee /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity \\
-  --role "Azure Event Hubs Data Receiver" \\
+az role assignment create \
+  --assignee /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity \
+  --role "Azure Event Hubs Data Receiver" \
   --scope /subscriptions/SUBSCRIPTION_ID/resourceGroups/YOUR_RESOURCE_GROUP/providers/Microsoft.EventHub/namespaces/YOUR_EVENT_HUB_NAMESPACE
 ```
 
@@ -142,9 +142,9 @@ For Azure Database for PostgreSQL, the hostname typically looks like: `servernam
 The `LICENSE_KEY` has been provided to you by the pganalyze team - replace `KEYKEYKEY` in the command with the actual key.
 
 ```bash
-kubectl create secret generic pganalyze-secret \\
-  --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \\
-  --from-literal=LICENSE_KEY=KEYKEYKEY \\
+kubectl create secret generic pganalyze-secret \
+  --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \
+  --from-literal=LICENSE_KEY=KEYKEYKEY \
   --dry-run=client -o yaml | kubectl apply -f -
 ```
 

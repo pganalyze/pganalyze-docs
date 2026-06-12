@@ -33,10 +33,10 @@ If your Kubernetes cluster has access to the internet, start by creating a Kuber
 username, password, and namespace in the command below:
 
 ```bash
-kubectl create secret docker-registry quay-io-secret \\
- --docker-server=quay.io \\
- --docker-username=USERNAME \\
- --docker-password=PASSWORD \\
+kubectl create secret docker-registry quay-io-secret \
+ --docker-server=quay.io \
+ --docker-username=USERNAME \
+ --docker-password=PASSWORD \
  --namespace=pganalyze
 ```
 
@@ -97,9 +97,9 @@ The `DATABASE_URL` has the format `postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DA
 The `LICENSE_KEY` has been provided to you by the pganalyze Team - replace `KEYKEYKEY` in the command with the actual key.
 
 ```bash
-kubectl create secret generic pganalyze-secret \\
-    --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \\
-    --from-literal=LICENSE_KEY=KEYKEYKEY \\
+kubectl create secret generic pganalyze-secret \
+    --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \
+    --from-literal=LICENSE_KEY=KEYKEYKEY \
     --dry-run=client -o yaml | kubectl apply -f -
 ```
 
