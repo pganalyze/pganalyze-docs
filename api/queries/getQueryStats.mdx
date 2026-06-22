@@ -40,8 +40,8 @@ Note that the data returned reflects the statistics of the previous 24 hours, fr
 
 GraphQL query:
 
-<CodeBlock language="graphql">
-{`query {
+```graphql
+query {
   getQueryStats(databaseId: 12345) {
     id
     queryUrl
@@ -53,19 +53,19 @@ GraphQL query:
     bufferHitRatio
     pctOfTotal
   }
-}`}
-</CodeBlock>
+}
+```
 
 Using `curl`:
 
-<CodeBlock language="bash">
-{`curl -XPOST -H 'Authorization: Token XXXXXXX' \
+```bash
+curl -XPOST -H 'Authorization: Token XXXXXXX' \
   -F 'query=query { getQueryStats(databaseId: 12345) { id, queryUrl, normalizedQuery, truncatedQuery, statementTypes, totalCalls, avgTime, bufferHitRatio, pctOfTotal } }' \
-  https://app.pganalyze.com/graphql`}
-</CodeBlock>
+  https://app.pganalyze.com/graphql
+```
 
-<CodeBlock language="json">
-{`{
+```json
+{
   "data": {
     "getQueryStats": [
       {
@@ -84,15 +84,15 @@ Using `curl`:
       [ ... ]
     }
   }
-}`}
-</CodeBlock>
+}
+```
 
 ## CSV Export
 
 In case you are looking for a CSV export instead of the JSON output for this API call, the following Ruby script can be used:
 
-<CodeBlock language="ruby">
-{`require 'csv'
+```ruby
+require 'csv'
 require 'json'
 require 'net/http'
  
@@ -133,8 +133,8 @@ csv_output = CSV.generate do |csv|
   end
 end
  
-puts csv_output`}
-</CodeBlock>
+puts csv_output
+```
 
 This will output the following on stdout:
 

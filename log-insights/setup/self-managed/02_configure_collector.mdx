@@ -12,15 +12,15 @@ export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot
 We can now configure the log directory for the collector, by adding the `db_log_location` setting,
 similar to this:
 
-<CodeBlock language="bash">
-{`db_log_location = [log location discovered in Step 1]`}
-</CodeBlock>
+```bash
+db_log_location = [log location discovered in Step 1]
+```
 
 Then, use the `--test-logs` option of the collector to verify that log collection and parsing works:
 
-<CodeBlock language="bash">
-{`sudo pganalyze-collector --test-logs --reload`}
-</CodeBlock>
+```bash
+sudo pganalyze-collector --test-logs --reload
+```
 
 In the successful case, the log output will look like this:
 
@@ -41,9 +41,9 @@ If you get an error about your Postgres `log_line_prefix`, check our
 
 If logs take longer than a few minutes, try restarting the collector:
 
-<CodeBlock language="bash">
-{`sudo systemctl restart pganalyze-collector`}
-</CodeBlock>
+```bash
+sudo systemctl restart pganalyze-collector
+```
 
 <PublicOnly>
   <p>

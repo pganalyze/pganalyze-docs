@@ -11,22 +11,22 @@ following INPUT and OUTPUT configuration examples should successfully start send
 each Postgres pod to the pganalyze collector for processing. You will need to adjust your input
 path accordingly.
 
-<CodeBlock language="text">
-{`[INPUT]
+```text
+[INPUT]
     Name  tail
     Path  /var/log/postgresql/cluster-example-*_default_postgres*.log
     Tag kube.*
     multiline.parser docker, cri
-    DB /var/log/flb_kube.db`}
-</CodeBlock>
+    DB /var/log/flb_kube.db
+```
 
-<CodeBlock language="text">
-{`[OUTPUT]
+```text
+[OUTPUT]
     Name  opentelemetry
     Match kube.*postgres*
     Host  pganalyze-collector-otel-service
-    Port  4318`}
-</CodeBlock>
+    Port  4318
+```
 
 With this flow, Fluent Bit tails the logs of Postgres pods, sends the logs to the
 pganalyze collector's OpenTelemetry HTTP endpoint (via `pganalyze-collector-otel-service`),
@@ -35,8 +35,8 @@ and the collector processes the logs.
 If you have multiple Postgres clusters, you can set up multiple Fluent Bit OUTPUT
 plugins, each pointing to a different OpenTelemetry HTTP endpoint on the pganalyze collector. 
 
-<CodeBlock language="text">
-{`[OUTPUT]
+```text
+[OUTPUT]
     Name  opentelemetry
     Match kube.*cluster-example2-*
     Host  192.168.12.242
@@ -46,5 +46,5 @@ plugins, each pointing to a different OpenTelemetry HTTP endpoint on the pganaly
     Name  opentelemetry
     Match kube.*cluster-example-*
     Host  192.168.12.242
-    Port  4318`}
-</CodeBlock>
+    Port  4318
+```

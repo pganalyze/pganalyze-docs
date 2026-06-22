@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import TabPanel, { TabItem } from './TabPanel'
-import { useCodeBlock } from './CodeBlock'
+import TabPanel, { Tab } from './TabPanel'
+import CodeBlock from './CodeBlock'
 import RepositorySigningKey from './RepositorySigningKey'
 
 const CollectorPkgInstallInstructions = () => {
@@ -48,12 +48,12 @@ type DebProps = {
 
 type Props = YumProps | DebProps
 
-const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'kind'>> = ({ kind }) => {
-  type InstallOpt = [id: string, distro: YumProps['distro'] | DebProps['distro'], label: string];
-  let installOpts: InstallOpt[] = [];
+type InstallOpt = [id: string, distro: YumProps['distro'] | DebProps['distro'], label: string];
+
+function getInstallOpts(kind: string): InstallOpt[] {
   switch (kind) {
     case 'yum':
-      installOpts = [
+      return [
         [ 'el10', 'el/10', 'RHEL / Rocky / OL 10' ],
         [ 'el9', 'el/9', 'RHEL / Rocky / OL 9' ],
         [ 'el8', 'el/8', 'RHEL / Rocky / OL 8' ],
@@ -62,25 +62,29 @@ const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'k
         [ 'fedora43', 'fedora/43', 'Fedora 43' ],
         [ 'fedora42', 'fedora/42', 'Fedora 42' ],
       ]
-      break
     case 'deb':
-      installOpts = [
+      return [
         ["noble", "ubuntu/noble", "Ubuntu 24.04"],
         ["jammy", "ubuntu/jammy", "Ubuntu 22.04"],
         ["focal", "ubuntu/focal", "Ubuntu 20.04"],
         ["bookworm", "debian/bookworm", "Debian 12"],
         ["bullseye", "debian/bullseye", "Debian 11"],
       ]
-      break
+    default:
+      return []
   }
-  const tabs = installOpts.map<TabItem>(opt => [opt[0], opt[2]])
+}
+
+const CollectorDistroInstallInstructions: React.FunctionComponent<Pick<Props, 'kind'>> = ({ kind }) => {
+  const installOpts = getInstallOpts(kind);
   return (
     <>
-      <TabPanel items={tabs}>
-        {(idx: number) => {
-          const distro = installOpts[idx][1];
-          return <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
-        }}
+      <TabPanel>
+        {installOpts.map(([id, distro, label]) => (
+          <Tab key={id} id={id} label={label}>
+            <CollectorDistroPkgInstallInstructions kind={kind} distro={distro} />
+          </Tab>
+        ))}
       </TabPanel>
       <RepositorySigningKey />
     </>
@@ -92,7 +96,6 @@ const CollectorDistroPkgInstallInstructions: React.FunctionComponent<{
   distro: string
 }> = ({ kind, distro }) => {
   let instructions = "";
-  const CodeBlock = useCodeBlock();
   switch (kind) {
     case 'yum':
       instructions = `echo "[pganalyze_collector]
@@ -116,7 +119,7 @@ sudo apt-get install pganalyze-collector`
   }
 
   return (
-    <CodeBlock style={{ maxWidth: "100%" }}>
+    <CodeBlock language="bash" style={{ maxWidth: "100%" }}>
       {instructions}
     </CodeBlock>
   )

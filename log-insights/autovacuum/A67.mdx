@@ -29,7 +29,7 @@ acquired, which is required since VACUUM FULL rewrites the table.
 
 Review all current lock holders on the table by running the following:
 
-```
+```sql
 SELECT * FROM pg_locks WHERE relation = 'mytable'::regclass;
 ```
 

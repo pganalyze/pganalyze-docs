@@ -1,35 +1,20 @@
-import TabPanel, {TabTextContent} from '../../components/TabPanel'
+import TabPanel, {Tab} from '../../components/TabPanel'
 import SetupIAMPolicyCLI from './_03_setup_iam_policy_cli.mdx'
 import SetupIAMPolicyConsole from './_03_setup_iam_policy_console.mdx'
-
-export const IAMPolicyCreation = () => {
-  const tabs = [
-    [ 'cli', 'CLI' ],
-    [ 'console', 'console'],
-  ];
-  return (
-    <TabPanel items={tabs}>
-      {(idx) => {
-        const tab = tabs[idx][0];
-        switch (tab) {
-          case 'cli':
-            return <TabTextContent><SetupIAMPolicyCLI /></TabTextContent>;
-          case 'console':
-            return <TabTextContent><SetupIAMPolicyConsole /></TabTextContent>;
-          default:
-            return null;
-        }
-      }}
-    </TabPanel>
-  )
-}
 
 ### Set up IAM policy
 
 You need to set up an IAM policy for the instance where the collector will run,
 so that the collector can access RDS information.
 
-<IAMPolicyCreation />
+<TabPanel>
+  <Tab id="cli" label="CLI" textContent>
+    <SetupIAMPolicyCLI />
+  </Tab>
+  <Tab id="console" label="console" textContent>
+    <SetupIAMPolicyConsole />
+  </Tab>
+</TabPanel>
 
 This policy grants the following access:
 

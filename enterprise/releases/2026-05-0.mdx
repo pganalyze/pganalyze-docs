@@ -15,20 +15,20 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 ## Features
 
-* **pganalyze MCP Server** (Preview) <!-- 5805 -->
+* **pganalyze MCP Server** (Preview) {/* 5805 */}
   - The new MCP Server is now available, allowing you to easily query pganalyze data from AI tools of choice, such as Claude Code. It is enabled by default, but can be disabled per organization by going to "Settings", "API Access".
   - Learn more details in the [announcement](https://pganalyze.com/blog/mcp-server-public-preview) and [documentation](https://pganalyze.com/docs/mcp).
   - Note the MCP Server usage is not rate limited for Enterprise Server installs.
-* **Server Groups for Postgres clusters** and Cluster-Wide Query Performance <!-- 5853 -->
+* **Server Groups for Postgres clusters** and Cluster-Wide Query Performance {/* 5853 */}
   - pganalyze now automatically detects server groups based on the Postgres cluster relationship, or when manually setting them in the
     collector. Server Groups are shown as their own distinct resource in the navigation's server dropdown, Dashboard, Query Performance,
     and Settings pages. Learn more in the [blog post](https://pganalyze.com/blog/server-groups-and-cluster-wide-query-performance).
-* Query Advisor: Introduce insight to show queries spilling to disk due to low work_mem <!-- 5785 -->
+* Query Advisor: Introduce insight to show queries spilling to disk due to low work_mem {/* 5785 */}
   - Detects Sort and Hash nodes that fall back to using temporary files because work_mem was too small. The legacy "Sort Spills to Disk"
     and "Too Many Hash Batches" annotations on EXPLAIN plans are now hidden for Query Advisor users to avoid duplication.
-* System statistics: Support 100 day retention <!-- 5796 -->
-* Update combined collector from v0.69.0 to [v0.70.2](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0702------2026-05-06) <!-- 5747 and 5892 -->
-* Connections: Improve how Connection Traces listing responds to date range selection <!-- 5659 -->
+* System statistics: Support 100 day retention {/* 5796 */}
+* Update combined collector from v0.69.0 to [v0.70.2](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0702------2026-05-06) {/* 5747 and 5892 */}
+* Connections: Improve how Connection Traces listing responds to date range selection {/* 5659 */}
   - Previously, the selected focus timestamp (the highlighted timestamp within the current date range) had inconsistent behavior
     when the date range is updated, or the focus timestamp itself is updated by clicking on the Wait Events or Connection States
     graphs.
@@ -36,61 +36,61 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
     Connection Traces listing is cleared. When an unlabeled date range is selected (whether from the date picker or by dragging
     on the graph), if the focus timestamp falls within the new range, it remains unchanged. If it does not, it is reset to the
     value of the end of the range
-* Collector Settings: Add collector settings page, with error and connection history <!-- 5793 -->
+* Collector Settings: Add collector settings page, with error and connection history {/* 5793 */}
   - The collector settings previously lived on the server settings page. Now on their own page, we also show a history of collector
     or data processing errors, as well as a connection history to make it easier to see if there are issues with your collector.
-* Database Dashboard: Show check-up status of all available checks <!-- 5685 -->
+* Database Dashboard: Show check-up status of all available checks {/* 5685 */}
   - The check-up widget on the database dashboard now covers all check types. Previously, only some checks were shown. Each check
     group now also displays the number of active issues.
-* Show Enterprise Server version in sidebar <!-- 5654 -->
+* Show Enterprise Server version in sidebar {/* 5654 */}
   - This links to the Enterprise Server changelog that shows the latest available version and the updates in each release.
-* Automated EXPLAIN: Improve plan parsing when auto_explain.log_format=text <!-- 5521 -->
+* Automated EXPLAIN: Improve plan parsing when auto_explain.log_format=text {/* 5521 */}
   - This adds support for JIT output changes in newer Postgres versions and fixes worker detail parsing when
     auto_explain.log_timing is disabled.
-* Query Advisor: Improve rewriting for more complex expressions/queries <!-- 5792 -->
-* pganalyze Workbooks: Show full list at organization, server group, server or database scope <!-- 5877 -->
+* Query Advisor: Improve rewriting for more complex expressions/queries {/* 5792 */}
+* pganalyze Workbooks: Show full list at organization, server group, server or database scope {/* 5877 */}
   - Workbooks are now reachable from the side navigation at every scope, with a New Workbook button that prompts for a server and database when needed.
 
 ## Bugfixes and other improvements
 
-* Stop processing/storing logs via S3-compatible storage <!-- 5658 and 5805 -->
+* Stop processing/storing logs via S3-compatible storage {/* 5658 and 5805 */}
   - Since collector release [0.60.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0600------2024-10-15) all log upload
     happens directly through the snapshot API. Uploading logs from older collector versions is now no longer supported.
-* Query Details: Interpolate I/O and CPU time breakdown in time series if there are no calls for the given time slice <!-- 5487 -->
+* Query Details: Interpolate I/O and CPU time breakdown in time series if there are no calls for the given time slice {/* 5487 */}
   - Since when there are no calls to a query, these values cannot be calculated, this was previously displayed in the same way as
     missing data, which could be confusing. Now we interpolate based on query stats before and after these periods of inactivity.
-* Indexing Engine: Handle schema names that include single quotes <!-- 5614 -->
-* Query details: Fix bug causing crash in CPU/IO graph due to track_io_timing=off <!-- 5630 -->
-* JWT tokens: Set "aud" audience field to a non-null value <!-- 5631 -->
-* Checks & Alerts: Do not alert about AlloyDB replicas with fsync=off <!-- 5615 -->
+* Indexing Engine: Handle schema names that include single quotes {/* 5614 */}
+* Query details: Fix bug causing crash in CPU/IO graph due to track_io_timing=off {/* 5630 */}
+* JWT tokens: Set "aud" audience field to a non-null value {/* 5631 */}
+* Checks & Alerts: Do not alert about AlloyDB replicas with fsync=off {/* 5615 */}
   - Also downgrade the alert to a warning if running on a non-AlloyDB replica: this is still worth addressing (since an untimely
     crash could lead to having to rebuild the replica), but it's unlikely to be a critical issue.
-* Query Performance: Change statement type filter to exclude DML when only SELECT is checked <!-- 5643 -->
+* Query Performance: Change statement type filter to exclude DML when only SELECT is checked {/* 5643 */}
   - Previously, any queries that included a SELECT component (like "INSERT ... SELECT" or even "INSERT ... VALUES") were returned.
     Limiting to SELECT-only is more in line with what users expect from a filter like this.
-* Persist table sort order in query string <!-- 5653 -->
+* Persist table sort order in query string {/* 5653 */}
   - This allows users to navigate back to a page of sorted results (e.g., in the Query Performance list) and maintain the sort order.
-* Restore right-aligned column headers in some tables <!-- 5709 -->
+* Restore right-aligned column headers in some tables {/* 5709 */}
   - The right-alignment was accidentally dropped recently.
-* Expire organization invitations after seven days <!-- 5718 -->
+* Expire organization invitations after seven days {/* 5718 */}
   - Invitations now expire after seven days. Invitations can be resent (before or after they expire) which resets the expiration timer.
-* Index Advisor: Fix multiple issues where query analysis fails with "internal error" <!-- 5789 -->
-* VACUUM Advisor: Fix missing bloat data / incorrect last autovacuum date in per-table bloat table <!-- 5762 -->
-* EXPLAIN: Fix occasional errors in comparison when "Select plans" is clicked <!-- 5803 -->
+* Index Advisor: Fix multiple issues where query analysis fails with "internal error" {/* 5789 */}
+* VACUUM Advisor: Fix missing bloat data / incorrect last autovacuum date in per-table bloat table {/* 5762 */}
+* EXPLAIN: Fix occasional errors in comparison when "Select plans" is clicked {/* 5803 */}
   - Currently, clicking "Select plans" on a plan comparison page can lead to an error when the already-selected plans have
     aged out of the selected date range. This change fixes that error and omits pre-selecting the existing plans in the list
     in that case (selection can be canceled to return to the previously-selected plans).
-* Navigation: Show the primary/replica role badge directly next to the server name for consistency <!-- 5823 -->
-* Query Tags: Improve parsing and skip invalid tags <!-- 5838 -->
+* Navigation: Show the primary/replica role badge directly next to the server name for consistency {/* 5823 */}
+* Query Tags: Improve parsing and skip invalid tags {/* 5838 */}
   - Tags using `=` as the key-value delimiter while also using `:` in the tag value are now properly parsed. For example
     `/* requestId=service:job:task */` is now parsed as a `requestId` tag with the value `service:job:task`. Previously it
     would be parsed as a `requestId=service` tag with the value `job:task`. Additionally, tags now have stricter requirements.
   - Tags whose key or value are empty are now skipped. Tag keys must only contain alphanumeric characters, periods, underscores,
     and dashes, matching the regular expression `[a-zA-Z0-9._-]`.
-* EXPLAIN: Standardize metric selection between grid view and plan comparison <!-- 5837 -->
-* Plan Statistics: Avoid overhead of updating internal table too frequently when pg_stat_plans is used <!-- 5873 -->
-* Accessibility: Improve color-contrast of grey text <!-- 5746 -->
-* Query Performance: Track nested query stats using toplevel field <!-- 5690 -->
+* EXPLAIN: Standardize metric selection between grid view and plan comparison {/* 5837 */}
+* Plan Statistics: Avoid overhead of updating internal table too frequently when pg_stat_plans is used {/* 5873 */}
+* Accessibility: Improve color-contrast of grey text {/* 5746 */}
+* Query Performance: Track nested query stats using toplevel field {/* 5690 */}
   - In this release this is mainly an internal storage change that will be improved upon in future releases.
 
 ## Security
@@ -109,6 +109,6 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 
 ## GraphQL API changes
 
-* Remove getQueryTagSummaryForQuery resolver <!-- 5613 -->
+* Remove getQueryTagSummaryForQuery resolver {/* 5613 */}
   - Query tag summary is now available as a field on `QueryType`, so you can fetch it via `getQueryDetails` instead
-* Add `getBatchIndexRecommendations` resolver for batch index recommendations <!-- 5695 -->
+* Add `getBatchIndexRecommendations` resolver for batch index recommendations {/* 5695 */}

@@ -16,21 +16,21 @@ slows down the query, even on fast storage.
 
 ### Example scenario
 
-<CodeBlock language="sql">
-{`SELECT customer_id, COUNT(*)
+```sql
+SELECT customer_id, COUNT(*)
 FROM orders
 GROUP BY customer_id
-ORDER BY COUNT(*) DESC;`}
-</CodeBlock>
+ORDER BY COUNT(*) DESC;
+```
 
 In `EXPLAIN (ANALYZE, BUFFERS)` output, a spilling Sort node looks like this:
 
-<CodeBlock language="text">
-{`Sort  (cost=... rows=... width=...) (actual time=... rows=...)
+```text
+Sort  (cost=... rows=... width=...) (actual time=... rows=...)
   Sort Key: (count(*)) DESC
   Sort Method: external merge  Disk: 11456kB
-  Buffers: shared hit=54504 dirtied=2, temp read=32453 written=32552`}
-</CodeBlock>
+  Buffers: shared hit=54504 dirtied=2, temp read=32453 written=32552
+```
 
 The `Sort Method: external merge` and the `temp read`/`temp written` buffers are the signal that the
 node spilled. A Hash node spills similarly, falling back to batched processing once it runs out of
@@ -52,36 +52,36 @@ should not depend on a per-session `SET`.
 **1. Temporarily, in a session.** Useful for ad-hoc investigation or comparing plans in a Workbook
 without changing anything persistent.
 
-<CodeBlock language="sql">
-{`SET work_mem = '128MB';
+```sql
+SET work_mem = '128MB';
 SELECT customer_id, COUNT(*)
 FROM orders
 GROUP BY customer_id
 ORDER BY COUNT(*) DESC;
-RESET work_mem;`}
-</CodeBlock>
+RESET work_mem;
+```
 
 **2. Per query, using `pg_hint_plan`.** If the [`pg_hint_plan`](https://github.com/ossc-db/pg_hint_plan)
 extension is installed, you can raise `work_mem` for a single statement by prefixing it with a `Set`
 hint comment. Other queries on the same connection are unaffected.
 
-<CodeBlock language="sql">
-{`/*+ Set(work_mem "128MB") */
+```sql
+/*+ Set(work_mem "128MB") */
 SELECT customer_id, COUNT(*)
 FROM orders
 GROUP BY customer_id
-ORDER BY COUNT(*) DESC;`}
-</CodeBlock>
+ORDER BY COUNT(*) DESC;
+```
 
 **3. Persistently, scoped to a database, role, or the whole server.** When the higher value is needed
 for a recurring workload, scope it as narrowly as you can. Per-database or per-role overrides keep
 unrelated workloads on the previous default.
 
-<CodeBlock language="sql">
-{`ALTER DATABASE mydb SET work_mem = '128MB';
+```sql
+ALTER DATABASE mydb SET work_mem = '128MB';
 -- or
-ALTER ROLE myrole SET work_mem = '128MB';`}
-</CodeBlock>
+ALTER ROLE myrole SET work_mem = '128MB';
+```
 
 To raise the server-wide default instead, update `work_mem` in your Postgres configuration (the
 parameter group or configuration UI provided by your managed Postgres service, or `postgresql.conf`

@@ -23,7 +23,7 @@ export const APIKeyInstructions = ({ apiKey }) => {
 
 export const CollectorDotEnv = ({ apiKey }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="bash">
       {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
 DB_HOST=1.2.3.4
 DB_NAME=your_database_name
@@ -54,7 +54,7 @@ Fill in the values step-by-step:
 
 If you're using IAM Authentication, the configuration file looks like the following instead:
 
-<CodeBlock>
+<CodeBlock language="bash">
   {`PGA_API_KEY=${props.apiKey || "your-organization-api-key"}
 DB_NAME=your_database_name
 DB_USERNAME=your_monitoring_user
@@ -69,7 +69,7 @@ and the host name will be specified using the project ID, the region, and the in
 
 Instead of specifying `GCP_REGION`, you can also update `GCP_CLOUDSQL_INSTANCE_ID` with the shape of `project_id:region:instance_id`.
 
-<CodeBlock>
+<CodeBlock language="bash">
   {`PGA_API_KEY=${props.apiKey || "your-organization-api-key"}
 DB_NAME=your_database_name
 DB_USERNAME=your_monitoring_user
@@ -85,8 +85,8 @@ If you are using Google AlloyDB, do not specify `GCP_CLOUDSQL_INSTANCE_ID`, but 
 
 Then run the following:
 
-<CodeBlock language="bash">
-{`docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test`}
-</CodeBlock>
+```bash
+docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test
+```
 
 <PublicLastStepLogInsightsLink />

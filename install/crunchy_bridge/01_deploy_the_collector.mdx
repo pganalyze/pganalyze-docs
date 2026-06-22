@@ -10,7 +10,7 @@ import { MonitoringUserLogRead, MonitoringUserPerDatabaseHelpers } from "../../c
 
 export const CollectorStartCommand = ({ apiKey, cmd, logExplain }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="sql">
       {`SELECT run_container('` + (cmd ? '' : '-d ') + `-t -e DB_URL="REPLACE_ME" -e PGA_API_KEY="` + (apiKey ? apiKey : 'API_KEY') + '"' + (logExplain ? ' -e PGA_ENABLE_LOG_EXPLAIN=true' : '') + ` -e CRUNCHY_BRIDGE_API_KEY="REPLACE_ME" -e DB_ALL_NAMES=1 --privileged quay.io/pganalyze/collector:stable` + (cmd ? ` ${cmd}` : '') + `');`}
     </CodeBlock>
   );
@@ -25,9 +25,9 @@ We recommend using a role with limited privileges for monitoring. You can use Cr
 
 To ensure the application user can access monitoring statistics for all users (not just itself), and can read the server log, **run the following with superuser credentials**:
 
-<CodeBlock language="sql">
-{`GRANT pg_monitor TO application;`}
-</CodeBlock>
+```sql
+GRANT pg_monitor TO application;
+```
 
 <MonitoringUserPerDatabaseHelpers username="application" />
 
@@ -37,9 +37,9 @@ In later steps you can now specify the application user credentials as the `DB_U
 
 If you have not yet enabled Postgres Container Apps, connect to your Crunchy Bridge Postgres database, and run the following commands as a superuser:
 
-<CodeBlock language="sql">
-{`CREATE EXTENSION IF NOT EXISTS pgpodman;`}
-</CodeBlock>
+```sql
+CREATE EXTENSION IF NOT EXISTS pgpodman;
+```
 
 ## Create Crunchy Bridge API key
 

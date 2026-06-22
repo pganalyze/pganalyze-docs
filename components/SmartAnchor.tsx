@@ -1,9 +1,25 @@
 import React, { useContext } from "react";
-import { useIcon } from "./WithIcons";
+import { FontAwesomeIcon } from "./FontAwesomeIcon";
+import { faExternalLink } from "@fortawesome/pro-regular-svg-icons";
 
 import classNames from "classnames";
 
 import styles from './style.module.scss';
+
+// A link is "internal" (no external-link icon, opens in the same tab) when it
+// targets our own site: the canonical pganalyze.com domain, or the host the
+// page is currently served from — which covers local dev, staging, and review
+// apps. Everything else is treated as external.
+function isInternalUrl(url: string): boolean {
+  try {
+    const { host } = new URL(url, "https://pganalyze.com/");
+    if (host === "pganalyze.com" || host === "www.pganalyze.com") return true;
+    if (typeof window !== "undefined" && host === window.location.host) return true;
+    return false;
+  } catch {
+    return true;
+  }
+}
 
 type AnchorProps = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
@@ -25,7 +41,6 @@ type Props = BaseProps & {
 }
 
 const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelative: adjustLinks, ...rest}) => {
-  const ExternaLinkIcon = useIcon('externalLink')
   let destination: string;
   if ('to' in rest) {
     destination = rest.to;
@@ -49,21 +64,17 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
       href: destination,
     }
 
-    if (isAbsolute) {
-      const rel = []
-      rel.push("noopener")
-      const isPganalyzeWebLink = /^https?:\/\/pganalyze\.com/.test(destination)
-      if (!isPganalyzeWebLink) {
-        rel.push("noreferrer")
-      }
-      props.rel = rel.join(' ')
-    }
+    const internal = isInternalUrl(destination);
 
     const { children, className, target, ...otherProps } = props;
-    // Don't show external icon link in some situations
-    const skipExternalLinkIcon = destination.startsWith('https://dashboard.heroku.com/new-app')
-      || destination.startsWith('#')
+    // Show the external-link icon only for links that leave our own site.
+    // Internal links (relative, pganalyze.com, or the current host) get no icon;
+    // also keep skipping it for in-page anchors, mail links, and the Heroku
+    // deploy button (a styled button, not inline text).
+    const skipExternalLinkIcon = internal
+      || isFragmentLink
       || destination.startsWith('mailto:')
+      || destination.startsWith('https://dashboard.heroku.com/new-app')
     return (
       <a
         {...otherProps}
@@ -72,7 +83,7 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
           target ?? (isAbsolute && !skipExternalLinkIcon) ? "_blank" : "_self"
         }
       >
-        {children}{!skipExternalLinkIcon && <ExternaLinkIcon className={styles.externalLinkIcon} />}
+        {children}{!skipExternalLinkIcon && <FontAwesomeIcon icon={faExternalLink} className={styles.externalLinkIcon} />}
       </a>
     )
   }

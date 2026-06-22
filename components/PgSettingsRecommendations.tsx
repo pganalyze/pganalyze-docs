@@ -1,10 +1,13 @@
 import React from 'react'
-import { useCodeBlock } from './CodeBlock';
+import CodeBlock from './CodeBlock';
 import Null from './Null';
+
+import classNames from 'classnames';
 
 import styles from './style.module.scss';
 import { useDescriptionPopup } from './WithDescriptionPopup';
-import { useIcon } from './WithIcons';
+import { FontAwesomeIcon } from './FontAwesomeIcon';
+import { faCheck, faExclamationTriangle, faInfoCircle } from '@fortawesome/pro-solid-svg-icons';
 
 type PGSettingRecommendation = {
   name: string;
@@ -94,28 +97,22 @@ const RecommendationSummary: React.FunctionComponent<Props> = ({mode, recommenda
 }
 
 const RecommendationStatus: React.FunctionComponent<{recommendation: PGSettingRecommendation}> = ({recommendation}) => {
-  const OkayIcon = useIcon('okay');
-  const ChangeRequiredIcon = useIcon('changeRequired');
-  const InfoIcon = useIcon('info');
-  // add stripped down classNames hack to avoid dependency
-  const classNames = (...classes: string[]) => classes.join(' ');
-
   if (!recommendation.recommendChange) {
     return (
       <div title="no changes required">
-        <OkayIcon className={classNames(styles.statusIcon, styles.okayIcon)} />
+        <FontAwesomeIcon icon={faCheck} className={classNames(styles.statusIcon, styles.okayIcon)} />
       </div>
     )
   } else if (recommendation.required) {
     return (
       <div title="update required">
-        <ChangeRequiredIcon className={classNames(styles.statusIcon, styles.changeRequiredIcon)} />
+        <FontAwesomeIcon icon={faExclamationTriangle} className={classNames(styles.statusIcon, styles.changeRequiredIcon)} />
       </div>
     )
   } else {
     return (
       <div title="update recommended">
-        <InfoIcon className={classNames(styles.statusIcon, styles.infoIcon)} />
+        <FontAwesomeIcon icon={faInfoCircle} className={classNames(styles.statusIcon, styles.infoIcon)} />
       </div>
     )
   }
@@ -141,9 +138,8 @@ const ListRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'
 }
 
 const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({recommendations}) => {
-  const CodeBlock = useCodeBlock();
   return (
-    <CodeBlock>
+    <CodeBlock language="sql">
       {recommendations.map(s => {
         // List-style settings like shared_preload_libraries must be passed to ALTER SYSTEM unquoted,
         // or Postgres will treat the whole list as a single library, which of course normally does

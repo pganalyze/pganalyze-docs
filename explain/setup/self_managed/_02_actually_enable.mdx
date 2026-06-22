@@ -6,7 +6,7 @@ export const SPLRecommendation = ({recommendation}) => {
                For example, if the current value is <code>pg_stat_statements</code>,
                you can set the new value to <code>pg_stat_statements, auto_explain</code>:
             </p>
-            <CodeBlock>
+            <CodeBlock language="sql">
                ALTER SYSTEM SET shared_preload_libraries TO pg_stat_statements, auto_explain;
             </CodeBlock>
          </React.Fragment>
@@ -18,13 +18,13 @@ export const SPLRecommendation = ({recommendation}) => {
             The current value appears to be <code>{recommendation.current}</code>.
             You can confirm this by running
          </p>
-         <CodeBlock>
+         <CodeBlock language="sql">
             SHOW shared_preload_libraries;
          </CodeBlock>
          <p>
             and then set the new value:
          </p>
-         <CodeBlock>
+         <CodeBlock language="sql">
             ALTER SYSTEM SET shared_preload_libraries TO {recommendation.recommended};
          </CodeBlock>
       </React.Fragment>
@@ -39,16 +39,16 @@ configuration setting.
 Since changes to `shared_preload_libraries` only take effect at server start, after you apply
 these settings, you will need to restart Postgres:
 
-<CodeBlock language="bash">
-{`sudo systemctl restart postgresql`}
-</CodeBlock>
+```bash
+sudo systemctl restart postgresql
+```
 
 After the reboot completes, verify that `shared_preload_libraries` now includes `auto_explain`
 and that the setting change does not require a restart (`pending_restart` should be `f`):
 
-<CodeBlock language="sql">
-{`SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';`}
-</CodeBlock>
+```sql
+SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';
+```
 
 If `auto_explain` is enabled and no longer requires a restart, you can proceed to
 review our recommended `auto_explain` configuration settings:

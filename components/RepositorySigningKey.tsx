@@ -1,5 +1,6 @@
 import React from 'react'
-import { useIcon } from './WithIcons';
+import { FontAwesomeIcon } from './FontAwesomeIcon';
+import { faLock } from '@fortawesome/pro-solid-svg-icons';
 
 import styles from './style.module.scss';
 
@@ -18,23 +19,21 @@ const RepositorySigningKey: React.FunctionComponent<Props> = ({small}) => {
 }
 
 const SmallKey: React.FunctionComponent = () => {
-  const SecureIcon = useIcon('secure');
   return (
     <div>
       <strong>
-        <SecureIcon className={styles.secureIcon} />Repository Signing Key Fingerprint
+        <FontAwesomeIcon icon={faLock} className={styles.secureIcon} />Repository Signing Key Fingerprint
       </strong>: C09B 2CAB 0DB3 78F6 E7FD 93F1 0E6D EC71 A2B5 F2F9
     </div>
   )
 }
 
 const Key: React.FunctionComponent = () => {
-  const SecureIcon = useIcon('secure');
   return (
     <>
       <div>
         <strong>
-          <SecureIcon className={styles.secureIcon} />Repository Signing Key
+          <FontAwesomeIcon icon={faLock} className={styles.secureIcon} />Repository Signing Key
         </strong>
       </div>
       <div>

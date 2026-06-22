@@ -28,39 +28,39 @@ Perform the next steps on a machine that has full internet connectivity with no 
 
 First, log in with your license information, shared with you by the pganalyze team:
 
-<CodeBlock language="bash">
-{`docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io`}
-</CodeBlock>
+```bash
+docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io
+```
 
 Now pull the image, replacing VERSION with the [latest pganalyze Enterprise version](/docs/enterprise/releases):
 
-<CodeBlock language="bash">
-{`docker pull quay.io/pganalyze/enterprise:VERSION`}
-</CodeBlock>
+```bash
+docker pull quay.io/pganalyze/enterprise:VERSION
+```
 
 Create a container registry in Azure (if you don't have one):
 
-<CodeBlock language="bash">
-{`az acr create --resource-group YOUR_RESOURCE_GROUP --name pganalyzeregistry --sku Basic`}
-</CodeBlock>
+```bash
+az acr create --resource-group YOUR_RESOURCE_GROUP --name pganalyzeregistry --sku Basic
+```
 
 Log in to your Azure Container Registry:
 
-<CodeBlock language="bash">
-{`az acr login --name pganalyzeregistry`}
-</CodeBlock>
+```bash
+az acr login --name pganalyzeregistry
+```
 
 Tag the pganalyze image for your ACR, replacing the values (REGISTRY_NAME, VERSION):
 
-<CodeBlock language="bash">
-{`docker tag quay.io/pganalyze/enterprise:VERSION pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION`}
-</CodeBlock>
+```bash
+docker tag quay.io/pganalyze/enterprise:VERSION pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION
+```
 
 And now push the tag to the registry:
 
-<CodeBlock language="bash">
-{`docker push pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION`}
-</CodeBlock>
+```bash
+docker push pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION
+```
 
 ### Step 2: Configure Azure managed identity for workload authentication
 pganalyze Enterprise requires a managed identity to authenticate with Azure services like Event Hub for log streaming. Follow these steps to set up the identity and configure Kubernetes workload identity federation.
@@ -68,28 +68,28 @@ pganalyze Enterprise requires a managed identity to authenticate with Azure serv
 #### Create the managed identity
 Create a managed identity that will be assigned to your AKS cluster:
 
-<CodeBlock language="bash">
-{`az identity create --resource-group YOUR_RESOURCE_GROUP --name pganalyze-identity`}
-</CodeBlock>
+```bash
+az identity create --resource-group YOUR_RESOURCE_GROUP --name pganalyze-identity
+```
 
 #### Assign the identity to your AKS cluster
 Enable managed identity on your AKS cluster and assign the identity you just created:
 
-<CodeBlock language="bash">
-{`az aks update --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \\
-  --enable-managed-identity \\
-  --assign-identity /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity`}
-</CodeBlock>
+```bash
+az aks update --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \
+  --enable-managed-identity \
+  --assign-identity /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity
+```
 
 You may be prompted to confirm switching from system-assigned to user-assigned managed identity. Type `y` to proceed.
 
 #### Get the OIDC issuer URL
 Workload identity federation requires the OIDC issuer URL from your AKS cluster. Retrieve it with the `show` command:
 
-<CodeBlock language="bash">
-{`az aks show --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \\
-  --query oidcIssuerProfile.issuerUrl -o tsv`}
-</CodeBlock>
+```bash
+az aks show --resource-group YOUR_RESOURCE_GROUP --name YOUR_AKS_CLUSTER \
+  --query oidcIssuerProfile.issuerUrl -o tsv
+```
 
 Save this URL—you'll need it in the next step. It will look something like:
 
@@ -100,14 +100,14 @@ Workload identity federation establishes a trust relationship between your Kuber
 
 Create the federated credential using the OIDC issuer URL from above:
 
-<CodeBlock language="bash">
-{`az identity federated-credential create \\
-  --resource-group YOUR_RESOURCE_GROUP \\
-  --identity-name pganalyze-identity \\
-  --name pganalyze-fic \\
-  --issuer "https://eastus.oic.prod-aks.azure.com/SUBSCRIPTION_ID/CLUSTER_ID/" \\
-  --subject "system:serviceaccount:default:pganalyze-sa"`}
-</CodeBlock>
+```bash
+az identity federated-credential create \
+  --resource-group YOUR_RESOURCE_GROUP \
+  --identity-name pganalyze-identity \
+  --name pganalyze-fic \
+  --issuer "https://eastus.oic.prod-aks.azure.com/SUBSCRIPTION_ID/CLUSTER_ID/" \
+  --subject "system:serviceaccount:default:pganalyze-sa"
+```
 
 Replace the issuer URL with the one you retrieved above (it should already include your region, subscription ID, and cluster ID).
 
@@ -120,12 +120,12 @@ Azure database for monitoring.
 If you plan to use the built-in pganalyze Collector to monitor your PostgreSQL databases in Azure, you'll need to grant the managed identity of the container the necessary permissions to the 
 Event Hub. **If you haven't set up log streaming yet, you can skip this step for now and return to it later.** Just note that log streaming won't work until this step is completed.
 
-<CodeBlock language="bash">
-{`az role assignment create \\
-  --assignee /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity \\
-  --role "Azure Event Hubs Data Receiver" \\
-  --scope /subscriptions/SUBSCRIPTION_ID/resourceGroups/YOUR_RESOURCE_GROUP/providers/Microsoft.EventHub/namespaces/YOUR_EVENT_HUB_NAMESPACE`}
-</CodeBlock>
+```bash
+az role assignment create \
+  --assignee /subscriptions/SUBSCRIPTION_ID/resourcegroups/YOUR_RESOURCE_GROUP/providers/Microsoft.ManagedIdentity/userAssignedIdentities/pganalyze-identity \
+  --role "Azure Event Hubs Data Receiver" \
+  --scope /subscriptions/SUBSCRIPTION_ID/resourceGroups/YOUR_RESOURCE_GROUP/providers/Microsoft.EventHub/namespaces/YOUR_EVENT_HUB_NAMESPACE
+```
 
 Replace `YOUR_EVENT_HUB_NAMESPACE` with your actual Event Hub namespace name.
 
@@ -141,19 +141,19 @@ For Azure Database for PostgreSQL, the hostname typically looks like: `servernam
 
 The `LICENSE_KEY` has been provided to you by the pganalyze team - replace `KEYKEYKEY` in the command with the actual key.
 
-<CodeBlock language="bash">
-{`kubectl create secret generic pganalyze-secret \\
-  --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \\
-  --from-literal=LICENSE_KEY=KEYKEYKEY \\
-  --dry-run=client -o yaml | kubectl apply -f -`}
-</CodeBlock>
+```bash
+kubectl create secret generic pganalyze-secret \
+  --from-literal=DATABASE_URL=postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE \
+  --from-literal=LICENSE_KEY=KEYKEYKEY \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
 
 ### Step 4: Create the pganalyze Enterprise deployment
 
 Save the following text into a file `pganalyze-enterprise.yml`:
 
-<CodeBlock language="yaml">
-{`apiVersion: v1
+```yaml
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: pganalyze-sa
@@ -209,31 +209,31 @@ spec:
   ports:
   - protocol: TCP
     port: 80
-    targetPort: 5000`}
-</CodeBlock>
+    targetPort: 5000
+```
 
 You will need to adjust the following settings:
 
 - `image: pganalyzeregistry.azurecr.io/pganalyze-enterprise:VERSION` - This needs to match the Docker image tag we created earlier
 - replace `YOUR_CLIENT_ID` with the Client ID of the managed identity you created earlier. You can get it by running:
-<CodeBlock language="bash">
-{`az identity show --resource-group YOUR_RESOURCE_GROUP --name pganalyze-identity --query clientId -o tsv`}
-</CodeBlock>
+```bash
+az identity show --resource-group YOUR_RESOURCE_GROUP --name pganalyze-identity --query clientId -o tsv
+```
 
 Now deploy the pganalyze Enterprise application:
 
-<CodeBlock language="bash">
-{`kubectl apply -f pganalyze-enterprise.yml`}
-</CodeBlock>
+```bash
+kubectl apply -f pganalyze-enterprise.yml
+```
 
 **Note on Memory Requirements:** The pganalyze container requests 8GB of memory in the template above. Ensure your AKS cluster has nodes with sufficient memory. 
 If you see "Insufficient memory" errors, you may need to scale up your cluster or reduce the requested memory limit in the YAML.
 
 We can confirm the deployment is completed by checking:
 
-<CodeBlock language="bash">
-{`kubectl get deploy`}
-</CodeBlock>
+```bash
+kubectl get deploy
+```
 
 Output should show:
 
@@ -246,9 +246,9 @@ pganalyze  1/1     1            1           1m`}
 
 Run the following command to perform the Enterprise self-check:
 
-<CodeBlock language="bash">
-{`kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake enterprise:self_check`}
-</CodeBlock>
+```bash
+kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake enterprise:self_check
+```
 
 This should return the following:
 
@@ -268,9 +268,9 @@ In case you get an error for the license verification, please reach out to the p
 
 Run the following to initialize the pganalyze statistics database:
 
-<CodeBlock language="bash">
-{`kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:structure:load`}
-</CodeBlock>
+```bash
+kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:structure:load
+```
 
 Output should show:
 
@@ -284,9 +284,9 @@ set_config
 
 Then run the following to create the initial admin user:
 
-<CodeBlock language="bash">
-{`kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:seed`}
-</CodeBlock>
+```bash
+kubectl exec -i -t deploy/pganalyze -- /docker-entrypoint.enterprise.sh rake db:seed
+```
 
 And note down the credentials that are returned:
 
@@ -305,9 +305,9 @@ INFO -- : Use these credentials to login and then change email address and passw
 
 Now we can connect to the pganalyze UI. Run the following to determine the IP address or hostname of the load balancer that was provisioned:
 
-<CodeBlock language="bash">
-{`kubectl get svc pganalyze-service`}
-</CodeBlock>
+```bash
+kubectl get svc pganalyze-service
+```
 
 Output should show:
 
@@ -328,9 +328,9 @@ Please now log in to the pganalyze interface using the generated credentials you
 
 If authentication does not work, or you see an error message, please check the container's logs using:
 
-<CodeBlock language="bash">
-{`kubectl logs deploy/pganalyze`}
-</CodeBlock>
+```bash
+kubectl logs deploy/pganalyze
+```
 
 After successful login, choose an organization name of your choice (typically your company name).
 
@@ -374,12 +374,12 @@ Additionally, you can review [all configuration settings](/docs/enterprise/setti
 
 In case you want to make adjustments to the configuration, simply adjust the `pganalyze-enterprise.yml` file from earlier, and then apply with kubectl:
 
-<CodeBlock language="bash">
-{`kubectl apply -f pganalyze-enterprise.yml`}
-</CodeBlock>
+```bash
+kubectl apply -f pganalyze-enterprise.yml
+```
 
 When changing the secrets information without changing the Kubernetes template, you can restart the deployment like this:
 
-<CodeBlock language="bash">
-{`kubectl rollout restart deployment pganalyze`}
-</CodeBlock>
+```bash
+kubectl rollout restart deployment pganalyze
+```

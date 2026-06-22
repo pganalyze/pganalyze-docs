@@ -49,20 +49,21 @@ manually define clusters using the collector configuration. Set the same `api_cl
 for all servers that should be treated as a cluster:
 
 
-<CodeBlock>
-{`[server1]
+```ini
+[server1]
 db_host = my-db-primary.postgres.database.azure.com
 ...
-api_cluster_id = my-db\n
+api_cluster_id = my-db
+
 [server2]
 db_host = my-db-replica.postgres.database.azure.com
 ...
-api_cluster_id = my-db`}
-</CodeBlock>
+api_cluster_id = my-db
+```
 For environment variable configuration, use API_CLUSTER_ID.
-<CodeBlock>
-{`API_CLUSTER_ID=my-db`}
-</CodeBlock>
+```
+API_CLUSTER_ID=my-db
+```
 
 Once configured, Index Advisor will combine workload data from all servers with the same cluster ID and produce recommendations 
 on the primary server.

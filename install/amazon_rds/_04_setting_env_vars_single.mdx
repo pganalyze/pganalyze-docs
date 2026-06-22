@@ -15,7 +15,7 @@ export const APIKeyInstructionsEnvVar = ({ apiKey }) => {
 export const CollectorDotEnv = ({ apiKey }) => {
   return (
     <React.Fragment>
-      <CodeBlock>
+      <CodeBlock language="bash">
         {`PGA_API_KEY=${apiKey || "your-organization-api-key"}
 DB_HOST=your_database_host
 DB_NAME=your_database_name

@@ -4,7 +4,6 @@ backlink_href: /docs/enterprise/upgrade
 backlink_title: 'Enterprise Server: Upgrade Overview'
 ---
 
-import CodeBlock from '../../components/CodeBlock'
 import ToC from '../../components/Toc'
 
 These are the upgrade instructions for [pganalyze Enterprise Server](/enterprise-postgres-monitoring) running as a Docker (or podman) container on a VM.
@@ -28,33 +27,33 @@ allows a convenient restore (e.g. Amazon RDS snapshots).
 
 Log in to the pganalyze image registry:
 
-<CodeBlock language="bash">
-{`docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io`}
-</CodeBlock>
+```bash
+docker login -e="." -u="pganalyze+enterprise_customer" -p="YOUR_PASSWORD" quay.io
+```
 
 Pull the new version. Replace `[new version]` with the release you are upgrading to — check 
 the [Releases page](https://pganalyze.com/docs/enterprise/releases) for the latest 
 version. The format of the version string is `v2026.01.0` (year, month of release, minor updates).
 
-<CodeBlock language="bash">
-{`docker pull quay.io/pganalyze/enterprise:[new version]`}
-</CodeBlock>
+```bash
+docker pull quay.io/pganalyze/enterprise:[new version]
+```
 
 ### Step 3: Stop the currently running container
 
-<CodeBlock language="bash">
-{`docker stop pganalyze
-docker rm pganalyze`}
-</CodeBlock>
+```bash
+docker stop pganalyze
+docker rm pganalyze
+```
 
 ### Step 4: Run the database migration
 
 Before starting the database migration task, make sure that the `btree_gist` and `pgcrypto` extensions are installed and available.
 
-<CodeBlock language="bash">
-{`docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[new version] \
-  rake db:migrate`}
-</CodeBlock>
+```bash
+docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[new version] \
+  rake db:migrate
+```
 
 This will upgrade the database schema for the new release. At this point the database
 schema has been upgraded to the new version. Rolling back now requires restoring from
@@ -66,19 +65,19 @@ set them in your `/etc/pganalyze.env` file before running the migration. See the
 
 ### Step 5: Run the Enterprise self-check
 
-<CodeBlock language="bash">
-{`docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[new version] \
-  rake enterprise:self_check`}
-</CodeBlock>
+```bash
+docker run --env-file /etc/pganalyze.env quay.io/pganalyze/enterprise:[new version] \
+  rake enterprise:self_check
+```
 
 If this returns any errors, review your environment configuration in `/etc/pganalyze.env`.
 
 ### Step 6: Start the container
 
-<CodeBlock language="bash">
-{`docker run -d --name pganalyze -p 8080:5000 --env-file /etc/pganalyze.env \
-  quay.io/pganalyze/enterprise:[new version]`}
-</CodeBlock>
+```bash
+docker run -d --name pganalyze -p 8080:5000 --env-file /etc/pganalyze.env \
+  quay.io/pganalyze/enterprise:[new version]
+```
 
 At this point the upgrade is complete and the pganalyze UI should be accessible.
 
@@ -86,10 +85,10 @@ At this point the upgrade is complete and the pganalyze UI should be accessible.
 
 Stop the pganalyze container if it is still running:
 
-<CodeBlock language="bash">
-{`docker stop pganalyze
-docker rm pganalyze`}
-</CodeBlock>
+```bash
+docker stop pganalyze
+docker rm pganalyze
+```
 
 Restore the statistics database from the backup taken in Step 1. On Amazon RDS you
 might choose to recover from a snapshot; on other systems you would usually use
@@ -97,10 +96,10 @@ might choose to recover from a snapshot; on other systems you would usually use
 
 After the backup is restored, start up the container with the old version:
 
-<CodeBlock language="bash">
-{`docker run -d --name pganalyze -p 8080:5000 --env-file /etc/pganalyze.env \
-  quay.io/pganalyze/enterprise:[old version]`}
-</CodeBlock>
+```bash
+docker run -d --name pganalyze -p 8080:5000 --env-file /etc/pganalyze.env \
+  quay.io/pganalyze/enterprise:[old version]
+```
 
 Confirm the pganalyze UI is accessible and healthy before investigating what went wrong
 with the upgrade.

@@ -10,14 +10,14 @@ This guide walks through a complete Query Advisor workflow, from detecting a per
 
 Query Advisor automatically detected this problematic query pattern in production:
 
-<CodeBlock language="sql">
-{`SELECT databases.*
+```sql
+SELECT databases.*
 FROM databases
 WHERE databases.server_id = $server_id
   AND databases.hidden = $hidden
 ORDER BY databases.id ASC
-LIMIT $3;`}
-</CodeBlock>
+LIMIT $3;
+```
 
 The query appeared to run fast initially but degraded significantly under certain conditions, taking over **6 seconds** to complete. The EXPLAIN plan (shown below) revealed the issue:
 
@@ -87,14 +87,14 @@ In the workbook variant editor, Query Advisor provided an **"Apply"** button for
 ### Automatic rewrite
 Query Advisor automatically modified the query to force better index selection:
 
-<CodeBlock language="sql">
-{`SELECT databases.*
+```sql
+SELECT databases.*
 FROM databases
 WHERE databases.server_id = $1
   AND databases.hidden = $2
 ORDER BY databases.id + $zero ASC  -- Added +0 to prevent index sort usage
-LIMIT $3;`}
-</CodeBlock>
+LIMIT $3;
+```
 
 The `$zero` here is identical with `0`. This is common workaround for this kind of Postgres query planner problem,
 as it forces the planner to not use an index on the `id` column in the `ORDER BY`. Instead, the planner will prefer

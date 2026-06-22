@@ -8,7 +8,7 @@ import {
   IssueReferenceIndex,
 } from "../../../util/checks";
 import { formatSqlObjectName } from "../../../util/format";
-import { useCodeBlock } from "../../CodeBlock";
+import CodeBlock from "../../CodeBlock";
 
 const IndexInvalidTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => {
   return (
@@ -25,7 +25,6 @@ const IndexInvalidTrigger: React.FunctionComponent<CheckTriggerProps> = ({}) => 
 const IndexInvalidGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   issue,
 }) => {
-  const CodeBlock = useCodeBlock();
   const indexes = issue?.references?.map((ref) => {
     const schemaIdx = ref.referent as IssueReferenceIndex;
     return formatSqlObjectName(schemaIdx.schemaName, schemaIdx.name);

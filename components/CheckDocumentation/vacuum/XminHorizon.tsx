@@ -6,7 +6,7 @@ import {
   CheckGuidanceProps,
   CheckTriggerProps,
 } from "../../../util/checks";
-import { useCodeBlock } from "../../CodeBlock";
+import CodeBlock from "../../CodeBlock";
 import { useSmartAnchor } from "../../SmartAnchor";
 import PGDocsLink from "../../PGDocsLink";
 
@@ -145,7 +145,6 @@ const GuidanceByBackend: React.FunctionComponent<{
     return null;
   }
 
-  const CodeBlock = useCodeBlock();
   return (
     <li>
       <h5>Long-running transactions</h5>
@@ -197,7 +196,6 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
   }
 
   const Link = useSmartAnchor();
-  const CodeBlock = useCodeBlock();
   return (
     <li>
       <h5>Lagging or stale physical replication slots</h5>
@@ -241,7 +239,6 @@ const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
     return null;
   }
 
-  const CodeBlock = useCodeBlock();
   const Link = useSmartAnchor();
   return (
     <li>
@@ -290,7 +287,6 @@ const GuidanceByStandby: React.FunctionComponent<{
     return null;
   }
 
-  const CodeBlock = useCodeBlock();
   return (
     <li>
       <h5>Long-running queries on standbys</h5>
@@ -355,7 +351,6 @@ const GuidanceByPreparedXact: React.FunctionComponent<{
     return null;
   }
 
-  const CodeBlock = useCodeBlock();
   return (
     <li>
       <h5>Abandoned prepared transactions</h5>

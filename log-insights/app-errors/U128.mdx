@@ -33,7 +33,7 @@ may often prove difficult, especially when the source data is user controlled.
 
 One way to resolve this issue on user generated data, is to utilize `NULLIF` like this:
 
-```
+```sql
 SELECT 1.0 / NULLIF(column_that_may_be_zero, 0)
 ```
 

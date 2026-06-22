@@ -21,41 +21,41 @@ Goals that should be avoided as the first goal are [Minimize Number of Indexes](
 
 The *Minimize Index Write Overhead* goal strives to minimize the index write overhead associated with the selected indexes.
 
-<CodeBlock language="json">
-{`{ "Name": "Minimize Index Write Overhead", "Tolerance": 0.0 }`}
-</CodeBlock>
+```json
+{ "Name": "Minimize Index Write Overhead", "Tolerance": 0.0 }
+```
 
 ### Minimize Number of Indexes
 
 The *Minimize Number of Indexes* goal strives to minimize the number of existing and possible indexes selected.
 
-<CodeBlock language="json">
-{`{ "Name": "Minimize Number of Indexes", "Tolerance": 0.0 }`}
-</CodeBlock>
+```json
+{ "Name": "Minimize Number of Indexes", "Tolerance": 0.0 }
+```
 
 ### Minimize Total Cost
 
 The *Minimize Total Cost* goal strives to minimize the combined costs of the scans.
 
-<CodeBlock language="json">
-{`{ "Name": "Minimize Total Cost", "Tolerance": 0.1 }`}
-</CodeBlock>
+```json
+{ "Name": "Minimize Total Cost", "Tolerance": 0.1 }
+```
 
 ### Minimize Maximum Cost
 
 The *Minimize Maximum Cost* goal strives to minimize the largest cost found among the scans.
 
-<CodeBlock language="json">
-{`{ "Name": "Minimize Maximum Cost", "Tolerance": 1.0 }`}
-</CodeBlock>
+```json
+{ "Name": "Minimize Maximum Cost", "Tolerance": 1.0 }
+```
 
 ### Minimize Maximum Relative Cost
 
 The *Minimize Maximum Relative Cost* goal strives to minimize the largest relative cost found among the scans. The *relative cost* of a scan is equal to its actual value divided by the best possible value it could get in theory.
 
-<CodeBlock language="json">
-{`{ "Name": "Minimize Maximum Relative Cost", "Tolerance": 10.0 }`}
-</CodeBlock>
+```json
+{ "Name": "Minimize Maximum Relative Cost", "Tolerance": 10.0 }
+```
 
 ### Minimize Total Weighted Cost
 
@@ -63,30 +63,30 @@ The *Minimize Total Weighted Cost* goal strives to minimize the combined weighte
 
 The weighted cost of a scan is a measure of its influence on performance, and is equal to its cost multiplied by the frequency in which it appears in queries. Common scans with high costs will tend to have a higher weighted cost than uncommon scans with lower costs.
 
-<CodeBlock language="json">
-{`{ "Name": "Minimize Total Weighted Cost", "Tolerance": 0.1 }`}
-</CodeBlock>
+```json
+{ "Name": "Minimize Total Weighted Cost", "Tolerance": 0.1 }
+```
 
 ### Minimize Maximum Weighted Cost
 
 The *Minimize Maximum Weighted Cost* goal strives to minimize the largest weighted cost found among the scans.
 
-<CodeBlock language="json">
-{`{ "Name": "Minimize Maximum Weighted Cost", "Tolerance": 1.0 }`}
-</CodeBlock>
+```json
+{ "Name": "Minimize Maximum Weighted Cost", "Tolerance": 1.0 }
+```
 
 ### Minimize Maximum Relative Weighted Cost
 
 The *Minimize Maximum Relative Weighted Cost* goal strives to minimize the largest relative weighted cost found among the scans. The *relative weighted cost* of a scan is equal to its actual value divided by the best possible value it could get in theory.
 
-<CodeBlock language="json">
-{`{ "Name": "Minimize Maximum Relative Weighted Cost", "Tolerance": 10.0 }`}
-</CodeBlock>
+```json
+{ "Name": "Minimize Maximum Relative Weighted Cost", "Tolerance": 10.0 }
+```
 
 ### Minimize Update Overhead
 
 The *Minimize Update Overhead* goal strives to minimize the update overhead of the selected indexes.
 
-<CodeBlock language="json">
-{`{ "Name": "Minimize Update Overhead", "Tolerance": 0 }`}
-</CodeBlock>
+```json
+{ "Name": "Minimize Update Overhead", "Tolerance": 0 }
+```

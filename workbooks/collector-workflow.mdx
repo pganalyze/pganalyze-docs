@@ -26,16 +26,16 @@ by calling a special helper function owned by the role.
 
 First, start by creating the new role:
 
-<CodeBlock language="sql">
-{`CREATE ROLE pganalyze_explain;`}
-</CodeBlock>
+```sql
+CREATE ROLE pganalyze_explain;
+```
 
 Then, either use GRANT statements for individual tables ([described separately](#individual-grant-statements-instead-of-pg_read_all_data)), or assign the
 `pg_read_all_data` role to the `pganalyze_explain` role:
 
-<CodeBlock language="sql">
-{`GRANT pg_read_all_data TO pganalyze_explain;`}
-</CodeBlock>
+```sql
+GRANT pg_read_all_data TO pganalyze_explain;
+```
 
 The special `pg_read_all_data` role lets the `pganalyze_explain` user read the data of
 all tables on the database server.
@@ -53,12 +53,12 @@ to ensure the `SECURITY DEFINER` privilege is correctly assigned.
 First, ensure the `pganalyze` schema exists, temporarily allow the `pganalyze_explain`
 user to create functions in it, and switch roles:
 
-<CodeBlock language="sql">
-{`CREATE SCHEMA IF NOT EXISTS pganalyze;
+```sql
+CREATE SCHEMA IF NOT EXISTS pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO pganalyze;
 GRANT CREATE ON SCHEMA pganalyze TO pganalyze_explain;
-SET ROLE pganalyze_explain;`}
-</CodeBlock>
+SET ROLE pganalyze_explain;
+```
 
 Then, create the function:
 
@@ -68,10 +68,10 @@ Then, create the function:
 
 To complete the setup, reset the role, and revoke the creation privilege again:
 
-<CodeBlock language="sql">
-{`RESET ROLE;
-REVOKE CREATE ON SCHEMA pganalyze FROM pganalyze_explain;`}
-</CodeBlock>
+```sql
+RESET ROLE;
+REVOKE CREATE ON SCHEMA pganalyze FROM pganalyze_explain;
+```
 <br/>
 
 ## Resolving search_path issues
@@ -84,9 +84,9 @@ To resolve the `search_path` issues, set the `search_path` on the function to en
 calls the function. Run the following `ALTER` command, ensuring that you replace `my_app_schema` with the schema(s) that contains your application 
 tables and functions.
 
-<CodeBlock language="sql">
-{`ALTER FUNCTION pganalyze.explain_analyze SET search_path = my_app_schema, public;`}
-</CodeBlock>
+```sql
+ALTER FUNCTION pganalyze.explain_analyze SET search_path = my_app_schema, public;
+```
 <br/>
 
  
@@ -104,14 +104,14 @@ By default `dblink` can be used by any user in the system, whether they are supe
 As a general best practice, and to avoid granting access to the `pganalyze_explain` user,
 we recommend explicitly revoking the use of `dblink` from `PUBLIC`:
 
-<CodeBlock language="sql">
-{`REVOKE ALL ON FUNCTION dblink(text, text) FROM PUBLIC;
+```sql
+REVOKE ALL ON FUNCTION dblink(text, text) FROM PUBLIC;
 REVOKE ALL ON FUNCTION dblink(text, text, bool) FROM PUBLIC;
 REVOKE ALL ON FUNCTION dblink_connect(text) FROM PUBLIC;
 REVOKE ALL ON FUNCTION dblink_connect(text, text) FROM PUBLIC;
 REVOKE ALL ON FUNCTION dblink_exec(text, text) FROM PUBLIC;
-REVOKE ALL ON FUNCTION dblink_exec(text, text, bool) FROM PUBLIC;`}
-</CodeBlock>
+REVOKE ALL ON FUNCTION dblink_exec(text, text, bool) FROM PUBLIC;
+```
 
 Note that if you have any non-superuser users utilizing `dblink`, you will need to explicitly
 grant them access to these functions instead.
@@ -123,16 +123,16 @@ instead of using `pg_read_all_data` as described earlier.
 
 For example, to grant access to all columns in table `test`, and only some columns in table `restricted`, you can run the following `GRANT` statements:
 
-<CodeBlock language="sql">
-{`GRANT SELECT ON test TO pganalyze_explain;
-GRANT SELECT (col1, col2) ON restricted TO pganalyze_explain;`}
-</CodeBlock>
+```sql
+GRANT SELECT ON test TO pganalyze_explain;
+GRANT SELECT (col1, col2) ON restricted TO pganalyze_explain;
+```
 
 Or alternatively you can grant access to all tables in a schema:
 
-<CodeBlock language="sql">
-{`GRANT SELECT ON ALL TABLES IN SCHEMA myschema TO pganalyze_explain;`}
-</CodeBlock>
+```sql
+GRANT SELECT ON ALL TABLES IN SCHEMA myschema TO pganalyze_explain;
+```
 
 Note this will not grant privileges to tables in the schema that are newly created after the `GRANT` statement was executed.
 
@@ -142,12 +142,12 @@ For most systems we recommend utilizing the `pg_read_all_data` role to avoid hav
 
 In order to deactivate the collector workflow, you will first need to drop the helper function on each database:
 
-<CodeBlock language="sql">
-{`DROP FUNCTION pganalyze.explain_analyze(query text, params text[], param_types text[], analyze_flags text[]);`}
-</CodeBlock>
+```sql
+DROP FUNCTION pganalyze.explain_analyze(query text, params text[], param_types text[], analyze_flags text[]);
+```
 
 And then you can optionally drop the role as well:
 
-<CodeBlock language="sql">
-{`DROP ROLE pganalyze_explain;`}
-</CodeBlock>
+```sql
+DROP ROLE pganalyze_explain;
+```

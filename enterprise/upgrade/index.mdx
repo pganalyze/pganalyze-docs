@@ -4,7 +4,6 @@ backlink_href: /docs/enterprise
 backlink_title: 'pganalyze Enterprise Server'
 ---
 
-import CodeBlock from '../../components/CodeBlock'
 import ToC from '../../components/Toc'
 
 This page covers the general upgrade process for
@@ -78,15 +77,15 @@ data backfill step to run it after migrations have been applied:
 2. After the new code is deployed, run these commands in a console (`console` command
    to the container / Docker entrypoint):
 
-<CodeBlock language="ruby">
-{`Rust::Migrate.migrate('20250902174735_backfill_query_stats_pco')
+```ruby
+Rust::Migrate.migrate('20250902174735_backfill_query_stats_pco')
 require './db/migrate/20251030164200_drop_query_stats_packed'
 DropQueryStatsPacked.new.up
  
 Rust::Migrate.migrate('20251031193250_backfill_table_stats_pco')
 require './db/migrate/20251212175907_drop_table_stats_packed'
-DropTableStatsPacked.new.up`}
-</CodeBlock>
+DropTableStatsPacked.new.up
+```
 
 Until the migration is completed the pganalyze UI will only show new data. After the
 migration is complete the full history will be available again.

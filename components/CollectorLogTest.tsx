@@ -1,8 +1,7 @@
 import React from 'react'
-import { useCodeBlock } from './CodeBlock'
+import CodeBlock from './CodeBlock'
 
 const CollectorLogTest: React.FunctionComponent<{provider: string, configFromEnv?: boolean}> = ({provider, configFromEnv}) => {
-  const CodeBlock = useCodeBlock();
 
   const sampleOutput = `...
 I [server1] Testing log collection (${provider})...
@@ -17,7 +16,7 @@ I Successfully reloaded pganalyze collector (PID 123)`
           and apply the collector configuration (for container environments, simply
           restart the collector):
         </p>
-        <CodeBlock>sudo pganalyze-collector --test</CodeBlock>
+        <CodeBlock language="bash">sudo pganalyze-collector --test</CodeBlock>
         <CodeBlock>{sampleOutput}</CodeBlock>
       </>
     )
@@ -34,13 +33,13 @@ I Successfully reloaded pganalyze collector (PID 123)`
     return (
       <>
         <p>You can now test and apply the collector configuration:</p>
-        <CodeBlock>sudo pganalyze-collector --test</CodeBlock>
+        <CodeBlock language="bash">sudo pganalyze-collector --test</CodeBlock>
         <CodeBlock>{sampleOutput}</CodeBlock>
         <p>
           If you are getting an error, it sometimes helps to run the
           test with the `-v` flag to show all details:
         </p>
-        <CodeBlock>sudo pganalyze-collector --test -v</CodeBlock>
+        <CodeBlock language="bash">sudo pganalyze-collector --test -v</CodeBlock>
       </>
     )
   } else {

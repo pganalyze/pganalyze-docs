@@ -112,7 +112,7 @@ The easiest way to deploy Vector in a Kubernetes environment is using
 First, fetch the example `values.yaml` that works with pganalyze from the
 [collector repository](https://github.com/pganalyze/collector/blob/main/contrib/vector/values.yaml):
 
-```
+```bash
 wget https://github.com/pganalyze/collector/raw/refs/heads/main/contrib/helm/pganalyze-collector/values.yaml
 ```
 
@@ -122,7 +122,7 @@ and point to the correct pganalyze-collector installation in the sink.
 
 Then, use the following commands to deploy Vector:
 
-```
+```bash
 helm repo add vector https://helm.vector.dev
 helm repo update
 helm install vector vector/vector \

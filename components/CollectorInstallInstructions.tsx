@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCodeBlock } from './CodeBlock'
+import CodeBlock from './CodeBlock'
 
 import RepositorySigningKey from './RepositorySigningKey'
 
@@ -27,7 +27,6 @@ const CollectorEnvInstallInstructions: React.FunctionComponent<{
   env: { [key: string]: string },
   hideManualInstall?: boolean,
 }> = ({env, hideManualInstall}) => {
-  const CodeBlock = useCodeBlock();
   let bashCmd: string;
   if (Object.keys(env).length === 0) {
     bashCmd = 'bash';

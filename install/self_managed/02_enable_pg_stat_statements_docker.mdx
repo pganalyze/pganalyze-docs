@@ -11,9 +11,9 @@ To get query statistics in Postgres, we need to modify the Postgres config setti
 
 You can do this by stopping your Postgres container, and then starting it again with the correct configuration as [part of the command line arguments](https://docs.docker.com/samples/library/postgres/#database-configuration):
 
-<CodeBlock language="bash">
-{`docker run -d --name my-pg postgres -c "shared_preload_libraries='pg_stat_statements'"`}
-</CodeBlock>
+```bash
+docker run -d --name my-pg postgres -c "shared_preload_libraries='pg_stat_statements'"
+```
 
 Alternatively you can also use `ALTER SYSTEM` to modify the `postgresql.auto.conf` file through SQL:
 
@@ -33,10 +33,10 @@ Be aware that in a [later installation step](/docs/explain/setup/self_managed/02
 
 As a superuser, run the following statements:
 
-<CodeBlock language="sql">
-{`CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
-SELECT calls, query FROM pg_stat_statements LIMIT 1;`}
-</CodeBlock>
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+SELECT calls, query FROM pg_stat_statements LIMIT 1;
+```
 
 If you have configured your database correctly, this will return a result like this:
 

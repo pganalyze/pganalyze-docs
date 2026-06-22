@@ -10,7 +10,7 @@ import { formatSqlObjectName } from "../../../util/format";
 
 import SQL from "../../SQL";
 import { useSmartAnchor } from "../../SmartAnchor";
-import { useCodeBlock } from "../../CodeBlock";
+import CodeBlock from "../../CodeBlock";
 import PGDocsLink from "../../PGDocsLink";
 
 const IndexUnusedTrigger: React.FunctionComponent<CheckTriggerProps> = ({
@@ -39,7 +39,6 @@ const IndexUnusedGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
   urls: { databaseTableUrl },
   issue,
 }) => {
-  const CodeBlock = useCodeBlock();
   const Link = useSmartAnchor();
 
   const indexes = issue?.references?.map((ref) => {

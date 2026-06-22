@@ -2,7 +2,7 @@ import { APIKeyInstructions } from './04_configure_the_collector_ec2.mdx'
 
 export const MultiECSConfigFile = ({ apiKey }) => {
   return (
-    <CodeBlock>
+    <CodeBlock language="ini">
       {`[pganalyze]
 api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
 [instance1]
@@ -37,15 +37,15 @@ To start, create an `INI` collector config file and save it as `pganalyze_collec
 
 Next, create a SSM secret for storing above file:
 
-<CodeBlock language="bash">
-{`aws ssm put-parameter --name /pganalyze/CONFIG_CONTENTS --type SecureString \
-  --value file://pganalyze_collector.conf`}
-</CodeBlock>
+```bash
+aws ssm put-parameter --name /pganalyze/CONFIG_CONTENTS --type SecureString \
+  --value file://pganalyze_collector.conf
+```
 
 Now, save the following ECS task definition to a file, for example `pganalyze_task.json`:
 
-<CodeBlock language="json">
-{`{
+```json
+{
   "family": "pganalyze-fargate",
   "requiresCompatibilities": [
     "FARGATE"
@@ -76,7 +76,7 @@ Now, save the following ECS task definition to a file, for example `pganalyze_ta
       "mountPoints": []
     }
   ]
-}`}
-</CodeBlock>
+}
+```
 
 Make sure to adjust `YOUR_ACCOUNT_ID` to be your AWS account ID (in the `executionRoleArn` field).

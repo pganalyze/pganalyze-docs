@@ -54,55 +54,37 @@ Common settings for configuring collector behavior, independent of the platform.
     <tr>
       <td>api_key (<code>PGA_API_KEY</code>)</td>
       <td>n/a, required</td>
-      <td>
-        API key to authenticate the collector to the pganalyze app. We will show this
-        when adding a server in the app, and you can review it on your organization's
-        Settings page under the API Access tab.
-      </td>
+      <td>API key to authenticate the collector to the pganalyze app. We will show this when adding a server in the app, and you can review it on your organization's Settings page under the API Access tab.</td>
     </tr>
     <tr>
       <td>api_base_url (<code>PGA_API_BASE_URL</code>)</td>
       <td>https://api.pganalyze.com</td>
-      <td>
-        Base URL for contacting the pganalyze API. You typically do not need to change this, unless you are
-        running <a href="/docs/enterprise">pganalyze Enterprise Server</a>.
-        <br /><br />
-        Note: The name of the environment variable was <code>PGA_API_BASEURL</code> prior to collector release v0.55.0.
-      </td>
+      <td>Base URL for contacting the pganalyze API. You typically do not need to change this, unless you are running <a href="/docs/enterprise">pganalyze Enterprise Server</a>. <br /><br /> Note: The name of the environment variable was <code>PGA_API_BASEURL</code> prior to collector release v0.55.0.</td>
     </tr>
     <tr>
       <td>api_require_websocket (<code>API_REQUIRE_WEBSOCKET</code>)</td>
       <td>false</td>
-      <td>
-        Enable to require a WebSocket connection to the pganalyze server, turning off the HTTP(S) fallback. WebSockets are more efficient for submitting snapshots, and are also required for the optional <a href="/docs/workbooks/collector-workflow">
-        Workbooks Collector Workflow</a>. A future collector release will change the default of this setting to true.
-      </td>
+      <td>Enable to require a WebSocket connection to the pganalyze server, turning off the HTTP(S) fallback. WebSockets are more efficient for submitting snapshots, and are also required for the optional <a href="/docs/workbooks/collector-workflow">Workbooks Collector Workflow</a>. A future collector release will change the default of this setting to true.</td>
     </tr>
     <tr>
       <td>api_cluster_id (<code>API_CLUSTER_ID</code>)</td>
       <td>auto-detected</td>
-      <td>Identity of the cluster the server belongs to. Defaults to cluster ID retrieved from cloud provider APIs (if available), or to the Postgres database system identifier for self-managed servers.
-      </td>
+      <td>Identity of the cluster the server belongs to. Defaults to cluster ID retrieved from cloud provider APIs (if available), or to the Postgres database system identifier for self-managed servers.</td>
     </tr>
     <tr>
       <td>skip_if_replica (<code>SKIP_IF_REPLICA</code>)</td>
       <td>false</td>
-      <td>Skip all metadata collection and snapshot submission while this server is a replica (according to <code>pg_is_in_recovery</code>).
-      When the server is promoted and is no longer a replica, automatically start collecting and submitting metadata as configured.
-      </td>
+      <td>Skip all metadata collection and snapshot submission while this server is a replica (according to <code>pg_is_in_recovery</code>). When the server is promoted and is no longer a replica, automatically start collecting and submitting metadata as configured.</td>
     </tr>
     <tr>
       <td>enable_log_explain (<code>PGA_ENABLE_LOG_EXPLAIN</code>)</td>
       <td>false</td>
-      <td>Enable log-based EXPLAIN. See <a href="/docs/explain/setup/log_explain">setup instructions</a>, but note
-      we recommend using <a href="/docs/explain/setup/auto_explain">auto_explain</a> instead if possible.
-      </td>
+      <td>Enable log-based EXPLAIN. See <a href="/docs/explain/setup/log_explain">setup instructions</a>, but note we recommend using <a href="/docs/explain/setup/auto_explain">auto_explain</a> instead if possible.</td>
     </tr>
     <tr>
       <td>max_buffer_cache_monitoring_gb (<code>MAX_BUFFER_CACHE_MONITORING_GB</code>)</td>
       <td>200</td>
-      <td>Threshold in GB for enabling the <a href="/docs/schema-statistics/buffer-cache">Buffer Cache Statistics</a> feature. If the Postgres <code>shared_buffers</code> setting exceeds the threshold it is disabled.
-      </td>
+      <td>Threshold in GB for enabling the <a href="/docs/schema-statistics/buffer-cache">Buffer Cache Statistics</a> feature. If the Postgres <code>shared_buffers</code> setting exceeds the threshold it is disabled.</td>
     </tr>
   </tbody>
 </table>
@@ -130,8 +112,7 @@ helper functions are expected to be defined, and the one we connect to for serve
     <tr>
       <td>db_name (<code>DB_NAME</code>)</td>
       <td>n/a, either this or db_url is required</td>
-      <td>Name of database to monitor; or, comma-separated list of all databases to monitor,
-      starting with primary (last entry can be <code>*</code> to monitor all databases on server)</td>
+      <td>Name of database to monitor; or, comma-separated list of all databases to monitor, starting with primary (last entry can be <code>*</code> to monitor all databases on server)</td>
     </tr>
     <tr>
       <td>db_username (<code>DB_USERNAME</code>)</td>
@@ -146,9 +127,7 @@ helper functions are expected to be defined, and the one we connect to for serve
     <tr>
       <td>db_host (<code>DB_HOST</code>)</td>
       <td>n/a, either this or db_url is required</td>
-      <td>
-        Host to connect to.<br /><br />Or, if connecting to a local server using <a href="https://www.postgresql.org/docs/current/auth-peer.html">peer authentication</a>, the path to a local unix domain socket as configured by <a href="https://www.postgresql.org/docs/current/runtime-config-connection.html#GUC-UNIX-SOCKET-DIRECTORIES">unix_socket_directories</a>.
-      </td>
+      <td>Host to connect to.<br /><br />Or, if connecting to a local server using <a href="https://www.postgresql.org/docs/current/auth-peer.html">peer authentication</a>, the path to a local unix domain socket as configured by <a href="https://www.postgresql.org/docs/current/runtime-config-connection.html#GUC-UNIX-SOCKET-DIRECTORIES">unix_socket_directories</a>.</td>
     </tr>
     <tr>
       <td>db_port (<code>DB_PORT</code>)</td>
@@ -193,10 +172,7 @@ helper functions are expected to be defined, and the one we connect to for serve
     <tr>
       <td><code>DB_ALL_NAMES</code></td>
       <td>false</td>
-      <td>Alternative to setting <code>*</code> as the last entry of db_name (<code>DB_NAME</code>) to
-      monitor all databases on the server. Can only be set using an environment variable.<br />
-      This is helpful when db_url (<code>DB_URL</code>) is used to specify a monitoring server (db_name is unused)
-      and you want to monitor all databases on that server.</td>
+      <td>Alternative to setting <code>*</code> as the last entry of db_name (<code>DB_NAME</code>) to monitor all databases on the server. Can only be set using an environment variable.<br /> This is helpful when db_url (<code>DB_URL</code>) is used to specify a monitoring server (db_name is unused) and you want to monitor all databases on that server.</td>
     </tr>
   </tbody>
 </table>
@@ -256,17 +232,15 @@ You can avoid reaching this limit by using the following setting to select which
     <tr>
       <td>ignore_schema_regexp (<code>IGNORE_SCHEMA_REGEXP</code>)</td>
       <td>[none]</td>
-      <td>Skip collecting metadata for all matching tables, schemas, or functions; match is checked against
-      schema-qualified object names (e.g. to ignore table "foo" only in the public schema, set to <code>^public\.foo$</code>)
-      </td>
+      <td>Skip collecting metadata for all matching tables, schemas, or functions; match is checked against schema-qualified object names (e.g. to ignore table "foo" only in the public schema, set to <code>^public\.foo$</code>)</td>
     </tr>
   </tbody>
 </table>
 
 To validate whether the setting is working as intended, you can run a query on your database server to count the number of monitored tables and views. Note you would have to run this on each database on the server and then summarize the counts, which should not exceed the 5,000 limit in aggregate:
 
-<CodeBlock language="sql">
-{`SELECT current_database() AS dbname,
+```sql
+SELECT current_database() AS dbname,
        COUNT(*) AS table_and_view_count
   FROM pg_class c
        LEFT JOIN pg_catalog.pg_namespace n ON (n.oid = c.relnamespace)
@@ -274,8 +248,8 @@ To validate whether the setting is working as intended, you can run a query on y
        AND c.relpersistence <> 't'
        AND c.relname NOT IN ('pg_stat_statements')
        AND n.nspname NOT IN ('pg_catalog','pg_toast','information_schema')
-       AND (n.nspname || '.' || c.relname) !~* 'REGEXP';`}
-</CodeBlock>
+       AND (n.nspname || '.' || c.relname) !~* 'REGEXP';
+```
 
 Make sure to replace `REGEXP` with the value of your `ignore_schema_regexp` setting.
 
@@ -323,18 +297,12 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
     <tr>
       <td>aws_account_id (<code>AWS_ACCOUNT_ID</code>)</td>
       <td>[none]</td>
-      <td>If specified, and api_system_scope (see below) is not specified, this is prepended to the auto-generated system scope (optional, can be used
-      to, e.g., differentiate staging from production)</td>
+      <td>If specified, and api_system_scope (see below) is not specified, this is prepended to the auto-generated system scope (optional, can be used to, e.g., differentiate staging from production)</td>
     </tr>
     <tr>
       <td>db_use_iam_auth (<code>DB_USE_IAM_AUTH</code>)</td>
       <td>false</td>
-      <td>
-        Fetches a short-lived token for logging into the database instance from the AWS API, instead of using a hardcoded password
-        in the collector configuration file. To use this setting, IAM authentication needs to be enabled on the database instance
-        / cluster, the pganalyze IAM policy needs to <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html">cover the "rds-db:connect" privilege</a> for
-        the pganalyze user, and the user needs to be <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.DBAccounts.html#UsingWithRDS.IAMDBAuth.DBAccounts.PostgreSQL">granted the "rds_iam" role</a> in Postgres.
-      </td>
+      <td>Fetches a short-lived token for logging into the database instance from the AWS API, instead of using a hardcoded password in the collector configuration file. To use this setting, IAM authentication needs to be enabled on the database instance / cluster, the pganalyze IAM policy needs to <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.IAMPolicy.html">cover the "rds-db:connect" privilege</a> for the pganalyze user, and the user needs to be <a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.DBAccounts.html#UsingWithRDS.IAMDBAuth.DBAccounts.PostgreSQL">granted the "rds_iam" role</a> in Postgres.</td>
     </tr>
     <tr>
       <td>aws_assume_role (<code>AWS_ASSUME_ROLE</code>)</td>
@@ -477,22 +445,12 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
     <tr>
       <td>gcp_pubsub_subscription (<code>GCP_PUBSUB_SUBSCRIPTION</code>)</td>
       <td>n/a, required for Log Insights</td>
-      <td>
-        See <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql#step-1-create-new-pubsub-topic-and-subscriber">
-        GCP setup instructions</a> for details</td>
+      <td>See <a href="https://pganalyze.com/docs/log-insights/setup/google-cloud-sql#step-1-create-new-pubsub-topic-and-subscriber"> GCP setup instructions</a> for details</td>
     </tr>
     <tr>
       <td>gcp_pubsub_max_age (<code>GCP_PUBSUB_MAX_AGE</code>)</td>
       <td>0</td>
-      <td>
-        Allow multiple collectors to subscribe to the same topic by sending a
-        "Nack" response to Pub/Sub messages that don't match a configured
-        Postgres server, so they can be redelivered and handled by another collector.
-        <br /><br />
-        After the
-        age limit is reached, messages will always be acknowledged. Keeping the
-        limit low is recommended, e.g. 10 minutes (<code>10m</code>), maximum 24 hours (<code>24h</code>).
-      </td>
+      <td>Allow multiple collectors to subscribe to the same topic by sending a "Nack" response to Pub/Sub messages that don't match a configured Postgres server, so they can be redelivered and handled by another collector. <br /><br /> After the age limit is reached, messages will always be acknowledged. Keeping the limit low is recommended, e.g. 10 minutes (<code>10m</code>), maximum 24 hours (<code>24h</code>).</td>
     </tr>
     <tr>
       <td>gcp_credentials_file (<code>GCP_CREDENTIALS_FILE</code>)</td>
@@ -502,10 +460,7 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
     <tr>
       <td>db_use_iam_auth (<code>DB_USE_IAM_AUTH</code>)</td>
       <td>false</td>
-      <td>
-        Fetches a short-lived token for logging into the database instance from the Google Cloud API, instead of using a hardcoded password
-        in the collector configuration file.
-      </td>
+      <td>Fetches a short-lived token for logging into the database instance from the Google Cloud API, instead of using a hardcoded password in the collector configuration file.</td>
     </tr>
     <tr>
       <td>gcp_region (<code>GCP_REGION</code>)</td>
@@ -515,9 +470,8 @@ Only relevant if you are running your database in GCP using Google Cloud SQL or 
     <tr>
       <td>gcp_use_public_ip (<code>GCP_USE_PUBLIC_IP</code>)</td>
       <td>false</td>
-      <td>Set to <code>true</code> if the CloudSQL proxy connection should use the available public IP rather than the default private IP. Setting
-        to <code>true</code> when no public IP is assigned will result in a connection error.</td>
-    </tr>
+      <td>Set to <code>true</code> if the CloudSQL proxy connection should use the available public IP rather than the default private IP. Setting to <code>true</code> when no public IP is assigned will result in a connection error.</td>
+    </tr> 
   </tbody>
 </table>
 
@@ -537,11 +491,7 @@ Only relevant if you are running your database in Crunchy Bridge.
     <tr>
       <td>crunchy_bridge_api_key (<code>CRUNCHY_BRIDGE_API_KEY</code>)</td>
       <td>n/a, required for accurate Storage Space information</td>
-      <td>
-        The API key of Crunchy Bridge. When specified, the collector uses the
-        Crunchy Bridge API to obtain accurate Storage Space information, as well
-        as cluster information.
-      </td>
+      <td>The API key of Crunchy Bridge. When specified, the collector uses the Crunchy Bridge API to obtain accurate Storage Space information, as well as cluster information.</td>
     </tr>
     <tr>
       <td>crunchy_bridge_cluster_id (<code>CRUNCHY_BRIDGE_CLUSTER_ID</code>)</td>
@@ -578,16 +528,12 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     <tr>
       <td>db_log_syslog_server (<code>LOG_SYSLOG_SERVER</code>)</td>
       <td>[none]</td>
-      <td>local address (host:port) to listen on for syslog messages
-        (see <a href="/docs/log-insights/setup/syslog-server">syslog server instructions</a>)</td>
+      <td>local address (host:port) to listen on for syslog messages (see <a href="/docs/log-insights/setup/syslog-server">syslog server instructions</a>)</td>
     </tr>
     <tr>
       <td>db_log_syslog_server_ca_file (<code>LOG_SYSLOG_SERVER_CA_FILE</code>)</td>
       <td>[none]</td>
-      <td>
-        Path to TLS certificate authority (CA) certificate(s) to use to verify the certificate of the collector syslog server
-        (optional, not required if a certificate is signed by a trusted CA)
-      </td>
+      <td>Path to TLS certificate authority (CA) certificate(s) to use to verify the certificate of the collector syslog server (optional, not required if a certificate is signed by a trusted CA)</td>
     </tr>
     <tr>
       <td>db_log_syslog_server_ca_contents (<code>LOG_SYSLOG_SERVER_CA_CONTENTS</code>)</td>
@@ -597,9 +543,7 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     <tr>
       <td>db_log_syslog_server_cert_file (<code>LOG_SYSLOG_SERVER_CERT_FILE</code>)</td>
       <td>[none]</td>
-      <td>
-        Path to the collector syslog server's TLS certificate (required for receiving logs over TLS)
-      </td>
+      <td>Path to the collector syslog server's TLS certificate (required for receiving logs over TLS)</td>
     </tr>
     <tr>
       <td>db_log_syslog_server_cert_contents (<code>LOG_SYSLOG_SERVER_CERT_CONTENTS</code>)</td>
@@ -609,9 +553,7 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     <tr>
       <td>db_log_syslog_server_key_file (<code>LOG_SYSLOG_SERVER_KEY_FILE</code>)</td>
       <td>[none]</td>
-      <td>
-        Path to the secret key used for the collector syslog server's certificate (required for receiving logs over TLS)
-      </td>
+      <td>Path to the secret key used for the collector syslog server's certificate (required for receiving logs over TLS)</td>
     </tr>
     <tr>
       <td>db_log_syslog_server_key_contents (<code>LOG_SYSLOG_SERVER_KEY_CONTENTS</code>)</td>
@@ -621,11 +563,7 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     <tr>
       <td>db_log_syslog_server_client_ca_file (<code>LOG_SYSLOG_SERVER_CLIENT_CA_FILE</code>)</td>
       <td>[none]</td>
-      <td>
-        Path to TLS certificate authority (CA) certificate(s) to use to verify the certificate of the client
-        that is sending logs to the collector syslog server, such as rsyslog
-        (optional, not required if a client doesn't provide a certificate or a client certificate is signed by a trusted CA)
-      </td>
+      <td>Path to TLS certificate authority (CA) certificate(s) to use to verify the certificate of the client that is sending logs to the collector syslog server, such as rsyslog (optional, not required if a client doesn't provide a certificate or a client certificate is signed by a trusted CA)</td>
     </tr>
     <tr>
       <td>db_log_syslog_server_client_ca_contents (<code>LOG_SYSLOG_SERVER_CLIENT_CA_CONTENTS</code>)</td>
@@ -635,15 +573,12 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     <tr>
       <td>always_collect_system_data (<code>PGA_ALWAYS_COLLECT_SYSTEM_DATA</code>)</td>
       <td>false</td>
-      <td>Always gather local system metrics, regardless of whether the database address is local or
-          remote. This is useful for setups which connect to a local database with a non-local IP
-          address.</td>
+      <td>Always gather local system metrics, regardless of whether the database address is local or remote. This is useful for setups which connect to a local database with a non-local IP address.</td>
     </tr>
     <tr>
       <td>db_log_otel_server (<code>LOG_OTEL_SERVER</code>)</td>
       <td>[none]</td>
-      <td>local address (host:port) to listen on for OpenTelemetry log data model messages
-        (see <a href="/docs/log-insights/setup/opentelemetry">Kubernetes with OpenTelemetry instructions</a>)</td>
+      <td>local address (host:port) to listen on for OpenTelemetry log data model messages (see <a href="/docs/log-insights/setup/opentelemetry">Kubernetes with OpenTelemetry instructions</a>)</td>
     </tr>
     <tr>
       <td>db_log_otel_k8s_pod (<code>LOG_OTEL_K8S_POD</code>)</td>
@@ -653,10 +588,7 @@ a self-managed VM on a cloud provider, the configuration settings here may be us
     <tr>
       <td>db_log_otel_k8s_labels (<code>LOG_OTEL_K8S_LABELS</code>)</td>
       <td>[none]</td>
-      <td>
-        Comma-separated <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors">Kubernetes label selectors</a> to filter matching logs.
-        Only support equality-based selectors.
-      </td>
+      <td>Comma-separated <a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors">Kubernetes label selectors</a> to filter matching logs. Only support equality-based selectors.</td>
     </tr>
   </tbody>
 </table>
@@ -717,46 +649,32 @@ talking to pganalyze support.
     <tr>
       <td>api_system_id (<code>PGA_API_SYSTEM_ID</code>)</td>
       <td>Automatically detected</td>
-      <td>Overrides the ID of the system, used for uniquely identifying the server with the pganalyze API.
-      This is commonly what's used to refer to a single server, and defaults to the instance ID for managed
-      database providers.</td>
+      <td>Overrides the ID of the system, used for uniquely identifying the server with the pganalyze API. This is commonly what's used to refer to a single server, and defaults to the instance ID for managed database providers.</td>
     </tr>
     <tr>
       <td>api_system_type (<code>PGA_API_SYSTEM_TYPE</code>)</td>
       <td>Automatically detected</td>
-      <td>Overrides the type of the system, used for uniquely identifying the server with the pganalyze API.
-      Must be one of the following: amazon_rds, azure_database, google_cloudsql, self_hosted or heroku.</td>
+      <td>Overrides the type of the system, used for uniquely identifying the server with the pganalyze API. Must be one of the following: amazon_rds, azure_database, google_cloudsql, self_hosted or heroku.</td>
     </tr>
     <tr>
       <td>api_system_scope (<code>PGA_API_SYSTEM_SCOPE</code>)</td>
       <td>Automatically detected</td>
-      <td>Overrides the scope of the system, used for uniquely identifying the server with the pganalyze API.
-      Can be used for auxiliary identifying characteristics (e.g., region of a server ID that's re-used).</td>
+      <td>Overrides the scope of the system, used for uniquely identifying the server with the pganalyze API. Can be used for auxiliary identifying characteristics (e.g., region of a server ID that's re-used).</td>
     </tr>
     <tr>
       <td>api_system_scope_fallback (<code>PGA_API_SYSTEM_SCOPE_FALLBACK</code>)</td>
       <td>[none]</td>
-      <td>When the pganalyze backend receives a snapshot with a fallback scope set, and there is no server created
-      with the regular scope, it will first search the servers with the fallback scope. If found, that server's
-      scope will be updated to the (new) regular scope. If not found, a new server will be created with the regular
-      scope. The main goal of the fallback scope is to avoid creating a duplicate server when changing the scope value.</td>
+      <td>When the pganalyze backend receives a snapshot with a fallback scope set, and there is no server created with the regular scope, it will first search the servers with the fallback scope. If found, that server's scope will be updated to the (new) regular scope. If not found, a new server will be created with the regular scope. The main goal of the fallback scope is to avoid creating a duplicate server when changing the scope value.</td>
     </tr>
     <tr>
       <td>db_log_docker_tail</td>
       <td>[none]</td>
-      <td>Experimental: name of docker container to collect logs from using <code>docker logs -t</code>.
-      This requires that the collector runs on the Docker host.</td>
+      <td>Experimental: name of docker container to collect logs from using <code>docker logs -t</code>. This requires that the collector runs on the Docker host.</td>
     </tr>
     <tr>
       <td>disable_citus_schema_stats (<code>DISABLE_CITUS_SCHEMA_STATS</code>)</td>
       <td>none</td>
-      <td>
-        Either <code>none</code>, <code>index</code>, or <code>all</code>.<br /><br />
-        If using the Citus extension in your database, turn off the collection of statistics for distributed indexes,
-        or both distributed indexes and distributed tables. For very large schemas, this collection can error out due to
-        timeouts or locks. When using this option it's recommended to instead monitor the workers directly for table and
-        index sizes.
-      </td>
+      <td>Either <code>none</code>, <code>index</code>, or <code>all</code>.<br /><br /> If using the Citus extension in your database, turn off the collection of statistics for distributed indexes, or both distributed indexes and distributed tables. For very large schemas, this collection can error out due to timeouts or locks. When using this option it's recommended to instead monitor the workers directly for table and index sizes.</td>
     </tr>
     <tr>
       <td>query_stats_interval (<code>QUERY_STATS_INTERVAL</code>)</td>
@@ -766,10 +684,7 @@ talking to pganalyze support.
     <tr>
       <td>max_collector_connections (<code>MAX_COLLECTOR_CONNECTION</code>)</td>
       <td>10</td>
-      <td>
-        Maximum connections allowed to the database with the collector application_name, in order to protect
-        against accidental connection leaks in the collector
-      </td>
+      <td>Maximum connections allowed to the database with the collector application_name, in order to protect against accidental connection leaks in the collector</td>
     </tr>
     <tr>
       <td>http_proxy (<code>HTTP_PROXY</code>)</td>
@@ -784,8 +699,7 @@ talking to pganalyze support.
     <tr>
       <td>no_proxy (<code>NO_PROXY</code>)</td>
       <td>[none]</td>
-      <td>Comma-delimited list of hostnames that should be accessed directly, without using a configured proxy. Has no effect unless
-      either HTTP_PROXY or HTTPS_PROXY is specified.</td>
+      <td>Comma-delimited list of hostnames that should be accessed directly, without using a configured proxy. Has no effect unless either HTTP_PROXY or HTTPS_PROXY is specified.</td>
     </tr>
     <tr>
       <td>disable_logs (<code>PGA_DISABLE_LOGS</code>)</td>
@@ -800,16 +714,12 @@ talking to pganalyze support.
     <tr>
       <td>error_callback</td>
       <td>[none]</td>
-      <td>
-        Script to call if snapshot fails (learn more <a target="_blank" href="https://github.com/pganalyze/collector/#successerror-callbacks">in the collector README</a>)
-      </td>
+      <td>Script to call if snapshot fails (learn more <a target="_blank" href="https://github.com/pganalyze/collector/#successerror-callbacks">in the collector README</a>)</td>
     </tr>
     <tr>
       <td>success_callback</td>
       <td>[none]</td>
-      <td>
-        Script to call if snapshot succeeds (learn more <a target="_blank" href="https://github.com/pganalyze/collector/#successerror-callbacks">in the collector README</a>)
-      </td>
+      <td>Script to call if snapshot succeeds (learn more <a target="_blank" href="https://github.com/pganalyze/collector/#successerror-callbacks">in the collector README</a>)</td>
     </tr>
   </tbody>
 </table>

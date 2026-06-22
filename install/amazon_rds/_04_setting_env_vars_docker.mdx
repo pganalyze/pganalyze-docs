@@ -1,0 +1,13 @@
+import TabPanel, {Tab} from '../../components/TabPanel'
+
+import CollectorDotEnvSingle from './_04_setting_env_vars_single.mdx';
+import CollectorDotEnvMulti from './_04_setting_env_vars_multi.mdx';
+
+<TabPanel>
+  <Tab id="single" label="Single DB Instance" textContent>
+    <CollectorDotEnvSingle apiKey={props.apiKey} />
+  </Tab>
+  <Tab id="multiple" label="Multiple DB Instances" textContent>
+    <CollectorDotEnvMulti apiKey={props.apiKey} />
+  </Tab>
+</TabPanel>
