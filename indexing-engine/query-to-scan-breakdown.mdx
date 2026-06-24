@@ -46,7 +46,7 @@ More broadly, each scan consists of:
  - Zero or more an ORDER BY clause columns (Note: not yet considered by the Indexing
    Engine; see [Limitations](/docs/indexing-engine/limitations))
  - Optionally, a LIMIT on how much data needs to be returned (Note: not yet
-   considered by the Indexing Engine; see [Limitations](/docs/index-advisor/limitations))
+   considered by the Indexing Engine; see [Limitations](/docs/indexing-engine/limitations))
 
 In case of JOIN conditions, we run the Postgres planner to determine whether a JOIN clause
 is likely to be used as the inner relation of a Nested Loop, allowing use of a [parameterized index
