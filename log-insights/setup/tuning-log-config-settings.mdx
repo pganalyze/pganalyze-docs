@@ -83,7 +83,7 @@ log_checkpoints = on
 
 Note that this setting is not available on AWS Aurora (see [here](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Reference.html) and [here](https://aws.amazon.com/blogs/database/optimizing-and-tuning-queries-in-amazon-rds-postgresql-based-on-native-and-external-tools/)).
 
-This will then give you the following log events: [W40: Checkpoint starting](/docs/log-insights/checkpoints/W40), [W41: Checkpoint complete](/docs/log-insights/checkpoints/W41) as well as others.
+This will then give you the following log events: [W40: Checkpoint starting](/docs/log-insights/wal-checkpoints/W40), [W41: Checkpoint complete](/docs/log-insights/wal-checkpoints/W41) as well as others.
 
 pganalyze will also do analysis on the checkpoint reason for you:
 
