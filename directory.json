@@ -1108,6 +1108,10 @@
       "title": "Disk Spill Due To Low work_mem",
       "path": "/docs/query-advisor/insights/disk-spill-work-mem"
     },
+    "query-advisor/insights/inefficient-index-use": {
+      "title": "Inefficient Index Use",
+      "path": "/docs/query-advisor/insights/inefficient-index-use"
+    },
     "query-advisor/insights/inefficient-nested-loops": {
       "title": "Inefficient Nested Loops",
       "path": "/docs/query-advisor/insights/inefficient-nested-loops"
