@@ -1,0 +1,68 @@
+---
+title: 'Inefficient Index Use'
+backlink_href: /docs/query-advisor/insights
+backlink_title: 'Query Advisor Insights'
+---
+
+Query Advisor detects when the planner picks an index that doesn't match the filter conditions of a
+query, so Postgres reads many rows from the index and then discards most of them at the Filter step.
+A different existing index on the filter columns could let the scan return fewer rows.
+
+## The problem
+
+When the index the planner chooses doesn't cover a query's filter conditions, Postgres walks the
+index and re-checks each row against a Filter, discarding the rows that don't match. The further
+apart the rows read and the rows returned are, the more work is wasted on rows that are thrown away.
+
+### Example scenario
+
+```sql
+SELECT * FROM orders
+WHERE customer_id = 42 AND status = 'shipped';
+```
+
+If the planner uses an index on `customer_id` alone, it reads every order for that customer and then
+filters on `status`. In `EXPLAIN (ANALYZE, BUFFERS)` output that looks like this:
+
+```text
+Index Scan using orders_customer_id_idx on orders  (cost=... rows=... width=...) (actual time=... rows=12)
+  Index Cond: (customer_id = 42)
+  Filter: (status = 'shipped'::text)
+  Rows Removed by Filter: 48213
+```
+
+The gap between the rows returned and `Rows Removed by Filter` is the signal: the scan read 48,225
+rows to return 12. An index that covers the filter column could return just the matching rows.
+
+## How Query Advisor helps
+
+When Query Advisor detects this pattern, it reports the index that was used, the filter conditions
+that index doesn't cover, and the number of rows removed by the filter. It then looks for other
+existing indexes on the table that could be used instead.
+
+### Typical optimization approach
+
+**1. Identify a better index.** Query Advisor lists alternative indexes on this table that could be
+used instead. If none cover the filter columns, look for another existing index that does, or
+consider a composite or partial index targeting those columns to help the planner skip the Filter
+step.
+
+**2. Force the better index with `pg_hint_plan`.** If the
+[`pg_hint_plan`](https://github.com/ossc-db/pg_hint_plan) extension is installed, prefix the query
+with an `IndexScan` hint to pin the scan to a specific index. This affects only this statement.
+
+```sql
+/*+ IndexScan(orders orders_customer_id_status_idx) */
+SELECT * FROM orders
+WHERE customer_id = 42 AND status = 'shipped';
+```
+
+Whether one of these is faster than the current choice depends on how selective your filter values
+are in practice. Try the hint on a sample of your workload in a [Workbook](/docs/workbooks) to
+confirm before changing anything.
+
+## Next steps
+
+- **[See complete example](/docs/query-advisor/from-insight-to-conclusion)** - Full walkthrough of Query Advisor optimization workflow
+- **[Configure Workbooks](/docs/workbooks)** - Set up testing environment for validating optimizations
+- **[Set up alerts](/docs/query-advisor/alerts)** - Get notified when new optimization opportunities are detected
