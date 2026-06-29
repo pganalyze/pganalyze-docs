@@ -1,6 +1,6 @@
 import React from "react";
 
-import { FontAwesomeIcon as OrigFAIcon, FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon as OrigFAIcon, type FontAwesomeIconProps } from "@fortawesome/react-fontawesome";
 
 import classNames from "classnames";
 import styles from './style.module.scss';

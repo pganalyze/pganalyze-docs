@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/checks";
+import type { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/checks";
 
 const FollowerMissingTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,

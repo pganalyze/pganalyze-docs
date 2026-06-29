@@ -1,7 +1,7 @@
 import SQL from "../../SQL";
 import React from "react";
 
-import {
+import type {
   CheckDocs,
   CheckGuidanceProps,
   CheckTriggerProps,
