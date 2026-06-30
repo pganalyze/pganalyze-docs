@@ -21,7 +21,7 @@ const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
   );
 };
 
-export const MonitoringUserPerDatabaseHelpers: React.FunctionComponent<{ username: string, adminUsername: string }> = ({
+export const MonitoringUserPerDatabaseHelpers: React.FunctionComponent<{ username: string, adminUsername?: string }> = ({
   username,
   adminUsername
 }) => {

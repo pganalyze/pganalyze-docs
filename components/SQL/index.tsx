@@ -44,7 +44,7 @@ class SQL extends React.Component<Props> {
 
       this.preRef &&
         this.preRef
-          .querySelectorAll(".hljs-keyword")
+          .querySelectorAll<HTMLElement>(".hljs-keyword")
           .forEach((elem: HTMLElement) => {
             const keyword = elem.innerText && elem.innerText.toLowerCase();
             if (unhighlightedKeywords.indexOf(keyword) !== -1) {
@@ -56,31 +56,31 @@ class SQL extends React.Component<Props> {
 
       this.preRef &&
         this.preRef
-          .querySelectorAll(".hljs-string")
+          .querySelectorAll<HTMLElement>(".hljs-string")
           .forEach((e: HTMLElement) => {
             e.className = styles.string;
           });
       this.preRef &&
         this.preRef
-          .querySelectorAll(".hljs-number")
+          .querySelectorAll<HTMLElement>(".hljs-number")
           .forEach((e: HTMLElement) => {
             e.className = styles.number;
           });
       this.preRef &&
         this.preRef
-          .querySelectorAll(".hljs-aggregate")
+          .querySelectorAll<HTMLElement>(".hljs-aggregate")
           .forEach((e: HTMLElement) => {
             e.className = styles.aggregate;
           });
       this.preRef &&
         this.preRef
-          .querySelectorAll(".hljs-comment")
+          .querySelectorAll<HTMLElement>(".hljs-comment")
           .forEach((e: HTMLElement) => {
             e.className = styles.comment;
           });
       this.preRef &&
         this.preRef
-          .querySelectorAll(".hljs-literal")
+          .querySelectorAll<HTMLElement>(".hljs-literal")
           .forEach((e: HTMLElement) => {
             e.className = "";
           });

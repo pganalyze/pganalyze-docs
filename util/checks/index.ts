@@ -159,7 +159,8 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
       }
     },
     advisor_insight: {
-      enabled: true
+      enabled: true,
+      settings: {},
     }
   },
   connections: {
@@ -188,12 +189,14 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
   },
   index_advisor: {
     indexing_engine: {
-      enabled: true
+      enabled: true,
+      settings: {},
     }
   },
   schema: {
     index_invalid: {
-      enabled: true
+      enabled: true,
+      settings: {},
     },
     index_unused: {
       enabled: true,
@@ -204,19 +207,24 @@ export const DEFAULT_CHECK_CONFIGS: DefaultCheckConfigs = {
   },
   settings: {
     enable_features: {
-      enabled: true
+      enabled: true,
+      settings: {},
     },
     fsync: {
-      enabled: true
+      enabled: true,
+      settings: {},
     },
     shared_buffers: {
-      enabled: true
+      enabled: true,
+      settings: {},
     },
     stats: {
-      enabled: true
+      enabled: true,
+      settings: {},
     },
     work_mem: {
-      enabled: true
+      enabled: true,
+      settings: {},
     },
   },
   system: {
@@ -304,29 +312,33 @@ export function checkFrequency(
 
 export type CheckConfig = {
   enabled: boolean;
-  settings?: { [key: string]: string | number | boolean };
+  settings: { [key: string]: string | number | boolean };
 };
 
 export type CheckTriggerProps = {
   config: CheckConfig;
 };
 
+// Consumers supply the subset of URLs that make sense in their context: the app
+// dashboard provides the full set, while the public docs site only has a few
+// (the rest point at app-only views). The app-specific URLs are therefore
+// optional; SmartAnchor renders an unlinked span when a destination is absent.
 export type IssueGuidanceUrls = {
-  firstReferenceUrl: string;
   SettingLink: React.ComponentType<{ setting: string }>;
-  queriesUrl: string;
-  indexRecommendationUrl: string;
-  serverSystemUrl: string;
-  serverVacuumsUrl: string;
-  tableVacuumsUrl: string;
-  backendsUrl: string;
-  databaseWaitEventsUrl: string;
-  databaseTableUrl: string;
   serverLogInsightsUrl: string;
-  serverSchemaUrl: string;
-  serverReplicationUrl: string;
-  serverVacuumFreezingUrl: string;
   featureUrl: (mainUrl: string | undefined, section: string) => string | undefined;
+  firstReferenceUrl?: string;
+  queriesUrl?: string;
+  indexRecommendationUrl?: string;
+  serverSystemUrl?: string;
+  serverVacuumsUrl?: string;
+  tableVacuumsUrl?: string;
+  backendsUrl?: string;
+  databaseWaitEventsUrl?: string;
+  databaseTableUrl?: string;
+  serverSchemaUrl?: string;
+  serverReplicationUrl?: string;
+  serverVacuumFreezingUrl?: string;
 };
 
 export function featureUrl (mainUrl: string | undefined, section: string): string | undefined {
@@ -361,7 +373,9 @@ export type IssueType = {
 
 export type CheckGuidanceProps = {
   urls: IssueGuidanceUrls;
-  issue: IssueType;
+  // Optional: the public docs site renders guidance without a concrete issue,
+  // so guidance components already guard on `issue` before using it.
+  issue?: IssueType;
 };
 
 export type CheckDocs = {

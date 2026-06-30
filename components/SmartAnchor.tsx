@@ -41,7 +41,7 @@ type Props = BaseProps & {
 }
 
 const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelative: adjustLinks, ...rest}) => {
-  let destination: string;
+  let destination: string | undefined;
   if ('to' in rest) {
     destination = rest.to;
     delete rest.to

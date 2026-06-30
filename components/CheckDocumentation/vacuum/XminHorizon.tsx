@@ -189,7 +189,7 @@ const GuidanceByBackend: React.FunctionComponent<{
 const GuidanceByReplicationSlot: React.FunctionComponent<{
   inApp: boolean;
   heldBackInfo: HeldBackInfoType | null;
-  serverReplicationUrl: string;
+  serverReplicationUrl?: string;
 }> = ({ inApp, heldBackInfo, serverReplicationUrl }) => {
   if (inApp && !heldBackInfo) {
     return null;
@@ -233,7 +233,7 @@ const GuidanceByReplicationSlot: React.FunctionComponent<{
 const GuidanceByReplicationSlotCatalog: React.FunctionComponent<{
   inApp: boolean;
   heldBackInfo: HeldBackInfoType | null;
-  serverReplicationUrl: string;
+  serverReplicationUrl?: string;
 }> = ({ inApp, heldBackInfo, serverReplicationUrl }) => {
   if (inApp && !heldBackInfo) {
     return null;
