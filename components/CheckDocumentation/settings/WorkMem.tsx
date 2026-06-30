@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/checks";
+import type { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../../util/checks";
 import { formatBytes } from "../../../util/format";
 
 import PGDocsLink from "../../PGDocsLink";

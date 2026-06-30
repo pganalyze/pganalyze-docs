@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../util/checks";
+import type { CheckDocs, CheckGuidanceProps, CheckTriggerProps } from "../../util/checks";
 
 import QuerySlowness from "./queries/Slowness";
 import ActiveQuery from "./connections/ActiveQuery";
