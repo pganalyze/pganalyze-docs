@@ -45,7 +45,7 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
             return (
               <tr key={r.name}>
                 <td className={styles.noWrap}>
-                  {r.name}<DescriptionPopup className={styles.descriptionPopupIcon} info={r.description} />
+                  {r.name}{r.description && <DescriptionPopup className={styles.descriptionPopupIcon} info={r.description} />}
                 </td>
                 {hasCurrent && <td>{r.current ?? '[not set]'}</td>}
                 <td>{r.recommended}</td>
@@ -159,7 +159,11 @@ type CurrentSettings = {
 }
 
 export const getSPLEnableAutoExplainRecommendation = (settings: CurrentSettings | undefined): PGSettingRecommendation => {
-  return getAllAutoExplainRecommendations(settings).find(s => s.name === 'shared_preload_libraries');
+  const spl = getAllAutoExplainRecommendations(settings).find(s => s.name === 'shared_preload_libraries');
+  if (!spl) {
+    throw new Error("shared_preload_libraries is always present in the default recommendations");
+  }
+  return spl;
 }
 
 export const getAutoExplainSettingRecommendations = (settings: CurrentSettings | undefined) => {
