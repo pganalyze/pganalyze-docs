@@ -1,6 +1,6 @@
 import AutoExplainNotice from '../_auto_explain_notice.mdx'
 
-# Check if auto_explain already enabled
+## Check if auto_explain already enabled
 
 First, to check if `auto_explain` is already enabled on your system, run the following
 query as user with the `cloudsqlsuperuser` / `alloydbsuperuser` role:
@@ -13,7 +13,7 @@ If `auto_explain` is included in the `shared_preload_libraries` value and `pendi
 is false, the module is already enabled.
 
 
-# If auto_explain is not enabled
+## If auto_explain is not enabled
 
 <AutoExplainNotice />
 <Link className="btn btn-success" to="02_enable_auto_explain">
@@ -22,7 +22,7 @@ is false, the module is already enabled.
 <br />
 <br />
 
-# If auto_explain is already enabled
+## If auto_explain is already enabled
 
 If `auto_explain` is already enabled, you can skip the next step and proceed to
 review our recommended `auto_explain` configuration settings:
