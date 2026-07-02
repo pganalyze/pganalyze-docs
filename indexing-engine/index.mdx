@@ -94,7 +94,7 @@ We are also working on making an API available that allows customizing how you u
 
 No. The Indexing Engine is powered by a purpose-built optimization algorithm based on the Postgres planner (see architecture overview above), and is executed in a deterministic way. If you provide the same inputs (queries and schema) the same version of the Indexing Engine will always produce the same outputs (recommendations).
 
-Whilst there have been attempts to use machine learning for index selection algorithms, in practice it has been shown (see e.g. ["An Experimental Evaluation of Index Selection Algorithms"](http://www.vldb.org/pvldb/vol13/p2382-kossmann.pdf)) that they take significantly longer to run, without providing better recommendations.
+Whilst there have been attempts to use machine learning for index selection algorithms, in practice it has been shown (see e.g. ["An Experimental Evaluation of Index Selection Algorithms"](https://www.vldb.org/pvldb/vol13/p2382-kossmann.pdf)) that they take significantly longer to run, without providing better recommendations.
 
 As part of its optimization algorithm, the pganalyze Indexing Engine is able to test possible indexes a lot quicker, due to its unique [What If? analysis](/docs/indexing-engine/what-if-analysis) logic, as well as it's [Constraint Programming Model](/docs/indexing-engine/cp-model).
 
