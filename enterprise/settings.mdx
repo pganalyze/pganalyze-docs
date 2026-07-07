@@ -18,6 +18,7 @@ The settings on this page can be passed in as environment variables into the pga
 * `MAILER_URL`: SMTP server used to send system emails, e.g. user invites (optional, recommended)
 * `MAILER_FROM`: "From" address used to send system emails (optional, recommended if setting MAILER_URL)
 * `REDIS_URL`: Redis server used for [scale out architecture](/docs/enterprise/architecture) (optional, only needed when running Redis separately)
+* `SECRET_KEY_BASE`: Secret key used to encrypt session cookies (optional, but required when running multiple web pods. See below for details)
 
 An example configuration looks like this:
 
@@ -29,7 +30,7 @@ MAILER_URL=smtp://myusername:mypassword@example.com:25
 MAILER_FROM=pganalyze@example.com
 ```
 
-### Session cookies with multiple web pods
+**Session cookies with multiple web pods**
 
 The web container uses session cookies, which are encrypted with a secret key. By default, each pod initializes a new key when it starts up, equivalent to running:
 
