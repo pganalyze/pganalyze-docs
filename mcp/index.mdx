@@ -4,7 +4,7 @@ backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
-The pganalyze [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server allows AI assistants to interact with your pganalyze data. This enables AI coding tools like Claude Code, Codex, or Cursor to query server metrics, inspect EXPLAIN plans, run the Index Advisor, and review active issues.
+The pganalyze [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server allows AI assistants to interact with your pganalyze data. This enables AI coding tools like Claude Code, Codex, or Cursor to query server metrics, inspect EXPLAIN plans, run the Index Advisor, and review active issues. A separate set of [Workbooks tools](#optimizing-queries-with-workbooks) (in early access) can additionally create workbooks and run new `EXPLAIN ANALYZE` executions through the collector to test query rewrites and planner settings.
 
 The pganalyze MCP server is currently in public preview, and available on current pganalyze [plans](/pricing). If you are on a legacy plan you may need to upgrade to access the MCP Server.
 
@@ -74,10 +74,11 @@ The MCP server supports two authentication methods: **OAuth** (interactive) and 
 
 ### OAuth (recommended)
 
-When you first connect, your MCP client will open an OAuth authorization flow through your pganalyze account. During authorization, you can choose between two permission levels:
+When you first connect, your MCP client will open an OAuth authorization flow through your pganalyze account. During authorization, you can choose between the following permission levels:
 
 - **Basic read access** (required): Read access to your account data, excluding sensitive information such as query parameters. EXPLAIN plans are available when the pganalyze collector is configured to normalize query samples for PII filtering.
 - **Full read access** (optional): Full read access to your account data, including query parameters and EXPLAIN plans.
+- **Workbook write access** (optional, early access): Write access for creating workbooks and running `EXPLAIN ANALYZE` through the collector. It depends on Full read access, so granting it grants Full read access as well. This permission only appears when the [Workbooks tools](#optimizing-queries-with-workbooks) are enabled for your organization.
 
 ![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
 
@@ -85,7 +86,7 @@ Access is further limited by your account permissions. For example, if you can o
 
 ### API key
 
-As an alternative to OAuth, you can authenticate using a pganalyze read API key. This gives full read access to your account data, equivalent to granting the "Full read access" OAuth permission.
+As an alternative to OAuth, you can authenticate using a pganalyze read API key. This gives full read access to your account data, equivalent to granting the "Full read access" OAuth permission. It does not grant write access: the [Workbooks tools](#optimizing-queries-with-workbooks) are only available through OAuth with workbook write access.
 
 To use API key authentication, first [create an API key](/docs/api/create-api-key), then configure your MCP client to pass the key as a Bearer token in the `Authorization` header. For example, with Claude Code:
 
@@ -136,6 +137,12 @@ The MCP server exposes tools, organized by the type of data they access. Since t
 | **Issues** | |
 | `get_issues` | Get active check-up issues and alerts |
 | `get_checkup_status` | Get check-up status overview for a database |
+| **Workbooks** ([setup required](#optimizing-queries-with-workbooks)) | |
+| `create_workbook` | Create a workbook from a query and run `EXPLAIN ANALYZE` |
+| `add_workbook_parameter_set` | Supply parameter values and trigger `EXPLAIN ANALYZE` |
+| `get_workbook_details` | Get a workbook overview and poll for `EXPLAIN` results |
+| `get_insight_rewrite` | Generate a query rewrite from a Query Advisor insight |
+| `create_workbook_variant` | Create a variant (rewrite or planner settings) |
 
 When `get_index_selection` or `run_index_selection` is called against the
 primary of a cluster, the response reflects the cluster-aware Index
@@ -143,9 +150,35 @@ Advisor view: scan data aggregated across the cluster server group, and each
 affected query labeled with its source server and database. This requires
 cluster-level access.
 
+## Optimizing queries with Workbooks
+
+The tools above read data that pganalyze has already collected: existing metrics, stored query samples, and previously captured EXPLAIN plans. The Workbooks tools go a step further. They let an AI assistant create a [workbook](/docs/workbooks) for a slow query, run new `EXPLAIN ANALYZE` executions under controlled parameter sets, and test rewrites or planner settings against a baseline. This is the same workflow available in the pganalyze app, run through your MCP client instead of the web interface.
+
+Because these tools execute queries against your database through the collector rather than only reading stored data, they carry additional requirements and are gated separately from the read-only tools.
+
+### Requirements
+
+Using the Workbooks tools requires all of the following:
+
+- **OAuth with workbook write access.** The Workbooks tools perform writes, so they require OAuth authentication with workbook write access granted (see [Authentication](#authentication)). API key authentication is read-only and cannot use them.
+- **The Create Workbooks permission.** Your pganalyze account must have the [Create Workbooks permission](/docs/accounts/permissions#create-workbooks), the same permission required to create workbooks in the app. Without it, the tools return an authorization error.
+- **The collector workflow.** Running `EXPLAIN ANALYZE` relies on the [Workbooks collector workflow](/docs/workbooks/collector-workflow) being set up for the database: the `pganalyze.explain_analyze` helper function, and a connected collector on version 0.64.0 or later.
+- **Early access enablement.** The Workbooks tools are not enabled by default, even when the rest of the MCP server is. [Contact pganalyze support](mailto:team@pganalyze.com?subject=pganalyze%20MCP%20early%20access) to enable them for your organization. Until then, the tools do not appear in the server's tool list.
+
+### How the tools fit together
+
+A typical optimization loop uses the tools in sequence:
+
+1. `create_workbook` creates a workbook from the slow query. The query can use literal values or `$1`-style placeholders. Parameter values are derived automatically from inline literals or recent query samples where possible; when they cannot be, the tool returns an `awaiting_parameters` status listing the parameters, and the client asks you for values to pass to `add_workbook_parameter_set`.
+2. Once parameter values are set, `EXPLAIN ANALYZE` runs through the collector. A run can take longer than a single request, so the tools return an `awaiting_results` status and the client polls `get_workbook_details` until the results are ready.
+3. To test an optimization, `get_insight_rewrite` turns a Query Advisor insight on the baseline plan into a candidate rewrite, and `create_workbook_variant` adds a rewrite or planner-setting variant and runs `EXPLAIN ANALYZE` on it, so you can compare its plan against the baseline.
+
+Note that the assistant does not invent parameter values on its own. It asks you for the values that define each parameter set, since those values determine which plan Postgres produces and therefore what the comparison measures.
+
 ## Example use cases
 
 - **Investigate slow queries during development**: Ask your AI tool to pull the top queries by runtime for a specific database using `get_query_stats`, then inspect EXPLAIN plans for a query that regressed using `get_query_explains` and `get_query_explain`.
 - **Review active issues**: Check the current check-up status for a database using `get_checkup_status` to see if there are unresolved alerts, such as insufficient VACUUM frequency or unused indexes.
 - **Trace a slow request to its query plan**: If your application uses [OpenTelemetry tracing](/docs/opentelemetry), resolve a trace span to the corresponding EXPLAIN plan using `get_query_explain_from_trace` to understand why a specific request was slow.
 - **Audit cluster-wide index opportunities**: For a cluster with several replicas, ask your AI tool to run `run_index_selection` against the primary so it can see workload aggregated from every replica, then review which databases on which servers contributed the most scans.
+- **Test a query rewrite before shipping it** (requires the [Workbooks tools](#optimizing-queries-with-workbooks)): Have your AI tool create a workbook for a slow query with `create_workbook`, supply representative parameter values, then compare a rewrite or planner-setting change against the baseline with `create_workbook_variant`. Because this runs real `EXPLAIN ANALYZE` executions through the collector, you can confirm the actual runtime effect rather than relying on the planner's cost estimate.
