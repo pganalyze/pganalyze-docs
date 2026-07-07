@@ -29,6 +29,60 @@ MAILER_URL=smtp://myusername:mypassword@example.com:25
 MAILER_FROM=pganalyze@example.com
 ```
 
+### Session cookies with multiple web pods
+
+The web container uses session cookies, which are encrypted with a secret key. By default, each pod initializes a new key when it starts up, equivalent to running:
+
+```sh
+$ openssl rand -hex 128
+```
+
+If you are running multiple web containers for high availability, they need to share the same encryption key. Otherwise, a session cookie created by one pod cannot be processed by another, so during a failover the user's session would not continue.
+
+To run multiple pods, create the key once using the `openssl` command above, and then pass the same value to all containers via the `SECRET_KEY_BASE` environment variable.
+
+```ini
+SECRET_KEY_BASE=your-generated-secret-key
+```
+
+## SMTP / email configuration
+
+In addition to the `MAILER_URL` and `MAILER_FROM` settings above, the following options allow you to control how pganalyze Enterprise Server connects to your SMTP server:
+
+* `MAILER_SSL`: SSL/TLS mode for the SMTP connection (optional, default: `auto`)
+  - `tls` - always require an SSL/TLS connection
+  - `starttls` - require the STARTTLS protocol
+  - `none` - don't use SSL/TLS or STARTTLS
+  - `auto` - auto-detect STARTTLS capability (default)
+* `MAILER_SSL_VERIFY_MODE`: Whether to verify the SMTP server's certificate. Set to `none` to skip verification (optional)
+* `MAILER_AUTHENTICATION`: Authentication mechanism used with the SMTP server (optional, default: `plain`)
+  - `plain` - sends the password in clear text (default)
+  - `login` - sends the password base64 encoded
+  - `cram_md5` - sends the password using the CRAM-MD5 challenge/response mechanism
+* `MAILER_DOMAIN`: Domain to send in the HELO command, when the mail server expects a specific value (optional)
+
+An example SMTP configuration looks like this:
+
+```ini
+MAILER_URL=smtp://myusername:mypassword@example.com:25
+MAILER_SSL=none
+MAILER_SSL_VERIFY_MODE=none
+MAILER_AUTHENTICATION=login
+MAILER_DOMAIN=example.com
+MAILER_FROM=pganalyze@example.com
+```
+
+## SSL / TLS configuration
+
+The `web` container runs an NGINX reverse proxy that offers SSL support on port `5001`. By default a self-signed certificate is auto-generated, but you can provide your own certificate and key using the following settings:
+
+* `SSL_CERT`: The full SSL certificate, passed in directly (optional)
+* `SSL_KEY`: The full SSL private key, passed in directly (optional)
+* `SSL_CERT_PATH`: Path to a custom SSL certificate inside the container, e.g. a volume mount (optional, requires [2025.03.0](/docs/enterprise/releases/2025-03-0) or newer)
+* `SSL_KEY_PATH`: Path to a custom SSL private key inside the container, e.g. a volume mount (optional, requires [2025.03.0](/docs/enterprise/releases/2025-03-0) or newer)
+
+Use either the `SSL_CERT` / `SSL_KEY` pair to pass in the certificate and key directly, or the `SSL_CERT_PATH` / `SSL_KEY_PATH` pair to reference files inside the container.
+
 ## Resource settings
 
 * `SIDEKIQ_CONCURRENCY`: Concurrency (number of threads) for background workers, defaults to 1. Set this to 0 to turn off the workers in the combined image (requires [2023.06.0](/docs/enterprise/releases/2023-06-0) or newer).
