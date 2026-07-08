@@ -19,7 +19,7 @@ The settings on this page can be passed in as environment variables into the pga
   * `MAILER_URL` can include username and password when the SMTP server requires authentication. For example, when connecting to a Microsoft Outlook server, you may need to use a URL like: `smtp://myusername:mypassword@example.com:25`
 * `MAILER_FROM`: "From" address used to send system emails (optional, recommended if setting MAILER_URL)
 * `REDIS_URL`: Redis server used for [scale out architecture](/docs/enterprise/architecture) (optional, only needed when running Redis separately)
-* `SECRET_KEY_BASE`: Secret key used to encrypt session cookies (optional, but required when running multiple web pods. See below for details)
+* `SECRET_KEY_BASE`: Secret key used to encrypt session cookies (optional, but required when running multiple web pods. [See below for details](#running-multiple-web-containers))
 
 An example configuration looks like this:
 
@@ -29,22 +29,6 @@ LICENSE_KEY=KEYKEYKEY
 DOMAIN_NAME=pganalyze.example.com
 MAILER_URL=smtp://example.com:25
 MAILER_FROM=pganalyze@example.com
-```
-
-**Session cookies with multiple web containers**
-
-The web container uses session cookies, which are encrypted with a secret key. By default, each pod initializes a new key when it starts up, equivalent to running:
-
-```sh
-$ openssl rand -hex 128
-```
-
-If you are running multiple web containers for high availability, they need to share the same encryption key. Otherwise, a session cookie created by one pod cannot be processed by another, so during a failover the user's session would not continue.
-
-To run multiple pods, create the key once using the `openssl` command above, and then pass the same value to all containers via the `SECRET_KEY_BASE` environment variable.
-
-```ini
-SECRET_KEY_BASE=your-generated-secret-key
 ```
 
 ## SMTP / email configuration
@@ -84,6 +68,22 @@ The `web` container runs an NGINX reverse proxy that offers SSL support on port 
 * `SSL_KEY_PATH`: Path to a custom SSL private key inside the container, e.g. a volume mount (optional)
 
 Use either the `SSL_CERT` / `SSL_KEY` pair to pass in the certificate and key directly, or the `SSL_CERT_PATH` / `SSL_KEY_PATH` pair to reference files inside the container. Do not use both pairs at the same time.
+
+## Running multiple web containers
+
+The web container uses session cookies, which are encrypted with a secret key. By default, each pod initializes a new key when it starts up, equivalent to running:
+
+```sh
+$ openssl rand -hex 128
+```
+
+If you are running multiple web containers for high availability, they need to share the same encryption key. Otherwise, a session cookie created by one pod cannot be processed by another, so during a failover the user's session would not continue.
+
+To run multiple pods, create the key once using the `openssl` command above, and then pass the same value to all containers via the `SECRET_KEY_BASE` environment variable.
+
+```ini
+SECRET_KEY_BASE=your-generated-secret-key
+```
 
 ## Resource settings
 
