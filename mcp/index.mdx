@@ -78,7 +78,7 @@ When you first connect, your MCP client will open an OAuth authorization flow th
 
 - **Basic read access** (required): Read access to your account data, excluding sensitive information such as query parameters. EXPLAIN plans are available when the pganalyze collector is configured to normalize query samples for PII filtering.
 - **Full read access** (optional): Full read access to your account data, including query parameters and EXPLAIN plans.
-- **Workbook write access** (optional, early access): Write access for creating workbooks and running `EXPLAIN ANALYZE` through the collector. It depends on Full read access, so granting it grants Full read access as well. This permission only appears when the [Workbooks tools](#optimizing-queries-with-workbooks) are enabled for your organization.
+- **Workbook write access** (optional, early access): Write access for creating workbooks and running `EXPLAIN ANALYZE` through the collector. It depends on Full read access, so granting it grants Full read access as well. This permission only appears once pganalyze has enabled the [Workbooks tools](#optimizing-queries-with-workbooks) for your organization.
 
 ![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
 
@@ -163,17 +163,17 @@ Using the Workbooks tools requires all of the following:
 - **OAuth with workbook write access.** The Workbooks tools perform writes, so they require OAuth authentication with workbook write access granted (see [Authentication](#authentication)). API key authentication is read-only and cannot use them.
 - **The Create Workbooks permission.** Your pganalyze account must have the [Create Workbooks permission](/docs/accounts/permissions#create-workbooks), the same permission required to create workbooks in the app. Without it, the tools return an authorization error.
 - **The collector workflow.** Running `EXPLAIN ANALYZE` relies on the [Workbooks collector workflow](/docs/workbooks/collector-workflow) being set up for the database: the `pganalyze.explain_analyze` helper function, and a connected collector on version 0.64.0 or later.
-- **Early access enablement.** The Workbooks tools are not enabled by default, even when the rest of the MCP server is. [Contact pganalyze support](mailto:team@pganalyze.com?subject=pganalyze%20MCP%20early%20access) to enable them for your organization. Until then, the tools do not appear in the server's tool list.
+- **Early access enablement.** The Workbooks tools are not enabled by default, even when the rest of the MCP server is. [Contact pganalyze support](mailto:team@pganalyze.com?subject=pganalyze%20MCP%20early%20access) to enable them for your organization. Until then, the tools do not appear when your MCP client lists the available tools.
 
 ### How the tools fit together
 
 A typical optimization loop uses the tools in sequence:
 
-1. `create_workbook` creates a workbook from the slow query. The query can use literal values or `$1`-style placeholders. Parameter values are derived automatically from inline literals or recent query samples where possible; when they cannot be, the tool returns an `awaiting_parameters` status listing the parameters, and the client asks you for values to pass to `add_workbook_parameter_set`.
-2. Once parameter values are set, `EXPLAIN ANALYZE` runs through the collector. A run can take longer than a single request, so the tools return an `awaiting_results` status and the client polls `get_workbook_details` until the results are ready.
+1. `create_workbook` creates a workbook from the slow query and runs `EXPLAIN ANALYZE` on it. The query can be a normalized query or use literal values, with parameters written as literals or `$1`-style placeholders. Parameter values are derived automatically from inline literals or recent query samples where possible; when they cannot be, you supply them with `add_workbook_parameter_set`.
+2. Once parameter values are set, `EXPLAIN ANALYZE` runs through the collector. A run can take longer than a single request, so `get_workbook_details` retrieves the results once they are ready.
 3. To test an optimization, `get_insight_rewrite` turns a Query Advisor insight on the baseline plan into a candidate rewrite, and `create_workbook_variant` adds a rewrite or planner-setting variant and runs `EXPLAIN ANALYZE` on it, so you can compare its plan against the baseline.
 
-Note that the assistant does not invent parameter values on its own. It asks you for the values that define each parameter set, since those values determine which plan Postgres produces and therefore what the comparison measures.
+When parameter values cannot be derived automatically, the assistant asks you for them rather than filling them in on its own. It may suggest realistic values grounded in the query, schema, or samples, but you confirm the final values, since those values determine which plan Postgres produces and therefore what the comparison measures.
 
 ## Example use cases
 
