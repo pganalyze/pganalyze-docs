@@ -1116,6 +1116,10 @@
       "title": "Inefficient Nested Loops",
       "path": "/docs/query-advisor/insights/inefficient-nested-loops"
     },
+    "query-advisor/insights/inefficient-or-in-join": {
+      "title": "Inefficient OR in Join",
+      "path": "/docs/query-advisor/insights/inefficient-or-in-join"
+    },
     "query-advisor/insights/wrong-index-order-by": {
       "title": "Wrong Index Due To ORDER BY",
       "path": "/docs/query-advisor/insights/wrong-index-order-by"

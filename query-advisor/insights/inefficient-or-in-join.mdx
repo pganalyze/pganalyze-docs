@@ -1,0 +1,82 @@
+---
+title: 'Inefficient OR in Join'
+backlink_href: /docs/query-advisor/insights
+backlink_title: 'Query Advisor Insights'
+---
+
+Query Advisor detects when a join combines conditions with `OR`, and each side of the `OR` filters a
+different table. Because a single `OR` references both tables, neither condition can be pushed down to
+an index scan on its own table. Splitting the query into a `UNION` lets each condition drive an index
+scan on its own table.
+
+## The problem
+
+When an `OR` spans both sides of a join, the planner can't use either condition to drive an index scan.
+It reads the inputs without applying the conditions and only evaluates the `OR` after joining, as a
+`Join Filter`, so each side reads far more rows than it needs to.
+
+### Example scenario
+
+```sql
+SELECT *
+ FROM orders o
+ JOIN customers c ON o.customer_id = c.id
+ WHERE o.status = 'shipped' OR c.country = 'US';
+```
+
+The `OR` references both `orders` (through `o.status`) and `customers` (through `c.country`). Neither
+condition can be applied during an index scan on its own table, so Postgres reads both tables broadly,
+joins them, and applies the `OR` as a `Join Filter`. In `EXPLAIN (ANALYZE)` output the shared filter
+shows up like this:
+
+```text
+Nested Loop  (cost=... rows=... width=...) (actual time=... rows=...)
+  Join Filter: ((o.status = 'shipped'::text) OR (c.country = 'US'::text))
+  Rows Removed by Join Filter: ...
+```
+
+## How Query Advisor helps
+
+When Query Advisor detects this pattern, it reports the join filter that combines both tables and the
+indexable columns on each side. It then suggests a `UNION` rewrite so each branch can filter its
+own table with an index.
+
+### Typical optimization approach
+
+**1. Identify the OR that spans the join.** The signal is a single `OR` in the join filter where each
+side references a different table. Splitting on those conditions is what lets each branch use an index.
+
+**2. Rewrite the query as a `UNION`.** Turn each side of the `OR` into its own `SELECT` over the same
+join, then combine them. The example above becomes:
+
+```sql
+SELECT *
+ FROM orders o
+ JOIN customers c ON o.customer_id = c.id
+ WHERE o.status = 'shipped'
+UNION
+SELECT *
+ FROM orders o
+ JOIN customers c ON o.customer_id = c.id
+ WHERE c.country = 'US';
+```
+
+Now `o.status = 'shipped'` can drive an index scan on `orders` in the first branch, and
+`c.country = 'US'` an index on `customers` in the second. Confirm the rewrite keeps the same results
+and check that each branch uses an index before adopting it. Try it on a sample of your workload in a
+[Workbook](/docs/workbooks) to confirm the improvement.
+
+### A note on duplicate rows
+
+`UNION` removes duplicate rows by comparing every selected column, which is what keeps a row matching
+both conditions from being returned twice. But that same deduplication also collapses rows that are
+genuinely distinct yet identical across all selected columns — rows the original `OR` query would have
+returned separately. With `SELECT *` on tables that contain such duplicates, the rewrite can return
+fewer rows than the original. If that matters for your data, include a primary key in the `SELECT`
+list (or deduplicate on it explicitly) so distinct rows stay distinct.
+
+## Next steps
+
+- **[See complete example](/docs/query-advisor/from-insight-to-conclusion)** - Full walkthrough of Query Advisor optimization workflow
+- **[Configure Workbooks](/docs/workbooks)** - Set up testing environment for validating optimizations
+- **[Set up alerts](/docs/query-advisor/alerts)** - Get notified when new optimization opportunities are detected
