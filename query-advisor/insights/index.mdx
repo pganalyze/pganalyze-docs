@@ -36,11 +36,11 @@ Detects when an index scan reads many rows that are then discarded by a filter, 
 
 **[Learn more about Inefficient Index Use →](/docs/query-advisor/insights/inefficient-index-use)**
 
-### Inefficient OR in Join
+### Late Join Filter with OR
 
-Detects when a join combines conditions with `OR` where each side filters a different table, forcing the planner to apply the `OR` as a join filter instead of an index scan, and suggests a `UNION` rewrite so each condition can drive an index on its own table.
+Detects when a join combines conditions with `OR` where each side filters a different table, forcing Postgres to apply the `OR` as a join filter instead of an index scan, and suggests a `UNION` rewrite so each condition can drive an index on its own table.
 
-**[Learn more about Inefficient OR in Join →](/docs/query-advisor/insights/inefficient-or-in-join)**
+**[Learn more about Late Join Filter with OR →](/docs/query-advisor/insights/late-join-filter-with-or)**
 
 ### Disk Spill Due To Low work_mem
 
@@ -92,7 +92,7 @@ This is normal behavior - database conditions evolve, and Query Advisor adapts a
 - **[Inefficient Nested Loops](/docs/query-advisor/insights/inefficient-nested-loops)** - Learn about join optimization
 - **[ORDER BY + LIMIT Issues](/docs/query-advisor/insights/wrong-index-order-by)** - Understand index selection problems
 - **[Inefficient Index Use](/docs/query-advisor/insights/inefficient-index-use)** - Spot index scans that discard most rows at the filter
-- **[Inefficient OR in Join](/docs/query-advisor/insights/inefficient-or-in-join)** - Split an OR across a join into a UNION so each branch uses an index
+- **[Late Join Filter with OR](/docs/query-advisor/insights/late-join-filter-with-or)** - Split an OR across a join into a UNION so each side uses an index
 - **[Disk Spill Due To Low work_mem](/docs/query-advisor/insights/disk-spill-work-mem)** - Keep Sort and Hash operations in memory
 - **[Set up alerts](/docs/query-advisor/alerts)** - Get notified of new optimization opportunities
 - **[Complete workflow guide](/docs/query-advisor/from-insight-to-conclusion)** - See Query Advisor in action

@@ -1,5 +1,5 @@
 ---
-title: 'Inefficient OR in Join'
+title: 'Late Join Filter with OR'
 backlink_href: /docs/query-advisor/insights
 backlink_title: 'Query Advisor Insights'
 ---
@@ -11,9 +11,9 @@ scan on its own table.
 
 ## The problem
 
-When an `OR` spans both sides of a join, the planner can't use either condition to drive an index scan.
-It reads the inputs without applying the conditions and only evaluates the `OR` after joining, as a
-`Join Filter`, so each side reads far more rows than it needs to.
+When an `OR` spans both sides of a join, neither condition can be pushed down to an index scan on its
+own table. Postgres first reads the data without using those conditions and only applies the `OR`
+after joining, as a `Join Filter`, so each side reads far more rows than it needs to.
 
 ### Example scenario
 
@@ -38,13 +38,13 @@ Nested Loop  (cost=... rows=... width=...) (actual time=... rows=...)
 ## How Query Advisor helps
 
 When Query Advisor detects this pattern, it reports the join filter that combines both tables and the
-indexable columns on each side. It then suggests a `UNION` rewrite so each branch can filter its
+indexable columns on each side. It then suggests a `UNION` rewrite so each side can filter its
 own table with an index.
 
 ### Typical optimization approach
 
 **1. Identify the OR that spans the join.** The signal is a single `OR` in the join filter where each
-side references a different table. Splitting on those conditions is what lets each branch use an index.
+side references a different table. Splitting on those conditions is what lets each side use an index.
 
 **2. Rewrite the query as a `UNION`.** Turn each side of the `OR` into its own `SELECT` over the same
 join, then combine them. The example above becomes:
@@ -61,9 +61,9 @@ SELECT *
  WHERE c.country = 'US';
 ```
 
-Now `o.status = 'shipped'` can drive an index scan on `orders` in the first branch, and
+Now `o.status = 'shipped'` can drive an index scan on `orders` in the first side, and
 `c.country = 'US'` an index on `customers` in the second. Confirm the rewrite keeps the same results
-and check that each branch uses an index before adopting it. Try it on a sample of your workload in a
+and check that each side uses an index before adopting it. Try it on a sample of your workload in a
 [Workbook](/docs/workbooks) to confirm the improvement.
 
 ### A note on duplicate rows
