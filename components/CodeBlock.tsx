@@ -58,9 +58,9 @@ docsHljs.registerLanguage("shell", shell); // "Shell Session" — highlights pro
 // handles HTML escaping (no hand-rolled escaper, and dangerouslySetInnerHTML
 // only ever receives highlight.js's own already-escaped output).
 function highlightCode(text: string, language: string): string | null {
-  if (language && language !== "text" && hljs.getLanguage(language)) {
+  if (language && language !== "text" && docsHljs.getLanguage(language)) {
     try {
-      return hljs.highlight(text, { language }).value;
+      return docsHljs.highlight(text, { language }).value;
     } catch {
       // fall through to plain rendering
     }
@@ -118,8 +118,8 @@ const CodeBlock = ({children, code, language = 'text', style, hideCopy = false}:
   const highlighted = text !== null ? highlightCode(text, language) : null;
 
   useEffect(() => {
-    if (text === null && codeRef.current && language !== 'text' && hljs.getLanguage(language)) {
-      hljs.highlightElement(codeRef.current);
+    if (text === null && codeRef.current && language !== 'text' && docsHljs.getLanguage(language)) {
+      docsHljs.highlightElement(codeRef.current);
     }
   }, [language, text]);
 
