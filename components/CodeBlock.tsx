@@ -33,17 +33,22 @@ function iniWithoutNumbers(hljs: typeof import("highlight.js").default) {
   return lang;
 }
 
+// Isolated instance so this component's config (classPrefix "token ", pgsql as
+// the "sql" grammar) stays off the shared highlight.js singleton that the app's
+// SQL components also use with the default "hljs-" prefix.
+const docsHljs = hljs.newInstance();
+
 // Register languages once at module load
-hljs.configure({ classPrefix: 'token ' });
-hljs.registerLanguage("sql", sql);
-hljs.registerLanguage("json", json);
-hljs.registerLanguage("yaml", yaml);
-hljs.registerLanguage("bash", bash);
-hljs.registerLanguage("ruby", ruby);
-hljs.registerLanguage("python", python);
-hljs.registerLanguage("dockerfile", dockerfile);
-hljs.registerLanguage("ini", iniWithoutNumbers);
-hljs.registerLanguage("shell", shell); // "Shell Session" — highlights prompt+command, leaves output plain (aliases: console, shellsession)
+docsHljs.configure({ classPrefix: 'token ' });
+docsHljs.registerLanguage("sql", sql);
+docsHljs.registerLanguage("json", json);
+docsHljs.registerLanguage("yaml", yaml);
+docsHljs.registerLanguage("bash", bash);
+docsHljs.registerLanguage("ruby", ruby);
+docsHljs.registerLanguage("python", python);
+docsHljs.registerLanguage("dockerfile", dockerfile);
+docsHljs.registerLanguage("ini", iniWithoutNumbers);
+docsHljs.registerLanguage("shell", shell); // "Shell Session" — highlights prompt+command, leaves output plain (aliases: console, shellsession)
 
 // Returns highlighted HTML for languages we explicitly support, or null when
 // there's nothing to highlight — `text`, an untagged fenced block (which
@@ -53,9 +58,9 @@ hljs.registerLanguage("shell", shell); // "Shell Session" — highlights prompt+
 // handles HTML escaping (no hand-rolled escaper, and dangerouslySetInnerHTML
 // only ever receives highlight.js's own already-escaped output).
 function highlightCode(text: string, language: string): string | null {
-  if (language && language !== "text" && hljs.getLanguage(language)) {
+  if (language && language !== "text" && docsHljs.getLanguage(language)) {
     try {
-      return hljs.highlight(text, { language }).value;
+      return docsHljs.highlight(text, { language }).value;
     } catch {
       // fall through to plain rendering
     }
@@ -113,8 +118,8 @@ const CodeBlock = ({children, code, language = 'text', style, hideCopy = false}:
   const highlighted = text !== null ? highlightCode(text, language) : null;
 
   useEffect(() => {
-    if (text === null && codeRef.current && language !== 'text' && hljs.getLanguage(language)) {
-      hljs.highlightElement(codeRef.current);
+    if (text === null && codeRef.current && language !== 'text' && docsHljs.getLanguage(language)) {
+      docsHljs.highlightElement(codeRef.current);
     }
   }, [language, text]);
 
