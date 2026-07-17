@@ -12,28 +12,28 @@ Query Advisor insights and integrating with your notification workflows.
 
 Query Advisor checks are enabled by default for all databases in your pganalyze organization
 on Scale (v4) and Enterprise plans, but **alerts must be explicitly configured** to receive notifications
-about newly detected optimization opportunities for new customers.
+about newly detected optimization opportunities.
 
-Currently Query Advisor alerts are only supported for Slack, or if implemented through a custom API
-integration with the [getIssues](/docs/api/queries/getIssues) API.
+Query Advisor insights are raised at "info" severity. Because e-mail and PagerDuty alerts are only
+sent for critical issues, notifications for new insights are delivered through Slack, or through a
+custom integration with the [getIssues](/docs/api/queries/getIssues) API.
 
-### Enabling Slack Alerts
+### Enabling Slack alerts
 
-To enable Slack alerts, first configure the pganalyze [Slack integration](/docs/checks/#alerting), and then
-navigate to a specific servers alert configuration page.
+1. Connect the pganalyze [Slack integration](/docs/checks/#connecting-integrations).
+2. On the Alerts & Check-Up page, open the Alert Destinations tab and create (or edit) a
+   destination with a Slack channel target.
+3. On the Alert Rules tab, create a rule that includes the "Advisor Insights" check and routes
+   to that destination. Leave the server unset to apply the rule to all servers, or select a specific server.
 
-After selecting "Configure alerts for this server" you can see the "Query Performance: Advisor Insights" option.
-
-![Alert configuration option](alerts-config.png)
-
-This will notify you of new Query Advisor insights for a query in a Slack channel of your choice.
+New Query Advisor insights for the matching servers will then be posted to the selected Slack channel.
 
 ## Troubleshooting alerts
 
-### No alerts despite slow queries
+### No alerts despite detected insights
 
 - **Check auto_explain configuration**: Ensure EXPLAIN plans are being collected and all settings are correctly set: `log_analyze` is enabled, `log_format` is set to `json`.
-- **Verify alert configuration**: Ensure you have enabled Slack notifications per the above instructions.
+- **Verify your alert rule and destination**: Ensure an alert rule includes the Advisor Insights check and routes to a destination with a Slack channel target.
 
 ## Next steps
 

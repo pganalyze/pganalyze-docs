@@ -41,6 +41,7 @@ export const CHECK_TITLES = {
 export const CHECK_SEVERITIES = {
   queries: {
     slowness: ['info'],
+    advisor_insight: ['info'],
   },
   connections: {
     active_query: ['warning', 'critical'],

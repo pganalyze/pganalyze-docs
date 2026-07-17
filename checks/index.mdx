@@ -50,65 +50,64 @@ indicate opportunities for performance improvements.
 
 ## Alerting
 
-If an issue is of severity "critical" (either because it starts as critical or
-escalates to that level), it will alert organization users by e-mail according to
-their configured Alert Policy. You can edit Alert Policies in the Configure section
-of the Alerts & Check-Up page. You can edit organization members' assigned policies
-in each member's organization profile page, accessible from the Members section of
-the organization Settings page.
+When a check creates or updates an issue, pganalyze can notify you through one or
+more alert destinations. A destination is a named, reusable target that can send
+alerts to any combination of:
 
-Alerting is also available through integrations with select third-party services.
-Currently supported services are [PagerDuty](https://pagerduty.com) and [Slack](https://slack.com).
-To enable alerting via a third-party integration, go to the Integrations tab in your
-Organization settings page:
+- E-mail — selected organization members
+- Slack — a channel, via the Slack integration
+- PagerDuty — a service, via the PagerDuty integration
+
+You manage destinations on the Alert Destinations tab of the Alerts & Check-Up
+page. Each organization has a default destination that new members are added to
+automatically.
+
+![Screenshot of the Alert Destination editor, with targets grouped into E-mail, Slack, and PagerDuty](./alert-destination-editor.png)
+
+### Connecting integrations
+
+Slack and PagerDuty destinations require a connected integration. Connect them on the
+Integrations tab of your organization Settings page:
 
 ![Screenshot of Organization Integrations](./organization-integrations.png)
 
-Here you can click the "Connect to ..." buttons to go through the authentication flow
-with the selected provider to enable the integration within pganalyze. Once connected,
-you can use the "Test" button to make sure the integration is configured correctly. For
-Slack, this will send a message to the selected channel; for PagerDuty, it will open an
-incident for the selected service (you should resolve the incident yourself).
+Click the "Connect to ..." button for a provider and complete its authentication flow.
+Once connected, use the "Test" button to confirm the setup: for Slack this sends a
+message to the selected channel, and for PagerDuty it opens an incident on the selected
+service (which you should then resolve yourself). A destination's Slack and PagerDuty
+targets are chosen from the channels and services these integrations make available.
 
-By default, completing the integration setup does not enable alerting through the integrated
-provider. You will need to configure alerting notifications on the alert configuration
-page for each server:
+### Alert rules
 
-![Screenshot of Server Alerting configuration](./alerts-config.png)
+Alert rules decide which issues reach which destinations. A rule applies to a
+specific server (or all servers), matches a set of checks, and routes matching issues
+to one or more destinations. You manage rules on the Alert Rules tab of the
+Alerts & Check-Up page. Whether and when an issue reaches a given severity is still
+governed by each server's per-check configuration; alert rules only control where
+matching issues are sent.
 
+![Screenshot of the Alert Rule editor, showing the rule name, the server it applies to, and the check selection; the destinations to route matching issues to are chosen further down](./alert-rule-editor.png)
 
-### Slack Notifications
+Alerts are delivered according to severity: Slack destinations receive matching issues
+of any severity, while PagerDuty and e-mail destinations are notified only for critical
+issues — either issues that start at critical severity (like a disabled `fsync` setting)
+or issues that escalate to critical (like a long-running query).
 
-Slack integration allows you to send Slack messages about issues discovered by pganalyze.
-You can configure Slack notifications for any type of check.
+### Slack notifications
 
-Slack notifications will be sent for all issue activity of the checks selected on configured
-servers. The initial alert will be sent as a new message, and subsequent changes to the issue
-will update the original message and start a thread summarizing issue activity (excluding
-notifications).
+The initial alert is sent as a new message, and subsequent changes to the issue update
+that message and start a thread summarizing issue activity.
 
-**Note**: the pganalyze app **must be invited to the channel** you select for notifications
-in order to be able to post there. You can do so from within Slack by typing "@pganalyze"
-within the channel: you'll be prompted to invite the app.
+**Note**: the pganalyze app **must be invited to the channel** you select in order to
+post there. You can do so from within Slack by typing "@pganalyze" in the channel:
+you'll be prompted to invite the app.
 
+### PagerDuty alerting
 
-### PagerDuty Alerting
-
-PagerDuty integration allows you to trigger PagerDuty alerts for critical issues discovered
-by pganalyze. This is available for both issues that start at critical severity immediately
-(like a disabled `fsync` setting) and for issues that can escalate to critical severity (like
-a long-running query). Alerts for the latter are triggered upon escalation.
-
-When you first click "Connect ...", you will be prompted to select which services you are
-interested in integrating with pganalyze. You should select any services you may want to
-trigger incidents on in the future. You can later configure which specific service to use
-for which server.
-
-Acknowledging the issue in pganalyze will acknowledge the PagerDuty incident. Re-opening an
-issue in pganalyze will re-trigger the incident. Once the issue is resolved in pganalyze, the
-PagerDuty incident will also be resolved automatically. You may interact with the incident
-normally through PagerDuty, though changes will not be reflected in the corresponding pganalyze
-issue.
+Acknowledging an issue in pganalyze acknowledges the PagerDuty incident; re-opening an
+issue re-triggers it; and resolving the issue in pganalyze resolves the incident
+automatically. You may interact with the incident through PagerDuty, though those
+changes are not reflected back in the corresponding pganalyze issue.
 
 [Read more about the PagerDuty integration](/docs/checks/pagerduty)
 

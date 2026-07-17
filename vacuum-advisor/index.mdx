@@ -23,7 +23,7 @@ The following insights are currently included with pganalyze VACUUM Advisor:
 * [Freezing - Approaching Multixact ID Wraparound](/docs/checks/vacuum/mxid_wraparound)
 * [Performance - Inefficient Index Phase](/docs/checks/vacuum/inefficient_index_phase)
 
-The insights are enabled by default for all your database servers, but alerts need to be enabled via alert policies. You can also utilize Slack notifications to notify you of newly detected insights. Read more details about the [Alerts & Check-Up system](/docs/checks).
+The insights are enabled by default for all your database servers, but you need to set up an alert rule and destination (for example, a Slack channel) to be notified of newly detected insights. Read more details about the [Alerts & Check-Up system](/docs/checks).
 
 ## Limitations of VACUUM Advisor
 
@@ -32,5 +32,4 @@ The insights are enabled by default for all your database servers, but alerts ne
 * The "Bloat - Insufficient VACUUM Frequency" insight requires a narrow set of conditions that does not capture all conditions where table bloat can occur (it works best after compacting the table with `pg_repack` or similar)
 * VACUUM Advisor does not distinguish between dead row versions and dead line pointers (LP_DEAD), e.g. as caused by HOT updates and on-access pruning
 * Insights for tuning `autovacuum_cost_delay`, `autovacuum_cost_limit` and `autovacuum_max_workers` are still under development
-* Email alerts are not yet enabled for VACUUM Advisor insights
 * In the "VACUUM Blocked by Xmin Horizon" graph, when the assigned time of the xmin horizon is older than the the statistics retention period (35 days), it will use the oldest known statistics collected time. For example, even if the xmin horizon was assigned 60 days ago, the xmin horizon in the graph would show that it was assigned 35 days ago
