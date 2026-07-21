@@ -13,6 +13,10 @@ import { useSmartAnchor } from "../../SmartAnchor";
 const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
   config,
 }) => {
+  const isOn = (value: unknown): boolean => value === true || value === "1";
+  const ignoreConcurrently = isOn(config.settings["ignore_concurrently"]);
+  const ignoreMaintenance = isOn(config.settings["ignore_maintenance"]);
+
   return (
     <>
       <p>
@@ -29,6 +33,21 @@ const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
         <code>pg_repack</code>, etc), as well as any queries that contain the
         <code>/* pganalyze:no-alert */</code> magic comment.
       </p>
+      {ignoreConcurrently && (
+        <p>
+          Also ignores non-blocking index builds (
+          <code>CREATE INDEX CONCURRENTLY</code> and{" "}
+          <code>REINDEX CONCURRENTLY</code>), based on this check's
+          configuration.
+        </p>
+      )}
+      {ignoreMaintenance && (
+        <p>
+          Also ignores non-blocking maintenance (<code>VACUUM</code>, excluding{" "}
+          <code>VACUUM FULL</code>, and <code>ANALYZE</code>), based on this
+          check's configuration.
+        </p>
+      )}
     </>
   );
 };
@@ -117,7 +136,7 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
 
 const documentation: CheckDocs = {
   description:
-    "<p>Alerts on connections currently in the <code>active</code> state, that have had a query running longer than the specified threshold. This check only triggers on queries that are currently running and auto-resolves once the queries stop running.</p><p>Ignores queries from backup and maintenance programs (<code>pg_dump</code>, <code>pg_repack</code>, etc), as well as any queries that contain the <code>/* pganalyze:no-alert */</code> magic comment.</p>",
+    "<p>Alerts on connections currently in the <code>active</code> state, that have had a query running longer than the specified threshold. This check only triggers on queries that are currently running and auto-resolves once the queries stop running.</p><p>Ignores queries from backup and maintenance programs (<code>pg_dump</code>, <code>pg_repack</code>, etc), as well as any queries that contain the <code>/* pganalyze:no-alert */</code> magic comment.</p><p>Can also be configured to ignore non-blocking index builds and non-blocking maintenance.</p>",
   Trigger: ActiveQueryTrigger,
   Guidance: ActiveQueryGuidance,
 };
