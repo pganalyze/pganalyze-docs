@@ -137,6 +137,9 @@ The MCP server exposes tools, organized by the type of data they access. Since t
 | **Issues** | |
 | `get_issues` | Get active check-up issues and alerts |
 | `get_checkup_status` | Get check-up status overview for a database |
+| **Logs** | |
+| `get_log_stats` | Get time-series counts of collected log lines by classification |
+| `get_log_lines` | Get individual log lines, newest first, with optional filters (last 7 days retained) |
 | **Workbooks** ([setup required](#optimizing-queries-with-workbooks)) | |
 | `create_workbook` | Create a workbook from a query and run `EXPLAIN ANALYZE` |
 | `add_workbook_parameter_set` | Supply parameter values and trigger `EXPLAIN ANALYZE` |
