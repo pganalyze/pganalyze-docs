@@ -76,9 +76,9 @@ The MCP server supports two authentication methods: **OAuth** (interactive) and 
 
 When you first connect, your MCP client will open an OAuth authorization flow through your pganalyze account. During authorization, you can choose between the following permission levels:
 
-- **Basic read access** (required): Read access to your account data, excluding sensitive information such as query parameters. EXPLAIN plans are available when the pganalyze collector is configured to normalize query samples for PII filtering.
-- **Full read access** (optional): Full read access to your account data, including query parameters and EXPLAIN plans.
-- **Workbook write access** (optional, early access): Write access for creating workbooks and running `EXPLAIN ANALYZE` through the collector. It depends on Full read access, so granting it grants Full read access as well. This permission only appears once pganalyze has enabled the [Workbooks tools](#optimizing-queries-with-workbooks) for your organization.
+- **Basic read access** (`restricted_read`, required): Read access to some of your account data, excluding sensitive information such as query parameters. EXPLAIN plans are available when the pganalyze collector's PII filtering is configured to normalize query samples. Individual log lines are available when PII filtering is configured to filter all log secrets.
+- **Full read access** (`read`, optional): Full read access to your account data, including query text and EXPLAIN plans.
+- **Workbook write access** (`write_workbooks`, optional, early access): Write access to workbooks in your account: create, edit, and delete workbooks along with their variants and parameter sets, and run `EXPLAIN ANALYZE` on your databases through the collector. It depends on Full read access, so granting it grants Full read access as well. This permission only appears once pganalyze has enabled the [Workbooks tools](#optimizing-queries-with-workbooks) for your organization.
 
 ![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
 
@@ -119,7 +119,6 @@ The MCP server exposes tools, organized by the type of data they access. Since t
 | **Queries** | |
 | `get_query_stats` | Get top queries by runtime percentage |
 | `get_query_details` | Get full normalized query text |
-| `get_query_samples` | Get sample executions with runtime and parameters |
 | **Tables** | |
 | `get_tables` | List tables with filtering and pagination |
 | `get_table` | Get detailed information about a single table: schema details, columns (with per-column stats), indexes, and constraints |
@@ -142,10 +141,13 @@ The MCP server exposes tools, organized by the type of data they access. Since t
 | `get_log_lines` | Get individual log lines, newest first, with optional filters (last 7 days retained) |
 | **Workbooks** ([setup required](#optimizing-queries-with-workbooks)) | |
 | `create_workbook` | Create a workbook from a query and run `EXPLAIN ANALYZE` |
-| `add_workbook_parameter_set` | Supply parameter values and trigger `EXPLAIN ANALYZE` |
-| `get_workbook_details` | Get a workbook overview and poll for `EXPLAIN` results |
+| `create_workbook_variant` | Create a variant (rewrite and/or planner settings) and run `EXPLAIN ANALYZE` |
+| `create_workbook_parameter_set` | Create a parameter set and run `EXPLAIN ANALYZE` |
+| `update_workbook` | Update a workbook's name and/or description (e.g. an outcome note) |
+| `get_workbook_details` | Get a workbook overview |
+| `sync_workbook` | Sync/poll fresh EXPLAIN results for all variants |
 | `get_insight_rewrite` | Generate a query rewrite from a Query Advisor insight |
-| `create_workbook_variant` | Create a variant (rewrite or planner settings) |
+| `delete_workbook_item` | Delete a workbook, a variant, or a parameter set |
 
 When `get_index_selection` or `run_index_selection` is called against the
 primary of a cluster, the response reflects the cluster-aware Index
