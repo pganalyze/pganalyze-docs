@@ -4,15 +4,14 @@ backlink_href: /docs/enterprise
 backlink_title: 'pganalyze Enterprise Server'
 ---
 
-import ToC from '../../components/Toc'
-
 In some environments, running containers as the root user is not acceptable. This guide describes how to set up [pganalyze Enterprise Server](/enterprise-postgres-monitoring) 
 in a Kubernetes cluster, without running the container as root. This requires using the slim version of the pganalyze Enterprise Docker image and a separate Redis container.
 
 **Please note** that the slim container image does not contain a built-in pganalyze collector application. Therefore, you will need to have a [standalone pganalyze collector](https://pganalyze-we-pganalyze--tcuqan.herokuapp.com/docs/enterprise/setup/separate-collector-install) 
 running somewhere with access to your PostgreSQL instances once you have finished setting up the Enterprise Server Kubernetes deployment.
  
-<ToC items={props.toc} />
+```toc
+```
 
 ## Installation steps
 
