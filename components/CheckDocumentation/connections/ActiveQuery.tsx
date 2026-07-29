@@ -34,21 +34,17 @@ const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
         queries that contain the{" "}
         <code>/* pganalyze:no-alert */</code> magic comment.
       </p>
-      {ignoreConcurrently && (
-        <p>
-          Also ignores concurrent <code>CREATE INDEX</code>/<code>REINDEX</code>{" "}
-          (<code>CREATE INDEX CONCURRENTLY</code> and{" "}
-          <code>REINDEX CONCURRENTLY</code>), based on this check's
-          configuration.
-        </p>
-      )}
-      {ignoreMaintenance && (
-        <p>
-          Also ignores non-blocking maintenance commands (<code>VACUUM</code>,
-          excluding <code>VACUUM FULL</code>, and <code>ANALYZE</code>), based
-          on this check's configuration.
-        </p>
-      )}
+      <p>
+        Also ignores concurrent <code>CREATE INDEX</code>/<code>REINDEX</code> (
+        <code>CREATE INDEX CONCURRENTLY</code> and{" "}
+        <code>REINDEX CONCURRENTLY</code>), based on this check's configuration (
+        {ignoreConcurrently ? "on" : "off"}).
+      </p>
+      <p>
+        Also ignores non-blocking maintenance commands (<code>VACUUM</code>,
+        excluding <code>VACUUM FULL</code>, and <code>ANALYZE</code>), based on
+        this check's configuration ({ignoreMaintenance ? "on" : "off"}).
+      </p>
     </>
   );
 };
