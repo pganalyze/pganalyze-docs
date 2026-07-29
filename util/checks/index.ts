@@ -316,8 +316,16 @@ export type CheckConfig = {
   settings: { [key: string]: string | number | boolean };
 };
 
+// Where the config passed to a trigger component came from. The app renders a
+// server's actual check config ("app"), so trigger docs can describe concretely
+// what that check will and will not do. The public docs site has no server
+// context and renders DEFAULT_CHECK_CONFIGS instead ("defaults"), so
+// settings-specific wording would be misleading there.
+export type CheckConfigSource = "app" | "defaults";
+
 export type CheckTriggerProps = {
   config: CheckConfig;
+  source: CheckConfigSource;
 };
 
 // Consumers supply the subset of URLs that make sense in their context: the app

@@ -80,12 +80,12 @@ type CheckProps = {
 
 export const CheckTrigger: React.FunctionComponent<
   CheckProps & CheckTriggerProps
-> = ({ checkGroup, checkName, config }) => {
+> = ({ checkGroup, checkName, config, source }) => {
   const TriggerComponent = Docs[checkGroup]?.[checkName]?.Trigger;
   if (!TriggerComponent) {
     return null;
   }
-  return <TriggerComponent config={config} />;
+  return <TriggerComponent config={config} source={source} />;
 };
 
 export const CheckGuidance: React.FunctionComponent<
