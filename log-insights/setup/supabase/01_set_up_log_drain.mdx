@@ -1,0 +1,84 @@
+---
+title: 'Step 1: Set up Log Drain'
+install_track_title: 'Log Insights: Setup (Supabase)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+import imgSupabaseLogDrain from './supabase-create-log-drain.png'
+import imgSupabaseOtlpSettings from './supabase-otlp-settings.png'
+
+Supabase allows you to configure a [Log Drain](https://supabase.com/docs/guides/telemetry/log-drains) that
+pushes logs to an OpenTelemetry (OTLP) HTTP endpoint that the pganalyze collector exposes.
+
+**Log Drains require the Supabase Pro plan or higher** (not available on the Free plan).
+
+## Expose an OpenTelemetry endpoint on the collector
+
+The pganalyze collector can receive logs over OTLP using the
+[`db_log_otel_server`](/docs/collector/settings#self-managed-servers) setting.
+
+```ini
+[pganalyze]
+api_key = your_pga_organization_api_key
+
+[server1]
+db_host = aws-0-your-region.pooler.supabase.com
+db_port = 5432
+db_username = pganalyze.your-project-ref
+...
+db_log_otel_server = 0.0.0.0:4318
+```
+
+Supabase's infrastructure needs to reach this endpoint over the public internet, so keep the following in mind:
+
+* Run the collector somewhere with a stable, publicly reachable address (a small VM works well)
+* Although not required, we highly recommend running the collector behind a TLS-terminating reverse 
+  proxy or load balancer in front of the `db_log_otel_server` port to provide a `https://` endpoint URL
+* The collector's OTLP receiver does not itself authenticate incoming requests, so restrict
+  network access to it (e.g. via firewall/security group rules) wherever possible
+
+## Add the Log Drain in Supabase
+
+In the Supabase dashboard, go to **Project Settings &rarr; Log Drains** and add a new drain with the **Add Destination** button:
+
+<img src={imgSupabaseLogDrain} alt="Supabase log drain details" className="img-polaroid" style={{ width: '500px' }} />
+<br/><br/>
+* **Name**: pganalyze
+* **Type**: OpenTelemetry Protocol (OTLP)
+* **Endpoint**: `https://your-collector-host:4318/v1/logs`
+* **Gzip**: enabled (recommended, and supported by the collector)
+* **Headers**: none required — the collector does not check authentication headers
+
+<img src={imgSupabaseOtlpSettings} alt="Supabase OTLP settings" className="img-polaroid" style={{ width: '500px' }} />
+<br/><br/>
+
+Supabase sends logs for all of its services (Postgres, Auth, Storage, Edge Functions, etc.)
+to the same drain. The collector only extracts the Postgres log lines and ignores the rest.
+
+## Test and verify
+
+Run the following on the collector host to verify the configuration:
+
+```bash
+sudo pganalyze-collector --test-logs --reload
+```
+
+Because Supabase batches and pushes logs on a delay, the collector waits longer than usual
+for the test log line to arrive (30 seconds by default for Supabase, configurable with
+[`db_log_test_timeout`](/docs/collector/settings#general-settings)). A successful run ends with
+`Log test successful`.
+
+If logs don't show up within a few minutes of a real query, double check that the Log Drain
+is enabled and pointed at the correct endpoint, and that the collector host is reachable from
+the public internet.
+
+<PublicOnly>
+  <p>
+    Once ready, you will see log events on the Log Insights page in pganalyze.
+  </p>
+  <p>
+    We recommend setting up <a href="/docs/explain/setup/supabase/01_auto_explain_check">Automated EXPLAIN</a> as
+    a follow-up step, to automatically EXPLAIN slow queries in Postgres.
+  </p>
+</PublicOnly>

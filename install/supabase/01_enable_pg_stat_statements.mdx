@@ -1,0 +1,40 @@
+---
+title: 'Step 1: Enable pg_stat_statements'
+install_track_title: Installation Guide (Supabase)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+To monitor a Supabase project, you run the pganalyze collector on your own infrastructure
+(a small VM or container), and point it at your project's database connection details.
+
+In this step we set up [pg_stat_statements](https://www.postgresql.org/docs/current/static/pgstatstatements.html),
+which is used by pganalyze to collect Postgres query statistics.
+
+Supabase enables the `pg_stat_statements` extension by default on every project, so
+no action is normally required here. You can confirm it's enabled by running the following
+in the [SQL Editor](https://supabase.com/dashboard/project/_/sql/new), or via `psql`:
+
+```sql
+SELECT * FROM pg_stat_statements LIMIT 1;
+```
+
+If this returns an error instead of a result (or an empty result on a brand new project),
+enable the extension through **Database &rarr; Extensions** in the Supabase dashboard, or by running:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+```
+
+Note that Supabase installs `pg_stat_statements` (and other extensions) into a dedicated
+`extensions` schema rather than `public`. That's why the query above works for the
+**postgres** user without qualifying the schema — its `search_path` already includes
+`extensions`. We'll grant the monitoring user access to that schema in the next step.
+
+---
+
+Next, we continue by creating a monitoring user:
+
+<Link className="btn btn-success" to="02_create_monitoring_user">
+  Proceed to Step 2: Create Monitoring User
+</Link>

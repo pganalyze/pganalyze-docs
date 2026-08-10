@@ -1,0 +1,42 @@
+---
+title: 'Step 4: Configure the Collector'
+install_track_title: Installation Guide (Supabase)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import InstallChoice from '../../components/InstallChoice'
+import styles from '../../style.module.scss'
+
+import imgLogoUbuntu from '../../images/logo_ubuntu.png'
+import imgLogoRedhat from '../../images/logo_redhat.svg'
+import imgLogoDocker from '../../images/logo_docker.svg'
+
+export const SelectCollectorPlatform = () => {
+  return (
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "04_configure_the_collector_package",
+          img: imgLogoUbuntu,
+          providerName: "Ubuntu & Debian",
+        },
+        {
+          link: "04_configure_the_collector_package",
+          img: imgLogoRedhat,
+          providerName: "RHEL, CentOS & Fedora",
+        },
+        {
+          link: "04_configure_the_collector_docker",
+          img: imgLogoDocker,
+          providerName: "Docker",
+        },
+      ]}
+    />
+  )
+}
+
+To continue, we need to know where your collector is running:
+
+<SelectCollectorPlatform />

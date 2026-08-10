@@ -18,14 +18,16 @@ type PGSettingRecommendation = {
   description?: string;
 }
 
-type RecommendationMode = 'list' | 'alter system';
+type RecommendationMode = 'list' | 'alter system' | 'alter role';
 
 type Props ={
   mode?: RecommendationMode,
-  recommendations: PGSettingRecommendation[]
+  recommendations: PGSettingRecommendation[],
+  // Role name to use for `alter role` mode, e.g. "your_app_role". Ignored by other modes.
+  roleName?: string,
 }
 
-const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'list', recommendations }) => {
+const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'list', recommendations, roleName }) => {
   const hasCurrent = recommendations.some(s => s.current != null);
   const DescriptionPopup = useDescriptionPopup()
 
@@ -57,12 +59,12 @@ const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'lis
           })}
         </tbody>
       </table>
-      <RecommendationSummary mode={mode} recommendations={recommendations} />
+      <RecommendationSummary mode={mode} recommendations={recommendations} roleName={roleName} />
     </>
   )
 }
 
-const RecommendationSummary: React.FunctionComponent<Props> = ({mode, recommendations}) => {
+const RecommendationSummary: React.FunctionComponent<Props> = ({mode, recommendations, roleName}) => {
   const requiredChanges = recommendations.filter(r => r.recommendChange && r.required);
   const recommendedChanges = recommendations.filter(r => r.recommendChange && !r.required);
 
@@ -72,10 +74,12 @@ const RecommendationSummary: React.FunctionComponent<Props> = ({mode, recommenda
     return <div>No changes are required or recommended</div>
   }
 
-  const Recommendations: React.ComponentType<Pick<Props, 'recommendations'>> = mode === 'list'
+  const Recommendations: React.ComponentType<Pick<Props, 'recommendations' | 'roleName'>> = mode === 'list'
     ? ListRecommendations
     : mode === 'alter system'
     ? AlterSystemRecommendations
+    : mode === 'alter role'
+    ? AlterRoleRecommendations
     : Null
 
   return (
@@ -83,13 +87,13 @@ const RecommendationSummary: React.FunctionComponent<Props> = ({mode, recommenda
       {hasRequired && (
         <>
           <h3>Summary of required changes</h3>
-          <Recommendations recommendations={requiredChanges} />
+          <Recommendations recommendations={requiredChanges} roleName={roleName} />
         </>
       )}
       {hasRecommended && (
         <>
           <h3>Summary of recommended changes</h3>
-          <Recommendations recommendations={recommendedChanges} />
+          <Recommendations recommendations={recommendedChanges} roleName={roleName} />
         </>
       )}
     </div>
@@ -118,7 +122,7 @@ const RecommendationStatus: React.FunctionComponent<{recommendation: PGSettingRe
   }
 }
 
-const ListRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({recommendations}) => {
+const ListRecommendations: React.FunctionComponent<Pick<Props, 'recommendations' | 'roleName'>> = ({recommendations}) => {
   return (
     <dl className={styles.recommendationsList}>
       {recommendations.map(s => {
@@ -137,7 +141,7 @@ const ListRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'
   )
 }
 
-const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({recommendations}) => {
+const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommendations' | 'roleName'>> = ({recommendations}) => {
   return (
     <CodeBlock language="sql">
       {recommendations.map(s => {
@@ -149,7 +153,20 @@ const AlterSystemRecommendations: React.FunctionComponent<Pick<Props, 'recommend
         return (
          `ALTER SYSTEM SET ${s.name} TO ${value};`
         )
-      })}
+      }).join("\n")}
+    </CodeBlock>
+  )
+}
+
+const AlterRoleRecommendations: React.FunctionComponent<Pick<Props, 'recommendations' | 'roleName'>> = ({recommendations, roleName = 'your_app_role'}) => {
+  return (
+    <CodeBlock language="sql">
+      {recommendations.map(s => {
+        const value = s.name === 'shared_preload_libraries' ? s.recommended : `'${s.recommended}'`
+        return (
+         `ALTER ROLE "${roleName}" SET ${s.name} TO ${value};`
+        )
+      }).join("\n")}
     </CodeBlock>
   )
 }

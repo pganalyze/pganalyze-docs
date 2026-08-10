@@ -1,0 +1,46 @@
+---
+title: 'Step 3: Install the Collector'
+install_track_title: Installation Guide (Supabase)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import InstallChoice from '../../components/InstallChoice'
+import styles from '../../style.module.scss'
+
+import imgLogoUbuntu from '../../images/logo_ubuntu.png'
+import imgLogoRedhat from '../../images/logo_redhat.svg'
+import imgLogoDocker from '../../images/logo_docker.svg'
+
+export const SelectCollectorPlatform = () => {
+  return (
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "03_install_the_collector_package",
+          img: imgLogoUbuntu,
+          providerName: "Ubuntu & Debian",
+        },
+        {
+          link: "03_install_the_collector_package",
+          img: imgLogoRedhat,
+          providerName: "RHEL, CentOS & Fedora",
+        },
+        {
+          link: "03_install_the_collector_docker",
+          img: imgLogoDocker,
+          providerName: "Docker",
+        },
+      ]}
+    />
+  )
+}
+
+The collector runs on a VM or container of your choosing, and connects to your
+Supabase database over the network. We recommend at least 1GB of RAM (you may need
+more to handle large schemas or complex query workloads).
+
+To continue, select the environment where you plan to run the collector.
+
+<SelectCollectorPlatform />

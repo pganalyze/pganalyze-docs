@@ -1,0 +1,4 @@
+- mount: log-insights/setup/neon
+  items:
+  - name: "Step 1: Set up OpenTelemetry Logs"
+    href: log-insights/setup/neon/01_set_up_opentelemetry_logs

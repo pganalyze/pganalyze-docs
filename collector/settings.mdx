@@ -720,5 +720,10 @@ talking to pganalyze support.
       <td>[none]</td>
       <td>Script to call if snapshot succeeds (learn more <a target="_blank" href="https://github.com/pganalyze/collector/#successerror-callbacks">in the collector README</a>)</td>
     </tr>
+    <tr>
+      <td>db_log_test_timeout (<code>LOG_TEST_TIMEOUT</code>)</td>
+      <td>10 (30 on platforms with a batched log push, e.g. Supabase)</td>
+      <td>Overrides how many seconds the collector test waits for the emitted test log event to arrive before giving up.</td>
+    </tr>
   </tbody>
 </table>

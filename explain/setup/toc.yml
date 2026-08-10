@@ -16,6 +16,8 @@
     href: explain/setup/azure_database
   - name: Google Cloud SQL
     href: explain/setup/google_cloud_sql
+  - name: Supabase
+    href: explain/setup/supabase
   - name: Crunchy Bridge
     href: explain/setup/crunchy_bridge
   - name: Heroku Postgres

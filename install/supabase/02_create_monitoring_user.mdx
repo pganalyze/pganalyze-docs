@@ -1,0 +1,38 @@
+---
+title: 'Step 2: Create Monitoring User'
+install_track_title: Installation Guide (Supabase)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
+
+We recommend creating a separate monitoring user, rather than using the built-in `postgres` user.
+
+Connect to your database as the **postgres** user and run the following to create a new user.
+This is a one-off setup step, so it doesn't matter which connection you use to run it — the
+[SQL Editor](https://supabase.com/dashboard/project/_/sql/new) is the easiest option, but `psql`
+against either the direct connection or the Supavisor pooler (session or transaction mode) works
+just as well:
+
+<MonitoringUserSetupInstructions adminUsername='postgres' databaseName='postgres' />
+
+Supabase installs extensions like `pg_stat_statements` into a dedicated `extensions`
+schema, rather than `public`. Since the `pganalyze` user doesn't have access to that
+schema by default, grant it explicitly (still connected as **postgres**):
+
+```sql
+GRANT USAGE ON SCHEMA extensions TO pganalyze;
+GRANT SELECT ON extensions.pg_stat_statements TO pganalyze;
+```
+
+Write down the username and password of the monitoring user, we will need it in later
+steps of this guide.
+
+---
+
+Next we continue by installing the pganalyze collector:
+
+<Link className="btn btn-success" to="03_install_the_collector">
+  Proceed to Step 3: Install the Collector
+</Link>

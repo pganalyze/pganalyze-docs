@@ -1,0 +1,18 @@
+import imgSupabaseGetConnected from './supabase-get-connected.png'
+import imgSupabaseConnectionDetails from './supabase-connection-details.png'
+
+## Finding your Supabase connection information
+
+The collector keeps an ongoing connection and we generally recommend connecting it through
+the Supavisor **session pooler** (port `5432` on the pooler hostname), rather than the direct connection.
+Supabase's direct connection is IPv6-only by default, and reaching it over IPv4 requires paying for the
+[IPv4 add-on](https://supabase.com/docs/guides/platform/ipv4-address).
+
+You can find your session pooler
+connection information by clicking on the **Get Connected** button in the Supabase dashboard:
+
+<img src={imgSupabaseGetConnected} alt="Supabase dashboard Get Connected button" className="img-polaroid" style={{ width: '520px' }} />
+<br/><br/>
+Then select the **Session pooler** option under the **Direct Connection String** tab.
+
+<img src={imgSupabaseConnectionDetails} alt="Supabase connection details showing the Session pooler option" className="img-polaroid" style={{ width: '500px' }} />

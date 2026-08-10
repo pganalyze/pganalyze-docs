@@ -1,0 +1,26 @@
+---
+title: 'Step 1: Check for auto_explain'
+install_track_title: 'Automated EXPLAIN: Setup (Supabase)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import Step01InAppSupabase from './_01_in_app.mdx'
+import Step01PublicSupabase from './_01_public.mdx'
+
+The recommended Automated EXPLAIN configuration for Supabase is to use the Postgres
+`auto_explain` contrib module. This ensures accurate and detailed plan information,
+including runtime information (as gathered by EXPLAIN ANALYZE). With our recommended
+configuration (presented in a later step), performance overhead is minimal.
+
+Unlike most other platforms, Supabase does not let you change `shared_preload_libraries`
+or use `ALTER SYSTEM` yourself — instead, most Postgres configuration on Supabase
+(including all `auto_explain.*` settings) is set at the **role level**, using
+`ALTER ROLE ... SET`. We'll cover that in Step 3.
+
+<PublicOnly>
+   <Step01PublicSupabase />
+</PublicOnly>
+<InAppOnly>
+   <Step01InAppSupabase autoExplainEnabled={props.autoExplainEnabled} />
+</InAppOnly>

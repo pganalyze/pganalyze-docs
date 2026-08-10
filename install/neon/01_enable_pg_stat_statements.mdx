@@ -1,0 +1,31 @@
+---
+title: 'Step 1: Enable pg_stat_statements'
+install_track_title: Installation Guide (Neon)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+To monitor a Neon project, you run the pganalyze collector on your own infrastructure
+(a small VM or container), and point it at the connection string for the branch you
+want to monitor. Note that every branch in a Neon project has its own connection
+string and its own compute, so you'll need to repeat this setup for each branch you
+want pganalyze to monitor (typically just your production branch).
+
+In this step we set up [pg_stat_statements](https://www.postgresql.org/docs/current/static/pgstatstatements.html),
+which is used by pganalyze to collect Postgres query statistics.
+
+Connect to the branch you want to monitor, using the connection string from the
+[Neon Console](https://console.neon.tech) (**Connect** button on the Project Dashboard),
+and run the following to enable the `pg_stat_statements` extension:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+```
+
+---
+
+Next, we continue by creating a monitoring user:
+
+<Link className="btn btn-success" to="02_create_monitoring_user">
+  Proceed to Step 2: Create Monitoring User
+</Link>

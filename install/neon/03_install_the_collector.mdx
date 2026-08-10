@@ -1,0 +1,50 @@
+---
+title: 'Step 3: Install the Collector'
+install_track_title: Installation Guide (Neon)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import InstallChoice from '../../components/InstallChoice'
+import styles from '../../style.module.scss'
+
+import imgLogoUbuntu from '../../images/logo_ubuntu.png'
+import imgLogoRedhat from '../../images/logo_redhat.svg'
+import imgLogoDocker from '../../images/logo_docker.svg'
+
+export const SelectCollectorPlatform = () => {
+  return (
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "03_install_the_collector_package",
+          img: imgLogoUbuntu,
+          providerName: "Ubuntu & Debian",
+        },
+        {
+          link: "03_install_the_collector_package",
+          img: imgLogoRedhat,
+          providerName: "RHEL, CentOS & Fedora",
+        },
+        {
+          link: "03_install_the_collector_docker",
+          img: imgLogoDocker,
+          providerName: "Docker",
+        },
+      ]}
+    />
+  )
+}
+
+The collector runs on a VM or container of your choosing, and connects to your
+Neon branch over the network. We recommend at least 1GB of RAM (you may need
+more to handle large schemas or complex query workloads).
+
+**Note:**: If you want to collect logs from your Neon branch ([configured separately](/docs/log-insights/setup/neon/01_set_up_opentelemetry_logs)), you must run the
+collector on a host that is reachable over the public internet. The collector exposes
+an OpenTelemetry (OTLP) HTTP endpoint that Neon will use to push log information to.
+
+To continue, select the environment where you plan to run the collector.
+
+<SelectCollectorPlatform />

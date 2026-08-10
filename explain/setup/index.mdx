@@ -30,17 +30,26 @@ Log-based EXPLAIN is not guaranteed to show the same plan that was executed, and
 
 ### Supported platforms
 
-Platform                      | Log-based EXPLAIN |    auto_explain   |
-------------------------------|-------------------|-------------------|
-Amazon RDS and Amazon Aurora  | Yes               | Yes (Recommended) |
-Azure Database for PostgreSQL | Yes               | Yes (Recommended) |
-Google Cloud SQL and AlloyDB  | Yes               | Yes (Recommended) |
-Heroku Postgres               | Yes               | Yes (Recommended) |
-Crunchy Bridge                | Yes               | Yes (Recommended) |
-Aiven                         | Yes               | No                |
-Self-managed VM               | Yes               | Yes (Recommended) |
-Kubernetes                    | No                | No                |
-Other PaaS                    | Contact support   | Contact support   |
+Platform                      | Log-based EXPLAIN |    auto_explain    |
+------------------------------|-------------------|---------------------|
+Amazon RDS and Amazon Aurora  | Yes               | Yes (Recommended)   |
+Azure Database for PostgreSQL | Yes               | Yes (Recommended)   |
+Google Cloud SQL and AlloyDB  | Yes               | Yes (Recommended)   |
+Heroku Postgres               | Yes               | Yes (Recommended)   |
+Crunchy Bridge                | Yes               | Yes (Recommended)   |
+Aiven                         | Yes               | No                  |
+Supabase                      | Yes               | Yes (Recommended)\* |
+Neon                          | No                | No                  |
+Self-managed VM               | Yes               | Yes (Recommended)   |
+Kubernetes                    | No                | No                  |
+Other PaaS                    | Contact support   | Contact support     |
+
+\* Supabase only supports configuring `auto_explain` settings at the role level (rather than
+server-wide). Therefore, you will need to configure each application role that you want auto_explain 
+output for individually. See the [Supabase setup guide](/docs/explain/setup/supabase/01_auto_explain_check) for details.
+
+Neon does not currently provide a way to collect EXPLAIN plans (neither `auto_explain` nor
+log-based EXPLAIN are supported on Neon at this time).
 
 We are constantly evaluating new platform to support - please [reach out](/contact) if you're missing an integration, to help us prioritize.
 
@@ -55,4 +64,5 @@ See the following pages for details on how to install pganalyze Automated EXPLAI
 * [Heroku Postgres](/docs/explain/setup/heroku/01_auto_explain_check)
 * [Crunchy Bridge](/docs/explain/setup/crunchy_bridge/01_auto_explain_check)
 * [Aiven](/docs/explain/setup/log_explain/01_create_helper_functions)
+* [Supabase](/docs/explain/setup/supabase/01_auto_explain_check)
 * [Self-Managed Server](/docs/explain/setup/self_managed/01_auto_explain_check)

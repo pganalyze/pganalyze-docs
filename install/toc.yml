@@ -24,5 +24,9 @@
     href: install/heroku_postgres
   - name: Aiven
     href: install/aiven
+  - name: Supabase
+    href: install/supabase
+  - name: Neon
+    href: install/neon
   - name: Self-managed (and other hosted Postgres)
     href: install/self_managed
