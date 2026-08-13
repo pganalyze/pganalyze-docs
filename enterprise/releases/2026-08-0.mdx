@@ -66,7 +66,6 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - Support fractional rows and Index Searches in plan output {/* 6007 */}
   - Fix plan text parser for Aurora Adaptive joins {/* 5895 */}
   - Avoid storing duplicate query plans {/* 5946 */}
-  - Only count up to 10k plans for plan counts, to avoid slow queries {/* 5943 */}
   - Fix error when viewing large EXPLAIN plans {/* 6054, 6078 */}
 * Add ability to hide and resize columns in some tables {/* 5911 and 5918 */}
   - This allows giving more space to more important columns (like query).
@@ -118,9 +117,12 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
       browser LocalStorage, this would also persist across visits.
     - The change guards against all statement types being turned off, and automatically turns on SELECT statements for
       users who may have previously turned off all statement types.
-* Graph:
-  - Skip series in graph tooltips when their nearest data points are too far from the cursor {/* 5906 */}
-  - Handle undefined interaction points on hover {/* 5907 */}
+* EXPLAIN plans and Automated EXPLAIN:
+  - Support fractional rows and Index Searches in plan output {/* 6007 */}
+  - Fix plan text parser for Aurora Adaptive joins {/* 5895 */}
+  - Avoid storing duplicate query plans {/* 5946 */}
+  - Fix error when viewing large EXPLAIN plans {/* 6054, 6078 */}
+* Skip series in graph tooltips when their nearest data points are too far from the cursor {/* 5906 */}
 * Render longer database names in database menu {/* 6041 */}
 * Log Insights
   - Fix log line ingest byte size issue {/* 6114 */}
@@ -130,7 +132,6 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 * Fix table sorting on Connections page {/* 5981 */}
 * Improve SAML integration setup with clearer error messages {/* 5993 */}
 * Fix missed aggregate statistics (1 hour data points) due to bug in compaction process {/* 6122 */}
-* Reduce rate of re-analyzing of queries with previously failed/outdated query analysis {/* 6043 */}
 * Schema Statistics: Revise tooltip text for updates/min {/* 5937 */}
 * Accessibility: Improve color contrast of link blue, and update to accessible green components {/* 5965 and 5990 */}
 * Snapshot processing: Improve reliability and reduce overhead {/* 5905, 5919, 5922, 5933, 5935, 5940, 5944, 6006 and 6037 */}
@@ -140,6 +141,8 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 * Speed up initial app loading time for organizations with many servers {/* 6030 */}
 * Avoid N+1 queries in server group, Index Advisor, VACUUM settings, summary statistics and index metadata worker {/* 6080, 6102, 6103, 6106, 6109, 6110, 6117 and 6131 */}
 * Query Advisor / VACUUM Advisor: Handle databases with a very large number of issues {/* 5980 */}
+* Reduce rate of re-analyzing of queries with previously failed/outdated query analysis {/* 6043 */}
+* Automated EXPLAIN: Only count up to 10k plans for plan counts, to avoid slow queries {/* 5943 */}
 
 ## Security
 
