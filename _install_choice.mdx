@@ -9,6 +9,8 @@ import imgLogoGcp from './images/logo_google_cloud.svg'
 import imgLogoPgsql from './images/logo_postgres.svg'
 import imgLogoHeroku from './images/logo_heroku.svg'
 import imgLogoCrunchyBridge from './images/logo_crunchy_bridge.svg'
+import imgLogoSupabase from './images/logo_supabase.svg'
+import imgLogoNeon from './images/logo_neon.svg'
 
 export const InstallChoiceList = ({ docsRoot }) => {
   return (
@@ -56,6 +58,18 @@ export const InstallChoiceList = ({ docsRoot }) => {
           img: imgLogoAiven,
           providerName: "Aiven",
           text: "Managed PostgreSQL",
+        },
+        {
+          link: "install/supabase/01_enable_pg_stat_statements",
+          img: imgLogoSupabase,
+          providerName: "Supabase",
+          text: "Managed Postgres Platform",
+        },
+        {
+          link: "install/neon/01_enable_pg_stat_statements",
+          img: imgLogoNeon,
+          providerName: "Neon",
+          text: "Serverless Postgres",
         },
       ]}
     />

@@ -1,0 +1,75 @@
+---
+title: 'Step 4: Configure the Collector'
+install_track_title: Installation Guide (Supabase)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
+import FindConnectionInfo from './_04_find_connection_info.mdx'
+
+export const APIKeyInstructions = ({ apiKey }) => {
+  return apiKey ? (
+    <React.Fragment>
+      The <code>api_key</code> for the current organization is{" "}
+      <code>{apiKey}</code>
+    </React.Fragment>
+  ) : (
+    <React.Fragment>
+      The <code>api_key</code> can be found in the pganalyze Settings page for
+      your organization, under the API Access tab
+    </React.Fragment>
+  );
+};
+
+export const ConfigSample = ({ apiKey }) => {
+  return (
+    <CodeBlock language="ini">
+      {`[pganalyze]
+api_key = ${apiKey ?? 'your_pga_organization_api_key'}\n
+[server1]
+db_host = aws-0-your-region.pooler.supabase.com
+db_port = 5432
+db_name = postgres
+db_username = pganalyze.your-project-ref
+db_password = your_monitoring_user_password`}
+    </CodeBlock>
+  )
+}
+
+<FindConnectionInfo />
+
+## Modify the collector configuration file
+The collector configuration file lives in `/etc/pganalyze-collector.conf`, and looks like this:
+
+<ConfigSample apiKey={props.apiKey} />
+
+Fill in the values step-by-step:
+
+1. <APIKeyInstructions apiKey={props.apiKey} />
+2. The `db_host` is the Supavisor pooler hostname for your project, of the form
+   `aws-0-<region>.pooler.supabase.com`. You can find it under **Project Settings &rarr; Database**
+   in the Supabase dashboard (choose the "Session pooler" tab)
+3. The `db_port` is `5432` for the **session pooler** — do not use port `6543`, which is the
+   transaction pooler and doesn't support the session-level features the collector relies on
+4. The `db_name` is the database you want to monitor (`postgres` by default)
+5. The `db_username` and `db_password` should be the credentials of the monitoring user we
+   created in Step 1. Note the pooler requires the `<role>.<project-ref>` username format,
+   so this is `pganalyze.your-project-ref`, not just `pganalyze`
+
+If you're paying for Supabase's IPv4 add-on and prefer to connect directly instead, use the
+direct connection hostname (`db.<project-ref>.supabase.co`) as `db_host`, drop `db_port`
+(defaults to `5432`), and use the plain `pganalyze` username.
+
+The collector automatically detects that this is a Supabase project from the `db_host`
+suffix, so no further platform-specific configuration is required.
+
+## Testing the new configuration
+
+Run the following to make sure the configuration works:
+
+```bash
+sudo pganalyze-collector --test
+```
+
+<PublicLastStepLogInsightsLink />

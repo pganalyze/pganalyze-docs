@@ -1,0 +1,4 @@
+- mount: log-insights/setup/supabase
+  items:
+  - name: "Step 1: Set up Log Drain"
+    href: log-insights/setup/supabase/01_set_up_log_drain

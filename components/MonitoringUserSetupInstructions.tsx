@@ -6,30 +6,36 @@ import { useGeneratedPassword } from "./WithGeneratedPassword";
 type Props = {
   adminUsername?: string;
   noPgMonitor?: boolean;
+  databaseName?: string;
 };
 
 const MonitoringUserSetupInstructions: React.FunctionComponent<Props> = ({
   adminUsername,
-  noPgMonitor
+  noPgMonitor,
+  databaseName
 }) => {
   const password = useGeneratedPassword();
   return (
     <>
       <MonitoringUserBase password={password} noPgMonitor={noPgMonitor} />
-      <MonitoringUserPerDatabaseHelpers username="pganalyze" adminUsername={adminUsername} />
+      <MonitoringUserPerDatabaseHelpers username="pganalyze" adminUsername={adminUsername} databaseName={databaseName} />
     </>
   );
 };
 
-export const MonitoringUserPerDatabaseHelpers: React.FunctionComponent<{ username: string, adminUsername?: string }> = ({
+export const MonitoringUserPerDatabaseHelpers: React.FunctionComponent<{ username: string, adminUsername?: string, databaseName?: string }> = ({
   username,
-  adminUsername
+  adminUsername,
+  databaseName
 }) => {
   const adminUserStr = !!adminUsername ? <strong>{adminUsername}</strong> : 'a superuser (or equivalent)'
+  const whereStr = !!databaseName
+    ? <React.Fragment>the <code>{databaseName}</code> database</React.Fragment>
+    : 'each database that you plan to monitor on this server'
   return (
     <>
       <p>
-        Then, connect to each database that you plan to monitor on this server as {adminUserStr} and
+        Then, connect to {whereStr} as {adminUserStr} and
         run the following to enable the collection of additional column statistics and extended statistics:
       </p>
       <CodeBlock language="sql">

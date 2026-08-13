@@ -1,0 +1,32 @@
+---
+title: 'Step 2: Create Monitoring User'
+install_track_title: Installation Guide (Neon)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import MonitoringUserSetupInstructions from "../../components/MonitoringUserSetupInstructions";
+
+We recommend creating a separate monitoring user, rather than using the default role
+that was created for you when the project (or branch) was created.
+
+Each branch starts out with a single database (`neondb` by default). Connect using the connection string from the Neon Console (Connect button on the Project Dashboard)
+following to create a new user:
+
+<MonitoringUserSetupInstructions adminUsername='your default Neon role' databaseName='neondb' />
+
+Write down the username and password of the monitoring user, we will need it in later
+steps of this guide.
+
+**Note:** Each Neon branch has its own independent set of roles and passwords, so if you
+plan to monitor more than one branch, you'll need to create a monitoring user on each of them.
+If you've created additional databases on a branch beyond the default one, repeat the column
+and extended statistics helper functions above for each of those too.
+
+---
+
+Next we continue by installing the pganalyze collector:
+
+<Link className="btn btn-success" to="03_install_the_collector">
+  Proceed to Step 3: Install the Collector
+</Link>

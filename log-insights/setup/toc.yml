@@ -14,6 +14,10 @@
     href: log-insights/setup/crunchy-bridge
   - name: Aiven
     href: log-insights/setup/aiven
+  - name: Supabase
+    href: log-insights/setup/supabase
+  - name: Neon
+    href: log-insights/setup/neon
   - name: Self-Managed Server
     href: log-insights/setup/self-managed
   - name: Receive logs using Syslog
