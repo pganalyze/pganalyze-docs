@@ -65,7 +65,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 * EXPLAIN plans and Automated EXPLAIN:
   - Support fractional rows and Index Searches in plan output {/* 6007 */}
   - Fix plan text parser for Aurora Adaptive joins {/* 5895 */}
-  - Do nothing when duplicate query plans are detected {/* 5946 */}
+  - Avoid storing duplicate query plans {/* 5946 */}
   - Only count up to 10k plans for plan counts, to avoid slow queries {/* 5943 */}
   - Fix error when viewing large EXPLAIN plans {/* 6054 */}
   - Support deeply nested EXPLAIN plans {/* 6078 */}
@@ -120,7 +120,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
     - The change guards against all statement types being turned off, and automatically turns on SELECT statements for
       users who may have previously turned off all statement types.
 * Graph:
-  - Avoid showing data points that are too far from the cursor in graph tooltips {/* 5906 */}
+  - Skip series in graph tooltips when their nearest data points are too far from the cursor {/* 5906 */}
   - Handle undefined interaction points on hover {/* 5907 */}
 * Render longer database names in database menu {/* 6041 */}
 * Log Insights
