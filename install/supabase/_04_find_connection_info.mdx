@@ -3,9 +3,7 @@ import imgSupabaseConnectionDetails from './supabase-connection-details.png'
 
 ## Finding your Supabase connection information
 
-The collector keeps an ongoing connection and we generally recommend connecting it through
-the Supavisor **session pooler** (port `5432` on the pooler hostname), rather than the direct connection.
-Supabase's direct connection is IPv6-only by default, and reaching it over IPv4 requires paying for the
+The collector currently uses IPv4 to connect to your database, but by default, Supabase's direct connection is IPv6-only. Therefore, we generally recommend connecting through the Supavisor **session pooler** (port `5432` on the pooler hostname), rather than the direct connection unless you are already paying for the IPv4 direct connection add-on in your Supabase project. 
 [IPv4 add-on](https://supabase.com/docs/guides/platform/ipv4-address).
 
 You can find your session pooler
