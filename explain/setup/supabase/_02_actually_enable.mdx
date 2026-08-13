@@ -1,6 +1,4 @@
-On Supabase, `shared_preload_libraries` is managed by the platform, and projects are not
-able to run `ALTER SYSTEM` themselves. If `auto_explain` doesn't show up in
-`shared_preload_libraries` for your project, [contact Supabase support](https://supabase.com/dashboard/support/new)
-and ask them to add `auto_explain` to your project's preload libraries.
+On Supabase, `shared_preload_libraries` is not user-configurable, but it includes `auto_explain`
+by default. If `auto_explain` doesn't show up in `shared_preload_libraries` for your project, contact Supabase support.
 
 Once that's confirmed, continue to the next step to configure `auto_explain` at the role level.

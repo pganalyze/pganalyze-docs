@@ -32,7 +32,7 @@ db_log_otel_server = 0.0.0.0:4318
 Neon's infrastructure needs to reach this endpoint over the public internet, so keep the following in mind:
 
 * Run the collector somewhere with a stable, publicly reachable address (a small VM works well)
-* Although not required, we highly recommend running the collector behind a TLS-terminating reverse
+* We highly recommend running the collector behind a TLS-terminating reverse
   proxy or load balancer in front of the `db_log_otel_server` port to provide a `https://` endpoint URL
 * The collector's OTLP receiver does not itself authenticate incoming requests. Neon's
   integration setup lets you configure an auth header (e.g. a bearer token) to send with

@@ -11,7 +11,7 @@ import imgSupabaseOtlpSettings from './supabase-otlp-settings.png'
 Supabase allows you to configure a [Log Drain](https://supabase.com/docs/guides/telemetry/log-drains) that
 pushes logs to an OpenTelemetry (OTLP) HTTP endpoint that the pganalyze collector exposes.
 
-**Log Drains require the Supabase Pro plan or higher** (not available on the Free plan).
+**Log Drains require the Supabase Pro plan or higher**.
 
 ## Expose an OpenTelemetry endpoint on the collector
 
@@ -33,7 +33,7 @@ db_log_otel_server = 0.0.0.0:4318
 Supabase's infrastructure needs to reach this endpoint over the public internet, so keep the following in mind:
 
 * Run the collector somewhere with a stable, publicly reachable address (a small VM works well)
-* Although not required, we highly recommend running the collector behind a TLS-terminating reverse 
+* We highly recommend running the collector behind a TLS-terminating reverse 
   proxy or load balancer in front of the `db_log_otel_server` port to provide a `https://` endpoint URL
 * The collector's OTLP receiver does not itself authenticate incoming requests, so restrict
   network access to it (e.g. via firewall/security group rules) wherever possible
