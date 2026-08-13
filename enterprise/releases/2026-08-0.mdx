@@ -1,0 +1,182 @@
+---
+title: '2026.08.0 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2026.08.0`
+
+## Notes
+
+- This release requires a database migration when coming from older releases, be sure to follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+- **Important:** If you are currently running v2023.08.0 or older, please [reach out to us](/contact) to walk you through the upgrade process.
+- If you're running the pganalyze-collector separately, it's required to use at least version [0.60.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0600------2024-10-15) (released October 2024) to ensure logs are uploaded in the correct format.
+- The Enterprise Server container image is now published as a multi-architecture container image for both x86-64 and ARM64
+- The Checks & Alerts configuration has been reworked around Alert Rules and Alert Destinations. Existing alert
+  policies are migrated automatically during the upgrade. {/* 5806 and 6009 */}
+
+## Features
+
+* Query Advisor:
+  - New Inefficient Index Use insight {/* 5787 */}
+    - This insight detects Index Scan nodes that read many rows only to discard most of them at the filter, and reports
+      when a different existing index exists that could be a better match.
+  - New Late Join Filter with OR insight {/* 5997 */}
+    - This insight detects joins with an OR condition that spans both joined tables, which prevents Postgres from using
+      an index on either side and forces it to filter after joining, and reports when existing indexes could support
+      rewriting the query as a UNION.
+  - See [the announcement post](/blog/new-query-advisor-insights) for details on the new insights
+* Checks & Alerts: Rework alert configuration {/* 5806 and 6009 */}
+  - The Checks & Alerts system has been reworked around the concept of Alert Rules (what triggers an alert) and
+    Alert Destinations (where alert notifications are sent). Alert Rules can be configured to track different Checks,
+    apply to a specific server or all servers in the organization, and target zero or more destination rules.
+* pganalyze MCP Server:
+  - Add log line and log statistics tools {/* 6042 */}
+    - This allows querying log lines and log statistics for a server through the MCP server.
+  - Allow extra OAuth DCR redirect hosts through `OAUTH_ALLOWED_REDIRECT_HOSTS` {/* 6035 */}
+    - The pganalyze MCP server authorizes clients through OAuth, and clients register themselves via Dynamic Client
+      Registration (DCR). Registration only succeeds when the client's redirect host is on an allowlist, which can now
+      be extended through the `OAUTH_ALLOWED_REDIRECT_HOSTS` environment variable (a comma-separated list of hostnames).
+* Update combined collector from v0.70.2 to [v0.72.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0720------2026-08-12) {/* 6038 and 6141 */}
+* Add Neon and Supabase as supported system types {/* 6072 */}
+* Server Groups: Support custom display names {/* 5896 */}
+  - Cluster-based server groups can now be renamed from the new Server Group Settings page. Updates to display name
+    will not change the underlying cluster ID. Empty names fall back to the cluster ID.
+* Workbooks:
+  - Allow creating a new parameter set by copying an existing one {/* 6029 */}
+  - Suggest queries to start from on the New Workbook page {/* 5880 */}
+    - Previously the New Workbook page showed only an empty SQL editor, leaving users without a query in mind to figure
+      out the next step on their own. The page now lists the database's top 10 SELECT queries by % of total runtime over
+      the last 24 hours; clicking any row starts a workbook pre-filled with that query.
+  - Don't show "Create Workbook" where it won't work, and check the create permission at the database level {/* 5954 and 6104 */}
+  - Link to PII filtering docs in query sample redaction callout {/* 5962 */}
+  - Improve the Assign Parameter Names modal, duplicate parameter set checks, and variant creation with new parameters {/* 6020, 6022, 6027 and 6028 */}
+* Index Advisor:
+  - Fix "relation does not exist" errors for tables referenced inside certain clauses {/* 6126 */}
+    - Previously, tables referenced only inside an aggregate FILTER clause, an aggregate ORDER BY clause, a window
+      definition, a VALUES list, a RETURNING clause, or an ON CONFLICT clause were not detected during query analysis.
+      For affected queries, Index Advisor showed a "relation ... does not exist" error and could not generate index
+      recommendations. These queries are now analyzed correctly and included in Index Advisor.
+  - Support uppercase column names in extended statistics {/* 5991 */}
+  - Prefer role-defined `search_path` if present when resolving schema objects {/* 6067 */}
+  - Unused index check: Raise maximum look back period from 35 days to 400 days {/* 5984 */}
+    - This allows configuring the unused index threshold to be significantly higher, to avoid incorrectly flagging
+      indexes that are used e.g. once a year. The default remains at 35 days.
+* EXPLAIN plans and Automated EXPLAIN:
+  - Support fractional rows and Index Searches in plan output {/* 6007 */}
+  - Fix plan text parser for Aurora Adaptive joins {/* 5895 */}
+  - Avoid storing duplicate query plans {/* 5946 */}
+  - Fix error when viewing large EXPLAIN plans {/* 6054, 6078 */}
+* Add ability to hide and resize columns in some tables {/* 5911 and 5918 */}
+  - This allows giving more space to more important columns (like query).
+* Graphs: Persist series selection (from legend) across navigation {/* 5994 */}
+  - The selection can be reset to defaults with a full-page reload.
+* System: Graph WAL size on WAL & Replication tab {/* 5927 */}
+* Add options to ignore concurrent CREATE INDEX/REINDEX and/or non-blocking maintenance commands in the Active Queries check {/* 6056 */}
+  - The Active Query check can now be configured to skip long-running statements that are expected to run without
+    blocking other queries. Two new options are available on the check's configuration page, both off by default:
+    "Ignore concurrent CREATE INDEX/REINDEX" skips `CREATE INDEX CONCURRENTLY` and `REINDEX CONCURRENTLY`, and
+    "Ignore non-blocking maintenance commands" skips `VACUUM` (excluding `VACUUM FULL`) and `ANALYZE`.
+* Store `pg_stat_database` `temp_files` and `temp_bytes`, as well as `temp_blks_read` and `temp_blks_written` on query statistics {/* 6013 and 6014 */}
+  - This gives server-wide spill data to complement the per-query temp block counters from `pg_stat_statements`.
+    In this release this is mainly an internal storage change that will be built upon in future releases.
+* Report deployment identity to license server {/* 6065 */}
+  - This utilizes the oldest organization creation time in the internal database as the deployment identifier (as a
+    unix timestamp), or "uninitialized" if there is no organization yet, and sends it to the license server on each
+    license check. This is intended to help distinguish multiple installs for accurate license reporting.
+
+## Bugfixes and other improvements
+
+* Fix missing system statistics when using release 2026.05.0 with collector version 0.71.0 or later {/* 6040 */}
+* Fix LDAP passthrough sign-in {/* 6008 */}
+  - An upstream change had stopped LDAP passthrough sign-in from working. This restores it, so LDAP users can sign in again.
+* Fix setting up of new Slack integrations {/* 5979 */}
+* Fix reporting of "Last Used At" date for newer collector API keys {/* 6047 */}
+  - Previously collector API keys that were created in the last two years showed an empty "Last Used At" timestamp,
+    making it seem as if the key was not in use, when in fact it was used to send statistics data. This issue was
+    specific to collector API keys and did not affect other API key types.
+* Authentication: Drop JWT and rely on cookie authentication for the GraphQL API {/* 6079 */}
+  - The GraphQL API previously used JWT for authentication, separate from the cookie authentication used for other app
+    interactions. The JWT mechanism has now been removed and GraphQL requests authenticate with cookies just like the
+    rest of the app. This should be transparent for most installations, but some users may need to adjust proxy configurations.
+* Allow exporting the generated collector configuration file {/* 5910 */}
+  - This adds an export button to the Collector Settings page for the configuration file generated by the integrated
+    collector (the collector that runs inside the Enterprise Server container). Exports are restricted to organization admins.
+  - This allows you to reuse the existing collector configuration from the integrated collector when setting up a
+    separate collector installation.
+* Isolate `pg_plan` (used by Index Advisor) in a separate process {/* 6066, 6111, 6132, 6134, 6135 and 6137 */}
+  - This makes query analysis more robust, so that failures in the analysis code cannot affect the rest of the
+    container.
+* Query Performance:
+  - Show an empty table when a search has no matches {/* 5960 */}
+    - Previously, searching the query list for a term with no matches showed an unrelated setup hint suggesting that
+      query statistics were not being collected.
+  - Guard against all statement types being turned off {/* 5941 */}
+    - Previously, unchecking all three statement type filters ("SELECT", "INSERT, UPDATE, DELETE", and "DDL &amp; other")
+      hid all query performance data and showed an unrelated setup hint instead. Since the selection is persisted in
+      browser LocalStorage, this would also persist across visits.
+    - The change guards against all statement types being turned off, and automatically turns on SELECT statements for
+      users who may have previously turned off all statement types.
+* EXPLAIN plans and Automated EXPLAIN:
+  - Support fractional rows and Index Searches in plan output {/* 6007 */}
+  - Fix plan text parser for Aurora Adaptive joins {/* 5895 */}
+  - Avoid storing duplicate query plans {/* 5946 */}
+  - Fix error when viewing large EXPLAIN plans {/* 6054, 6078 */}
+* Skip series in graph tooltips when their nearest data points are too far from the cursor {/* 5906 */}
+* Render longer database names in database menu {/* 6041 */}
+* Log Insights
+  - Fix log line ingest byte size issue {/* 6114 */}
+    - If the collector sent a log snapshot with an incorrect byte size for a log file, the ingest code could drop log
+      lines beyond the reported "end" of the file. Log file sizes are now recomputed rather than trusted as sent.
+  - Explicitly split uploaded data by minute for packed format to support higher log download intervals {/* 6093 */}
+* Fix table sorting on Connections page {/* 5981 */}
+* Improve SAML integration setup with clearer error messages {/* 5993 */}
+* Fix missed aggregate statistics (1 hour data points) due to bug in compaction process {/* 6122 */}
+* Schema Statistics: Revise tooltip text for updates/min {/* 5937 */}
+* Accessibility: Improve color contrast of link blue, and update to accessible green components {/* 5965 and 5990 */}
+* Snapshot processing: Improve reliability and reduce overhead {/* 5905, 5919, 5922, 5933, 5935, 5940, 5944, 6006 and 6037 */}
+
+## Performance
+
+* Speed up initial app loading time for organizations with many servers {/* 6030 */}
+* Avoid N+1 queries in server group, Index Advisor, VACUUM settings, summary statistics and index metadata worker {/* 6080, 6102, 6103, 6106, 6109, 6110, 6117 and 6131 */}
+* Query Advisor / VACUUM Advisor: Handle databases with a very large number of issues {/* 5980 */}
+* Reduce rate of re-analyzing of queries with previously failed/outdated query analysis {/* 6043 */}
+* Automated EXPLAIN: Only count up to 10k plans for plan counts, to avoid slow queries {/* 5943 */}
+
+## Security
+
+* Routine security updates to packages in the base image and library dependencies
+* Update Ruby to 3.4.10 and upgrade Rails to 8.1.3 {/* 6060, 6100 and 6140 */}
+* Fix `deleteServer` mutation permission check {/* 6062 */}
+  - This was incorrectly allowing a member with only "modify" permissions to delete servers, instead of requiring "manage" permissions
+* Updates dependencies for security issues that might have been flagged by scanners, but are not exploitable in our assessment
+  * Javascript libraries: CVE-2026-67213, CVE-2026-69152, CVE-2026-13149, CVE-2026-14257, CVE-2026-18446, CVE-2026-13676,
+    CVE-2026-16221, CVE-2026-59869, CVE-2026-53550, GHSA-5p4m-2wfm-xmqj, CVE-2026-49458, CVE-2026-49459,
+    GHSA-55q2-fjhq-7xh7, GHSA-c2j3-45gr-mqc4, GHSA-76mc-f452-cxcm, GHSA-r28c-9q8g-f849, CVE-2026-59879, CVE-2026-59880,
+    CVE-2026-13311, CVE-2026-9277, CVE-2026-13760, CVE-2026-11417, GHSA-464c-974j-9xm6, CVE-2026-53666, CVE-2026-53668,
+    CVE-2026-53669, CVE-2026-40181, CVE-2026-12143, CVE-2026-53571, CVE-2026-48779, CVE-2026-49356, GHSA-p63j-vcc4-9vmv
+  * Ruby gems: GHSA-j7xr-4g94-r9h3, GHSA-cgp2-2cmh-pf7x, GHSA-52jp-gj8w-j6xh, GHSA-5p9g-j988-pcwv, GHSA-7683-3w9x-ch42,
+    GHSA-h669-8m4g-r2hc, GHSA-rjr6-rcgv-9m7m, GHSA-5qhf-9phg-95m2, GHSA-8whx-365g-h9vv, GHSA-9wjq-cp2p-hrgf,
+    GHSA-cj75-f6xr-r4g7, GHSA-6jxj-px6v-747w, GHSA-6wmf-3r64-vcwv, GHSA-8vfg-2r28-hvhj, GHSA-wwpr-jff3-395c,
+    CVE-2026-53727, CVE-2026-54522, CVE-2026-54904, GHSA-5prr-v3j2-97mh, GHSA-5v8h-3h3q-446p, GHSA-8678-w3jw-xfc2,
+    GHSA-9cv2-cfxc-v4v2, GHSA-p67v-3w7g-wjg7, GHSA-phwj-rprq-35pp, GHSA-wfpw-mmfh-qq69, GHSA-wjv4-x9w8-wm3h,
+    CVE-2026-54297, CVE-2026-33637, CVE-2026-47240, CVE-2026-47241, CVE-2026-47242, GHSA-pp92-crg2-gfv9
+  * The unused "oj" gem was removed, addressing CVE-2026-54500, CVE-2026-54502, CVE-2026-54592, CVE-2026-54896,
+    CVE-2026-54897, CVE-2026-54898, CVE-2026-54899, CVE-2026-54900, CVE-2026-54901, CVE-2026-54902, CVE-2026-54903
+  * Rust crates: GHSA-cq8v-f236-94qc, GHSA-chgr-c6px-7xpp, GHSA-36hh-v3qg-5jq4, GHSA-7gcf-g7xr-8hxj
+
+## GraphQL API changes
+
+* Checks & Alerts: Replace alert policy resolvers with alert rule and alert destination resolvers {/* 6009 */}
+  - Removed `getAlertPolicies` and `getAlertPolicyDetails`
+  - Added `getAlertRules`, `getAlertRuleDetails`, `getAlertDestinations`, `getAlertDestinationDetails` and `getAlertCheckConfigs`
+  - Added `createAlertRule`, `updateAlertRule`, `deleteAlertRule`, `createAlertDestination`, `updateAlertDestination`,
+    `deleteAlertDestination` and `leaveAlertDestination` mutations
+* Server Groups: Add `updateServerGroup` mutation to support setting a custom display name {/* 5896 */}
+* Remove `clusterPrimaryServerHumanId` field from `ServerType` {/* 6115 */}
+  - This can be resolved on the client by going through the server group the server is a part of. Removing it also
+    avoids an N+1 on the server side.
+* Return an error when `getCurrentUserDetails` is called with an API key {/* 6108 */}
+* Add validation for the `sortBy` argument on query statistics and schema function resolvers {/* 5992 */}
+* Add default values for non-required fields on the `getSchemaTableEvents` resolver {/* 5902 */}
