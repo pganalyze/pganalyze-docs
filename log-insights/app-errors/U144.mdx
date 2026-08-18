@@ -38,12 +38,11 @@ built on, so the failing condition may come from an underlying view.
 
 **Recommended Action:**
 
-Look at the `DETAIL` line to see the offending row, compare it against the view's, and
-investigate the application code to determine why the invalid updates are being issued.
+Look at the `DETAIL` line to see the offending row, compare it against the view's definition,
+and investigate the application code to determine why the invalid updates are being issued.
 
-This may lead to dropping the WITH CHECK OPTION on the view, but note that
-dropping it means rows written through the view may not be visible through it
-afterwards.
+This may lead to dropping the WITH CHECK OPTION on the view, but note that dropping it means
+rows written through the view may not be visible through it afterwards.
 
 **Learn More:**
 

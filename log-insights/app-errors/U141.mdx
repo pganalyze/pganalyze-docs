@@ -22,8 +22,8 @@ STATEMENT:  SELECT '1e400'::float8;
 ```
 
 ```
-ERROR:  interval field value out of range: "P1Y2M3D" at character 20
-STATEMENT:  SELECT interval 'P1Y2M3D';
+ERROR:  interval field value out of range: "2147483648 days"
+STATEMENT: SELECT interval '2147483648 days';
 ```
 
 **Explanation:**
