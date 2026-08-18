@@ -1,0 +1,45 @@
+---
+log_classification: U148
+log_title: Object already exists
+log_category: app-errors
+collector_key: OBJECT_ALREADY_EXISTS
+tooltip: A CREATE or ALTER command conflicts with an object that already exists
+urgency: low
+sqlstate: "42710, 42P07, 42701 and 42723 (Class 42 - Syntax Error or Access Rule Violation: duplicate_object, duplicate_table, duplicate_column and duplicate_function)"
+---
+
+**Example Postgres Log Output:**
+
+```
+ERROR:  relation "mytable" already exists
+STATEMENT:  CREATE TABLE mytable (id int);
+```
+
+```
+ERROR:  column "created_at" of relation "mytable" already exists
+STATEMENT:  ALTER TABLE mytable ADD COLUMN created_at timestamptz;
+```
+
+```
+ERROR:  type "status" already exists
+```
+
+**Explanation:**
+
+A `CREATE` or `ALTER` command tried to create an object whose name is already
+taken. This covers every object kind since the cause and the fix are the same
+regardless of kind.
+
+Note that "already exists" is judged by name within the relevant namespace, not by
+definition. `CREATE TABLE mytable` fails if *any* relation named `mytable` exists in the
+schema, including a view, sequence, index or foreign table. Roles and databases are
+cluster-wide, so those conflicts can come from outside the current database entirely.
+
+**Recommended Action:**
+
+The most common source of this event is a migration being applied twice: a
+retried deploy, two application instances racing to run migrations at boot, or a
+migration that was partially applied and then re-run after an error.
+
+For idempotent commands, `IF NOT EXISTS` variants can avoid this error, but they
+only match on name, so they cannot ensure a known-good state.

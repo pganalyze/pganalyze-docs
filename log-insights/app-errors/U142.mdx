@@ -1,0 +1,62 @@
+---
+log_classification: U142
+log_title: Object does not exist
+log_category: app-errors
+collector_key: OBJECT_DOES_NOT_EXIST
+tooltip: A statement referenced a database object that does not exist
+urgency: low
+sqlstate: "42704 (Class 42 - Syntax Error or Access Rule Violation: undefined_object), and the related undefined_* codes"
+---
+
+**Example Postgres Log Output:**
+
+```
+ERROR:  role "app_readonly" does not exist
+STATEMENT:  GRANT SELECT ON mytable TO app_readonly;
+```
+
+```
+ERROR:  type "myenum" does not exist at character 32
+STATEMENT:  ALTER TABLE mytable ADD COLUMN status myenum;
+```
+
+```
+ERROR:  extension "pg_stat_statements" does not exist
+STATEMENT:  ALTER EXTENSION pg_stat_statements UPDATE;
+```
+
+**Explanation:**
+
+A statement referenced a database object that Postgres could not find. This is the catch-all
+classification for object kinds that do not have a classification of their own.
+
+The most frequently seen object kinds have their own event types, and are not reported here:
+
+* [U119: Relation does not exist](/docs/log-insights/app-errors/U119) - tables, views,
+  sequences and materialized views
+* [U120: Column does not exist](/docs/log-insights/app-errors/U120)
+* [U133: Function does not exist](/docs/log-insights/app-errors/U133) - also procedures and
+  aggregates
+* [U121: Operator does not exist](/docs/log-insights/app-errors/U121)
+* [U134: No such savepoint](/docs/log-insights/app-errors/U134) - for
+  `ROLLBACK TO SAVEPOINT` on an undefined savepoint
+
+**Recommended Action:**
+
+Investigate the application code to determine why it's attempting to access these missing objects.
+
+Some common causes:
+
+* For a missing type, extension or similar, the object may exist in a schema
+  that is not on the connection's `search_path`
+* A migration that has not been applied on this database
+* Case sensitivity: unquoted identifiers are folded to lower case, so `CREATE ROLE "AppUser"`
+  must be referenced as `"AppUser"`, not as `AppUser`.
+
+If the reference is intentionally optional, many `DROP` commands accept `IF EXISTS` to avoid
+the error entirely.
+
+**Learn More:**
+
+* [Postgres Documentation: Identifiers and Key Words](https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS)
+* [Postgres Documentation: Schemas and the search_path](https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PATH)

@@ -1,0 +1,66 @@
+---
+log_classification: U146
+log_title: SQL/JSON error
+log_category: app-errors
+collector_key: SQL_JSON_ERROR
+tooltip: An error processing JSON, jsonpath or an SQL/JSON function
+urgency: low
+sqlstate: "2203x (Class 22 - Data Exception: the SQL/JSON subclasses), plus 22P02, 22023, 42601 and 0A000"
+---
+
+**Example Postgres Log Output:**
+
+```
+ERROR:  no SQL/JSON item found for specified path
+STATEMENT:  SELECT jsonb_path_query_first(data, '$.missing' ERROR ON ERROR) FROM events;
+```
+
+```
+ERROR:  argument "5x" of jsonpath item method .integer() is invalid for type integer
+```
+
+```
+ERROR:  duplicate JSON object key value: "k"
+```
+
+```
+ERROR:  jsonpath item method .string() can only be applied to a boolean, string, numeric, or datetime value
+```
+
+**Explanation:**
+
+Something went wrong while evaluating JSON, a `jsonpath` expression, or one of the SQL/JSON
+functions (`JSON_TABLE`, `JSON_QUERY`, `JSON_VALUE`, `JSON_EXISTS`, `jsonb_path_query` et al.).
+
+Postgres spreads these across many SQLSTATE values, but they are one class of problem in
+practice, so pganalyze groups them into a single event type. The common shapes are:
+
+* **The path does not match the data.** `no SQL/JSON item found for specified path` means the
+  document has no value at the requested location. This is only an error when `ERROR ON ERROR`
+  or `ERROR ON EMPTY` is requested - the default behavior returns NULL silently.
+* **A value in the document is not what the expression assumed.** A `.integer()` or
+  `.number()` accessor applied to text that does not parse, or a `.string()` accessor applied
+  to an object or array.
+* **The jsonpath expression itself is malformed**, or refers to a variable that was not
+  supplied in the `vars` argument.
+* **The document is malformed or ambiguous**, such as a duplicate key when constructing an
+  object with `WITH UNIQUE KEYS`.
+* **The SQL/JSON syntax is not valid or not supported** - an invalid `JSON_TABLE`
+  specification, a `RETURNING` type that cannot be produced, a `FORMAT JSON` clause on a
+  non-string type.
+
+Plain syntax errors in the surrounding SQL text are classified as
+[U110: Syntax error](/docs/log-insights/app-errors/U110), and JSON input text that does not
+parse at all as [U111: Invalid input syntax](/docs/log-insights/app-errors/U111), rather than
+here.
+
+**Recommended Action:**
+
+The message identifies which accessor or clause failed, and the right fix generally depends
+on intended sematnics.
+
+**Learn More:**
+
+* [Postgres Documentation: JSON Functions and Operators](https://www.postgresql.org/docs/current/functions-json.html)
+* [Postgres Documentation: jsonpath Type](https://www.postgresql.org/docs/current/datatype-json.html#DATATYPE-JSONPATH)
+* [Postgres Documentation: SQL/JSON Query Functions](https://www.postgresql.org/docs/current/functions-json.html#FUNCTIONS-SQLJSON-QUERYING)

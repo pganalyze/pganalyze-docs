@@ -336,6 +336,10 @@
       "title": "2026.05.0 Release",
       "path": "/docs/enterprise/releases/2026-05-0"
     },
+    "enterprise/releases/2026-08-0": {
+      "title": "2026.08.0 Release",
+      "path": "/docs/enterprise/releases/2026-08-0"
+    },
     "enterprise/settings": {
       "title": "Enterprise Server: Container settings",
       "path": "/docs/enterprise/settings"
@@ -539,6 +543,22 @@
     "explain/setup/self_managed/04_test_and_verify": {
       "title": "Step 4: Test and Verify",
       "path": "/docs/explain/setup/self_managed/04_test_and_verify"
+    },
+    "explain/setup/supabase/01_auto_explain_check": {
+      "title": "Step 1: Check for auto_explain",
+      "path": "/docs/explain/setup/supabase/01_auto_explain_check"
+    },
+    "explain/setup/supabase/02_enable_auto_explain": {
+      "title": "Step 2: Enable auto_explain",
+      "path": "/docs/explain/setup/supabase/02_enable_auto_explain"
+    },
+    "explain/setup/supabase/03_review_settings": {
+      "title": "Step 3: Review auto_explain settings",
+      "path": "/docs/explain/setup/supabase/03_review_settings"
+    },
+    "explain/setup/supabase/04_test_and_verify": {
+      "title": "Step 4: Test and Verify",
+      "path": "/docs/explain/setup/supabase/04_test_and_verify"
     },
     "guides": {
       "title": "Guides",
@@ -824,6 +844,38 @@
       "title": "Step 3: Verify Configuration",
       "path": "/docs/install/heroku_postgres/03_verify_configuration"
     },
+    "install/neon/01_enable_pg_stat_statements": {
+      "title": "Step 1: Enable pg_stat_statements",
+      "path": "/docs/install/neon/01_enable_pg_stat_statements"
+    },
+    "install/neon/02_create_monitoring_user": {
+      "title": "Step 2: Create Monitoring User",
+      "path": "/docs/install/neon/02_create_monitoring_user"
+    },
+    "install/neon/03_install_the_collector": {
+      "title": "Step 3: Install the Collector",
+      "path": "/docs/install/neon/03_install_the_collector"
+    },
+    "install/neon/03_install_the_collector_docker": {
+      "title": "Step 3: Install the Collector",
+      "path": "/docs/install/neon/03_install_the_collector_docker"
+    },
+    "install/neon/03_install_the_collector_package": {
+      "title": "Step 3: Install the Collector",
+      "path": "/docs/install/neon/03_install_the_collector_package"
+    },
+    "install/neon/04_configure_the_collector": {
+      "title": "Step 4: Configure the Collector",
+      "path": "/docs/install/neon/04_configure_the_collector"
+    },
+    "install/neon/04_configure_the_collector_docker": {
+      "title": "Step 4: Configure the Collector",
+      "path": "/docs/install/neon/04_configure_the_collector_docker"
+    },
+    "install/neon/04_configure_the_collector_package": {
+      "title": "Step 4: Configure the Collector",
+      "path": "/docs/install/neon/04_configure_the_collector_package"
+    },
     "install/self_managed/00_choose_setup_method": {
       "title": "Step 0: Choose Setup Method",
       "path": "/docs/install/self_managed/00_choose_setup_method"
@@ -879,6 +931,38 @@
     "install/self_managed/04_configure_the_collector_package": {
       "title": "Step 4: Configure the Collector",
       "path": "/docs/install/self_managed/04_configure_the_collector_package"
+    },
+    "install/supabase/01_enable_pg_stat_statements": {
+      "title": "Step 1: Enable pg_stat_statements",
+      "path": "/docs/install/supabase/01_enable_pg_stat_statements"
+    },
+    "install/supabase/02_create_monitoring_user": {
+      "title": "Step 2: Create Monitoring User",
+      "path": "/docs/install/supabase/02_create_monitoring_user"
+    },
+    "install/supabase/03_install_the_collector": {
+      "title": "Step 3: Install the Collector",
+      "path": "/docs/install/supabase/03_install_the_collector"
+    },
+    "install/supabase/03_install_the_collector_docker": {
+      "title": "Step 3: Install the Collector",
+      "path": "/docs/install/supabase/03_install_the_collector_docker"
+    },
+    "install/supabase/03_install_the_collector_package": {
+      "title": "Step 3: Install the Collector",
+      "path": "/docs/install/supabase/03_install_the_collector_package"
+    },
+    "install/supabase/04_configure_the_collector": {
+      "title": "Step 4: Configure the Collector",
+      "path": "/docs/install/supabase/04_configure_the_collector"
+    },
+    "install/supabase/04_configure_the_collector_docker": {
+      "title": "Step 4: Configure the Collector",
+      "path": "/docs/install/supabase/04_configure_the_collector_docker"
+    },
+    "install/supabase/04_configure_the_collector_package": {
+      "title": "Step 4: Configure the Collector",
+      "path": "/docs/install/supabase/04_configure_the_collector_package"
     },
     "install/troubleshooting": {
       "title": "Installation Troubleshooting",
@@ -1020,6 +1104,10 @@
       "title": "Step 3: Restart Collector",
       "path": "/docs/log-insights/setup/heroku-postgres/03_restart_collector"
     },
+    "log-insights/setup/neon/01_set_up_opentelemetry_logs": {
+      "title": "Step 1: Set up OpenTelemetry Logs",
+      "path": "/docs/log-insights/setup/neon/01_set_up_opentelemetry_logs"
+    },
     "log-insights/setup/opentelemetry": {
       "title": "Log Insights: Kubernetes with OpenTelemetry",
       "path": "/docs/log-insights/setup/opentelemetry"
@@ -1047,6 +1135,10 @@
     "log-insights/setup/self-managed/troubleshooting": {
       "title": "Troubleshooting",
       "path": "/docs/log-insights/setup/self-managed/troubleshooting"
+    },
+    "log-insights/setup/supabase/01_set_up_log_drain": {
+      "title": "Step 1: Set up Log Drain",
+      "path": "/docs/log-insights/setup/supabase/01_set_up_log_drain"
     },
     "log-insights/setup/syslog-server": {
       "title": "Log Insights: Syslog server setup",
@@ -1220,100 +1312,111 @@
   "logClassifications": {
     "A60": {
       "title": "Canceling autovacuum task",
-      "category": "autovacuum",
+      "category": "maintenance",
       "collectorKey": "AUTOVACUUM_CANCEL",
       "tooltip": "Autovacuum run on a table has been canceled",
       "urgency": "low",
       "sqlstate": "57014 (Class 57 - Operator Intervention: query_canceled)",
-      "path": "/docs/log-insights/autovacuum/A60",
+      "path": "/docs/log-insights/maintenance/A60",
       "color": null,
       "hasAnalysis": null
     },
     "A61": {
       "title": "TXID wraparound warning",
-      "category": "autovacuum",
+      "category": "maintenance",
       "collectorKey": "TXID_WRAPAROUND_WARNING",
       "tooltip": "Database is at risk of forced shutdown due to overdue VACUUM",
       "urgency": "high",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/autovacuum/A61",
+      "path": "/docs/log-insights/maintenance/A61",
       "color": null,
       "hasAnalysis": null
     },
     "A62": {
       "title": "TXID wraparound critical",
-      "category": "autovacuum",
+      "category": "maintenance",
       "collectorKey": "TXID_WRAPAROUND_ERROR",
       "tooltip": "The database has been interrupted due to imminent TXID wraparound - manual intervention required",
       "urgency": "high",
       "sqlstate": "54000 (Class 54 - Program Limit Exceeded: program_limit_exceeded)",
-      "path": "/docs/log-insights/autovacuum/A62",
+      "path": "/docs/log-insights/maintenance/A62",
       "color": null,
       "hasAnalysis": null
     },
     "A63": {
       "title": "Autovacuum launcher started",
-      "category": "autovacuum",
+      "category": "maintenance",
       "collectorKey": "AUTOVACUUM_LAUNCHER_STARTED",
       "tooltip": "The Postgres autovacuum launcher has started",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/autovacuum/A63",
+      "path": "/docs/log-insights/maintenance/A63",
       "color": null,
       "hasAnalysis": null
     },
     "A64": {
       "title": "Autovacuum launcher stopped",
-      "category": "autovacuum",
+      "category": "maintenance",
       "collectorKey": "AUTOVACUUM_LAUNCHER_SHUTTING_DOWN",
       "tooltip": "The autovacuum launcher has been stopped",
       "urgency": "low",
       "sqlstate": "57P01 (Class 57 - Operator Intervention: admin_shutdown)",
-      "path": "/docs/log-insights/autovacuum/A64",
+      "path": "/docs/log-insights/maintenance/A64",
       "color": null,
       "hasAnalysis": null
     },
     "A65": {
       "title": "Autovacuum completed",
-      "category": "autovacuum",
+      "category": "maintenance",
       "collectorKey": "AUTOVACUUM_COMPLETED",
       "tooltip": "Automatic VACUUM for the referenced table has completed",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/autovacuum/A65",
+      "path": "/docs/log-insights/maintenance/A65",
       "color": "#8be",
       "hasAnalysis": null
     },
     "A66": {
       "title": "Autoanalyze completed",
-      "category": "autovacuum",
+      "category": "maintenance",
       "collectorKey": "AUTOANALYZE_COMPLETED",
       "tooltip": "Automatic ANALYZE for the referenced table has completed",
       "urgency": "low",
       "sqlstate": "n/a",
-      "path": "/docs/log-insights/autovacuum/A66",
+      "path": "/docs/log-insights/maintenance/A66",
       "color": "#8be",
       "hasAnalysis": null
     },
     "A67": {
       "title": "Skipping vacuum due to lock",
-      "category": "autovacuum",
+      "category": "maintenance",
       "collectorKey": "SKIPPING_VACUUM_LOCK_NOT_AVAILABLE",
       "tooltip": "Vacuum could not be started due to lock failure",
       "urgency": "low",
       "sqlstate": "55P03 (Class 55 - Object Not In Prerequisite State: lock_not_available)",
-      "path": "/docs/log-insights/autovacuum/A67",
+      "path": "/docs/log-insights/maintenance/A67",
       "color": null,
       "hasAnalysis": null
     },
     "A68": {
       "title": "Skipping analyze due to lock",
-      "category": "autovacuum",
+      "category": "maintenance",
       "collectorKey": "SKIPPING_ANALYZE_LOCK_NOT_AVAILABLE",
       "tooltip": "Vacuum could not be started due to lock failure",
       "urgency": "low",
       "sqlstate": "55P03 (Class 55 - Object Not In Prerequisite State: lock_not_available)",
-      "path": "/docs/log-insights/autovacuum/A68",
+      "path": "/docs/log-insights/maintenance/A68",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "A69": {
+      "title": "Skipping maintenance due to permissions",
+      "category": "maintenance",
+      "collectorKey": "SKIPPING_MAINTENANCE_PERMISSION_DENIED",
+      "tooltip": "A maintenance command skipped a table the role has no privileges on",
+      "urgency": "low",
+      "sqlstate": "01000 (Class 01 - Warning: warning)",
+      "path": "/docs/log-insights/maintenance/A69",
       "color": null,
       "hasAnalysis": null
     },
@@ -2109,6 +2212,105 @@
       "color": null,
       "hasAnalysis": null
     },
+    "U141": {
+      "title": "Value out of range",
+      "category": "app-errors",
+      "collectorKey": "VALUE_OUT_OF_RANGE",
+      "tooltip": "A value does not fit the range of the target data type",
+      "urgency": "medium",
+      "sqlstate": "22003, 22008 and related (Class 22 - Data Exception: numeric_value_out_of_range and datetime_field_overflow)",
+      "path": "/docs/log-insights/app-errors/U141",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U142": {
+      "title": "Object does not exist",
+      "category": "app-errors",
+      "collectorKey": "OBJECT_DOES_NOT_EXIST",
+      "tooltip": "A statement referenced a database object that does not exist",
+      "urgency": "low",
+      "sqlstate": "42704 (Class 42 - Syntax Error or Access Rule Violation: undefined_object), and the related undefined_* codes",
+      "path": "/docs/log-insights/app-errors/U142",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U143": {
+      "title": "Row-level security violation",
+      "category": "app-errors",
+      "collectorKey": "ROW_LEVEL_SECURITY_VIOLATION",
+      "tooltip": "A row-level security policy blocked the statement",
+      "urgency": "medium",
+      "sqlstate": "42501 (Class 42 - Syntax Error or Access Rule Violation: insufficient_privilege)",
+      "path": "/docs/log-insights/app-errors/U143",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U144": {
+      "title": "View check option violation",
+      "category": "app-errors",
+      "collectorKey": "WITH_CHECK_OPTION_VIOLATION",
+      "tooltip": "A row written through a view fails the view's WITH CHECK OPTION",
+      "urgency": "low",
+      "sqlstate": "44000 (Class 44 - WITH CHECK OPTION Violation: with_check_option_violation)",
+      "path": "/docs/log-insights/app-errors/U144",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U145": {
+      "title": "Cannot modify view",
+      "category": "app-errors",
+      "collectorKey": "CANNOT_MODIFY_VIEW",
+      "tooltip": "A write targeted a view that is not automatically updatable",
+      "urgency": "low",
+      "sqlstate": "55000 and 0A000 (Class 55 - Object Not In Prerequisite State: object_not_in_prerequisite_state; Class 0A - Feature Not Supported: feature_not_supported)",
+      "path": "/docs/log-insights/app-errors/U145",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U146": {
+      "title": "SQL/JSON error",
+      "category": "app-errors",
+      "collectorKey": "SQL_JSON_ERROR",
+      "tooltip": "An error processing JSON, jsonpath or an SQL/JSON function",
+      "urgency": "low",
+      "sqlstate": "2203x (Class 22 - Data Exception: the SQL/JSON subclasses), plus 22P02, 22023, 42601 and 0A000",
+      "path": "/docs/log-insights/app-errors/U146",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U147": {
+      "title": "Partitioning error",
+      "category": "app-errors",
+      "collectorKey": "PARTITION_ERROR",
+      "tooltip": "A partitioning definition or operation was rejected",
+      "urgency": "low",
+      "sqlstate": "42P16, 42P17 and 0A000 (Class 42 - Syntax Error or Access Rule Violation: invalid_table_definition and invalid_object_definition; Class 0A - Feature Not Supported: feature_not_supported)",
+      "path": "/docs/log-insights/app-errors/U147",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U148": {
+      "title": "Object already exists",
+      "category": "app-errors",
+      "collectorKey": "OBJECT_ALREADY_EXISTS",
+      "tooltip": "A CREATE or ALTER command conflicts with an object that already exists",
+      "urgency": "low",
+      "sqlstate": "42710, 42P07, 42701 and 42723 (Class 42 - Syntax Error or Access Rule Violation: duplicate_object, duplicate_table, duplicate_column and duplicate_function)",
+      "path": "/docs/log-insights/app-errors/U148",
+      "color": null,
+      "hasAnalysis": null
+    },
+    "U149": {
+      "title": "Wrong object type",
+      "category": "app-errors",
+      "collectorKey": "WRONG_OBJECT_TYPE",
+      "tooltip": "A command was run against the wrong kind of database object",
+      "urgency": "low",
+      "sqlstate": "42809 (Class 42 - Syntax Error or Access Rule Violation: wrong_object_type)",
+      "path": "/docs/log-insights/app-errors/U149",
+      "color": null,
+      "hasAnalysis": null
+    },
     "V100": {
       "title": "Unique constraint violation",
       "category": "constraint-violations",
@@ -2633,7 +2835,7 @@
     "server": "Server",
     "connections": "Connections",
     "wal-checkpoints": "WAL & Checkpoints",
-    "autovacuum": "Autovacuum",
+    "maintenance": "Maintenance",
     "locks": "Locks",
     "statements": "Statements",
     "standby": "Standby Servers",

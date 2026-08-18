@@ -1,0 +1,51 @@
+---
+log_classification: U144
+log_title: View check option violation
+log_category: app-errors
+collector_key: WITH_CHECK_OPTION_VIOLATION
+tooltip: A row written through a view fails the view's WITH CHECK OPTION
+urgency: low
+sqlstate: "44000 (Class 44 - WITH CHECK OPTION Violation: with_check_option_violation)"
+---
+
+**Example Postgres Log Output:**
+
+```
+ERROR:  new row violates check option for view "active_users"
+DETAIL:  Failing row contains (42, bob, f).
+STATEMENT:  INSERT INTO active_users (id, name, active) VALUES (42, 'bob', false);
+```
+
+**Explanation:**
+
+The view being written to was defined `WITH CHECK OPTION`, and the row that the `INSERT` or
+`UPDATE` produced does not satisfy the view's `WHERE` clause.
+
+For example, given:
+
+```sql
+CREATE VIEW active_users AS
+  SELECT * FROM users WHERE active
+  WITH CHECK OPTION;
+```
+
+inserting a row with `active = false` fails, as does updating an existing row to set
+`active = false` through the view.
+
+`WITH LOCAL CHECK OPTION` checks only this view's own condition; `WITH CASCADED CHECK OPTION`
+(the default when neither is specified) also checks the conditions of any views this one is
+built on, so the failing condition may come from an underlying view.
+
+**Recommended Action:**
+
+Look at the `DETAIL` line to see the offending row, compare it against the view's, and
+investigate the application code to determine why the invalid updates are being issued.
+
+This may lead to dropping the WITH CHECK OPTION on the view, but note that
+dropping it means rows written through the view may not be visible through it
+afterwards.
+
+**Learn More:**
+
+* [Postgres Documentation: CREATE VIEW](https://www.postgresql.org/docs/current/sql-createview.html)
+* [Postgres Documentation: Updatable Views](https://www.postgresql.org/docs/current/sql-createview.html#SQL-CREATEVIEW-UPDATABLE-VIEWS)

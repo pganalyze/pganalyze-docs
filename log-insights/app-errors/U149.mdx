@@ -1,0 +1,52 @@
+---
+log_classification: U149
+log_title: Wrong object type
+log_category: app-errors
+collector_key: WRONG_OBJECT_TYPE
+tooltip: A command was run against the wrong kind of database object
+urgency: low
+sqlstate: "42809 (Class 42 - Syntax Error or Access Rule Violation: wrong_object_type)"
+---
+
+**Example Postgres Log Output:**
+
+```
+ERROR:  "mytable_pkey" is not a table
+HINT:  Use DROP INDEX to remove an index.
+STATEMENT:  DROP TABLE mytable_pkey;
+```
+
+```
+ERROR:  "myview" is a view
+DETAIL:  Views cannot have row-level BEFORE or AFTER triggers.
+STATEMENT:  CREATE TRIGGER myview_trg BEFORE INSERT ON myview FOR EACH ROW EXECUTE FUNCTION f();
+```
+
+```
+ERROR:  "measurement_y2026m01" is not a partition of relation "measurement"
+```
+
+```
+ERROR:  ALTER action DETACH PARTITION cannot be performed on relation "mytable"
+DETAIL:  This operation is not supported for tables.
+```
+
+**Explanation:**
+
+The object named in the statement exists, but it is not the kind of object the command works
+on. Postgres keeps tables, views, sequences, indexes, materialized views and foreign tables
+in one shared namespace, so a name resolves successfully and only then fails the type check.
+
+The partition-specific variants (`"x" is not a partition of ...`, `"x" is already a
+partition`, `"x" is not a partitioned table`) are grouped here rather than with
+[U147: Partitioning error](/docs/log-insights/app-errors/U147), since they are wrong-object
+errors that happen to involve partitions.
+
+If the object does not exist at all, that is
+[U119: Relation does not exist](/docs/log-insights/app-errors/U119) or
+[U142: Object does not exist](/docs/log-insights/app-errors/U142) instead.
+
+**Recommended Action:**
+
+Investigate the application code to determine why the wrong the command is being invoked on
+the wrong object type.

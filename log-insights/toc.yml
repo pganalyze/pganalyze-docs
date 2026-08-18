@@ -17,8 +17,8 @@
     href: log-insights/connections
   - name: WAL & Checkpoints
     href: log-insights/wal-checkpoints
-  - name: Autovacuum
-    href: log-insights/autovacuum
+  - name: Maintenance
+    href: log-insights/maintenance
   - name: Locks
     href: log-insights/locks
   - name: Statements
