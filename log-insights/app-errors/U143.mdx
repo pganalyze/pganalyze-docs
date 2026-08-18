@@ -1,0 +1,54 @@
+---
+log_classification: U143
+log_title: Row-level security violation
+log_category: app-errors
+collector_key: ROW_LEVEL_SECURITY_VIOLATION
+tooltip: A row-level security policy blocked the statement
+urgency: medium
+sqlstate: "42501 (Class 42 - Syntax Error or Access Rule Violation: insufficient_privilege)"
+---
+
+**Example Postgres Log Output:**
+
+```
+ERROR:  new row violates row-level security policy for table "accounts"
+STATEMENT:  INSERT INTO accounts (tenant_id, name) VALUES (2, 'test');
+```
+
+```
+ERROR:  new row violates row-level security policy "acct_policy" for table "accounts"
+```
+
+```
+ERROR:  query would be affected by row-level security policy for table "accounts"
+STATEMENT:  COPY accounts TO STDOUT;
+```
+
+**Explanation:**
+
+The statement was rejected by a row-level security (RLS) policy on the table.
+
+There are two distinct situations behind this event:
+
+* **A write produced a row the current role may not have.** `new row violates row-level
+  security policy` means the row failed the `WITH CHECK` expression of the applicable policy
+  on `INSERT` or `UPDATE`. `target row violates row-level security policy (USING expression)`
+  means an `UPDATE` or `DELETE` targeted a row the role cannot see under the policy's `USING`
+  expression.
+* **A command that cannot apply policies row-by-row was refused outright.** `query would be
+  affected by row-level security policy` is raised by commands like `COPY table TO`.
+
+Note that a *read* filtered by RLS is not an error and produces no log line at all: rows the
+role may not see are simply omitted from the result.
+
+**Recommended Action:**
+
+Establish which policy applies and what it requires. The usual cause is a
+session variable or connection setting that the policy depends on not being set.
+For example a multi-tenant application that sets `app.current_tenant` per
+request and misses it on one code path.
+
+**Learn More:**
+
+* [Postgres Documentation: Row Security Policies](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
+* [Postgres Documentation: CREATE POLICY](https://www.postgresql.org/docs/current/sql-createpolicy.html)

@@ -1,0 +1,77 @@
+---
+log_classification: U147
+log_title: Partitioning error
+log_category: app-errors
+collector_key: PARTITION_ERROR
+tooltip: A partitioning definition or operation was rejected
+urgency: low
+sqlstate: "42P16, 42P17 and 0A000 (Class 42 - Syntax Error or Access Rule Violation: invalid_table_definition and invalid_object_definition; Class 0A - Feature Not Supported: feature_not_supported)"
+---
+
+**Example Postgres Log Output:**
+
+```
+ERROR:  partition "measurement_y2026m01" would overlap partition "measurement_y2025m12"
+LINE 1: ...ITION OF measurement FOR VALUES FROM ('2025-12-15') TO ('2026...
+```
+
+```
+ERROR:  cannot attach index "idx" as a partition of index "pidx"
+DETAIL:  The index definitions do not match.
+```
+
+```
+ERROR:  every hash partition modulus must be a factor of the next larger modulus
+```
+
+```
+ERROR:  unsupported PRIMARY KEY constraint with partition key definition
+DETAIL:  PRIMARY KEY constraints cannot be used when partition keys include expressions.
+```
+
+**Explanation:**
+
+A command that defines or restructures a partitioned table was rejected. This is
+a single broad classification covering DDL-level partitioning errors, because
+there are many distinct messages that all point at an invalid partition
+configuration.
+
+Common cases:
+
+* **Bounds that overlap or are invalid.** A new range partition covering values an existing
+  partition already claims, an empty range (`FROM` above `TO`), a bound with the wrong number
+  of values, or a bound that conflicts with the default partition's current contents.
+* **Hash partition modulus/remainder rules.** Every modulus must be a factor of the next
+  larger one, and the remainder must be below the modulus.
+* **Constraints that do not include the partition key.** `UNIQUE`, `PRIMARY KEY` and
+  `EXCLUDE` constraints on a partitioned table must include all partitioning columns, since
+  Postgres enforces them per-partition.
+* **`ATTACH`/`DETACH` that cannot be performed.** Mismatched column definitions, a partition
+  already pending detach, or an index whose definition does not match the parent's.
+* **Features that are not supported on partitioned tables or partitions.** Identity columns
+  on partitions, unlogged partitioned tables, `ROW` triggers with transition tables on
+  partitions, and similar.
+
+Two adjacent situations are classified elsewhere:
+
+* A row that does not route to any partition at runtime, or that fails a partition
+  constraint, is
+  [V103: Check constraint violation](/docs/log-insights/constraint-violations/V103) - it is a
+  data problem, not a definition problem.
+* `"x" is not a partition of ...` and similar wrong-kind-of-object messages are
+  [U149: Wrong object type](/docs/log-insights/app-errors/U149).
+
+**Recommended Action:**
+
+This generally points to problems in the partition maintenance strategy, which is often an
+application problem. Check the details of the message and investigate your partition
+management mechanism.
+
+For partition bounds, remember that range bounds are inclusive at the lower end
+and exclusive at the upper end, so adjacent partitions should share an endpoint
+(`... TO ('2026-01-01')` followed by `FROM ('2026-01-01') ...`).
+
+**Learn More:**
+
+* [Postgres Documentation: Table Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html)
+* [Postgres Documentation: ALTER TABLE ... ATTACH PARTITION](https://www.postgresql.org/docs/current/sql-altertable.html#SQL-ALTERTABLE-ATTACH-PARTITION)

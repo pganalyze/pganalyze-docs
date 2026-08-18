@@ -1,7 +1,7 @@
 ---
 log_classification: A66
 log_title: Autoanalyze completed
-log_category: autovacuum
+log_category: maintenance
 collector_key: AUTOANALYZE_COMPLETED
 tooltip: Automatic ANALYZE for the referenced table has completed
 urgency: low
@@ -17,7 +17,7 @@ LOG: automatic analyze of table "postgres.public.pgbench_branches" system usage:
 
 **Explanation:**
 
-This log event, similar to [A65 - Automatic vacuum of table completed](/docs/log-insights/autovacuum/A65), is controlled
+This log event, similar to [A65 - Automatic vacuum of table completed](/docs/log-insights/maintenance/A65), is controlled
 by `log_autovacuum_min_duration`, as both are started by the autovacuum launcher.
 
 ANALYZE is the process of updating table statistics, and whilst it often runs together with

@@ -1,0 +1,64 @@
+---
+log_classification: A69
+log_title: Skipping maintenance due to permissions
+log_category: maintenance
+collector_key: SKIPPING_MAINTENANCE_PERMISSION_DENIED
+tooltip: A maintenance command skipped a table the role has no privileges on
+urgency: low
+sqlstate: "01000 (Class 01 - Warning: warning)"
+---
+
+**Example Postgres Log Output:**
+
+```
+WARNING:  permission denied to vacuum "pgbench_accounts", skipping it
+```
+
+```
+WARNING:  permission denied to analyze "pgbench_accounts", skipping it
+```
+
+**Explanation:**
+
+A maintenance command (`VACUUM`, `ANALYZE`, `CLUSTER` or `REPACK`) was asked to process a
+table that the current role is not allowed to maintain, so Postgres skipped that table and
+continued with the rest.
+
+This is a warning, not an error: the command still reports success, whether the
+table was named explicitly or picked up implicitly by a database-wide `VACUUM`.
+If the skipped table is one you expected to be processed, the maintenance
+silently did not happen. This can lead to bloat and stale statistics on that
+table over time.
+
+A role may maintain a table if it owns the table, has the `MAINTAIN` privilege on it, is a
+member of `pg_maintain`, or owns the current database (for non-shared relations).
+
+Note that this does not affect autovacuum, which is not subject to these privilege checks.
+
+**Recommended Action:**
+
+First determine whether the skipped table actually needs to be covered by this maintenance
+run. Routine vacuuming and analyzing of the table continues through autovacuum regardless.
+
+If the manual maintenance run should cover the table, grant the maintaining role the
+`MAINTAIN` privilege on it:
+
+```sql
+GRANT MAINTAIN ON mytable TO myuser;
+```
+
+Or, to let the role maintain everything in the database, make it a member of the
+`pg_maintain` predefined role:
+
+```sql
+GRANT pg_maintain TO myuser;
+```
+
+The `MAINTAIN` privilege and the `pg_maintain` role were added in Postgres 17. On earlier
+versions, the role has to own the table (or be a superuser) to maintain it.
+
+**Learn More:**
+
+* [Postgres Documentation: GRANT](https://www.postgresql.org/docs/current/sql-grant.html)
+* [Postgres Documentation: Predefined Roles](https://www.postgresql.org/docs/current/predefined-roles.html)
+* [Postgres Documentation: VACUUM](https://www.postgresql.org/docs/current/sql-vacuum.html)

@@ -1,0 +1,47 @@
+---
+log_classification: U141
+log_title: Value out of range
+log_category: app-errors
+collector_key: VALUE_OUT_OF_RANGE
+tooltip: A value does not fit the range of the target data type
+urgency: medium
+sqlstate: "22003, 22008 and related (Class 22 - Data Exception: numeric_value_out_of_range and datetime_field_overflow)"
+---
+
+**Example Postgres Log Output:**
+
+```
+ERROR:  numeric field overflow
+DETAIL:  A field with precision 4, scale 2 must round to an absolute value less than 10^2.
+STATEMENT:  INSERT INTO mytable (amount) VALUES (12345.67);
+```
+
+```
+ERROR:  "1e400" is out of range for type double precision at character 12
+STATEMENT:  SELECT '1e400'::float8;
+```
+
+```
+ERROR:  interval field value out of range: "2147483648 days"
+STATEMENT: SELECT interval '2147483648 days';
+```
+
+**Explanation:**
+
+A value did not fit the range (or the declared precision and scale) of the type it was being
+stored in or converted to. This covers the non-integer types: `numeric`, `money`, floating
+point, the date/time and interval types, `pg_lsn`, `oid` and others.
+
+The equivalent error for `smallint`, `integer` and `bigint` has its own classification,
+[U130: Integer out of range](/docs/log-insights/app-errors/U130).
+
+**Recommended Action:**
+
+Investigate the application code to confirm whether these values should be passed to the
+database, and possibly adjust the schema (or inline casts in queries) to support the
+values being passed in.
+
+**Learn More:**
+
+* [Postgres Documentation: Numeric Types](https://www.postgresql.org/docs/current/datatype-numeric.html)
+* [Postgres Documentation: Date/Time Types](https://www.postgresql.org/docs/current/datatype-datetime.html)

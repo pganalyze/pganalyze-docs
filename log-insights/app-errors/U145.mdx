@@ -1,0 +1,45 @@
+---
+log_classification: U145
+log_title: Cannot modify view
+log_category: app-errors
+collector_key: CANNOT_MODIFY_VIEW
+tooltip: A write targeted a view that is not automatically updatable
+urgency: low
+sqlstate: "55000 and 0A000 (Class 55 - Object Not In Prerequisite State: object_not_in_prerequisite_state; Class 0A - Feature Not Supported: feature_not_supported)"
+---
+
+**Example Postgres Log Output:**
+
+```
+ERROR:  cannot insert into view "user_summary"
+DETAIL:  Views containing GROUP BY are not automatically updatable.
+HINT:  To enable inserting into the view, provide an INSTEAD OF INSERT trigger or an unconditional ON INSERT DO INSTEAD rule.
+STATEMENT:  INSERT INTO user_summary (name, total) VALUES ('bob', 1);
+```
+
+```
+ERROR:  cannot update column "full_name" of view "user_details"
+DETAIL:  View columns that are not columns of their base relation are not updatable.
+```
+
+**Explanation:**
+
+An `INSERT`, `UPDATE`, `DELETE` or `MERGE` targeted a view that Postgres cannot automatically
+translate into a write against a base table.
+
+A view is automatically updatable only in limited circumstances.
+
+Note that this is about the *shape* of the view, not about privileges. Writes refused because
+of permissions are [U123: Permission denied](/docs/log-insights/app-errors/U123), and rows
+refused because they fall outside a `WITH CHECK OPTION` view's condition are
+[U144: View check option violation](/docs/log-insights/app-errors/U144).
+
+**Recommended Action:**
+
+The `DETAIL` line names the specific reason the view is not updatable, and the `HINT` suggests
+alternatives.
+
+**Learn More:**
+
+* [Postgres Documentation: Updatable Views](https://www.postgresql.org/docs/current/sql-createview.html#SQL-CREATEVIEW-UPDATABLE-VIEWS)
+* [Postgres Documentation: CREATE TRIGGER](https://www.postgresql.org/docs/current/sql-createtrigger.html)
