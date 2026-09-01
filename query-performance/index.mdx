@@ -23,17 +23,13 @@ The list is sorted by the percentage of all runtime by default. You can search
 this list by part of the query text, or the name of the Postgres roles executing
 the query.
 
-### Cluster-wide query performance
+### Group-Wide Query Performance
 
-For servers grouped into a [cluster server
-group](/docs/accounts/server_groups), the same view is available across the
-whole cluster. The default page summarizes query activity per database group 
-(databases sharing a name across cluster members). Pick a database group from 
-the table or Database picker to see top queries for that group, aggregated 
-across every cluster member that hosts that database. The drill-down offers the 
-same latency graph, statement-type filters, and time filter as the per-server
-view, and the query list adds a column showing which server each query came
-from.
+For servers grouped into a [cluster or server group](/docs/accounts/server_groups#server-groups-and-clusters), the same view is available across the whole group. The default page summarizes query activity per database group, meaning databases that share a name across members. Pick a database group to see top queries aggregated across every member that hosts that database. The drill-down adds a column showing which server each query came from.
+
+This is especially useful in two cases. For a cluster, the per-server column shows how read traffic is actually distributed between the primary and its replicas, so you can see which queries are landing where.
+
+For a sharded database, a [server group](/docs/accounts/server_groups#managing-server-groups) can represent the shard set with a match rule on server name, picking up new shards as they are added. Query Performance then shows the combined workload in one view rather than one shard at a time.
 
 ### How percentiles are calculated
 

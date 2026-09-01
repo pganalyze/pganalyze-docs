@@ -4,58 +4,124 @@ backlink_href: /docs/accounts
 backlink_title: 'Account Management'
 ---
 
-A server group is a way to group related servers within an organization, so
-that pganalyze can present them together and aggregate data across their
-members.
+A server group lets you navigate a set of servers as a single unit. You see Dashboard and Query Performance aggregated across every member, and you can scope roles to a group so people in your organization see exactly what they own.
 
-Today, pganalyze only supports cluster server groups, which are created
-automatically based on the cluster ID determined by the collector (see below).
+There are server groups, which you create yourself, and clusters, which come from your infrastructure. Both types are defined below.
 
-## Cluster-Based Server Groups
+![Clusters and Server Groups in the Server dropdown](servergroup_dropdown.png)
 
-A cluster-based server group is created automatically when two or more servers
-in the same organization share a cluster ID. The cluster ID is set by the
-pganalyze collector via the `api_cluster_id` setting. See [Configuring
-Clusters](/docs/index-advisor/configuration#configuring-clusters) for how to
-set it manually or rely on auto-detection on supported providers.
+## Server Groups and Clusters
 
-Every server whose cluster ID matches the server group's cluster ID
-is automatically a member. You do not add or remove members directly.
+### Server Groups
 
-By default, the display name of a server group is its cluster ID.
+You define a server group yourself, which requires the [Manage permission](/docs/accounts/permissions#manage). It groups servers by how your organization thinks about them rather than by how they are deployed, so it can represent a team, an environment, or a sharded database. Membership comes from any combination of [match rules](#match-rules) and [explicit membership](#explicit-membership) including both servers and nested groups.
 
-To verify which cluster a server belongs to, check the Debug Info panel
-in Settings > Server Settings. The panel shows the Cluster ID when
-available, so you can confirm that replicas are grouped as expected.
+Server groups are in early access. Contact your organization admin to enable the feature, or reach out to [pganalyze Support](mailto:support@pganalyze.com) for access.
 
-## Renaming a Server Group
+### Clusters
 
-When cluster ids become hard to distinguish from each other, or if you just
-want to update the display name, select the cluster you want to rename in 
-the server dropdown and then open Settings > Server Group Settings page. Enter 
-a name in the Name field. The underlying cluster ID will not change, but you will 
-see the new display name used throughout the app. Leaving the field blank
-reverts the display name to the cluster ID.
+A cluster is defined by your infrastructure rather than by you. It is managed automatically from the cluster ID a server reports, set via `api_cluster_id`, and every server reporting the same ID belongs to it. You cannot add or remove members.
+
+A cluster with a single member is expected, because it exists as soon as one server reports an ID. Some platform integrations, including Crunchy Bridge, derive the cluster ID for you, so a cluster can appear without you configuring one.
+
+See [Configuring Clusters](/docs/index-advisor/configuration#configuring-clusters) for setup.
+
+## When to Use a Server Group
+
+1. Team ownership. Group the servers your team owns, then scope a role to the group. Each member sees exactly those servers in Dashboard, Query Performance, and Workbooks, nothing else. The group defines ownership. The role grants access.
+2. Compliance or environment boundary. Match on a tag like `env:staging` and the group stays current as servers are added and removed.
+3. Sharded database. Match on a name pattern like `workspace-shard-*` and every shard joins automatically, including new ones added later. Query Performance shows the combined workload across all shards in one view.
+
+## Feature Support
+
+Clusters and server groups both support:
+
+* [Dashboard](#server-groups-dashboard), with issue counts rolled up per member
+* [Query Performance](#query-performance), with query statistics aggregated across members and grouped by database name
+* [Workbooks](/docs/workbooks), with query tuning scoped to the group's servers
+* [Permissions](#permissions), where you can scope roles to a particular group and assign members to mirror your org chart
+
+Features that operate on a single server land you on a default member instead. For a cluster that is the primary. For a server group it is the oldest member.
+
+## Managing Server Groups
+
+Open the Server dropdown and click the Add Server Group button.
+
+![Server Group create flow with a rule-based match on server name](servergroup_create_workspace.png)
+
+Give the group a name and optional description, then add members using any combination of match rules, explicit server membership, or nested group membership. A preview diff on the right shows which servers will join before you save.
+
+### Match Rules
+
+A match rule selects servers by a property. When multiple rules are present, a server must match every rule. Servers matched by rules cannot also be explicit members.
+
+| Rule type | Matches on | Example |
+|---|---|---|
+| Server name | Display name | `workspace-shard-*` |
+| Tag | Key-value tag | key: `shard_set`, value: `workspace` |
+| Cluster ID | Collector-assigned cluster ID | `prod-us-east-*` |
+| Role | Primary or replica | `primary` |
+
+Use `*` as a wildcard. Rules are evaluated on read, so servers added later are picked up automatically.
+
+### Explicit Membership
+
+Add individual servers with the server picker. Use Shift-click to select a range, or filter and select all. A server matched by a rule cannot also be an explicit member.
+
+A server group can also include another server group as a member. Nesting is one level deep, so a group that contains another group cannot itself be nested. To pull in a cluster, use a match rule on cluster ID instead.
+
+### Editing and Deleting
+
+Open a group from [Server Group Settings](#server-group-settings), or navigate to it in the Server dropdown and open Settings > Server Group Settings. The preview diff shows how proposed changes compare to current membership before you save.
+
+![Server Group edit flow with an existing nested group and adding a new server member](servergroup_edit_payments_team.png)
+
+You can delete a server group from this page. Deleting removes it from navigation and Dashboard, and a role scoped to it stops granting access through it. Member servers are not affected.
+
+A cluster cannot be deleted and its members cannot be changed. You can rename one by opening its Server Group Settings and entering a name, which otherwise defaults to the cluster ID. Leaving the field blank reverts to the cluster ID. To verify which cluster a server belongs to, check the Debug Info panel in Settings > Server Settings.
+
+## Permissions
+
+A role's [permissions](/docs/accounts/permissions) can be scoped to a group, and a permission granted on one applies to every server and database in it. This works for clusters and server groups alike.
+
+![Scope members to a role with permission to view, modify, and/or create workbooks](servergroup_role_scope.png)
+
+See [Permissions and Roles](/docs/accounts/permissions) for which permission types support this.
+
+## Server Group Settings
+
+Settings > Server Group Settings lists every group in your organization, clusters included. Search by name, sort by any column, and read the Type column to tell the two apart. Cluster ID shows the collector-assigned ID, or a dash for a server group.
+
+![Server Group Settings lists every group in the organization, with its type and cluster ID](servergroup_settings.png)
+
+Selecting a name opens that group's settings, where you can edit or delete it.
 
 ## Server Groups Dashboard
 
-The Server Groups page provides a fleet-level overview of all clusters in
-your organization. The top-level rows are clusters, expanded by default to
-show their members as children. Each member has a badge indicating whether it
-is a primary or a replica. Both cluster and member rows share the same
-columns, including database count and the number of open warning and critical
-issues. This lets you compare cluster totals against the stats of each
-instance at a glance.
+The Server Groups page shows everything in your organization. Groups are expanded by default to show members. Both group and member rows share the same columns, including database count and open issue counts, so you can compare totals against individual members at a glance. Sort by any column to surface the worst-affected group first.
 
-You can sort by any column. Sorting by issues can help surface
-the worst-affected cluster first. From there you can drill down to a specific 
-server for more detail.
+![Server Group Dashboard is a high level view of your fleet with member rows, and counts for databases and issues](servergroup_dashboard.png)
+
+## Query Performance
+
+[Query Performance](/docs/query-performance) works across a group. The default page summarizes query activity per database group, meaning databases that share a name across members.
+
+![Query Performance for the entire Workspace shard](servergroup_queryperformance_wide.png)
+
+Pick a database group to see top queries aggregated across every member that hosts that database. The drill-down adds a column showing which server each query came from.
+
+![Query Performance for Workspace database](servergroup_queryperformance_db.png)
+
+See [Group-Wide Query Performance](/docs/query-performance#group-wide-query-performance) for more detail.
 
 ## Navigation
 
-The server dropdown in the header includes a Clusters section below
-recent servers. Each cluster lists its primary and replicas, with status
-icons that bubble up from members to the cluster level. Selecting a cluster
-takes you to the Server Groups dashboard or [cluster-wide Query
-Performance](/docs/query-performance#cluster-wide-query-performance) page.
-Navigating away from either moves you onto the cluster primary by default.
+The Server dropdown in the header has a Clusters section and a Server Groups section above your standalone servers, and each group lists its members. Selecting a group takes you to the Server Groups Dashboard or group-wide Query Performance.
+
+## Coming Soon
+
+We are actively working on:
+
+* Merged queries in Query Performance, so the same query running on every shard appears as one entry in your workload instead of one per member
+* Combining the All Servers and All Server Groups dashboards into a single view
+* Alerts & Check-Up across a group, so it reports its own status rather than only its members'
