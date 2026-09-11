@@ -96,6 +96,10 @@
       "title": "PII Filtering",
       "path": "/docs/collector/pii-filtering"
     },
+    "collector/server-identity": {
+      "title": "Server identity and monitoring history",
+      "path": "/docs/collector/server-identity"
+    },
     "collector/settings": {
       "title": "pganalyze Collector settings",
       "path": "/docs/collector/settings"

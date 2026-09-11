@@ -6,6 +6,8 @@
     href: collector/packages
   - name: Configuration Settings
     href: collector/settings
+  - name: Server Identity
+    href: collector/server-identity
   - name: Upgrading
     href: collector/upgrading
   - name: PII Filtering
