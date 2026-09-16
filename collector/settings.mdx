@@ -295,8 +295,8 @@ Note that the `aws_endpoint_*` settings are only relevant if you are using custo
     </tr>
     <tr>
       <td>aws_account_id (<code>AWS_ACCOUNT_ID</code>)</td>
-      <td>[none]</td>
-      <td>If specified, and api_system_scope (see below) is not specified, this is prepended to the auto-generated system scope (optional, can be used to, e.g., differentiate staging from production)</td>
+      <td>Account-specific identifier from the RDS hostname</td>
+      <td>Unless api_system_scope is set, this is appended to the region to form the <a href="/docs/collector/server-identity">system scope</a>, as <code>region/aws_account_id</code>. Defaults to the account-specific identifier in the RDS hostname (the second label, e.g. <code>abcd1234efgh</code> in <code>production.abcd1234efgh.us-east-1.rds.amazonaws.com</code>), which is usually not your numeric AWS account ID. Can be set explicitly to, e.g., differentiate staging from production.</td>
     </tr>
     <tr>
       <td>db_use_iam_auth (<code>DB_USE_IAM_AUTH</code>)</td>
@@ -630,11 +630,12 @@ Note that this requires queries to have parent span information propagated using
   </tbody>
 </table>
 
+## Server identity settings
 
-## Additional settings
-
-Like the general settings above, but less commonly used. We only recommend using these settings after
-talking to pganalyze support.
+How the collector identifies the server with the pganalyze API. These are detected automatically,
+and you only need to set them when the automatic detection does not produce the identity you want,
+or when a server changes identity and you want it to keep its monitoring history. See
+[Server identity and monitoring history](/docs/collector/server-identity) for the full details.
 
 <table>
   <thead>
@@ -653,7 +654,7 @@ talking to pganalyze support.
     <tr>
       <td>api_system_type (<code>PGA_API_SYSTEM_TYPE</code>)</td>
       <td>Automatically detected</td>
-      <td>Overrides the type of the system, used for uniquely identifying the server with the pganalyze API. Must be one of the following: amazon_rds, azure_database, google_cloudsql, self_hosted or heroku.</td>
+      <td>Overrides the type of the system, used for uniquely identifying the server with the pganalyze API. Must be one of the following: <code>amazon_rds</code>, <code>azure_database</code>, <code>google_cloudsql</code>, <code>aiven</code>, <code>crunchy_bridge</code>, <code>tembo</code>, <code>planetscale</code>, <code>neon</code>, <code>supabase</code>, <code>heroku</code> or <code>self_hosted</code>.</td>
     </tr>
     <tr>
       <td>api_system_scope (<code>PGA_API_SYSTEM_SCOPE</code>)</td>
@@ -661,10 +662,37 @@ talking to pganalyze support.
       <td>Overrides the scope of the system, used for uniquely identifying the server with the pganalyze API. Can be used for auxiliary identifying characteristics (e.g., region of a server ID that's re-used).</td>
     </tr>
     <tr>
+      <td>api_system_id_fallback (<code>PGA_API_SYSTEM_ID_FALLBACK</code>)</td>
+      <td>[none]</td>
+      <td>The previous system ID of this server, so it is recognized after its ID changed (e.g. when an instance is replaced, or the database moves to a different provider). See <a href="/docs/collector/server-identity">Server identity and monitoring history</a>.</td>
+    </tr>
+    <tr>
+      <td>api_system_type_fallback (<code>PGA_API_SYSTEM_TYPE_FALLBACK</code>)</td>
+      <td>[none]</td>
+      <td>The previous system type of this server, so it is recognized after its type changed (e.g. when the database moves to a different provider). See <a href="/docs/collector/server-identity">Server identity and monitoring history</a>.</td>
+    </tr>
+    <tr>
       <td>api_system_scope_fallback (<code>PGA_API_SYSTEM_SCOPE_FALLBACK</code>)</td>
       <td>[none]</td>
-      <td>When the pganalyze backend receives a snapshot with a fallback scope set, and there is no server created with the regular scope, it will first search the servers with the fallback scope. If found, that server's scope will be updated to the (new) regular scope. If not found, a new server will be created with the regular scope. The main goal of the fallback scope is to avoid creating a duplicate server when changing the scope value.</td>
+      <td>The previous system scope of this server, so it is recognized after its scope changed (e.g. when the database moves to a different AWS account, GCP project or Aiven project). See <a href="/docs/collector/server-identity">Server identity and monitoring history</a>.</td>
     </tr>
+  </tbody>
+</table>
+
+## Additional settings
+
+Like the general settings above, but less commonly used. We only recommend using these settings after
+talking to pganalyze support.
+
+<table>
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
     <tr>
       <td>db_log_docker_tail</td>
       <td>[none]</td>
