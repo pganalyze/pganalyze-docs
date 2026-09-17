@@ -1,0 +1,74 @@
+---
+title: '2026.08.1 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2026.08.1`
+
+## Notes
+
+- This is a patch release on top of **[2026.08.0](2026-08-0)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2026.08.0](2026-08-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+
+## Features
+
+* Update combined collector from v0.72.0 to [v0.74.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0740------2026-09-17) {/* 6243 */}
+  - See the collector changelog for [0.73.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0730------2026-09-01) and [0.74.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0740------2026-09-17) for the full details
+* Log Insights: Support new log event types {/* 6157 */}
+
+
+## Bugfixes and other improvements
+
+* Index Advisor: Show an error message on the per-table run page when needed
+  - Previously an Index Advisor run that failed during query analysis would fail silently, without making it
+    apparent to the user that an error occurred. These errors are now surfaced in the same style as the errors
+    shown for individual queries in Query Analysis.
+* Improve snapshot API and snapshot worker logging to aid debugging {/* 6162 */}
+  - The snapshot worker default log level is raised to info, the snapshot queue state is logged on a recurring
+    basis, and additional warnings are emitted when snapshots are dropped, including the server ID. This helps
+    identify whether missing data originates in the snapshot API/worker or in another component.
+* Expand the system fallback lookup to more identity changes {/* 6217 */}
+  - The system ID and system type fallbacks previously only applied alongside a fallback scope, and only when both
+    were set, so a provider change or a replaced instance created a new server instead of re-keying the existing
+    one. The empty and current scope are now tried as well, since an empty previous scope cannot be sent as a
+    config value.
+* Alerts & Check-Up: Don't run the fsync check for Neon databases {/* 6147 */}
+  - Neon uses a specialized storage layer and turns fsync off by design, so there is nothing for the user to act on
+* pganalyze MCP Server: Add `.truefoundry.cloud` and `.composio.dev` to the default OAuth DCR redirect host allowlist {/* 6164 and 6194 */}
+* Snapshot API: Include a 404 route for the `grant_logs` endpoint {/* 6163 */}
+
+
+## Performance
+
+* Fix N+1 query in the Index Selection GraphQL response {/* 6154 */}
+  - Per-fingerprint lookups caused a large number of serial database round trips on tables with many query
+    fingerprints, which could time out the Index Selection GraphQL request at 120s. The affected list is also
+    capped to the top 50 queries per scan.
+
+
+## Security
+
+* Important application security fixes {/* 6228, 6237 and 6242 */}
+  - We recommend all installations upgrade to pick up these fixes
+* Routine security updates to packages in the base image and library dependencies
+* Updates dependencies for security issues that might have been flagged by scanners, but are not exploitable in our assessment
+  * Ruby gems: mail [GHSA-mvxr-6m87-mv2q](https://github.com/advisories/GHSA-mvxr-6m87-mv2q) {/* 6159 */}
+  * Rust crates: [GHSA-5x78-73v4-xg6w](https://github.com/advisories/GHSA-5x78-73v4-xg6w),
+    [GHSA-rgqc-3x5p-6gwg](https://github.com/advisories/GHSA-rgqc-3x5p-6gwg),
+    [GHSA-3gjw-f78c-vvpw](https://github.com/advisories/GHSA-3gjw-f78c-vvpw) {/* 6239 */}
+  * Javascript libraries: CVE-2026-76172, CVE-2026-75975, CVE-2026-75931, CVE-2026-75899, CVE-2026-63376,
+    CVE-2026-77465, CVE-2026-84375, CVE-2026-84373, CVE-2026-68921, CVE-2026-85062, CVE-2026-9358,
+    GHSA-p498-v437-472g {/* 6240 */}, CVE-2026-73089, CVE-2026-73088, GHSA-gv7w-rqvm-qjhr
+
+
+## GraphQL API changes
+
+* Workbooks: Avoid writes in the `getWorkbookVariantRewrite` query {/* 6124 */}
+  - This query previously updated the workbook to add parameters when necessary, which violates GraphQL semantics
+    (queries shouldn't write). The query now returns `introducedParameters`, describing the parameters that would
+    be needed if the rewrite were applied, and the `createWorkbookVariant` mutation accepts these and updates the
+    workbook when creating such a variant.
