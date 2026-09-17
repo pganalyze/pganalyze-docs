@@ -1,0 +1,30 @@
+---
+title: '2026.02.1 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2026.02.1`
+
+## Notes
+
+- This is a patch release on top of **[2026.02.0](2026-02-0)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2026.02.0](2026-02-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+
+
+## Bugfixes
+
+- JWT tokens: Set `aud` audience field to a non-null value
+  - Previously the JWT token contained an `aud` field set to `null`, which could confuse some intermediary proxies.
+    The audience is now declared by sending an `X-JWT-Audience` HTTP header when requesting the token. When used,
+    this header must also be set on subsequent requests, and the server validates that the token being passed has
+    the same audience.
+
+
+## Security
+
+- Important application security fixes
+  - We recommend all installations upgrade to pick up these fixes
+- Routine security updates to packages in the base image
