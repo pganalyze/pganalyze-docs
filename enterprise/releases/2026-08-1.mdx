@@ -40,9 +40,6 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
   - Neon uses a specialized storage layer and turns fsync off by design, so there is nothing for the user to act on
 * pganalyze MCP Server: Add `.truefoundry.cloud` and `.composio.dev` to the default OAuth DCR redirect host allowlist {/* 6164 and 6194 */}
 * Snapshot API: Include a 404 route for the `grant_logs` endpoint {/* 6163 */}
-* GraphQL: Serialize non-finite Float values as null instead of failing the field {/* 6209 and 6210 */}
-  - Ratio calculations can produce NaN or Infinity when a denominator is zero, which the Float type rejects.
-    These now serialize as null rather than erroring.
 
 
 ## Performance
