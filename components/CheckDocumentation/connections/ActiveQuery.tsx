@@ -94,8 +94,8 @@ const ActiveQueryGuidance: React.FunctionComponent<CheckGuidanceProps> = ({
           <p>
             If a query lacks the necessary indexes to execute efficiently, it
             may take longer and use more I/O than necessary, causing a negative
-            impact on the whole system. Check the the <strong>Index Check</strong> tab for
-            the referenced queries to review indexing recommendations.
+            impact on the whole system. Check the <strong>Index Advisor</strong>
+            tab for the referenced queries to review indexing recommendations.
           </p>
         </li>
         <li>
