@@ -1,0 +1,34 @@
+---
+title: 'Step 3: Deploy the Collector'
+install_track_title: Installation Guide (CloudNativePG)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+## Deploying the collector with Helm
+
+The pganalyze collector runs as an ordinary container in your cluster. There's nothing
+CNPG-specific about how the collector itself is deployed. It just needs network connectivity to
+the CNPG cluster's `-rw` Service, the same way any other application in the cluster would connect.
+
+### Prerequisites
+
+* [`kubectl`](https://kubernetes.io/docs/tasks/tools/) is configured for your cluster
+* [The Helm CLI](https://helm.sh/) v3 or above is installed
+* CNPG is already installed, and you have a `Cluster` with the monitoring role and
+  `pg_stat_statements` set up from the previous two steps
+
+### Fetch the Helm chart's example values
+
+```bash
+helm repo add pganalyze https://charts.pganalyze.com/
+helm repo update
+helm show values pganalyze/pganalyze-collector > values.yaml
+```
+
+You'll customize this `values.yaml` file in the next step to point the collector at your CNPG
+cluster.
+
+<Link className="btn btn-success" to="04_configure_the_collector">
+  Proceed to Step 4: Configure the Collector
+</Link>

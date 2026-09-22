@@ -1,0 +1,38 @@
+---
+title: 'Step 3: Test and Verify'
+install_track_title: 'Log Insights: Setup (CloudNativePG)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+With Vector forwarding logs and the collector's OTLP endpoint configured, run a query against your
+CNPG cluster to generate a log line, then check that the collector picked it up:
+
+```bash
+kubectl exec deploy/my-collector-pganalyze-collector -- pganalyze-collector --test-logs --reload
+```
+
+If nothing shows up, check, in order:
+
+* Vector's own pod logs (`kubectl logs -n vector daemonset/vector`) for errors reshaping or sending
+  log events
+* That the pods you're monitoring actually carry the `cnpg.io/cluster` and
+  `cnpg.io/podRole: instance` labels the `cnpg_route` filter matches on
+  (`kubectl get pods --show-labels -l cnpg.io/cluster=my-cluster`)
+* That the cluster name in Vector's `cnpg_route` filter matches your actual CNPG `Cluster` name
+* That the sink URI in Vector's config resolves to the collector's OTLP Service
+  (`kubectl get svc pganalyze-collector-otel-service`)
+
+<PublicOnly>
+  <p>
+    Once this is working, log events will start showing up on the Log Insights page in pganalyze.
+  </p>
+  <p>
+    Note that <code>logger: "postgres"</code> log lines get full structured field extraction today;
+    other loggers CNPG emits (like <code>pgaudit</code>) are forwarded but not yet parsed into
+    structured fields.
+  </p>
+</PublicOnly>
+
+Next, you can set up [Automated EXPLAIN](/docs/explain/setup/cloudnative_pg/01_auto_explain_check)
+to start collecting EXPLAIN plans for your slow queries.

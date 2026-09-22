@@ -11,6 +11,7 @@ import imgLogoHeroku from './images/logo_heroku.svg'
 import imgLogoCrunchyBridge from './images/logo_crunchy_bridge.svg'
 import imgLogoSupabase from './images/logo_supabase.svg'
 import imgLogoNeon from './images/logo_neon.svg'
+import imgLogoKubernetes from './images/logo_kubernetes.png'
 
 export const InstallChoiceList = ({ docsRoot }) => {
   return (
@@ -70,6 +71,12 @@ export const InstallChoiceList = ({ docsRoot }) => {
           img: imgLogoNeon,
           providerName: "Neon",
           text: "Serverless Postgres",
+        },
+        {
+          link: "install/cloudnative_pg/01_create_monitoring_role",
+          img: imgLogoKubernetes,
+          providerName: "CloudNativePG",
+          text: "Postgres on Kubernetes",
         },
       ]}
     />

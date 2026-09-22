@@ -1,0 +1,133 @@
+---
+title: 'Step 4: Configure the Collector'
+install_track_title: Installation Guide (CloudNativePG)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
+
+export const APIKeyInstructions = ({ apiKey }) => {
+  return apiKey ? (
+    <React.Fragment>
+      The <code>PGA_API_KEY</code> for the current organization is{" "}
+      <code>{apiKey}</code>
+    </React.Fragment>
+  ) : (
+    <React.Fragment>
+      The <code>PGA_API_KEY</code> can be found in the pganalyze Settings page
+      for your organization, under the API Access tab
+    </React.Fragment>
+  );
+};
+
+export const ExtraEnvQuick = ({ apiKey }) => {
+  return (
+    <CodeBlock language="yaml">
+      {`extraEnv:
+  PGA_API_KEY: ${apiKey || "your-organization-api-key"}
+  DB_HOST: my-cluster-rw
+  DB_NAME: app
+  DB_USERNAME: pganalyze
+  DB_PASSWORD: your_monitoring_role_password`}
+    </CodeBlock>
+  );
+};
+
+## Point the collector at your CNPG cluster
+
+Update the `extraEnv` section of the `values.yaml` file you fetched in the previous step:
+
+<ExtraEnvQuick apiKey={props.apiKey} />
+
+1. <APIKeyInstructions apiKey={props.apiKey} />
+2. The `DB_HOST` should be the CNPG `-rw` Service for your cluster: `<cluster-name>-rw` if the
+   collector is deployed in the same namespace as the `Cluster`, or
+   `<cluster-name>-rw.<namespace>.svc` if it's in a different namespace. This Service always points
+   at the current primary, so the collector keeps working across failovers without reconfiguration.
+3. The `DB_NAME` is the database on the cluster you want to monitor. `app` is CNPG's default
+   application database name unless you customized `.spec.bootstrap.initdb.database`. If you're
+   monitoring more than one database on this cluster, add another `[section]` to the INI config
+   below for each one (all pointing at the same `DB_HOST`). See the
+   [collector settings reference](/docs/collector/settings) for the multi-server config format
+4. The `DB_USERNAME` and `DB_PASSWORD` are the credentials from the `pganalyze-monitoring-user`
+   Secret you created in Step 1
+
+`extraEnv` is fine for a first test, but since `DB_PASSWORD` is a credential, we recommend moving to
+a Kubernetes Secret-based config once you've confirmed things work. Create a Secret containing the
+collector's INI config:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pganalyze-secrets
+data:
+  pganalyze-collector.conf: |
+    [pganalyze]
+    api_key = your_api_key
+    [my-cluster]
+    db_host = my-cluster-rw
+    db_name = app
+    db_username = pganalyze
+    db_password = your_monitoring_role_password
+```
+
+Then mount it into the collector at `/config`, replacing the `extraEnv` section:
+
+```yaml
+volumes:
+  - name: scratch
+    emptyDir: {}
+  - name: config-volume
+    secret:
+      secretName: pganalyze-secrets
+
+volumeMounts:
+  - mountPath: /tmp
+    name: scratch
+    subPath: tmp
+  - mountPath: /state
+    name: scratch
+    subPath: state
+  - mountPath: /config
+    name: config-volume
+```
+
+**Note:** The pganalyze collector supports more [optional settings](https://pganalyze.com/docs/collector/settings)
+(multiple database names, log forwarding via `db_log_otel_server`, etc.) that you can add to the
+`[my-cluster]` section above.
+
+## Install the Helm chart
+
+```bash
+helm upgrade --install my-collector pganalyze/pganalyze-collector --values=values.yaml
+```
+
+Adjust the namespace if needed. You can run the same command again whenever you change
+`values.yaml`.
+
+To verify the install went well, check the deployment and pod logs:
+
+```console
+$ kubectl get deployment
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+my-collector-pganalyze-collector   1/1     1            1           1m10s
+$ kubectl logs deploy/my-collector-pganalyze-collector
+I [my-cluster] Submitted compact snapshots successfully: 6 activity, 2 logs
+```
+
+The `Submitted compact snapshots successfully` message indicates the collector is running
+correctly.
+
+**Your setup is complete. The dashboard will start showing data within 15 minutes.**
+
+<PublicLastStepLogInsightsLink />
+
+## (Optional) Running tests
+
+You can run the collector's built-in test using `docker-entrypoint.sh` inside the running pod:
+
+```bash
+kubectl exec deploy/my-collector-pganalyze-collector -- /home/pganalyze/docker-entrypoint.sh test
+```
