@@ -9,6 +9,9 @@ import { MonitoringUserPerDatabaseHelpers } from "../../components/MonitoringUse
 import VerifyConnection from "../../components/VerifyConnection";
 import { CNPGMonitoringSecretYaml, CNPGMonitoringSecretKubectl } from "../../components/CNPGMonitoringSecret";
 
+This guide assumes you already have a CNPG cluster running, named `my-cluster`, with its manifest
+in a file called `cluster.yaml`. Substitute your own cluster name and file throughout.
+
 [CloudNativePG](https://cloudnative-pg.io/) (CNPG) lets you manage Postgres roles declaratively
 through the `Cluster` resource, instead of connecting and running `CREATE USER` yourself. We
 recommend using this to create a dedicated monitoring role for pganalyze.
@@ -30,9 +33,9 @@ Apply it with `kubectl apply -f pganalyze-monitoring-secret.yaml`, or create it 
 
 ## Declare the role on your Cluster
 
-Add the role to `.spec.managed.roles` in your `Cluster` manifest, referencing the Secret you just
-created, and granting it the built-in `pg_monitor` role (which covers most of what the collector
-needs to read):
+Add the role to `.spec.managed.roles` in `cluster.yaml`, referencing the Secret you just created,
+and granting it the built-in `pg_monitor` role (which covers most of what the collector needs to
+read).
 
 ```yaml
 apiVersion: postgresql.cnpg.io/v1
@@ -68,11 +71,8 @@ kubectl cnpg psql my-cluster
 
 This connects you directly to the primary as the `postgres` superuser over a local socket inside
 the pod, so it works even if you haven't enabled network-level superuser access for the cluster.
-Once connected, run the following for each database you want to monitor. Most CNPG clusters only
-have one application database, and unless you customized `.spec.bootstrap.initdb.database` when
-creating the cluster, its name defaults to `app`:
 
-<MonitoringUserPerDatabaseHelpers username="pganalyze" databaseName="app" />
+<MonitoringUserPerDatabaseHelpers username="pganalyze" />
 
 ## Verify connection
 
@@ -86,9 +86,9 @@ kubectl port-forward svc/my-cluster-rw 5432:5432
 
 Then, in another terminal:
 
-<VerifyConnection host="localhost" />
+<VerifyConnection host="localhost" dbname="app" />
 
-Write down the username and password of the monitoring role, we'll use it in Step 4 of this guide.
+Write down the username and password of the monitoring role. we'll use it in Step 4.
 
 ---
 

@@ -23,11 +23,13 @@ the CNPG cluster's `-rw` Service, the same way any other application in the clus
 ```bash
 helm repo add pganalyze https://charts.pganalyze.com/
 helm repo update
-helm show values pganalyze/pganalyze-collector > values.yaml
+helm show values pganalyze/pganalyze-collector > collector-values.yaml
 ```
 
-You'll customize this `values.yaml` file in the next step to point the collector at your CNPG
-cluster.
+You'll customize this `collector-values.yaml` file in the next step to point the collector at your
+CNPG cluster. Naming it specifically matters if you keep manifests for multiple charts in the same
+directory. `values.yaml` is a common enough default that it's easy to collide with another chart's
+file, Vector's, for one, later in this guide.
 
 <Link className="btn btn-success" to="04_configure_the_collector">
   Proceed to Step 4: Configure the Collector

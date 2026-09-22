@@ -23,12 +23,17 @@ but we've found the following is a good starting point:
 
 <PgSettingsTable recommendations={getAutoExplainSettingRecommendations(props.settings)} />
 
-Add these to `.spec.postgresql.parameters` in your `Cluster` manifest, for example:
+Add these to `.spec.postgresql.parameters` in your `Cluster` manifest, alongside the
+`pg_stat_statements.*` keys already there from Initial Setup, for example:
 
 ```yaml
 spec:
   postgresql:
     parameters:
+      pg_stat_statements.max: "10000" # already set, keep it
+      pg_stat_statements.track: "all" # already set, keep it
+      track_io_timing: "on" # already set, keep it
+      auto_explain.log_format: "json"
       auto_explain.log_min_duration: "1000"
       auto_explain.log_analyze: "on"
       auto_explain.log_buffers: "on"

@@ -37,6 +37,12 @@ export const InstallChoiceList = ({ docsRoot }) => {
           text: "Cloud SQL and AlloyDB",
         },
         {
+          link: "install/cloudnative_pg/01_create_monitoring_role",
+          img: imgLogoKubernetes,
+          providerName: "CloudNativePG",
+          text: "Postgres on Kubernetes",
+        },
+        {
           link: "install/self_managed/00_choose_setup_method",
           img: imgLogoPgsql,
           providerName: "Self-Managed",
@@ -71,12 +77,6 @@ export const InstallChoiceList = ({ docsRoot }) => {
           img: imgLogoNeon,
           providerName: "Neon",
           text: "Serverless Postgres",
-        },
-        {
-          link: "install/cloudnative_pg/01_create_monitoring_role",
-          img: imgLogoKubernetes,
-          providerName: "CloudNativePG",
-          text: "Postgres on Kubernetes",
         },
       ]}
     />

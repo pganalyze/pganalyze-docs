@@ -27,11 +27,8 @@ type Props ={
   roleName?: string,
 }
 
-// Just the settings comparison table, with no "Summary of required/recommended changes"
-// section below it. Split out for platforms like CNPG where that summary (a plain list of
-// name/value pairs meant to support copy-pasting into `ALTER SYSTEM`/`ALTER ROLE`) doesn't apply,
-// since the settings are configured a different way and the page already shows its own
-// copy-pasteable example inline.
+// Just the settings comparison table. "Summary of required/recommended changes" in separate component shown
+// for installations that can use ALTER SYSTEM/ROLE commands.
 export const PgSettingsTable: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({ recommendations }) => {
   const hasCurrent = recommendations.some(s => s.current != null);
   const DescriptionPopup = useDescriptionPopup()

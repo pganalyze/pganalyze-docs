@@ -11,7 +11,8 @@ which is used by pganalyze to collect Postgres query statistics.
 ## Set the parameters
 
 CNPG configuration lives in the `Cluster` resource's `.spec.postgresql.parameters`. Add the
-following:
+following to the same `cluster.yaml` you used in [Step 1](01_create_monitoring_role), alongside
+the `.spec.managed.roles` you already set there:
 
 ```yaml
 spec:

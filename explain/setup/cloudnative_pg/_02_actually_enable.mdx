@@ -22,12 +22,17 @@ export const SPLRecommendation = ({recommendation}) => {
 ## Set the parameter
 
 Add `auto_explain.*` parameters to `.spec.postgresql.parameters` in your `Cluster` manifest (the
-full recommended set is in the next step):
+full recommended set is in the next step). This is the same `.spec.postgresql.parameters` map you
+set `pg_stat_statements.*` in during [Initial Setup](/docs/install/cloudnative_pg/02_enable_pg_stat_statements),
+so merge these in alongside those keys rather than replacing the map:
 
 ```yaml
 spec:
   postgresql:
     parameters:
+      pg_stat_statements.max: "10000" # already set, keep it
+      pg_stat_statements.track: "all" # already set, keep it
+      track_io_timing: "on" # already set, keep it
       auto_explain.log_min_duration: "1000"
 ```
 

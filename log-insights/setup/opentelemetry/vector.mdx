@@ -32,10 +32,14 @@ First, you need to ensure your Vector configuration is sourcing logs from your K
 ```
 
 Second, we recommend filtering the logs to just the CNPG output, and limiting it down to the clusters you
-want to monitor in pganalyze, like `cluster-test1` and `cluster-test2` in the below example. Note that you
-can send the logs of multiple clusters/pods to the same pganalyze-collector installation, and then use the
-[collector configuration](/docs/collector/settings#self-managed-servers) to split it up by cluster or
-Kubernetes pod labels.
+want to monitor in pganalyze. Each entry in the `includes([...])` list below is the **name of a whole
+`Cluster` resource** (the `cnpg.io/cluster` label, shared by every instance/replica of that cluster,
+not a per-instance name). Most setups only have one entry here. The example below shows two entries,
+`payments-prod` and `payments-staging`, purely to illustrate monitoring more than one *separate* cluster
+through the same Vector deployment; don't treat this as a pattern to imitate for a single cluster. Note
+that you can send the logs of multiple clusters/pods to the same pganalyze-collector installation, and
+then use the [collector configuration](/docs/collector/settings#self-managed-servers) to split it up by
+cluster or Kubernetes pod labels.
 
 ```yaml
   transforms:
@@ -54,8 +58,8 @@ Kubernetes pod labels.
           # .kubernetes.pod_labels."cnpg.io/instanceRole" == "primary" &&
           includes(
             [
-              "cluster-test1",
-              "cluster-test2",
+              "payments-prod",
+              "payments-staging",
             ],
             .kubernetes.pod_labels."cnpg.io/cluster"
           )
@@ -80,6 +84,13 @@ Last, the log output needs to be sent to your pganalyze collector configuration 
 [OTLP log server](/docs/log-insights/setup/opentelemetry) configured, correctly wrapping the log
 records in OTLP JSON encoding:
 
+**`batch.max_events` must be `1`.** Vector's `opentelemetry` sink does not currently support
+batching more than one event per request with the `json` codec (confirmed by a Vector maintainer
+in [vectordotdev/vector#22054](https://github.com/vectordotdev/vector/issues/22054)); any request
+carrying more than one event is malformed and gets rejected with HTTP 400, and dropped rather than
+retried. This means every log line is sent as its own HTTP request, higher request volume than
+true batching, but it's the only combination that reliably works today.
+
 ```yaml
   sinks:
     pganalyze:
@@ -88,8 +99,10 @@ records in OTLP JSON encoding:
       type: opentelemetry
       protocol:
         type: http
-        # ! Update this to point to the pganalyze-collector with db_log_otel_server / LOG_OTEL_SERVER configured
-        uri: "http://pganalyze-collector-service:4318/v1/logs"
+        # ! Update this to point to the pganalyze-collector Service with db_log_otel_server / LOG_OTEL_SERVER configured.
+        # ! Use the namespace-qualified form if Vector and the collector are in different namespaces (likely) —
+        # ! a bare Service name only resolves via Kubernetes DNS within the same namespace as the caller.
+        uri: "http://pganalyze-collector-otel-service.<collector-namespace>.svc.cluster.local:4318/v1/logs"
         method: post
         encoding:
           codec: json
@@ -100,7 +113,7 @@ records in OTLP JSON encoding:
         payload_prefix: '{"resourceLogs":'
         payload_suffix: '}'
         batch:
-          max_events: 50
+          max_events: 1
           timeout_secs: 5
         request:
           headers:

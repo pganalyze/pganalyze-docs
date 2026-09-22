@@ -55,9 +55,7 @@ reasons:
 1. CNPG doesn't support attaching a sidecar to its managed instance pods through the normal
    `Cluster` spec. The only extensibility point, CNPG-I, requires writing and maintaining a full
    gRPC plugin.
-2. Even with a plugin, there's no confirmed way to mount that log volume into an injected sidecar.
-   The only [public discussion](https://github.com/cloudnative-pg/cloudnative-pg/discussions/9638)
-   on this got an unconfirmed bot reply that cited the wrong deployment, not a maintainer answer.
+2. Even with a plugin, there's no confirmed way to mount that log volume into an injected sidecar at this time.
 
 Given that, the supported path is to collect CNPG's JSON logs from Kubernetes and forward them to the collector
 over OpenTelemetry as described above.
