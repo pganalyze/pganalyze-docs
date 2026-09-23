@@ -1,0 +1,36 @@
+---
+title: 'API: Authentication'
+backlink_href: /docs/api
+backlink_title: 'API Overview'
+---
+
+Requests to the pganalyze [GraphQL API](/docs/api) and the [MCP server](/docs/mcp) are authenticated with a credential passed in the `Authorization` header. You manage these credentials on the **Settings > API Access** page of your organization.
+
+## Choosing a credential
+
+| Credential | Acts as | Access | Works with |
+|------------|---------|--------|------------|
+| [Personal access token](/docs/api/personal-access-tokens) (early access) | You, within one organization | The [scopes](#scopes) you pick, limited further by your account permissions | GraphQL API, MCP server |
+| [OAuth](/docs/mcp#oauth-recommended) | You, within one organization | The [scopes](#scopes) you approve, limited further by your account permissions | MCP server |
+| [API key](/docs/api/create-api-key) | The organization | Read, or read-write (pganalyze Enterprise Server) | GraphQL API, MCP server |
+
+Use a personal access token when a script, agent, or CI job should act on your behalf with only the access it needs. Because a personal access token belongs to you, it can never see more than you can: if you only have access to certain servers, the token has the same restriction, and it stops working if you leave the organization.
+
+Use OAuth when you connect an interactive MCP client. The client opens the authorization flow in your browser, so there is no token to copy or store.
+
+An API key is not tied to a person. It is scoped to the whole organization, and keeps working regardless of who is a member.
+
+The collector sends statistics to pganalyze with a collector API key, which you create during [collector installation](/docs/install). A collector API key only works for sending statistics, and cannot be used with the GraphQL API or the MCP server.
+
+## Scopes
+
+Personal access tokens and OAuth authorizations carry scopes, which limit what the credential can do. You choose the scopes when you create a personal access token, or when you approve an OAuth authorization. API keys do not use scopes.
+
+- **Basic read access** (`restricted_read`, required): Read access to some of your account data, excluding sensitive information such as query parameters. EXPLAIN plans are available when the pganalyze collector's PII filtering is configured to normalize query samples. Individual log lines are available when PII filtering is configured to filter all log secrets.
+- **Full read access** (`read`, optional): Full read access to your account data, including query text and EXPLAIN plans.
+- **Workbook write access** (`write_workbooks`, optional): Write access to workbooks in your account: create, edit, and delete workbooks along with their variants and parameter sets, and run `EXPLAIN ANALYZE` on your databases through the collector. It depends on Full read access, so granting it grants Full read access as well.
+
+Scopes never grant more than your account permissions allow. For example, if you can only view certain servers, the credential has the same restriction.
+
+Scopes for other write operations, such as changing settings through [mutations](/docs/api/mutations), are currently not available.
+

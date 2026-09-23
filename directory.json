@@ -40,8 +40,12 @@
       "title": "pganalyze GraphQL API",
       "path": "/docs/api"
     },
+    "api/authentication": {
+      "title": "API: Authentication",
+      "path": "/docs/api/authentication"
+    },
     "api/create-api-key": {
-      "title": "API: Creating an API key",
+      "title": "API: API keys",
       "path": "/docs/api/create-api-key"
     },
     "api/mutations": {
@@ -59,6 +63,10 @@
     "api/mutations/updateServer": {
       "title": "updateServer - Update a server on pganalyze Enterprise Server",
       "path": "/docs/api/mutations/updateServer"
+    },
+    "api/personal-access-tokens": {
+      "title": "API: Personal access tokens",
+      "path": "/docs/api/personal-access-tokens"
     },
     "api/queries": {
       "title": "pganalyze GraphQL API Queries",
@@ -328,21 +336,41 @@
       "title": "2025.03.5 Release",
       "path": "/docs/enterprise/releases/2025-03-5"
     },
+    "enterprise/releases/2025-03-6": {
+      "title": "2025.03.6 Release",
+      "path": "/docs/enterprise/releases/2025-03-6"
+    },
     "enterprise/releases/2026-01-0": {
       "title": "2026.01.0 Release",
       "path": "/docs/enterprise/releases/2026-01-0"
+    },
+    "enterprise/releases/2026-01-1": {
+      "title": "2026.01.1 Release",
+      "path": "/docs/enterprise/releases/2026-01-1"
     },
     "enterprise/releases/2026-02-0": {
       "title": "2026.02.0 Release",
       "path": "/docs/enterprise/releases/2026-02-0"
     },
+    "enterprise/releases/2026-02-1": {
+      "title": "2026.02.1 Release",
+      "path": "/docs/enterprise/releases/2026-02-1"
+    },
     "enterprise/releases/2026-05-0": {
       "title": "2026.05.0 Release",
       "path": "/docs/enterprise/releases/2026-05-0"
     },
+    "enterprise/releases/2026-05-1": {
+      "title": "2026.05.1 Release",
+      "path": "/docs/enterprise/releases/2026-05-1"
+    },
     "enterprise/releases/2026-08-0": {
       "title": "2026.08.0 Release",
       "path": "/docs/enterprise/releases/2026-08-0"
+    },
+    "enterprise/releases/2026-08-1": {
+      "title": "2026.08.1 Release",
+      "path": "/docs/enterprise/releases/2026-08-1"
     },
     "enterprise/settings": {
       "title": "Enterprise Server: Container settings",
