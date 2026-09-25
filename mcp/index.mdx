@@ -4,7 +4,7 @@ backlink_href: /docs
 backlink_title: 'Documentation'
 ---
 
-The pganalyze [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server allows AI assistants to interact with your pganalyze data. This enables AI coding tools like Claude Code, Codex, or Cursor to query server metrics, inspect EXPLAIN plans, run the Index Advisor, and review active issues. A separate set of [Workbooks tools](#optimizing-queries-with-workbooks) (in early access) can additionally create workbooks and run new `EXPLAIN ANALYZE` executions through the collector to test query rewrites and planner settings.
+The pganalyze [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server allows AI assistants to interact with your pganalyze data. This enables AI coding tools like Claude Code, Codex, or Cursor to query server metrics, inspect EXPLAIN plans, run the Index Advisor, and review active issues. A separate set of [Workbooks tools](#optimizing-queries-with-workbooks) can additionally create workbooks and run new `EXPLAIN ANALYZE` executions through the collector to test query rewrites and planner settings.
 
 The pganalyze MCP server is currently in public preview, and available on current pganalyze [plans](/pricing). If you are on a legacy plan you may need to upgrade to access the MCP Server.
 
@@ -70,15 +70,11 @@ If you're using an MCP client hosted on the web (instead of running locally) the
 
 ## Authentication
 
-The MCP server supports two authentication methods: **OAuth** (interactive) and **API key** (non-interactive).
+The MCP server supports three authentication methods: **OAuth** (interactive), and **API key** or **personal access token** (non-interactive). See [API Authentication](/docs/api/authentication) for a comparison.
 
 ### OAuth (recommended)
 
-When you first connect, your MCP client will open an OAuth authorization flow through your pganalyze account. During authorization, you can choose between the following permission levels:
-
-- **Basic read access** (`restricted_read`, required): Read access to some of your account data, excluding sensitive information such as query parameters. EXPLAIN plans are available when the pganalyze collector's PII filtering is configured to normalize query samples. Individual log lines are available when PII filtering is configured to filter all log secrets.
-- **Full read access** (`read`, optional): Full read access to your account data, including query text and EXPLAIN plans.
-- **Workbook write access** (`write_workbooks`, optional, early access): Write access to workbooks in your account: create, edit, and delete workbooks along with their variants and parameter sets, and run `EXPLAIN ANALYZE` on your databases through the collector. It depends on Full read access, so granting it grants Full read access as well. This permission only appears once pganalyze has enabled the [Workbooks tools](#optimizing-queries-with-workbooks) for your organization.
+When you first connect, your MCP client will open an OAuth authorization flow through your pganalyze account. During authorization, you choose which [scopes](/docs/api/authentication#scopes) to grant: Basic read access (`restricted_read`) is always granted, and Full read access (`read`) and Workbook write access (`write_workbooks`) are optional. Workbook write access is required for the [Workbooks tools](#optimizing-queries-with-workbooks).
 
 ![OAuth authorization prompt when connecting to the pganalyze MCP server](mcp-authorize.png)
 
@@ -86,7 +82,7 @@ Access is further limited by your account permissions. For example, if you can o
 
 ### API key
 
-As an alternative to OAuth, you can authenticate using a pganalyze read API key. This gives full read access to your account data, equivalent to granting the "Full read access" OAuth permission. It does not grant write access: the [Workbooks tools](#optimizing-queries-with-workbooks) are only available through OAuth with workbook write access.
+As an alternative to OAuth, you can authenticate using a pganalyze read API key. This gives full read access to your account data, equivalent to granting the "Full read access" OAuth permission. It does not grant write access: the [Workbooks tools](#optimizing-queries-with-workbooks) are only available through OAuth or a personal access token with workbook write access.
 
 To use API key authentication, first [create an API key](/docs/api/create-api-key), then configure your MCP client to pass the key as a Bearer token in the `Authorization` header. For example, with Claude Code:
 
@@ -99,6 +95,18 @@ claude mcp add --transport http \
 The exact configuration for other MCP clients depends on how they support custom headers. Refer to your client's documentation for details.
 
 Since API key authentication does not require interactive authorization, it is suited for scenarios where OAuth is impractical, for example, automated background agents, CI/CD pipelines, or other programmatic integrations that run without user interaction.
+
+### Personal access token
+
+Like an API key, a [personal access token](/docs/api/personal-access-tokens) (early access) does not require interactive authorization. Unlike an API key, it authenticates as you, with the same scopes as OAuth, so it can be limited to only the access it needs.
+
+Pass the token as a Bearer token in the `Authorization` header. For example, with Claude Code:
+
+```bash
+claude mcp add --transport http \
+  pganalyze https://app.pganalyze.com/mcp \
+  -H "Authorization: Bearer pgat_XXXXXXX"
+```
 
 ## Rate limiting
 
@@ -159,16 +167,15 @@ cluster-level access.
 
 The tools above read data that pganalyze has already collected: existing metrics, stored query samples, and previously captured EXPLAIN plans. The Workbooks tools go a step further. They let an AI assistant create a [workbook](/docs/workbooks) for a slow query, run new `EXPLAIN ANALYZE` executions under controlled parameter sets, and test rewrites or planner settings against a baseline. This is the same workflow available in the pganalyze app, run through your MCP client instead of the web interface.
 
-Because these tools execute queries against your database through the collector rather than only reading stored data, they carry additional requirements and are gated separately from the read-only tools.
+Because these tools execute queries against your database through the collector rather than only reading stored data, they carry additional requirements beyond those of the read-only tools.
 
 ### Requirements
 
 Using the Workbooks tools requires all of the following:
 
-- **OAuth with workbook write access.** The Workbooks tools perform writes, so they require OAuth authentication with workbook write access granted (see [Authentication](#authentication)). API key authentication is read-only and cannot use them.
+- **OAuth or a personal access token with workbook write access.** The Workbooks tools perform writes, so they require OAuth authentication with workbook write access granted, or a [personal access token](/docs/api/personal-access-tokens) with the `write_workbooks` scope (see [Authentication](#authentication)). API key authentication is read-only and cannot use them.
 - **The Create Workbooks permission.** Your pganalyze account must have the [Create Workbooks permission](/docs/accounts/permissions#create-workbooks), the same permission required to create workbooks in the app. Without it, the tools return an authorization error.
 - **The collector workflow.** Running `EXPLAIN ANALYZE` relies on the [Workbooks collector workflow](/docs/workbooks/collector-workflow) being set up for the database: the `pganalyze.explain_analyze` helper function, and a connected collector on version 0.64.0 or later.
-- **Early access enablement.** The Workbooks tools are not enabled by default, even when the rest of the MCP server is. [Contact pganalyze support](mailto:team@pganalyze.com?subject=pganalyze%20MCP%20early%20access) to enable them for your organization. Until then, the tools do not appear when your MCP client lists the available tools.
 
 ### How the tools fit together
 

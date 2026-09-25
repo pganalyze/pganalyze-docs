@@ -2,9 +2,17 @@
   items:
   - name: Overview
     href: api
-  - name: Creating an API key
-    href: api/create-api-key
+  - name: Authentication
+    href: api/authentication
   - name: Queries
     href: api/queries
   - name: Mutations
     href: api/mutations
+- mount: api/authentication
+  items:
+  - name: Overview
+    href: api/authentication
+  - name: Personal access tokens
+    href: api/personal-access-tokens
+  - name: API keys
+    href: api/create-api-key
