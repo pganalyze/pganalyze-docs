@@ -147,6 +147,8 @@ The MCP server exposes tools, organized by the type of data they access. Since t
 | **Logs** | |
 | `get_log_stats` | Get time-series counts of collected log lines by classification |
 | `get_log_lines` | Get individual log lines, newest first, with optional filters (last 7 days retained) |
+| **System** | |
+| `get_system_stats` | Get time-series OS metrics (CPU, memory, storage, network, WAL size) by metric group |
 | **Workbooks** ([setup required](#optimizing-queries-with-workbooks)) | |
 | `create_workbook` | Create a workbook from a query and run `EXPLAIN ANALYZE` |
 | `create_workbook_variant` | Create a variant (rewrite and/or planner settings) and run `EXPLAIN ANALYZE` |
