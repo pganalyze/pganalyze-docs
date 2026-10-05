@@ -37,4 +37,25 @@ the Managed Identity's Client ID.
 
 Double check your Event Hub namespace and Event Hub name that [you have configured in Step 5](/docs/log-insights/setup/azure-database/05_configure_collector).
 
+### Error: "Azure Event Hub log tail timed out"
+
+This can occur when the Event Hub is receiving log events, but the collector discards them because they don't match the configured server name.
+
+Run the test with verbose output to check:
+
+```bash
+sudo pganalyze-collector --test --verbose
+```
+
+When running the collector with Docker:
+
+```bash
+docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test --verbose
+```
+
+If the output contains "Discarding log line because of unknown server", the `azure_db_server_name` / `AZURE_DB_SERVER_NAME` setting doesn't match your Azure Database server. The name shown at the end of that line is the one Azure reports.
+Set `azure_db_server_name` to the exact name of your Azure Database server resource, as shown in the Azure Portal, or remove the setting if your `db_host` ends in `.postgres.database.azure.com`, where it is inferred automatically.
+A wrong server name also prevents System stats from being collected.
+See [Step 4 of the installation guide](/docs/install/azure_database/04_configure_the_collector) for details.
+
 
