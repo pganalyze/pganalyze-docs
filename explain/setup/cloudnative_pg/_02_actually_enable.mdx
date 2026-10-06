@@ -1,0 +1,70 @@
+import CNPGRestartNotice from './_cnpg_restart_notice.mdx'
+
+export const SPLRecommendation = ({recommendation}) => {
+   if (recommendation.current == null) {
+      return (
+         <p>
+            For example, if the current value is <code>pg_stat_statements</code>,
+            you can set the new value to <code>pg_stat_statements, auto_explain</code>.
+         </p>
+      )
+   }
+   return (
+      <React.Fragment>
+         <p>
+            The current value appears to be <code>{recommendation.current}</code>.
+            You can set the new value to <code>{recommendation.recommended}</code>.
+         </p>
+      </React.Fragment>
+   )
+}
+
+## Set the parameter
+
+Add `auto_explain.*` parameters to `.spec.postgresql.parameters` in your `Cluster` manifest (the
+full recommended set is in the next step). This is the same `.spec.postgresql.parameters` map you
+set `pg_stat_statements.*` in during [Initial Setup](/docs/install/cloudnative_pg/02_enable_pg_stat_statements),
+so merge these in alongside those keys rather than replacing the map:
+
+```yaml
+spec:
+  postgresql:
+    parameters:
+      pg_stat_statements.max: "10000" # already set, keep it
+      pg_stat_statements.track: "all" # already set, keep it
+      track_io_timing: "on" # already set, keep it
+      auto_explain.log_min_duration: "1000"
+```
+
+**You typically don't need to edit `shared_preload_libraries` yourself.** CNPG recognizes the
+`auto_explain.*` parameter prefix and automatically adds the `auto_explain` library to
+`shared_preload_libraries` for you.
+
+<SPLRecommendation recommendation={props.splRecommendation} />
+
+If for some reason `auto_explain` isn't picked up automatically, you can add it to
+`shared_preload_libraries` explicitly instead:
+
+```yaml
+spec:
+  postgresql:
+    parameters:
+      shared_preload_libraries: "pg_stat_statements,auto_explain"
+```
+
+Apply the change with `kubectl apply -f cluster.yaml`.
+
+## Restart
+
+<CNPGRestartNotice />
+
+Once the rollout completes, verify that `shared_preload_libraries` now includes `auto_explain`
+and that the setting change no longer requires a restart (`pending_restart` should be `f`):
+
+```bash
+kubectl cnpg psql my-cluster -- -c \
+  "SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';"
+```
+
+If `auto_explain` is enabled and no longer requires a restart, you can proceed to
+review our recommended `auto_explain` configuration settings:

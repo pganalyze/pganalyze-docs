@@ -1,0 +1,83 @@
+---
+title: 'Step 3: Test and Verify'
+install_track_title: 'Log Insights: Setup (CloudNativePG)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+## Generate a guaranteed log line
+
+A plain `SELECT` won't necessarily produce anything to forward. Postgres doesn't log successful
+statements or connections by default (`log_statement`, `log_min_duration_statement`,
+`log_connections` are all off unless you've configured them), so an ordinary test query can leave
+you checking for something that was never logged in the first place. `RAISE LOG` bypasses all of
+that and is always captured, so it's a reliable way to generate one:
+
+```bash
+kubectl cnpg psql my-cluster -- -c "DO \$\$ BEGIN RAISE LOG 'pganalyze-log-insights-test'; END \$\$;"
+```
+
+## Check that it arrived
+
+Give it 10-15 seconds, then check the collector's own pod logs for a snapshot submission that
+includes a logs count:
+
+```bash
+kubectl logs deploy/my-collector-pganalyze-collector --since=1m
+```
+
+```console
+I [my-cluster] Submitted compact snapshots successfully: 3 activity, 1 logs
+```
+
+**Don't use `docker-entrypoint.sh collector --test-logs --reload` here.** That works for other log
+ingestion methods, but for OTel specifically it starts a second, temporary OTLP listener on the
+same port your already-running collector is using, which fails with "address already in use." The
+collector's own hint calls this out as a likely false positive, and it is one, the snapshot check
+above is the reliable signal for a deployment that's already running.
+
+## If nothing shows up
+
+Check these in order, they cover every failure mode found while building this out:
+
+1. **The cluster filter.** Each entry in Vector's `cnpg_route` `includes([...])` list must be the
+   whole `Cluster` resource's name (the `cnpg.io/cluster` label value, shared by every
+   instance/replica), not a per-instance pod name:
+   ```bash
+   kubectl get pods --show-labels -l cnpg.io/cluster=my-cluster
+   ```
+2. **The sink URI's namespace.** If Vector is deployed in a different namespace than the
+   collector's Service (likely, since our own examples put Vector in its own `vector` namespace),
+   a bare Service name like `pganalyze-collector-otel-service` won't resolve, Kubernetes DNS only
+   resolves unqualified Service names within the same namespace as the caller. Use the fully
+   qualified form instead: `pganalyze-collector-otel-service.<namespace>.svc.cluster.local`. A DNS
+   failure here shows up in Vector's logs as `dns error: failed to lookup address information`.
+3. **`batch.max_events` must be `1`** in the sink config, not higher. See the
+   [Vector configuration reference](/docs/log-insights/setup/opentelemetry/vector) for why.
+4. **Vector's own pod logs**, for anything beyond the above:
+   ```bash
+   kubectl logs -n vector daemonset/vector
+   ```
+5. **Raw payload inspection**, if you're still stuck. Temporarily add `--very-verbose` to the
+   collector's args (there's no way to enable this at runtime otherwise) to see exactly what
+   arrives at the OTLP endpoint:
+   ```bash
+   kubectl patch deployment my-collector-pganalyze-collector --type='json' \
+     -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args", "value": ["collector", "--very-verbose"]}]'
+   ```
+   Remove it the same way (`"op": "remove"`, same `path`, no `value`) once you're done, it's noisy
+   and not meant to run continuously.
+
+<PublicOnly>
+  <p>
+    Once this is working, log events will start showing up on the Log Insights page in pganalyze.
+  </p>
+  <p>
+    Note that <code>logger: "postgres"</code> log lines get full structured field extraction today;
+    other loggers CNPG emits (like <code>pgaudit</code>) are forwarded but not yet parsed into
+    structured fields.
+  </p>
+</PublicOnly>
+
+Next, you can set up [Automated EXPLAIN](/docs/explain/setup/cloudnative_pg/01_auto_explain_check)
+to start collecting EXPLAIN plans for your slow queries.

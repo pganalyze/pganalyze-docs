@@ -1,0 +1,67 @@
+---
+title: 'Log Insights: Setup (CloudNativePG)'
+install_track_title: 'Log Insights: Setup (CloudNativePG)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+Log Insights setup for [CloudNativePG](https://cloudnative-pg.io/) (CNPG) looks different from
+the other platform in these docs because of how CNPG handles logging.
+
+## Why this looks different
+
+CNPG always writes Postgres's log output as JSON to stdout. This isn't a configuration choice.
+Settings like `log_destination`, `logging_collector`, `log_directory`, and `log_filename` are on
+CNPG's [blocked parameter list](https://cloudnative-pg.io/docs/devel/postgresql_conf/), so its
+admission webhook rejects any attempt to set them. In practice this means:
+
+* Postgres still writes csvlog output to disk internally (what `log_directory`/`log_destination`
+  actually control, hence the block), but nothing outside the pod can reach that file. The
+  instance manager tails it and re-serializes each line as JSON to stdout.
+* There's no `log_line_prefix`-formatted text output anywhere you can reach, which is what most of
+  pganalyze's other log ingestion methods (tailing, syslog) expect.
+
+Each log line looks like this:
+
+```json
+{"level":"info","ts":"2025-12-09T00:32:20.823314307Z","logger":"postgres","msg":"record","logging_pod":"cluster-test1-1","record":{"log_time":"2025-12-09 00:32:20.822 UTC","user_name":"postgres","database_name":"postgres","process_id":"4003","connection_from":"[local]","session_id":"69376dbf.fa3","session_line_num":"1","command_tag":"SELECT","session_start_time":"2025-12-09 00:30:55 UTC","virtual_transaction_id":"2/81","transaction_id":"0","error_severity":"LOG","sql_state_code":"00000","message":"duration: 100.000 ms  statement: SELECT 1","application_name":"psql","backend_type":"client backend"}}
+```
+
+`logger` can be one of several values (`postgres`, `pgaudit`, `instance-manager`, `wal-archive`,
+and others). pganalyze's field extraction is built for `logger: "postgres"` today, so other
+loggers (notably `pgaudit`) aren't parsed into structured fields yet.
+
+## The log forwarding pipeline
+
+Getting CNPG logs into pganalyze requires two pieces to work together:
+
+1. **The collector exposes an OpenTelemetry (OTLP) logs endpoint.** This is the same
+   [`db_log_otel_server`](/docs/log-insights/setup/opentelemetry) mechanism other platforms use for
+   OpenTelemetry-based log forwarding, including Neon and Supabase. It isn't unique to Kubernetes.
+2. **[Vector](https://vector.dev/) runs as a DaemonSet**, tails Kubernetes pod logs, filters down to
+   your CNPG instance pods, reshapes CNPG's JSON envelope into the OTLP log record format the
+   collector expects, and forwards it to the endpoint from step 1.
+
+Reshaping CNPG's JSON into the OTLP shape requires a transform step, and pganalyze provides and
+tests one for Vector: a [VRL](https://vector.dev/docs/reference/vrl/) transform maintained in the
+collector repository. Follow the steps below to use it.
+
+### Note: Why a sidecar or stdout-scraping doesn't work
+
+Customers often ask about running the collector as a sidecar container that tails Postgres's log output directly, the way
+you might on other platforms. As noted above, that internal log file does exist, but it isn't reachable this way, for two
+reasons:
+
+1. CNPG doesn't support attaching a sidecar to its managed instance pods through the normal
+   `Cluster` spec. The only extensibility point, CNPG-I, requires writing and maintaining a full
+   gRPC plugin.
+2. Even with a plugin, there's no confirmed way to mount that log volume into an injected sidecar at this time.
+
+Given that, the supported path is to collect CNPG's JSON logs from Kubernetes and forward them to the collector
+over OpenTelemetry as described above.
+
+### Setup
+
+* [Step 1: Configure the collector's OTLP endpoint](/docs/log-insights/setup/cloudnative-pg/01_configure_the_collector)
+* [Step 2: Deploy Vector](/docs/log-insights/setup/cloudnative-pg/02_deploy_vector)
+* [Step 3: Test and verify](/docs/log-insights/setup/cloudnative-pg/03_verify)

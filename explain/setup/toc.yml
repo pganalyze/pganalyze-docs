@@ -22,6 +22,8 @@
     href: explain/setup/crunchy_bridge
   - name: Heroku Postgres
     href: explain/setup/heroku
+  - name: CloudNativePG (CNPG)
+    href: explain/setup/cloudnative_pg
   - name: Self-Managed Server
     href: explain/setup/self_managed
 - mount: explain/setup/log_explain

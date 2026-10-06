@@ -27,38 +27,46 @@ type Props ={
   roleName?: string,
 }
 
-const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'list', recommendations, roleName }) => {
+// Just the settings comparison table. "Summary of required/recommended changes" in separate component shown
+// for installations that can use ALTER SYSTEM/ROLE commands.
+export const PgSettingsTable: React.FunctionComponent<Pick<Props, 'recommendations'>> = ({ recommendations }) => {
   const hasCurrent = recommendations.some(s => s.current != null);
   const DescriptionPopup = useDescriptionPopup()
 
   return (
+    <table className={styles.settingsTable}>
+      <thead>
+        <tr>
+          <th>Setting</th>
+          {hasCurrent && <th>Current</th>}
+          <th>Recommended</th>
+          {hasCurrent && <th>Status</th>}
+        </tr>
+      </thead>
+      <tbody>
+        {recommendations.map(r => {
+          return (
+            <tr key={r.name}>
+              <td className={styles.noWrap}>
+                {r.name}{r.description && <DescriptionPopup className={styles.descriptionPopupIcon} info={r.description} />}
+              </td>
+              {hasCurrent && <td>{r.current ?? '[not set]'}</td>}
+              <td>{r.recommended}</td>
+              {hasCurrent && <td>
+                <RecommendationStatus recommendation={r} />
+              </td>}
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  );
+}
+
+const PGSettingsRecommendations: React.FunctionComponent<Props> = ({ mode = 'list', recommendations, roleName }) => {
+  return (
     <>
-      <table className={styles.settingsTable}>
-        <thead>
-          <tr>
-            <th>Setting</th>
-            {hasCurrent && <th>Current</th>}
-            <th>Recommended</th>
-            {hasCurrent && <th>Status</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {recommendations.map(r => {
-            return (
-              <tr key={r.name}>
-                <td className={styles.noWrap}>
-                  {r.name}{r.description && <DescriptionPopup className={styles.descriptionPopupIcon} info={r.description} />}
-                </td>
-                {hasCurrent && <td>{r.current ?? '[not set]'}</td>}
-                <td>{r.recommended}</td>
-                {hasCurrent && <td>
-                  <RecommendationStatus recommendation={r} />
-                </td>}
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+      <PgSettingsTable recommendations={recommendations} />
       <RecommendationSummary mode={mode} recommendations={recommendations} roleName={roleName} />
     </>
   )

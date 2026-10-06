@@ -1,0 +1,107 @@
+---
+title: 'Step 1: Configure the Collector''s OTLP Endpoint'
+install_track_title: 'Log Insights: Setup (CloudNativePG)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+The pganalyze collector can receive logs over OTLP using the
+[`db_log_otel_server`](/docs/collector/settings#self-managed-servers) setting. If you're using the
+Secret-based INI config from [Initial Setup Step 4](/docs/install/cloudnative_pg/04_configure_the_collector),
+add it to the section for your CNPG cluster:
+
+```ini
+[pganalyze]
+api_key = your_pga_organization_api_key
+
+[my-cluster]
+db_host = my-cluster-rw
+...
+db_log_otel_server = 0.0.0.0:4318
+```
+
+**If you're still using the quicker `extraEnv` config from that same step**, add it there instead,
+as `LOG_OTEL_SERVER` (no `db_` prefix, this env var naming is a collector-wide convention, not
+specific to this setting):
+
+```yaml
+extraEnv:
+  # ... your existing PGA_API_KEY, DB_HOST, etc.
+  LOG_OTEL_SERVER: 0.0.0.0:4318
+```
+
+Either way, this starts an HTTP server inside the collector container, listening on the given
+port, that accepts OpenTelemetry log messages at `/v1/logs`. Use an unprivileged port (1024 and
+up) to avoid running the collector as root.
+
+## Expose it as a Kubernetes Service
+
+Vector (deployed in the next step) needs a stable address to send logs to. If you deployed the
+collector with the pganalyze Helm chart, its `collector-values.yaml` already ships a `service`
+block with `name`, `port`, and `targetPort` defaulted to exactly what you need below, so this part
+of your file will already look correct at a glance. The one field that actually needs to change is
+`create`, which defaults to `false`:
+
+```yaml
+service:
+  create: true # defaults to false in the chart — this is the line to change
+  name: pganalyze-collector-otel-service
+  type: ClusterIP
+  port: 4318
+  targetPort: 4318
+```
+
+Then apply it:
+
+```bash
+helm upgrade --install my-collector pganalyze/pganalyze-collector --values=collector-values.yaml
+```
+
+This creates a `pganalyze-collector-otel-service` Service, which is the address you'll point Vector
+at in the next step.
+
+### Monitoring multiple CNPG clusters with one collector
+
+If you're monitoring more than one CNPG cluster, you can run multiple OTLP servers on the same
+collector, one per monitored cluster, each on a different port:
+
+```ini
+[pganalyze]
+api_key = your_pga_organization_api_key
+
+[cluster-one]
+db_host = cluster-one-rw
+...
+db_log_otel_server = 0.0.0.0:4318
+
+[cluster-two]
+db_host = cluster-two-rw
+...
+db_log_otel_server = 0.0.0.0:4319
+```
+
+Add a matching entry to the Service's `ports` list. **Once `ports` is set, the chart ignores the
+single `port`/`targetPort` fields above entirely.** Remove them rather than leaving them alongside
+`ports`. They won't do anything, and they'll make the file misleading to read later:
+
+```yaml
+service:
+  create: true
+  name: pganalyze-collector-otel-service
+  type: ClusterIP
+  ports:
+    - name: pganalyze-collector-otel1
+      port: 4318
+      targetPort: 4318
+    - name: pganalyze-collector-otel2
+      port: 4319
+      targetPort: 4319
+```
+
+Alternatively, a single OTLP endpoint can receive logs from multiple clusters and split them apart
+using `db_log_otel_k8s_pod` / `db_log_otel_k8s_labels`. See the
+[collector settings reference](/docs/collector/settings#self-managed-servers) for details.
+
+<Link className="btn btn-success" to="02_deploy_vector">
+  Proceed to Step 2: Deploy Vector
+</Link>
