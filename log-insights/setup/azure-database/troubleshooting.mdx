@@ -53,8 +53,12 @@ When running the collector with Docker:
 docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test --verbose
 ```
 
-If the output contains "Discarding log line because of unknown server", the `azure_db_server_name` / `AZURE_DB_SERVER_NAME` setting doesn't match your Azure Database server. The name shown at the end of that line is the one Azure reports.
-Set `azure_db_server_name` to the exact name of your Azure Database server resource, as shown in the Azure Portal, or remove the setting if your `db_host` is `<server name>.postgres.database.azure.com`, where it is inferred automatically.
+If the output contains "Discarding log line because of unknown server", the collector received a log line from a server that doesn't match the `azure_db_server_name` / `AZURE_DB_SERVER_NAME` setting. The name shown at the end of that line is the one Azure reports.
+This is expected if several servers send logs to the same Event Hub, as the collector discards lines from servers it doesn't monitor.
+
+If none of the reported names match your configured server, set `azure_db_server_name` to the exact name of your Azure Database server resource, as shown in the Azure Portal, or remove the setting if your `db_host` is `<server name>.postgres.database.azure.com`, where it is inferred automatically.
 See [Step 4 of the installation guide](/docs/install/azure_database/04_configure_the_collector) for details.
+
+Changing the server name changes the server's identity in pganalyze, which creates a new server. To keep the existing server and its history, set `api_system_id_fallback` to the System ID shown in the server's Debug Info panel in pganalyze, in the same change and before running the test again. See [Server identity and monitoring history](/docs/collector/server-identity) for details.
 
 
