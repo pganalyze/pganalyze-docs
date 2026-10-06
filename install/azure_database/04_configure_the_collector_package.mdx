@@ -50,9 +50,8 @@ Fill in the values step-by-step:
 4. The `db_username` and `db_password` should be the credentials of the monitoring user we created in Step 1
 5. The `azure_subscription_id` is the subscription ID of your Azure Database server
 6. (optional) The `azure_db_server_name` is the exact name of your Azure Database server resource, as shown in the Azure Portal.
-It is inferred from a `db_host` ending in `.postgres.database.azure.com`. Leave it out unless `db_host` is an IP address or a custom DNS record.
-A wrong value stops both Log Insights and System stats from being collected.
-If you're using Azure Cosmos DB for PostgreSQL Cluster, this is required and set the cluster name.
+It is inferred from a `db_host` like `<server name>.postgres.database.azure.com`, so leave it out in that case.
+Set it if `db_host` is an IP address or a custom DNS record, or if you're using Azure Cosmos DB for PostgreSQL Cluster, where it is the name of your cluster.
 
 If the VM has multiple Managed Identities assigned, specify the client ID of the specific Managed Identity created in Step 3
 using the `azure_ad_client_id` setting.

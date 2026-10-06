@@ -54,8 +54,7 @@ docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable
 ```
 
 If the output contains "Discarding log line because of unknown server", the `azure_db_server_name` / `AZURE_DB_SERVER_NAME` setting doesn't match your Azure Database server. The name shown at the end of that line is the one Azure reports.
-Set `azure_db_server_name` to the exact name of your Azure Database server resource, as shown in the Azure Portal, or remove the setting if your `db_host` ends in `.postgres.database.azure.com`, where it is inferred automatically.
-A wrong server name also prevents System stats from being collected.
+Set `azure_db_server_name` to the exact name of your Azure Database server resource, as shown in the Azure Portal, or remove the setting if your `db_host` is `<server name>.postgres.database.azure.com`, where it is inferred automatically.
 See [Step 4 of the installation guide](/docs/install/azure_database/04_configure_the_collector) for details.
 
 
