@@ -6,14 +6,12 @@ backlink_title: 'Log Insights: Setup'
 ---
 
 import SetupManagedIdentity from '../../../install/azure_database/_03_setup_managed_identity.mdx';
-import AssignManagedIdentity from '../../../install/azure_database/_03_assign_managed_identity.mdx';
 
 Log output on Azure Database for PostgreSQL is available through Azure Event Hub.
 
-If you have already created the Managed Identity and granted it the Monitoring Reader role during the initial setup, skip this step and continue to Step 2.
+If you have already created the Managed Identity during the initial setup, skip this step and continue to Step 2.
 
 <SetupManagedIdentity />
-<AssignManagedIdentity />
 
 <Link className="btn btn-success" to="02_set_up_azure_event_hub">
   Continue to Step 2: Set Up Azure Event Hub
