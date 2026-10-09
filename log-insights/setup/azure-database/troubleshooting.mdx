@@ -5,6 +5,10 @@ backlink_href: /docs/log-insights/setup
 backlink_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
 ---
 
+import imgEventHubMessages from './event-hub-messages.png'
+
+export const ImgEventHubMessages = () => <img src={imgEventHubMessages} alt="Screenshot of incoming messages in the Event Hub Overview graph in Azure Portal" />
+
 ### Error: "Could not get logs through Azure Event Hub: Timeout"
 
 This error can occur when you went quickly through the steps, and the Postgres database
@@ -39,7 +43,18 @@ Double check your Event Hub namespace and Event Hub name that [you have configur
 
 ### Error: "Azure Event Hub log tail timed out"
 
-This can occur when the Event Hub is receiving log events, but the collector discards them because they don't match the configured server name.
+This can occur for two reasons.
+
+**1. The Event Hub isn't receiving messages**
+
+The Event Hub isn't receiving any messages from the Postgres instance, typically because of misconfiguration or permissions issues with the selected Event Hub policy in [Step 3 of the setup](/docs/log-insights/setup/azure-database/03_stream_logs_into_event_hub).
+Verify that the Event Hub has incoming messages in the Overview graph in the Azure Portal.
+
+<ImgEventHubMessages />
+
+**2. The collector discards log lines that don't match the server name**
+
+The Event Hub is receiving log events, but the collector discards them because they don't match the configured server name.
 
 Run the test with verbose output to check:
 
