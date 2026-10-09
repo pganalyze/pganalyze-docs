@@ -32,7 +32,7 @@ db_name = your_database_name
 db_username = your_monitoring_user
 db_password = your_monitoring_user_password
 azure_subscription_id = your_subscription_id
-azure_db_server_name = your_db`}
+# azure_db_server_name = your_azure_server_resource_name`}
     </CodeBlock>
   )
 }
@@ -46,12 +46,13 @@ The collector configuration file lives in `/etc/pganalyze-collector.conf`, and l
 Fill in the values step-by-step:
 
 1. <APIKeyInstructions apiKey={props.apiKey} />
-2. The `db_host` is the IP address of your Azure Database server
+2. The `db_host` is the hostname of your Azure Database server, e.g. `your_db.postgres.database.azure.com`
 3. The `db_name` is the database on the Azure Database server you want to monitor
 4. The `db_username` and `db_password` should be the credentials of the monitoring user we created in Step 1
 5. The `azure_subscription_id` is the subscription ID of your Azure Database server
-6. (optional) The `azure_db_server_name` sets your Azure Database server name - this is automatically inferred from `db_host` and typically not needed.
-If you're using Azure Cosmos DB for PostgreSQL Cluster, this is required and set the cluster name.
+6. (optional) The `azure_db_server_name` is the exact name of your Azure Database server resource, as shown in the Azure Portal.
+It is inferred from a `db_host` like `<server name>.postgres.database.azure.com`, so leave it out in that case.
+Set it if `db_host` is an IP address or a custom DNS record, or if you're using Azure Cosmos DB for PostgreSQL Cluster, where it is the name of your cluster.
 
 If the VM has multiple Managed Identities assigned, specify the client ID of the specific Managed Identity created in Step 3
 using the `azure_ad_client_id` setting.
