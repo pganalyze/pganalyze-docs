@@ -18,6 +18,8 @@
     href: checks/replication
   - name: Vacuum
     href: checks/vacuum
+  - name: Webhooks
+    href: checks/webhooks
 # TODO: Should the check TOC items be auto-generated from the list in util/checks?
 - mount: checks/queries
   items:

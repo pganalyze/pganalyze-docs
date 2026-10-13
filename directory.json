@@ -92,6 +92,10 @@
       "title": "PagerDuty Integration",
       "path": "/docs/checks/pagerduty"
     },
+    "checks/webhooks": {
+      "title": "Webhooks",
+      "path": "/docs/checks/webhooks"
+    },
     "collector": {
       "title": "pganalyze Collector",
       "path": "/docs/collector"
