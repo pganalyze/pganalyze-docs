@@ -27,9 +27,7 @@ Other members can view webhooks and deliveries for servers they have access to.
 5. Copy the **Signing secret** and configure your receiver to verify requests (see [step 2](#2-verify-requests))
 6. Click **Test and Add**. pganalyze sends a `ping` event and only adds the webhook if it succeeds.
 
-{/* SCREENSHOT: Add Webhook dialog
 ![Add Webhook dialog with name, URL, request headers, and signing secret](./webhook-add.png)
-*/}
 
 ### 2. Verify requests
 
@@ -51,9 +49,7 @@ permissions can reveal and copy it in the **Webhooks** panel.
 
 See [Alerting](/docs/checks#alerting) for how destinations and rules work.
 
-{/* SCREENSHOT: Alert destination editor with a webhook
-![Alert Destination editor with a webhook selected](./webhook-alert-destination.png)
-*/}
+![Alert Destination editor with E-mail, Slack, PagerDuty, and webhook targets](./alert-destination-editor.png)
 
 
 ## Payload
@@ -81,9 +77,7 @@ Click a webhook's name in the **Webhooks** panel to open its details. From there
 **Send test**, **Edit**, **Disable**, or **Remove** it. Changing the URL or request headers
 requires a new successful test.
 
-{/* SCREENSHOT: Webhook details
 ![Webhook details with actions and deliveries](./webhook-details.png)
-*/}
 
 **Deliveries:** the webhook details list deliveries from the last 30 days, filterable by
 status. Click a delivery's time to see its attempts, the response body excerpt, and the
