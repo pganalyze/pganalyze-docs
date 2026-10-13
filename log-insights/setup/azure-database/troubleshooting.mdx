@@ -5,6 +5,10 @@ backlink_href: /docs/log-insights/setup
 backlink_title: 'Log Insights: Setup (Azure Database for PostgreSQL)'
 ---
 
+import imgEventHubMessages from './event-hub-messages.png'
+
+export const ImgEventHubMessages = () => <img src={imgEventHubMessages} alt="Screenshot of incoming messages in the Event Hub Overview graph in Azure Portal" />
+
 ### Error: "Could not get logs through Azure Event Hub: Timeout"
 
 This error can occur when you went quickly through the steps, and the Postgres database
@@ -36,5 +40,40 @@ the Managed Identity's Client ID.
 ### Error: "failed to connect to the Event Hub management node"
 
 Double check your Event Hub namespace and Event Hub name that [you have configured in Step 5](/docs/log-insights/setup/azure-database/05_configure_collector).
+
+### Error: "Azure Event Hub log tail timed out"
+
+This can occur for two reasons.
+
+**1. The Event Hub isn't receiving messages**
+
+The Event Hub isn't receiving any messages from the Postgres instance, typically because of misconfiguration or permissions issues with the selected Event Hub policy in [Step 3 of the setup](/docs/log-insights/setup/azure-database/03_stream_logs_into_event_hub).
+Verify that the Event Hub has incoming messages in the Overview graph in the Azure Portal.
+
+<ImgEventHubMessages />
+
+**2. The collector discards log lines that don't match the server name**
+
+The Event Hub is receiving log events, but the collector discards them because they don't match the configured server name.
+
+Run the test with verbose output to check:
+
+```bash
+sudo pganalyze-collector --test --verbose
+```
+
+When running the collector with Docker:
+
+```bash
+docker run --env-file pganalyze_collector.env quay.io/pganalyze/collector:stable test --verbose
+```
+
+If the output contains "Discarding log line because of unknown server", the collector received a log line from a server that doesn't match the `azure_db_server_name` / `AZURE_DB_SERVER_NAME` setting. The name shown at the end of that line is the one Azure reports.
+This is expected if several servers send logs to the same Event Hub, as the collector discards lines from servers it doesn't monitor.
+
+If none of the reported names match your configured server, set `azure_db_server_name` to the exact name of your Azure Database server resource, as shown in the Azure Portal, or remove the setting if your `db_host` is `<server name>.postgres.database.azure.com`, where it is inferred automatically.
+See [Step 4 of the installation guide](/docs/install/azure_database/04_configure_the_collector) for details.
+
+Changing the server name changes the server's identity in pganalyze, which creates a new server. To keep the existing server and its history, set `api_system_id_fallback` to the System ID shown in the server's Debug Info panel in pganalyze, in the same change and before running the test again. See [Server identity and monitoring history](/docs/collector/server-identity) for details.
 
 
