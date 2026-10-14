@@ -1,0 +1,103 @@
+---
+title: 'Step 2: Deploy Vector'
+install_track_title: 'Log Insights: Setup (CloudNativePG)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+[Vector](https://vector.dev/) runs as a DaemonSet, tails every pod's logs on its node, filters down
+to your CNPG instance pods, and reshapes CNPG's JSON log envelope into the OTLP log record format
+using a [VRL](https://vector.dev/docs/reference/vrl/) transform maintained in the
+[pganalyze collector repository](https://github.com/pganalyze/collector/tree/main/contrib/vector).
+
+This page covers the quickest path to get it running. For a full breakdown of what each part of
+the Vector configuration does (the Kubernetes log source, the CNPG pod filter, the JSON remap, and
+the OTLP sink), see the [Vector configuration reference](/docs/log-insights/setup/opentelemetry/vector).
+
+## Fetch the example values.yaml
+
+Saved as `vector-values.yaml` rather than the generic `values.yaml`, so it doesn't collide with
+`collector-values.yaml` from Initial Setup if you keep both in the same directory:
+
+```bash
+wget -O vector-values.yaml https://github.com/pganalyze/collector/raw/refs/heads/main/contrib/vector/values.yaml
+```
+
+This file already implements the full pipeline: a `kubernetes_logs` source, a `cnpg_route` filter
+(matching pods with the `cnpg.io/podRole: instance` label), the `cnpg_remap` JSON transform, and an
+`opentelemetry` sink.
+
+## Customize it for your cluster
+
+Three things need to change before this will work for you:
+
+1. **The cluster filter.** In the `cnpg_route` transform, update the list to your `Cluster`
+   resource's name, e.g. `my-cluster`, not a per-instance pod name like `my-cluster-1`:
+
+   ```yaml
+   route:
+     cnpg: |
+       exists(.kubernetes.pod_labels."cnpg.io/cluster") &&
+       exists(.kubernetes.pod_labels."cnpg.io/podRole") &&
+       .kubernetes.pod_labels."cnpg.io/podRole" == "instance" &&
+       includes(
+         [
+           "my-cluster",
+         ],
+         .kubernetes.pod_labels."cnpg.io/cluster"
+       )
+   ```
+
+2. **The sink URI.** Point it at the `pganalyze-collector-otel-service` Service you created in
+   Step 1, using its **namespace-qualified** form. Vector runs in its own `vector` namespace
+   (per the `helm install` command below), while the collector's Service is wherever you deployed
+   the collector, and a bare Service name only resolves via Kubernetes DNS within the same
+   namespace as the caller. Replace `<collector-namespace>` with the actual namespace (`default`
+   if you didn't set one):
+
+   ```yaml
+   sinks:
+     pganalyze:
+       type: opentelemetry
+       protocol:
+         type: http
+         uri: "http://pganalyze-collector-otel-service.<collector-namespace>.svc.cluster.local:4318/v1/logs"
+         # ...
+   ```
+
+3. **The sink's `batch.max_events`, which must be `1`.** The downloaded file sets it higher, but
+   Vector's `opentelemetry` sink does not currently support batching more than one event per
+   request with the `json` codec, anything higher silently drops logs. See the
+   [Vector configuration reference](/docs/log-insights/setup/opentelemetry/vector) for details:
+
+   ```yaml
+   sinks:
+     pganalyze:
+       protocol:
+         batch:
+           max_events: 1
+           # ...
+   ```
+
+## Deploy
+
+```bash
+helm repo add vector https://helm.vector.dev
+helm repo update
+helm install vector vector/vector \
+  --namespace vector \
+  --create-namespace \
+  --values vector-values.yaml
+```
+
+Check that the Vector pods came up on every node:
+
+```console
+$ kubectl get pods -n vector
+NAME       READY   STATUS    RESTARTS   AGE
+vector-0   1/1     Running   0          1m
+```
+
+<Link className="btn btn-success" to="03_verify">
+  Proceed to Step 3: Test and Verify
+</Link>

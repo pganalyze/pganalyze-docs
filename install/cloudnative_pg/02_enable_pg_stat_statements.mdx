@@ -1,0 +1,69 @@
+---
+title: 'Step 2: Enable pg_stat_statements'
+install_track_title: Installation Guide (CloudNativePG)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+In this step we set up [pg_stat_statements](https://www.postgresql.org/docs/current/static/pgstatstatements.html),
+which is used by pganalyze to collect Postgres query statistics.
+
+## Set the parameters
+
+CNPG configuration lives in the `Cluster` resource's `.spec.postgresql.parameters`. Add the
+following to the same `cluster.yaml` you used in [Step 1](01_create_monitoring_role), alongside
+the `.spec.managed.roles` you already set there:
+
+```yaml
+spec:
+  postgresql:
+    parameters:
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: "all"
+      track_io_timing: "on"
+```
+
+Apply the change with `kubectl apply -f cluster.yaml`.
+
+**You do not need to manually edit `shared_preload_libraries`.** CNPG recognizes the
+`pg_stat_statements.*` parameter prefix and automatically adds the `pg_stat_statements` library to
+`shared_preload_libraries` for you (it does the same for `auto_explain`, `pgaudit`, and
+`pg_failover_slots`). This is different from most other platforms in these docs, where you have to
+edit `shared_preload_libraries` yourself.
+
+## Restart
+
+`shared_preload_libraries` changes only take effect on server start, so this change requires a
+Postgres restart. CNPG handles this automatically: with the default `primaryUpdateStrategy:
+unsupervised` and `primaryUpdateMethod: restart`, the operator restarts replicas first, then
+performs a switchover and restarts the former primary. No manual restart step is needed.
+
+If you've configured `primaryUpdateStrategy: supervised` on this cluster, you'll need to manually
+approve the primary's restart with the `cnpg` kubectl plugin:
+
+```bash
+kubectl cnpg restart my-cluster
+```
+
+You can watch the rollout with:
+
+```bash
+kubectl get pods -l cnpg.io/cluster=my-cluster -w
+```
+
+Once the rollout completes, verify `pg_stat_statements` is active:
+
+```bash
+kubectl cnpg psql my-cluster -- -c \
+  "SELECT setting, pending_restart FROM pg_settings WHERE name = 'shared_preload_libraries';"
+```
+
+`shared_preload_libraries` should include `pg_stat_statements` and `pending_restart` should be `f`.
+
+---
+
+Next we continue by deploying the collector:
+
+<Link className="btn btn-success" to="03_deploy_the_collector">
+  Proceed to Step 3: Deploy the Collector
+</Link>

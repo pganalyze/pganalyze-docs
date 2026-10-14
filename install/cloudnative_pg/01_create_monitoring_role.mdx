@@ -1,0 +1,99 @@
+---
+title: 'Step 1: Create a Monitoring Role'
+install_track_title: Installation Guide (CloudNativePG)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import { MonitoringUserPerDatabaseHelpers } from "../../components/MonitoringUserSetupInstructions";
+import VerifyConnection from "../../components/VerifyConnection";
+import { CNPGMonitoringSecretYaml, CNPGMonitoringSecretKubectl } from "../../components/CNPGMonitoringSecret";
+
+This guide assumes you already have a CNPG cluster running, named `my-cluster`, with its manifest
+in a file called `cluster.yaml`. Substitute your own cluster name and file throughout.
+
+[CloudNativePG](https://cloudnative-pg.io/) (CNPG) lets you manage Postgres roles declaratively
+through the `Cluster` resource, instead of connecting and running `CREATE USER` yourself. We
+recommend using this to create a dedicated monitoring role for pganalyze.
+
+## Create a Secret for the role's password
+
+Unlike most declarative role management in CNPG (and unlike the SQL-based monitoring user setup
+used for other platforms in these docs), CNPG does **not** generate a password for you when you
+declare a role in the `Cluster` spec. You need to create a Kubernetes `Secret` with the
+credentials yourself, and reference it from the role.
+
+We've generated a random password for you below, but you can replace it with one of your choosing:
+
+<CNPGMonitoringSecretYaml />
+
+Apply it with `kubectl apply -f pganalyze-monitoring-secret.yaml`, or create it inline:
+
+<CNPGMonitoringSecretKubectl />
+
+## Declare the role on your Cluster
+
+Add the role to `.spec.managed.roles` in `cluster.yaml`, referencing the Secret you just created,
+and granting it the built-in `pg_monitor` role (which covers most of what the collector needs to
+read).
+
+```yaml
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: my-cluster
+spec:
+  managed:
+    roles:
+      - name: pganalyze
+        ensure: present
+        login: true
+        connectionLimit: 5
+        inRoles:
+          - pg_monitor
+        passwordSecret:
+          name: pganalyze-monitoring-user
+```
+
+Apply this change with `kubectl apply -f cluster.yaml`. CNPG's operator picks it up and creates the
+role on the primary automatically. No restart is needed for a role change like this.
+
+## Add helper functions for column and extended statistics
+
+`pg_monitor` covers query and activity statistics, but pganalyze also collects some additional
+column and extended statistics through a small set of `SECURITY DEFINER` helper functions, which
+still need to be created with plain SQL as a superuser. The easiest way to get a superuser SQL
+prompt against a CNPG cluster is the [`cnpg` kubectl plugin](https://cloudnative-pg.io/documentation/current/kubectl-plugin/):
+
+```bash
+kubectl cnpg psql my-cluster
+```
+
+This connects you directly to the primary as the `postgres` superuser over a local socket inside
+the pod, so it works even if you haven't enabled network-level superuser access for the cluster.
+
+<MonitoringUserPerDatabaseHelpers username="pganalyze" />
+
+## Verify connection
+
+CNPG creates a `<cluster-name>-rw` Service that always points at the current primary. That's what
+the collector should connect to. To verify the role can connect from outside the cluster, forward a
+local port to it:
+
+```bash
+kubectl port-forward svc/my-cluster-rw 5432:5432
+```
+
+Then, in another terminal:
+
+<VerifyConnection host="localhost" dbname="app" />
+
+Write down the username and password of the monitoring role. we'll use it in Step 4.
+
+---
+
+Next we continue by enabling pg_stat_statements:
+
+<Link className="btn btn-success" to="02_enable_pg_stat_statements">
+  Proceed to Step 2: Enabling pg_stat_statements
+</Link>

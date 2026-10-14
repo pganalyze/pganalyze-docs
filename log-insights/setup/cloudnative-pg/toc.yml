@@ -1,0 +1,10 @@
+- mount: log-insights/setup/cloudnative-pg
+  items:
+  - name: "Overview"
+    href: log-insights/setup/cloudnative-pg
+  - name: "Step 1: Configure the Collector's OTLP Endpoint"
+    href: log-insights/setup/cloudnative-pg/01_configure_the_collector
+  - name: "Step 2: Deploy Vector"
+    href: log-insights/setup/cloudnative-pg/02_deploy_vector
+  - name: "Step 3: Test and Verify"
+    href: log-insights/setup/cloudnative-pg/03_verify

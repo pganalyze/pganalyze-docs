@@ -1,0 +1,7 @@
+Enabling `auto_explain` requires a Postgres restart, since it changes `shared_preload_libraries`.
+Unlike most other platforms in these docs, **CNPG restarts the cluster for you automatically by
+default**: with `primaryUpdateStrategy: unsupervised` (the default), the operator restarts replicas
+first, then performs a switchover and restarts the former primary. No manual restart step needed.
+
+If this cluster uses `primaryUpdateStrategy: supervised`, you'll need to approve the primary's
+restart yourself with `kubectl cnpg restart my-cluster` after applying the parameter change.
