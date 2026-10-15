@@ -1,0 +1,114 @@
+---
+title: 'pganalyze Collector command-line flags'
+backlink_href: /docs/collector
+backlink_title: 'pganalyze Collector'
+---
+
+Command-line flags change how a single collector invocation behaves. They do not persist: for settings that
+apply every time the collector runs, use the [collector settings](/docs/collector/settings) instead.
+
+For task-oriented examples, see [Running & Testing the Collector](/docs/collector/running). You can also list
+all flags for your installed version with `pganalyze-collector --help`.
+
+```toc
+```
+
+## Testing and verification
+
+Test runs collect data from each configured server (or just one, with `--test-section`). Flags marked as
+combinable with `--test-section` can be used together with it.
+
+| Flag | Description |
+|------|-------------|
+| `--test`, `-t` | Tests data collection (including logs), submits a snapshot to pganalyze, and reloads the collector daemon on success (disable the reload with `--no-reload`). |
+| `--test-section=NAME` | Tests only the config file section `NAME` (a specific server) and skips all other sections without connecting to them. Combines with `--test`, `--test-logs`, `--test-explain`, `--dry-run`, `--dry-run-logs` and the `--generate-*` flags. |
+| `--test-logs` | Tests whether log collection works. Does not test privilege dropping for local log collection, use `--test` for that. |
+| `--test-explain` | Tests whether EXPLAIN collection works by issuing a dummy query. Make sure log collection works first. |
+| `--reload` | Reloads the collector daemon that is running on the host, without running a test. |
+| `--no-reload` | Disables the automatic config reload that follows a successful test run. |
+
+The `NAME` for `--test-section` is the `[section]` name in the `INI` config file, which is not the same as the
+server name shown in the pganalyze app. See [collector settings](/docs/collector/settings).
+
+## Previewing and debugging output
+
+| Flag | Description |
+|------|-------------|
+| `--dry-run` | Prints the JSON that would be sent to pganalyze (without sending it) and exits. |
+| `--dry-run-logs` | Prints the JSON for a log snapshot (without sending it) and exits. |
+| `--verbose`, `-v` | Outputs additional debugging information. Use this if you are encountering errors or other problems. |
+| `--very-verbose` | Enables very verbose logging, which also enables verbose logging. |
+| `--quiet`, `-q` | Only outputs error messages and hides informational and warning messages. |
+| `--debug-logs` | Outputs all log analysis that would be sent, and does not send any other data. For some providers, also outputs incoming logs from the source. Use for debugging only. |
+
+## Log output format
+
+These control how the collector writes its own log output, not the Postgres logs it monitors.
+
+| Flag | Description |
+|------|-------------|
+| `--syslog` | Writes all log output to syslog instead of stderr. |
+| `--json-logs` | Writes all log output to stderr as newline-delimited JSON. Ignored if `--syslog` is set. |
+| `--no-log-timestamps` | Disables timestamps in the log output. Done automatically when `--syslog` is used. |
+
+## File locations
+
+| Flag | Description |
+|------|-------------|
+| `--config=PATH` | Path to the config file. Defaults to `/etc/pganalyze-collector.conf`, falling back to `~/.pganalyze_collector.conf` if the default does not exist. |
+| `--statefile=PATH` | Path to the state file. |
+| `--pidfile=PATH` | Path to write a pidfile to. No pidfile is written by default. |
+
+## Disabling parts of data collection
+
+Useful for a single run, for example to isolate which collection step is failing. To disable collection
+permanently, use the corresponding [collector settings](/docs/collector/settings).
+
+| Flag | Description |
+|------|-------------|
+| `--no-logs` | Does not collect log data. |
+| `--no-explain` | Does not automatically EXPLAIN slow queries found in the log file. |
+| `--no-system-information` | Does not collect OS-level performance data. |
+| `--no-postgres-relations` | Does not collect Postgres relation information (not recommended). |
+| `--no-postgres-settings` | Does not collect Postgres configuration settings. |
+| `--no-postgres-locks` | Does not collect Postgres lock information. |
+
+## Log troubleshooting
+
+| Flag | Description |
+|------|-------------|
+| `--discover-log-location` | Tries to discover the location of the Postgres log directory, to help with configuring `db_log_location`. |
+| `--analyze-logfile=PATH` | Analyzes the content of the given log file and outputs debug information about it. Requires `--analyze-logfile-prefix`. |
+| `--analyze-logfile-prefix=PREFIX` | The `log_line_prefix` to use with `--analyze-logfile`. |
+| `--analyze-logfile-tz=TZ` | The `log_timezone` to use with `--analyze-logfile`. Defaults to UTC. |
+| `--analyze-debug-classifications=LIST` | With `--analyze-logfile`, prints detailed information about the given classifications. Takes a comma-separated list of integers, or `all`. |
+| `--filter-logfile=PATH` | Prints the given log file with known secrets replaced, according to `--filter-log-secret`. |
+| `--filter-log-secret=TYPE` | The type of secrets that `--filter-logfile` replaces. Defaults to `all`. |
+
+## Helper SQL generation
+
+| Flag | Description |
+|------|-------------|
+| `--generate-stats-helper-sql=NAME` | Generates a SQL script that installs the collector stats helpers on all configured databases of the given server. Run it with `psql -f`. |
+| `--generate-explain-analyze-helper-sql=NAME` | Generates a SQL script that installs the `pganalyze.explain_analyze` helper on all configured databases of the given server. Run it with `psql -f`. |
+| `--generate-explain-analyze-helper-role=ROLE` | Owner role of the `pganalyze.explain_analyze` helper function. Defaults to `pganalyze_explain`. |
+
+`NAME` is the config file section name, or `default` when the server is configured through environment variables.
+
+## Advanced and internal
+
+These flags are mainly useful for debugging the collector itself, and may change between versions.
+See [Profiling the collector](/docs/collector/running#profiling-the-collector) for how to use them.
+
+| Flag | Description |
+|------|-------------|
+| `--write-heap-profile` | Writes a Go memory heap profile to `~/pganalyze_collector.mprof` when the daemon receives SIGHUP. |
+| `--trace` | Writes a Go trace file to `~/pganalyze_collector.trace` for a single test run. |
+| `--benchmark` | Runs the collector in benchmark mode: collects data without submitting it, and without JSON output. |
+| `--force-state-update` | Updates the state file even if other options would prevent it. Intended to be used with `--dry-run`. |
+
+## Other
+
+| Flag | Description |
+|------|-------------|
+| `--version` | Prints the collector version and exits. |
