@@ -183,7 +183,7 @@ Using the Workbooks tools requires all of the following:
 
 A typical optimization loop uses the tools in sequence:
 
-1. `create_workbook` creates a workbook from the slow query and runs `EXPLAIN ANALYZE` on it. The query can be a normalized query or use literal values, with parameters written as literals or `$1`-style placeholders. Parameter values are derived automatically from inline literals or recent query samples where possible; when they cannot be, you supply them with `add_workbook_parameter_set`.
+1. `create_workbook` creates a workbook from the slow query and runs `EXPLAIN ANALYZE` on it. The query can be a normalized query or use literal values, with parameters written as literals or `$1`-style placeholders. Parameter values are derived automatically from inline literals or recent query samples where possible; when they cannot be, you supply them with `create_workbook_parameter_set`.
 2. Once parameter values are set, `EXPLAIN ANALYZE` runs through the collector. A run can take longer than a single request, so `get_workbook_details` retrieves the results once they are ready.
 3. To test an optimization, `get_insight_rewrite` turns a Query Advisor insight on the baseline plan into a candidate rewrite, and `create_workbook_variant` adds a rewrite or planner-setting variant and runs `EXPLAIN ANALYZE` on it, so you can compare its plan against the baseline.
 
