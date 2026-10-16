@@ -86,6 +86,11 @@ db_host = mydbinstance3.123456789012.us-east-1.rds.amazonaws.com
 ...
 ```
 
+Cluster endpoints and instance endpoints behave differently when the cluster fails over: a
+pganalyze server either follows a role (writer or reader), or a specific instance. See
+[Monitoring Amazon Aurora clusters through a failover](/docs/collector/server-identity#monitoring-amazon-aurora-clusters-through-a-failover)
+to decide which one fits your setup.
+
 ## Test snapshot
 
 Now, verify that the configuration is correct, by running the following command:

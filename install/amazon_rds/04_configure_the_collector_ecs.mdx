@@ -61,6 +61,11 @@ endpoint to the content of the `pganalyze_collector.conf` file (e.g. add each se
 then update the `/pganalyze/CONFIG_CONTENTS` SSM secret, or run one pganalyze
 collector Docker container for each instance.
 
+Cluster endpoints and instance endpoints behave differently when the cluster fails over: a
+pganalyze server either follows a role (writer or reader), or a specific instance. See
+[Monitoring Amazon Aurora clusters through a failover](/docs/collector/server-identity#monitoring-amazon-aurora-clusters-through-a-failover)
+to decide which one fits your setup.
+
 ## Registering the task and launching it
 
 We can now register the task definition like this, as well as create the log group:
