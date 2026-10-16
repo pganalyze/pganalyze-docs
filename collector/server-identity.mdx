@@ -271,10 +271,10 @@ db_host = my-cluster.cluster-ro-abcd1234efgh.us-east-1.rds.amazonaws.com
 ```
 
 Each pganalyze server then always describes the same role, and the instance behind it changes when
-the cluster fails over. The collector resolves the endpoint to the instance that currently has the
-role, both for the Postgres connection and for the logs and system metrics it fetches from AWS. The
-`writer` server keeps showing the primary workload with continuous history, no matter which instance
-is the writer.
+the cluster fails over. The Postgres connection follows the role through the endpoint, and the
+collector looks up the instance that currently has the role to fetch logs and system metrics from
+AWS. The `writer` server keeps showing the primary workload with continuous history, no matter
+which instance is the writer.
 
 ![Diagram of an Aurora cluster monitored through the cluster and reader endpoints, before and after a failover. Each pganalyze server keeps following the same role while the instance behind it changes, so the query stats trend of the writer server stays the same](./failover-server-per-role.png)
 
@@ -282,9 +282,10 @@ Both servers share the cluster ID as their system ID, and are told apart by the 
 `us-east-1/cluster-abcd1234efgh` for the writer, and `us-east-1/cluster-ro-abcd1234efgh` for the
 reader.
 
-**This setup requires a cluster with at most one reader instance.** With multiple readers, the
-reader endpoint balances connections across them, and the collector cannot tell which instance to
-monitor. In that case it reports an error and asks you to use instance endpoints instead.
+**This setup requires a cluster with exactly one reader instance** (or only the `writer` section
+if there is none). With multiple readers, the reader endpoint balances connections across them, and
+the collector cannot tell which instance to monitor. In that case it reports an error for logs and
+system metrics, and asks you to use instance endpoints instead.
 
 ### Choosing between them
 
@@ -292,8 +293,8 @@ If your cluster has more than one reader instance, use one server per instance.
 
 Otherwise, either option works, and the choice comes down to what you want to follow over time.
 One server per role gives the primary workload a single, continuous history and a stable URL in
-pganalyze. One server per instance keeps each instance's history together, and keeps working
-unchanged as you add more readers.
+pganalyze, regardless of which instance is the writer. One server per instance keeps each
+instance's history together, and keeps working unchanged as you add more readers.
 
 Whichever you choose, use it for all of the servers in the cluster. In particular, if you connect
 through the cluster or reader endpoint, do not also set `aws_db_instance_id`. That setting pins the
@@ -310,7 +311,7 @@ carried over to one new server, and the history of two servers cannot be merged,
 history each new server should continue.
 
 For example, when switching from one server per instance to one server per role, the `writer`
-server can continue the history of the `instance-1` server, which was the writer at the time:
+server can continue the history of the `instance-1` server, which is the current writer:
 
 ```ini
 [writer]
@@ -319,6 +320,8 @@ db_host = my-cluster.cluster-abcd1234efgh.us-east-1.rds.amazonaws.com
 api_system_id_fallback = instance-1
 api_system_scope_fallback = us-east-1/abcd1234efgh
 ```
+
+The `reader` server can likewise continue the history of the `instance-2` server.
 
 Follow the steps in [Carrying the server over](#carrying-the-server-over), and check the
 **Debug Info** panel of each existing server for the identity that pganalyze has stored.
