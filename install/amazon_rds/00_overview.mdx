@@ -5,9 +5,6 @@ backlink_href: /docs/install
 backlink_title: 'Installation Guide'
 ---
 
-import imgCollectorAwsArchitecture from '../../images/collector_aws_architecture.svg'
-export const ImgCollectorAwsArchitecture = () => <img src={imgCollectorAwsArchitecture} />
-
 To monitor your Amazon RDS for PostgreSQL or Amazon Aurora PostgreSQL instances
 with pganalyze, you need to run the pganalyze collector. The pganalyze collector
 connects to your database to capture query metadata and various statistics, then
@@ -37,7 +34,49 @@ ECS, or with Docker.
 Here is an overview diagram for how the pganalyze collector will be placed
 within your existing setup.
 
-<ImgCollectorAwsArchitecture />
+```mermaid filename=pganalyze-collector-aws-architecture
+---
+config:
+  flowchart:
+    wrappingWidth: 400
+---
+flowchart TB
+  accTitle: pganalyze collector in an AWS environment
+  accDescr: The pganalyze collector runs on EC2, ECS, or EKS in the application AWS account. It connects to the RDS/Aurora Postgres instance over Postgres/5432, to the AWS API over HTTPS/443, and to the pganalyze API over HTTPS/443.
+
+  subgraph account["Application AWS Account"]
+    rds["RDS/Aurora<br/>Postgres Instance<br/>(for Application)"]:::existing
+    awsapi["AWS API<br/>(RDS, CloudWatch)"]:::existing
+    subgraph compute["EC2, ECS, or EKS"]
+      app["Existing<br/>Application"]
+      collector["pganalyze<br/>collector"]:::pga
+      n4["<i>Collector can be installed directly</i><br/><i>on an EC2 instance, or you can</i><br/><i>also deploy as a part of your</i><br/><i>existing ECS/EKS</i>"]:::note
+      n1["<i>Each collector can monitor</i><br/><i>one or more RDS or Aurora</i><br/><i>instances</i>"]:::note
+    end
+    n2["<i>Postgres is</i><br/><i>accessed</i><br/><i>using restricted</i><br/><i>monitoring user</i>"]:::note
+    n3["<i>Instance role with</i><br/><i>IAM policy that allows</i><br/><i>RDS log download</i><br/><i>and system metrics</i>"]:::note
+    app --> rds
+    collector pg1@-- "Postgres/5432" --> rds
+    collector -- "HTTPS/443" --> awsapi
+    app ~~~ n4
+    collector ~~~ n1
+    rds ~~~ n2
+    awsapi ~~~ n3
+  end
+
+  subgraph saas["pganalyze"]
+    api["pganalyze API"]
+  end
+
+  n5["<i>Collector sends query metadata</i><br/><i>and various statistics (snapshots)</i><br/><i>to pganalyze on a continuous</i><br/><i>basis</i>"]:::note
+  collector -- "HTTPS/443" --> api
+  api ~~~ n5
+
+  classDef pg stroke:#1282A6
+  class pg1 pg
+  %% legend pga: New component
+  %% legend existing: Existing application / infrastructure component
+```
 
 The collector can be installed in a different AWS account from the one hosting the
 RDS/Aurora instance, provided that the collector can establish a connection to

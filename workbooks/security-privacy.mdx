@@ -18,7 +18,50 @@ to only certain tables [by using individual GRANT statements](collector-workflow
 
 ## Security architecture of the Collector Workflow
 
-![Security architecture diagram](security_architecture.svg)
+```mermaid filename=pganalyze-collector-workflow-security
+---
+title: "pganalyze Query Tuning: Collector Workflow Security Architecture"
+---
+flowchart LR
+  accTitle: Collector Workflow Security Architecture
+  accDescr: A workbook query is validated and submitted by the pganalyze application, validated and executed by the pganalyze collector, and run through pganalyze.explain_analyze, which switches execution context to the pganalyze_explain user using SECURITY DEFINER.
+
+  subgraph app["pganalyze Application"]
+    direction TB
+    a1["User with <b>permission</b><br/><b>“Create Workbooks”</b> creates<br/>a workbook for a query of<br/>their choice"]:::validation
+    a2["User picks existing<br/><b>parameters</b> from query<br/>samples, or adds new<br/>parameters"]:::action
+    a3["User chooses<br/><b>Collector Workflow</b>"]:::action
+    a4["<b>Validates &amp; submits query</b><br/>- Checks multi-statement<br/>- Blocks DML statements<br/>- Blocks known bad functions<br/>(e.g. dblink)"]:::validation
+    a1 --> a2 --> a3 --> a4
+  end
+
+  subgraph collector["pganalyze Collector"]
+    direction TB
+    c1["Websocket Listener for<br/>Query Run"]:::action
+    c2["<b>Validates &amp; executes query</b><br/>- Checks multi-statement<br/>- Sets READ ONLY transaction<br/>- Blocks known bad functions<br/>(e.g. dblink)<br/>- Sets statement timeout"]:::validation
+    c1 --> c2
+  end
+
+  subgraph dbuser["Database (pganalyze user)"]
+    d1["<b>SELECT</b><br/><b>pganalyze.explain_analyze</b><br/>Switches execution context<br/>using SECURITY DEFINER"]:::action
+  end
+
+  subgraph dbexplain["Database (pganalyze_explain user)"]
+    direction TB
+    e1["<b>pganalyze.explain_analyze</b><br/>- Checks multi-statement<br/>- Sets READ ONLY transaction<br/>- Blocks super user owner"]:::validation
+    e2["EXPLAIN<br/>(ANALYZE, BUFFERS)<br/>SELECT * FROM <b>test</b>"]:::action
+    e3["Table <b>test</b>"]:::dbobject
+    e1 --> e2
+    e2 -- "SELECT permission" --> e3
+    e3 ~~~ grant["Individual GRANT or pg_read_all_data"]:::note
+  end
+
+  a4 --> c1
+  c2 --> d1
+  d1 --> e1
+
+  style grant fill:none,stroke:none
+```
 
 The Collector Workflow is designed to:
 
