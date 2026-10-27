@@ -1,0 +1,48 @@
+---
+title: 'Step 4: Configure the Collector'
+install_track_title: Installation Guide (Amazon RDS and Amazon Aurora)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import InstallChoice from '../../components/InstallChoice'
+import styles from '../../style.module.scss'
+
+import imgAwsEc2 from '../../images/aws-ec2.svg'
+import imgAwsEcs from '../../images/aws-ecs.svg'
+import imgAwsEks from '../../images/aws-eks.svg'
+import imgDocker from '../../images/logo_docker.svg'
+
+export const SelectCollectorPlatform = () => {
+  return (
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "04-configure-the-collector-ec2",
+          img: imgAwsEc2,
+          providerName: "Amazon EC2 Instance",
+        },
+        {
+          link: "04-configure-the-collector-ecs",
+          img: imgAwsEcs,
+          providerName: "Amazon ECS",
+        },
+        {
+          link: "04-configure-the-collector-eks",
+          img: imgAwsEks,
+          providerName: "Amazon EKS",
+        },
+        {
+          link: "04-configure-the-collector-docker",
+          img: imgDocker,
+          providerName: "Docker on EC2",
+        },
+      ]}
+    />
+  )
+}
+
+Choose where you have installed the collector:
+
+<SelectCollectorPlatform />

@@ -13,15 +13,15 @@
 - mount: install/
   items:
   - name: Amazon RDS and Amazon Aurora
-    href: install/amazon_rds
+    href: install/amazon-rds
   - name: Azure Database for PostgreSQL
-    href: install/azure_database
+    href: install/azure-database
   - name: Google Cloud SQL and AlloyDB
-    href: install/google_cloud_sql
+    href: install/google-cloud-sql
   - name: Crunchy Bridge
-    href: install/crunchy_bridge
+    href: install/crunchy-bridge
   - name: Heroku Postgres
-    href: install/heroku_postgres
+    href: install/heroku-postgres
   - name: Aiven
     href: install/aiven
   - name: Supabase
@@ -29,6 +29,6 @@
   - name: Neon
     href: install/neon
   - name: CloudNativePG (CNPG)
-    href: install/cloudnative_pg
+    href: install/cloudnative-pg
   - name: Self-managed (and other hosted Postgres)
-    href: install/self_managed
+    href: install/self-managed

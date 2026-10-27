@@ -1,0 +1,33 @@
+---
+title: 'Step 4: Test and Verify'
+install_track_title: 'Automated EXPLAIN: Setup (Crunchy Bridge)'
+backlink_href: /docs/explain/setup
+backlink_title: 'Automated EXPLAIN: Setup'
+---
+
+import { CollectorStartCommand } from "../../../install/crunchy-bridge/01-deploy-the-collector.mdx";
+
+import VerifyExplainPublic from '../_verify_explain_public.mdx'
+
+At this point, your pganalyze setup should be ready to collect EXPLAIN plans. Since
+you may not have any slow queries in your system right now, we can generate a
+synthetic slow query that we can use to confirm everything is working.
+
+The collector includes a flag to do this for you automatically, based on your
+`auto_explain.log_min_duration`:
+
+<CollectorStartCommand apiKey={props.apiKey} logExplain={true} cmd="test-explain" />
+
+This will run an artificially slow query using the Postgres `pg_sleep` function. It
+will produce output similar to the following:
+
+```
+                      run_container
+----------------------------------------------------------
+ I Running collector test with pganalyze-collector 0.52.2
+(1 row)
+```
+
+<PublicOnly>
+  <VerifyExplainPublic />
+</PublicOnly>

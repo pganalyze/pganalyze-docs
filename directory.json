@@ -16,9 +16,9 @@
       "title": "Permissions and Roles",
       "path": "/docs/accounts/permissions"
     },
-    "accounts/server_groups": {
+    "accounts/server-groups": {
       "title": "Server Groups",
-      "path": "/docs/accounts/server_groups"
+      "path": "/docs/accounts/server-groups"
     },
     "accounts/sso": {
       "title": "Single Sign-On",
@@ -396,17 +396,17 @@
       "title": "Enterprise Server: Firewall Configuration",
       "path": "/docs/enterprise/setup/firewall-configuration"
     },
-    "enterprise/setup/kubernetes_amazon_eks": {
+    "enterprise/setup/kubernetes-amazon-eks": {
       "title": "Enterprise Server: Initial Setup (Kubernetes on Amazon EKS)",
-      "path": "/docs/enterprise/setup/kubernetes_amazon_eks"
+      "path": "/docs/enterprise/setup/kubernetes-amazon-eks"
     },
-    "enterprise/setup/kubernetes_as_non_root": {
+    "enterprise/setup/kubernetes-as-non-root": {
       "title": "Enterprise Server: Initial Non-root Setup with Kubernetes",
-      "path": "/docs/enterprise/setup/kubernetes_as_non_root"
+      "path": "/docs/enterprise/setup/kubernetes-as-non-root"
     },
-    "enterprise/setup/kubernetes_azure_aks": {
+    "enterprise/setup/kubernetes-azure-aks": {
       "title": "Enterprise Server: Initial Setup (Kubernetes on Azure AKS)",
-      "path": "/docs/enterprise/setup/kubernetes_azure_aks"
+      "path": "/docs/enterprise/setup/kubernetes-azure-aks"
     },
     "enterprise/setup/separate-collector-install": {
       "title": "Enterprise Server: Separate collector installation",
@@ -424,13 +424,13 @@
       "title": "Enterprise Server: Upgrade Docker on a VM",
       "path": "/docs/enterprise/upgrade/docker"
     },
-    "enterprise/upgrade/kubernetes_amazon_eks": {
+    "enterprise/upgrade/kubernetes-amazon-eks": {
       "title": "Enterprise Server: Upgrade Amazon EKS",
-      "path": "/docs/enterprise/upgrade/kubernetes_amazon_eks"
+      "path": "/docs/enterprise/upgrade/kubernetes-amazon-eks"
     },
-    "enterprise/upgrade/kubernetes_azure_aks": {
+    "enterprise/upgrade/kubernetes-azure-aks": {
       "title": "Enterprise Server: Upgrade Azure AKS",
-      "path": "/docs/enterprise/upgrade/kubernetes_azure_aks"
+      "path": "/docs/enterprise/upgrade/kubernetes-azure-aks"
     },
     "explain": {
       "title": "Monitoring Postgres EXPLAIN plans",
@@ -468,153 +468,153 @@
       "title": "Set up automatic EXPLAIN plan collection",
       "path": "/docs/explain/setup"
     },
-    "explain/setup/amazon_rds/01_auto_explain_check": {
+    "explain/setup/amazon-rds/01-auto_explain-check": {
       "title": "Step 1: Check for auto_explain",
-      "path": "/docs/explain/setup/amazon_rds/01_auto_explain_check"
+      "path": "/docs/explain/setup/amazon-rds/01-auto_explain-check"
     },
-    "explain/setup/amazon_rds/02_enable_auto_explain": {
+    "explain/setup/amazon-rds/02-enable-auto_explain": {
       "title": "Step 2: Enable auto_explain",
-      "path": "/docs/explain/setup/amazon_rds/02_enable_auto_explain"
+      "path": "/docs/explain/setup/amazon-rds/02-enable-auto_explain"
     },
-    "explain/setup/amazon_rds/03_review_settings": {
+    "explain/setup/amazon-rds/03-review-settings": {
       "title": "Step 3: Review auto_explain settings",
-      "path": "/docs/explain/setup/amazon_rds/03_review_settings"
+      "path": "/docs/explain/setup/amazon-rds/03-review-settings"
     },
-    "explain/setup/amazon_rds/04_test_and_verify": {
+    "explain/setup/amazon-rds/04-test-and-verify": {
       "title": "Step 4: Test and Verify",
-      "path": "/docs/explain/setup/amazon_rds/04_test_and_verify"
+      "path": "/docs/explain/setup/amazon-rds/04-test-and-verify"
     },
     "explain/setup/auto_explain": {
       "title": "Collect Postgres EXPLAIN plans using auto_explain",
       "path": "/docs/explain/setup/auto_explain"
     },
-    "explain/setup/azure_database/01_auto_explain_check": {
+    "explain/setup/azure-database/01-auto_explain-check": {
       "title": "Step 1: Check for auto_explain",
-      "path": "/docs/explain/setup/azure_database/01_auto_explain_check"
+      "path": "/docs/explain/setup/azure-database/01-auto_explain-check"
     },
-    "explain/setup/azure_database/02_enable_auto_explain": {
+    "explain/setup/azure-database/02-enable-auto_explain": {
       "title": "Step 2: Enable auto_explain",
-      "path": "/docs/explain/setup/azure_database/02_enable_auto_explain"
+      "path": "/docs/explain/setup/azure-database/02-enable-auto_explain"
     },
-    "explain/setup/azure_database/03_review_settings": {
+    "explain/setup/azure-database/03-review-settings": {
       "title": "Step 3: Review auto_explain settings",
-      "path": "/docs/explain/setup/azure_database/03_review_settings"
+      "path": "/docs/explain/setup/azure-database/03-review-settings"
     },
-    "explain/setup/azure_database/04_test_and_verify": {
+    "explain/setup/azure-database/04-test-and-verify": {
       "title": "Step 4: Test and Verify",
-      "path": "/docs/explain/setup/azure_database/04_test_and_verify"
+      "path": "/docs/explain/setup/azure-database/04-test-and-verify"
     },
-    "explain/setup/cloudnative_pg/01_auto_explain_check": {
+    "explain/setup/cloudnative-pg/01-auto_explain-check": {
       "title": "Step 1: Check for auto_explain",
-      "path": "/docs/explain/setup/cloudnative_pg/01_auto_explain_check"
+      "path": "/docs/explain/setup/cloudnative-pg/01-auto_explain-check"
     },
-    "explain/setup/cloudnative_pg/02_enable_auto_explain": {
+    "explain/setup/cloudnative-pg/02-enable-auto_explain": {
       "title": "Step 2: Enable auto_explain",
-      "path": "/docs/explain/setup/cloudnative_pg/02_enable_auto_explain"
+      "path": "/docs/explain/setup/cloudnative-pg/02-enable-auto_explain"
     },
-    "explain/setup/cloudnative_pg/03_review_settings": {
+    "explain/setup/cloudnative-pg/03-review-settings": {
       "title": "Step 3: Review auto_explain settings",
-      "path": "/docs/explain/setup/cloudnative_pg/03_review_settings"
+      "path": "/docs/explain/setup/cloudnative-pg/03-review-settings"
     },
-    "explain/setup/cloudnative_pg/04_test_and_verify": {
+    "explain/setup/cloudnative-pg/04-test-and-verify": {
       "title": "Step 4: Test and Verify",
-      "path": "/docs/explain/setup/cloudnative_pg/04_test_and_verify"
+      "path": "/docs/explain/setup/cloudnative-pg/04-test-and-verify"
     },
-    "explain/setup/crunchy_bridge/01_auto_explain_check": {
+    "explain/setup/crunchy-bridge/01-auto_explain-check": {
       "title": "Step 1: Check for auto_explain",
-      "path": "/docs/explain/setup/crunchy_bridge/01_auto_explain_check"
+      "path": "/docs/explain/setup/crunchy-bridge/01-auto_explain-check"
     },
-    "explain/setup/crunchy_bridge/02_enable_auto_explain": {
+    "explain/setup/crunchy-bridge/02-enable-auto_explain": {
       "title": "Step 2: Enable auto_explain",
-      "path": "/docs/explain/setup/crunchy_bridge/02_enable_auto_explain"
+      "path": "/docs/explain/setup/crunchy-bridge/02-enable-auto_explain"
     },
-    "explain/setup/crunchy_bridge/03_review_settings": {
+    "explain/setup/crunchy-bridge/03-review-settings": {
       "title": "Step 3: Review auto_explain settings",
-      "path": "/docs/explain/setup/crunchy_bridge/03_review_settings"
+      "path": "/docs/explain/setup/crunchy-bridge/03-review-settings"
     },
-    "explain/setup/crunchy_bridge/04_test_and_verify": {
+    "explain/setup/crunchy-bridge/04-test-and-verify": {
       "title": "Step 4: Test and Verify",
-      "path": "/docs/explain/setup/crunchy_bridge/04_test_and_verify"
+      "path": "/docs/explain/setup/crunchy-bridge/04-test-and-verify"
     },
-    "explain/setup/google_cloud_sql/01_auto_explain_check": {
+    "explain/setup/google-cloud-sql/01-auto_explain-check": {
       "title": "Step 1: Check for auto_explain",
-      "path": "/docs/explain/setup/google_cloud_sql/01_auto_explain_check"
+      "path": "/docs/explain/setup/google-cloud-sql/01-auto_explain-check"
     },
-    "explain/setup/google_cloud_sql/02_enable_auto_explain": {
+    "explain/setup/google-cloud-sql/02-enable-auto_explain": {
       "title": "Step 2: Enable auto_explain",
-      "path": "/docs/explain/setup/google_cloud_sql/02_enable_auto_explain"
+      "path": "/docs/explain/setup/google-cloud-sql/02-enable-auto_explain"
     },
-    "explain/setup/google_cloud_sql/03_review_settings": {
+    "explain/setup/google-cloud-sql/03-review-settings": {
       "title": "Step 3: Review auto_explain settings",
-      "path": "/docs/explain/setup/google_cloud_sql/03_review_settings"
+      "path": "/docs/explain/setup/google-cloud-sql/03-review-settings"
     },
-    "explain/setup/google_cloud_sql/04_test_and_verify": {
+    "explain/setup/google-cloud-sql/04-test-and-verify": {
       "title": "Step 4: Test and Verify",
-      "path": "/docs/explain/setup/google_cloud_sql/04_test_and_verify"
+      "path": "/docs/explain/setup/google-cloud-sql/04-test-and-verify"
     },
-    "explain/setup/heroku/01_auto_explain_check": {
+    "explain/setup/heroku/01-auto_explain-check": {
       "title": "Step 1: Check for auto_explain",
-      "path": "/docs/explain/setup/heroku/01_auto_explain_check"
+      "path": "/docs/explain/setup/heroku/01-auto_explain-check"
     },
-    "explain/setup/heroku/02_enable_auto_explain": {
+    "explain/setup/heroku/02-enable-auto_explain": {
       "title": "Step 2: Enable auto_explain",
-      "path": "/docs/explain/setup/heroku/02_enable_auto_explain"
+      "path": "/docs/explain/setup/heroku/02-enable-auto_explain"
     },
-    "explain/setup/heroku/03_review_settings": {
+    "explain/setup/heroku/03-review-settings": {
       "title": "Step 3: Review auto_explain settings",
-      "path": "/docs/explain/setup/heroku/03_review_settings"
+      "path": "/docs/explain/setup/heroku/03-review-settings"
     },
-    "explain/setup/heroku/04_test_and_verify": {
+    "explain/setup/heroku/04-test-and-verify": {
       "title": "Step 4: Test and Verify",
-      "path": "/docs/explain/setup/heroku/04_test_and_verify"
+      "path": "/docs/explain/setup/heroku/04-test-and-verify"
     },
-    "explain/setup/log_explain": {
+    "explain/setup/log-explain": {
       "title": "Collect Postgres EXPLAIN plans using log-based EXPLAIN",
-      "path": "/docs/explain/setup/log_explain"
+      "path": "/docs/explain/setup/log-explain"
     },
-    "explain/setup/log_explain/01_create_helper_functions": {
+    "explain/setup/log-explain/01-create-helper-functions": {
       "title": "Step 1: Create helper functions",
-      "path": "/docs/explain/setup/log_explain/01_create_helper_functions"
+      "path": "/docs/explain/setup/log-explain/01-create-helper-functions"
     },
-    "explain/setup/log_explain/02_enable_log_explain": {
+    "explain/setup/log-explain/02-enable-log-explain": {
       "title": "Step 2: Enable log-based EXPLAIN",
-      "path": "/docs/explain/setup/log_explain/02_enable_log_explain"
+      "path": "/docs/explain/setup/log-explain/02-enable-log-explain"
     },
-    "explain/setup/log_explain/03_test_and_verify": {
+    "explain/setup/log-explain/03-test-and-verify": {
       "title": "Step 3: Test and verify",
-      "path": "/docs/explain/setup/log_explain/03_test_and_verify"
+      "path": "/docs/explain/setup/log-explain/03-test-and-verify"
     },
-    "explain/setup/self_managed/01_auto_explain_check": {
+    "explain/setup/self-managed/01-auto_explain-check": {
       "title": "Step 1: Check for auto_explain",
-      "path": "/docs/explain/setup/self_managed/01_auto_explain_check"
+      "path": "/docs/explain/setup/self-managed/01-auto_explain-check"
     },
-    "explain/setup/self_managed/02_enable_auto_explain": {
+    "explain/setup/self-managed/02-enable-auto_explain": {
       "title": "Step 2: Enable auto_explain",
-      "path": "/docs/explain/setup/self_managed/02_enable_auto_explain"
+      "path": "/docs/explain/setup/self-managed/02-enable-auto_explain"
     },
-    "explain/setup/self_managed/03_review_settings": {
+    "explain/setup/self-managed/03-review-settings": {
       "title": "Step 3: Review auto_explain settings",
-      "path": "/docs/explain/setup/self_managed/03_review_settings"
+      "path": "/docs/explain/setup/self-managed/03-review-settings"
     },
-    "explain/setup/self_managed/04_test_and_verify": {
+    "explain/setup/self-managed/04-test-and-verify": {
       "title": "Step 4: Test and Verify",
-      "path": "/docs/explain/setup/self_managed/04_test_and_verify"
+      "path": "/docs/explain/setup/self-managed/04-test-and-verify"
     },
-    "explain/setup/supabase/01_auto_explain_check": {
+    "explain/setup/supabase/01-auto_explain-check": {
       "title": "Step 1: Check for auto_explain",
-      "path": "/docs/explain/setup/supabase/01_auto_explain_check"
+      "path": "/docs/explain/setup/supabase/01-auto_explain-check"
     },
-    "explain/setup/supabase/02_enable_auto_explain": {
+    "explain/setup/supabase/02-enable-auto_explain": {
       "title": "Step 2: Enable auto_explain",
-      "path": "/docs/explain/setup/supabase/02_enable_auto_explain"
+      "path": "/docs/explain/setup/supabase/02-enable-auto_explain"
     },
-    "explain/setup/supabase/03_review_settings": {
+    "explain/setup/supabase/03-review-settings": {
       "title": "Step 3: Review auto_explain settings",
-      "path": "/docs/explain/setup/supabase/03_review_settings"
+      "path": "/docs/explain/setup/supabase/03-review-settings"
     },
-    "explain/setup/supabase/04_test_and_verify": {
+    "explain/setup/supabase/04-test-and-verify": {
       "title": "Step 4: Test and Verify",
-      "path": "/docs/explain/setup/supabase/04_test_and_verify"
+      "path": "/docs/explain/setup/supabase/04-test-and-verify"
     },
     "guides": {
       "title": "Guides",
@@ -720,349 +720,349 @@
       "title": "Get Started",
       "path": "/docs/install"
     },
-    "install/01_enabling_pg_stat_statements": {
+    "install/01-enabling-pg_stat_statements": {
       "title": "Enabling pg_stat_statements",
-      "path": "/docs/install/01_enabling_pg_stat_statements"
+      "path": "/docs/install/01-enabling-pg_stat_statements"
     },
-    "install/aiven/01_create_monitoring_user": {
+    "install/aiven/01-create-monitoring-user": {
       "title": "Step 1: Create Monitoring User",
-      "path": "/docs/install/aiven/01_create_monitoring_user"
+      "path": "/docs/install/aiven/01-create-monitoring-user"
     },
-    "install/aiven/02_enable_pg_stat_statements": {
+    "install/aiven/02-enable-pg_stat_statements": {
       "title": "Step 2: Enable pg_stat_statements",
-      "path": "/docs/install/aiven/02_enable_pg_stat_statements"
+      "path": "/docs/install/aiven/02-enable-pg_stat_statements"
     },
-    "install/aiven/03_create_pg_stat_statements_helpers": {
+    "install/aiven/03-create-pg_stat_statements-helpers": {
       "title": "Step 3: Create pg_stat_statements Helpers",
-      "path": "/docs/install/aiven/03_create_pg_stat_statements_helpers"
+      "path": "/docs/install/aiven/03-create-pg_stat_statements-helpers"
     },
-    "install/aiven/04_install_the_collector": {
+    "install/aiven/04-install-the-collector": {
       "title": "Step 4: Install the Collector",
-      "path": "/docs/install/aiven/04_install_the_collector"
+      "path": "/docs/install/aiven/04-install-the-collector"
     },
-    "install/aiven/04_install_the_collector_docker": {
+    "install/aiven/04-install-the-collector-docker": {
       "title": "Step 4: Install the Collector",
-      "path": "/docs/install/aiven/04_install_the_collector_docker"
+      "path": "/docs/install/aiven/04-install-the-collector-docker"
     },
-    "install/aiven/04_install_the_collector_package": {
+    "install/aiven/04-install-the-collector-package": {
       "title": "Step 4: Install the Collector",
-      "path": "/docs/install/aiven/04_install_the_collector_package"
+      "path": "/docs/install/aiven/04-install-the-collector-package"
     },
-    "install/aiven/05_configure_the_collector": {
+    "install/aiven/05-configure-the-collector": {
       "title": "Step 5: Configure the Collector",
-      "path": "/docs/install/aiven/05_configure_the_collector"
+      "path": "/docs/install/aiven/05-configure-the-collector"
     },
-    "install/aiven/05_configure_the_collector_docker": {
+    "install/aiven/05-configure-the-collector-docker": {
       "title": "Step 5: Configure the Collector",
-      "path": "/docs/install/aiven/05_configure_the_collector_docker"
+      "path": "/docs/install/aiven/05-configure-the-collector-docker"
     },
-    "install/aiven/05_configure_the_collector_package": {
+    "install/aiven/05-configure-the-collector-package": {
       "title": "Step 5: Configure the Collector",
-      "path": "/docs/install/aiven/05_configure_the_collector_package"
+      "path": "/docs/install/aiven/05-configure-the-collector-package"
     },
-    "install/amazon_rds/00_overview": {
+    "install/amazon-rds/00-overview": {
       "title": "Step 0: Overview",
-      "path": "/docs/install/amazon_rds/00_overview"
+      "path": "/docs/install/amazon-rds/00-overview"
     },
-    "install/amazon_rds/01_configure_rds_instance": {
+    "install/amazon-rds/01-configure-rds-instance": {
       "title": "Step 1: Configure RDS Instance",
-      "path": "/docs/install/amazon_rds/01_configure_rds_instance"
+      "path": "/docs/install/amazon-rds/01-configure-rds-instance"
     },
-    "install/amazon_rds/02_create_monitoring_user": {
+    "install/amazon-rds/02-create-monitoring-user": {
       "title": "Step 2: Create Monitoring User",
-      "path": "/docs/install/amazon_rds/02_create_monitoring_user"
+      "path": "/docs/install/amazon-rds/02-create-monitoring-user"
     },
-    "install/amazon_rds/03_install_collector": {
+    "install/amazon-rds/03-install-collector": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/amazon_rds/03_install_collector"
+      "path": "/docs/install/amazon-rds/03-install-collector"
     },
-    "install/amazon_rds/03_install_collector_docker": {
+    "install/amazon-rds/03-install-collector-docker": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/amazon_rds/03_install_collector_docker"
+      "path": "/docs/install/amazon-rds/03-install-collector-docker"
     },
-    "install/amazon_rds/03_install_collector_ec2": {
+    "install/amazon-rds/03-install-collector-ec2": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/amazon_rds/03_install_collector_ec2"
+      "path": "/docs/install/amazon-rds/03-install-collector-ec2"
     },
-    "install/amazon_rds/03_install_collector_ecs": {
+    "install/amazon-rds/03-install-collector-ecs": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/amazon_rds/03_install_collector_ecs"
+      "path": "/docs/install/amazon-rds/03-install-collector-ecs"
     },
-    "install/amazon_rds/03_install_collector_eks": {
+    "install/amazon-rds/03-install-collector-eks": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/amazon_rds/03_install_collector_eks"
+      "path": "/docs/install/amazon-rds/03-install-collector-eks"
     },
-    "install/amazon_rds/04_configure_the_collector": {
+    "install/amazon-rds/04-configure-the-collector": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/amazon_rds/04_configure_the_collector"
+      "path": "/docs/install/amazon-rds/04-configure-the-collector"
     },
-    "install/amazon_rds/04_configure_the_collector_docker": {
+    "install/amazon-rds/04-configure-the-collector-docker": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/amazon_rds/04_configure_the_collector_docker"
+      "path": "/docs/install/amazon-rds/04-configure-the-collector-docker"
     },
-    "install/amazon_rds/04_configure_the_collector_ec2": {
+    "install/amazon-rds/04-configure-the-collector-ec2": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/amazon_rds/04_configure_the_collector_ec2"
+      "path": "/docs/install/amazon-rds/04-configure-the-collector-ec2"
     },
-    "install/amazon_rds/04_configure_the_collector_ecs": {
+    "install/amazon-rds/04-configure-the-collector-ecs": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/amazon_rds/04_configure_the_collector_ecs"
+      "path": "/docs/install/amazon-rds/04-configure-the-collector-ecs"
     },
-    "install/amazon_rds/04_configure_the_collector_eks": {
+    "install/amazon-rds/04-configure-the-collector-eks": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/amazon_rds/04_configure_the_collector_eks"
+      "path": "/docs/install/amazon-rds/04-configure-the-collector-eks"
     },
-    "install/amazon_rds/iam_policy": {
+    "install/amazon-rds/iam-policy": {
       "title": "Amazon RDS and Aurora: IAM Policy",
-      "path": "/docs/install/amazon_rds/iam_policy"
+      "path": "/docs/install/amazon-rds/iam-policy"
     },
-    "install/azure_database/01_configure_azure_instance": {
+    "install/azure-database/01-configure-azure-instance": {
       "title": "Step 1: Configure Azure Database for PostgreSQL Instance",
-      "path": "/docs/install/azure_database/01_configure_azure_instance"
+      "path": "/docs/install/azure-database/01-configure-azure-instance"
     },
-    "install/azure_database/02_create_monitoring_user": {
+    "install/azure-database/02-create-monitoring-user": {
       "title": "Step 2: Create Monitoring User",
-      "path": "/docs/install/azure_database/02_create_monitoring_user"
+      "path": "/docs/install/azure-database/02-create-monitoring-user"
     },
-    "install/azure_database/03_install_the_collector": {
+    "install/azure-database/03-install-the-collector": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/azure_database/03_install_the_collector"
+      "path": "/docs/install/azure-database/03-install-the-collector"
     },
-    "install/azure_database/03_install_the_collector_deb": {
+    "install/azure-database/03-install-the-collector-deb": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/azure_database/03_install_the_collector_deb"
+      "path": "/docs/install/azure-database/03-install-the-collector-deb"
     },
-    "install/azure_database/03_install_the_collector_docker": {
+    "install/azure-database/03-install-the-collector-docker": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/azure_database/03_install_the_collector_docker"
+      "path": "/docs/install/azure-database/03-install-the-collector-docker"
     },
-    "install/azure_database/03_install_the_collector_yum": {
+    "install/azure-database/03-install-the-collector-yum": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/azure_database/03_install_the_collector_yum"
+      "path": "/docs/install/azure-database/03-install-the-collector-yum"
     },
-    "install/azure_database/04_configure_the_collector": {
+    "install/azure-database/04-configure-the-collector": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/azure_database/04_configure_the_collector"
+      "path": "/docs/install/azure-database/04-configure-the-collector"
     },
-    "install/azure_database/04_configure_the_collector_docker": {
+    "install/azure-database/04-configure-the-collector-docker": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/azure_database/04_configure_the_collector_docker"
+      "path": "/docs/install/azure-database/04-configure-the-collector-docker"
     },
-    "install/azure_database/04_configure_the_collector_package": {
+    "install/azure-database/04-configure-the-collector-package": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/azure_database/04_configure_the_collector_package"
+      "path": "/docs/install/azure-database/04-configure-the-collector-package"
     },
-    "install/cloudnative_pg/01_create_monitoring_role": {
+    "install/cloudnative-pg/01-create-monitoring-role": {
       "title": "Step 1: Create a Monitoring Role",
-      "path": "/docs/install/cloudnative_pg/01_create_monitoring_role"
+      "path": "/docs/install/cloudnative-pg/01-create-monitoring-role"
     },
-    "install/cloudnative_pg/02_enable_pg_stat_statements": {
+    "install/cloudnative-pg/02-enable-pg_stat_statements": {
       "title": "Step 2: Enable pg_stat_statements",
-      "path": "/docs/install/cloudnative_pg/02_enable_pg_stat_statements"
+      "path": "/docs/install/cloudnative-pg/02-enable-pg_stat_statements"
     },
-    "install/cloudnative_pg/03_configure_and_deploy_the_collector": {
+    "install/cloudnative-pg/03-configure-and-deploy-the-collector": {
       "title": "Step 3: Configure and Deploy the Collector",
-      "path": "/docs/install/cloudnative_pg/03_configure_and_deploy_the_collector"
+      "path": "/docs/install/cloudnative-pg/03-configure-and-deploy-the-collector"
     },
-    "install/crunchy_bridge/01_deploy_the_collector": {
+    "install/crunchy-bridge/01-deploy-the-collector": {
       "title": "Step 1: Deploy the Collector",
-      "path": "/docs/install/crunchy_bridge/01_deploy_the_collector"
+      "path": "/docs/install/crunchy-bridge/01-deploy-the-collector"
     },
-    "install/google_cloud_sql/01_create_monitoring_user": {
+    "install/google-cloud-sql/01-create-monitoring-user": {
       "title": "Step 1: Create Monitoring User",
-      "path": "/docs/install/google_cloud_sql/01_create_monitoring_user"
+      "path": "/docs/install/google-cloud-sql/01-create-monitoring-user"
     },
-    "install/google_cloud_sql/02_install_the_collector": {
+    "install/google-cloud-sql/02-install-the-collector": {
       "title": "Step 2: Install the Collector",
-      "path": "/docs/install/google_cloud_sql/02_install_the_collector"
+      "path": "/docs/install/google-cloud-sql/02-install-the-collector"
     },
-    "install/google_cloud_sql/02_install_the_collector_deb": {
+    "install/google-cloud-sql/02-install-the-collector-deb": {
       "title": "Step 2: Install the Collector",
-      "path": "/docs/install/google_cloud_sql/02_install_the_collector_deb"
+      "path": "/docs/install/google-cloud-sql/02-install-the-collector-deb"
     },
-    "install/google_cloud_sql/02_install_the_collector_docker": {
+    "install/google-cloud-sql/02-install-the-collector-docker": {
       "title": "Step 2: Install the Collector",
-      "path": "/docs/install/google_cloud_sql/02_install_the_collector_docker"
+      "path": "/docs/install/google-cloud-sql/02-install-the-collector-docker"
     },
-    "install/google_cloud_sql/02_install_the_collector_yum": {
+    "install/google-cloud-sql/02-install-the-collector-yum": {
       "title": "Step 2: Install the Collector",
-      "path": "/docs/install/google_cloud_sql/02_install_the_collector_yum"
+      "path": "/docs/install/google-cloud-sql/02-install-the-collector-yum"
     },
-    "install/google_cloud_sql/03_configure_the_collector": {
+    "install/google-cloud-sql/03-configure-the-collector": {
       "title": "Step 3: Configure the Collector",
-      "path": "/docs/install/google_cloud_sql/03_configure_the_collector"
+      "path": "/docs/install/google-cloud-sql/03-configure-the-collector"
     },
-    "install/google_cloud_sql/03_configure_the_collector_docker": {
+    "install/google-cloud-sql/03-configure-the-collector-docker": {
       "title": "Step 3: Configure the Collector",
-      "path": "/docs/install/google_cloud_sql/03_configure_the_collector_docker"
+      "path": "/docs/install/google-cloud-sql/03-configure-the-collector-docker"
     },
-    "install/google_cloud_sql/03_configure_the_collector_package": {
+    "install/google-cloud-sql/03-configure-the-collector-package": {
       "title": "Step 3: Configure the Collector",
-      "path": "/docs/install/google_cloud_sql/03_configure_the_collector_package"
+      "path": "/docs/install/google-cloud-sql/03-configure-the-collector-package"
     },
-    "install/heroku_postgres/01_deploy_the_collector": {
+    "install/heroku-postgres/01-deploy-the-collector": {
       "title": "Step 1: Deploy the Collector",
-      "path": "/docs/install/heroku_postgres/01_deploy_the_collector"
+      "path": "/docs/install/heroku-postgres/01-deploy-the-collector"
     },
-    "install/heroku_postgres/02_attach_databases": {
+    "install/heroku-postgres/02-attach-databases": {
       "title": "Step 2: Create Credential and Attach Databases",
-      "path": "/docs/install/heroku_postgres/02_attach_databases"
+      "path": "/docs/install/heroku-postgres/02-attach-databases"
     },
-    "install/heroku_postgres/03_verify_configuration": {
+    "install/heroku-postgres/03-verify-configuration": {
       "title": "Step 3: Verify Configuration",
-      "path": "/docs/install/heroku_postgres/03_verify_configuration"
+      "path": "/docs/install/heroku-postgres/03-verify-configuration"
     },
-    "install/neon/01_enable_pg_stat_statements": {
+    "install/neon/01-enable-pg_stat_statements": {
       "title": "Step 1: Enable pg_stat_statements",
-      "path": "/docs/install/neon/01_enable_pg_stat_statements"
+      "path": "/docs/install/neon/01-enable-pg_stat_statements"
     },
-    "install/neon/02_create_monitoring_user": {
+    "install/neon/02-create-monitoring-user": {
       "title": "Step 2: Create Monitoring User",
-      "path": "/docs/install/neon/02_create_monitoring_user"
+      "path": "/docs/install/neon/02-create-monitoring-user"
     },
-    "install/neon/03_install_the_collector": {
+    "install/neon/03-install-the-collector": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/neon/03_install_the_collector"
+      "path": "/docs/install/neon/03-install-the-collector"
     },
-    "install/neon/03_install_the_collector_docker": {
+    "install/neon/03-install-the-collector-docker": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/neon/03_install_the_collector_docker"
+      "path": "/docs/install/neon/03-install-the-collector-docker"
     },
-    "install/neon/03_install_the_collector_package": {
+    "install/neon/03-install-the-collector-package": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/neon/03_install_the_collector_package"
+      "path": "/docs/install/neon/03-install-the-collector-package"
     },
-    "install/neon/04_configure_the_collector": {
+    "install/neon/04-configure-the-collector": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/neon/04_configure_the_collector"
+      "path": "/docs/install/neon/04-configure-the-collector"
     },
-    "install/neon/04_configure_the_collector_docker": {
+    "install/neon/04-configure-the-collector-docker": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/neon/04_configure_the_collector_docker"
+      "path": "/docs/install/neon/04-configure-the-collector-docker"
     },
-    "install/neon/04_configure_the_collector_package": {
+    "install/neon/04-configure-the-collector-package": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/neon/04_configure_the_collector_package"
+      "path": "/docs/install/neon/04-configure-the-collector-package"
     },
-    "install/self_managed/00_choose_setup_method": {
+    "install/self-managed/00-choose-setup-method": {
       "title": "Step 0: Choose Setup Method",
-      "path": "/docs/install/self_managed/00_choose_setup_method"
+      "path": "/docs/install/self-managed/00-choose-setup-method"
     },
-    "install/self_managed/01_create_monitoring_user": {
+    "install/self-managed/01-create-monitoring-user": {
       "title": "Step 1: Create Monitoring User",
-      "path": "/docs/install/self_managed/01_create_monitoring_user"
+      "path": "/docs/install/self-managed/01-create-monitoring-user"
     },
-    "install/self_managed/01_guided_setup": {
+    "install/self-managed/01-guided-setup": {
       "title": "Step 1: Guided Setup",
-      "path": "/docs/install/self_managed/01_guided_setup"
+      "path": "/docs/install/self-managed/01-guided-setup"
     },
-    "install/self_managed/02_enable_pg_stat_statements": {
+    "install/self-managed/02-enable-pg_stat_statements": {
       "title": "Step 2: Enable pg_stat_statements",
-      "path": "/docs/install/self_managed/02_enable_pg_stat_statements"
+      "path": "/docs/install/self-managed/02-enable-pg_stat_statements"
     },
-    "install/self_managed/02_enable_pg_stat_statements_deb": {
+    "install/self-managed/02-enable-pg_stat_statements-deb": {
       "title": "Step 2: Enable pg_stat_statements",
-      "path": "/docs/install/self_managed/02_enable_pg_stat_statements_deb"
+      "path": "/docs/install/self-managed/02-enable-pg_stat_statements-deb"
     },
-    "install/self_managed/02_enable_pg_stat_statements_docker": {
+    "install/self-managed/02-enable-pg_stat_statements-docker": {
       "title": "Step 2: Enable pg_stat_statements",
-      "path": "/docs/install/self_managed/02_enable_pg_stat_statements_docker"
+      "path": "/docs/install/self-managed/02-enable-pg_stat_statements-docker"
     },
-    "install/self_managed/02_enable_pg_stat_statements_yum": {
+    "install/self-managed/02-enable-pg_stat_statements-yum": {
       "title": "Step 2: Enable pg_stat_statements",
-      "path": "/docs/install/self_managed/02_enable_pg_stat_statements_yum"
+      "path": "/docs/install/self-managed/02-enable-pg_stat_statements-yum"
     },
-    "install/self_managed/03_install_the_collector": {
+    "install/self-managed/03-install-the-collector": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/self_managed/03_install_the_collector"
+      "path": "/docs/install/self-managed/03-install-the-collector"
     },
-    "install/self_managed/03_install_the_collector_deb": {
+    "install/self-managed/03-install-the-collector-deb": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/self_managed/03_install_the_collector_deb"
+      "path": "/docs/install/self-managed/03-install-the-collector-deb"
     },
-    "install/self_managed/03_install_the_collector_docker": {
+    "install/self-managed/03-install-the-collector-docker": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/self_managed/03_install_the_collector_docker"
+      "path": "/docs/install/self-managed/03-install-the-collector-docker"
     },
-    "install/self_managed/03_install_the_collector_yum": {
+    "install/self-managed/03-install-the-collector-yum": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/self_managed/03_install_the_collector_yum"
+      "path": "/docs/install/self-managed/03-install-the-collector-yum"
     },
-    "install/self_managed/04_configure_the_collector": {
+    "install/self-managed/04-configure-the-collector": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/self_managed/04_configure_the_collector"
+      "path": "/docs/install/self-managed/04-configure-the-collector"
     },
-    "install/self_managed/04_configure_the_collector_docker": {
+    "install/self-managed/04-configure-the-collector-docker": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/self_managed/04_configure_the_collector_docker"
+      "path": "/docs/install/self-managed/04-configure-the-collector-docker"
     },
-    "install/self_managed/04_configure_the_collector_package": {
+    "install/self-managed/04-configure-the-collector-package": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/self_managed/04_configure_the_collector_package"
+      "path": "/docs/install/self-managed/04-configure-the-collector-package"
     },
-    "install/supabase/01_enable_pg_stat_statements": {
+    "install/supabase/01-enable-pg_stat_statements": {
       "title": "Step 1: Enable pg_stat_statements",
-      "path": "/docs/install/supabase/01_enable_pg_stat_statements"
+      "path": "/docs/install/supabase/01-enable-pg_stat_statements"
     },
-    "install/supabase/02_create_monitoring_user": {
+    "install/supabase/02-create-monitoring-user": {
       "title": "Step 2: Create Monitoring User",
-      "path": "/docs/install/supabase/02_create_monitoring_user"
+      "path": "/docs/install/supabase/02-create-monitoring-user"
     },
-    "install/supabase/03_install_the_collector": {
+    "install/supabase/03-install-the-collector": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/supabase/03_install_the_collector"
+      "path": "/docs/install/supabase/03-install-the-collector"
     },
-    "install/supabase/03_install_the_collector_docker": {
+    "install/supabase/03-install-the-collector-docker": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/supabase/03_install_the_collector_docker"
+      "path": "/docs/install/supabase/03-install-the-collector-docker"
     },
-    "install/supabase/03_install_the_collector_package": {
+    "install/supabase/03-install-the-collector-package": {
       "title": "Step 3: Install the Collector",
-      "path": "/docs/install/supabase/03_install_the_collector_package"
+      "path": "/docs/install/supabase/03-install-the-collector-package"
     },
-    "install/supabase/04_configure_the_collector": {
+    "install/supabase/04-configure-the-collector": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/supabase/04_configure_the_collector"
+      "path": "/docs/install/supabase/04-configure-the-collector"
     },
-    "install/supabase/04_configure_the_collector_docker": {
+    "install/supabase/04-configure-the-collector-docker": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/supabase/04_configure_the_collector_docker"
+      "path": "/docs/install/supabase/04-configure-the-collector-docker"
     },
-    "install/supabase/04_configure_the_collector_package": {
+    "install/supabase/04-configure-the-collector-package": {
       "title": "Step 4: Configure the Collector",
-      "path": "/docs/install/supabase/04_configure_the_collector_package"
+      "path": "/docs/install/supabase/04-configure-the-collector-package"
     },
     "install/troubleshooting": {
       "title": "Installation Troubleshooting",
       "path": "/docs/install/troubleshooting"
     },
-    "install/troubleshooting/collector_crash": {
+    "install/troubleshooting/collector-crash": {
       "title": "Collector crashes",
-      "path": "/docs/install/troubleshooting/collector_crash"
+      "path": "/docs/install/troubleshooting/collector-crash"
     },
-    "install/troubleshooting/column_stats_helper": {
+    "install/troubleshooting/column-stats-helper": {
       "title": "Resolving the \"Limited access to table column statistics\" warning",
-      "path": "/docs/install/troubleshooting/column_stats_helper"
+      "path": "/docs/install/troubleshooting/column-stats-helper"
     },
-    "install/troubleshooting/ext_stats_helper": {
+    "install/troubleshooting/ext-stats-helper": {
       "title": "Resolving the \"missing extended stats monitoring helper functions\" warning",
-      "path": "/docs/install/troubleshooting/ext_stats_helper"
+      "path": "/docs/install/troubleshooting/ext-stats-helper"
     },
-    "install/troubleshooting/pg_read_file_helper": {
+    "install/troubleshooting/pg_read_file-helper": {
       "title": "Reading logs directly from Postgres",
-      "path": "/docs/install/troubleshooting/pg_read_file_helper"
+      "path": "/docs/install/troubleshooting/pg_read_file-helper"
     },
     "install/troubleshooting/pg_stat_statements": {
       "title": "Resolving the 'permission denied to create extension \"pg_stat_statements\"' error",
       "path": "/docs/install/troubleshooting/pg_stat_statements"
     },
-    "install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries": {
+    "install/troubleshooting/rds-pg_stat_statements-shared_preload_libraries": {
       "title": "Amazon RDS: Resolving the \"pg_stat_statements must be loaded via shared_preload_libraries\" error",
-      "path": "/docs/install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries"
+      "path": "/docs/install/troubleshooting/rds-pg_stat_statements-shared_preload_libraries"
     },
-    "install/troubleshooting/reset_stat_statements": {
+    "install/troubleshooting/reset-stat-statements": {
       "title": "Query text unavailable and reducing memory usage",
-      "path": "/docs/install/troubleshooting/reset_stat_statements"
+      "path": "/docs/install/troubleshooting/reset-stat-statements"
     },
     "log-insights": {
       "title": "pganalyze Log Insights",
@@ -1076,53 +1076,53 @@
       "title": "Log Insights: Setup",
       "path": "/docs/log-insights/setup"
     },
-    "log-insights/setup/aiven/01_move_database_into_vpc": {
+    "log-insights/setup/aiven/01-move-database-into-vpc": {
       "title": "Step 1: Move Database into VPC",
-      "path": "/docs/log-insights/setup/aiven/01_move_database_into_vpc"
+      "path": "/docs/log-insights/setup/aiven/01-move-database-into-vpc"
     },
-    "log-insights/setup/aiven/02_configure_vpc_peering": {
+    "log-insights/setup/aiven/02-configure-vpc-peering": {
       "title": "Step 2: Configure VPC Peering",
-      "path": "/docs/log-insights/setup/aiven/02_configure_vpc_peering"
+      "path": "/docs/log-insights/setup/aiven/02-configure-vpc-peering"
     },
-    "log-insights/setup/aiven/03_configure_collector": {
+    "log-insights/setup/aiven/03-configure-collector": {
       "title": "Step 3: Configure the Collector",
-      "path": "/docs/log-insights/setup/aiven/03_configure_collector"
+      "path": "/docs/log-insights/setup/aiven/03-configure-collector"
     },
-    "log-insights/setup/aiven/04_configure_service_integration": {
+    "log-insights/setup/aiven/04-configure-service-integration": {
       "title": "Step 4: Configure Service Integration",
-      "path": "/docs/log-insights/setup/aiven/04_configure_service_integration"
+      "path": "/docs/log-insights/setup/aiven/04-configure-service-integration"
     },
     "log-insights/setup/amazon-rds": {
       "title": "Log Insights: Setup (Amazon RDS & Amazon Aurora)",
       "path": "/docs/log-insights/setup/amazon-rds"
     },
-    "log-insights/setup/amazon-rds/01_test_log_download": {
+    "log-insights/setup/amazon-rds/01-test-log-download": {
       "title": "Step 1: Test Log Download",
-      "path": "/docs/log-insights/setup/amazon-rds/01_test_log_download"
+      "path": "/docs/log-insights/setup/amazon-rds/01-test-log-download"
     },
     "log-insights/setup/azure-database": {
       "title": "Log Insights: Setup (Azure Database for PostgreSQL)",
       "path": "/docs/log-insights/setup/azure-database"
     },
-    "log-insights/setup/azure-database/01_set_up_managed_identity": {
+    "log-insights/setup/azure-database/01-set-up-managed-identity": {
       "title": "Step 1: Set up Managed Identity",
-      "path": "/docs/log-insights/setup/azure-database/01_set_up_managed_identity"
+      "path": "/docs/log-insights/setup/azure-database/01-set-up-managed-identity"
     },
-    "log-insights/setup/azure-database/02_set_up_azure_event_hub": {
+    "log-insights/setup/azure-database/02-set-up-azure-event-hub": {
       "title": "Step 2: Set up Azure Event Hub",
-      "path": "/docs/log-insights/setup/azure-database/02_set_up_azure_event_hub"
+      "path": "/docs/log-insights/setup/azure-database/02-set-up-azure-event-hub"
     },
-    "log-insights/setup/azure-database/03_stream_logs_into_event_hub": {
+    "log-insights/setup/azure-database/03-stream-logs-into-event-hub": {
       "title": "Step 3: Stream Postgres Logs into Azure Event Hub",
-      "path": "/docs/log-insights/setup/azure-database/03_stream_logs_into_event_hub"
+      "path": "/docs/log-insights/setup/azure-database/03-stream-logs-into-event-hub"
     },
-    "log-insights/setup/azure-database/04_adjust_log_line_prefix": {
+    "log-insights/setup/azure-database/04-adjust-log_line_prefix": {
       "title": "Step 4: Adjust Postgres log_line_prefix",
-      "path": "/docs/log-insights/setup/azure-database/04_adjust_log_line_prefix"
+      "path": "/docs/log-insights/setup/azure-database/04-adjust-log_line_prefix"
     },
-    "log-insights/setup/azure-database/05_configure_collector": {
+    "log-insights/setup/azure-database/05-configure-collector": {
       "title": "Step 5: Configure Collector",
-      "path": "/docs/log-insights/setup/azure-database/05_configure_collector"
+      "path": "/docs/log-insights/setup/azure-database/05-configure-collector"
     },
     "log-insights/setup/azure-database/troubleshooting": {
       "title": "Troubleshooting",
@@ -1132,41 +1132,41 @@
       "title": "Log Insights: Setup (CloudNativePG)",
       "path": "/docs/log-insights/setup/cloudnative-pg"
     },
-    "log-insights/setup/cloudnative-pg/01_configure_the_collector": {
+    "log-insights/setup/cloudnative-pg/01-configure-the-collector": {
       "title": "Step 1: Configure the Collector's OTLP Endpoint",
-      "path": "/docs/log-insights/setup/cloudnative-pg/01_configure_the_collector"
+      "path": "/docs/log-insights/setup/cloudnative-pg/01-configure-the-collector"
     },
-    "log-insights/setup/cloudnative-pg/02_deploy_vector": {
+    "log-insights/setup/cloudnative-pg/02-deploy-vector": {
       "title": "Step 2: Deploy Vector",
-      "path": "/docs/log-insights/setup/cloudnative-pg/02_deploy_vector"
+      "path": "/docs/log-insights/setup/cloudnative-pg/02-deploy-vector"
     },
-    "log-insights/setup/cloudnative-pg/03_verify": {
+    "log-insights/setup/cloudnative-pg/03-verify": {
       "title": "Step 3: Test and Verify",
-      "path": "/docs/log-insights/setup/cloudnative-pg/03_verify"
+      "path": "/docs/log-insights/setup/cloudnative-pg/03-verify"
     },
-    "log-insights/setup/crunchy-bridge/01_create_helper_function_and_test": {
+    "log-insights/setup/crunchy-bridge/01-create-helper-function-and-test": {
       "title": "Step 1: Create helper function and test",
-      "path": "/docs/log-insights/setup/crunchy-bridge/01_create_helper_function_and_test"
+      "path": "/docs/log-insights/setup/crunchy-bridge/01-create-helper-function-and-test"
     },
     "log-insights/setup/google-cloud-sql": {
       "title": "Log Insights: Setup (Google Cloud SQL and AlloyDB)",
       "path": "/docs/log-insights/setup/google-cloud-sql"
     },
-    "log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber": {
+    "log-insights/setup/google-cloud-sql/01-create-topic-and-subscriber": {
       "title": "Step 1: Create Topic and Subscriber",
-      "path": "/docs/log-insights/setup/google-cloud-sql/01_create_topic_and_subscriber"
+      "path": "/docs/log-insights/setup/google-cloud-sql/01-create-topic-and-subscriber"
     },
-    "log-insights/setup/google-cloud-sql/02_configure_log_routing": {
+    "log-insights/setup/google-cloud-sql/02-configure-log-routing": {
       "title": "Step 2: Configure Log Routing",
-      "path": "/docs/log-insights/setup/google-cloud-sql/02_configure_log_routing"
+      "path": "/docs/log-insights/setup/google-cloud-sql/02-configure-log-routing"
     },
-    "log-insights/setup/google-cloud-sql/03_set_up_service_account": {
+    "log-insights/setup/google-cloud-sql/03-set-up-service-account": {
       "title": "Step 3: Set Up Service Account",
-      "path": "/docs/log-insights/setup/google-cloud-sql/03_set_up_service_account"
+      "path": "/docs/log-insights/setup/google-cloud-sql/03-set-up-service-account"
     },
-    "log-insights/setup/google-cloud-sql/04_configure_collector": {
+    "log-insights/setup/google-cloud-sql/04-configure-collector": {
       "title": "Step 4: Configure Collector",
-      "path": "/docs/log-insights/setup/google-cloud-sql/04_configure_collector"
+      "path": "/docs/log-insights/setup/google-cloud-sql/04-configure-collector"
     },
     "log-insights/setup/google-cloud-sql/troubleshooting": {
       "title": "Troubleshooting",
@@ -1176,21 +1176,21 @@
       "title": "Log Insights: Setup (Heroku Postgres)",
       "path": "/docs/log-insights/setup/heroku-postgres"
     },
-    "log-insights/setup/heroku-postgres/01_add_log_drain": {
+    "log-insights/setup/heroku-postgres/01-add-log-drain": {
       "title": "Step 1: Add Log Drain",
-      "path": "/docs/log-insights/setup/heroku-postgres/01_add_log_drain"
+      "path": "/docs/log-insights/setup/heroku-postgres/01-add-log-drain"
     },
-    "log-insights/setup/heroku-postgres/02_verify_log_drain": {
+    "log-insights/setup/heroku-postgres/02-verify-log-drain": {
       "title": "Step 2: Verify Log Drain",
-      "path": "/docs/log-insights/setup/heroku-postgres/02_verify_log_drain"
+      "path": "/docs/log-insights/setup/heroku-postgres/02-verify-log-drain"
     },
-    "log-insights/setup/heroku-postgres/03_restart_collector": {
+    "log-insights/setup/heroku-postgres/03-restart-collector": {
       "title": "Step 3: Restart Collector",
-      "path": "/docs/log-insights/setup/heroku-postgres/03_restart_collector"
+      "path": "/docs/log-insights/setup/heroku-postgres/03-restart-collector"
     },
-    "log-insights/setup/neon/01_set_up_opentelemetry_logs": {
+    "log-insights/setup/neon/01-set-up-opentelemetry-logs": {
       "title": "Step 1: Set up OpenTelemetry Logs",
-      "path": "/docs/log-insights/setup/neon/01_set_up_opentelemetry_logs"
+      "path": "/docs/log-insights/setup/neon/01-set-up-opentelemetry-logs"
     },
     "log-insights/setup/opentelemetry": {
       "title": "Log Insights: Kubernetes with OpenTelemetry",
@@ -1208,21 +1208,21 @@
       "title": "Log Insights: Setup (Self-Managed)",
       "path": "/docs/log-insights/setup/self-managed"
     },
-    "log-insights/setup/self-managed/01_determine_log_location": {
+    "log-insights/setup/self-managed/01-determine-log-location": {
       "title": "Step 1: Determine Log Location",
-      "path": "/docs/log-insights/setup/self-managed/01_determine_log_location"
+      "path": "/docs/log-insights/setup/self-managed/01-determine-log-location"
     },
-    "log-insights/setup/self-managed/02_configure_collector": {
+    "log-insights/setup/self-managed/02-configure-collector": {
       "title": "Step 2: Configure Collector",
-      "path": "/docs/log-insights/setup/self-managed/02_configure_collector"
+      "path": "/docs/log-insights/setup/self-managed/02-configure-collector"
     },
     "log-insights/setup/self-managed/troubleshooting": {
       "title": "Troubleshooting",
       "path": "/docs/log-insights/setup/self-managed/troubleshooting"
     },
-    "log-insights/setup/supabase/01_set_up_log_drain": {
+    "log-insights/setup/supabase/01-set-up-log-drain": {
       "title": "Step 1: Set up Log Drain",
-      "path": "/docs/log-insights/setup/supabase/01_set_up_log_drain"
+      "path": "/docs/log-insights/setup/supabase/01-set-up-log-drain"
     },
     "log-insights/setup/syslog-server": {
       "title": "Log Insights: Syslog server setup",
@@ -1236,9 +1236,9 @@
       "title": "MCP Server (Preview)",
       "path": "/docs/mcp"
     },
-    "open_source_components": {
+    "open-source-components": {
       "title": "Open-Source Components",
-      "path": "/docs/open_source_components"
+      "path": "/docs/open-source-components"
     },
     "opentelemetry": {
       "title": "OpenTelemetry Tracing Integration",
@@ -1372,9 +1372,9 @@
       "title": "Setting up the Collector Workflow",
       "path": "/docs/workbooks/collector-workflow"
     },
-    "workbooks/enabling_pg_hint_plan": {
+    "workbooks/enabling-pg_hint_plan": {
       "title": "Enabling pg_hint_plan",
-      "path": "/docs/workbooks/enabling_pg_hint_plan"
+      "path": "/docs/workbooks/enabling-pg_hint_plan"
     },
     "workbooks/how-to-use-workbooks": {
       "title": "How to Optimize Slow Queries with Workbooks",
