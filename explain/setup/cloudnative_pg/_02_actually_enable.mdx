@@ -40,18 +40,6 @@ spec:
 `auto_explain.*` parameter prefix and automatically adds the `auto_explain` library to
 `shared_preload_libraries` for you.
 
-<SPLRecommendation recommendation={props.splRecommendation} />
-
-If for some reason `auto_explain` isn't picked up automatically, you can add it to
-`shared_preload_libraries` explicitly instead:
-
-```yaml
-spec:
-  postgresql:
-    parameters:
-      shared_preload_libraries: "pg_stat_statements,auto_explain"
-```
-
 Apply the change with `kubectl apply -f cluster.yaml`.
 
 ## Restart

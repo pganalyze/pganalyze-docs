@@ -68,7 +68,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: pganalyze-secrets
-data:
+stringData:
   pganalyze-collector.conf: |
     [pganalyze]
     api_key = your_api_key

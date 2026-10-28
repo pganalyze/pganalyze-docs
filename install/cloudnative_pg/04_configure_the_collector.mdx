@@ -35,7 +35,7 @@ export const ExtraEnvQuick = ({ apiKey }) => {
   );
 };
 
-## Point the collector at your CNPG cluster
+## Configure the connections settings
 
 Update the `extraEnv` section of the `collector-values.yaml` file you fetched in the previous step:
 
@@ -63,7 +63,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: pganalyze-secrets
-data:
+stringData:
   pganalyze-collector.conf: |
     [pganalyze]
     api_key = your_api_key
