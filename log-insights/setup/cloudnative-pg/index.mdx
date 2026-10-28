@@ -6,13 +6,13 @@ backlink_title: 'Log Insights: Setup'
 ---
 
 Log Insights setup for [CloudNativePG](https://cloudnative-pg.io/) (CNPG) looks different from
-the other platform in these docs because of how CNPG handles logging.
+the other platforms in these docs because of how CNPG handles logging.
 
 ## Why this looks different
 
 CNPG always writes Postgres's log output as JSON to stdout. This isn't a configuration choice.
 Settings like `log_destination`, `logging_collector`, `log_directory`, and `log_filename` are on
-CNPG's [blocked parameter list](https://cloudnative-pg.io/docs/devel/postgresql_conf/), so its
+CNPG's [blocked parameter list](https://cloudnative-pg.io/docs/current/postgresql_conf/), so its
 admission webhook rejects any attempt to set them. In practice this means:
 
 * Postgres still writes csvlog output to disk internally (what `log_directory`/`log_destination`
@@ -48,7 +48,7 @@ collector repository. Follow the steps below to use it.
 
 ### Note: Why a sidecar or stdout-scraping doesn't work
 
-Customers often ask about running the collector as a sidecar container that tails Postgres's log output directly, the way
+You might consider running the collector as a sidecar container that tails Postgres's log output directly, the way
 you might on other platforms. As noted above, that internal log file does exist, but it isn't reachable this way, for two
 reasons:
 
@@ -60,7 +60,7 @@ reasons:
 Given that, the supported path is to collect CNPG's JSON logs from Kubernetes and forward them to the collector
 over OpenTelemetry as described above.
 
-### Setup
+## Setup
 
 * [Step 1: Configure the collector's OTLP endpoint](/docs/log-insights/setup/cloudnative-pg/01_configure_the_collector)
 * [Step 2: Deploy Vector](/docs/log-insights/setup/cloudnative-pg/02_deploy_vector)

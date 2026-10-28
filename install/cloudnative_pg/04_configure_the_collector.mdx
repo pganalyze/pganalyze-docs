@@ -56,8 +56,7 @@ Update the `extraEnv` section of the `collector-values.yaml` file you fetched in
    Secret you created in Step 1
 
 `extraEnv` is fine for a first test, but since `DB_PASSWORD` is a credential, we recommend moving to
-a Kubernetes Secret-based config once you've confirmed things work. Create a Secret containing the
-collector's INI config:
+a Kubernetes Secret-based config once you've confirmed things work. Save the following as `pganalyze-collector-config.yaml`:
 
 ```yaml
 apiVersion: v1

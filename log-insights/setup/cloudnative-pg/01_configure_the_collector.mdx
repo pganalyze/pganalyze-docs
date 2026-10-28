@@ -20,9 +20,7 @@ db_host = my-cluster-rw
 db_log_otel_server = 0.0.0.0:4318
 ```
 
-**If you're still using the quicker `extraEnv` config from that same step**, add it there instead,
-as `LOG_OTEL_SERVER` (no `db_` prefix, this env var naming is a collector-wide convention, not
-specific to this setting):
+If you configured the collector with `extraEnv` instead, add the equivalent `LOG_OTEL_SERVER` environment variable:
 
 ```yaml
 extraEnv:
@@ -36,11 +34,8 @@ up) to avoid running the collector as root.
 
 ## Expose it as a Kubernetes Service
 
-Vector (deployed in the next step) needs a stable address to send logs to. If you deployed the
-collector with the pganalyze Helm chart, its `collector-values.yaml` already ships a `service`
-block with `name`, `port`, and `targetPort` defaulted to exactly what you need below, so this part
-of your file will already look correct at a glance. The one field that actually needs to change is
-`create`, which defaults to `false`:
+Vector (deployed in the next step) needs a stable address to send logs to.
+The collector's `collector-values.yaml` already includes a service block with the right `name`, `port`, and `targetPort`. Only `create` needs to change, since it defaults to `false`:
 
 ```yaml
 service:
