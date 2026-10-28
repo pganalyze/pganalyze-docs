@@ -41,23 +41,11 @@ server name shown in the pganalyze app. See [collector settings](/docs/collector
 | `--quiet`, `-q` | Only outputs error messages and hides informational and warning messages. |
 | `--debug-logs` | Outputs all log analysis that would be sent, and does not send any other data. For some providers, also outputs incoming logs from the source. Use for debugging only. |
 
-## Log output format
-
-These control how the collector writes its own log output, not the Postgres logs it monitors.
-
-| Flag | Description |
-|------|-------------|
-| `--syslog` | Writes all log output to syslog instead of stderr. |
-| `--json-logs` | Writes all log output to stderr as newline-delimited JSON. Ignored if `--syslog` is set. |
-| `--no-log-timestamps` | Disables timestamps in the log output. Done automatically when `--syslog` is used. |
-
 ## File locations
 
 | Flag | Description |
 |------|-------------|
 | `--config=PATH` | Path to the config file. Defaults to `/etc/pganalyze-collector.conf`, falling back to `~/.pganalyze_collector.conf` if the default does not exist. |
-| `--statefile=PATH` | Path to the state file. |
-| `--pidfile=PATH` | Path to write a pidfile to. No pidfile is written by default. |
 
 ## Disabling parts of data collection
 
@@ -85,15 +73,6 @@ permanently, use the corresponding [collector settings](/docs/collector/settings
 | `--filter-logfile=PATH` | Prints the given log file with known secrets replaced, according to `--filter-log-secret`. |
 | `--filter-log-secret=TYPE` | The type of secrets that `--filter-logfile` replaces. Defaults to `all`. |
 
-## Helper SQL generation
-
-| Flag | Description |
-|------|-------------|
-| `--generate-stats-helper-sql=NAME` | Generates a SQL script that installs the collector stats helpers on all configured databases of the given server. Run it with `psql -f`. |
-| `--generate-explain-analyze-helper-sql=NAME` | Generates a SQL script that installs the `pganalyze.explain_analyze` helper on all configured databases of the given server. Run it with `psql -f`. |
-| `--generate-explain-analyze-helper-role=ROLE` | Owner role of the `pganalyze.explain_analyze` helper function. Defaults to `pganalyze_explain`. |
-
-`NAME` is the config file section name, or `default` when the server is configured through environment variables.
 
 ## Advanced and internal
 
@@ -104,8 +83,6 @@ See [Profiling the collector](/docs/collector/running#profiling-the-collector) f
 |------|-------------|
 | `--write-heap-profile` | Writes a Go memory heap profile to `~/pganalyze_collector.mprof` when the daemon receives SIGHUP. |
 | `--trace` | Writes a Go trace file to `~/pganalyze_collector.trace` for a single test run. |
-| `--benchmark` | Runs the collector in benchmark mode: collects data without submitting it, and without JSON output. |
-| `--force-state-update` | Updates the state file even if other options would prevent it. Intended to be used with `--dry-run`. |
 
 ## Other
 
