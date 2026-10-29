@@ -6,6 +6,7 @@ backlink_title: 'Installation Guide'
 ---
 
 import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
+import AuroraFailoverNote from './_04_aurora_failover_note.mdx';
 import SettingEnvVarsECS from './_04_setting_env_vars_ecs.mdx';
 
 export const FinishSetup = ({ inviteLink }) => {
@@ -61,10 +62,7 @@ endpoint to the content of the `pganalyze_collector.conf` file (e.g. add each se
 then update the `/pganalyze/CONFIG_CONTENTS` SSM secret, or run one pganalyze
 collector Docker container for each instance.
 
-Cluster endpoints and instance endpoints behave differently when the cluster fails over: a
-pganalyze server either follows a role (writer or reader), or a specific instance. See
-[Monitoring Amazon Aurora clusters through a failover](/docs/collector/server-identity#monitoring-amazon-aurora-clusters-through-a-failover)
-to decide which one fits your setup.
+<AuroraFailoverNote />
 
 ## Registering the task and launching it
 
