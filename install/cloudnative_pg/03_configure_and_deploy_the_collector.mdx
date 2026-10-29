@@ -1,5 +1,5 @@
 ---
-title: 'Step 4: Configure the Collector'
+title: 'Step 3: Configure and Deploy the Collector'
 install_track_title: Installation Guide (CloudNativePG)
 backlink_href: /docs/install
 backlink_title: 'Installation Guide'
@@ -35,9 +35,36 @@ export const ExtraEnvQuick = ({ apiKey }) => {
   );
 };
 
-## Configure the connections settings
+## Deploying the collector with Helm
 
-Update the `extraEnv` section of the `collector-values.yaml` file you fetched in the previous step:
+The pganalyze collector runs as an ordinary container in your cluster. There's nothing
+CNPG-specific about how the collector itself is deployed. It just needs network connectivity to
+the CNPG cluster's `-rw` Service, the same way any other application in the cluster would connect.
+
+### Prerequisites
+
+* [`kubectl`](https://kubernetes.io/docs/tasks/tools/) is configured for your cluster
+* [The Helm CLI](https://helm.sh/) v3 or above is installed
+* CNPG is already installed, and you have a `Cluster` with the monitoring role and
+  `pg_stat_statements` set up from the previous two steps
+
+### Fetch the Helm chart's example values
+
+```bash
+helm repo add pganalyze https://charts.pganalyze.com/
+helm repo update
+helm show values pganalyze/pganalyze-collector > collector-values.yaml
+```
+
+Below, you'll edit `collector-values.yaml` to configure the collector, including your pganalyze
+API key and the connection details for the database you want to monitor.
+
+We name it `collector-values.yaml` rather than the default `values.yaml` so it doesn't collide with
+other charts' values files in the same directory, such as Vector's in the Log Insights setup.
+
+## Configure the connection settings
+
+Update the `extraEnv` section of `collector-values.yaml`:
 
 <ExtraEnvQuick apiKey={props.apiKey} />
 
@@ -48,10 +75,11 @@ Update the `extraEnv` section of the `collector-values.yaml` file you fetched in
    `<cluster-name>-rw.<namespace>.svc` if it's in a different namespace. This Service always points
    at the current primary, so the collector keeps working across failovers without reconfiguration.
 4. The `DB_NAME` is the database on the cluster you want to monitor. `app` is CNPG's default
-   application database name unless you customized `.spec.bootstrap.initdb.database`. If you're
-   monitoring more than one database on this cluster, add another `[section]` to the INI config
-   below for each one (all pointing at the same `DB_HOST`). See the
-   [collector settings reference](/docs/collector/settings) for the multi-server config format
+   application database name unless you customized `.spec.bootstrap.initdb.database`. To monitor
+   more than one database on this cluster, use a comma-separated list instead, starting with the
+   primary one, e.g. `app,other_db`, or end the list with `*` (e.g. `app,*`) to monitor every
+   database on the cluster. See the [collector settings reference](/docs/collector/settings) for
+   details
 5. The `DB_USERNAME` and `DB_PASSWORD` are the credentials from the `pganalyze-monitoring-user`
    Secret you created in Step 1
 
@@ -75,7 +103,13 @@ stringData:
     db_password = your_monitoring_role_password
 ```
 
-Then mount it into the collector at `/config`, replacing the `extraEnv` section:
+Then apply it:
+
+```bash
+kubectl apply -f pganalyze-collector-config.yaml
+```
+
+Finally, in `collector-values.yaml`, remove the `extraEnv` section and mount the Secret at `/config` instead:
 
 ```yaml
 volumes:

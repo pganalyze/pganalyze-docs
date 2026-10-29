@@ -84,13 +84,6 @@ Last, the log output needs to be sent to your pganalyze collector configuration 
 [OTLP log server](/docs/log-insights/setup/opentelemetry) configured, correctly wrapping the log
 records in OTLP JSON encoding:
 
-**`batch.max_events` must be `1`.** Vector's `opentelemetry` sink does not currently support
-batching more than one event per request with the `json` codec (confirmed by a Vector maintainer
-in [vectordotdev/vector#22054](https://github.com/vectordotdev/vector/issues/22054)); any request
-carrying more than one event is malformed and gets rejected with HTTP 400, and dropped rather than
-retried. This means every log line is sent as its own HTTP request, higher request volume than
-true batching, but it's the only combination that reliably works today.
-
 ```yaml
   sinks:
     pganalyze:
@@ -120,6 +113,12 @@ true batching, but it's the only combination that reliably works today.
             content-type: "application/json"
 ```
 
+**`batch.max_events` must be `1`.** Vector's `opentelemetry` sink does not currently support
+batching more than one event per request with the `json` codec (confirmed by a Vector maintainer
+in [vectordotdev/vector#22054](https://github.com/vectordotdev/vector/issues/22054)); any request
+carrying more than one event is malformed and gets rejected with HTTP 400, and dropped rather than
+retried. This means every log line is sent as its own HTTP request, higher request volume than
+true batching, but it's the only combination that reliably works today.
 
 ## Deploying Vector through Helm chart
 
@@ -130,7 +129,7 @@ First, fetch the example `values.yaml` that works with pganalyze from the
 [collector repository](https://github.com/pganalyze/collector/blob/main/contrib/vector/values.yaml):
 
 ```bash
-wget https://github.com/pganalyze/collector/raw/refs/heads/main/contrib/helm/pganalyze-collector/values.yaml
+wget https://github.com/pganalyze/collector/raw/refs/heads/main/contrib/vector/values.yaml
 ```
 
 **Important:** Next, customize the `values.yaml` file to use your cluster names in the `cnpg_route` step,

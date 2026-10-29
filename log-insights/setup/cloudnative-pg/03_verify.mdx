@@ -19,7 +19,7 @@ kubectl cnpg psql my-cluster -- -c "DO \$\$ BEGIN RAISE LOG 'pganalyze-log-insig
 
 ## Check that it arrived
 
-Give it 10-15 seconds, then check the collector's own pod logs for a snapshot submission that
+Give it 15-30 seconds, then check the collector's own pod logs for a snapshot submission that
 includes a logs count:
 
 ```bash
@@ -30,8 +30,7 @@ kubectl logs deploy/my-collector-pganalyze-collector --since=1m
 I [my-cluster] Submitted compact snapshots successfully: 3 activity, 1 logs
 ```
 
-**Don't use `docker-entrypoint.sh collector --test-logs --reload` here.** That works for other log
-ingestion methods, but for OTel specifically it starts a second, temporary OTLP listener on the
+The collector's usual log test (`collector --test-logs`) doesn't work for this setup: it starts a second, temporary OTLP listener on the
 same port your already-running collector is using, which fails with "address already in use." The
 collector's own hint calls this out as a likely false positive, and it is one, the snapshot check
 above is the reliable signal for a deployment that's already running.
@@ -68,16 +67,15 @@ Check these in order, they cover every failure mode found while building this ou
    Remove it the same way (`"op": "remove"`, same `path`, no `value`) once you're done, it's noisy
    and not meant to run continuously.
 
+Note that `logger: "postgres"` log lines get full structured field extraction today; other loggers
+CNPG emits (like `pgaudit`) are forwarded but not yet parsed into structured fields.
+
 <PublicOnly>
   <p>
     Once this is working, log events will start showing up on the Log Insights page in pganalyze.
   </p>
   <p>
-    Note that <code>logger: "postgres"</code> log lines get full structured field extraction today;
-    other loggers CNPG emits (like <code>pgaudit</code>) are forwarded but not yet parsed into
-    structured fields.
+    We recommend setting up <a href="/docs/explain/setup/cloudnative_pg/01_auto_explain_check">Automated EXPLAIN</a> as
+    a follow-up step, to start collecting EXPLAIN plans for your slow queries.
   </p>
 </PublicOnly>
-
-Next, you can set up [Automated EXPLAIN](/docs/explain/setup/cloudnative_pg/01_auto_explain_check)
-to start collecting EXPLAIN plans for your slow queries.
