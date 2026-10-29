@@ -28,5 +28,7 @@
     href: install/supabase
   - name: Neon
     href: install/neon
+  - name: CloudNativePG (CNPG)
+    href: install/cloudnative_pg
   - name: Self-managed (and other hosted Postgres)
     href: install/self_managed

@@ -13,6 +13,7 @@ When you select one of the query executions in this list, you will see details o
 
 <ImgLogExplainDetails />
 
-From now on, you will now get EXPLAIN plans automatically in the pganalyze UI, for all your slow queries.
+From now on, you will get EXPLAIN plans automatically in the pganalyze UI for all your slow queries that exceed 
+your `auto_explain.log_min_duration` threshold and `auto_explain.sample_rate` setting.
 
 [Learn more about how pganalyze works with EXPLAIN data.](https://pganalyze.com/docs/explain)
