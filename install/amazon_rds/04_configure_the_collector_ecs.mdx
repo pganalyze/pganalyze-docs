@@ -6,6 +6,7 @@ backlink_title: 'Installation Guide'
 ---
 
 import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
+import AuroraFailoverNote from './_04_aurora_failover_note.mdx';
 import SettingEnvVarsECS from './_04_setting_env_vars_ecs.mdx';
 
 export const FinishSetup = ({ inviteLink }) => {
@@ -60,6 +61,8 @@ If you have a cluster with multiple readers, you either need to add each instanc
 endpoint to the content of the `pganalyze_collector.conf` file (e.g. add each section like `[reader_instance1]`, `[reader_instance2]`),
 then update the `/pganalyze/CONFIG_CONTENTS` SSM secret, or run one pganalyze
 collector Docker container for each instance.
+
+<AuroraFailoverNote />
 
 ## Registering the task and launching it
 

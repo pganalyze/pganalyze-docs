@@ -6,6 +6,7 @@ backlink_title: 'Installation Guide'
 ---
 
 import PublicLastStepLogInsightsLink from '../_public_last_step_log_insights_link.mdx'
+import AuroraFailoverNote from './_04_aurora_failover_note.mdx';
 
 export const APIKeyInstructions = ({ apiKey }) => {
   return apiKey ? (
@@ -85,6 +86,8 @@ db_host = mydbinstance2.123456789012.us-east-1.rds.amazonaws.com
 db_host = mydbinstance3.123456789012.us-east-1.rds.amazonaws.com
 ...
 ```
+
+<AuroraFailoverNote />
 
 ## Test snapshot
 
