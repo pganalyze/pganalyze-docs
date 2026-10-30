@@ -27,6 +27,9 @@ For package-based installs, if the test succeeds, this will automatically load t
 background process (equivalent to using the `--reload` flag). This minimizes monitoring interruptions and simplifies
 config file updates.
 
+If your config file has many servers, you can test just one with `--test-section`, see
+[Running & Testing](/docs/collector/running#test-a-single-server).
+
 The tables below list configuration settings, their defaults if not set, and their descriptions. If a setting is
 configurable through environment variables, the environment variable name follows the setting in parentheses.
 Boolean settings in both the `INI` config and environment variables can either be specified as `true`/`false`
