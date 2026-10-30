@@ -287,9 +287,14 @@ if there is none). With multiple readers, the reader endpoint balances connectio
 the collector cannot tell which instance to monitor. In that case it reports an error for logs and
 system metrics, and asks you to use instance endpoints instead.
 
+The same applies if a reader is added to the cluster later, for example by Aurora Auto Scaling.
+The `writer` server keeps working, but the `reader` server starts reporting this error, and its
+query statistics mix data from the readers. To fix this, replace the `reader` section with one
+section per reader instance endpoint.
+
 ### Choosing between them
 
-If your cluster has more than one reader instance, use one server per instance.
+If your cluster has more than one reader instance, or might have in the future, use one server per instance.
 
 Otherwise, either option works, and the choice comes down to what you want to follow over time.
 One server per role gives the primary workload a single, continuous history and a stable URL in
