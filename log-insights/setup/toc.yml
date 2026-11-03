@@ -18,6 +18,8 @@
     href: log-insights/setup/supabase
   - name: Neon
     href: log-insights/setup/neon
+  - name: CloudNativePG (CNPG)
+    href: log-insights/setup/cloudnative-pg
   - name: Self-Managed Server
     href: log-insights/setup/self-managed
   - name: Receive logs using Syslog
