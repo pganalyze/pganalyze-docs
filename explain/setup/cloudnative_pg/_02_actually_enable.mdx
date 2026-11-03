@@ -1,24 +1,5 @@
 import CNPGRestartNotice from './_cnpg_restart_notice.mdx'
 
-export const SPLRecommendation = ({recommendation}) => {
-   if (recommendation.current == null) {
-      return (
-         <p>
-            For example, if the current value is <code>pg_stat_statements</code>,
-            you can set the new value to <code>pg_stat_statements, auto_explain</code>.
-         </p>
-      )
-   }
-   return (
-      <React.Fragment>
-         <p>
-            The current value appears to be <code>{recommendation.current}</code>.
-            You can set the new value to <code>{recommendation.recommended}</code>.
-         </p>
-      </React.Fragment>
-   )
-}
-
 ## Set the parameter
 
 Add `auto_explain.*` parameters to `.spec.postgresql.parameters` in your `Cluster` manifest (the
