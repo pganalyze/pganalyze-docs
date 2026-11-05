@@ -1,6 +1,7 @@
 import React from "react";
 
 import styles from "../style.module.scss";
+import { useSmartAnchor } from "./SmartAnchor";
 
 type InstallChoiceItem = {
   link: string;
@@ -15,6 +16,7 @@ type Props = {
 };
 
 const InstallChoice: React.FunctionComponent<Props> = ({ docsRoot, items }) => {
+  const Anchor = useSmartAnchor();
   return (
     <>
       <div className={styles.overviewInstallChoice}>
@@ -22,7 +24,7 @@ const InstallChoice: React.FunctionComponent<Props> = ({ docsRoot, items }) => {
           const linkTo = `${docsRoot ? "/docs/" : ""}${item.link}`;
           const imgAlt = `Logo of ${item.providerName}`;
           return (
-            <a
+            <Anchor
               className={styles.overviewInstallChoiceStep}
               href={linkTo}
               key={item.providerName}
@@ -36,7 +38,7 @@ const InstallChoice: React.FunctionComponent<Props> = ({ docsRoot, items }) => {
                   {item.text}
                 </div>
               )}
-            </a>
+            </Anchor>
           );
         })}
       </div>

@@ -93,7 +93,11 @@ const SmartAnchor: React.FunctionComponent<Props> = ({linkComponent, linkRelativ
   return <Link {...rest} to={destination} />
 };
 
-const SmartAnchorContext = React.createContext<React.ComponentType<BaseProps> | undefined>(undefined);
+function PlainLink({ to, ...rest }: LinkProps) {
+  return <a {...rest} href={to} />
+}
+
+const SmartAnchorContext = React.createContext<React.ComponentType<BaseProps>>(makeSmartAnchor(PlainLink, false));
 
 export const WithSmartAnchor = ({linkComponent, linkRelative, children}: {
   linkComponent: React.ComponentType<LinkProps>;
@@ -108,11 +112,7 @@ export const WithSmartAnchor = ({linkComponent, linkRelative, children}: {
 }
 
 export function useSmartAnchor(): React.ComponentType<BaseProps> {
-  const value = useContext(SmartAnchorContext);
-  if (!value) {
-    throw new Error('must be used within WithSmartAnchor');
-  }
-  return value;
+  return useContext(SmartAnchorContext);
 }
 
 export function makeSmartAnchor(linkComponent: React.ComponentType<LinkProps>, linkRelative: boolean): React.ComponentType<BaseProps> {
