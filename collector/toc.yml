@@ -6,6 +6,10 @@
     href: collector/packages
   - name: Configuration Settings
     href: collector/settings
+  - name: Command-line Flags
+    href: collector/flags
+  - name: Running & Testing
+    href: collector/running
   - name: Server Identity
     href: collector/server-identity
   - name: Upgrading
