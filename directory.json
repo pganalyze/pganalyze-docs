@@ -88,6 +88,10 @@
       "title": "Alerts & Check-Up",
       "path": "/docs/checks"
     },
+    "checks/incident-io": {
+      "title": "incident.io Integration",
+      "path": "/docs/checks/incident-io"
+    },
     "checks/pagerduty": {
       "title": "PagerDuty Integration",
       "path": "/docs/checks/pagerduty"
@@ -500,6 +504,22 @@
       "title": "Step 4: Test and Verify",
       "path": "/docs/explain/setup/azure_database/04_test_and_verify"
     },
+    "explain/setup/cloudnative_pg/01_auto_explain_check": {
+      "title": "Step 1: Check for auto_explain",
+      "path": "/docs/explain/setup/cloudnative_pg/01_auto_explain_check"
+    },
+    "explain/setup/cloudnative_pg/02_enable_auto_explain": {
+      "title": "Step 2: Enable auto_explain",
+      "path": "/docs/explain/setup/cloudnative_pg/02_enable_auto_explain"
+    },
+    "explain/setup/cloudnative_pg/03_review_settings": {
+      "title": "Step 3: Review auto_explain settings",
+      "path": "/docs/explain/setup/cloudnative_pg/03_review_settings"
+    },
+    "explain/setup/cloudnative_pg/04_test_and_verify": {
+      "title": "Step 4: Test and Verify",
+      "path": "/docs/explain/setup/cloudnative_pg/04_test_and_verify"
+    },
     "explain/setup/crunchy_bridge/01_auto_explain_check": {
       "title": "Step 1: Check for auto_explain",
       "path": "/docs/explain/setup/crunchy_bridge/01_auto_explain_check"
@@ -832,6 +852,18 @@
       "title": "Step 4: Configure the Collector",
       "path": "/docs/install/azure_database/04_configure_the_collector_package"
     },
+    "install/cloudnative_pg/01_create_monitoring_role": {
+      "title": "Step 1: Create a Monitoring Role",
+      "path": "/docs/install/cloudnative_pg/01_create_monitoring_role"
+    },
+    "install/cloudnative_pg/02_enable_pg_stat_statements": {
+      "title": "Step 2: Enable pg_stat_statements",
+      "path": "/docs/install/cloudnative_pg/02_enable_pg_stat_statements"
+    },
+    "install/cloudnative_pg/03_configure_and_deploy_the_collector": {
+      "title": "Step 3: Configure and Deploy the Collector",
+      "path": "/docs/install/cloudnative_pg/03_configure_and_deploy_the_collector"
+    },
     "install/crunchy_bridge/01_deploy_the_collector": {
       "title": "Step 1: Deploy the Collector",
       "path": "/docs/install/crunchy_bridge/01_deploy_the_collector"
@@ -1095,6 +1127,22 @@
     "log-insights/setup/azure-database/troubleshooting": {
       "title": "Troubleshooting",
       "path": "/docs/log-insights/setup/azure-database/troubleshooting"
+    },
+    "log-insights/setup/cloudnative-pg": {
+      "title": "Log Insights: Setup (CloudNativePG)",
+      "path": "/docs/log-insights/setup/cloudnative-pg"
+    },
+    "log-insights/setup/cloudnative-pg/01_configure_the_collector": {
+      "title": "Step 1: Configure the Collector's OTLP Endpoint",
+      "path": "/docs/log-insights/setup/cloudnative-pg/01_configure_the_collector"
+    },
+    "log-insights/setup/cloudnative-pg/02_deploy_vector": {
+      "title": "Step 2: Deploy Vector",
+      "path": "/docs/log-insights/setup/cloudnative-pg/02_deploy_vector"
+    },
+    "log-insights/setup/cloudnative-pg/03_verify": {
+      "title": "Step 3: Test and Verify",
+      "path": "/docs/log-insights/setup/cloudnative-pg/03_verify"
     },
     "log-insights/setup/crunchy-bridge/01_create_helper_function_and_test": {
       "title": "Step 1: Create helper function and test",
