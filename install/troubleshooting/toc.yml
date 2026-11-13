@@ -1,16 +1,16 @@
 - mount: install/troubleshooting
   items:
   - name: Collector crashes
-    href: install/troubleshooting/collector_crash
+    href: install/troubleshooting/collector-crash
   - name: Query text unavailable and reducing memory usage
-    href: install/troubleshooting/reset_stat_statements
+    href: install/troubleshooting/reset-stat-statements
   - name: 'Resolving the "Limited access to table column statistics" warning'
-    href: install/troubleshooting/column_stats_helper
+    href: install/troubleshooting/column-stats-helper
   - name: 'Resolving the "missing extended stats monitoring helper functions" warning'
-    href: install/troubleshooting/ext_stats_helper
+    href: install/troubleshooting/ext-stats-helper
   - name: Resolving the 'permission denied to create extension "pg_stat_statements"' error
     href: install/troubleshooting/pg_stat_statements
   - name: 'Amazon RDS: Resolving the "pg_stat_statements must be loaded via shared_preload_libraries" error'
-    href: install/troubleshooting/rds_pg_stat_statements_shared_preload_libraries
+    href: install/troubleshooting/rds-pg_stat_statements-shared_preload_libraries
   - name: 'Adding the pg_read_file helper'
-    href: install/troubleshooting/pg_read_file_helper
+    href: install/troubleshooting/pg_read_file-helper

@@ -1,0 +1,36 @@
+- mount: install/amazon-rds
+  items:
+  - name: "Step 0: Overview"
+    href: install/amazon-rds/00-overview
+  - name: "Step 1: Configure RDS Instance"
+    href: install/amazon-rds/01-configure-rds-instance
+  - name: "Step 2: Create Monitoring User"
+    href: install/amazon-rds/02-create-monitoring-user
+  - name: "Step 3: Install the Collector"
+    href: install/amazon-rds/03-install-collector
+  - name: "Step 4: Configure the Collector"
+    href: install/amazon-rds/04-configure-the-collector
+- mount: install/amazon-rds/03-install-collector
+  items:
+  - name: Choose deployment
+    href: install/amazon-rds/03-install-collector
+  - name: Amazon EC2
+    href: install/amazon-rds/03-install-collector-ec2
+  - name: Amazon ECS
+    href: install/amazon-rds/03-install-collector-ecs
+  - name: Amazon EKS
+    href: install/amazon-rds/03-install-collector-eks
+  - name: Docker
+    href: install/amazon-rds/03-install-collector-docker
+- mount: install/amazon-rds/04-configure-the-collector
+  items:
+  - name: Choose deployment
+    href: install/amazon-rds/04-configure-the-collector
+  - name: Amazon EC2
+    href: install/amazon-rds/04-configure-the-collector-ec2
+  - name: Amazon ECS
+    href: install/amazon-rds/04-configure-the-collector-ecs
+  - name: Amazon EKS
+    href: install/amazon-rds/04-configure-the-collector-eks
+  - name: Docker
+    href: install/amazon-rds/04-configure-the-collector-docker

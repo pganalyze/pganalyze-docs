@@ -1,0 +1,62 @@
+---
+title: 'Step 1: Add Log Drain'
+install_track_title: 'Log Insights: Setup (Heroku Postgres)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+export const TestAppConfigVars = ({apiKey}) => {
+  return (
+    <CodeBlock>
+      {`=== [your-collector-app-name] Config Vars
+TESTAPP_URL: postgres://...:...@...:.../...
+PGA_API_KEY: ${apiKey ?? '...'}`}
+    </CodeBlock>
+  )
+}
+
+Log output support is only available on Standard-tier or higher databases. It's not available on Essential-tier databases.
+
+Log output for Heroku Postgres databases is sent to the application that the
+database is attached to, so we need to add a log drain to that application that
+forwards log lines to the pganalyze collector app running in your account.
+
+The collector receives log drains at the following URL:
+
+```bash
+https://[your-collector-app-domain-name].herokuapp.com/logs/[ALIAS]
+```
+
+To check the `[your-collector-app-domain-name]` value of your collector app, run
+the following Heroku command:
+
+```bash
+heroku domains -a [your-collector-app-name]
+```
+
+It should look like 'your-collector-app-name-[unique identifier].herokuapp.com'.
+
+For the `[ALIAS]` value we recommend you use the add-on attachment name you've chosen
+in the initial setup, which you can determine by viewing the current Heroku
+configuration of your collector app:
+
+```bash
+heroku config -a [your-collector-app-name]
+```
+<TestAppConfigVars apiKey={props.apiKey} />
+
+So in this case we would use `TESTAPP_URL` as our alias, and then we would add the log drain
+like this:
+
+```bash
+heroku drains:add https://[your-collector-app-domain-name].herokuapp.com/logs/TESTAPP_URL -a [your-app-name]
+```
+
+Make sure to replace `[your-collector-app-name]` with the name of your own collector application
+that you've deployed in your Heroku account, and `[your-app-name]` with the name of your main
+application (the one that owns the database for which you want to collect logs).
+
+
+<Link className="btn btn-success" to="02-verify-log-drain">
+  Continue to Step 2: Verify log drain
+</Link>

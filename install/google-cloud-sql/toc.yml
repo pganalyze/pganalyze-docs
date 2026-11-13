@@ -1,0 +1,26 @@
+- mount: install/google-cloud-sql
+  items:
+  - name: "Step 1: Create Monitoring User"
+    href: install/google-cloud-sql/01-create-monitoring-user
+  - name: "Step 2: Install the Collector"
+    href: install/google-cloud-sql/02-install-the-collector
+  - name: "Step 3: Configure the Collector"
+    href: install/google-cloud-sql/03-configure-the-collector
+- mount: install/google-cloud-sql/02-install-the-collector
+  items:
+  - name: Choose deployment
+    href: install/google-cloud-sql/02-install-the-collector
+  - name: Ubuntu & Debian
+    href: install/google-cloud-sql/02-install-the-collector-deb
+  - name: RHEL, CentOS & Fedora
+    href: install/google-cloud-sql/02-install-the-collector-yum
+  - name: Docker
+    href: install/google-cloud-sql/02-install-the-collector-docker
+- mount: install/google-cloud-sql/03-configure-the-collector
+  items:
+  - name: Choose deployment
+    href: install/google-cloud-sql/03-configure-the-collector
+  - name: Package-based
+    href: install/google-cloud-sql/03-configure-the-collector-package
+  - name: Docker
+    href: install/google-cloud-sql/03-configure-the-collector-docker

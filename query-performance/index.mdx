@@ -25,11 +25,11 @@ the query.
 
 ### Group-Wide Query Performance
 
-For servers grouped into a [cluster or server group](/docs/accounts/server_groups#server-groups-and-clusters), the same view is available across the whole group. The default page summarizes query activity per database group, meaning databases that share a name across members. Pick a database group to see top queries aggregated across every member that hosts that database. The drill-down adds a column showing which server each query came from.
+For servers grouped into a [cluster or server group](/docs/accounts/server-groups#server-groups-and-clusters), the same view is available across the whole group. The default page summarizes query activity per database group, meaning databases that share a name across members. Pick a database group to see top queries aggregated across every member that hosts that database. The drill-down adds a column showing which server each query came from.
 
 This is especially useful in two cases. For a cluster, the per-server column shows how read traffic is actually distributed between the primary and its replicas, so you can see which queries are landing where.
 
-For a sharded database, a [server group](/docs/accounts/server_groups#managing-server-groups) can represent the shard set with a match rule on server name, picking up new shards as they are added. Query Performance then shows the combined workload in one view rather than one shard at a time.
+For a sharded database, a [server group](/docs/accounts/server-groups#managing-server-groups) can represent the shard set with a match rule on server name, picking up new shards as they are added. Query Performance then shows the combined workload in one view rather than one shard at a time.
 
 ### How percentiles are calculated
 

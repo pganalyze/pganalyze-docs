@@ -1,10 +1,10 @@
 - mount: explain/setup/heroku
   items:
   - name: "Step 1: Check for auto_explain"
-    href: explain/setup/heroku/01_auto_explain_check
+    href: explain/setup/heroku/01-auto_explain-check
   - name: "Step 2: Enable auto_explain"
-    href: explain/setup/heroku/02_enable_auto_explain
+    href: explain/setup/heroku/02-enable-auto_explain
   - name: "Step 3: Review auto_explain settings"
-    href: explain/setup/heroku/03_review_settings
+    href: explain/setup/heroku/03-review-settings
   - name: "Step 4: Test and verify"
-    href: explain/setup/heroku/04_test_and_verify
+    href: explain/setup/heroku/04-test-and-verify

@@ -1,0 +1,30 @@
+---
+title: 'Step 4: Configure Collector'
+install_track_title: 'Log Insights: Setup (Google Cloud SQL and AlloyDB)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+import CollectorSettings from '../../../components/CollectorSettings'
+import CollectorLogTest from '../../../components/CollectorLogTest'
+
+Next, update the collector configuration for this server.
+
+<CollectorSettings settings={[
+  ['gcp_pubsub_subscription', 'projects/PROJECT_ID/subscriptions/SUBSCRIPTION_ID'],
+]} configFromEnv={props.configFromEnv} />
+
+The value for the setting should be set to the "Subscription name" you can see when clicking on the details for the Pub/Sub subscriber we created earlier.
+
+<CollectorLogTest provider="Google Cloud SQL and AlloyDB" configFromEnv={props.configFromEnv} />
+
+For additional help when you get an error please check our
+[troubleshooting documentation](https://pganalyze.com/docs/log-insights/setup/google-cloud-sql/troubleshooting).
+
+<PublicOnly>
+  <p>You will start seeing log data in pganalyze Log Insights within a few minutes.</p>
+  <p>
+    We recommend setting up <a href="/docs/explain/setup/google-cloud-sql/01-auto_explain-check">Automated EXPLAIN</a> as
+    a follow-up step, to automatically EXPLAIN slow queries in Postgres.
+  </p>
+</PublicOnly>

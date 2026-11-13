@@ -25,7 +25,7 @@ The pganalyze container image is mostly self-contained, and runs various service
   * 50 GB of dedicated disk space or more
 * Optional: If you use the RDS integration, set up an appropriate IAM role that can be used to download logs and system metrics
   * You can also assign the required policy to an existing EC2 instance and its instance role
-  * You will need the [collector IAM policy](/docs/install/amazon_rds/iam_policy)
+  * You will need the [collector IAM policy](/docs/install/amazon-rds/iam-policy)
 
 ### Step 1: Download the container image
 
@@ -160,9 +160,9 @@ Before you can add a database to the pganalyze installation, you'll need to enab
 
 This extension is bundled with PostgreSQL and allows you detailed query monitoring. Its overhead on the database system is minimal, and it is required to use pganalyze.
 
-Please see [self-hosted systems](/docs/install/01_enabling_pg_stat_statements) or [Amazon RDS](/docs/install/amazon_rds/00_overview) instructions on how to add it to your database.
+Please see [self-hosted systems](/docs/install/01-enabling-pg_stat_statements) or [Amazon RDS](/docs/install/amazon-rds/00-overview) instructions on how to add it to your database.
 
-In addition you will need to either use the database superuser (usually "postgres") to give pganalyze access to your database, or create a special [restricted monitoring user](/docs/install/amazon_rds/02_create_monitoring_user).
+In addition you will need to either use the database superuser (usually "postgres") to give pganalyze access to your database, or create a special [restricted monitoring user](/docs/install/amazon-rds/02-create-monitoring-user).
 
 You don't need to run anything else on your database server - the pganalyze container will connect to your database at regular intervals to gather information from PostgreSQL's statistics tables.
 
