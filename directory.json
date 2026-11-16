@@ -1248,6 +1248,10 @@
       "title": "Integrating pganalyze with Datadog APM",
       "path": "/docs/opentelemetry/datadog"
     },
+    "opentelemetry/grafana-tempo": {
+      "title": "Integrating pganalyze with Grafana Tempo",
+      "path": "/docs/opentelemetry/grafana-tempo"
+    },
     "opentelemetry/honeycomb": {
       "title": "Integrating pganalyze with Honeycomb",
       "path": "/docs/opentelemetry/honeycomb"
