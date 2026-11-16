@@ -1,0 +1,63 @@
+---
+title: 'Step 1: Deploy the Collector'
+install_track_title: Installation Guide (Heroku Postgres)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import imgHerokuDeploy from "../../images/deploy_to_heroku.png"
+import { collectorAppName } from "./util";
+
+export const APIKey = ({ apiKey }) => !!apiKey ? <React.Fragment> <code>{apiKey}</code></React.Fragment> : null;
+
+export const HerokuButton = ({ apiKey }) => {
+  let href = 'https://dashboard.heroku.com/new-app?template=https://github.com/pganalyze/collector'
+  if (apiKey) {
+    href += `&env[PGA_API_KEY]=${apiKey}`
+  }
+  return (
+    <p>
+      <a href={href} target="_blank">
+        <img
+          src="https://www.herokucdn.com/deploy/button.svg"
+          alt="Deploy"
+          style={{ border: "none" }}
+        />
+      </a>
+    </p>
+  )
+}
+
+export const ImgPaidDyno = () => {
+  return (
+    <img style={{ border: "1px solid grey", width: '500px' }} src={imgHerokuDeploy} />
+  )
+}
+
+export const CollectorApp = ({ organizationSlug }) => (
+  <code>{collectorAppName(organizationSlug)}</code>
+);
+
+In order to monitor a Heroku Postgres database you need to run the pganalyze
+collector as an app inside your Heroku account. Through Heroku's add-on attachment system you then attach all databases that should be monitored.
+
+## Deploy collector
+
+First, deploy the collector to your own Heroku account with your pganalyze API key<APIKey apiKey={props.apiKey} />:
+
+<HerokuButton apiKey={props.apiKey}/>
+
+Remember the name of the collector app. We assume you called it <CollectorApp organizationSlug={props.organizationSlug} /> for the next step.
+
+During the creation, make sure to use the Basic dyno to deploy, **not the Eco dynos**, otherwise the tracking will stop working once the dyno goes idle:
+
+<ImgPaidDyno />
+
+Note: if you have a large schema, a lot of query activity, or high log volume, you may need a larger dyno size.
+Check the Heroku dashboard to see if your collector dyno is swapping or crashing.
+
+Now you can continue by attaching your databases:
+
+<Link className="btn btn-success" to="02-attach-databases">
+  Continue to Step 2: Create Credential and Attach Databases
+</Link>

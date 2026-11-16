@@ -1,0 +1,59 @@
+---
+title: 'Step 1: Configure RDS Instance'
+install_track_title: Installation Guide (Amazon RDS and Amazon Aurora)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+In order to setup pganalyze monitoring for Amazon RDS or Amazon Aurora for Postgres
+you'll need to enable the [pg_stat_statements](https://www.postgresql.org/docs/current/pgstatstatements.html)
+extension for collecting query statistics.
+
+---
+
+## Enabling pg_stat_statements
+
+Connect to your database as an RDS superuser (usually the credentials you created the database with), e.g. using `psql`.
+
+Run the following SQL commands to enable the extension, and make sure it was installed correctly:
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+
+SELECT * FROM pg_stat_statements LIMIT 1;
+```
+
+This should return one row of query statistics information.
+
+**Important:** If you get the error `pg_stat_statements must be loaded via shared_preload_libraries`,
+follow [the troubleshooting document](https://pganalyze.com/docs/install/troubleshooting/rds-pg_stat_statements-shared_preload_libraries).
+
+## Review pg_stat_statements configuration parameters
+
+See [Configure PostgreSQL section of Enabling pg_stat_statements](https://pganalyze.com/docs/install/01-enabling-pg_stat_statements#configure-postgresql)
+for some change recommendations of the pg_stat_statements settings.
+
+With RDS, you can apply these changes with the [Parameter Group](https://console.aws.amazon.com/rds/home#parameter-groups:id=).
+for your database and apply the settings above.
+
+## Enable Enhanced Monitoring
+
+We also highly recommend turning on [Enhanced Monitoring](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.OS.overview.html),
+if you haven't already - it will give you more detailed system-level statistics
+that can be helpful, e.g. to debug I/O issues.
+
+If Enhanced Monitoring is enabled, pganalyze will automatically collect and show
+this additional information in the dashboard as well.
+
+
+---
+
+<Link className="btn btn-success" to="02-create-monitoring-user">
+  Proceed to Step 2: Create Monitoring User
+</Link>
+
+<PublicOnly>
+  <br />
+  <br />
+  <div><SignupCTA event-label="Docs" /></div>
+</PublicOnly>

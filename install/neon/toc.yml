@@ -1,26 +1,26 @@
 - mount: install/neon
   items:
   - name: "Step 1: Enable pg_stat_statements"
-    href: install/neon/01_enable_pg_stat_statements
+    href: install/neon/01-enable-pg_stat_statements
   - name: "Step 2: Create Monitoring User"
-    href: install/neon/02_create_monitoring_user
+    href: install/neon/02-create-monitoring-user
   - name: "Step 3: Install the Collector"
-    href: install/neon/03_install_the_collector
+    href: install/neon/03-install-the-collector
   - name: "Step 4: Configure the Collector"
-    href: install/neon/04_configure_the_collector
-- mount: install/neon/03_install_the_collector
+    href: install/neon/04-configure-the-collector
+- mount: install/neon/03-install-the-collector
   items:
   - name: Choose deployment
-    href: install/neon/03_install_the_collector
+    href: install/neon/03-install-the-collector
   - name: Package-based
-    href: install/neon/03_install_the_collector_package
+    href: install/neon/03-install-the-collector-package
   - name: Docker
-    href: install/neon/03_install_the_collector_docker
-- mount: install/neon/04_configure_the_collector
+    href: install/neon/03-install-the-collector-docker
+- mount: install/neon/04-configure-the-collector
   items:
   - name: Choose deployment
-    href: install/neon/04_configure_the_collector
+    href: install/neon/04-configure-the-collector
   - name: Package-based
-    href: install/neon/04_configure_the_collector_package
+    href: install/neon/04-configure-the-collector-package
   - name: Docker
-    href: install/neon/04_configure_the_collector_docker
+    href: install/neon/04-configure-the-collector-docker

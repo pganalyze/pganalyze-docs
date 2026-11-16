@@ -1,0 +1,28 @@
+- mount: install/azure-database
+  items:
+  - name: "Step 1: Configure Azure Instance"
+    href: install/azure-database/01-configure-azure-instance
+  - name: "Step 2: Create Monitoring User"
+    href: install/azure-database/02-create-monitoring-user
+  - name: "Step 3: Install the Collector"
+    href: install/azure-database/03-install-the-collector
+  - name: "Step 4: Configure the Collector"
+    href: install/azure-database/04-configure-the-collector
+- mount: install/azure-database/03-install-the-collector
+  items:
+  - name: Choose platform
+    href: install/azure-database/03-install-the-collector
+  - name: Ubuntu & Debian
+    href: install/azure-database/03-install-the-collector-deb
+  - name: RHEL, CentOS & Fedora
+    href: install/azure-database/03-install-the-collector-yum
+  - name: Docker
+    href: install/azure-database/03-install-the-collector-docker
+- mount: install/azure-database/04-configure-the-collector
+  items:
+  - name: Choose platform
+    href: install/azure-database/04-configure-the-collector
+  - name: Package-based
+    href: install/azure-database/04-configure-the-collector-package
+  - name: Docker
+    href: install/azure-database/04-configure-the-collector-docker

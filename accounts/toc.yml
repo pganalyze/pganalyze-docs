@@ -7,6 +7,6 @@
   - name: Permissions and Roles
     href: accounts/permissions
   - name: Server Groups
-    href: accounts/server_groups
+    href: accounts/server-groups
   - name: Single Sign-On
     href: accounts/sso

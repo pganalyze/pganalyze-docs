@@ -47,7 +47,7 @@ write overhead = index entry size  / row size * partial index selectivity
 ```
 
 The index entry size is an 8-byte header plus the average width (based on
-[column stats](/docs/install/troubleshooting/column_stats_helper) if available;
+[column stats](/docs/install/troubleshooting/column-stats-helper) if available;
 otherwise using a generic estimate based on data type) of all indexed columns.
 
 The row size is a 23-byte header, plus a 4-byte item pointer, plus the average

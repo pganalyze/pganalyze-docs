@@ -21,7 +21,7 @@ EXPLAIN insights to help you interpret the raw plan information.
 pganalyze supports two different mechanisms for collecting EXPLAIN plans automatically:
 
 * **[auto_explain](/docs/explain/setup/auto_explain)**<br />Postgres collects EXPLAIN (or EXPLAIN ANALYZE) data as part of query processing, based on `auto_explain.log_min_duration`, reflecting the actual plan that was used
-* **[Log-based EXPLAIN](/docs/explain/setup/log_explain)**<br />pganalyze collector runs EXPLAIN (without ANALYZE) on all queries logged based on `log_min_duration_statement`, after the query has completed
+* **[Log-based EXPLAIN](/docs/explain/setup/log-explain)**<br />pganalyze collector runs EXPLAIN (without ANALYZE) on all queries logged based on `log_min_duration_statement`, after the query has completed
 
 Generally we recommend utilizing **auto_explain** where available, as it provides higher data quality.
 
@@ -47,7 +47,7 @@ Other PaaS                    | Contact support   | Contact support     |
 
 \* Supabase only supports configuring `auto_explain` settings at the role level (rather than
 server-wide). Therefore, you will need to configure each application role that you want auto_explain 
-output for individually. See the [Supabase setup guide](/docs/explain/setup/supabase/01_auto_explain_check) for details.
+output for individually. See the [Supabase setup guide](/docs/explain/setup/supabase/01-auto_explain-check) for details.
 
 Neon does not currently provide a way to collect EXPLAIN plans (neither `auto_explain` nor
 log-based EXPLAIN are supported on Neon at this time).
@@ -59,12 +59,12 @@ We are constantly evaluating new platform to support - please [reach out](/conta
 
 See the following pages for details on how to install pganalyze Automated EXPLAIN:
 
-* [Amazon RDS & Amazon Aurora](/docs/explain/setup/amazon_rds/01_auto_explain_check)
-* [Azure Database for PostgreSQL](/docs/explain/setup/azure_database/01_auto_explain_check)
-* [Google Cloud SQL and AlloyDB](/docs/explain/setup/google_cloud_sql/01_auto_explain_check)
-* [Heroku Postgres](/docs/explain/setup/heroku/01_auto_explain_check)
-* [Crunchy Bridge](/docs/explain/setup/crunchy_bridge/01_auto_explain_check)
-* [Aiven](/docs/explain/setup/log_explain/01_create_helper_functions)
-* [Supabase](/docs/explain/setup/supabase/01_auto_explain_check)
-* [CloudNativePG (CNPG)](/docs/explain/setup/cloudnative_pg/01_auto_explain_check)
-* [Self-Managed Server](/docs/explain/setup/self_managed/01_auto_explain_check)
+* [Amazon RDS & Amazon Aurora](/docs/explain/setup/amazon-rds/01-auto_explain-check)
+* [Azure Database for PostgreSQL](/docs/explain/setup/azure-database/01-auto_explain-check)
+* [Google Cloud SQL and AlloyDB](/docs/explain/setup/google-cloud-sql/01-auto_explain-check)
+* [Heroku Postgres](/docs/explain/setup/heroku/01-auto_explain-check)
+* [Crunchy Bridge](/docs/explain/setup/crunchy-bridge/01-auto_explain-check)
+* [Aiven](/docs/explain/setup/log-explain/01-create-helper-functions)
+* [Supabase](/docs/explain/setup/supabase/01-auto_explain-check)
+* [CloudNativePG (CNPG)](/docs/explain/setup/cloudnative-pg/01-auto_explain-check)
+* [Self-Managed Server](/docs/explain/setup/self-managed/01-auto_explain-check)

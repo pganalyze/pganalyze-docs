@@ -72,7 +72,7 @@ occupied by dead rows becomes reusable through VACUUM, and there are more
 INSERTs than DELETEs to utilize that space.
 
 To clean up existing bloat, you have two options: `VACUUM FULL` or
-[pg_repack](https://pganalyze.com/blog/5mins-postgres-pg-repack-VACUUM-FULL).
+[pg_repack](https://pganalyze.com/blog/5mins-postgres-pg-repack-vacuum-full).
 However, `VACUUM FULL` requires heavyweight locks and must rewrite the entire
 table, which makes it impractical for most workloads. On the other hand,
 pg_repack rewrites the table without taking long locks and it is recommended

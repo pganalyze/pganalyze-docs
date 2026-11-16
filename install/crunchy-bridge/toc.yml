@@ -1,0 +1,4 @@
+- mount: install/crunchy-bridge
+  items:
+  - name: "Step 1: Deploy The Collector"
+    href: install/crunchy-bridge/01-deploy-the-collector

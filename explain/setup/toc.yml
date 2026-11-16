@@ -5,30 +5,30 @@
   - name: auto_explain
     href: explain/setup/auto_explain
   - name: Log-based EXPLAIN
-    href: explain/setup/log_explain
+    href: explain/setup/log-explain
 - mount: explain/setup/auto_explain
   items:
   - name: Overview
     href: explain/setup/auto_explain
   - name: Amazon RDS & Amazon Aurora
-    href: explain/setup/amazon_rds
+    href: explain/setup/amazon-rds
   - name: Azure Database for PostgreSQL
-    href: explain/setup/azure_database
+    href: explain/setup/azure-database
   - name: Google Cloud SQL
-    href: explain/setup/google_cloud_sql
+    href: explain/setup/google-cloud-sql
   - name: Supabase
     href: explain/setup/supabase
   - name: Crunchy Bridge
-    href: explain/setup/crunchy_bridge
+    href: explain/setup/crunchy-bridge
   - name: Heroku Postgres
     href: explain/setup/heroku
   - name: CloudNativePG (CNPG)
-    href: explain/setup/cloudnative_pg
+    href: explain/setup/cloudnative-pg
   - name: Self-Managed Server
-    href: explain/setup/self_managed
-- mount: explain/setup/log_explain
+    href: explain/setup/self-managed
+- mount: explain/setup/log-explain
   items:
   - name: Overview
-    href: explain/setup/log_explain
+    href: explain/setup/log-explain
   - name: Other platforms
-    href: explain/setup/log_explain/
+    href: explain/setup/log-explain/

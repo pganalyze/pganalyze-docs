@@ -14,7 +14,7 @@ On the "Columns" tab of each table, you can find all columns that are defined on
 
 In case of partitioned tables, you will additionally see "Full NULL %", "Full Avg Size" and a second "Num. Distinct" data point. This represents the data that Postgres collects as an aggregate information across all partitions, as compared to just the partitioned table itself (in case of inheritance-based partitioning).
 
-Note that planner statistics are only available when the [get_column_stats](/docs/install/troubleshooting/column_stats_helper) helper is set up on your database.
+Note that planner statistics are only available when the [get_column_stats](/docs/install/troubleshooting/column-stats-helper) helper is set up on your database.
 
 ## Heap-Only Tuples (HOT) optimization
 
