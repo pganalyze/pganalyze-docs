@@ -83,7 +83,7 @@ CREATE FUNCTION pganalyze.get_column_stats() RETURNS TABLE(
   SELECT schemaname, tablename, attname, inherited, null_frac, avg_width, n_distinct, correlation
   FROM pg_catalog.pg_stats
   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;
  
 DROP FUNCTION IF EXISTS pganalyze.get_relation_stats_ext;
 CREATE FUNCTION pganalyze.get_relation_stats_ext() RETURNS TABLE(
@@ -97,7 +97,7 @@ $$
   most_common_val_nulls, most_common_freqs, most_common_base_freqs
   FROM pg_catalog.pg_stats_ext se
   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;
 ```
 
 ## Attach database

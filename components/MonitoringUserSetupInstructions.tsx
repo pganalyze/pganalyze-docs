@@ -51,7 +51,7 @@ CREATE FUNCTION pganalyze.get_column_stats() RETURNS TABLE(
   SELECT schemaname, tablename, attname, inherited, null_frac, avg_width, n_distinct, correlation
   FROM pg_catalog.pg_stats
   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;
 
 DROP FUNCTION IF EXISTS pganalyze.get_relation_stats_ext;
 CREATE FUNCTION pganalyze.get_relation_stats_ext() RETURNS TABLE(
@@ -65,7 +65,7 @@ $$
   most_common_val_nulls, most_common_freqs, most_common_base_freqs
   FROM pg_catalog.pg_stats_ext se
   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
       <p>
         <strong>Note:</strong> We never collect actual table data through this method (see the <code>NULL</code> values
@@ -101,7 +101,7 @@ CREATE FUNCTION pganalyze.get_column_stats() RETURNS TABLE(
   SELECT schemaname, tablename, attname, inherited, null_frac, avg_width, n_distinct, correlation
   FROM pg_catalog.pg_stats
   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
       <p>
         <strong>Note:</strong> We never collect actual table data through this method (see the <code>NULL</code> values in the function), but we do collect statistics about the distribution of values in your tables.
@@ -139,7 +139,7 @@ $$
   most_common_val_nulls, most_common_freqs, most_common_base_freqs
   FROM pg_catalog.pg_stats_ext se
   WHERE schemaname NOT IN ('pg_catalog', 'information_schema') AND tablename <> 'pg_subscription';
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
       <p>
         <strong>Note:</strong> We never collect actual table data through this method (we omit fetching fields like <code>most_common_vals</code> from the <code>pg_stats_ext</code> view, as you can see in the function definition), but we do collect statistics about the distribution of values in your tables.
@@ -157,20 +157,25 @@ export const MonitoringUserExplain: React.FunctionComponent<{ username: string }
       <CodeBlock language="sql">
         {`CREATE SCHEMA IF NOT EXISTS pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO ${username};
-CREATE OR REPLACE FUNCTION pganalyze.explain(query text, params text[]) RETURNS text AS
-$$
+CREATE OR REPLACE FUNCTION pganalyze.explain(query text, params text[]) RETURNS text AS $$
 DECLARE
-  prepared_query text;
-  prepared_params text;
-  result text;
+  prepared_query pg_catalog.text;
+  prepared_params pg_catalog.text;
+  result pg_catalog.text;
 BEGIN
-  SELECT regexp_replace(query, ';+\\s*\\Z', '') INTO prepared_query;
+  SELECT pg_catalog.regexp_replace(query, ';+\\s*\\Z', '') INTO prepared_query;
   IF prepared_query LIKE '%;%' THEN
     RAISE EXCEPTION 'cannot run EXPLAIN when query contains semicolon';
   END IF;
 
-  IF array_length(params, 1) > 0 THEN
-    SELECT string_agg(quote_literal(param) || '::unknown', ',') FROM unnest(params) p(param) INTO prepared_params;
+  IF pg_catalog.array_length(params, 1) > 0 THEN
+    SELECT pg_catalog.array_to_string(
+      ARRAY(
+        SELECT pg_catalog.quote_literal(param) || '::pg_catalog.unknown' FROM pg_catalog.unnest(params) p(param)
+      ),
+      ',',
+      'NULL'
+    ) INTO prepared_params;
 
     EXECUTE 'PREPARE pganalyze_explain AS ' || prepared_query;
     BEGIN
@@ -224,7 +229,7 @@ BEGIN
 
   RETURN result;
 END
-$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE plpgsql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
     </>
   );
@@ -246,7 +251,7 @@ ${noPgMonitor ? `
 CREATE OR REPLACE FUNCTION pganalyze.get_stat_replication() RETURNS SETOF pg_stat_replication AS
 $$
   /* pganalyze-collector */ SELECT * FROM pg_catalog.pg_stat_replication;
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;` : ''}`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;` : ''}`}
       </CodeBlock>
       <p>
         If you enable the optional reset mode (usually not required), you will also need this helper method:
@@ -255,7 +260,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;` : ''}`}
       {`CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
 $$
   /* pganalyze-collector */ SELECT * FROM public.pg_stat_statements_reset();
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
     </>
   )
@@ -280,7 +285,7 @@ GRANT USAGE ON SCHEMA public TO "${username}";`}
       {`CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
 $$
   /* pganalyze-collector */ SELECT * FROM public.pg_stat_statements_reset();
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
     </>
   )
@@ -309,7 +314,7 @@ export const NoPgMonitorPgStatStatementsHelpers: React.FunctionComponent<{
 RETURNS SETOF pg_stat_statements AS
 $$
   SELECT * FROM public.pg_stat_statements(showtext) WHERE userid = '<username>'::regrole;
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
       <p>
         For example, if you have two users, <code>app</code> and <code>analytics</code>, you'll
@@ -320,7 +325,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
 RETURNS SETOF pg_stat_statements AS
 $$
   SELECT * FROM public.pg_stat_statements(showtext) WHERE userid = 'app'::regrole;
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
       <p>
         Then, log in as <code>analytics</code> and run:
@@ -330,7 +335,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
 RETURNS SETOF pg_stat_statements AS
 $$
   SELECT * FROM public.pg_stat_statements(showtext) WHERE userid = 'analytics'::regrole;
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
       <p>
         Make sure to also log in as {adminUserStr} and create a function for that user:
@@ -340,7 +345,7 @@ $$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
 RETURNS SETOF pg_stat_statements AS
 $$
   SELECT * FROM public.pg_stat_statements(showtext) WHERE userid = '${adminUsername}'::regrole;
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
       <p>
         Then, still logged in as {adminUserStr}, create a helper function to combine these. For example,
@@ -355,7 +360,7 @@ $$
   SELECT * FROM pganalyze.get_stat_statements_analytics(showtext)
     UNION ALL
   SELECT * FROM pganalyze.get_stat_statements_${adminUsername}(showtext)
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER;`}
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;`}
       </CodeBlock>
       <p>
         You will need to update these function definitions as new dataabse users are added and removed,
