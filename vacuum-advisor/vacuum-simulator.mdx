@@ -89,7 +89,7 @@ There is a specific insight for this in the [Alerts & Check-Up](/docs/checks/) s
 * The simulation data tends to trigger autovacuum earlier than the actual
   triggered timing, especially with tables with lots of UPDATEs.
   Occasionally, UPDATEs operations don't create dead rows, or even decrease dead
-  rows when ["mini autovacuum"](https://pganalyze.com/blog/5mins-postgres-debug-UPDATE-bloated-tables-auto-explain-pageinspect#hot-pruning-in-postgres)
+  rows when ["mini autovacuum"](https://pganalyze.com/blog/5mins-postgres-debug-update-bloated-tables-auto-explain-pageinspect#hot-pruning-in-postgres)
   happened with these operations.
   The current simulation can't represent this situation well, therefore dead
   rows simply keep increasing with UPDATEs and trigger autovacuum earlier.

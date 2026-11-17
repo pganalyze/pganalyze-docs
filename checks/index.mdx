@@ -58,6 +58,7 @@ alerts to any combination of:
 - Slack — a channel, via the Slack integration
 - PagerDuty — a service, via the PagerDuty integration
 - Webhooks — a URL you configure, for any service that accepts webhooks (early access)
+- incident.io: an HTTP alert source, via the incident.io integration (early access)
 
 You manage destinations on the Alert Destinations tab of the Alerts & Check-Up
 page. Each organization has a default destination that new members are added to
@@ -81,6 +82,9 @@ targets are chosen from the channels and services these integrations make availa
 For webhooks, click "Add Webhook", enter the URL, and click "Test and Add". The webhook
 is only added if the test succeeds. See [Webhooks](/docs/checks/webhooks) for setup details.
 
+For incident.io, click "Add Alert Source", enter the URL and token of an HTTP alert source,
+and click "Test and Add". See [incident.io Integration](/docs/checks/incident-io) for setup details.
+
 ### Alert rules
 
 Alert rules decide which issues reach which destinations. A rule applies to a
@@ -92,7 +96,7 @@ matching issues are sent.
 
 ![Screenshot of the Alert Rule editor, showing the rule name, the server it applies to, and the check selection; the destinations to route matching issues to are chosen further down](./alert-rule-editor.png)
 
-Alerts are delivered according to severity: Slack and webhook destinations receive matching
+Alerts are delivered according to severity: Slack, webhook, and incident.io destinations receive matching
 issues of any severity, while PagerDuty and e-mail destinations are notified only for critical
 issues — either issues that start at critical severity (like a disabled `fsync` setting)
 or issues that escalate to critical (like a long-running query).
@@ -122,6 +126,14 @@ accepts webhooks. pganalyze sends an event when an issue is triggered, changes s
 is acknowledged or reopened, and when it is resolved.
 
 [Read more about webhooks](/docs/checks/webhooks)
+
+### incident.io alerting
+
+pganalyze sends each issue to an incident.io HTTP alert source as a single alert. Severity
+changes update the alert, and resolving the issue in pganalyze resolves the alert. Issue
+metadata like server, database, and severity is available for incident.io alert routes.
+
+[Read more about the incident.io integration](/docs/checks/incident-io)
 
 ## Checks
 

@@ -10,3 +10,5 @@
     href: opentelemetry/datadog
   - name: Integrating with New Relic
     href: opentelemetry/newrelic
+  - name: Integrating with Grafana Tempo
+    href: opentelemetry/grafana-tempo

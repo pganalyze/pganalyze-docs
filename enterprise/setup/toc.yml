@@ -5,11 +5,11 @@
   - name: Docker on a VM
     href: enterprise/setup/docker
   - name: Initial setup on Kubernetes (Amazon EKS)
-    href: enterprise/setup/kubernetes_amazon_eks
+    href: enterprise/setup/kubernetes-amazon-eks
   - name: Initial setup on Kubernetes (Azure AKS)
-    href: enterprise/setup/kubernetes_azure_aks
+    href: enterprise/setup/kubernetes-azure-aks
   - name: Initial setup on Kubernetes (non-root)
-    href: enterprise/setup/kubernetes_as_non_root
+    href: enterprise/setup/kubernetes-as-non-root
   - name: Separate collector installation
     href: enterprise/setup/separate-collector-install
   - name: Google Auth setup

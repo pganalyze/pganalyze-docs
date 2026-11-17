@@ -1,0 +1,47 @@
+---
+title: 'Step 3: Install the Collector'
+install_track_title: Installation Guide (Self-Managed)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import InstallChoice from '../../components/InstallChoice'
+import styles from '../../style.module.scss'
+
+import imgLogoUbuntu from '../../images/logo_ubuntu.png'
+import imgLogoRedhat from '../../images/logo_redhat.svg'
+import imgLogoDocker from '../../images/logo_docker.svg'
+
+export const SelectCollectorPlatform = () => {
+  return (
+    <InstallChoice
+      docsRoot={false}
+      items={[
+        {
+          link: "03-install-the-collector-deb",
+          img: imgLogoUbuntu,
+          providerName: "Ubuntu & Debian",
+        },
+        {
+          link: "03-install-the-collector-yum",
+          img: imgLogoRedhat,
+          providerName: "RHEL, CentOS & Fedora",
+        },
+        {
+          link: "03-install-the-collector-docker",
+          img: imgLogoDocker,
+          providerName: "Docker",
+        },
+      ]}
+    />
+  )
+}
+
+To continue, we need to know where your collector is running:
+
+<SelectCollectorPlatform />
+
+<br />
+If your Postgres runs somewhere else, <a href="mailto:support@pganalyze.com">
+  let us know
+</a> & we're happy to help.

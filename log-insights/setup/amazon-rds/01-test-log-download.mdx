@@ -1,0 +1,46 @@
+---
+title: 'Step 1: Test Log Download'
+install_track_title: 'Log Insights: Setup (Amazon RDS & Amazon Aurora)'
+backlink_href: /docs/log-insights/setup
+backlink_title: 'Log Insights: Setup'
+---
+
+import CollectorLogTest from '../../../components/CollectorLogTest'
+import imgLogInsightsScreenshot from '../log_insights_screenshot.png'
+
+export const ImgLogInsightsScreenshot = () => <img src={imgLogInsightsScreenshot} alt='Screenshot of pganalyze Log Insights feature' />
+
+Log Insights works by continuously fetching your Postgres log files from AWS, classifying log
+lines, and submitting log data and statistics to pganalyze. The RDS configuration usually
+does not require any additional configuration beyond the steps you performed as part of basic
+setup, so we can proceed directly to testing the integration.
+
+<CollectorLogTest provider="Amazon RDS" configFromEnv={props.configFromEnv} />
+
+The collector will start sending logs shortly.
+
+<PublicOnly>
+  <p>
+    The collector will only collect log data when you have an Amazon RDS host name specified (the
+    instance/cluster name is auto-detected), or you manually specify the <code>aws_db_instance_id</code>/<code>aws_db_cluster_id</code> and{" "}
+    <code>aws_region</code> settings.
+  </p>
+  <p>
+    In addition, you need to ensure that AWS APIs can be accessed either by using the EC2 metadata
+    service, or by manually specifying the <code>aws_access_key_id</code> and <code>aws_secret_access_key</code>
+    settings.
+  </p>
+</PublicOnly>
+
+In case you get permission errors, make sure your IAM user has the [appropriate policy associated](https://pganalyze.com/docs/install/amazon-rds/iam-policy).
+
+<PublicOnly>
+  <p>You will then see Log Insights data on your database within a few minutes:</p>
+  <p>
+    <ImgLogInsightsScreenshot />
+  </p>
+  <p>
+    We recommend that you also <a href="https://pganalyze.com/docs/log-insights/setup/tuning-log-config-settings">tune a
+    few configuration parameters</a> to get useful log output from Postgres.
+  </p>
+</PublicOnly>

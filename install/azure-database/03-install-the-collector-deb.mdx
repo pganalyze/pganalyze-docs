@@ -1,0 +1,23 @@
+---
+title: 'Step 3: Install the Collector'
+install_track_title: Installation Guide (Azure Database for PostgreSQL)
+backlink_href: /docs/install
+backlink_title: 'Installation Guide'
+---
+
+import CollectorInstallInstructions from "../../components/CollectorInstallInstructions"
+import SetupManagedIdentity from './_03_setup_managed_identity.mdx'
+import AssignManagedIdentity from './_03_assign_managed_identity.mdx'
+
+In this step we'll install the collector which sends statistics information to pganalyze.
+
+<SetupManagedIdentity />
+<AssignManagedIdentity />
+
+### Install the collector
+
+<CollectorInstallInstructions apiKey={props.apiKey} />
+
+<Link className="btn btn-success" to="04-configure-the-collector-package">
+  Continue to Step 4: Configure the Collector
+</Link>

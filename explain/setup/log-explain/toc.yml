@@ -1,0 +1,8 @@
+- mount: explain/setup/log-explain/
+  items:
+  - name: "Step 1: Create helper functions"
+    href: explain/setup/log-explain/01-create-helper-functions
+  - name: "Step 2: Enable log-based EXPLAIN"
+    href: explain/setup/log-explain/02-enable-log-explain
+  - name: "Step 3: Test and verify"
+    href: explain/setup/log-explain/03-test-and-verify
