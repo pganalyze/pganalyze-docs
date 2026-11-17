@@ -49,7 +49,8 @@ we are using the [OpenTelemetry collector](https://docs.datadoghq.com/openteleme
 with the `datadog/exporter` from the contrib collection.
 
 Alternate mechanisms include the [DDOT Collector](https://docs.datadoghq.com/opentelemetry/setup/ddot_collector)
-(an OpenTelemetry collector distribution), or the [Datadog Agent](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest_in_the_agent). Note that Datadog's [direct OTLP ingest](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest) does not yet support tracing data.
+(an OpenTelemetry collector distribution), the [Datadog Agent](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest_in_the_agent),
+or Datadog's [direct OTLP ingest](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest/traces) endpoint.
 
 First, we install the OpenTelemetry collector, as described in the [OpenTelemetry documentation](https://opentelemetry.io/docs/collector/installation/). We then configure the Datadog contrib modules, as described in the [Datadog documentation](https://docs.datadoghq.com/opentelemetry/setup/collector_exporter/install/#2---configure-the-datadog-exporter-and-connector).
 
