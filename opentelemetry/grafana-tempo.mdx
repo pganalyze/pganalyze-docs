@@ -56,7 +56,7 @@ endpoint requires authentication, pass the credentials with
 
 The pganalyze collector also supports OTLP over gRPC (typically port 4317), but
 only with TLS. If your Tempo receiver only exposes gRPC, use an `https://`
-endpoint, for example `https://tempo.example.com:4317`, and make sure the
+endpoint, for example `grpc://tempo.example.com:4317`, and make sure the
 receiver (or a proxy in front of it) presents a certificate that the collector
 trusts. A plain `http://` endpoint on port 4317 will not work. Use whichever
 protocol your receiver exposes.
@@ -116,7 +116,7 @@ For example, if the Base64 output were `MTIzNDU2OmdsY194eHh4eHh4eA==`, the
 complete setting would be:
 
 ```bash
-Authorization=Basic%20MTIzNDU2OmdsY194eHh4eHh4eA==
+otel_exporter_otlp_headers: Authorization=Basic%20MTIzNDU2OmdsY194eHh4eHh4eA==
 ```
 
 ### Optional settings
