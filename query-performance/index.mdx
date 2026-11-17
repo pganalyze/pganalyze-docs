@@ -27,13 +27,13 @@ the query.
 
 For servers in a [server group or cluster](/docs/accounts/server-groups#server-groups-and-clusters), the same view is available across the whole group. The default page summarizes query activity per database group, which are databases that share a name across members. DB Count is the number of members where that database is monitored. The other columns work as they do on a single server's Query Performance page, computed across every member in the group.
 
-![Query Performance for the entire Workspace shard, with one row per database group](../accounts/servergroup_queryperformance_wide.png)
+![Query Performance across a server group, with one row per database group](../accounts/servergroup_queryperformance_wide_production.png)
 
 #### Merged Queries
 
 Pick a database group to see its queries. A query that runs on several members appears as one row, with its statistics combined across every member that runs it. Queries are matched by their fingerprint, which ignores comments and formatting, so the text shown is from the slowest database and may differ slightly from the others. Open a database's own query page for its exact text.
 
-![Merged queries in the workspace database across the Workspace shard, with an outlier expanded to list its databases slowest first](servergroup_merged_list.png)
+![Merged queries in one database group, with an outlier expanded to list its databases slowest first](servergroup_merged_list_production.png)
 
 Avg Time, Calls / min, % I/O, and % Runtime work as they do for a single database, computed across every member that runs the query. Two columns are specific to the group view:
 
@@ -43,19 +43,19 @@ Avg Time, Calls / min, % I/O, and % Runtime work as they do for a single databas
 Expand a row to list every database running the query, slowest first, each linking to its query on that database. The first 10 show by default, and Show all lists the rest. This is especially useful in two cases:
 
 * For a cluster, the expanded rows show how read traffic is actually distributed between the primary and its replicas, so you can see which queries are landing where.
-* For a sharded database, a server group can represent the shard set with a [match rule](/docs/accounts/server-groups#match-rules) on server name, picking up new shards as they are added. Expanded rows then show which shards run a query slowest, without checking one shard at a time.
+* For a database your application shards across standalone Postgres servers, a server group can represent the shard set with a [match rule](/docs/accounts/server-groups#match-rules) on server name, picking up new shards as they are added. Expanded rows then show which shards run a query slowest, without checking one shard at a time.
 
 #### Outliers
 
 Check Outliers only to list just the queries whose Slowest DB is red. It takes the place of Compare to 7 days ago, which is not available in the group view.
 
-![Outliers only narrows the list to two queries](servergroup_outliers_only.png)
+![Outliers only narrows the list to two queries](servergroup_outliers_only_production.png)
 
 #### Query Group Zoom
 
 Selecting a query opens that query across every database in the group that runs it. Tiles at the top show the slowest database, how many databases are outliers, and how many servers run the query. The Servers panel graphs calls per minute for the 5 busiest databases, with the rest combined as Other databases. The list below it shows each server with its average time and calls per minute.
 
-![A query across the Workspace shard, with the slowest database, outlier count, and calls per minute by server](servergroup_query_page.png)
+![A query across every member of a group, with the slowest database, outlier count, and calls per minute by server](servergroup_query_page_cluster.png)
 
 To view per-database query samples, EXPLAIN plans, and Index Advisor, select a server in the table.
 
@@ -63,7 +63,7 @@ To view per-database query samples, EXPLAIN plans, and Index Advisor, select a s
 
 To see the same query across every server you can access, clear the server group in the Server Group dropdown. Outliers are not flagged here, since only databases in a group are peers.
 
-![The same query across every server in the organization, without outlier highlights](all_servers_query_page.png)
+![The same query across every server in the organization, without outlier highlights](all_servers_query_page_v2.png)
 
 ### How percentiles are calculated
 

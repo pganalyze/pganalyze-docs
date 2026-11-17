@@ -8,8 +8,6 @@ A server group lets you navigate a set of servers as a single unit. You see Dash
 
 There are server groups, which you create yourself, and clusters, which come from your infrastructure. Both types are defined below.
 
-![Clusters and Server Groups in the Server dropdown](servergroup_dropdown.png)
-
 ## Server Groups and Clusters
 
 ### Server Groups
@@ -28,7 +26,7 @@ See [Configuring Clusters](/docs/index-advisor/configuration#configuring-cluster
 
 1. Team ownership. Group the servers your team owns, then scope a role to the group. Each member sees exactly those servers in Dashboard, Query Performance, and Workbooks, nothing else. The group defines ownership. The role grants access.
 2. Compliance or environment boundary. Match on a tag like `env:staging` and the group stays current as servers are added and removed.
-3. Sharded database. Match on a name pattern like `workspace-shard-*` and every shard joins automatically, including new ones added later. Query Performance shows the combined workload across all shards in one view, with a query that runs on every shard listed once.
+3. Sharded database. When your application splits one database across standalone Postgres servers by a shard key, match on a name pattern like `accounts-db-*` and every shard joins automatically, including new ones added later. Query Performance shows the combined workload across all shards in one view, with a query that runs on every shard listed once.
 
 ## Feature Support
 
@@ -45,7 +43,7 @@ Features that operate on a single server land you on a default member instead. F
 
 Open the Server dropdown and click the Add Server Group button.
 
-![Server Group create flow with a rule-based match on server name](servergroup_create_workspace.png)
+![Server Group create flow with a rule-based match on a tag](servergroup_create_production.png)
 
 Give the group a name and optional description, then add members using any combination of match rules, explicit server membership, or nested group membership. A preview diff on the right shows which servers will join before you save.
 
@@ -55,9 +53,9 @@ A match rule selects servers by a property. When multiple rules are present, a s
 
 | Rule type | Matches on | Example |
 |---|---|---|
-| Server name | Display name | `workspace-shard-*` |
-| Tag | Key-value tag | key: `shard_set`, value: `workspace` |
-| Cluster ID | Collector-assigned cluster ID | `prod-us-east-*` |
+| Server name | Display name | `app-prod-*` |
+| Tag | Key-value tag | key: `env`, value: `production` |
+| Cluster ID | Collector-assigned cluster ID | `app-prod-us-*` |
 | Role | Primary or replica | `primary` |
 
 Use `*` as a wildcard. Rules are evaluated on read, so servers added later are picked up automatically.
@@ -72,7 +70,7 @@ A server group can also include another server group as a member. Nesting is one
 
 Open a group from [Server Group Settings](#server-group-settings), or navigate to it in the Server dropdown and open Settings > Server Group Settings. The preview diff shows how proposed changes compare to current membership before you save.
 
-![Server Group edit flow with an existing nested group and adding a new server member](servergroup_edit_payments_team.png)
+![Server Group edit flow with an existing nested group and adding a new server member](servergroup_edit_payments_team_v2.png)
 
 You can delete a server group from this page. Deleting removes it from navigation and Dashboard, and a role scoped to it stops granting access through it. Member servers are not affected.
 
@@ -82,7 +80,7 @@ A cluster cannot be deleted and its members cannot be changed. You can rename on
 
 A role's [permissions](/docs/accounts/permissions) can be scoped to a group, and a permission granted on one applies to every server and database in it. This works for clusters and server groups alike.
 
-![Scope members to a role with permission to view, modify, and/or create workbooks](servergroup_role_scope.png)
+![Scope members to a role with permission to view, modify, and/or create workbooks](servergroup_role_scope_v2.png)
 
 See [Permissions and Roles](/docs/accounts/permissions) for which permission types support this.
 
@@ -90,7 +88,7 @@ See [Permissions and Roles](/docs/accounts/permissions) for which permission typ
 
 Settings > Server Group Settings lists every group in your organization, clusters included. Search by name, sort by any column, and read the Type column to tell the two apart. Cluster ID shows the collector-assigned ID, or a dash for a server group.
 
-![Server Group Settings lists every group in the organization, with its type and cluster ID](servergroup_settings.png)
+![Server Group Settings lists every group in the organization, with its type and cluster ID](servergroup_settings_v2.png)
 
 Selecting a name opens that group's settings, where you can edit or delete it.
 
@@ -98,19 +96,21 @@ Selecting a name opens that group's settings, where you can edit or delete it.
 
 The Server Groups page shows everything in your organization. Groups are expanded by default to show members. Both group and member rows share the same columns, including database count and open issue counts, so you can compare totals against individual members at a glance. Sort by any column to surface the worst-affected group first.
 
-![Server Group Dashboard is a high level view of your fleet with member rows, and counts for databases and issues](servergroup_dashboard.png)
+![Server Group Dashboard is a high level view of your fleet with member rows, and counts for databases and issues](servergroup_dashboard_v2.png)
 
 ## Query Performance
 
 [Query Performance](/docs/query-performance) works across a group. With a group selected, the page summarizes query activity per database group, which are databases that share a name across members.
 
-![Query Performance for the entire Workspace shard, with one row per database group](servergroup_queryperformance_wide.png)
+![Query Performance across a server group, with one row per database group](servergroup_queryperformance_wide_production.png)
 
 Pick a database group to see its queries. A query that runs on several members appears once, with stats combined across every member that runs it. See [Group-Wide Query Performance](/docs/query-performance#group-wide-query-performance) for how merged queries, outliers, and the query page work.
 
 ## Navigation
 
 The Server dropdown in the header has a Clusters section and a Server Groups section above your standalone servers, and each group lists its members. Selecting a group takes you to the Server Groups Dashboard or group-wide Query Performance.
+
+![Clusters and Server Groups in the Server dropdown](servergroup_dropdown_v2.png)
 
 ## Coming Soon
 
