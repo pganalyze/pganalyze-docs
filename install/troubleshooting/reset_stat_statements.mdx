@@ -43,7 +43,7 @@ We recommend defining this function to avoid permissions errors:
 CREATE OR REPLACE FUNCTION pganalyze.reset_stat_statements() RETURNS SETOF void AS
 $$
   /* pganalyze-collector */ SELECT * FROM public.pg_stat_statements_reset();
-$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog;
+$$ LANGUAGE sql VOLATILE SECURITY DEFINER SET search_path = pg_catalog, pg_temp;
 ```
 
 After enabling the "Maximum Query Stats Reset Frequency" setting on the server settings page
