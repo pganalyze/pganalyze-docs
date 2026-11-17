@@ -16,8 +16,6 @@ There are server groups, which you create yourself, and clusters, which come fro
 
 You define a server group yourself, which requires the [Manage permission](/docs/accounts/permissions#manage). It groups servers by how your organization thinks about them rather than by how they are deployed, so it can represent a team, an environment, or a sharded database. Membership comes from any combination of [match rules](#match-rules) and [explicit membership](#explicit-membership) including both servers and nested groups.
 
-Server groups are in early access. Contact your organization admin to enable the feature, or reach out to [pganalyze Support](mailto:support@pganalyze.com) for access.
-
 ### Clusters
 
 A cluster is defined by your infrastructure rather than by you. It is managed automatically from the cluster ID a server reports, set via `api_cluster_id`, and every server reporting the same ID belongs to it. You cannot add or remove members.
@@ -30,14 +28,14 @@ See [Configuring Clusters](/docs/index-advisor/configuration#configuring-cluster
 
 1. Team ownership. Group the servers your team owns, then scope a role to the group. Each member sees exactly those servers in Dashboard, Query Performance, and Workbooks, nothing else. The group defines ownership. The role grants access.
 2. Compliance or environment boundary. Match on a tag like `env:staging` and the group stays current as servers are added and removed.
-3. Sharded database. Match on a name pattern like `workspace-shard-*` and every shard joins automatically, including new ones added later. Query Performance shows the combined workload across all shards in one view.
+3. Sharded database. Match on a name pattern like `workspace-shard-*` and every shard joins automatically, including new ones added later. Query Performance shows the combined workload across all shards in one view, with a query that runs on every shard listed once.
 
 ## Feature Support
 
 Clusters and server groups both support:
 
 * [Dashboard](#server-groups-dashboard), with issue counts rolled up per member
-* [Query Performance](#query-performance), with query statistics aggregated across members and grouped by database name
+* [Query Performance](#query-performance), grouped by database name, with the same query merged into one row across members
 * [Workbooks](/docs/workbooks), with query tuning scoped to the group's servers
 * [Permissions](#permissions), where you can scope roles to a particular group and assign members to mirror your org chart
 
@@ -104,15 +102,11 @@ The Server Groups page shows everything in your organization. Groups are expande
 
 ## Query Performance
 
-[Query Performance](/docs/query-performance) works across a group. The default page summarizes query activity per database group, meaning databases that share a name across members.
+[Query Performance](/docs/query-performance) works across a group. With a group selected, the page summarizes query activity per database group, which are databases that share a name across members.
 
-![Query Performance for the entire Workspace shard](servergroup_queryperformance_wide.png)
+![Query Performance for the entire Workspace shard, with one row per database group](servergroup_queryperformance_wide.png)
 
-Pick a database group to see top queries aggregated across every member that hosts that database. The drill-down adds a column showing which server each query came from.
-
-![Query Performance for Workspace database](servergroup_queryperformance_db.png)
-
-See [Group-Wide Query Performance](/docs/query-performance#group-wide-query-performance) for more detail.
+Pick a database group to see its queries. A query that runs on several members appears once, with stats combined across every member that runs it. See [Group-Wide Query Performance](/docs/query-performance#group-wide-query-performance) for how merged queries, outliers, and the query page work.
 
 ## Navigation
 
@@ -122,6 +116,5 @@ The Server dropdown in the header has a Clusters section and a Server Groups sec
 
 We are actively working on:
 
-* Merged queries in Query Performance, so the same query running on every shard appears as one entry in your workload instead of one per member
 * Combining the All Servers and All Server Groups dashboards into a single view
 * Alerts & Check-Up across a group, so it reports its own status rather than only its members'
