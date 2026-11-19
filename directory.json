@@ -64,6 +64,10 @@
       "title": "updateServer - Update a server on pganalyze Enterprise Server",
       "path": "/docs/api/mutations/updateServer"
     },
+    "api/organization-access-tokens": {
+      "title": "API: Organization access tokens",
+      "path": "/docs/api/organization-access-tokens"
+    },
     "api/personal-access-tokens": {
       "title": "API: Personal access tokens",
       "path": "/docs/api/personal-access-tokens"

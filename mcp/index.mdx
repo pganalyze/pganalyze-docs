@@ -70,7 +70,7 @@ If you're using an MCP client hosted on the web (instead of running locally) the
 
 ## Authentication
 
-The MCP server supports three authentication methods: **OAuth** (interactive), and **API key** or **personal access token** (non-interactive). See [API Authentication](/docs/api/authentication) for a comparison.
+The MCP server supports four authentication methods: **OAuth**, where your MCP client opens an authorization flow in your browser, and an **API key**, a **personal access token**, or an **organization access token**, which you add to your MCP client's configuration. See [API Authentication](/docs/api/authentication) for a comparison.
 
 ### OAuth (recommended)
 
@@ -107,6 +107,10 @@ claude mcp add --transport http \
   pganalyze https://app.pganalyze.com/mcp \
   -H "Authorization: Bearer pgat_XXXXXXX"
 ```
+
+### Organization access token
+
+An [organization access token](/docs/api/organization-access-tokens) (early access) is configured the same way as a personal access token, but authenticates as your organization rather than as a member. It can access all servers in the organization, limited by the scopes chosen when it was created, and keeps working when the member who created it leaves. Use it for shared automation, such as a team's CI pipeline.
 
 ## Rate limiting
 
@@ -175,8 +179,8 @@ Because these tools execute queries against your database through the collector 
 
 Using the Workbooks tools requires all of the following:
 
-- **OAuth or a personal access token with workbook write access.** The Workbooks tools perform writes, so they require OAuth authentication with workbook write access granted, or a [personal access token](/docs/api/personal-access-tokens) with the `write_workbooks` scope (see [Authentication](#authentication)). API key authentication is read-only and cannot use them.
-- **The Create Workbooks permission.** Your pganalyze account must have the [Create Workbooks permission](/docs/accounts/permissions#create-workbooks), the same permission required to create workbooks in the app. Without it, the tools return an authorization error.
+- **OAuth or an access token with workbook write access.** The Workbooks tools perform writes, so they require OAuth authentication with workbook write access granted, or a [personal](/docs/api/personal-access-tokens) or [organization](/docs/api/organization-access-tokens) access token with the `write_workbooks` scope (see [Authentication](#authentication)). API key authentication is read-only and cannot use them.
+- **The Create Workbooks permission.** Your pganalyze account must have the [Create Workbooks permission](/docs/accounts/permissions#create-workbooks), the same permission required to create workbooks in the app. Without it, the tools return an authorization error. This does not apply to an organization access token, which needs only the `write_workbooks` scope.
 - **The collector workflow.** Running `EXPLAIN ANALYZE` relies on the [Workbooks collector workflow](/docs/workbooks/collector-workflow) being set up for the database: the `pganalyze.explain_analyze` helper function, and a connected collector on version 0.64.0 or later.
 
 ### How the tools fit together
