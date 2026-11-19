@@ -40,7 +40,7 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 * pganalyze MCP Server: Return more details in existing tools {/* 6288 */}
   - `get_tables` now includes the index ID and a link for each index, backend details include information about the
     running query, and issue references link to the relevant pages
-* pganalyze MCP Server: Add support for devin.ai and Amp {/* 6253, 6310 and 6337 */}
+* pganalyze MCP Server: Add `.devin.ai` and `ampcode.com` to the default OAuth DCR redirect host allowlist {/* 6253, 6310 and 6337 */}
 * Accessibility: Improve color contrast and screen reader labels throughout the app {/* 6206, 6215, 6216, 6220, 6225, 6230, 6244 and 6267 */}
 
 
@@ -137,4 +137,4 @@ backlink_title: 'pganalyze Enterprise Server: Release Changelog'
 * Add `postgres_outdated` status to the Workbooks Collector Workflow status {/* 6400 */}
 * `getBackendDetails`: Return an error for invalid backend locators {/* 6319 */}
 * `getLogLineDetails`: Return an error for OAuth tokens with the "restricted read" scope, unless the collector filters all log secret kinds {/* 6271 */}
-* `getQueryExplains`: Always cap the returned EXPLAIN plans to 50, also when a time range is passed {/* 6196 */}
+* `getQueryExplains`: Cap the returned EXPLAIN plans to 50 when a time range is passed, matching the existing cap without a time range {/* 6196 */}
