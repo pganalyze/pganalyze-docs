@@ -10,6 +10,8 @@ import DocsEarlyAccessFeature from '../components/DocsEarlyAccessFeature'
 
 A personal access token lets a script, agent, or CI job call the pganalyze [GraphQL API](/docs/api) or [MCP server](/docs/mcp) on your behalf. Each token belongs to you and to a single organization, and carries only the scopes you choose when you create it.
 
+For automation that should keep working regardless of who is a member, such as a team's CI pipeline, use an [organization access token](/docs/api/organization-access-tokens) instead.
+
 Personal access tokens are not yet available on pganalyze Enterprise Server.
 
 ## How access is determined
@@ -30,13 +32,13 @@ Any member of the organization can create personal access tokens for themselves.
 3. Enter a name that tells you where the token is used, for example "Local development" or "CI pipeline".
 4. Select the [scopes](#scopes) to grant.
 5. Choose an expiration: 30 days, 60 days, 90 days (the default), 1 year, or no expiration.
-6. Click **Create new Access Token**.
+6. Click **Create Personal Access Token**.
 
-![Create New Access Token dialog on the API Access settings page](create-access-token.png)
+![Create New Personal Access Token dialog on the API Access settings page](create-access-token.png)
 
 The token is shown only once, right after you create it. Copy it and store it somewhere safe, such as a secrets manager. pganalyze stores only a hash of the token and cannot show it to you again.
 
-Tokens start with `pgat_`. The API Access page lists your tokens by name and the first few characters of the token, so you can tell them apart without the full value.
+Tokens start with `pgat_`. The Personal Access Tokens section lists your tokens by name and the first few characters of the token, so you can tell them apart without the full value.
 
 ## Scopes
 
@@ -68,6 +70,6 @@ See [MCP Server](/docs/mcp) for the available tools and how to configure other M
 
 ## Revoking a personal access token
 
-To revoke a token, click the trash icon next to it on the API Access page. Revocation takes effect immediately.
+To revoke a token, click the trash icon next to it in the Personal Access Tokens section of the API Access page. Revocation takes effect immediately.
 
 When you are removed from an organization, your personal access tokens for that organization are revoked automatically.
