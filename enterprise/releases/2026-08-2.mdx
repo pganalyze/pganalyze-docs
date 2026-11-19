@@ -1,0 +1,140 @@
+---
+title: '2026.08.2 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2026.08.2`
+
+## Notes
+
+- This is a patch release on top of **[2026.08.0](2026-08-0)** and **[2026.08.1](2026-08-1)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2026.08.0](2026-08-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+- This release contains important security fixes, including an update to Ruby 3.4.13. We recommend all installations upgrade.
+- Single Sign-On: Only accept sign-in requests for the configured `DOMAIN_NAME` {/* 6397 */}
+  - When the `DOMAIN_NAME` setting is set, Single Sign-On (SAML, LDAP) and connecting the Slack integration now only
+    work when pganalyze is accessed under that hostname. Requests arriving under a different hostname or IP address are
+    rejected with an "Authentication error" message.
+  - Before upgrading, verify that `DOMAIN_NAME` matches the hostname your users and your Identity Provider use to reach
+    pganalyze. The value must be a hostname only, without a protocol or port (e.g. `pganalyze.example.com`). Installations
+    that do not set `DOMAIN_NAME` will continue accepting all hosts, but show a warning in the log.
+- Workbooks Collector Workflow: Require current Postgres minor versions on the connected server {/* 6400 */}
+  - In an abundance of caution, this requires that a server used with the Collector Workflow is patched against the
+    November 2026 set of Postgres minor releases (18.7, 17.12, 16.16, 15.20, 14.25) to avoid potential privilege escalation
+    through Postgres vulnerabilities. Note this may produce a false positive in case a provider patched the server without
+    bumping up the minor version.
+
+
+## Features
+
+* Update combined collector from v0.74.0 to [v0.76.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0760------2026-11-13) {/* 6417 */}
+  - See the collector changelog for [0.75.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0750------2026-09-30) and [0.76.0](https://github.com/pganalyze/collector/blob/main/CHANGELOG.md#0760------2026-11-13) for the full details
+  - This includes security fixes in the collector, such as the pg_query_go update addressing
+    [GHSA-6ggm-xmc9-8ffg](https://github.com/pganalyze/libpg_query/security/advisories/GHSA-6ggm-xmc9-8ffg)
+* Connection Traces: Link to autovacuum runs {/* 6250 */}
+  - The Connection Traces view now links to autovacuum runs that are currently in progress. Previously they would show
+    up as `<unparsable query>` and not provide any additional information.
+* pganalyze MCP Server: Add new `get_system_stats` tool for system metrics {/* 6263 */}
+* pganalyze MCP Server: Return more details in existing tools {/* 6288 */}
+  - `get_tables` now includes the index ID and a link for each index, backend details include information about the
+    running query, and issue references link to the relevant pages
+* pganalyze MCP Server: Add support for devin.ai and Amp {/* 6253, 6310 and 6337 */}
+* Accessibility: Improve color contrast and screen reader labels throughout the app {/* 6206, 6215, 6216, 6220, 6225, 6230, 6244 and 6267 */}
+
+
+## Bugfixes and other improvements
+
+* Schema Statistics:
+  - Correctly show the `autovacuum_enabled` state in the VACUUM/ANALYZE Activity tab when set to any truthy value {/* 6295 */}
+  - Don't treat every table as changed when the collector version changes {/* 6064 */}
+  - Mark constraints as removed when a table loses its last constraint {/* 6259 */}
+* Index Advisor:
+  - Fix costing of hypothetical scans when generating index recommendations for submitted queries {/* 6193 */}
+  - Add a 30 minute timeout to index selection runs, and enforce the runtime limit while generating index candidates {/* 6266 and 6274 */}
+* Query Analysis: Fix analysis of queries that use subscripted array constructors, like `(ARRAY[...])[1]` {/* 6171 */}
+* Queries: Fix EXPLAIN plan list timing out on queries with many captured plans {/* 6196 */}
+* API: Omit databases that no longer exist on the server {/* 6304 */}
+* OAuth: Improve scope handling for older OAuth clients {/* 6325 */}
+  - OAuth clients (such as MCP clients) that registered before a scope was introduced no longer fail to authorize when
+    requesting all supported scopes. They are now granted the scopes they registered for.
+* Neon, Supabase, PlanetScale: Correctly record the system type for these providers {/* 6264 */}
+* Connection Traces: Validate the backend identifier when looking up backend details {/* 6319 */}
+* Server Settings: Show the system scope as a separate cell in Debug Info {/* 6227 */}
+* Organization Settings: Fix styling of the remove member panel {/* 6224 */}
+* Add logging to the daily Check-Up worker {/* 6248 */}
+* Enterprise license check: Keep the existing license file if the license server can't be reached or returns an error {/* 6378 */}
+  - Previously the license file would be overwritten with the error response, or deleted. Invalid license file contents
+    are now handled more gracefully, and errors from the daily license refresh are logged.
+
+## Performance
+
+* Query Advisor: Speed up the check-up for inefficient index use {/* 6265 */}
+* Server Groups: Avoid N+1 queries when loading summary statistics {/* 6130 */}
+
+
+## Security
+
+* Update Ruby to 3.4.13 {/* 6416 */}
+  - Addresses multiple vulnerabilities in Ruby's Regexp and String handling, see the
+    [Ruby security advisory](https://www.ruby-lang.org/en/news/2026/11/18/multiple-vulnerabilities-in-regexp-and-string/)
+  - In our assessment, one of these can be triggered by unauthenticated requests to crash web workers (denial of service)
+  - We recommend all installations upgrade to pick up this fix
+* Update rack to 3.2.8, addressing a denial of service through multipart request parsing {/* 6327 */}
+  - [GHSA-5v64-555j-wjxm](https://github.com/advisories/GHSA-5v64-555j-wjxm): A single unauthenticated multipart request
+    could cause a web worker to hold memory proportional to the request size while parsing, which could be used to exhaust
+    memory. This also updates rack for [GHSA-2j8w-xcrc-x985](https://github.com/advisories/GHSA-2j8w-xcrc-x985),
+    [GHSA-wvg4-6p58-3gh3](https://github.com/advisories/GHSA-wvg4-6p58-3gh3) and
+    [GHSA-p8x9-v4hv-2w4g](https://github.com/advisories/GHSA-p8x9-v4hv-2w4g)
+* Log Insights: Don't return unredacted log lines to OAuth tokens with the "restricted read" scope {/* 6271 */}
+  - The log line details lookup now applies the same restrictions as the log line list: restricted tokens can only
+    access log lines when the collector filters all log secret kinds, and lines from log files ingested before filtering
+    was enabled are not returned.
+* Update Rails to the 8.1.4.1 security release {/* 6336 */}
+* Update omniauth to 2.3.1, addressing CVE-2026-63183 {/* 6397 */}
+* Routine security updates to packages in the base image and library dependencies
+* Updates dependencies for security issues that might have been flagged by scanners, but are not exploitable in our assessment
+  * Ruby gems: rubyntlm [GHSA-cx24-f932-rr55](https://github.com/advisories/GHSA-cx24-f932-rr55),
+    graphql [GHSA-p3g2-4c7r-4fww](https://github.com/advisories/GHSA-p3g2-4c7r-4fww),
+    [GHSA-965v-9v76-5hg2](https://github.com/advisories/GHSA-965v-9v76-5hg2),
+    [GHSA-4rw8-495r-pf6j](https://github.com/advisories/GHSA-4rw8-495r-pf6j),
+    [GHSA-q3cc-p5hm-55wj](https://github.com/advisories/GHSA-q3cc-p5hm-55wj),
+    loofah [GHSA-h6v6-rg66-fqj4](https://github.com/advisories/GHSA-h6v6-rg66-fqj4),
+    [GHSA-m3x9-938q-5767](https://github.com/advisories/GHSA-m3x9-938q-5767),
+    [GHSA-345x-3rq2-jfrm](https://github.com/advisories/GHSA-345x-3rq2-jfrm),
+    [GHSA-mf2j-8f84-cc9q](https://github.com/advisories/GHSA-mf2j-8f84-cc9q),
+    [GHSA-jcff-cj73-4w4f](https://github.com/advisories/GHSA-jcff-cj73-4w4f),
+    [GHSA-p9wj-w8xq-vjx6](https://github.com/advisories/GHSA-p9wj-w8xq-vjx6),
+    rails-html-sanitizer [GHSA-h7wh-q2qr-458c](https://github.com/advisories/GHSA-h7wh-q2qr-458c),
+    [GHSA-cpgf-5mjf-73p7](https://github.com/advisories/GHSA-cpgf-5mjf-73p7),
+    addressable [GHSA-qq38-m9mg-xjj5](https://github.com/advisories/GHSA-qq38-m9mg-xjj5),
+    [GHSA-8gmh-2hhj-2hv9](https://github.com/advisories/GHSA-8gmh-2hhj-2hv9),
+    [GHSA-4w5q-wg7v-w6gp](https://github.com/advisories/GHSA-4w5q-wg7v-w6gp),
+    [GHSA-9f42-57jx-vpp3](https://github.com/advisories/GHSA-9f42-57jx-vpp3),
+    [GHSA-j82w-28jv-3pmj](https://github.com/advisories/GHSA-j82w-28jv-3pmj),
+    [GHSA-9crm-g4mf-wc5j](https://github.com/advisories/GHSA-9crm-g4mf-wc5j) {/* 6327 */},
+    rack-proxy (via vite_ruby) {/* 6261 */}, css_parser {/* 6301 */}, crass {/* 6309 */}, msgpack and puma {/* 6398 */},
+    mcp [GHSA-4m5j-jjfc-97gx](https://github.com/advisories/GHSA-4m5j-jjfc-97gx) {/* 6313 */}
+  * Rust crates: CVE-2026-25537, [GHSA-2mjx-qc3c-rqvc](https://github.com/advisories/GHSA-2mjx-qc3c-rqvc),
+    [GHSA-c8m5-c952-6cm4](https://github.com/advisories/GHSA-c8m5-c952-6cm4),
+    [GHSA-h2v8-394m-p7vv](https://github.com/advisories/GHSA-h2v8-394m-p7vv),
+    [GHSA-w44r-93j7-qv28](https://github.com/advisories/GHSA-w44r-93j7-qv28) {/* 6418 */}
+  * Javascript libraries: CVE-2026-102276, CVE-2026-102277, CVE-2026-102278, GHSA-p98j-92pf-mc4p, CVE-2026-17495 {/* 6275 */},
+    CVE-2026-93749, CVE-2026-102422, CVE-2026-19484, CVE-2026-103921 {/* 6294 */},
+    GHSA-cg2g-xh64-v4q7, GHSA-mrv2-3pqr-j5jr, GHSA-c6gr-qvv4-5v3f, GHSA-9jrq-w75r-8gcw, GHSA-rq7h-c2jc-7f22,
+    GHSA-vfpm-58rq-9qcg, GHSA-587h-7wmj-h5pm, GHSA-698v-4r3x-3vcv, GHSA-r825-w8mm-5pxw, GHSA-qxg6-89mg-rqv8,
+    GHSA-xp26-3454-mjgp, GHSA-f2ph-cmg5-wxc8, GHSA-px85-f4q5-jh77, GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr,
+    GHSA-333x-w4r6-6crp, GHSA-xhq7-xmqj-769h, GHSA-mrhx-c7xc-m3w5, GHSA-4qx8-w7c3-pj3p, GHSA-9j65-hcg3-gc64,
+    GHSA-9qmh-m7c6-f92p, GHSA-7mx3-vvmw-hjmv, GHSA-c4qx-w738-7hr3 {/* 6313 */},
+    GHSA-g3hv-75wg-m249, GHSA-3g3m-2fjr-6pw4, GHSA-rj75-hqrm-r3gf {/* 6333 and 6334 */}
+
+
+## GraphQL API changes
+
+* Add `supportsCpuMetrics`, `supportsMemoryMetrics`, `supportsIoMetrics` and `supportsNetworkMetrics` fields to `SystemInfoType` {/* 6249 */}
+* Add `vacuumRun` field to backends, linking to the in-progress autovacuum run {/* 6250 */}
+* Add `postgres_outdated` status to the Workbooks Collector Workflow status {/* 6400 */}
+* `getBackendDetails`: Return an error for invalid backend locators {/* 6319 */}
+* `getLogLineDetails`: Return an error for OAuth tokens with the "restricted read" scope, unless the collector filters all log secret kinds {/* 6271 */}
+* `getQueryExplains`: Always cap the returned EXPLAIN plans to 50, also when a time range is passed {/* 6196 */}

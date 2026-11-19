@@ -1,0 +1,30 @@
+---
+title: '2026.05.2 Release'
+backlink_href: /docs/enterprise/releases
+backlink_title: 'pganalyze Enterprise Server: Release Changelog'
+---
+
+**Docker tag:** `quay.io/pganalyze/enterprise:v2026.05.2`
+
+## Notes
+
+- This is a patch release on top of **[2026.05.0](2026-05-0)** and **[2026.05.1](2026-05-1)**
+  - This release does not have any new database migrations, and is easy to apply (or rollback)
+  - If you're upgrading from a release before [2026.05.0](2026-05-0), be sure to read those release notes,
+    and follow the [recommended upgrade steps](/docs/enterprise/upgrade)
+- This release contains important security fixes, including an update to Ruby 3.4.13. We recommend all installations upgrade.
+
+
+## Security
+
+* Update Ruby to 3.4.13 {/* 6416 */}
+  - Addresses multiple vulnerabilities in Ruby's Regexp and String handling, see the
+    [Ruby security advisory](https://www.ruby-lang.org/en/news/2026/11/18/multiple-vulnerabilities-in-regexp-and-string/)
+  - In our assessment, one of these can be triggered by unauthenticated requests to crash web workers (denial of service)
+  - We recommend all installations upgrade to pick up this fix
+* Update rack to 3.1.23, addressing a denial of service through multipart request parsing {/* 6327 */}
+  - [GHSA-5v64-555j-wjxm](https://github.com/advisories/GHSA-5v64-555j-wjxm): A single unauthenticated multipart request
+    could cause a web worker to hold memory proportional to the request size while parsing, which could be used to exhaust
+    memory. This also updates rack for [GHSA-2j8w-xcrc-x985](https://github.com/advisories/GHSA-2j8w-xcrc-x985),
+    [GHSA-wvg4-6p58-3gh3](https://github.com/advisories/GHSA-wvg4-6p58-3gh3) and
+    [GHSA-p8x9-v4hv-2w4g](https://github.com/advisories/GHSA-p8x9-v4hv-2w4g)
