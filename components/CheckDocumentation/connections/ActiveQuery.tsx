@@ -52,6 +52,11 @@ const ActiveQueryTrigger: React.FunctionComponent<CheckTriggerProps> = ({
         <code>COPY FROM</code>), based on this check's configuration (
         {ignoreCopy ? "on" : "off"}).
       </p>
+      <p>
+        These commands are recognized by parsing the query text, so a query
+        that's too long and shows up as <code>&lt;truncated query&gt;</code> may
+        still alert. This mostly affects long <code>COPY (...)</code> queries.
+      </p>
     </>
   );
 };
