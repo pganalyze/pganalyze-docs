@@ -14,5 +14,7 @@
     href: api/authentication
   - name: Personal access tokens
     href: api/personal-access-tokens
+  - name: Organization access tokens
+    href: api/organization-access-tokens
   - name: API keys
     href: api/create-api-key
