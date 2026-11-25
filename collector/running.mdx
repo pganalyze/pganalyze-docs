@@ -1,0 +1,145 @@
+---
+title: 'Running & Testing the Collector'
+backlink_href: /docs/collector
+backlink_title: 'pganalyze Collector'
+---
+
+Common ways to run, test and debug the pganalyze collector from the command line. For a complete list of
+options, see [Command-line Flags](/docs/collector/flags).
+
+```toc
+```
+
+## Test the whole configuration
+
+Run this after changing the config file. It collects data from every configured server, submits a snapshot,
+and on success reloads the collector daemon.
+
+```console
+$ sudo pganalyze-collector --test
+```
+
+## Test a single server
+
+If your config file has many servers, test just one with `--test-section`. All other sections are skipped, and
+the collector does not connect to them.
+
+```console
+$ sudo pganalyze-collector --test --test-section=prod-db
+```
+
+The value is the `[section]` name from the config file, not the server name shown in the pganalyze app.
+
+A successful test still reloads the daemon, and the reload loads the whole config file. To avoid that, add `--no-reload`.
+
+`--test-section` combines with the other test flags:
+
+```console
+$ sudo pganalyze-collector --test --test-section=prod-db -v
+$ sudo pganalyze-collector --test-section=prod-db --test-logs
+$ sudo pganalyze-collector --test-section=prod-db --test-explain
+```
+
+## Preview what would be sent
+
+`--dry-run` prints the JSON snapshot instead of submitting it. The JSON goes to stdout and log messages go to
+stderr, so you can redirect the output to a file. Use `--dry-run-logs` for a log snapshot.
+
+```console
+$ sudo pganalyze-collector --dry-run --test-section=prod-db > snapshot.json
+```
+
+## Debug a problem
+
+Add `-v` for additional debugging output, or `--very-verbose` for even more detail. For example,
+`--very-verbose` logs the raw payloads received by the [OpenTelemetry log input](/docs/log-insights/setup/opentelemetry).
+
+```console
+$ sudo pganalyze-collector --test -v
+```
+
+## Reload without testing
+
+Reloads the config in the running daemon, without running a test.
+
+```console
+$ sudo pganalyze-collector --reload
+```
+
+## Use a config from a specific location
+
+```console
+$ pganalyze-collector --test --config=/path/to/pganalyze-collector.conf
+```
+
+## Disable parts of collection for a run
+
+To find out which collection step is failing, turn steps off for a single test run.
+
+```console
+$ sudo pganalyze-collector --test --no-logs
+```
+
+## Log troubleshooting helpers
+
+Find the Postgres log directory, to help set `db_log_location`:
+
+```console
+$ sudo pganalyze-collector --discover-log-location
+```
+
+Check how the collector parses a log file. The prefix must match your Postgres `log_line_prefix`, see
+the [supported prefixes](/docs/log-insights/setup/self-managed/troubleshooting#collector-test-error-log_line_prefix-not-supported).
+
+```console
+$ sudo pganalyze-collector --analyze-logfile=/var/log/postgresql/postgresql.log \
+    --analyze-logfile-prefix='%m [%p] %q[user=%u,db=%d,app=%a] '
+```
+
+## Docker
+
+With the Docker image, the `test` command runs `--test` (with `--no-reload`), and extra arguments are passed
+through to the collector. The config is supplied through the `CONFIG_CONTENTS` environment variable.
+
+```console
+$ docker run --rm -e CONFIG_CONTENTS="$(cat pganalyze-collector.conf)" \
+    quay.io/pganalyze/collector:stable test --test-section=prod-db
+```
+
+## Profiling the collector
+
+For debugging collector performance, usually together with pganalyze support. See
+[Advanced and internal flags](/docs/collector/flags#advanced-and-internal).
+
+### Heap profile
+
+The heap profile is written when a running collector receives SIGHUP. Run the collector in the foreground,
+since the packaged service sets `ProtectHome=true`, which can prevent writing to the home directory.
+
+1. Stop the service, so that two collectors do not submit data at the same time:
+
+   ```console
+   $ sudo systemctl stop pganalyze-collector
+   ```
+
+2. Run the collector in the foreground (add `--config` and `--statefile` as needed):
+
+   ```console
+   $ sudo pganalyze-collector --write-heap-profile
+   ```
+
+3. Let it run through a few collection cycles, then from another terminal send SIGHUP:
+
+   ```console
+   $ sudo pkill -HUP pganalyze-collector
+   ```
+
+   The collector logs `Wrote memory heap profile to ...`.
+
+4. The profile is at `~/pganalyze_collector.mprof` of the user running the collector (for example `/root` when
+   using `sudo`). Typically this file is provided to pganalyze support to analyze as part of troubleshooting
+   efforts.
+
+   ```console
+   $ go tool pprof pganalyze_collector.mprof
+   ```
