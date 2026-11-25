@@ -157,20 +157,25 @@ export const MonitoringUserExplain: React.FunctionComponent<{ username: string }
       <CodeBlock language="sql">
         {`CREATE SCHEMA IF NOT EXISTS pganalyze;
 GRANT USAGE ON SCHEMA pganalyze TO ${username};
-CREATE OR REPLACE FUNCTION pganalyze.explain(query text, params text[]) RETURNS text AS
-$$
+CREATE OR REPLACE FUNCTION pganalyze.explain(query text, params text[]) RETURNS text AS $$
 DECLARE
   prepared_query text;
   prepared_params text;
   result text;
 BEGIN
-  SELECT regexp_replace(query, ';+\\s*\\Z', '') INTO prepared_query;
+  SELECT regexp_replace(query, ';+\s*\Z', '') INTO prepared_query;
   IF prepared_query LIKE '%;%' THEN
     RAISE EXCEPTION 'cannot run EXPLAIN when query contains semicolon';
   END IF;
 
   IF array_length(params, 1) > 0 THEN
-    SELECT string_agg(quote_literal(param) || '::unknown', ',') FROM unnest(params) p(param) INTO prepared_params;
+    SELECT array_to_string(
+      ARRAY(
+        SELECT quote_literal(param) || '::unknown' FROM unnest(params) p(param)
+      ),
+      ',',
+      'NULL'
+    ) INTO prepared_params;
 
     EXECUTE 'PREPARE pganalyze_explain AS ' || prepared_query;
     BEGIN
