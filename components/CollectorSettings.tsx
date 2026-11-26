@@ -73,6 +73,7 @@ function toEnvSetting(configFileSetting: string):string {
       return 'AWS_INSTANCE_ID';
     case 'api_key':
     case 'enable_log_explain':
+    case 'workbooks_explain_analyze':
     case 'api_system_id':
     case 'api_system_type':
     case 'api_system_scope':

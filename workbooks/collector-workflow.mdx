@@ -5,6 +5,7 @@ backlink_title: 'Workbooks'
 ---
 
 import { explainAnalyzeHelper } from '../components/helperSQL'
+import CollectorSettings from '../components/CollectorSettings'
 
 The Collector Workflow in Workbooks optionally allows users with the [Create Workbooks permission](/docs/accounts/permissions#create-workbooks)
 to execute arbitrary EXPLAIN ANALYZE commands directly from the pganalyze user interface. This eliminates
@@ -73,6 +74,24 @@ RESET ROLE;
 REVOKE CREATE ON SCHEMA pganalyze FROM pganalyze_explain;
 ```
 <br/>
+
+## Required Postgres minor version
+
+Starting with collector release 0.77.0, the Collector Workflow by default requires a Postgres
+minor version that includes the November 2026 security fixes (18.7, 17.12, 16.16, 15.20, 14.25
+or newer).
+
+The Collector Workflow relies on the restricted `pganalyze_explain` role to limit what a query
+run can do. The [November 2026 Postgres releases](https://www.postgresql.org/about/news/postgresql-187-1712-1616-1520-1425-and-19-rc-2-released-3442/)
+fix vulnerabilities that might allow any database user who can run queries to execute arbitrary code
+on the database server, which would bypass these restrictions.
+
+We recommend updating Postgres, but you can also skip this check at your own risk with the
+[`workbooks_explain_analyze`](/docs/collector/settings#general-settings) collector setting:
+
+<CollectorSettings settings={[
+  ['workbooks_explain_analyze', 'allow_no_version_check'],
+]} />
 
 ## Resolving search_path issues
 The `explain_analyze` function is created with `SECURITY DEFINER`, which means it will run with the privileges of the `pganalyze_explain` role,
@@ -151,3 +170,18 @@ And then you can optionally drop the role as well:
 ```sql
 DROP ROLE pganalyze_explain;
 ```
+
+### Deactivating the Collector Workflow in the collector configuration
+
+Alternatively, with collector release 0.77.0 or later, you can turn off the Collector Workflow
+for a server in the collector configuration, without dropping the helper function. This is
+useful when the helper function exists on a server where EXPLAIN ANALYZE should not run, for
+example to only run it on a replica, since functions created on the primary also exist on its
+replicas:
+
+<CollectorSettings settings={[
+  ['workbooks_explain_analyze', 'disable'],
+]} />
+
+In the config file, the setting can be placed in an individual server section to apply to that
+server only, or in the `[pganalyze]` section to apply to all servers.
