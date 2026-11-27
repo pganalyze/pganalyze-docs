@@ -81,6 +81,11 @@ Common settings for configuring collector behavior, independent of the platform.
       <td>Enable log-based EXPLAIN. See <a href="/docs/explain/setup/log-explain">setup instructions</a>, but note we recommend using <a href="/docs/explain/setup/auto_explain">auto_explain</a> instead if possible.</td>
     </tr>
     <tr>
+      <td>workbooks_explain_analyze (<code>PGA_WORKBOOKS_EXPLAIN_ANALYZE</code>)</td>
+      <td>allow</td>
+      <td>Either <code>allow</code> (requires a <a href="/docs/workbooks/collector-workflow#required-postgres-minor-version">minimum Postgres minor version</a>), <code>allow_no_version_check</code>, or <code>disable</code>. Controls whether the collector allows running EXPLAIN ANALYZE for the <a href="/docs/workbooks/collector-workflow">Workbooks Collector Workflow</a> if the helper function is installed.</td>
+    </tr>
+    <tr>
       <td>max_buffer_cache_monitoring_gb (<code>MAX_BUFFER_CACHE_MONITORING_GB</code>)</td>
       <td>200</td>
       <td>Threshold in GB for enabling the <a href="/docs/schema-statistics/buffer-cache">Buffer Cache Statistics</a> feature. If the Postgres <code>shared_buffers</code> setting exceeds the threshold it is disabled.</td>
